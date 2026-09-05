@@ -6,7 +6,7 @@ Agent noun for authorizing the release of artifacts that have completed produce 
 
 **Name:** ship-role
 
-**Purpose:** Authorize the transition from "done" to "shipped." Decide whether audited artifacts may be released. This is the third element of Produce ≠ Audit ≠ Ship (charter §16.3, §16.5).
+**Purpose:** Authorize release — decide whether produced artifacts with audit findings may move from "done" to "shipped." This is the third element of Produce ≠ Audit ≠ Ship (charter §16.3, §16.5).
 
 ## Invariants
 

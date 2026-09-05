@@ -51,8 +51,8 @@
 | Success criteria | Binary criteria | `CHARTER.md:725-731` |
 
 **Section renumbering:**
-- §16.5 Rules → §16.7 Rules
-- §16.6 Confirmation → §16.7 Confirmation (renumbered)
+- Former §16.5 Rules → §16.6
+- Former §16.6 Confirmation → §16.7
 
 ---
 
