@@ -307,6 +307,17 @@ The proposing agent produces, in one change-set of documents:
 
 No implementation in this step unless the change is already classified as exempt.
 
+**Produce package required for handoff.** Proposal completion includes the produce package: classification (plan A–F as above), applicability statement, boundary I/O declarations, and self-adversarial notes. A proposal without this package is incomplete. Incomplete proposals do not hand off to fitness or adversarial review.
+
+### Step 2.5 — Fitness preflight
+
+Before adversarial review opens, fitness performs a preflight check:
+
+- **Package present and complete** → proceed to Step 3.
+- **Package missing or incomplete** → return `handoff_refused` with defect log. Do not open content scoring. The proposal is not fitness-FAIL; it is produce-incomplete.
+
+Preflight is not discovery. Fitness does not invent the package, coach the producer, or soft-fail to prompt remediation. The producer fixes the package and resubmits. Do not normalize "re-gate" for missing-package rework.
+
 ### Step 3 — Adversarial review
 
 A second agent, with a different role, attacks the proposal. It does not implement. It does not protect the author’s feelings. It answers only:
@@ -646,6 +657,8 @@ The software model (§4) organizes code so agents can change it without scatteri
 - Gates block automatically; no human or role decides.
 - Audits produce findings; a ship-role or human decides whether findings block.
 
+**Handoff refused ≠ fitness FAIL.** When fitness preflight returns `handoff_refused` (produce package missing/incomplete), that is not a fitness FAIL. It is a produce-incomplete signal. The Gate remains the CI enforcement point for fitness scoring; preflight refusal is upstream of Gate. Do not normalize "re-gate" language for missing-package rework — that masks the produce-handoff defect.
+
 ### 16.2 Agent noun structure
 
 Every agent noun package (under `agents/<name>/`) declares:
@@ -748,6 +761,8 @@ Each verb has input contract, output contract, and failure mode. See agent noun 
 
 **S6.** Audit roles have no ship verbs. Adversarial auditors produce findings; another role decides.
 
+**S7.** Produce→fitness handoff is default-closed. Produce completion requires change artifacts AND produce package. Without a complete package, fitness preflight returns `handoff_refused`; content scoring does not open.
+
 ### 16.7 Confirmation checklist (systems)
 
 For changes that touch agent nouns:
@@ -758,6 +773,7 @@ For changes that touch agent nouns:
 - [ ] CS4. Success criteria are binary (ops vs defects).
 - [ ] CS5. Produce ≠ Audit ≠ Ship separation is honored.
 - [ ] CS6. Audit roles have no ship verbs.
+- [ ] CS7. Produce package present before fitness; incomplete handoffs refused, not soft-failed.
 
 ---
 
