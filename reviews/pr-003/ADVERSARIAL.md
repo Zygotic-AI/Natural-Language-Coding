@@ -160,7 +160,7 @@ grep -r "§16\.7" --include="*.md" .  # new
 
 **Check performed:**
 - Before fix: §16.5 Ship noun → §16.7 Rules (gap at §16.6)
-- **Fixed:** Renumbered §16.7→§16.6, §16.8→§16.7
+- **Fixed:** Renumbered to consecutive §16.6 Rules, §16.7 Checklist
 - Now: §16.1 Vocabulary → §16.2 Structure → §16.3 Produce≠Audit → §16.4 Audit no ship → §16.5 Ship noun → §16.6 Rules → §16.7 Checklist
 
 **Evidence:** `grep "### 16\." CHARTER.md` shows consecutive numbering

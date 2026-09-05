@@ -689,7 +689,7 @@ Ship is a first-class agent noun, separate from produce and audit. The ship noun
 
 **Name:** ship-role (or specific variants: ratify-role, merge-role, release-role)
 
-**Purpose:** Authorize the release of artifacts that have completed produce and audit phases. Gate the transition from "done" to "shipped."
+**Purpose:** Authorize the release of artifacts that have completed produce and audit phases. Decide whether audited artifacts may be released.
 
 #### Invariants
 

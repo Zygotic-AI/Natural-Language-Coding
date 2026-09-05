@@ -52,7 +52,7 @@
 
 **Section renumbering:**
 - §16.5 Rules → §16.7 Rules
-- §16.6 Confirmation → §16.8 Confirmation
+- §16.6 Confirmation → §16.7 Confirmation (renumbered)
 
 ---
 

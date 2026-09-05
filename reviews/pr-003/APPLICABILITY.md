@@ -25,7 +25,7 @@
 | S5 | Yes — ship-role separation | MET | Ship-role has invariant "No self-ship" |
 | S6 | N/A | — | Ship-role is not an audit role; has ship authority |
 
-### Confirmation checklist (systems) — §16.8
+### Confirmation checklist (systems) — §16.7
 
 | Item | Applies | Status | Evidence |
 |------|---------|--------|----------|
