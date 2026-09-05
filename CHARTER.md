@@ -307,7 +307,7 @@ The proposing agent produces, in one change-set of documents:
 
 No implementation in this step unless the change is already classified as exempt.
 
-**Produce package required for handoff.** Proposal completion includes the produce package: classification (plan A–F as above), applicability statement, boundary I/O declarations, and self-adversarial notes. A proposal without this package is incomplete. Incomplete proposals do not hand off to fitness or adversarial review.
+**Produce package required for handoff.** Proposal completion includes the produce package: classification (plan A–F as above), applicability statement, boundary I/O declarations, self-adversarial notes, and task/board SSOT exit evidence (`ssot_leaf_ids` + `ssot_exit_status`). A proposal without this package is incomplete. Incomplete proposals do not hand off to fitness or adversarial review.
 
 ### Step 2.5 — Fitness preflight
 
@@ -763,6 +763,8 @@ Each verb has input contract, output contract, and failure mode. See agent noun 
 
 **S7.** Produce→fitness handoff is default-closed. Produce completion requires change artifacts AND produce package. Without a complete package, fitness preflight returns `handoff_refused`; content scoring does not open.
 
+**S8.** Produce packages require task/board SSOT exit evidence. Packages must include `ssot_leaf_ids` (one or more opaque leaf ids from the task/board SSOT) and `ssot_exit_status` (non-empty exit state string). Missing SSOT exit evidence triggers `handoff_refused` (same refuse class as S7); fitness scoring refuses MET; adversarial audit refuses PASS (P-020).
+
 ### 16.7 Confirmation checklist (systems)
 
 For changes that touch agent nouns:
@@ -774,6 +776,7 @@ For changes that touch agent nouns:
 - [ ] CS5. Produce ≠ Audit ≠ Ship separation is honored.
 - [ ] CS6. Audit roles have no ship verbs.
 - [ ] CS7. Produce package present before fitness; incomplete handoffs refused, not soft-failed.
+- [ ] CS8. Task/board SSOT exit evidence present in produce package (`ssot_leaf_ids` + `ssot_exit_status`); missing evidence refused (P-020).
 
 ---
 

@@ -25,10 +25,20 @@ input:
         type: array
         items:
           type: string
-        description: Specific rules to check (e.g., ["R5", "R6", "S1"]). If omitted, all applicable rules.
+        description: Specific rules to check (e.g., ["R5", "R6", "S1", "S8"]). If omitted, all applicable rules.
       producer_id:
         type: string
         description: Who produced this artifact (to verify separation)
+      ssot_leaf_ids:
+        type: array
+        items:
+          type: string
+        minItems: 1
+        description: Opaque leaf ids from fitness receipt (required for PASS per P-020)
+      ssot_exit_status:
+        type: string
+        minLength: 1
+        description: Exit state string from fitness receipt (required for PASS per P-020)
 ```
 
 ### Output contract
@@ -85,10 +95,12 @@ error:
   required: [code, message]
   properties:
     code:
-      enum: [ARTIFACT_NOT_FOUND, SELF_AUDIT, SCOPE_EMPTY]
+      enum: [ARTIFACT_NOT_FOUND, SELF_AUDIT, SCOPE_EMPTY, SSOT_EVIDENCE_MISSING]
     message:
       type: string
 ```
+
+**Note:** `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; audit refuses PASS without SSOT exit evidence (S8, P-020).
 
 ---
 
@@ -114,6 +126,16 @@ input:
         enum: [software, systems, both]
         default: software
         description: Which confirmation checklist to apply
+      ssot_leaf_ids:
+        type: array
+        items:
+          type: string
+        minItems: 1
+        description: Opaque leaf ids from fitness receipt (required for PASS per P-020)
+      ssot_exit_status:
+        type: string
+        minLength: 1
+        description: Exit state string from fitness receipt (required for PASS per P-020)
 ```
 
 ### Output contract
@@ -170,10 +192,12 @@ error:
   required: [code, message]
   properties:
     code:
-      enum: [DIFF_NOT_FOUND, SELF_AUDIT, INVALID_CLASS]
+      enum: [DIFF_NOT_FOUND, SELF_AUDIT, INVALID_CLASS, SSOT_EVIDENCE_MISSING]
     message:
       type: string
 ```
+
+**Note:** `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; audit refuses PASS without SSOT exit evidence (S8, P-020).
 
 ---
 
