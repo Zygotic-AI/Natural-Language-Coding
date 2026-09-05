@@ -29,15 +29,16 @@ input:
       producer_id:
         type: string
         description: Who produced this artifact (to verify separation)
-      notion_page_ids:
+      ssot_leaf_ids:
         type: array
         items:
           type: string
-          format: uuid
-        description: Notion page UUIDs from fitness receipt (required for PASS per P-020)
-      notion_exit_status:
+        minItems: 1
+        description: Opaque leaf ids from fitness receipt (required for PASS per P-020)
+      ssot_exit_status:
         type: string
-        description: Exit status from fitness receipt (required for PASS per P-020)
+        minLength: 1
+        description: Exit state string from fitness receipt (required for PASS per P-020)
 ```
 
 ### Output contract
@@ -94,12 +95,12 @@ error:
   required: [code, message]
   properties:
     code:
-      enum: [ARTIFACT_NOT_FOUND, SELF_AUDIT, SCOPE_EMPTY, NOTION_EVIDENCE_MISSING]
+      enum: [ARTIFACT_NOT_FOUND, SELF_AUDIT, SCOPE_EMPTY, SSOT_EVIDENCE_MISSING]
     message:
       type: string
 ```
 
-**Note:** `NOTION_EVIDENCE_MISSING` error is returned if Notion page id(s) or exit status are absent; audit refuses PASS without Notion exit evidence (S8, P-020).
+**Note:** `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; audit refuses PASS without SSOT exit evidence (S8, P-020).
 
 ---
 
@@ -125,15 +126,16 @@ input:
         enum: [software, systems, both]
         default: software
         description: Which confirmation checklist to apply
-      notion_page_ids:
+      ssot_leaf_ids:
         type: array
         items:
           type: string
-          format: uuid
-        description: Notion page UUIDs from fitness receipt (required for pass per P-020)
-      notion_exit_status:
+        minItems: 1
+        description: Opaque leaf ids from fitness receipt (required for PASS per P-020)
+      ssot_exit_status:
         type: string
-        description: Exit status from fitness receipt (required for pass per P-020)
+        minLength: 1
+        description: Exit state string from fitness receipt (required for PASS per P-020)
 ```
 
 ### Output contract
@@ -190,12 +192,12 @@ error:
   required: [code, message]
   properties:
     code:
-      enum: [DIFF_NOT_FOUND, SELF_AUDIT, INVALID_CLASS, NOTION_EVIDENCE_MISSING]
+      enum: [DIFF_NOT_FOUND, SELF_AUDIT, INVALID_CLASS, SSOT_EVIDENCE_MISSING]
     message:
       type: string
 ```
 
-**Note:** `NOTION_EVIDENCE_MISSING` error is returned if Notion page id(s) or exit status are absent; audit refuses pass without Notion exit evidence (S8, P-020).
+**Note:** `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; audit refuses PASS without SSOT exit evidence (S8, P-020).
 
 ---
 

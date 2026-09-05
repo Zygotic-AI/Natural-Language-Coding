@@ -75,7 +75,7 @@ Standards steward produces one of:
 | Supersede notice | Existing ADR replaced; pointer added |
 | Produce package + `complete-produce` → complete | Before fitness handoff (S7, S8) |
 
-Completion for fitness handoff = change artifact + produce package (including Notion exit evidence) + `complete-produce` status `complete`.
+Completion for fitness handoff = change artifact + produce package (including SSOT exit evidence) + `complete-produce` status `complete`.
 
 Completion is **not** ratification.
 
@@ -87,10 +87,10 @@ Before standards-steward hands off to fitness:
 |-----------|----------|
 | Change artifact exists | Path to draft ADR, charter edit, or artifact |
 | Produce package complete | All required files present in package directory |
-| Notion exit evidence present | Notion page id(s) + exit status in package (S8, P-020) |
+| SSOT exit evidence present | `ssot_leaf_ids` + `ssot_exit_status` in package (S8, P-020) |
 | `complete-produce` status | `complete` (not `incomplete`) |
 
-Incomplete handoffs (missing package, missing Notion evidence, or `incomplete` status) do not proceed to fitness.
+Incomplete handoffs (missing package, missing SSOT exit evidence, or `incomplete` status) do not proceed to fitness.
 
 ## Produce verbs
 

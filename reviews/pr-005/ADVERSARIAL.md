@@ -1,93 +1,93 @@
-# PR-005 Self-Adversarial Notes
+# Self-adversarial notes — SSOT exit evidence abstract delta
 
-Pre-submission adversarial review by the producer against the charter.
+Pre-submission adversarial review by the producer against the charter and principle lock.
 
-## Notion exit evidence (P-020 dogfood)
+## SSOT exit evidence (P-020 dogfood)
 
-This package dogfoods the P-020 requirement by including Notion exit evidence.
+This package dogfoods the **abstract** P-020 contract only:
 
 ```yaml
-notion_page_ids:
-  - "3d29d973-ccd7-81fa-9cb1-c7b01cf5a2da"
-notion_exit_status: "in progress"
-notion_task_name: "Require Notion exit evidence in gate packages"
-notion_task_id: "15721"
-notion_url: "https://app.notion.com/p/3d29d973ccd781fa9cb1c7b01cf5a2da"
-tags:
-  - grokbot
+ssot_leaf_ids:
+  - "3d29d973-ccd7-8158-a1c2-e8d46be9bbef"
+ssot_exit_status: "in progress"
 ```
+
+Opaque leaf id as data. No product field labels. Parked prior leaf is not dogfooded.
+
+---
+
+## Architecture FAIL on prior Notion surface
+
+| Claim | Disposition |
+|-------|-------------|
+| Prior MET on Notion-named fields clears architecture fitness | **No** — superseded |
+| Notion-named fields in BBA charter/agent verbs | **Architecture-scope FAIL** under tool-agnostic lock |
+| This delta restores tool-agnostic contract | Target of this change |
+
+Principle lock cited: BBA = architecture definition; no Notion / MCP / Cursor / Grok product bindings in charter, AGENTS.md, or agent verb field names. Bindings repo is out of scope.
 
 ---
 
 ## Checklist against charter rules
 
-### R26 (Practice integrity P1–P7)
+### R26 / P1–P7
 
-- [x] **P1 Stand-alone branding:** No foreign brand packages imported
-- [x] **P2 Zero variance:** New rules prescribe actions with binary outcomes
-- [x] **P3 Hard gates:** Missing Notion evidence triggers `handoff_refused` or error with binary outcome
-- [x] **P4 Hard boundary I/O:** All modified verbs declare updated input, output, failure mode
-- [x] **P5 Binary audits:** S8/CS8 have audit ids (A-S8, A-CS8)
-- [x] **P6 Unbound matrix entries listed:** S8/CS8 added as unbound, surface=reference
-- [x] **P7 Promote-only-when-bindable:** S8/CS8 are reference surface, not in-force; no false binders
+- [x] **P1 Stand-alone / tool-agnostic:** Abstract field names; no product brand as required vocabulary
+- [x] **P2 Zero variance:** Binary refuse outcomes preserved
+- [x] **P3 Hard gates:** Missing evidence → `handoff_refused` / refuse MET / refuse PASS
+- [x] **P4 Hard boundary I/O:** Verb contracts declare abstract I/O + failure mode
+- [x] **P5 Binary audits:** A-S8 / A-CS8 retained, rewritten
+- [x] **P6 Unbound listed:** S8/CS8 remain unbound reference
+- [x] **P7 Promote-only-when-bindable:** No false binders
 
-### S5 (Produce ≠ Audit ≠ Ship)
+### S5 / S6 / S7
 
-- [x] This PR is produced by agent, to be audited by Reed (fitness), then adversarial, then shipped separately
-- [x] The produce package (this directory) enforces S5 on itself
+- [x] Produce ≠ Audit ≠ Ship honored
+- [x] Audit roles still exclude ship verbs
+- [x] S7 refuse class extended by S8 (same class as P-016)
 
-### S6 (Audit roles have no ship verbs)
+### S8 / CS8 (this delta)
 
-- [x] quality-architect verbs exclude ship verbs (ratify, merge, release, approve)
-- [x] adversarial-auditor verbs exclude ship verbs
-
-### S7 (Produce→fitness handoff default-closed)
-
-- [x] This change extends S7 with Notion evidence requirement (S8)
-- [x] Missing Notion evidence triggers `handoff_refused` with `NOTION_EXIT_EVIDENCE`
-
-### S8 (Notion exit evidence required — THIS PR)
-
-- [x] This package includes `notion_page_ids` and `notion_exit_status` (dogfood)
-- [x] S8 rule added to charter §16.6
-- [x] CS8 checklist item added to §16.7
+- [x] Prose = task/board SSOT exit evidence
+- [x] Fields = `ssot_leaf_ids` + `ssot_exit_status`
+- [x] Missing enum = `SSOT_EXIT_EVIDENCE`
+- [x] Error = `SSOT_EVIDENCE_MISSING`
+- [x] Package dogfoods abstract fields above
 
 ---
 
-## Potential holes identified
+## Potential holes
 
-### Hole 1: Missing binder for S8/CS8
+### Hole 1: Unbound S8/CS8
 
-**Issue:** S8 and CS8 are added as reference surface, unbound. No CI binder exists.
+**Issue:** Still no CI binder.  
+**Mitigation:** Intentional (P7). Reference surface until bindable.  
+**Reviewer question:** Confirm reference/unbound remains correct.
 
-**Mitigation:** Intentional. Rules are reference-level until a binder can be written. Adding a false binder would violate P7.
+### Hole 2: Opaque leaf shape
 
-**Reviewer question:** Is reference surface appropriate, or should these be deferred entirely?
+**Issue:** Leaf ids are opaque strings; no product API validation in BBA.  
+**Mitigation:** Correct for architecture repo; API validation belongs in bindings/implementation, not charter.  
+**Reviewer question:** Is non-empty opaque leaf (≥1) sufficient for A-CS8?
 
-### Hole 2: Notion API validation not enforced
+### Hole 3: Free-form `ssot_exit_status`
 
-**Issue:** `notion_page_ids` are UUIDs but not validated against Notion API.
+**Issue:** Non-empty string, no enum.  
+**Mitigation:** Board vocabularies vary by SSOT; hard gate is non-empty.  
+**Reviewer question:** Keep free-form, or document common examples as non-normative?
 
-**Mitigation:** UUID format validation is sufficient for package completeness. API validation can be added in a future binder.
+### Hole 4: Residual R1 from prior Notion PASS (envelope FAIL vs error)
 
-**Reviewer question:** Should the audit definition require API validation, or is format validation sufficient?
-
-### Hole 3: Exit status vocabulary not constrained
-
-**Issue:** `notion_exit_status` is a free-form string. No enum of valid statuses.
-
-**Mitigation:** Notion task statuses vary by board configuration. Constraining would require board-specific enums. Non-empty string is the hard gate.
-
-**Reviewer question:** Is "non-empty string" sufficient, or should common statuses be documented?
+**Issue:** score/adversarial refusal envelope wording may still differ (FAIL vs `SSOT_EVIDENCE_MISSING` error).  
+**Mitigation:** Primary path (`handoff_refused` + `SSOT_EXIT_EVIDENCE`) agrees; optional cleanup post-land. Non-blocking if no soft-pass path exists.
 
 ---
 
 ## Self-adversarial rebuttal
 
-This change extends the produce→fitness boundary (S7) with Notion exit evidence (S8). The holes identified are known limitations, not defects:
+This change fixes an architecture defect (product binding in BBA) while preserving the fail-closed evidence gate. Holes 1–3 are known unbound/reference limitations, not defects. Hole 4 is optional envelope alignment.
 
-1. Reference-surface rules are correct for unbindable requirements (P7)
-2. UUID format validation is sufficient for package completeness; API validation is a future binder concern
-3. Free-form status is appropriate given Notion board variability
+Dogfood:
 
-This package dogfoods the requirement: `notion_page_ids` = `3d29d973-ccd7-81fa-9cb1-c7b01cf5a2da`, `notion_exit_status` = `in progress`.
+- `ssot_leaf_ids`: `["3d29d973-ccd7-8158-a1c2-e8d46be9bbef"]`
+- `ssot_exit_status`: `"in progress"`

@@ -693,7 +693,7 @@
     },
     {
       "id": "S8",
-      "statement": "Produce packages require Notion exit evidence. Packages must include Notion page id(s) and exit status. Missing Notion evidence triggers handoff_refused; fitness scoring refuses MET; adversarial audit refuses PASS (P-020).",
+      "statement": "Produce packages require task/board SSOT exit evidence. Packages must include ssot_leaf_ids (one or more opaque leaf ids from the task/board SSOT) and ssot_exit_status (non-empty exit state string). Missing SSOT exit evidence triggers handoff_refused; fitness scoring refuses MET; adversarial audit refuses PASS (P-020).",
       "surface": "reference",
       "audit_id": "A-S8",
       "audit_def": "integrity/audits/A-S8.md",
@@ -702,7 +702,7 @@
     },
     {
       "id": "CS8",
-      "statement": "Notion exit evidence present in produce package (page id(s) + exit status); missing evidence refused (P-020).",
+      "statement": "Task/board SSOT exit evidence present in produce package (ssot_leaf_ids + ssot_exit_status); missing evidence refused (P-020).",
       "surface": "reference",
       "audit_id": "A-CS8",
       "audit_def": "integrity/audits/A-CS8.md",

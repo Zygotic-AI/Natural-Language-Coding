@@ -1,145 +1,76 @@
-# PR-005 Boundary I/O Declarations
+# Boundary I/O — SSOT exit evidence (abstract)
 
 ## Modified boundaries
 
-### 1. `complete-produce` (standards-steward verb)
+### 1. `complete-produce` (standards-steward)
 
-**Added to output:**
+**Output missing enum:** include `SSOT_EXIT_EVIDENCE` (replaces any `NOTION_EXIT_EVIDENCE`).
+
+**Output fields:**
+
 ```yaml
-missing:
-  items:
-    enum: [..., NOTION_EXIT_EVIDENCE]  # Added
-notion_page_ids:
+ssot_leaf_ids:
   type: array
   items:
     type: string
-    format: uuid
-  description: Notion page UUIDs from package (echo for traceability)
-notion_exit_status:
+  minItems: 1
+  description: Opaque leaf ids from the task/board SSOT (echo for traceability)
+ssot_exit_status:
   type: string
-  description: Exit status declared in package (echo for traceability)
+  minLength: 1
+  description: Exit state string declared in package (echo for traceability)
 ```
 
-**Added to failure mode:**
-```yaml
-code:
-  enum: [..., NOTION_EVIDENCE_MISSING]  # Added
-```
+**Failure mode:** include `SSOT_EVIDENCE_MISSING`.
 
 ---
 
-### 2. `preflight-fitness-handoff` (quality-architect verb)
+### 2. `preflight-fitness-handoff` (quality-architect)
 
-**Added to output:**
-```yaml
-defect_log:
-  missing:
-    items:
-      enum: [..., NOTION_EXIT_EVIDENCE]  # Added
-notion_page_ids:
-  type: array
-  items:
-    type: string
-    format: uuid
-  description: Notion page UUIDs from package (only if ready)
-notion_exit_status:
-  type: string
-  description: Exit status declared in package (only if ready)
-```
+**defect_log.missing enum:** include `SSOT_EXIT_EVIDENCE`.
+
+**Output when ready:** `ssot_leaf_ids`, `ssot_exit_status`.
+
+`handoff_refused` remains a valid output (not an infrastructure error) when SSOT exit evidence is missing.
 
 ---
 
-### 3. `score-fitness` (quality-architect verb)
+### 3. `score-fitness` (quality-architect)
 
-**Added to input:**
-```yaml
-notion_page_ids:
-  type: array
-  items:
-    type: string
-    format: uuid
-  description: Notion page UUIDs from preflight (required for MET)
-notion_exit_status:
-  type: string
-  description: Exit status from preflight (required for MET)
-```
+**Input (required for MET):** `ssot_leaf_ids`, `ssot_exit_status`.
 
-**Added to output:**
-```yaml
-checklist_results:
-  items:
-    item_id:
-      description: Checklist item (C1, C2, CS1, CS8, etc.)  # CS8 added
-notion_page_ids:
-  type: array
-  items:
-    type: string
-    format: uuid
-  description: Notion page UUIDs verified (echo for receipt)
-notion_exit_status:
-  type: string
-  description: Exit status verified (echo for receipt)
-```
+**Output echo:** same fields.
 
-**Added to failure mode:**
-```yaml
-code:
-  enum: [..., NOTION_EVIDENCE_MISSING]  # Added
-```
+**Failure mode:** include `SSOT_EVIDENCE_MISSING`.
+
+**blocking_failures:** may include `CS8` when SSOT exit evidence missing.
 
 ---
 
-### 4. `audit-proposal` (adversarial-auditor verb)
+### 4. `audit-proposal` / `audit-diff` (adversarial-auditor)
 
-**Added to input:**
-```yaml
-notion_page_ids:
-  type: array
-  items:
-    type: string
-    format: uuid
-  description: Notion page UUIDs from fitness receipt (required for PASS per P-020)
-notion_exit_status:
-  type: string
-  description: Exit status from fitness receipt (required for PASS per P-020)
-```
+**Input (required for PASS):** `ssot_leaf_ids`, `ssot_exit_status`.
 
-**Added to failure mode:**
-```yaml
-code:
-  enum: [..., NOTION_EVIDENCE_MISSING]  # Added
-```
-
----
-
-### 5. `audit-diff` (adversarial-auditor verb)
-
-**Added to input:**
-```yaml
-notion_page_ids:
-  type: array
-  items:
-    type: string
-    format: uuid
-  description: Notion page UUIDs from fitness receipt (required for pass per P-020)
-notion_exit_status:
-  type: string
-  description: Exit status from fitness receipt (required for pass per P-020)
-```
-
-**Added to failure mode:**
-```yaml
-code:
-  enum: [..., NOTION_EVIDENCE_MISSING]  # Added
-```
+**Failure mode:** include `SSOT_EVIDENCE_MISSING`.
 
 ---
 
 ## Boundary vocabulary
 
-| Term | Input/Output | Boundary |
-|------|--------------|----------|
-| `notion_page_ids` | Input/Output | complete-produce, preflight-fitness-handoff, score-fitness, audit-* |
-| `notion_exit_status` | Input/Output | complete-produce, preflight-fitness-handoff, score-fitness, audit-* |
-| `NOTION_EXIT_EVIDENCE` | Output (missing enum) | complete-produce, preflight-fitness-handoff |
-| `NOTION_EVIDENCE_MISSING` | Error code | complete-produce, score-fitness, audit-* |
+| Term | Role | Boundaries |
+|------|------|------------|
+| `ssot_leaf_ids` | I/O field | complete-produce, preflight, score-fitness, audit-* |
+| `ssot_exit_status` | I/O field | complete-produce, preflight, score-fitness, audit-* |
+| `SSOT_EXIT_EVIDENCE` | Missing enum | complete-produce, preflight |
+| `SSOT_EVIDENCE_MISSING` | Error code | complete-produce, score-fitness, audit-* |
+
+## Explicitly removed from BBA contracts
+
+| Removed | Why |
+|---------|-----|
+| `notion_page_ids` | Product-named field |
+| `notion_exit_status` | Product-named field |
+| `NOTION_EXIT_EVIDENCE` | Product-named missing token |
+| `NOTION_EVIDENCE_MISSING` | Product-named error code |
+
+Product mapping belongs outside BBA (implementation/bindings repo).

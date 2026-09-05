@@ -43,18 +43,19 @@ output:
         missing:
           type: array
           items:
-            enum: [PLAN, APPLICABILITY, BOUNDARY_IO, ADVERSARIAL_NOTES, VERIFY_SCRIPT, NOTION_EXIT_EVIDENCE]
+            enum: [PLAN, APPLICABILITY, BOUNDARY_IO, ADVERSARIAL_NOTES, VERIFY_SCRIPT, SSOT_EXIT_EVIDENCE]
         reason:
           type: string
-    notion_page_ids:
+    ssot_leaf_ids:
       type: array
       items:
         type: string
-        format: uuid
-      description: Notion page UUIDs from package (only if ready)
-    notion_exit_status:
+      minItems: 1
+      description: Opaque leaf ids from package (only if ready)
+    ssot_exit_status:
       type: string
-      description: Exit status declared in package (only if ready)
+      minLength: 1
+      description: Exit state string from package (only if ready)
 ```
 
 ### Failure mode
@@ -72,7 +73,7 @@ error:
       type: string
 ```
 
-**Note:** `handoff_refused` is NOT an error. It is a valid output status indicating produce-incomplete (includes missing Notion exit evidence per S8/P-020). Errors are reserved for infrastructure failures.
+**Note:** `handoff_refused` is NOT an error. It is a valid output status indicating produce-incomplete (includes missing SSOT exit evidence per S8/P-020). Errors are reserved for infrastructure failures.
 
 ---
 
@@ -101,14 +102,15 @@ input:
       change_class:
         enum: [A, B, C, D, E, F]
         description: Change classification (if known)
-      notion_page_ids:
+      ssot_leaf_ids:
         type: array
         items:
           type: string
-          format: uuid
-        description: Notion page UUIDs from preflight (required for MET)
-      notion_exit_status:
+        minItems: 1
+        description: SSOT leaf ids from preflight (required for MET)
+      ssot_exit_status:
         type: string
+        minLength: 1
         description: Exit status from preflight (required for MET)
 ```
 
@@ -139,15 +141,16 @@ output:
       type: array
       items:
         type: string
-      description: Item ids that caused FAIL status (includes CS8 if Notion evidence missing)
-    notion_page_ids:
+      description: Item ids that caused FAIL status (includes CS8 if SSOT exit evidence missing)
+    ssot_leaf_ids:
       type: array
       items:
         type: string
-        format: uuid
-      description: Notion page UUIDs verified (echo for receipt)
-    notion_exit_status:
+      minItems: 1
+      description: SSOT leaf ids verified (echo for receipt)
+    ssot_exit_status:
       type: string
+      minLength: 1
       description: Exit status verified (echo for receipt)
 ```
 
@@ -161,12 +164,12 @@ error:
   required: [code, message]
   properties:
     code:
-      enum: [ARTIFACT_NOT_FOUND, PREFLIGHT_NOT_READY, SELF_SCORE, NOTION_EVIDENCE_MISSING]
+      enum: [ARTIFACT_NOT_FOUND, PREFLIGHT_NOT_READY, SELF_SCORE, SSOT_EVIDENCE_MISSING]
     message:
       type: string
 ```
 
-**Note:** `PREFLIGHT_NOT_READY` error is returned if `preflight_status` is not `ready`. This enforces the default-closed handoff: no scoring without preflight pass. `NOTION_EVIDENCE_MISSING` error is returned if Notion page id(s) or exit status are absent; scoring refuses MET without Notion evidence (S8, P-020).
+**Note:** `PREFLIGHT_NOT_READY` error is returned if `preflight_status` is not `ready`. This enforces the default-closed handoff: no scoring without preflight pass. `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; scoring refuses MET without SSOT exit evidence (S8, P-020).
 
 ---
 

@@ -1,42 +1,40 @@
-# PR-005 Applicability Statement
+# Applicability — SSOT exit evidence abstract delta
 
 ## Scope
 
-This change applies to:
-
-1. **Charter document** (`CHARTER.md`) — §6 Step 2, S8, CS8
-2. **Binding matrix** (`integrity/binding-matrix.json`) — S8, CS8 entries
-3. **Agent noun packages** (`agents/`) — standards-steward, quality-architect, adversarial-auditor
-4. **ADR** (`adrs/0005-notion-exit-evidence.md`) — decision record
-5. **AGENTS.md** — standing instructions for Cursor agents
-6. **Integrity audits** (`integrity/audits/`) — A-S8.md, A-CS8.md
+1. `CHARTER.md` — §6 Step 2, S8, CS8
+2. `adrs/0005-ssot-exit-evidence.md` (replace Notion-named ADR 0005 file)
+3. `AGENTS.md` — P-020 standing instruction
+4. `agents/standards-steward/{AGENT.md,verbs.md}`
+5. `agents/quality-architect/verbs.md`
+6. `agents/adversarial-auditor/{AGENT.md,verbs.md}`
+7. `integrity/audits/A-S8.md`, `A-CS8.md`
+8. `integrity/binding-matrix.json` — S8/CS8 statement text only
+9. Produce package for this delta (dogfood abstract fields)
 
 ## Exclusions
 
-This change does **not** apply to:
-
-- PR #3 or PR #4 scope (except inheriting current main)
+- Implementation/bindings repo (product how-to)
 - Product application code
-- Session gate implementation (deferred)
-- Existing CI tooling (no binder changes)
-- External task tracker support (Notion only)
+- Session gate implementation
+- Existing CI binders (none for S8/CS8; remain unbound)
+- Requiring any board product brand in BBA artifacts
 
 ## Applicability rationale
 
-**Charter S7 (Produce→fitness default-closed)** requires complete produce packages. This change extends the completeness requirement to include Notion exit evidence, ensuring traceability from produce work to coordination system.
+**Principle lock:** BBA architecture definition must stay tool-agnostic. PR #5's Notion-named fields are an architecture-scope FAIL even if package completeness MET under that vocabulary.
 
-**P-016 alignment:** Follows the same refuse pattern — missing Notion evidence triggers `handoff_refused` with `NOTION_EXIT_EVIDENCE` in defect log, not soft-fail.
+**S7 / P-016:** Same refuse class — missing evidence → `handoff_refused` with missing-enum token; not soft-fail discovery.
 
-**KD-010 quality north star:** Default-closed boundaries; no discovery loops.
+**P7:** S8/CS8 stay reference/unbound until bindable.
 
 ## Backward compatibility
 
-- Existing produce packages without Notion evidence will receive `handoff_refused` (not retroactive FAIL)
-- No breaking change to existing bound rules
-- New rules S8/CS8 are reference surface (unbound) — no false binders
+- Notion-named required fields are **removed** from BBA contracts (not aliased as dual-required)
+- Opaque leaf id strings may still be UUID-shaped data without labeling the field as a product id
+- No false binders introduced
 
 ## Forward compatibility
 
-- Future binders for S8/CS8 will enforce Notion evidence presence
-- Future external task tracker support can extend via separate ADR
-- This package dogfoods the requirement (includes Notion evidence)
+- Bindings repo may map `ssot_leaf_ids` ↔ product leaf ids without changing BBA
+- Future binders enforce abstract field presence only
