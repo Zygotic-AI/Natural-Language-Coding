@@ -9,7 +9,10 @@
 ☐ Package agent short-form prompt + roles under agents/ (each step hard-gated)
 ☐ Add hard I/O + failure-mode declarations to every public tool/agent boundary in this repo
 ☐ Create fail-capable binders for S1–S6 and CS1–CS6 (systems model requirements)
-☐ Define additional agent nouns as needed (e.g., ratify-role, deploy-role)
+✔ Define ship-role agent noun (ratify, merge, release, waive-finding verbs) @done(26-09-05 20:35)
+☐ Define additional agent nouns as needed (e.g., deploy-role for environment-specific release)
 ☐ Add machine-readable schemas (JSON Schema / OpenAPI) for agent noun verb contracts
+✔ Add standards-steward load-applicability query verb for Session/WU applicability register @done(26-09-05 20:35)
+✔ Clarify gate ≠ audit terminology in charter §16.1 vocabulary mapping @done(26-09-05 20:35)
 ☐ Wire session gates for agent noun verbs (OUT OF SCOPE for initial systems extension — future work)
 ☐ Create tooling to validate agent noun package structure (AGENT.md + verbs.md completeness)
