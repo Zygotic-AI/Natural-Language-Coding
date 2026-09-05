@@ -276,6 +276,67 @@ error:
 
 ---
 
+## complete-produce
+
+Signal that produce work is complete and ready for fitness handoff.
+
+### Input contract
+
+```yaml
+input:
+  complete_produce_request:
+    type: object
+    required: [artifact_path, package_path]
+    properties:
+      artifact_path:
+        type: string
+        description: Path to the change artifact (diff, proposal, code)
+      package_path:
+        type: string
+        description: Path to the produce package directory
+      classification:
+        enum: [A, B, C, D, E, F]
+        description: Change class (§6 Step 1)
+```
+
+### Output contract
+
+```yaml
+output:
+  type: object
+  required: [status]
+  properties:
+    status:
+      enum: [complete, incomplete]
+    handoff_token:
+      type: string
+      description: Token for fitness handoff (only if complete)
+    missing:
+      type: array
+      items:
+        enum: [PLAN, APPLICABILITY, BOUNDARY_IO, ADVERSARIAL_NOTES, VERIFY_SCRIPT]
+      description: Missing package elements (only if incomplete)
+```
+
+### Failure mode
+
+Returns error result:
+
+```yaml
+error:
+  type: object
+  required: [code, message]
+  properties:
+    code:
+      enum: [ARTIFACT_NOT_FOUND, PACKAGE_NOT_FOUND, PACKAGE_MISSING]
+    message:
+      type: string
+```
+
+**Note:** `handoff_token` is issued when status is `complete` for convenience. Fitness preflight may accept a token OR validate package paths directly; the hard gate is package completeness (S7), not token presence. Token is optional on preflight input.
+
+---
+
 ## Excluded verbs (no shipping authority)
 
 The following verbs are **explicitly excluded** from standards-steward:

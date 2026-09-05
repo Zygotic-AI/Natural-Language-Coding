@@ -672,6 +672,24 @@
       "audit_def": "integrity/audits/A-CS6.md",
       "binder": "",
       "status": "unbound"
+    },
+    {
+      "id": "S7",
+      "statement": "Produce→fitness handoff is default-closed. Produce completion requires change artifacts AND produce package. Without a complete package, fitness preflight returns handoff_refused; content scoring does not open.",
+      "surface": "reference",
+      "audit_id": "A-S7",
+      "audit_def": "integrity/audits/A-S7.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "CS7",
+      "statement": "Produce package present before fitness; incomplete handoffs refused, not soft-failed.",
+      "surface": "reference",
+      "audit_id": "A-CS7",
+      "audit_def": "integrity/audits/A-CS7.md",
+      "binder": "",
+      "status": "unbound"
     }
   ]
 }

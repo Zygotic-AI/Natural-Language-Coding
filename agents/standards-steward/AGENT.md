@@ -54,8 +54,27 @@ Standards steward produces one of:
 | Draft charter edit | Rule change proposed |
 | No-change note | Request reviewed; no action needed; reason stated |
 | Supersede notice | Existing ADR replaced; pointer added |
+| Produce package + `complete-produce` → complete | Before fitness handoff (S7) |
 
-Completion is **not** ratification. Completion means "proposal ready for review."
+Completion for fitness handoff = change artifact + produce package + `complete-produce` status `complete`.
+
+Completion is **not** ratification.
+
+## Handoff-out
+
+Before standards-steward hands off to fitness:
+
+| Condition | Evidence |
+|-----------|----------|
+| Change artifact exists | Path to draft ADR, charter edit, or artifact |
+| Produce package complete | All required files present in package directory |
+| `complete-produce` status | `complete` (not `incomplete`) |
+
+Incomplete handoffs (missing package or `incomplete` status) do not proceed to fitness.
+
+## Produce verbs
+
+- `complete-produce` — signal produce work is complete; returns `status: complete` or `incomplete`
 
 ---
 
