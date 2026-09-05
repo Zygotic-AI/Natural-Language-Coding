@@ -564,6 +564,114 @@
       "audit_def": "integrity/audits/A-C24.md",
       "binder": "",
       "status": "unbound"
+    },
+    {
+      "id": "S1",
+      "statement": "Every agent noun has an identity file that states purpose and invariants.",
+      "surface": "reference",
+      "audit_id": "A-S1",
+      "audit_def": "integrity/audits/A-S1.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "S2",
+      "statement": "Every verb on an agent noun has an input contract, output contract, and failure mode.",
+      "surface": "reference",
+      "audit_id": "A-S2",
+      "audit_def": "integrity/audits/A-S2.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "S3",
+      "statement": "Every agent noun declares handoff-in (preconditions) and completion artifact (postconditions).",
+      "surface": "reference",
+      "audit_id": "A-S3",
+      "audit_def": "integrity/audits/A-S3.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "S4",
+      "statement": "Success criteria are binary: ops (work completed as specified) vs defects (deviation from spec or invariants).",
+      "surface": "reference",
+      "audit_id": "A-S4",
+      "audit_def": "integrity/audits/A-S4.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "S5",
+      "statement": "Produce ≠ Audit ≠ Ship. An agent may not audit its own output as the final gate.",
+      "surface": "reference",
+      "audit_id": "A-S5",
+      "audit_def": "integrity/audits/A-S5.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "S6",
+      "statement": "Audit roles have no ship verbs. Adversarial auditors produce findings; another role decides.",
+      "surface": "reference",
+      "audit_id": "A-S6",
+      "audit_def": "integrity/audits/A-S6.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "CS1",
+      "statement": "Agent noun has identity and invariants.",
+      "surface": "reference",
+      "audit_id": "A-CS1",
+      "audit_def": "integrity/audits/A-CS1.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "CS2",
+      "statement": "Each verb has input, output, and failure mode.",
+      "surface": "reference",
+      "audit_id": "A-CS2",
+      "audit_def": "integrity/audits/A-CS2.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "CS3",
+      "statement": "Handoff-in and completion artifact are declared.",
+      "surface": "reference",
+      "audit_id": "A-CS3",
+      "audit_def": "integrity/audits/A-CS3.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "CS4",
+      "statement": "Success criteria are binary (ops vs defects).",
+      "surface": "reference",
+      "audit_id": "A-CS4",
+      "audit_def": "integrity/audits/A-CS4.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "CS5",
+      "statement": "Produce ≠ Audit ≠ Ship separation is honored.",
+      "surface": "reference",
+      "audit_id": "A-CS5",
+      "audit_def": "integrity/audits/A-CS5.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "CS6",
+      "statement": "Audit roles have no ship verbs.",
+      "surface": "reference",
+      "audit_id": "A-CS6",
+      "audit_def": "integrity/audits/A-CS6.md",
+      "binder": "",
+      "status": "unbound"
     }
   ]
 }

@@ -8,3 +8,4 @@ Naming: `NNNN-short-slug.md`. Superseded ADRs are marked superseded, not deleted
 |-----|-------|
 | [`0001-zero-variance-integrity.md`](0001-zero-variance-integrity.md) | Zero-variance integrity, binding matrix, binary audits |
 | [`0002-p2-scope.md`](0002-p2-scope.md) | Scope of P2 (zero variance): gates and boundaries, not every keystroke |
+| [`0003-systems-extension-agent-nouns.md`](0003-systems-extension-agent-nouns.md) | Systems extension: agent nouns and contracted verbs |
