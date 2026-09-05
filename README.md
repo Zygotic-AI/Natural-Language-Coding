@@ -1,8 +1,8 @@
-# Boundary-Based Programming
+# Boundary-Based Architecture
 
-Central home for the practice: theory, agentic application, and tools — so humans and agents can change software without scattering invariants or widening blast radius.
+Architecture that keeps agents and code from shipping slop. Central home for theory, agentic application, and tools — so humans and agents can change software and systems without scattering invariants or widening blast radius.
 
-**Tagline:** Stopping your agents from shipping slop.
+**Boundary-Based Programming (BBP)** is the programming practice face of this architecture (charter §§4–14). **Systems model** (§16) extends the same discipline to agent fleets and durable roles.
 
 ## Start here
 

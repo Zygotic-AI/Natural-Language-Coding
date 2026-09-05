@@ -707,7 +707,7 @@ For changes that touch agent nouns:
 
 - Status: working charter (living). Descended from the interview draft in [`theory/history/og-interview-draft.md`](theory/history/og-interview-draft.md). Not yet a ratified organizational standard.
 - Home: this file (`CHARTER.md`) is authoritative for the practice. Do not edit the OG history copy.
-- Subject: Boundary-Based Programming (nouns, contracted verbs, goals, workflows)
+- Subject: Boundary-Based Architecture (BBA) — Boundary-Based Programming (BBP) is the programming practice (§§4–14); systems model (§16) extends to agent fleets
 - Systems extension: agent nouns (§16), ratified by ADR 0003
 - Companion rejected name: Boundary-Enforced Programming (keep as a description of CI, not the practice title)
 - Companion rejected frame: “governance / governed” as the name of the integrity loop
