@@ -459,8 +459,17 @@ output:
     missing:
       type: array
       items:
-        enum: [PLAN, APPLICABILITY, BOUNDARY_IO, ADVERSARIAL_NOTES, VERIFY_SCRIPT]
+        enum: [PLAN, APPLICABILITY, BOUNDARY_IO, ADVERSARIAL_NOTES, VERIFY_SCRIPT, NOTION_EXIT_EVIDENCE]
       description: Missing package elements (only if incomplete)
+    notion_page_ids:
+      type: array
+      items:
+        type: string
+        format: uuid
+      description: Notion page UUIDs from package (echo for traceability)
+    notion_exit_status:
+      type: string
+      description: Exit status declared in package (echo for traceability)
 ```
 
 ### Failure mode
@@ -473,12 +482,12 @@ error:
   required: [code, message]
   properties:
     code:
-      enum: [ARTIFACT_NOT_FOUND, PACKAGE_NOT_FOUND, PACKAGE_MISSING]
+      enum: [ARTIFACT_NOT_FOUND, PACKAGE_NOT_FOUND, PACKAGE_MISSING, NOTION_EVIDENCE_MISSING]
     message:
       type: string
 ```
 
-**Note:** `handoff_token` is issued when status is `complete` for convenience. Fitness preflight may accept a token OR validate package paths directly; the hard gate is package completeness (S7), not token presence. Token is optional on preflight input.
+**Note:** `handoff_token` is issued when status is `complete` for convenience. Fitness preflight may accept a token OR validate package paths directly; the hard gate is package completeness (S7) and Notion exit evidence (S8, P-020), not token presence. Token is optional on preflight input.
 
 ---
 

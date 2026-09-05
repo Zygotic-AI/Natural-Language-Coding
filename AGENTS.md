@@ -13,6 +13,8 @@ Practice integrity (charter §5.8, [`integrity/PRINCIPLES.md`](integrity/PRINCIP
 - Every public boundary declares input, output, and failure mode.
 - Stand-alone BBP branding; copy and re/unbrand useful shapes; do not import foreign brand integrity packages.
 
+**Notion exit evidence required (P-020, S8).** Every produce package must include Notion page id(s) and exit status. Fitness refuses MET without this evidence; adversarial audit refuses PASS. Missing Notion evidence triggers `handoff_refused` with `NOTION_EXIT_EVIDENCE` in the defect log. Do not normalize leaving Notion for later.
+
 
 ## Layout
 

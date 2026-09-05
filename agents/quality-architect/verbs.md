@@ -43,9 +43,18 @@ output:
         missing:
           type: array
           items:
-            enum: [PLAN, APPLICABILITY, BOUNDARY_IO, ADVERSARIAL_NOTES, VERIFY_SCRIPT]
+            enum: [PLAN, APPLICABILITY, BOUNDARY_IO, ADVERSARIAL_NOTES, VERIFY_SCRIPT, NOTION_EXIT_EVIDENCE]
         reason:
           type: string
+    notion_page_ids:
+      type: array
+      items:
+        type: string
+        format: uuid
+      description: Notion page UUIDs from package (only if ready)
+    notion_exit_status:
+      type: string
+      description: Exit status declared in package (only if ready)
 ```
 
 ### Failure mode
@@ -63,7 +72,7 @@ error:
       type: string
 ```
 
-**Note:** `handoff_refused` is NOT an error. It is a valid output status indicating produce-incomplete. Errors are reserved for infrastructure failures.
+**Note:** `handoff_refused` is NOT an error. It is a valid output status indicating produce-incomplete (includes missing Notion exit evidence per S8/P-020). Errors are reserved for infrastructure failures.
 
 ---
 
@@ -92,6 +101,15 @@ input:
       change_class:
         enum: [A, B, C, D, E, F]
         description: Change classification (if known)
+      notion_page_ids:
+        type: array
+        items:
+          type: string
+          format: uuid
+        description: Notion page UUIDs from preflight (required for MET)
+      notion_exit_status:
+        type: string
+        description: Exit status from preflight (required for MET)
 ```
 
 ### Output contract
@@ -111,7 +129,7 @@ output:
         properties:
           item_id:
             type: string
-            description: Checklist item (C1, C2, CS1, etc.)
+            description: Checklist item (C1, C2, CS1, CS8, etc.)
           status:
             enum: [PASS, FAIL, N/A]
           evidence:
@@ -121,7 +139,16 @@ output:
       type: array
       items:
         type: string
-      description: Item ids that caused FAIL status
+      description: Item ids that caused FAIL status (includes CS8 if Notion evidence missing)
+    notion_page_ids:
+      type: array
+      items:
+        type: string
+        format: uuid
+      description: Notion page UUIDs verified (echo for receipt)
+    notion_exit_status:
+      type: string
+      description: Exit status verified (echo for receipt)
 ```
 
 ### Failure mode
@@ -134,12 +161,12 @@ error:
   required: [code, message]
   properties:
     code:
-      enum: [ARTIFACT_NOT_FOUND, PREFLIGHT_NOT_READY, SELF_SCORE]
+      enum: [ARTIFACT_NOT_FOUND, PREFLIGHT_NOT_READY, SELF_SCORE, NOTION_EVIDENCE_MISSING]
     message:
       type: string
 ```
 
-**Note:** `PREFLIGHT_NOT_READY` error is returned if `preflight_status` is not `ready`. This enforces the default-closed handoff: no scoring without preflight pass.
+**Note:** `PREFLIGHT_NOT_READY` error is returned if `preflight_status` is not `ready`. This enforces the default-closed handoff: no scoring without preflight pass. `NOTION_EVIDENCE_MISSING` error is returned if Notion page id(s) or exit status are absent; scoring refuses MET without Notion evidence (S8, P-020).
 
 ---
 

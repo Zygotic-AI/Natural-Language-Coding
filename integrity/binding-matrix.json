@@ -690,6 +690,24 @@
       "audit_def": "integrity/audits/A-CS7.md",
       "binder": "",
       "status": "unbound"
+    },
+    {
+      "id": "S8",
+      "statement": "Produce packages require Notion exit evidence. Packages must include Notion page id(s) and exit status. Missing Notion evidence triggers handoff_refused; fitness scoring refuses MET; adversarial audit refuses PASS (P-020).",
+      "surface": "reference",
+      "audit_id": "A-S8",
+      "audit_def": "integrity/audits/A-S8.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "CS8",
+      "statement": "Notion exit evidence present in produce package (page id(s) + exit status); missing evidence refused (P-020).",
+      "surface": "reference",
+      "audit_id": "A-CS8",
+      "audit_def": "integrity/audits/A-CS8.md",
+      "binder": "",
+      "status": "unbound"
     }
   ]
 }
