@@ -734,7 +734,7 @@ Each verb has input contract, output contract, and failure mode. See agent noun 
 | Decision recorded | Ship record exists with all fields | Ship action without record |
 | Authority verified | Ship authority checked before verb | Ship without authority |
 
-### 16.7 Rules for agent nouns
+### 16.6 Rules for agent nouns
 
 **S1.** Every agent noun has an identity file that states purpose and invariants.
 
@@ -748,7 +748,7 @@ Each verb has input contract, output contract, and failure mode. See agent noun 
 
 **S6.** Audit roles have no ship verbs. Adversarial auditors produce findings; another role decides.
 
-### 16.8 Confirmation checklist (systems)
+### 16.7 Confirmation checklist (systems)
 
 For changes that touch agent nouns:
 
