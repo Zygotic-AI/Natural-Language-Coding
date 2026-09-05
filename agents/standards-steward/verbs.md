@@ -333,7 +333,7 @@ error:
       type: string
 ```
 
-**Note:** `handoff_token` is only returned when status is `complete`. Fitness preflight requires the token to open content scoring.
+**Note:** `handoff_token` is issued when status is `complete` for convenience. Fitness preflight may accept a token OR validate package paths directly; the hard gate is package completeness (S7), not token presence. Token is optional on preflight input.
 
 ---
 

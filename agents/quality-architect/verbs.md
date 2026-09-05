@@ -24,7 +24,7 @@ input:
         description: Path to the produce package directory
       handoff_token:
         type: string
-        description: Token from complete-produce (optional; required if producer issued one)
+        description: Optional. If present must match complete-produce issuance. Absence allowed when package_path supplied and package checks pass.
 ```
 
 ### Output contract

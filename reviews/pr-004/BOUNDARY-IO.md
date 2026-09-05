@@ -31,6 +31,8 @@ package_path: string (required)
 handoff_token: string (optional)
 ```
 
+**Hard gate:** Package completeness (S7), not token presence. Token is convenience; preflight validates package paths directly when token absent.
+
 **Output:**
 ```yaml
 status: enum [ready, handoff_refused]

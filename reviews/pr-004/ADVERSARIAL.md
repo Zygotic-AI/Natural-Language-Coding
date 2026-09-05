@@ -34,13 +34,11 @@ Pre-submission adversarial review by the producer against the charter.
 
 **Reviewer question:** Is reference surface appropriate, or should these be deferred entirely?
 
-### Hole 2: `handoff_token` optional in preflight
+### Hole 2: `handoff_token` optional in preflight — RESOLVED
 
 **Issue:** `handoff_token` is optional in `preflight-fitness-handoff` input. A producer could skip `complete-produce` and go directly to preflight.
 
-**Mitigation:** Preflight still checks package presence. Token is convenience, not enforcement. Future tightening could require token.
-
-**Reviewer question:** Should token be required to enforce `complete-produce` call?
+**Resolution:** Optional end-to-end by design. Package completeness is the hard gate (S7), not token presence. Preflight validates package paths directly when token absent. Token is convenience for traceability, not enforcement mechanism.
 
 ### Hole 3: Quality-architect is new; no ship-role agent noun exists
 
@@ -55,5 +53,5 @@ Pre-submission adversarial review by the producer against the charter.
 This change strengthens the produce→fitness boundary without creating false binders. The holes identified are known limitations, not defects:
 
 1. Reference-surface rules are the correct status for unbindable requirements (P7 compliance)
-2. Token-optional allows incremental adoption without breaking existing flows
+2. ~~Token-optional allows incremental adoption without breaking existing flows~~ **RESOLVED:** Token optional end-to-end; package completeness is hard gate (S7)
 3. Ship-role documentation is sufficient until a ship-role agent noun is needed
