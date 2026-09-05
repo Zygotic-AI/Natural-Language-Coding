@@ -623,10 +623,91 @@ If charter, contracts, and code disagree, stop and reconcile them in one change.
 
 ---
 
+## 16. Systems model — agent nouns
+
+Ratified by [`adrs/0003-systems-extension-agent-nouns.md`](adrs/0003-systems-extension-agent-nouns.md).
+
+The software model (§4) organizes code so agents can change it without scattering invariants. The same structural discipline organizes **agent fleets** — durable roles that operate a system over time.
+
+### 16.1 Vocabulary mapping
+
+| Software BBP | Systems BBP |
+|--------------|-------------|
+| Noun | Agent noun — durable role with identity and invariants |
+| Verb (on noun) | Verb — legal function an agent may perform; contracted I/O |
+| Goal | Use-case — orchestration across agent nouns or to the outside world |
+| Workflow | Workflow — durable composition of use-cases |
+| Contract | Boundary artifact — input, output, failure mode, handoff, completion |
+| Invariant | Role invariant — what the agent must never violate |
+| Fitness check | Audit — binary ops vs defects, success vs failure |
+
+### 16.2 Agent noun structure
+
+Every agent noun package (under `agents/<name>/`) declares:
+
+| Element | Purpose |
+|---------|---------|
+| **Identity** | Role name, purpose (one line) |
+| **Invariants** | What the agent must never violate |
+| **Verb list** | Each verb has input contract, output contract, failure mode |
+| **Handoff-in** | What must be true before this agent receives work |
+| **Completion artifact** | What the agent produces to mark work complete |
+| **Success criteria** | Ops vs defects; binary auditable outcomes |
+
+Packages may use structured markdown or machine-readable schemas; the boundary declarations must be confirmer-checkable.
+
+### 16.3 Produce ≠ Audit
+
+An agent that **produces** an artifact may not be the final **auditor** of that artifact. The agent that **ships** (ratifies, merges, releases) may not be the same agent that grades itself.
+
+Separate:
+
+1. **Produce** — create the artifact
+2. **Audit** — adversarial review against charter/invariants
+3. **Ship** — authorize release
+
+This is §7 applied to systems: proposer ≠ reviewer ≠ confirmer.
+
+### 16.4 Audit roles have no shipping authority
+
+Agent nouns whose purpose is **adversarial review**, **audit**, or **standards enforcement** do not have shipping authority.
+
+- They may **not** ratify, merge, or release.
+- They **produce findings**. Another role (or human) decides whether findings block the ship.
+- Their verb lists explicitly exclude ship verbs.
+
+### 16.5 Rules for agent nouns
+
+**S1.** Every agent noun has an identity file that states purpose and invariants.
+
+**S2.** Every verb on an agent noun has an input contract, output contract, and failure mode — just like noun-verbs in code (R10).
+
+**S3.** Every agent noun declares handoff-in (preconditions) and completion artifact (postconditions).
+
+**S4.** Success criteria are binary: ops (work completed as specified) vs defects (deviation from spec or invariants).
+
+**S5.** Produce ≠ Audit ≠ Ship. An agent may not audit its own output as the final gate.
+
+**S6.** Audit roles have no ship verbs. Adversarial auditors produce findings; another role decides.
+
+### 16.6 Confirmation checklist (systems)
+
+For changes that touch agent nouns:
+
+- [ ] CS1. Agent noun has identity and invariants.
+- [ ] CS2. Each verb has input, output, and failure mode.
+- [ ] CS3. Handoff-in and completion artifact are declared.
+- [ ] CS4. Success criteria are binary (ops vs defects).
+- [ ] CS5. Produce ≠ Audit ≠ Ship separation is honored.
+- [ ] CS6. Audit roles have no ship verbs.
+
+---
+
 ## Document control
 
 - Status: working charter (living). Descended from the interview draft in [`theory/history/og-interview-draft.md`](theory/history/og-interview-draft.md). Not yet a ratified organizational standard.
 - Home: this file (`CHARTER.md`) is authoritative for the practice. Do not edit the OG history copy.
 - Subject: Boundary-Based Programming (nouns, contracted verbs, goals, workflows)
+- Systems extension: agent nouns (§16), ratified by ADR 0003
 - Companion rejected name: Boundary-Enforced Programming (keep as a description of CI, not the practice title)
 - Companion rejected frame: “governance / governed” as the name of the integrity loop

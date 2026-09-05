@@ -8,3 +8,8 @@
 ☐ Bind remaining in-force requirements (leave R6/C5 until a verb-path binder exists) with fail-capable binders
 ☐ Package agent short-form prompt + roles under agents/ (each step hard-gated)
 ☐ Add hard I/O + failure-mode declarations to every public tool/agent boundary in this repo
+☐ Create fail-capable binders for S1–S6 and CS1–CS6 (systems model requirements)
+☐ Define additional agent nouns as needed (e.g., ratify-role, deploy-role)
+☐ Add machine-readable schemas (JSON Schema / OpenAPI) for agent noun verb contracts
+☐ Wire session gates for agent noun verbs (OUT OF SCOPE for initial systems extension — future work)
+☐ Create tooling to validate agent noun package structure (AGENT.md + verbs.md completeness)
