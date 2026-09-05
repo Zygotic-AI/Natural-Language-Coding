@@ -6,7 +6,7 @@ Single source of truth for **Boundary-Based Programming** (BBP): theory → agen
 
 ## Core model (short)
 
-- **Noun** — identity, private state, invariants; retrieval key for “how does X work?”
+- **Noun** — identity, private state, invariants; retrieval key for "how does X work?"
 - **Verb (on noun)** — only legal mutation; contracted I/O
 - **Goal** — use-case orchestration (I/O, other nouns, policy); calls verbs; never writes noun fields
 - **Workflow** — durable composition of goals when one in-process call is not enough
@@ -32,8 +32,9 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `theory/history/og-interview-draft.md` | OG interview draft (frozen) |
 | `theory/` | Theory and history |
 | `agents/` | Agent loops, roles, prompts, agent nouns |
-| `agents/standards-steward/` | Agent noun: charter/ADR steward (no ship authority) |
+| `agents/standards-steward/` | Agent noun: charter/ADR steward (no ship authority); query verbs for Session applicability |
 | `agents/adversarial-auditor/` | Agent noun: adversarial review (no ship authority) |
+| `agents/ship-role/` | Agent noun: authorize release (ship authority with mandate) |
 | `tools/` | Fitness checks, scaffolding, matrix auditor |
 | `examples/` | Adopter sample systems |
 | `adrs/` | Decision records (`0001` = zero-variance, `0003` = systems extension) |
@@ -45,7 +46,15 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 
 ## Naming to avoid
 
-Do not brand the practice “governance” / “governed.” Prefer charter, integrity, adversarial review. “Boundary-Enforced Programming” describes CI, not the practice title.
+Do not brand the practice "governance" / "governed." Prefer charter, integrity, adversarial review. "Boundary-Enforced Programming" describes CI, not the practice title.
+
+## Terminology clarification (gate ≠ audit)
+
+- **Gate** = automated enforcement (fitness checks, CI rules); binary pass/fail; blocks automatically
+- **Audit** = role-based adversarial review (adversarial-auditor agent noun); produces findings for ship decision
+- **Produce ≠ Audit ≠ Ship** = separate agent nouns for creating artifacts, reviewing them, and authorizing release
+
+Gates and audits both yield binary outcomes (ops vs defects), but differ in mechanism and authority. Gates block the build; audits produce findings for a ship-role or human to decide.
 
 ## Adoption bar
 

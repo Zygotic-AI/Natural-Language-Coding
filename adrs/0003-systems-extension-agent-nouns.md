@@ -27,7 +27,8 @@ Quality north star: highest quality; effectiveness before efficiency; default-cl
 | Workflow | Workflow (durable composition of use-cases) |
 | Contract | Boundary artifact (input, output, failure mode, handoff, completion) |
 | Invariant | Role invariant (what the agent must never violate) |
-| Fitness check | Audit (binary ops vs defects, success vs failure) |
+| Fitness check | Gate (automated enforcement; binary pass/fail; CI-bound) |
+| Adversarial review | Audit (role-based review against charter; produces findings) |
 
 ### 2. Agent noun structure
 
@@ -54,10 +55,10 @@ A new charter section (§16 or similar) documents the systems model without alte
 
 ## Consequences
 
-- Charter gains a "Systems / agent nouns" section with vocabulary mapping and produce≠audit constraint.
+- Charter gains a "Systems / agent nouns" section with vocabulary mapping and produce≠audit≠ship constraint.
 - `agents/` gains structured agent noun packages (not just role prompts) with declared boundaries.
 - Existing software BBP rules unchanged in meaning; systems layer is additive.
-- First two agent nouns: standards-steward and adversarial-auditor.
+- Three agent nouns implement Produce ≠ Audit ≠ Ship: standards-steward (produce standards), adversarial-auditor (audit), ship-role (authorize release).
 
 ## Rejected
 

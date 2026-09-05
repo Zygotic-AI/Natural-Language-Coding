@@ -22,13 +22,32 @@ Agent noun for maintaining charter, ADRs, and constitutional artifacts.
 
 ## Shipping authority
 
-**None.** This agent noun produces proposals and drafts. It does not ratify, merge, or release. Ship authority belongs to a human or a ratify-role with explicit charter mandate.
+**None.** This agent noun produces proposals and drafts. It does not ratify, merge, or release. Ship authority belongs to a human or a ship-role with explicit charter mandate.
 
 ---
 
 ## Verbs
 
 See [`verbs.md`](verbs.md) for contracted verb definitions.
+
+### Query verbs (read-only)
+
+| Verb | Purpose | Caller |
+|------|---------|--------|
+| `load-applicability` | Return applicable rules, checklists, ADRs for a scope | Session/WU before materialize |
+
+Query verbs provide applicability information without granting produce authority. A Session that calls `load-applicability` learns what standards apply but does not become the steward.
+
+### Produce verbs (write authority)
+
+| Verb | Purpose |
+|------|---------|
+| `draft-adr` | Draft an ADR for a decision |
+| `draft-charter-edit` | Propose a charter edit |
+| `supersede-adr` | Mark an ADR superseded |
+| `review-drift` | Check for spec/code disagreement |
+
+Produce verbs create or modify standards artifacts. They require steward role.
 
 ---
 
