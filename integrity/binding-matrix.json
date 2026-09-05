@@ -1,0 +1,569 @@
+{
+  "version": 1,
+  "title": "BBP binding matrix",
+  "audits_of_matrix": [
+    "A-BINDING-UNBOUND",
+    "A-BINDING-PROMOTE",
+    "A-BINDING-COVERAGE"
+  ],
+  "requirements": [
+    {
+      "id": "P1",
+      "statement": "Stand-alone BBP branding; copy and re/unbrand useful shapes; do not import foreign brand packages into integrity.",
+      "surface": "reference",
+      "audit_id": "A-P1",
+      "audit_def": "integrity/PRINCIPLES.md#p1--stand-alone-branding",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "P2",
+      "statement": "Zero variance: every changing action is prescribed and gated.",
+      "surface": "reference",
+      "audit_id": "A-P2",
+      "audit_def": "integrity/PRINCIPLES.md#p2--zero-variance",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "P3",
+      "statement": "Every step/action has a hard gate with complete/incomplete outcome only.",
+      "surface": "reference",
+      "audit_id": "A-P3",
+      "audit_def": "integrity/PRINCIPLES.md#p3--hard-gates-complete--incomplete",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "P4",
+      "statement": "Every boundary declares hard input, output, and failure mode (error return, throw, or process exit).",
+      "surface": "reference",
+      "audit_id": "A-P4",
+      "audit_def": "integrity/PRINCIPLES.md#p4--hard-boundary-io",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "P5",
+      "statement": "Every requirement has a binary met/not-met audit.",
+      "surface": "reference",
+      "audit_id": "A-P5",
+      "audit_def": "integrity/PRINCIPLES.md#p5--binary-requirement-audits",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "P6",
+      "statement": "Binding matrix unbound entries fail audit and are listed.",
+      "surface": "in-force",
+      "audit_id": "A-BINDING-UNBOUND",
+      "audit_def": "integrity/binding-matrix.md#a-binding-unbound",
+      "binder": "tools/audit-binding-matrix.py",
+      "status": "bound"
+    },
+    {
+      "id": "P7",
+      "statement": "Promote-only-when-bindable; in-force unbindable entries fail audit and are listed.",
+      "surface": "in-force",
+      "audit_id": "A-BINDING-PROMOTE",
+      "audit_def": "integrity/binding-matrix.md#a-binding-promote",
+      "binder": "tools/audit-binding-matrix.py",
+      "status": "bound"
+    },
+    {
+      "id": "R26",
+      "statement": "Practice integrity principles P1\u2013P7 are in force.",
+      "surface": "reference",
+      "audit_id": "A-R26",
+      "audit_def": "integrity/audits/A-R26.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R27",
+      "statement": "Every published requirement appears in the binding matrix with an audit id.",
+      "surface": "in-force",
+      "audit_id": "A-BINDING-COVERAGE",
+      "audit_def": "integrity/binding-matrix.md#a-binding-coverage",
+      "binder": "tools/audit-binding-matrix.py",
+      "status": "bound"
+    },
+    {
+      "id": "R28",
+      "statement": "Unbound matrix entries fail; report lists them.",
+      "surface": "in-force",
+      "audit_id": "A-BINDING-UNBOUND",
+      "audit_def": "integrity/binding-matrix.md#a-binding-unbound",
+      "binder": "tools/audit-binding-matrix.py",
+      "status": "bound"
+    },
+    {
+      "id": "R29",
+      "statement": "In-force unbindable requirements fail; report lists them.",
+      "surface": "in-force",
+      "audit_id": "A-BINDING-PROMOTE",
+      "audit_def": "integrity/binding-matrix.md#a-binding-promote",
+      "binder": "tools/audit-binding-matrix.py",
+      "status": "bound"
+    },
+    {
+      "id": "R30",
+      "statement": "Every prescribed step has a hard gate with complete/incomplete criteria.",
+      "surface": "reference",
+      "audit_id": "A-R30",
+      "audit_def": "integrity/audits/A-R30.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R31",
+      "statement": "Every public boundary declares input, output, and failure mode.",
+      "surface": "reference",
+      "audit_id": "A-R31",
+      "audit_def": "integrity/audits/A-R31.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R1",
+      "statement": "If breaking the rule would make *this noun* a lie, the rule lives on the noun, as an invariant or as a verb precondition/postcondition.",
+      "surface": "reference",
+      "audit_id": "A-R1",
+      "audit_def": "integrity/audits/A-R1.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R2",
+      "statement": "If the work spans nouns, I/O, or a business outcome, it is a goal (or a workflow of goals).",
+      "surface": "reference",
+      "audit_id": "A-R2",
+      "audit_def": "integrity/audits/A-R2.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R3",
+      "statement": "Cross-noun work does not get glued onto the most convenient noun. `allocatePaymentToInvoices` is a goal, or a `PaymentAllocation` noun if it has its own inva...",
+      "surface": "reference",
+      "audit_id": "A-R3",
+      "audit_def": "integrity/audits/A-R3.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R4",
+      "statement": "If a verb does not need the noun\u2019s invariant set, it does not belong on the noun.",
+      "surface": "reference",
+      "audit_id": "A-R4",
+      "audit_def": "integrity/audits/A-R4.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R5",
+      "statement": "Noun fields are private. No goal, workflow, adapter, or other noun writes them.",
+      "surface": "in-force",
+      "audit_id": "A-R5",
+      "audit_def": "integrity/audits/A-R5.md",
+      "binder": "tools/fitness-no-noun-field-writes.py",
+      "status": "bound"
+    },
+    {
+      "id": "R6",
+      "statement": "The only legal mutation of a noun is a public verb on that noun.",
+      "surface": "reference",
+      "audit_id": "A-R6",
+      "audit_def": "integrity/audits/A-R6.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R7",
+      "statement": "Nouns never call goals. Nouns never call workflows. Direction is workflow \u2192 goal \u2192 noun-verb only (plus explicit reads).",
+      "surface": "reference",
+      "audit_id": "A-R7",
+      "audit_def": "integrity/audits/A-R7.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R8",
+      "statement": "Goals may read what the noun chooses to expose (queries / snapshots). Goals may not reach through that snapshot and write.",
+      "surface": "reference",
+      "audit_id": "A-R8",
+      "audit_def": "integrity/audits/A-R8.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R9",
+      "statement": "Every public goal entrypoint has an input contract and an output contract.",
+      "surface": "reference",
+      "audit_id": "A-R9",
+      "audit_def": "integrity/audits/A-R9.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R10",
+      "statement": "Every public noun-verb has an input contract and an output contract.",
+      "surface": "reference",
+      "audit_id": "A-R10",
+      "audit_def": "integrity/audits/A-R10.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R11",
+      "statement": "A field that means the same thing in two contracts is defined once and referenced. Duplicate independent definitions of the same meaning are a defect.",
+      "surface": "reference",
+      "audit_id": "A-R11",
+      "audit_def": "integrity/audits/A-R11.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R12",
+      "statement": "Contracts are versioned. Breaking changes require a new version and an ADR.",
+      "surface": "reference",
+      "audit_id": "A-R12",
+      "audit_def": "integrity/audits/A-R12.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R13",
+      "statement": "One public entrypoint per goal.",
+      "surface": "reference",
+      "audit_id": "A-R13",
+      "audit_def": "integrity/audits/A-R13.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R14",
+      "statement": "Goal internals are not callable from other goals. If two goals need the same orchestration fragment, extract a noun-verb, a shared library with its own contr...",
+      "surface": "reference",
+      "audit_id": "A-R14",
+      "audit_def": "integrity/audits/A-R14.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R15",
+      "statement": "Shared domain logic that protects a noun lives on the noun, not in a helper copied into two goals.",
+      "surface": "reference",
+      "audit_id": "A-R15",
+      "audit_def": "integrity/audits/A-R15.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R16",
+      "statement": "A new goal is created only when there is a distinct use-case. Do not create a goal per function (`ValidateEmail` as a sibling of `CreateCustomer` unless it i...",
+      "surface": "reference",
+      "audit_id": "A-R16",
+      "audit_def": "integrity/audits/A-R16.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R17",
+      "statement": "Workflows compose goals. They do not call noun-verbs directly unless the runtime has no goal layer and the workflow *is* the goal. Prefer one rule in a given...",
+      "surface": "reference",
+      "audit_id": "A-R17",
+      "audit_def": "integrity/audits/A-R17.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R18",
+      "statement": "Compensation and retries live in the workflow or the goal, not inside the noun, unless the noun\u2019s invariant itself requires idempotency of a verb. Verbs must...",
+      "surface": "reference",
+      "audit_id": "A-R18",
+      "audit_def": "integrity/audits/A-R18.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R19",
+      "statement": "Do not maintain a separate hand-authored execution-graph file that duplicates the workflow definition.",
+      "surface": "reference",
+      "audit_id": "A-R19",
+      "audit_def": "integrity/audits/A-R19.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R20",
+      "statement": "The charter, contracts, and code must agree. If they disagree, the build fails. Code does not win by existing. Spec does not win by being newer. They must be...",
+      "surface": "reference",
+      "audit_id": "A-R20",
+      "audit_def": "integrity/audits/A-R20.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R21",
+      "statement": "Dependency and impact information is generated from code and contracts, not authored as a parallel JSON document.",
+      "surface": "reference",
+      "audit_id": "A-R21",
+      "audit_def": "integrity/audits/A-R21.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R22",
+      "statement": "ADRs that are superseded are marked superseded, not deleted. The trail is part of integrity.",
+      "surface": "reference",
+      "audit_id": "A-R22",
+      "audit_def": "integrity/audits/A-R22.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R23",
+      "statement": "A fitness check fails the change if a goal (or workflow, or adapter) assigns a noun field or imports a noun internals module.",
+      "surface": "reference",
+      "audit_id": "A-R23",
+      "audit_def": "integrity/audits/A-R23.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R24",
+      "statement": "A fitness check fails the change if invoice-equivalent money math, status transitions, or named invariants appear outside the owning noun (copy-paste of the ...",
+      "surface": "reference",
+      "audit_id": "A-R24",
+      "audit_def": "integrity/audits/A-R24.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "R25",
+      "statement": "Tests for a noun\u2019s invariants live next to the noun and run on every verb. Goal tests do not replace them.",
+      "surface": "reference",
+      "audit_id": "A-R25",
+      "audit_def": "integrity/audits/A-R25.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C1",
+      "statement": "Change class (A\u2013F) is stated.",
+      "surface": "reference",
+      "audit_id": "A-C1",
+      "audit_def": "integrity/audits/A-C1.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C2",
+      "statement": "Laws live on the noun named in C1, not in a goal folder.",
+      "surface": "reference",
+      "audit_id": "A-C2",
+      "audit_def": "integrity/audits/A-C2.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C3",
+      "statement": "New orchestration lives in a goal or workflow, not as a method on an unrelated noun.",
+      "surface": "reference",
+      "audit_id": "A-C3",
+      "audit_def": "integrity/audits/A-C3.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C4",
+      "statement": "No assignment to noun fields occurs outside the noun module.",
+      "surface": "in-force",
+      "audit_id": "A-C4",
+      "audit_def": "integrity/audits/A-C4.md",
+      "binder": "tools/fitness-no-noun-field-writes.py",
+      "status": "bound"
+    },
+    {
+      "id": "C5",
+      "statement": "Every state change of a noun goes through a public verb.",
+      "surface": "reference",
+      "audit_id": "A-C5",
+      "audit_def": "integrity/audits/A-C5.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C6",
+      "statement": "No noun module imports a goal or workflow module.",
+      "surface": "reference",
+      "audit_id": "A-C6",
+      "audit_def": "integrity/audits/A-C6.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C7",
+      "statement": "Each changed public goal has input and output schemas.",
+      "surface": "reference",
+      "audit_id": "A-C7",
+      "audit_def": "integrity/audits/A-C7.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C8",
+      "statement": "Each changed public verb has input and output schemas.",
+      "surface": "reference",
+      "audit_id": "A-C8",
+      "audit_def": "integrity/audits/A-C8.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C9",
+      "statement": "Shared meanings use a shared type; no forked `balance` / `status` / `currency`.",
+      "surface": "reference",
+      "audit_id": "A-C9",
+      "audit_def": "integrity/audits/A-C9.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C10",
+      "statement": "Breaking schema changes have a new version and an ADR.",
+      "surface": "reference",
+      "audit_id": "A-C10",
+      "audit_def": "integrity/audits/A-C10.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C11",
+      "statement": "Each changed goal has exactly one public entrypoint.",
+      "surface": "reference",
+      "audit_id": "A-C11",
+      "audit_def": "integrity/audits/A-C11.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C12",
+      "statement": "No goal imports another goal\u2019s internals.",
+      "surface": "reference",
+      "audit_id": "A-C12",
+      "audit_def": "integrity/audits/A-C12.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C13",
+      "statement": "No new goal exists whose only job is a single noun-verb with no I/O or policy \u2014 or an ADR explains why the wrapper exists.",
+      "surface": "reference",
+      "audit_id": "A-C13",
+      "audit_def": "integrity/audits/A-C13.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C14",
+      "statement": "Workflows call goals (or the ADR-chosen single exception is documented).",
+      "surface": "reference",
+      "audit_id": "A-C14",
+      "audit_def": "integrity/audits/A-C14.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C15",
+      "statement": "Verbs invoked from a retrying workflow are idempotent, or the workflow uses an idempotency key the verb honors.",
+      "surface": "reference",
+      "audit_id": "A-C15",
+      "audit_def": "integrity/audits/A-C15.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C16",
+      "statement": "Every invariant named in the proposal has a test on the noun.",
+      "surface": "reference",
+      "audit_id": "A-C16",
+      "audit_def": "integrity/audits/A-C16.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C17",
+      "statement": "Every new verb has tests for success, precondition failure, and invariant preservation.",
+      "surface": "reference",
+      "audit_id": "A-C17",
+      "audit_def": "integrity/audits/A-C17.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C18",
+      "statement": "Goal tests cover the use-case, not a copy of the noun\u2019s invariant suite.",
+      "surface": "reference",
+      "audit_id": "A-C18",
+      "audit_def": "integrity/audits/A-C18.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C19",
+      "statement": "No second implementation of the same law exists in the diff (search for duplicated predicates).",
+      "surface": "reference",
+      "audit_id": "A-C19",
+      "audit_def": "integrity/audits/A-C19.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C20",
+      "statement": "Fitness / lint rules for R23 and R24 passed.",
+      "surface": "reference",
+      "audit_id": "A-C20",
+      "audit_def": "integrity/audits/A-C20.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C21",
+      "statement": "Impact list in the proposal matches generated callers of the changed verbs/goals.",
+      "surface": "reference",
+      "audit_id": "A-C21",
+      "audit_def": "integrity/audits/A-C21.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C22",
+      "statement": "Charter/ADR/code/contracts were updated in the same change if they were affected.",
+      "surface": "reference",
+      "audit_id": "A-C22",
+      "audit_def": "integrity/audits/A-C22.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C23",
+      "statement": "Adversarial review findings are all fixed or explicitly rebutted.",
+      "surface": "reference",
+      "audit_id": "A-C23",
+      "audit_def": "integrity/audits/A-C23.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "C24",
+      "statement": "Ratification is recorded for classes that require it.",
+      "surface": "reference",
+      "audit_id": "A-C24",
+      "audit_def": "integrity/audits/A-C24.md",
+      "binder": "",
+      "status": "unbound"
+    }
+  ]
+}

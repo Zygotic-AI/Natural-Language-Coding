@@ -1,0 +1,49 @@
+---
+description: >-
+  Portable agent content lives under .agents/ (and AGENTS.md), not
+  .cursor/skills. On each repo, ensure a project rule exists and migrate
+  portable skills/instructions out of .cursor.
+alwaysApply: true
+---
+
+# Portable agent SSOT: `.agents/` (not `.cursor/skills`)
+
+Coding harnesses (Cursor, Claude Code, Codex, Copilot, …) share one portable tree. Cursor-only wiring stays under `.cursor/`.
+
+## Where things live
+
+| Content | Location | Notes |
+|---------|----------|-------|
+| Skills (`SKILL.md` packages) | `.agents/skills/<name>/` | Project. User-global: `~/.agents/skills/` |
+| Always-on standing instructions | Repo-root `AGENTS.md` | Cross-harness standard |
+| Extra portable instructions | `.agents/instructions/*.md` | Optional; link from `AGENTS.md` if needed |
+| Cursor-only rules / hooks | `.cursor/rules/`, `.cursor/hooks*` | Product-specific injection — keep here |
+
+**NEVER** author new portable skills under `.cursor/skills/` as a *separate copy*, or under `~/.cursor/skills/` as the only copy.
+**NEVER** put the only copy of standing instructions in `.cursor/rules/` when every harness should see them — put the text in `AGENTS.md` / `.agents/instructions/`, and if Cursor needs always-apply, add a thin `.cursor/rules/*.mdc` that points at that SSOT.
+
+**Cursor `/` discovery (quirks):**
+
+1. Prefer a **real** `.cursor/skills/<name>/` tree (rsync/copy from `.agents/skills/`), not a symlink — some Cursor builds skip symlinked skills in the `/` menu.
+2. Optional fallback: `.cursor/commands/<name>.md` (legacy slash commands) pointing at the `.agents` skill.
+3. User-global: `~/.cursor/skills/<name>/` if project discovery still fails.
+4. After adding/moving skills: **new Agent chat**; if still missing, restart Cursor. Confirm under Customize → Skills.
+
+## On every repo you open / start working in
+
+Do this once per workspace when the checks fail (do not ask the user to run it):
+
+### (a) Project rule for teammates
+
+If `.cursor/rules/agents-portable-ssot.mdc` is missing, create it with the same policy as this user rule (skills → `.agents/skills/`, standing instructions → `AGENTS.md` / `.agents/instructions/`, Cursor-only stays in `.cursor/`). `alwaysApply: true`.
+
+### (b) Migrate portable content out of `.cursor`
+
+1. If `.cursor/skills/` exists as a **real directory** with skill folders: move each to `.agents/skills/<name>/`, then replace `.cursor/skills` with a symlink to `../.agents/skills`. Update path references in docs to `.agents/skills/`.
+2. If `.agents/skills/` exists but `.cursor/skills` is missing or is a non-symlink directory without being the SSOT: ensure `.cursor/skills` → `../.agents/skills` symlink for Cursor `/` discovery.
+3. If `.cursor/` holds plain portable instruction markdown (not Cursor `.mdc` rules, not hooks): move into `.agents/instructions/` and ensure `AGENTS.md` mentions them.
+4. Leave `.cursor/rules/*.mdc`, hooks, and other Cursor product config in place.
+
+### When creating a skill
+
+Create under `.agents/skills/<name>/SKILL.md` (folder name = frontmatter `name`). Prefer `disable-model-invocation: true` for slash-style skills.

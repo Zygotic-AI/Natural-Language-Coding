@@ -1,0 +1,36 @@
+# .gitignore
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*~
+*.swp
+.idea/
+.vscode/
+!.vscode/extensions.json
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+credentials.json
+
+# Dependencies / build (when tools land)
+node_modules/
+dist/
+build/
+coverage/
+.turbo/
+.cache/
+*.tsbuildinfo
+
+# Python (when tools land)
+__pycache__/
+.venv/
+venv/
+*.egg-info/
+
+# Logs
+*.log
+npm-debug.log*

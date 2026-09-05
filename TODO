@@ -1,0 +1,10 @@
+✔ Bootstrap central BBP repo layout (theory / agents / tools / examples / adrs / integrity) @done(26-09-03 20:23)
+✔ Place OG interview draft under theory/history and install living CHARTER.md @done(26-09-03 20:23)
+✔ Ratify zero-variance integrity (ADR 0001, principles P1–P7, charter §5.8) @done(26-09-04 15:29)
+✔ Install binding matrix + unbound/promote/coverage audits that list offenders @done(26-09-04 15:29)
+✔ Define fitness check 1 (no field writes across noun boundary) under tools/ @done(26-09-04 22:13)
+✔ Add a minimal example that fails fitness check 1 on a deliberate violation @done(26-09-04 22:13)
+✔ Bind R5 and C4 to tools/fitness-no-noun-field-writes.py @done(26-09-04 22:13)
+☐ Bind remaining in-force requirements (leave R6/C5 until a verb-path binder exists) with fail-capable binders
+☐ Package agent short-form prompt + roles under agents/ (each step hard-gated)
+☐ Add hard I/O + failure-mode declarations to every public tool/agent boundary in this repo
