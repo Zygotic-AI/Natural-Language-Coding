@@ -4,6 +4,151 @@ Contracted verbs for the standards-steward agent noun. Each verb has input contr
 
 ---
 
+## Query verbs (read-only)
+
+These verbs provide applicability information to Sessions/Work Units without granting produce authority. A Session may call these verbs to obtain an applicability register before materialize (default-closed). The Session does not become the steward; it receives read-only data.
+
+---
+
+## load-applicability
+
+Return the applicability register for a given scope. A Session/WU calls this verb to learn which charter rules, ADRs, checklists, and agent noun constraints apply before materializing work. This is a query — it does not produce, modify, or ratify any standard.
+
+### Input contract
+
+```yaml
+input:
+  applicability_request:
+    type: object
+    required: [scope]
+    properties:
+      scope:
+        type: object
+        required: [change_class]
+        properties:
+          change_class:
+            enum: [A, B, C, D, E, F]
+            description: Change classification (charter §6 step 1)
+          artifact_type:
+            enum: [noun, verb, goal, workflow, contract, charter, adr, agent_noun]
+            description: Type of artifact being changed
+          nouns_in_scope:
+            type: array
+            items:
+              type: string
+            description: Noun ids affected (if known)
+          agent_nouns_in_scope:
+            type: array
+            items:
+              type: string
+            description: Agent noun ids affected (if known)
+      include_checklist:
+        type: boolean
+        default: true
+        description: Include applicable confirmation checklist items
+      include_adrs:
+        type: boolean
+        default: true
+        description: Include related ADR references
+```
+
+### Output contract
+
+```yaml
+output:
+  applicability_register:
+    type: object
+    required: [rules_applicable, checklist_applicable, status]
+    properties:
+      status:
+        enum: [loaded, partial, error]
+      rules_applicable:
+        type: array
+        items:
+          type: object
+          required: [rule_id, statement, surface]
+          properties:
+            rule_id:
+              type: string
+              description: Rule identifier (R*, S*, P*)
+            statement:
+              type: string
+            surface:
+              enum: [in-force, reference]
+            binding_status:
+              enum: [bound, unbound]
+            binder:
+              type: string
+              description: Path to binder (if bound)
+      checklist_applicable:
+        type: array
+        items:
+          type: object
+          required: [item_id, statement, scope]
+          properties:
+            item_id:
+              type: string
+              description: Checklist item (C*, CS*)
+            statement:
+              type: string
+            scope:
+              enum: [software, systems, both]
+            blocking:
+              type: boolean
+              description: True if this item blocks completion (C4, C5, etc.)
+      adrs_applicable:
+        type: array
+        items:
+          type: object
+          required: [adr_id, title, status]
+          properties:
+            adr_id:
+              type: string
+            title:
+              type: string
+            status:
+              enum: [Accepted, Superseded, Draft]
+            path:
+              type: string
+      gates_required:
+        type: array
+        items:
+          type: string
+        description: Gate ids that must complete for this change class (G-PROPOSE, G-REVIEW, etc.)
+```
+
+### Failure mode
+
+Returns error result (does not throw):
+
+```yaml
+error:
+  type: object
+  required: [code, message]
+  properties:
+    code:
+      enum: [INVALID_SCOPE, CHARTER_UNAVAILABLE, MATRIX_UNAVAILABLE]
+    message:
+      type: string
+```
+
+### Separation guarantee
+
+This verb is **read-only**. Calling `load-applicability` does NOT:
+- Grant the caller produce authority over standards
+- Allow the caller to modify charter, ADRs, or binding matrix
+- Create any artifact or side effect
+
+The Session obtains an applicability register; it does not become the steward.
+
+---
+
+## Produce verbs (write authority)
+
+These verbs produce or modify standards artifacts. Only the standards-steward agent noun may execute these. A Session that called `load-applicability` does not gain produce authority.
+
+---
+
 ## draft-adr
 
 Draft an ADR for a decision that constrains future work.

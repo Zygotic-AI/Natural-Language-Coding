@@ -639,7 +639,12 @@ The software model (§4) organizes code so agents can change it without scatteri
 | Workflow | Workflow — durable composition of use-cases |
 | Contract | Boundary artifact — input, output, failure mode, handoff, completion |
 | Invariant | Role invariant — what the agent must never violate |
-| Fitness check | Audit — binary ops vs defects, success vs failure |
+| Fitness check | Gate — automated enforcement; binary pass/fail; CI-bound |
+| Adversarial review | Audit — role-based review against charter; produces findings |
+
+**Gate ≠ Audit.** Gates are automated enforcement mechanisms (fitness checks, CI rules) that fail the build. Audits are role-based adversarial reviews (adversarial-auditor agent noun) that produce findings for a ship decision. Both yield binary outcomes (ops vs defects), but differ in mechanism and authority:
+- Gates block automatically; no human or role decides.
+- Audits produce findings; a ship-role or human decides whether findings block.
 
 ### 16.2 Agent noun structure
 
@@ -676,7 +681,60 @@ Agent nouns whose purpose is **adversarial review**, **audit**, or **standards e
 - They **produce findings**. Another role (or human) decides whether findings block the ship.
 - Their verb lists explicitly exclude ship verbs.
 
-### 16.5 Rules for agent nouns
+### 16.5 Ship noun
+
+Ship is a first-class agent noun, separate from produce and audit. The ship noun authorizes release — it decides whether produced artifacts with audit findings may be released.
+
+#### Identity
+
+**Name:** ship-role (or specific variants: ratify-role, merge-role, release-role)
+
+**Purpose:** Authorize the release of artifacts that have completed produce and audit phases. Gate the transition from "done" to "shipped."
+
+#### Invariants
+
+1. **Ship follows produce and audit.** A ship verb may only execute after the artifact has been produced and audited. Ship does not skip the pipeline.
+
+2. **Ship is a decision, not a review.** Ship decides whether audit findings block release. Ship does not re-audit.
+
+3. **Ship is recorded.** Every ship action records who, when, what artifact version, and what audit findings were accepted or required to be fixed.
+
+4. **Ship authority is granted.** Ship verbs require explicit charter mandate or human delegation. An agent noun does not assume ship authority.
+
+#### Verbs
+
+| Verb | Purpose | Precondition |
+|------|---------|--------------|
+| `ratify` | Accept a proposal as final | Audit complete; findings addressed or waived |
+| `merge` | Merge a change to target branch | Audit complete; CI green (or waiver recorded) |
+| `release` | Publish or deploy an artifact | Merge complete; release criteria met |
+| `waive-finding` | Accept a finding without fix | Finding documented; risk acknowledged |
+
+Each verb has input contract, output contract, and failure mode. See agent noun package for schemas.
+
+#### Handoff-in
+
+| Condition | Evidence |
+|-----------|----------|
+| Artifact produced | Path to artifact or proposal |
+| Audit complete | Audit report with findings or clean status |
+| Ship authority granted | Charter mandate or delegation record |
+
+#### Completion artifact
+
+| Artifact | Contents |
+|----------|----------|
+| Ship record | Who, when, artifact version, findings disposition |
+
+#### Success criteria
+
+| Measure | Ops (success) | Defect |
+|---------|---------------|--------|
+| Pipeline honored | Ship followed produce and audit | Ship skipped a phase |
+| Decision recorded | Ship record exists with all fields | Ship action without record |
+| Authority verified | Ship authority checked before verb | Ship without authority |
+
+### 16.7 Rules for agent nouns
 
 **S1.** Every agent noun has an identity file that states purpose and invariants.
 
@@ -690,7 +748,7 @@ Agent nouns whose purpose is **adversarial review**, **audit**, or **standards e
 
 **S6.** Audit roles have no ship verbs. Adversarial auditors produce findings; another role decides.
 
-### 16.6 Confirmation checklist (systems)
+### 16.8 Confirmation checklist (systems)
 
 For changes that touch agent nouns:
 

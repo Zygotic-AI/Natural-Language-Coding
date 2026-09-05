@@ -27,7 +27,8 @@ Quality north star: highest quality; effectiveness before efficiency; default-cl
 | Workflow | Workflow (durable composition of use-cases) |
 | Contract | Boundary artifact (input, output, failure mode, handoff, completion) |
 | Invariant | Role invariant (what the agent must never violate) |
-| Fitness check | Audit (binary ops vs defects, success vs failure) |
+| Fitness check | Gate (automated enforcement; binary pass/fail; CI-bound) |
+| Adversarial review | Audit (role-based review against charter; produces findings) |
 
 ### 2. Agent noun structure
 

@@ -21,6 +21,9 @@ Durable organizational positions with identity, invariants, and contracted verbs
 |------------|---------|-------------------|
 | Standards steward | [`standards-steward/`](standards-steward/) | None |
 | Adversarial auditor | [`adversarial-auditor/`](adversarial-auditor/) | None |
+| Ship role | [`ship-role/`](ship-role/) | Yes — with mandate |
+
+**Produce ≠ Audit ≠ Ship** (§16.3, §16.5): these three agent nouns cover the full pipeline. Standards steward and adversarial auditor produce artifacts and findings; ship-role authorizes release.
 
 Each package contains:
 
