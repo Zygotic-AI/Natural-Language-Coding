@@ -20,6 +20,7 @@ Durable organizational positions with identity, invariants, and contracted verbs
 | Agent noun | Package | Shipping authority |
 |------------|---------|-------------------|
 | Standards steward | [`standards-steward/`](standards-steward/) | None |
+| Quality architect | [`quality-architect/`](quality-architect/) | None |
 | Adversarial auditor | [`adversarial-auditor/`](adversarial-auditor/) | None |
 
 Each package contains:
@@ -28,6 +29,28 @@ Each package contains:
 - `verbs.md` — contracted verbs with input/output/failure mode
 
 See ADR [`0003-systems-extension-agent-nouns.md`](../adrs/0003-systems-extension-agent-nouns.md) for rationale.
+
+## Ship-role handoff-in
+
+Ship authority (ratify, merge, release) belongs to a human or designated ship-role. Before ship:
+
+| Condition | Evidence |
+|-----------|----------|
+| Fitness `MET` | Fitness `score-fitness` returned `MET` |
+| No open `handoff_refused` | All preflight refusals resolved; no produce-incomplete artifacts pending |
+| Adversarial audit clean or rebutted | Findings addressed; no unresolved blockers |
+
+Ship-role does not receive work with open `handoff_refused` status. The producer fixes and resubmits.
+
+## Vocabulary
+
+| Term | Meaning | Use |
+|------|---------|-----|
+| `handoff_refused` | Produce package missing/incomplete; preflight did not pass | Fitness preflight output; NOT a FAIL |
+| `MET` | Fitness criteria satisfied | Fitness score output |
+| `FAIL` | Fitness criteria not satisfied (content defect) | Fitness score output |
+| `Gate` | CI enforcement point for fitness scoring | Charter §12; downstream of preflight |
+| `re-gate` | **Forbidden.** Do not use for missing-package rework | Masks produce-handoff defect |
 
 ## Short-form prompt
 

@@ -41,6 +41,10 @@ Before adversarial-auditor receives work:
 | Artifact to audit exists | Path or link to proposal, diff, or artifact |
 | Auditor is not the producer | Different role or session produced the artifact |
 | Scope is defined | Which rules/checklist to audit against |
+| Preflight ready | Fitness preflight returned `ready` (not `handoff_refused`) |
+| Fitness scored | Fitness `score-fitness` returned `MET` or `FAIL` (not skipped) |
+
+**Note:** Adversarial audit operates on artifacts that have passed fitness preflight. If preflight returned `handoff_refused`, the artifact is produce-incomplete and not ready for adversarial audit. The auditor does not convert `handoff_refused` into audit FAIL — the producer fixes and resubmits.
 
 ---
 
