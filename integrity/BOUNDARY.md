@@ -134,15 +134,17 @@ There is no path from UAT with incomplete or mismatched evidence to Ship. The ha
 
 ---
 
-## Soft-pass hunt (adversarial half)
+## Incomplete-packet hunt (adversarial half)
 
-When an artifact defines a Gate or Handoff tip, the adversarial audit includes a **soft-pass hunt**:
+When an artifact defines a Gate or Handoff tip, the adversarial audit includes an **incomplete-packet hunt**:
 
 > Can an incomplete packet still slip the checklist?
 
-If the answer is yes, the handoff tip is not MET. The soft-pass hunt does not design remediations -- it finds holes. Fixes belong to the produce role. See [`GATE.md`](GATE.md) § Soft-Pass Hunt.
+**Definition:** Hunt for incomplete-packet slips. If fixture 15855 without §7/R3/R4 can still PASS the checklist → audit **FAIL**.
 
-**Adversarial auditor role:** See [`../agents/adversarial-auditor/AGENT.md`](../agents/adversarial-auditor/AGENT.md). The auditor produces findings. The auditor does not have ship authority. If the auditor finds soft-pass paths, those are blocker-level findings.
+If the answer is yes, the handoff tip is not MET. The incomplete-packet hunt does not design remediations -- it finds holes. Fixes belong to the produce role. See [`GATE.md`](GATE.md) § Incomplete-Packet Hunt.
+
+**Adversarial auditor role:** See [`../agents/adversarial-auditor/AGENT.md`](../agents/adversarial-auditor/AGENT.md). The auditor produces findings. The auditor does not have ship authority. Verdicts are PASS / FAIL / REFUSE only -- no soft PASS. If the auditor finds incomplete-packet slips, those are blocker-level findings → audit FAIL.
 
 ---
 
@@ -190,7 +192,7 @@ System-Remediate Design ──→ Produce ──→ Fitness ──→ Audit ─�
 | 4 | **HITL Root-Approve** | Human Root-Approver | HITL → Produce | Readiness not MET; missing root-approve decision; incomplete packet | Raise packet without HITL approval record |
 | 5 | **Produce** (code or standard tip) | Producer | Produce → Fitness | Missing produce package; missing SSOT exit evidence (S7, S8) | Package without `ssot_leaf_ids` + `ssot_exit_status` |
 | 6 | **Fitness** | Quality Architect | Fitness → Audit | Preflight `handoff_refused`; scoring not MET | Produce package incomplete → `handoff_refused` (not FAIL) |
-| 7 | **Adversarial Audit** | Adversarial Auditor | Audit → UAT/Promote | Unresolved blocker findings; soft-pass hunt positive | Audit with unrebutted charter-rule violation |
+| 7 | **Adversarial Audit** | Adversarial Auditor | Audit → UAT/Promote | Unresolved blocker findings; incomplete-packet hunt finds slip → FAIL | Audit with unrebutted charter-rule violation |
 | 8 | **UAT / Promote Evidence** | Release Conductor | UAT → Ship | Incomplete packet; tip mismatch (missing suite check, tip marker mismatch, tip-race provisional, wrong tip); soft-green evidence — **soft-green into Ship = REFUSE** | Greenlight request with missing suite, tip mismatch, or "mostly passing" evidence |
 | 9 | **Ship** | Ship Role, Release Conductor | Ship → Execute-Release | No mandate; pipeline not complete; findings not addressed; UAT greenlight not PASS | Ship request without UAT greenlight record |
 | 10 | **Execute-Release** | Release Conductor | Execute → Instance Heal (or Done) | Ship not complete; release preconditions not met | Execute request without Ship completion record |
@@ -212,7 +214,7 @@ System-Remediate Design ──→ Produce ──→ Fitness ──→ Audit ─�
 
 5. **Fitness outcomes:** `MET` / `FAIL` / `handoff_refused`. The `handoff_refused` outcome is upstream of content scoring -- it means produce-incomplete, not content-defective. Do not normalize "re-gate" language for `handoff_refused`; that masks the produce-handoff defect.
 
-6. **Adversarial audit:** Audit ≠ Gate ≠ Review. Auditors produce findings; they do not have ship authority. When the artifact is a Gate tip or Handoff tip, adversarial audit includes the soft-pass hunt.
+6. **Adversarial audit:** Audit ≠ Gate ≠ Review. Auditors produce findings; they do not have ship authority. Verdicts are PASS / FAIL / REFUSE only -- no soft PASS. When the artifact is a Gate tip or Handoff tip, adversarial audit includes the incomplete-packet hunt.
 
 7. **UAT / Promote Evidence:** Own Boundary with **Release Conductor** role. **UAT greenlight lands BEFORE Ship** (when suite applies). Refuses greenlight on incomplete packet or tip mismatch:
    - Missing suite check
@@ -255,8 +257,8 @@ For changes that add or modify boundaries or handoffs:
 - [ ] CB4. Refuse criteria stated in the handoff tip.
 - [ ] CB5. Incomplete-packet fixture documented in the same tip.
 - [ ] CB6. Incomplete packet REFUSES under the stated refuse criteria.
-- [ ] CB7. Soft-pass hunt performed when artifact is a Gate/Handoff tip.
-- [ ] CB8. No soft-pass paths remain (or blocker findings filed).
+- [ ] CB7. Incomplete-packet hunt performed when artifact is a Gate/Handoff tip.
+- [ ] CB8. No incomplete-packet slips remain (or blocker findings filed).
 - [ ] CB9. Role assignments use role names only (no person names in SOP tables).
 - [ ] CB10. `handoff_refused` not conflated with `FAIL`.
 
@@ -268,7 +270,7 @@ For changes that add or modify boundaries or handoffs:
 - Charter §5.8: Practice integrity (zero variance, hard gates)
 - Charter §16: Systems model -- agent nouns, vocabulary mapping
 - Charter §16.1: Gate ≠ Audit vocabulary
-- [`GATE.md`](GATE.md): Gate noun, G1--G4, soft-pass hunt
+- [`GATE.md`](GATE.md): Gate noun, G1--G4, incomplete-packet hunt
 - [`PRINCIPLES.md`](PRINCIPLES.md) P3: Hard gates (complete/incomplete only)
 - [`../agents/quality-architect/AGENT.md`](../agents/quality-architect/AGENT.md): Fitness preflight and scoring
 - [`../agents/adversarial-auditor/AGENT.md`](../agents/adversarial-auditor/AGENT.md): Adversarial review role

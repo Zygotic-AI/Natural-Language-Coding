@@ -39,7 +39,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `examples/` | Adopter sample systems |
 | `adrs/` | Decision records (`0001` = zero-variance, `0003` = systems extension) |
 | `integrity/` | Principles, binding matrix, audit defs |
-| `integrity/GATE.md` | Gate noun SSOT (G1--G4, soft-pass hunt) |
+| `integrity/GATE.md` | Gate noun SSOT (G1--G4, incomplete-packet hunt) |
 | `integrity/BOUNDARY.md` | Boundary + Handoff noun SSOT; role-bound SOP |
 | `integrity/binding-matrix.json` | Requirement → audit → binder (unbound fails) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
