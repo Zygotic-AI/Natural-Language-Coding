@@ -657,6 +657,8 @@ The software model (§4) organizes code so agents can change it without scatteri
 - Gates block automatically; no human or role decides.
 - Audits produce findings; a ship-role or human decides whether findings block.
 
+For the formal Gate definition, hell-yeah fitness bar (G1--G4), and design rules, see [`integrity/GATE.md`](integrity/GATE.md).
+
 **Handoff refused ≠ fitness FAIL.** When fitness preflight returns `handoff_refused` (produce package missing/incomplete), that is not a fitness FAIL. It is a produce-incomplete signal. The Gate remains the CI enforcement point for fitness scoring; preflight refusal is upstream of Gate. Do not normalize "re-gate" language for missing-package rework — that masks the produce-handoff defect.
 
 ### 16.2 Agent noun structure

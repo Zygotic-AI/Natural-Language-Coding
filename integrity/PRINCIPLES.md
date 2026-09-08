@@ -49,9 +49,11 @@ A requirement is promoted to an in-force surface only when a binder can fail the
 | Term | Meaning |
 |------|---------|
 | Requirement | A confirmable rule or principle with an id |
-| Audit | Procedure that yields met / not met with evidence |
+| Audit | Procedure that yields met / not met with evidence; produces findings for ship decision |
 | Binder | Mechanism that can fail a change when the audit would be not met |
 | Bound | Requirement has audit + binder |
 | Unbound | Requirement missing audit and/or binder |
 | In-force | Published on the charter or other mandatory surface |
-| Gate | Binary complete/incomplete check on a prescribed step |
+| Gate | Binary PASS/FAIL enforcement checkpoint; see [`GATE.md`](GATE.md) for formal definition and hell-yeah fitness bar |
+
+**Gate vs Audit:** Gates block automatically (CI, fitness); audits produce findings for a ship-role or human to decide. Both are binary per item, but differ in mechanism and authority. See [`GATE.md`](GATE.md) §Definition.
