@@ -64,7 +64,7 @@ A handoff tip without a documented incomplete-packet fixture is incomplete.
 
 ## Incomplete-packet fixture: 15855 without §7/R3/R4
 
-Reference case for handoffs in the raise-to-Richard path.
+Reference case for handoffs in the raise-to-HITL path (Human Root-Approver escalation).
 
 **Scenario:** Leaf 15855 was raised without:
 - §7 Preventive action (Owner / Path / Verification)
