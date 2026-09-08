@@ -44,11 +44,11 @@ If a check cannot run (missing input, parser failure, network error), the gate r
 
 **Honesty on refuse-wired:** A gate tip must not claim "refuse-wired" for checks whose binders do not yet exist. When binders are absent, document **UNWIRED residual** and cross-link the companion tip that owns the binder. G2 is MET only when refuse surfaces exist and are wired.
 
-### G3. The last incomplete packet that reached Richard would FAIL it
+### G3. The last incomplete packet that reached HITL would FAIL it
 
 Design criterion: the gate must fail realistic bad input. The incomplete-packet fixture (see below) must document a known-bad case and demonstrate that the gate rejects it.
 
-### G4. PASS does not still need Richard or a human redo
+### G4. PASS does not still need Human Root-Approver or a human redo
 
 A PASS means the work is ready for the next stage. If PASS requires a human to fix, double-check, or complete something, that is not a PASS -- that is a handoff to review. A true gate PASS is self-sufficient.
 
@@ -66,28 +66,30 @@ A gate tip without a documented incomplete-packet fixture is incomplete. A gate 
 
 ---
 
-## Soft-Pass Hunt (Adversarial Half)
+## Incomplete-Packet Hunt (Adversarial Half)
 
-The **soft-pass hunt** is the adversarial audit of a gate. The adversarial-auditor role (or a human in that role) asks:
+The **incomplete-packet hunt** is the adversarial audit of a gate. The adversarial-auditor role (or a human in that role) asks:
 
 > Can an incomplete packet still slip the checklist?
 
-If the answer is yes, the gate tip is not MET. The soft-pass hunt does not design remediations -- it finds holes. Fixes belong to the produce role.
+**Definition:** Hunt for incomplete-packet slips. If fixture 15855 without §7/R3/R4 can still PASS the checklist → audit **FAIL**.
 
-**Adversarial auditor role:** See [`../agents/adversarial-auditor/AGENT.md`](../agents/adversarial-auditor/AGENT.md). The auditor produces findings. The auditor does not have ship authority. If the auditor finds soft-pass paths, those are blocker-level findings.
+If the answer is yes, the gate tip is not MET. The incomplete-packet hunt does not design remediations -- it finds holes. Fixes belong to the produce role.
+
+**Adversarial auditor role:** See [`../agents/adversarial-auditor/AGENT.md`](../agents/adversarial-auditor/AGENT.md). The auditor produces findings. The auditor does not have ship authority. Verdicts are PASS / FAIL / REFUSE only -- no soft PASS. If the auditor finds incomplete-packet slips, those are blocker-level findings → audit FAIL.
 
 ---
 
 ## Incomplete-packet fixture: 15855 without §7/R3/R4
 
-Reference case for raise-to-Richard readiness gates.
+Reference case for raise-to-HITL readiness gates (Human Root-Approver escalation).
 
-**Scenario:** Leaf 15855 was raised to Richard without:
+**Scenario:** Leaf 15855 was raised without:
 - §7 Preventive action (Owner / Path / Verification)
 - Vera readiness R3 (named actionable preventive)
 - Vera readiness R4 (self-heal Y/N + future capture Y/N)
 
-**Required outcome:** Any raise-to-Richard readiness gate must FAIL this packet -- at preflight, fitness, **and** adversarial readiness. All raise paths are covered; there is no soft-pass route via "case bars only" or "ship-role decides."
+**Required outcome:** Any raise-to-HITL readiness gate must FAIL this packet -- at preflight, fitness, **and** adversarial readiness. All raise paths are covered; there is no incomplete-packet slip route via "case bars only" or "ship-role decides."
 
 **Gate test:** A packet matching the 15855 shape -- missing §7 fields, missing R3, missing R4 -- fails at every gate in the raise path:
 - Preflight refuses handoff (produce incomplete)
@@ -100,9 +102,9 @@ The gate does not soft-pass to "address later."
 
 Under the all-required PASS bar:
 - **G1:** 15855 is incomplete (missing required fields) → must FAIL
-- **G2:** §7/R3/R4 checks require concrete content validation, not field-presence only (see SP4 below). **Refuse-wired:** raise-to-Richard readiness G2 is MET -- binders exist and are in force on Bindings main ([P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) @ `16104a47`). Binders: worker §7 metric, Vera R3/R4 always-required checklist SSOT, Vale NHR refuse. Skill: [`skills/raise-readiness-refuse.md`](https://github.com/richardpickett/BBA-Bindings/blob/main/skills/raise-readiness-refuse.md). This tip owns refuse criteria and SSOT; Bindings owns the binder.
+- **G2:** §7/R3/R4 checks require concrete content validation, not field-presence only (see SP4 below). **Refuse-wired:** raise-to-HITL readiness G2 is MET -- binders exist and are in force on Bindings main ([P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) @ `16104a47`). Binders: worker §7 metric, R3/R4 always-required checklist SSOT, NHR refuse. Skill: [`skills/raise-readiness-refuse.md`](https://github.com/richardpickett/BBA-Bindings/blob/main/skills/raise-readiness-refuse.md). This tip owns refuse criteria and SSOT; Bindings owns the binder.
 - **G3:** 15855 is the incomplete-packet fixture; the gate fails it → MET (by this tip's refuse criteria)
-- **G4:** PASS would require Richard to add §7/R3/R4 → not self-sufficient → must FAIL
+- **G4:** PASS would require Human Root-Approver to add §7/R3/R4 → not self-sufficient → must FAIL
 
 **Conclusion:** A gate that would PASS 15855 is not a gate. It is a review point with no enforcement.
 
@@ -197,7 +199,7 @@ There is no:
 - **Fitness → Audit:** Fitness must score MET before adversarial audit opens (handoff-in for adversarial-auditor).
 - **Audit → Ship:** Audit produces findings; ship-role decides if findings block (but audit itself is binary per item). **Exception:** Adversarial readiness PASS requires R3+R4; missing R3 or R4 → adversarial audit refuses PASS and returns FAIL readiness. Ship-role cannot soft-pass missing R3/R4 -- the audit gate closes before ship-role sees the packet.
 
-**Soft-pass path closed:** The route "fitness skips → Vera case-bars-only → raise" is blocked. Adversarial readiness checks R3+R4 presence and content; missing or placeholder → FAIL. There is no path to Richard that bypasses this gate.
+**Incomplete-packet path closed:** The route "fitness skips → case-bars-only → raise" is blocked. Adversarial readiness checks R3+R4 presence and content; missing or placeholder → FAIL. There is no path to HITL that bypasses this gate.
 
 ### SSOT exit evidence (S8, P-020)
 
@@ -220,8 +222,8 @@ For changes that add or modify gates:
 - [ ] CG4. Refuse criteria stated in the gate tip.
 - [ ] CG5. Incomplete-packet fixture documented in the same tip.
 - [ ] CG6. Incomplete packet FAILs under the stated refuse criteria.
-- [ ] CG7. Soft-pass hunt performed (adversarial audit of the gate).
-- [ ] CG8. No soft-pass paths remain (or blocker findings filed).
+- [ ] CG7. Incomplete-packet hunt performed (adversarial audit of the gate).
+- [ ] CG8. No incomplete-packet slips remain (or blocker findings filed).
 - [ ] CG9. Binder status honest: refuse-wired claimed only when binders exist; UNWIRED residual documented otherwise.
 - [ ] CG10. Adversarial readiness binds refuse (not fitness-only); all raise paths covered.
 - [ ] CG11. Always-required items (R3/R4) cannot be replaced by case bars.
