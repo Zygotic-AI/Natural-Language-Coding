@@ -42,6 +42,8 @@ If the artifact is incomplete -- missing required fields, missing SSOT exit evid
 
 If a check cannot run (missing input, parser failure, network error), the gate refuses to open. No check may be vibes-only or human-judgment-required in its definition. If human judgment is needed, the gate is actually a review point -- rename it or redesign it.
 
+**Honesty on refuse-wired:** A gate tip must not claim "refuse-wired" for checks whose binders do not yet exist. When binders are absent, document **UNWIRED residual** and cross-link the companion tip that owns the binder. G2 is MET only when refuse surfaces exist and are wired.
+
 ### G3. The last oatmeal that reached Richard would FAIL it
 
 Design criterion: the gate must fail realistic bad input. The oatmeal fixture (see below) must document a known-bad case and demonstrate that the gate rejects it.
@@ -85,19 +87,67 @@ Reference case for raise-to-Richard readiness gates.
 - Vera readiness R3 (named actionable preventive)
 - Vera readiness R4 (self-heal Y/N + future capture Y/N)
 
-**Required outcome:** Any raise-to-Richard readiness gate must FAIL this packet.
+**Required outcome:** Any raise-to-Richard readiness gate must FAIL this packet -- at preflight, fitness, **and** adversarial readiness. All raise paths are covered; there is no soft-pass route via "case bars only" or "ship-role decides."
 
-**Gate test:** A packet matching the 15855 shape -- missing §7 fields, missing R3, missing R4 -- fails preflight or fitness. The gate does not soft-pass to "address later."
+**Gate test:** A packet matching the 15855 shape -- missing §7 fields, missing R3, missing R4 -- fails at every gate in the raise path:
+- Preflight refuses handoff (produce incomplete)
+- Fitness refuses MET (required fields missing)
+- Adversarial readiness refuses PASS (R3+R4 absent)
+
+The gate does not soft-pass to "address later."
 
 ### Fixture verification
 
 Under the hell-yeah bar:
 - **G1:** 15855 is incomplete (missing required fields) → must FAIL
-- **G2:** §7/R3/R4 checks are machine-checkable (field presence) → refuse-wired
-- **G3:** 15855 is the oatmeal; the gate fails it → MET
+- **G2:** §7/R3/R4 checks require concrete content validation, not field-presence only (see SP4 below). **UNWIRED residual:** raise-to-Richard readiness G2 is MET only when Bindings/skill refuse surfaces exist (worker §7 metric, Vera R3/R4 always-required checklist SSOT, Vale NHR refuse). Until those binders land, G2 is unwired; this tip owns refuse criteria and SSOT, Bindings tip owns the binder (companion produce).
+- **G3:** 15855 is the oatmeal; the gate fails it → MET (by this tip's refuse criteria)
 - **G4:** PASS would require Richard to add §7/R3/R4 → not self-sufficient → must FAIL
 
 **Conclusion:** A gate that would PASS 15855 is not a gate. It is a review point with no enforcement.
+
+### Amend oatmeal: 15855 with case bars only
+
+**Scenario:** 15855 amend PASS contained case bars 1--7 but zero R3/R4 rows.
+
+**Required outcome:** FAIL. Case bars are additive; they never replace R3/R4. A Vera readiness checklist with case bars but no R3/R4 is incomplete.
+
+---
+
+## Hard Refuse Criteria: Vera Readiness
+
+### R3 and R4 are always required (SP3)
+
+**R3 (named actionable preventive)** and **R4 (self-heal Y/N + future capture Y/N)** are always required on every Vera readiness checklist. Case-specific bars **add** to R3/R4; they **never replace** R3/R4.
+
+| Condition | Outcome |
+|-----------|---------|
+| R3 present and concrete, R4 present | Eligible for PASS |
+| R3 absent, R4 present | FAIL |
+| R3 present, R4 absent | FAIL |
+| R3 absent, R4 absent | FAIL |
+| Case bars present, R3/R4 absent | FAIL |
+
+**Oatmeal:** 15855 amend PASS (case bars 1--7, zero R3/R4 rows) must FAIL under this criterion.
+
+### R3 must be concrete, not placeholder (SP4)
+
+R3 = **named actionable preventive** at path-level granularity:
+- **Owner** -- non-empty, not "TBD", not placeholder
+- **Path/Artifact** -- non-empty, not "TBD", not "see later", not placeholder
+- **Verification** -- non-empty, not "TBD", not placeholder
+
+Presence of a heading or field with oatmeal text (empty, TBD, placeholder) = FAIL. The same standard applies to §7 Owner/Path/Verification: non-empty and concrete.
+
+| R3 content | Outcome |
+|------------|---------|
+| Owner: "Jane", Path: "integrity/GATE.md", Verification: "audit A-GATE" | PASS (concrete) |
+| Owner: "TBD", Path: "TBD", Verification: "TBD" | FAIL (placeholder) |
+| Owner: "", Path: "", Verification: "" | FAIL (empty) |
+| Owner: "Jane", Path: "see later", Verification: "later" | FAIL (defer = incomplete) |
+| Field heading present, content empty | FAIL (field-presence alone is insufficient) |
+
+**Design note:** Field-presence validation is necessary but not sufficient. Content validation must confirm concrete, actionable values.
 
 ---
 
@@ -145,7 +195,9 @@ There is no:
 
 - **Produce → Fitness:** Default-closed (S7). Incomplete produce package → `handoff_refused`.
 - **Fitness → Audit:** Fitness must score MET before adversarial audit opens (handoff-in for adversarial-auditor).
-- **Audit → Ship:** Audit produces findings; ship-role decides if findings block (but audit itself is binary per item).
+- **Audit → Ship:** Audit produces findings; ship-role decides if findings block (but audit itself is binary per item). **Exception:** Adversarial readiness PASS requires R3+R4; missing R3 or R4 → adversarial audit refuses PASS and returns FAIL readiness. Ship-role cannot soft-pass missing R3/R4 -- the audit gate closes before ship-role sees the packet.
+
+**Soft-pass path closed:** The route "fitness skips → Vera case-bars-only → raise" is blocked. Adversarial readiness checks R3+R4 presence and content; missing or placeholder → FAIL. There is no path to Richard that bypasses this gate.
 
 ### SSOT exit evidence (S8, P-020)
 
@@ -164,12 +216,16 @@ For changes that add or modify gates:
 
 - [ ] CG1. Gate criteria are binary (PASS/FAIL only).
 - [ ] CG2. Gate is default-closed (refuse if check cannot run).
-- [ ] CG3. Hell-yeah bar documented (G1–G4 addressed).
+- [ ] CG3. Hell-yeah bar documented (G1--G4 addressed).
 - [ ] CG4. Refuse criteria stated in the gate tip.
 - [ ] CG5. Oatmeal fixture documented in the same tip.
 - [ ] CG6. Oatmeal FAILs under the stated refuse criteria.
 - [ ] CG7. Soft-pass hunt performed (adversarial audit of the gate).
 - [ ] CG8. No soft-pass paths remain (or blocker findings filed).
+- [ ] CG9. Binder status honest: refuse-wired claimed only when binders exist; UNWIRED residual documented otherwise.
+- [ ] CG10. Adversarial readiness binds refuse (not fitness-only); all raise paths covered.
+- [ ] CG11. Always-required items (R3/R4) cannot be replaced by case bars.
+- [ ] CG12. Content validation required, not field-presence only; TBD/placeholder = FAIL.
 
 ---
 
