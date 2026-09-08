@@ -100,7 +100,7 @@ The gate does not soft-pass to "address later."
 
 Under the hell-yeah bar:
 - **G1:** 15855 is incomplete (missing required fields) → must FAIL
-- **G2:** §7/R3/R4 checks require concrete content validation, not field-presence only (see SP4 below). **UNWIRED residual:** raise-to-Richard readiness G2 is MET only when Bindings/skill refuse surfaces exist (worker §7 metric, Vera R3/R4 always-required checklist SSOT, Vale NHR refuse). Until those binders land, G2 is unwired; this tip owns refuse criteria and SSOT, Bindings tip owns the binder (companion produce).
+- **G2:** §7/R3/R4 checks require concrete content validation, not field-presence only (see SP4 below). **Refuse-wired:** raise-to-Richard readiness G2 is MET -- binders exist and are in force on Bindings main ([P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) @ `16104a47`). Binders: worker §7 metric, Vera R3/R4 always-required checklist SSOT, Vale NHR refuse. Skill: [`skills/raise-readiness-refuse.md`](https://github.com/richardpickett/BBA-Bindings/blob/main/skills/raise-readiness-refuse.md). This tip owns refuse criteria and SSOT; Bindings owns the binder.
 - **G3:** 15855 is the oatmeal; the gate fails it → MET (by this tip's refuse criteria)
 - **G4:** PASS would require Richard to add §7/R3/R4 → not self-sufficient → must FAIL
 
