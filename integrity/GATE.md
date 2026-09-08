@@ -86,8 +86,8 @@ Reference case for raise-to-HITL readiness gates (Human Root-Approver escalation
 
 **Scenario:** Leaf 15855 was raised without:
 - §7 Preventive action (Owner / Path / Verification)
-- Vera readiness R3 (named actionable preventive)
-- Vera readiness R4 (self-heal Y/N + future capture Y/N)
+- Adversarial Auditor readiness R3 (named actionable preventive)
+- Adversarial Auditor readiness R4 (self-heal Y/N + future capture Y/N)
 
 **Required outcome:** Any raise-to-HITL readiness gate must FAIL this packet -- at preflight, fitness, **and** adversarial readiness. All raise paths are covered; there is no incomplete-packet slip route via "case bars only" or "ship-role decides."
 
@@ -112,15 +112,15 @@ Under the all-required PASS bar:
 
 **Scenario:** 15855 amend PASS contained case bars 1--7 but zero R3/R4 rows.
 
-**Required outcome:** FAIL. Case bars are additive; they never replace R3/R4. A Vera readiness checklist with case bars but no R3/R4 is incomplete.
+**Required outcome:** FAIL. Case bars are additive; they never replace R3/R4. An Adversarial Auditor readiness checklist with case bars but no R3/R4 is incomplete.
 
 ---
 
-## Hard Refuse Criteria: Vera Readiness
+## Hard Refuse Criteria: Adversarial Auditor Readiness
 
 ### R3 and R4 are always required (SP3)
 
-**R3 (named actionable preventive)** and **R4 (self-heal Y/N + future capture Y/N)** are always required on every Vera readiness checklist. Case-specific bars **add** to R3/R4; they **never replace** R3/R4.
+**R3 (named actionable preventive)** and **R4 (self-heal Y/N + future capture Y/N)** are always required on every Adversarial Auditor readiness checklist. Case-specific bars **add** to R3/R4; they **never replace** R3/R4.
 
 | Condition | Outcome |
 |-----------|---------|
