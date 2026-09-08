@@ -30,9 +30,9 @@ Gates exist in code (CI checks, fitness rules) and in the agent pipeline (produc
 
 ---
 
-## Hell-Yeah Fitness Bar
+## All-required PASS fitness bar
 
-A gate is **good** only if it meets the hell-yeah bar:
+A gate is **good** only if it meets the all-required PASS bar:
 
 ### G1. Incomplete work cannot PASS
 
@@ -44,9 +44,9 @@ If a check cannot run (missing input, parser failure, network error), the gate r
 
 **Honesty on refuse-wired:** A gate tip must not claim "refuse-wired" for checks whose binders do not yet exist. When binders are absent, document **UNWIRED residual** and cross-link the companion tip that owns the binder. G2 is MET only when refuse surfaces exist and are wired.
 
-### G3. The last oatmeal that reached Richard would FAIL it
+### G3. The last incomplete packet that reached Richard would FAIL it
 
-Design criterion: the gate must fail realistic bad input. The oatmeal fixture (see below) must document a known-bad case and demonstrate that the gate rejects it.
+Design criterion: the gate must fail realistic bad input. The incomplete-packet fixture (see below) must document a known-bad case and demonstrate that the gate rejects it.
 
 ### G4. PASS does not still need Richard or a human redo
 
@@ -54,15 +54,15 @@ A PASS means the work is ready for the next stage. If PASS requires a human to f
 
 ---
 
-## Design Rule: Refuse + Oatmeal Fixture in the Same Tip
+## Design Rule: Refuse + Incomplete-packet Fixture in the Same Tip
 
-When designing or documenting a gate, write the **refuse criteria** and the **oatmeal fixture** in the same section. This forces the gate author to:
+When designing or documenting a gate, write the **refuse criteria** and the **incomplete-packet fixture** in the same section. This forces the gate author to:
 
 1. State what the gate refuses (the FAIL conditions)
-2. Provide a concrete example (oatmeal) that would FAIL
-3. Prove the refuse criteria catch the oatmeal
+2. Provide a concrete example (incomplete packet) that would FAIL
+3. Prove the refuse criteria catch the incomplete packet
 
-A gate tip without a documented oatmeal is incomplete. A gate with refuse criteria that do not fail the oatmeal is broken.
+A gate tip without a documented incomplete-packet fixture is incomplete. A gate with refuse criteria that do not fail the incomplete packet is broken.
 
 ---
 
@@ -70,7 +70,7 @@ A gate tip without a documented oatmeal is incomplete. A gate with refuse criter
 
 The **soft-pass hunt** is the adversarial audit of a gate. The adversarial-auditor role (or a human in that role) asks:
 
-> Can oatmeal still slip the checklist?
+> Can an incomplete packet still slip the checklist?
 
 If the answer is yes, the gate tip is not MET. The soft-pass hunt does not design remediations -- it finds holes. Fixes belong to the produce role.
 
@@ -78,7 +78,7 @@ If the answer is yes, the gate tip is not MET. The soft-pass hunt does not desig
 
 ---
 
-## Oatmeal Fixture: 15855
+## Incomplete-packet fixture: 15855 without §7/R3/R4
 
 Reference case for raise-to-Richard readiness gates.
 
@@ -98,15 +98,15 @@ The gate does not soft-pass to "address later."
 
 ### Fixture verification
 
-Under the hell-yeah bar:
+Under the all-required PASS bar:
 - **G1:** 15855 is incomplete (missing required fields) → must FAIL
 - **G2:** §7/R3/R4 checks require concrete content validation, not field-presence only (see SP4 below). **Refuse-wired:** raise-to-Richard readiness G2 is MET -- binders exist and are in force on Bindings main ([P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) @ `16104a47`). Binders: worker §7 metric, Vera R3/R4 always-required checklist SSOT, Vale NHR refuse. Skill: [`skills/raise-readiness-refuse.md`](https://github.com/richardpickett/BBA-Bindings/blob/main/skills/raise-readiness-refuse.md). This tip owns refuse criteria and SSOT; Bindings owns the binder.
-- **G3:** 15855 is the oatmeal; the gate fails it → MET (by this tip's refuse criteria)
+- **G3:** 15855 is the incomplete-packet fixture; the gate fails it → MET (by this tip's refuse criteria)
 - **G4:** PASS would require Richard to add §7/R3/R4 → not self-sufficient → must FAIL
 
 **Conclusion:** A gate that would PASS 15855 is not a gate. It is a review point with no enforcement.
 
-### Amend oatmeal: 15855 with case bars only
+### Amend incomplete packet: 15855 with case bars only
 
 **Scenario:** 15855 amend PASS contained case bars 1--7 but zero R3/R4 rows.
 
@@ -128,7 +128,7 @@ Under the hell-yeah bar:
 | R3 absent, R4 absent | FAIL |
 | Case bars present, R3/R4 absent | FAIL |
 
-**Oatmeal:** 15855 amend PASS (case bars 1--7, zero R3/R4 rows) must FAIL under this criterion.
+**Incomplete-packet fixture:** 15855 amend PASS (case bars 1--7, zero R3/R4 rows) must FAIL under this criterion.
 
 ### R3 must be concrete, not placeholder (SP4)
 
@@ -137,7 +137,7 @@ R3 = **named actionable preventive** at path-level granularity:
 - **Path/Artifact** -- non-empty, not "TBD", not "see later", not placeholder
 - **Verification** -- non-empty, not "TBD", not placeholder
 
-Presence of a heading or field with oatmeal text (empty, TBD, placeholder) = FAIL. The same standard applies to §7 Owner/Path/Verification: non-empty and concrete.
+Presence of a heading or field with incomplete-packet content (empty, TBD, placeholder) = FAIL. The same standard applies to §7 Owner/Path/Verification: non-empty and concrete.
 
 | R3 content | Outcome |
 |------------|---------|
@@ -216,10 +216,10 @@ For changes that add or modify gates:
 
 - [ ] CG1. Gate criteria are binary (PASS/FAIL only).
 - [ ] CG2. Gate is default-closed (refuse if check cannot run).
-- [ ] CG3. Hell-yeah bar documented (G1--G4 addressed).
+- [ ] CG3. All-required PASS bar documented (G1--G4 addressed).
 - [ ] CG4. Refuse criteria stated in the gate tip.
-- [ ] CG5. Oatmeal fixture documented in the same tip.
-- [ ] CG6. Oatmeal FAILs under the stated refuse criteria.
+- [ ] CG5. Incomplete-packet fixture documented in the same tip.
+- [ ] CG6. Incomplete packet FAILs under the stated refuse criteria.
 - [ ] CG7. Soft-pass hunt performed (adversarial audit of the gate).
 - [ ] CG8. No soft-pass paths remain (or blocker findings filed).
 - [ ] CG9. Binder status honest: refuse-wired claimed only when binders exist; UNWIRED residual documented otherwise.

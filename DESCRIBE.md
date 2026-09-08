@@ -50,13 +50,13 @@ Do not brand the practice "governance" / "governed." Prefer charter, integrity, 
 
 ## Terminology clarification (gate ≠ audit)
 
-- **Gate** = automated enforcement (fitness checks, CI rules); binary PASS/FAIL; blocks automatically; default-closed. See [`integrity/GATE.md`](integrity/GATE.md) for formal definition and hell-yeah fitness bar.
+- **Gate** = automated enforcement (fitness checks, CI rules); binary PASS/FAIL; blocks automatically; default-closed. See [`integrity/GATE.md`](integrity/GATE.md) for formal definition and all-required PASS fitness bar.
 - **Audit** = role-based adversarial review (adversarial-auditor agent noun); produces findings for ship decision
 - **Produce ≠ Audit ≠ Ship** = separate agent nouns for creating artifacts, reviewing them, and authorizing release
 
 Gates and audits both yield binary outcomes (ops vs defects), but differ in mechanism and authority. Gates block the build; audits produce findings for a ship-role or human to decide.
 
-**Hell-yeah bar (G1–G4):** A gate is good only if incomplete work cannot PASS, every check is machine-checkable or refuse-wired, the last oatmeal would FAIL it, and PASS does not require human redo. Design rule: write refuse + oatmeal fixture in the same tip. See [`integrity/GATE.md`](integrity/GATE.md).
+**All-required PASS bar (G1–G4):** A gate is good only if incomplete work cannot PASS, every check is machine-checkable or refuse-wired, the last incomplete packet would FAIL it, and PASS does not require human redo. Design rule: write refuse + incomplete-packet fixture in the same tip. See [`integrity/GATE.md`](integrity/GATE.md).
 
 ## Adoption bar
 

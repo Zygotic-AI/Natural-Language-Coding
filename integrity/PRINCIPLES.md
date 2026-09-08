@@ -54,6 +54,6 @@ A requirement is promoted to an in-force surface only when a binder can fail the
 | Bound | Requirement has audit + binder |
 | Unbound | Requirement missing audit and/or binder |
 | In-force | Published on the charter or other mandatory surface |
-| Gate | Binary PASS/FAIL enforcement checkpoint; see [`GATE.md`](GATE.md) for formal definition and hell-yeah fitness bar |
+| Gate | Binary PASS/FAIL enforcement checkpoint; see [`GATE.md`](GATE.md) for formal definition and all-required PASS fitness bar |
 
 **Gate vs Audit:** Gates block automatically (CI, fitness); audits produce findings for a ship-role or human to decide. Both are binary per item, but differ in mechanism and authority. See [`GATE.md`](GATE.md) §Definition.
