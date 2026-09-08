@@ -97,7 +97,13 @@ Reference case for handoffs in the raise-to-HITL path (Human Root-Approver escal
 
 ## UAT / Promote Evidence: Refuse Greenlight
 
-The **UAT / Promote Evidence** Boundary is owned by **Release Conductor** (role, never a person name). This boundary refuses greenlight -- never soft-green into Ship or Execute-Release.
+The **UAT / Promote Evidence** Boundary is owned by **Release Conductor** (role, never a person name). This boundary refuses greenlight -- never soft-green into Execute-Release / prod ladder.
+
+**Ship (merge) ≠ Execute-Release (prod promote).** Per P-028 / Release Conductor lock:
+- **Ship (merge)** authorizes code merge; may precede UAT
+- **Execute-Release** promotes to production; must not precede UAT greenlight
+
+Ship-as-merge is not greenlight. Merge does not authorize prod promote.
 
 ### Refuse criteria
 
@@ -109,14 +115,15 @@ The **UAT / Promote Evidence** Boundary is owned by **Release Conductor** (role,
 | Wrong tip | REFUSE | Evidence is for a different tip than release target |
 | Soft-green evidence | REFUSE | "Mostly passing" / "close enough" is not binary acceptance |
 | Incomplete packet | REFUSE | Missing required fields or SSOT exit evidence |
+| Treating merge as greenlight | REFUSE | Ship (merge) does not substitute for UAT greenlight |
 
-### Never soft-green
+### Never soft-green into Execute-Release / prod ladder
 
 **Hard rule:** UAT / Promote Evidence handoff never soft-greens into:
-- **Ship Boundary** -- ship decisions require greenlight PASS
 - **Execute-Release Boundary** -- release execution requires greenlight PASS
+- **Prod ladder** -- no production promotion without binary UAT acceptance
 
-There is no path from UAT with incomplete or mismatched evidence to Ship or Execute-Release. The handoff refuses; work returns to the prior boundary for remediation.
+Ship (merge) may precede UAT; Execute-Release must not. There is no path from UAT with incomplete or mismatched evidence to Execute-Release. The handoff refuses; work returns to the prior boundary for remediation.
 
 ### Incomplete-packet fixture: UAT greenlight mismatch
 
@@ -154,7 +161,7 @@ This SOP maps boundaries in the work pipeline to roles. Roles are organizational
 | **Quality Architect** | Gates fitness preflight and scoring; refuses incomplete handoffs; does not have ship authority |
 | **Adversarial Auditor** | Attacks artifacts against charter; produces findings; does not have ship authority |
 | **Defect Remediator** | Fixes defects identified by Quality Architect or Adversarial Auditor; re-gates after fix |
-| **Release Conductor** | Orchestrates ship and UAT/promote boundaries; coordinates merge, release, deploy; refuses soft-green into Ship or Execute-release |
+| **Release Conductor** | Orchestrates ship (merge) and UAT/promote boundaries; coordinates merge, release, deploy; refuses soft-green into Execute-Release / prod ladder |
 | **Ship Role** | Authorizes release (ratify, merge, release verbs); requires explicit mandate |
 | **Escalation Steward** | Handles escalation paths when handoffs cannot advance; owns unblock decisions |
 | **Human Root-Approver** | HITL root-approve authority for decisions that exceed agent mandate |
@@ -162,16 +169,16 @@ This SOP maps boundaries in the work pipeline to roles. Roles are organizational
 ### Boundary flow
 
 ```text
-Plan ─┬─→ Produce ──→ Fitness ──→ Audit ──→ Ship ──→ UAT/Promote ──→ Execute-Release
+Plan ─┬─→ Produce ──→ Fitness ──→ Audit ──→ Ship (merge) ──→ UAT/Promote ──→ Execute-Release
       │
-      └─→ Conduct-RCA ──→ Raise-Readiness (P-030/R3+R4)
-                              │
-                              └─→ (rejoins Produce when readiness MET)
+      └─→ Conduct-RCA ──→ Raise-Readiness (P-030/R3+R4) ──→ HITL Root-Approve ──→ Produce
 ```
+
+**Ship (merge) ≠ Execute-Release (prod promote).** Ship (merge) may precede UAT; Execute-Release must not. UAT/Promote Evidence refuses soft-green into Execute-Release / prod ladder.
 
 Post-approve cohort (system change path):
 ```text
-System-Remediate Design ──→ Produce ──→ Fitness ──→ Audit ──→ Ship ──→ UAT/Promote ──→ Execute-Release ──→ Instance Heal
+System-Remediate Design ──→ Produce ──→ Fitness ──→ Audit ──→ Ship (merge) ──→ UAT/Promote ──→ Execute-Release ──→ Instance Heal
 ```
 
 ### Boundary × Role × Handoff map
@@ -180,42 +187,49 @@ System-Remediate Design ──→ Produce ──→ Fitness ──→ Audit ─�
 |---|----------|---------|-------------|-----------------|---------------------------|
 | 1 | **Plan** | Plan Steward | Plan → Produce | *Off Gate noun until refuse-wired plan exit exists* | (future: plan without acceptance criteria) |
 | 2 | **Conduct-RCA** | RCA Conductor | RCA → Raise-Readiness | Investigation incomplete; no root cause named | RCA report without root cause statement |
-| 3 | **Raise-Readiness** | RCA Conductor, Quality Architect | Raise → Produce | Missing §7 (Owner/Path/Verification), missing R3, missing R4; see [P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) | **15855 without §7/R3/R4** |
-| 4 | **Produce** (code or standard tip) | Producer | Produce → Fitness | Missing produce package; missing SSOT exit evidence (S7, S8) | Package without `ssot_leaf_ids` + `ssot_exit_status` |
-| 5 | **Fitness** | Quality Architect | Fitness → Audit | Preflight `handoff_refused`; scoring not MET | Produce package incomplete → `handoff_refused` (not FAIL) |
-| 6 | **Adversarial Audit** | Adversarial Auditor | Audit → Ship | Unresolved blocker findings; soft-pass hunt positive | Audit with unrebutted charter-rule violation |
-| 7 | **Ship** | Ship Role, Release Conductor | Ship → UAT/Promote | No mandate; pipeline not complete; findings not addressed | Ship request without audit completion record |
-| 8 | **UAT / Promote Evidence** | Release Conductor | UAT → Execute-Release | Incomplete packet; tip mismatch (missing suite check, tip marker mismatch, tip-race provisional, wrong tip); soft-green evidence — **never soft-green into Ship or Execute-Release** | Greenlight request with missing suite, tip mismatch, or "mostly passing" evidence |
-| 9 | **Execute-Release** | Release Conductor | Execute → Instance Heal (or Done) | UAT handoff not PASS; greenlight incomplete; release preconditions not met | Execute request without UAT PASS record |
-| 10 | **System-Remediate Design** | Producer, Quality Architect | Design → Produce | Design incomplete; no boundary I/O declared | Design doc without input/output/failure mode |
-| 11 | **Instance Heal** | Release Conductor, Defect Remediator | Heal → Done | Instance not verified healthy; rollback not confirmed | Heal report without verification evidence |
+| 3 | **Raise-Readiness** | RCA Conductor, Quality Architect, Adversarial Auditor, Escalation Steward | Raise → HITL Root-Approve | Missing §7 (Owner/Path/Verification), missing R3, missing R4; Adversarial Auditor refuses P-030 readiness (R3/R4); Escalation Steward refuses NHR packaging; see [P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) | **15855 without §7/R3/R4** |
+| 4 | **HITL Root-Approve** | Human Root-Approver | HITL → Produce | Readiness not MET; missing root-approve decision; incomplete packet | Raise packet without HITL approval record |
+| 5 | **Produce** (code or standard tip) | Producer | Produce → Fitness | Missing produce package; missing SSOT exit evidence (S7, S8) | Package without `ssot_leaf_ids` + `ssot_exit_status` |
+| 6 | **Fitness** | Quality Architect | Fitness → Audit | Preflight `handoff_refused`; scoring not MET | Produce package incomplete → `handoff_refused` (not FAIL) |
+| 7 | **Adversarial Audit** | Adversarial Auditor | Audit → Ship | Unresolved blocker findings; soft-pass hunt positive | Audit with unrebutted charter-rule violation |
+| 8 | **Ship (merge)** | Ship Role, Release Conductor | Ship → UAT/Promote | No mandate; pipeline not complete; findings not addressed | Ship request without audit completion record |
+| 9 | **UAT / Promote Evidence** | Release Conductor | UAT → Execute-Release | Incomplete packet; tip mismatch (missing suite check, tip marker mismatch, tip-race provisional, wrong tip); soft-green evidence — **never soft-green into Execute-Release / prod ladder** | Greenlight request with missing suite, tip mismatch, or "mostly passing" evidence |
+| 10 | **Execute-Release** | Release Conductor | Execute → Instance Heal (or Done) | UAT handoff not PASS; greenlight incomplete; release preconditions not met | Execute request without UAT PASS record |
+| 11 | **System-Remediate Design** | Producer, Quality Architect | Design → Produce | Design incomplete; no boundary I/O declared | Design doc without input/output/failure mode |
+| 12 | **Instance Heal** | Release Conductor, Defect Remediator | Heal → Done | Instance not verified healthy; rollback not confirmed | Heal report without verification evidence |
 
 ### Notes on boundary distinctions
 
 1. **Plan boundary:** Currently off Gate noun until a refuse-wired plan exit is implemented. Plan Steward owns completeness criteria; handoff to Produce is manual until binder exists.
 
-2. **Conduct-RCA → Raise-Readiness:** This is not code Produce. RCA work feeds the readiness gate (P-030 / R3+R4) before code work begins. Quality Architect gates the Raise-Readiness handoff.
+2. **Conduct-RCA → Raise-Readiness:** This is not code Produce. RCA work feeds the readiness gate (P-030 / R3+R4) before code work begins. Raise-Readiness includes:
+   - **Quality Architect** -- gates fitness preflight
+   - **Adversarial Auditor** -- refuses P-030 readiness (R3/R4 PASS/REFUSE)
+   - **Escalation Steward** -- refuses NHR packaging
 
-3. **Produce boundary:** Same machinery for code tip, standard tip, or design tip. Producer owns produce package; Quality Architect refuses incomplete handoffs at fitness preflight.
+3. **HITL Root-Approve:** Refuse-wired boundary after Raise-Readiness and before Produce on the raise path. Human Root-Approver must approve before work enters Produce. Incomplete packet or missing root-approve = REFUSE handoff into Produce. This boundary appears in the flow diagram and map -- not glossary-only.
 
-4. **Fitness outcomes:** `MET` / `FAIL` / `handoff_refused`. The `handoff_refused` outcome is upstream of content scoring -- it means produce-incomplete, not content-defective. Do not normalize "re-gate" language for `handoff_refused`; that masks the produce-handoff defect.
+4. **Produce boundary:** Same machinery for code tip, standard tip, or design tip. Producer owns produce package; Quality Architect refuses incomplete handoffs at fitness preflight.
 
-5. **Adversarial audit:** Audit ≠ Gate ≠ Review. Auditors produce findings; they do not have ship authority. When the artifact is a Gate tip or Handoff tip, adversarial audit includes the soft-pass hunt.
+5. **Fitness outcomes:** `MET` / `FAIL` / `handoff_refused`. The `handoff_refused` outcome is upstream of content scoring -- it means produce-incomplete, not content-defective. Do not normalize "re-gate" language for `handoff_refused`; that masks the produce-handoff defect.
 
-6. **Ship boundary:** Ship is a decision, not a review. Ship Role decides whether audit findings block release. Ship does not re-audit. Ship authority requires explicit mandate.
+6. **Adversarial audit:** Audit ≠ Gate ≠ Review. Auditors produce findings; they do not have ship authority. When the artifact is a Gate tip or Handoff tip, adversarial audit includes the soft-pass hunt.
 
-7. **UAT / Promote Evidence:** Own Boundary with **Release Conductor** role. Refuses greenlight on incomplete packet or tip mismatch:
+7. **Ship (merge) boundary:** Ship is a decision, not a review. Ship Role decides whether audit findings block release. Ship does not re-audit. Ship authority requires explicit mandate. **Ship (merge) ≠ Execute-Release (prod promote).** Merge may precede UAT; merge is not greenlight.
+
+8. **UAT / Promote Evidence:** Own Boundary with **Release Conductor** role. Refuses greenlight on incomplete packet or tip mismatch:
    - Missing suite check
    - Tip marker mismatch
    - Tip-race provisional
    - Wrong tip
    - Soft-green evidence (e.g., "80% passing is close enough")
+   - Treating merge as greenlight
    
-   **Never soft-green into Ship or Execute-Release Boundaries.** Binary acceptance required; no provisional greenlight.
+   **Never soft-green into Execute-Release / prod ladder.** Binary acceptance required; no provisional greenlight. Ship (merge) may precede UAT; Execute-Release must not.
 
-8. **Execute-Release:** Follows UAT/Promote Evidence. Release Conductor executes the release only after UAT handoff PASS. No release without greenlight.
+9. **Execute-Release:** Follows UAT/Promote Evidence. Release Conductor executes the release only after UAT handoff PASS. No release without greenlight. Execute-Release is prod promote -- distinct from Ship (merge).
 
-9. **Post-approve cohort:** System remediation follows the same produce→fitness→audit→ship→UAT→execute-release path. Instance heal is last -- only after execute-release completes for the system change.
+10. **Post-approve cohort:** System remediation follows the same produce→fitness→audit→ship(merge)→UAT→execute-release path. Instance heal is last -- only after execute-release completes for the system change.
 
 ---
 
