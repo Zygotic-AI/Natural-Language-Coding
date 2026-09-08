@@ -39,6 +39,8 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `examples/` | Adopter sample systems |
 | `adrs/` | Decision records (`0001` = zero-variance, `0003` = systems extension) |
 | `integrity/` | Principles, binding matrix, audit defs |
+| `integrity/GATE.md` | Gate noun SSOT (G1--G4, soft-pass hunt) |
+| `integrity/BOUNDARY.md` | Boundary + Handoff noun SSOT; role-bound SOP |
 | `integrity/binding-matrix.json` | Requirement → audit → binder (unbound fails) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
 | `AGENTS.md` | Cross-harness standing instructions |
@@ -56,7 +58,16 @@ Do not brand the practice "governance" / "governed." Prefer charter, integrity, 
 
 Gates and audits both yield binary outcomes (ops vs defects), but differ in mechanism and authority. Gates block the build; audits produce findings for a ship-role or human to decide.
 
-**All-required PASS bar (G1–G4):** A gate is good only if incomplete work cannot PASS, every check is machine-checkable or refuse-wired, the last incomplete packet would FAIL it, and PASS does not require human redo. Design rule: write refuse + incomplete-packet fixture in the same tip. See [`integrity/GATE.md`](integrity/GATE.md).
+**All-required PASS bar (G1--G4):** A gate is good only if incomplete work cannot PASS, every check is machine-checkable or refuse-wired, the last incomplete packet would FAIL it, and PASS does not require human redo. Design rule: write refuse + incomplete-packet fixture in the same tip. See [`integrity/GATE.md`](integrity/GATE.md).
+
+## Terminology clarification (boundary ≠ handoff)
+
+- **Boundary** = named stage in a work pipeline that owns laws, is default-closed, and produces binary advance. See [`integrity/BOUNDARY.md`](integrity/BOUNDARY.md).
+- **Handoff** = refuse-wired gate between Boundaries; must meet G1--G4; `handoff_refused` ≠ fitness FAIL (produce-incomplete signal, not content defect).
+
+Boundaries include: Plan, Conduct-RCA, Raise-Readiness, Produce, Fitness, Adversarial Audit, Ship, UAT/Promote, System-Remediate Design, Instance Heal. Role-bound SOP maps boundaries to roles (Plan Steward, Quality Architect, Adversarial Auditor, Ship Role, etc.) -- no person names in SOP tables.
+
+**Incomplete-packet fixture:** 15855 without §7/R3/R4 must FAIL any raise-readiness handoff. Binder: [P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) on BBA-Bindings main.
 
 ## Adoption bar
 
