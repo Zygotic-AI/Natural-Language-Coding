@@ -74,7 +74,8 @@ Reference case for handoffs in the raise-to-HITL path (Human Root-Approver escal
 **Required outcome:** Any raise-readiness handoff must REFUSE this packet at every boundary:
 - Produce → Fitness: `handoff_refused` (produce incomplete)
 - Fitness → Audit: refuses MET (required fields missing)
-- Audit → Ship: refuses PASS (R3+R4 absent)
+- Audit → UAT: refuses PASS (R3+R4 absent)
+- UAT → Ship: refuses greenlight (incomplete packet)
 
 **Fixture verification under G1--G4:**
 
@@ -97,13 +98,12 @@ Reference case for handoffs in the raise-to-HITL path (Human Root-Approver escal
 
 ## UAT / Promote Evidence: Refuse Greenlight
 
-The **UAT / Promote Evidence** Boundary is owned by **Release Conductor** (role, never a person name). This boundary refuses greenlight -- never soft-green into Execute-Release / prod ladder.
+The **UAT / Promote Evidence** Boundary is owned by **Release Conductor** (role, never a person name). This boundary refuses greenlight -- **soft-green into Ship = REFUSE**.
 
-**Ship (merge) ≠ Execute-Release (prod promote).** Per P-028 / Release Conductor lock:
-- **Ship (merge)** authorizes code merge; may precede UAT
-- **Execute-Release** promotes to production; must not precede UAT greenlight
-
-Ship-as-merge is not greenlight. Merge does not authorize prod promote.
+**UAT / Promote Evidence all-required PASS greenlight lands BEFORE Ship** (when suite applies). Per Release Conductor lock:
+- UAT greenlight is a precondition for Ship
+- Incomplete packet / tip mismatch refuses Ship handoff
+- No Ship without UAT greenlight PASS
 
 ### Refuse criteria
 
@@ -115,15 +115,14 @@ Ship-as-merge is not greenlight. Merge does not authorize prod promote.
 | Wrong tip | REFUSE | Evidence is for a different tip than release target |
 | Soft-green evidence | REFUSE | "Mostly passing" / "close enough" is not binary acceptance |
 | Incomplete packet | REFUSE | Missing required fields or SSOT exit evidence |
-| Treating merge as greenlight | REFUSE | Ship (merge) does not substitute for UAT greenlight |
 
-### Never soft-green into Execute-Release / prod ladder
+### Soft-green into Ship = REFUSE
 
-**Hard rule:** UAT / Promote Evidence handoff never soft-greens into:
-- **Execute-Release Boundary** -- release execution requires greenlight PASS
-- **Prod ladder** -- no production promotion without binary UAT acceptance
+**Hard rule:** UAT / Promote Evidence handoff never soft-greens into Ship:
+- **Ship Boundary** -- ship authorization requires UAT greenlight PASS
+- **Execute-Release Boundary** -- downstream of Ship; blocked when Ship blocked
 
-Ship (merge) may precede UAT; Execute-Release must not. There is no path from UAT with incomplete or mismatched evidence to Execute-Release. The handoff refuses; work returns to the prior boundary for remediation.
+There is no path from UAT with incomplete or mismatched evidence to Ship. The handoff refuses; work returns to the prior boundary for remediation.
 
 ### Incomplete-packet fixture: UAT greenlight mismatch
 
@@ -161,7 +160,7 @@ This SOP maps boundaries in the work pipeline to roles. Roles are organizational
 | **Quality Architect** | Gates fitness preflight and scoring; refuses incomplete handoffs; does not have ship authority |
 | **Adversarial Auditor** | Attacks artifacts against charter; produces findings; does not have ship authority |
 | **Defect Remediator** | Fixes defects identified by Quality Architect or Adversarial Auditor; re-gates after fix |
-| **Release Conductor** | Orchestrates ship (merge) and UAT/promote boundaries; coordinates merge, release, deploy; refuses soft-green into Execute-Release / prod ladder |
+| **Release Conductor** | Orchestrates UAT/promote and ship boundaries; coordinates greenlight, merge, release, deploy; refuses soft-green into Ship |
 | **Ship Role** | Authorizes release (ratify, merge, release verbs); requires explicit mandate |
 | **Escalation Steward** | Handles escalation paths when handoffs cannot advance; owns unblock decisions |
 | **Human Root-Approver** | HITL root-approve authority for decisions that exceed agent mandate |
@@ -169,16 +168,16 @@ This SOP maps boundaries in the work pipeline to roles. Roles are organizational
 ### Boundary flow
 
 ```text
-Plan ─┬─→ Produce ──→ Fitness ──→ Audit ──→ Ship (merge) ──→ UAT/Promote ──→ Execute-Release
+Plan ─┬─→ Produce ──→ Fitness ──→ Audit ──→ UAT/Promote ──→ Ship ──→ Execute-Release
       │
       └─→ Conduct-RCA ──→ Raise-Readiness (P-030/R3+R4) ──→ HITL Root-Approve ──→ Produce
 ```
 
-**Ship (merge) ≠ Execute-Release (prod promote).** Ship (merge) may precede UAT; Execute-Release must not. UAT/Promote Evidence refuses soft-green into Execute-Release / prod ladder.
+**UAT / Promote Evidence all-required PASS greenlight lands BEFORE Ship** (when suite applies). Soft-green into Ship = REFUSE. Incomplete packet / tip mismatch refuses Ship handoff.
 
 Post-approve cohort (system change path):
 ```text
-System-Remediate Design ──→ Produce ──→ Fitness ──→ Audit ──→ Ship (merge) ──→ UAT/Promote ──→ Execute-Release ──→ Instance Heal
+System-Remediate Design ──→ Produce ──→ Fitness ──→ Audit ──→ UAT/Promote ──→ Ship ──→ Execute-Release ──→ Instance Heal
 ```
 
 ### Boundary × Role × Handoff map
@@ -191,10 +190,10 @@ System-Remediate Design ──→ Produce ──→ Fitness ──→ Audit ─�
 | 4 | **HITL Root-Approve** | Human Root-Approver | HITL → Produce | Readiness not MET; missing root-approve decision; incomplete packet | Raise packet without HITL approval record |
 | 5 | **Produce** (code or standard tip) | Producer | Produce → Fitness | Missing produce package; missing SSOT exit evidence (S7, S8) | Package without `ssot_leaf_ids` + `ssot_exit_status` |
 | 6 | **Fitness** | Quality Architect | Fitness → Audit | Preflight `handoff_refused`; scoring not MET | Produce package incomplete → `handoff_refused` (not FAIL) |
-| 7 | **Adversarial Audit** | Adversarial Auditor | Audit → Ship | Unresolved blocker findings; soft-pass hunt positive | Audit with unrebutted charter-rule violation |
-| 8 | **Ship (merge)** | Ship Role, Release Conductor | Ship → UAT/Promote | No mandate; pipeline not complete; findings not addressed | Ship request without audit completion record |
-| 9 | **UAT / Promote Evidence** | Release Conductor | UAT → Execute-Release | Incomplete packet; tip mismatch (missing suite check, tip marker mismatch, tip-race provisional, wrong tip); soft-green evidence — **never soft-green into Execute-Release / prod ladder** | Greenlight request with missing suite, tip mismatch, or "mostly passing" evidence |
-| 10 | **Execute-Release** | Release Conductor | Execute → Instance Heal (or Done) | UAT handoff not PASS; greenlight incomplete; release preconditions not met | Execute request without UAT PASS record |
+| 7 | **Adversarial Audit** | Adversarial Auditor | Audit → UAT/Promote | Unresolved blocker findings; soft-pass hunt positive | Audit with unrebutted charter-rule violation |
+| 8 | **UAT / Promote Evidence** | Release Conductor | UAT → Ship | Incomplete packet; tip mismatch (missing suite check, tip marker mismatch, tip-race provisional, wrong tip); soft-green evidence — **soft-green into Ship = REFUSE** | Greenlight request with missing suite, tip mismatch, or "mostly passing" evidence |
+| 9 | **Ship** | Ship Role, Release Conductor | Ship → Execute-Release | No mandate; pipeline not complete; findings not addressed; UAT greenlight not PASS | Ship request without UAT greenlight record |
+| 10 | **Execute-Release** | Release Conductor | Execute → Instance Heal (or Done) | Ship not complete; release preconditions not met | Execute request without Ship completion record |
 | 11 | **System-Remediate Design** | Producer, Quality Architect | Design → Produce | Design incomplete; no boundary I/O declared | Design doc without input/output/failure mode |
 | 12 | **Instance Heal** | Release Conductor, Defect Remediator | Heal → Done | Instance not verified healthy; rollback not confirmed | Heal report without verification evidence |
 
@@ -215,21 +214,20 @@ System-Remediate Design ──→ Produce ──→ Fitness ──→ Audit ─�
 
 6. **Adversarial audit:** Audit ≠ Gate ≠ Review. Auditors produce findings; they do not have ship authority. When the artifact is a Gate tip or Handoff tip, adversarial audit includes the soft-pass hunt.
 
-7. **Ship (merge) boundary:** Ship is a decision, not a review. Ship Role decides whether audit findings block release. Ship does not re-audit. Ship authority requires explicit mandate. **Ship (merge) ≠ Execute-Release (prod promote).** Merge may precede UAT; merge is not greenlight.
-
-8. **UAT / Promote Evidence:** Own Boundary with **Release Conductor** role. Refuses greenlight on incomplete packet or tip mismatch:
+7. **UAT / Promote Evidence:** Own Boundary with **Release Conductor** role. **UAT greenlight lands BEFORE Ship** (when suite applies). Refuses greenlight on incomplete packet or tip mismatch:
    - Missing suite check
    - Tip marker mismatch
    - Tip-race provisional
    - Wrong tip
    - Soft-green evidence (e.g., "80% passing is close enough")
-   - Treating merge as greenlight
    
-   **Never soft-green into Execute-Release / prod ladder.** Binary acceptance required; no provisional greenlight. Ship (merge) may precede UAT; Execute-Release must not.
+   **Soft-green into Ship = REFUSE.** Binary acceptance required; no provisional greenlight.
 
-9. **Execute-Release:** Follows UAT/Promote Evidence. Release Conductor executes the release only after UAT handoff PASS. No release without greenlight. Execute-Release is prod promote -- distinct from Ship (merge).
+8. **Ship boundary:** Ship is a decision, not a review. Ship Role decides whether audit findings block release. Ship does not re-audit. Ship authority requires explicit mandate. **Ship requires UAT greenlight PASS** (when suite applies). No Ship without greenlight.
 
-10. **Post-approve cohort:** System remediation follows the same produce→fitness→audit→ship(merge)→UAT→execute-release path. Instance heal is last -- only after execute-release completes for the system change.
+9. **Execute-Release:** Follows Ship. Release Conductor executes the release only after Ship completes. No release without Ship authorization.
+
+10. **Post-approve cohort:** System remediation follows the same produce→fitness→audit→UAT→ship→execute-release path. Instance heal is last -- only after execute-release completes for the system change.
 
 ---
 
