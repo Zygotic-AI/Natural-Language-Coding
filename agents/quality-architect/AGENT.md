@@ -20,6 +20,10 @@ Agent noun for fitness checks, gates, and quality assurance of change proposals.
 
 5. **Gate, not ship.** Quality Architect owns gates (CI enforcement); it does not have ship authority. Ship decisions belong to a ratify-role or human.
 
+6. **Quality evidence required.** Quality Architect refuses MET without quality evidence (gate receipts with outcome + timestamp). Missing evidence triggers `handoff_refused` with `QUALITY_EVIDENCE` (Q1). Quality metric SSOT: [`../../integrity/QUALITY_METRIC.md`](../../integrity/QUALITY_METRIC.md).
+
+7. **Quality snapshot at exit.** Fitness completion artifacts include a quality snapshot (`{ opportunities, ops, defects, quality }`). Formula is `Quality = Ops / Opportunities` — binary classification, no weighting (Q3–Q5).
+
 ## Shipping authority
 
 **None.** This agent noun performs fitness checks and gates. It does not ratify, merge, or release.
@@ -66,3 +70,6 @@ Completion is **not** ship authorization. Completion means "fitness assessment d
 | Outcome clarity | `handoff_refused` / `MET` / `FAIL` distinct | Outcomes conflated or soft-failed |
 | No discovery loop | Refusals logged as produce defects | Fitness became remediation coach |
 | Separation | Quality Architect did not produce the artifact | Same pass produced and assessed |
+| Quality evidence (Q1) | Missing evidence → `handoff_refused` | MET granted without evidence |
+| Quality snapshot (Q3) | Completion artifact includes quality snapshot | Snapshot missing or incomplete |
+| Binary classification (Q4) | All outcomes are op or defect | Partial/weighted outcomes recorded |

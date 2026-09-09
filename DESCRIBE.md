@@ -40,6 +40,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `adrs/` | Decision records (`0001` = zero-variance, `0003` = systems extension) |
 | `integrity/` | Principles, binding matrix, audit defs |
 | `integrity/GATE.md` | Gate noun SSOT (G1--G4, incomplete-packet hunt) |
+| `integrity/QUALITY_METRIC.md` | Quality metric SSOT (ops vs defects; Q1--Q5) |
 | `integrity/BOUNDARY.md` | Boundary + Handoff noun SSOT; role-bound SOP |
 | `integrity/binding-matrix.json` | Requirement → audit → binder (unbound fails) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
@@ -68,6 +69,17 @@ Gates and audits both yield binary outcomes (ops vs defects), but differ in mech
 Boundaries include: Plan, Conduct-RCA, Raise-Readiness, Produce, Fitness, Adversarial Audit, Ship, UAT/Promote, System-Remediate Design, Instance Heal. Role-bound SOP maps boundaries to roles (Plan Steward, Quality Architect, Adversarial Auditor, Ship Role, etc.) -- no person names in SOP tables.
 
 **Incomplete-packet fixture:** 15855 without §7/R3/R4 must FAIL any raise-readiness handoff. Binder: [P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) on BBA-Bindings main.
+
+## Quality metric (ops vs defects)
+
+- **Quality** = `Ops / Opportunities` — rate of defect-free operations across agent processes
+- **Opportunity** = gate/verb execution with binary outcome (PASS/FAIL, MET/FAIL, ready/refused)
+- **Op** = opportunity completed as specified (PASS, MET, ready)
+- **Defect** = deviation from spec (FAIL, handoff_refused, error, not met)
+
+DPMO-class without the academic theater. Binary classification only — no partial, weighted, or continuous scores. See [`integrity/QUALITY_METRIC.md`](integrity/QUALITY_METRIC.md) for formula, measurement surface, refuse rules (Q1--Q5).
+
+**Refuse rules:** Fitness refuses MET without quality evidence (Q1). Adversarial audit refuses PASS without quality snapshot traceable to SSOT (Q2). Boundary exit refuses without quality snapshot recorded (Q3).
 
 ## Adoption bar
 
