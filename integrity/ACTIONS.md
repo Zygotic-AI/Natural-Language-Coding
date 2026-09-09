@@ -70,45 +70,48 @@ A compound action is not a label for a phase — it is a composition of atomic a
 
 ## Action Catalog
 
-This catalog names the gated Actions in the BBP pipeline. Each action cites its executing Gate or Handoff and its boundary seat.
+This catalog names the gated Actions in the BBP pipeline. Each action cites its executing Gate or Handoff, boundary seat, and binder status.
 
 ### Pipeline Actions
 
-| Action | Type | Gate/Handoff | Boundary seat | Evidence |
-|--------|------|--------------|---------------|----------|
-| **Plan** | Atomic | Plan → Produce handoff | Plan | Plan exit criteria met; acceptance criteria documented |
-| **Bind-ADRs** | Atomic | ADR-binding gate | Plan | ADR exists with decision and binder |
-| **Conduct-RCA** | Atomic | RCA → Raise-Readiness handoff | Conduct-RCA | Root cause named; investigation complete |
-| **Raise-Readiness** | Compound | Raise → HITL Root-Approve handoff (includes P-030 refuse, R3/R4 check) | Raise-Readiness | §7 Owner/Path/Verification, R3, R4 present |
-| **Produce** | Compound | Produce → Fitness handoff (includes produce-package, SSOT exit evidence) | Produce | Produce package complete; `ssot_leaf_ids` + `ssot_exit_status` |
-| **Preflight-Fitness** | Atomic | `handoff_refused` gate (S7) | Fitness | No `handoff_refused`; package complete |
-| **Score-Fitness** | Atomic | Fitness scoring gate | Fitness | `MET` / `FAIL` with criteria verdicts |
-| **Fitness** | Compound | Fitness → Audit handoff (includes preflight + scoring) | Fitness | `MET` (preflight passed, scoring passed) |
-| **Audit-Charter-Rules** | Atomic | Charter-rule audit gate | Adversarial Audit | Findings report per charter rule |
-| **Incomplete-Packet-Hunt** | Atomic | Incomplete-packet gate (GATE.md) | Adversarial Audit | No incomplete-packet slips found |
-| **Adversarial-Audit** | Compound | Audit → UAT/Promote handoff (includes charter audit + incomplete-packet hunt) | Adversarial Audit | All audit sub-gates PASS; no unresolved blocker findings |
-| **UAT-Greenlight** | Atomic | UAT → Ship handoff | UAT / Promote Evidence | Suite complete; tip marker match; no soft-green |
-| **Ship** | Atomic | Ship decision gate | Ship | Ship record: who, when, artifact version, findings disposition |
-| **Execute-Release** | Atomic | Ship → Execute-Release handoff | Execute-Release | Ship complete; release preconditions met |
-| **Instance-Heal** | Atomic | Execute → Instance Heal handoff | Instance Heal | Instance verified healthy; rollback confirmed if needed |
+| Action | Type | Gate/Handoff | Binder | Boundary seat | Evidence |
+|--------|------|--------------|--------|---------------|----------|
+| **Plan** | Atomic | Plan → Produce handoff | UNWIRED+companion | Plan | Plan exit criteria met; acceptance criteria documented |
+| **Bind-ADRs** | Atomic | ADR-binding gate | UNWIRED+companion | Plan | ADR exists with decision and binder |
+| **Conduct-RCA** | Atomic | RCA → Raise-Readiness handoff | UNWIRED+companion | Conduct-RCA | Root cause named; investigation complete |
+| **Raise-Readiness** | Compound | Raise → HITL Root-Approve handoff (includes P-030 refuse, R3/R4 check) | wired-Bindings ([P-030](https://github.com/richardpickett/BBA-Bindings/pull/9)) | Raise-Readiness | §7 Owner/Path/Verification, R3, R4 present |
+| **Produce** | Compound | Produce → Fitness handoff (includes produce-package, SSOT exit evidence) | wired-Bindings ([P-020](https://github.com/richardpickett/BBA-Bindings)) | Produce | Produce package complete; `ssot_leaf_ids` + `ssot_exit_status` |
+| **Preflight-Fitness** | Atomic | `handoff_refused` gate (S7) | wired-local (`tools/score-fitness.py`) | Fitness | No `handoff_refused`; package complete |
+| **Score-Fitness** | Atomic | Fitness scoring gate | wired-local (`tools/score-fitness.py`) | Fitness | `MET` / `FAIL` with criteria verdicts |
+| **Fitness** | Compound | Fitness → Audit handoff (includes preflight + scoring) | wired-local (`tools/score-fitness.py`) | Fitness | `MET` (preflight passed, scoring passed) |
+| **Audit-Charter-Rules** | Atomic | Charter-rule audit gate | UNWIRED+companion | Adversarial Audit | Findings report per charter rule |
+| **Incomplete-Packet-Hunt** | Atomic | Incomplete-packet gate (GATE.md) | wired-Bindings ([P-030](https://github.com/richardpickett/BBA-Bindings/pull/9)) | Adversarial Audit | No incomplete-packet slips found |
+| **Adversarial-Audit** | Compound | Audit → UAT/Promote handoff (includes charter audit + incomplete-packet hunt) | UNWIRED+companion | Adversarial Audit | All audit sub-gates PASS; no unresolved blocker findings |
+| **UAT-Greenlight** | Atomic | UAT → Ship handoff | UNWIRED+companion | UAT / Promote Evidence | Suite complete; tip marker match; no soft-green |
+| **Ship** | Atomic | Ship decision gate | UNWIRED+companion | Ship | Ship record: who, when, artifact version, findings disposition |
+| **Execute-Release** | Atomic | Ship → Execute-Release handoff | UNWIRED+companion | Execute-Release | Ship complete; release preconditions met |
+| **Instance-Heal** | Atomic | Execute → Instance Heal handoff | UNWIRED+companion | Instance Heal | Instance verified healthy; rollback confirmed if needed |
 
 ### Contribution Actions
 
-| Action | Type | Gate/Handoff | Boundary seat | Evidence |
-|--------|------|--------------|---------------|----------|
-| **Contribution-Add-Noun** | Compound | Add-noun gate (includes R1–R9, contract presence) | Produce | Noun with identity, private state, verbs, invariant tests |
-| **Contribution-Add-Goal** | Compound | Add-goal gate (includes R17–R20, fitness checks) | Produce | Goal with I/O contract, verb-only writes, fitness green |
-| **Contribution-Add-Agent-Noun** | Compound | Add-agent-noun gate (includes S1–S6) | Produce | Agent noun with identity, verbs, handoff-in, completion artifact |
-| **Contribution-Add-Audit** | Atomic | Add-audit gate (P5, binding-matrix entry) | Produce | Audit definition with binary criteria; matrix row |
-| **Contribution-Add-Gate** | Compound | Add-gate gate (includes G1–G4, incomplete-packet fixture) | Produce | Gate with refuse criteria, fixture, fixture verification |
+| Action | Type | Gate/Handoff | Binder | Boundary seat | Evidence |
+|--------|------|--------------|--------|---------------|----------|
+| **Contribution/add-X** | Compound | Contribution Gate (TBD) | **UNWIRED — Gate TBD refuse** | Produce | Aligned with CONTRIBUTION.md when tip lands |
+| **Contribution-Add-Noun** | Compound | Add-noun gate (includes R1–R9, contract presence) | UNWIRED+companion | Produce | Noun with identity, private state, verbs, invariant tests |
+| **Contribution-Add-Goal** | Compound | Add-goal gate (includes R17–R20, fitness checks) | UNWIRED+companion | Produce | Goal with I/O contract, verb-only writes, fitness green |
+| **Contribution-Add-Agent-Noun** | Compound | Add-agent-noun gate (includes S1–S6) | UNWIRED+companion | Produce | Agent noun with identity, verbs, handoff-in, completion artifact |
+| **Contribution-Add-Audit** | Atomic | Add-audit gate (P5, binding-matrix entry) | wired-local (`tools/audit-binding-matrix.py`) | Produce | Audit definition with binary criteria; matrix row |
+| **Contribution-Add-Gate** | Compound | Add-gate gate (includes G1–G4, incomplete-packet fixture) | UNWIRED+companion | Produce | Gate with refuse criteria, fixture, fixture verification |
+
+**Contribution/add-X stub:** This action aligns with the Contribution Gate once `integrity/CONTRIBUTION.md` tip lands. Until then, Gate TBD refuse applies — the action is cataloged by name but its binder is not yet wired.
 
 ### Administrative Actions
 
-| Action | Type | Gate/Handoff | Boundary seat | Evidence |
-|--------|------|--------------|---------------|----------|
-| **Record-Ship-Decision** | Atomic | Ship record gate (§16.5) | Ship | Ship record exists with all required fields |
-| **Waive-Finding** | Atomic | Waiver gate (finding documented, risk acknowledged) | Ship | Waiver record: finding, rationale, risk acknowledgement |
-| **Escalate-to-HITL** | Atomic | HITL escalation handoff | HITL Root-Approve | Escalation packet with readiness evidence |
+| Action | Type | Gate/Handoff | Binder | Boundary seat | Evidence |
+|--------|------|--------------|--------|---------------|----------|
+| **Record-Ship-Decision** | Atomic | Ship record gate (§16.5) | UNWIRED+companion | Ship | Ship record exists with all required fields |
+| **Waive-Finding** | Atomic | Waiver gate (finding documented, risk acknowledged) | UNWIRED+companion | Ship | Waiver record: finding, rationale, risk acknowledgement |
+| **Escalate-to-HITL** | Atomic | HITL escalation handoff | wired-Bindings ([P-030](https://github.com/richardpickett/BBA-Bindings/pull/9)) | HITL Root-Approve | Escalation packet with readiness evidence |
 
 ---
 
@@ -140,11 +143,15 @@ If any atomic action lacks evidence of gate execution, the adversarial audit ret
 New actions must meet these criteria before catalog entry:
 
 1. **Named** — the action has a unique name in the catalog
-2. **Gated** — a Gate or Handoff exists that enforces the action
-3. **Seated** — the action belongs to a defined Boundary
-4. **Evidenced** — execution produces evidence of PASS/FAIL/REFUSE
+2. **Gate/Handoff cited** — a named Gate or Handoff exists; paper-only actions (no Gate name) are refused
+3. **Binder status declared** — one of:
+   - `wired-local` — binder lives in this repo's `tools/`
+   - `wired-Bindings` — binder lives in BBA-Bindings companion repo
+   - `UNWIRED+companion` — documented UNWIRED residual with companion tip link
+4. **Seated** — the action belongs to a defined Boundary
+5. **Evidenced** — execution produces evidence of PASS/FAIL/REFUSE
 
-Actions that are "planned" or "intended" but lack a binder are not catalog entries — they are roadmap items. Only wired actions appear in the catalog.
+**Honesty on binder status:** Many pipeline Actions cite Gates/Handoffs whose binders live in BBA-Bindings or are UNWIRED residuals. Catalog rows require a named Gate/Handoff; the binder may be local, companion, or documented UNWIRED. Paper-only entries (no Gate name, no binder status) are refused.
 
 ---
 
@@ -154,12 +161,12 @@ For changes that add or modify actions:
 
 - [ ] CA1. Action is named and unique in the catalog.
 - [ ] CA2. Action type is specified (atomic or compound).
-- [ ] CA3. Executing Gate or Handoff is cited.
+- [ ] CA3. Executing Gate or Handoff is cited by name (no paper-only).
 - [ ] CA4. Boundary seat is identified.
 - [ ] CA5. Evidence type is documented.
 - [ ] CA6. If compound, all constituent atomic actions are listed.
 - [ ] CA7. Nesting rule verified: every sub-gate must execute (no paper-only compounds).
-- [ ] CA8. Action binder exists (action is wired, not just documented).
+- [ ] CA8. Binder status declared: `wired-local` | `wired-Bindings` | `UNWIRED+companion` (with companion tip link for UNWIRED).
 
 ---
 
