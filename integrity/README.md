@@ -11,6 +11,7 @@ Zero-variance practice integrity for the BBP hub.
 | [`CONTRIBUTION.md`](CONTRIBUTION.md) | Shared docs standard + Contribution Gate (G1–G4 refuse) |
 | [`LEXICON.md`](LEXICON.md) | Locked term definitions (Action, Content type, Type recipe, etc.) |
 | [`ACTIONS.md`](ACTIONS.md) | Action noun SSOT; gated action catalog; nesting rule |
+| [`QUALITY_METRIC.md`](QUALITY_METRIC.md) | Quality metric SSOT (ops vs defects; Q1–Q5) |
 | [`binding-matrix.md`](binding-matrix.md) | Matrix rules + unbound/promote audits |
 | [`binding-matrix.json`](binding-matrix.json) | Machine index (requirement → audit → binder) |
 | [`audits/`](audits/) | Per-requirement audit definitions |

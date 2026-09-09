@@ -44,6 +44,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `adrs/` | Decision records (`0001` = zero-variance, `0003` = systems extension) |
 | `integrity/` | Principles, binding matrix, audit defs |
 | `integrity/GATE.md` | Gate noun SSOT (G1--G4, incomplete-packet hunt) |
+| `integrity/QUALITY_METRIC.md` | Quality metric SSOT (ops vs defects; Q1--Q5) |
 | `integrity/BOUNDARY.md` | Boundary + Handoff noun SSOT; role-bound SOP |
 | `integrity/BOUNDED_CONTEXT.md` | Bounded Context noun SSOT; living system-as-is knowledge (mechanisms, keys, invariants) |
 | `integrity/CONTRIBUTION.md` | Shared docs standard + Contribution Gate (G1--G4 refuse) |
@@ -87,6 +88,17 @@ Boundaries include: Plan, Conduct-RCA, Raise-Readiness, Produce, Fitness, Advers
 - **Nesting rule** = every Gate in a compound action executes; no paper-only compounds.
 
 Actions connect the pipeline (Plan → Produce → Fitness → Audit → Ship) to specific enforcement points. Charter R30: every prescribed step or action has a hard gate.
+
+## Quality metric (ops vs defects)
+
+- **Quality** = `Ops / Opportunities` — rate of defect-free operations across agent processes
+- **Opportunity** = gate/verb execution with binary outcome (PASS/FAIL, MET/FAIL, ready/refused)
+- **Op** = opportunity completed as specified (PASS, MET, ready)
+- **Defect** = deviation from spec (FAIL, handoff_refused, error, not met)
+
+DPMO-class without the academic theater. Binary classification only — no partial, weighted, or continuous scores. See [`integrity/QUALITY_METRIC.md`](integrity/QUALITY_METRIC.md) for formula, measurement surface, refuse rules (Q1--Q5).
+
+**Refuse rules:** Fitness refuses MET without quality evidence (Q1). Adversarial audit refuses PASS without quality snapshot traceable to SSOT (Q2). Boundary exit refuses without quality snapshot recorded (Q3).
 
 ## Adoption bar
 

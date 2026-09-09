@@ -9,6 +9,7 @@
 ☐ Package agent short-form prompt + roles under agents/ (each step hard-gated)
 ☐ Add hard I/O + failure-mode declarations to every public tool/agent boundary in this repo
 ✔ Create fail-capable binders for S1–S6 and CS1–CS6 (systems model requirements) @done(26-09-09 22:30)
+✔ Add Quality metric SSOT (ops vs defects; Q1–Q5) to integrity/ @done(26-09-09 22:20)
 ✔ Define ship-role agent noun (ratify, merge, release, waive-finding verbs) @done(26-09-05 20:35)
 ☐ Define additional agent nouns as needed (e.g., deploy-role for environment-specific release)
 ✔ Add machine-readable schemas (JSON Schema / OpenAPI) for agent noun verb contracts @done(26-09-09 22:16)

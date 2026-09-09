@@ -708,6 +708,69 @@
       "audit_def": "integrity/audits/A-CS8.md",
       "binder": "tools/fitness-agent-noun-structure.py",
       "status": "bound"
+    },
+    {
+      "id": "Q1",
+      "statement": "Quality evidence required at fitness. Every produce package submitted to fitness preflight must include quality evidence from prior gate executions.",
+      "surface": "reference",
+      "audit_id": "A-Q1",
+      "audit_def": "integrity/audits/A-Q1.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "Q2",
+      "statement": "Quality evidence required at adversarial audit. Every artifact submitted to adversarial audit must have quality evidence traceable to SSOT.",
+      "surface": "reference",
+      "audit_id": "A-Q2",
+      "audit_def": "integrity/audits/A-Q2.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "Q3",
+      "statement": "Quality snapshot recorded at boundary exit. Every boundary exit that advances work must record a quality snapshot.",
+      "surface": "reference",
+      "audit_id": "A-Q3",
+      "audit_def": "integrity/audits/A-Q3.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "Q4",
+      "statement": "Defect classification is binary. Every opportunity outcome is classified as exactly one of: op or defect.",
+      "surface": "reference",
+      "audit_id": "A-Q4",
+      "audit_def": "integrity/audits/A-Q4.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "Q5",
+      "statement": "Quality metric is ops/opportunities. The canonical quality formula; no alternative weighted or continuous formulas.",
+      "surface": "reference",
+      "audit_id": "A-Q5",
+      "audit_def": "integrity/audits/A-Q5.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "CS9",
+      "statement": "Quality evidence present in produce package (gate receipts with outcome + timestamp).",
+      "surface": "reference",
+      "audit_id": "A-CS9",
+      "audit_def": "integrity/audits/A-CS9.md",
+      "binder": "",
+      "status": "unbound"
+    },
+    {
+      "id": "CS10",
+      "statement": "Quality snapshot recorded at boundary exit ({ opportunities, ops, defects, quality }).",
+      "surface": "reference",
+      "audit_id": "A-CS10",
+      "audit_def": "integrity/audits/A-CS10.md",
+      "binder": "",
+      "status": "unbound"
     }
   ]
 }

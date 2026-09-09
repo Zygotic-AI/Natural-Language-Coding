@@ -767,7 +767,29 @@ Each verb has input contract, output contract, and failure mode. See agent noun 
 
 **S8.** Produce packages require task/board SSOT exit evidence. Packages must include `ssot_leaf_ids` (one or more opaque leaf ids from the task/board SSOT) and `ssot_exit_status` (non-empty exit state string). Missing SSOT exit evidence triggers `handoff_refused` (same refuse class as S7); fitness scoring refuses MET; adversarial audit refuses PASS (P-020).
 
-### 16.7 Confirmation checklist (systems)
+### 16.8 Quality metric (ops vs defects)
+
+SSOT: [`integrity/QUALITY_METRIC.md`](integrity/QUALITY_METRIC.md).
+
+Quality measures the rate of defect-free operations across agent processes:
+
+```text
+Quality = Ops / Opportunities
+```
+
+Where **Opportunities** are gate/verb executions with binary outcomes, **Ops** are opportunities that completed as specified (PASS, MET, ready), and **Defects** are deviations from spec (FAIL, handoff_refused, error). This is DPMO-class without the academic theater.
+
+**Q1.** Quality evidence required at fitness. Produce packages must include gate receipts with `outcome` + `timestamp`. Missing evidence triggers `handoff_refused` with `QUALITY_EVIDENCE`.
+
+**Q2.** Quality evidence required at adversarial audit. Artifacts must have `ssot_leaf_ids` present AND `quality_snapshot` with non-zero `opportunities`. Missing evidence causes audit FAIL citing Q2.
+
+**Q3.** Quality snapshot recorded at boundary exit. Completion artifacts include `{ opportunities, ops, defects, quality }`.
+
+**Q4.** Defect classification is binary. Every outcome is exactly op or defect. No partial, weighted, or continuous scores.
+
+**Q5.** Quality formula is ops/opportunities. No alternative formulas for the canonical quality metric.
+
+### 16.9 Confirmation checklist (systems)
 
 For changes that touch agent nouns:
 
@@ -779,6 +801,8 @@ For changes that touch agent nouns:
 - [ ] CS6. Audit roles have no ship verbs.
 - [ ] CS7. Produce package present before fitness; incomplete handoffs refused, not soft-failed.
 - [ ] CS8. Task/board SSOT exit evidence present in produce package (`ssot_leaf_ids` + `ssot_exit_status`); missing evidence refused (P-020).
+- [ ] CS9. Quality evidence present in produce package (gate receipts with outcome + timestamp).
+- [ ] CS10. Quality snapshot recorded at boundary exit (`{ opportunities, ops, defects, quality }`).
 
 ---
 
