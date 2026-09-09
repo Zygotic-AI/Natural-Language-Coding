@@ -73,6 +73,36 @@ Boundaries include: Plan, Conduct-RCA, Raise-Readiness, Produce, Fitness, Advers
 
 Charter §14: charter present, real noun + goal, fitness check 1 fails a deliberate violation in CI, agent loop written for class A/B, confirmer produces evidence. Plus §5.8: binding matrix audits green (no unbound in-force requirements).
 
+## Binding matrix status
+
+**Current ratio: 40/78 bound (51.3%)**
+
+Bound requirements have fail-capable binders under `tools/`. The 38 unbound reference requirements fall into two categories:
+
+### Requirements needing future binders
+
+These can gain automated binders with additional tooling work:
+
+- **C5, R6**: Verb-path analysis (every state change through public verb) — needs call-graph tooling
+- **R9, R10, C7, C8**: Contract presence checks — needs schema validation tooling
+- **R11, C9**: Field meaning uniqueness — needs semantic schema comparison
+- **C19**: Duplicated law detection — needs AST-based predicate matching
+- **R20**: Charter/ADR/code agreement — needs drift detection tooling
+
+### Requirements staying reference (judgment required)
+
+These require human review or are inherently design-time decisions:
+
+- **R1-R4**: Ownership placement rules — requires understanding intent
+- **R13, R15, R16, C11, C13**: Goal/noun design decisions — judgment calls
+- **R17, R18, C14, C15**: Workflow composition rules — design review
+- **C1-C3**: Change classification and home — proposal-time decisions
+- **C16-C18, R25**: Test coverage and scope — review-time checks
+- **C21-C24**: Proposal integrity — adversarial review items
+- **P2**: Zero variance scope — meta-principle about the system itself
+
+Run `python3 tools/audit-binding-matrix.py` to verify matrix integrity. All in-force requirements must be bound; reference requirements may remain unbound without failing the audit.
+
 ## Conventions in this workspace
 
 - Prefer promise chaining over `await`; `.catch()` instead of try/catch around chains; `async` on Promise-returning functions; JSDoc on methods (when JS/TS lands).
