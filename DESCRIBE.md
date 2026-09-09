@@ -44,6 +44,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `integrity/BOUNDED_CONTEXT.md` | Bounded Context noun SSOT; living system-as-is knowledge (mechanisms, keys, invariants) |
 | `integrity/CONTRIBUTION.md` | Shared docs standard + Contribution Gate (G1--G4 refuse) |
 | `integrity/LEXICON.md` | Locked term definitions (Action, Content type, Type recipe, etc.) |
+| `integrity/ACTIONS.md` | Action noun SSOT; gated action catalog; nesting rule |
 | `integrity/binding-matrix.json` | Requirement → audit → binder (unbound fails) |
 | `content-types/HOW-TO-ADD.md` | Type recipes for adding content (ADR, integrity doc, agent noun, etc.) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
@@ -72,6 +73,15 @@ Gates and audits both yield binary outcomes (ops vs defects), but differ in mech
 Boundaries include: Plan, Conduct-RCA, Raise-Readiness, Produce, Fitness, Adversarial Audit, Ship, UAT/Promote, System-Remediate Design, Instance Heal. Role-bound SOP maps boundaries to roles (Plan Steward, Quality Architect, Adversarial Auditor, Ship Role, etc.) -- no person names in SOP tables.
 
 **Incomplete-packet fixture:** 15855 without §7/R3/R4 must FAIL any raise-readiness handoff. Binder: [P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) on BBA-Bindings main.
+
+## Terminology clarification (action)
+
+- **Action** = named, gated unit of work within a boundary; executes through a Gate or Handoff. See [`integrity/ACTIONS.md`](integrity/ACTIONS.md).
+- **Atomic action** = indivisible unit; exactly one Gate/Handoff.
+- **Compound action** = composed of atomic actions; every sub-gate must execute.
+- **Nesting rule** = every Gate in a compound action executes; no paper-only compounds.
+
+Actions connect the pipeline (Plan → Produce → Fitness → Audit → Ship) to specific enforcement points. Charter R30: every prescribed step or action has a hard gate.
 
 ## Adoption bar
 
