@@ -41,6 +41,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `integrity/` | Principles, binding matrix, audit defs |
 | `integrity/GATE.md` | Gate noun SSOT (G1--G4, incomplete-packet hunt) |
 | `integrity/BOUNDARY.md` | Boundary + Handoff noun SSOT; role-bound SOP |
+| `integrity/BOUNDED_CONTEXT.md` | Bounded Context noun SSOT; living system-as-is knowledge (mechanisms, keys, invariants) |
 | `integrity/binding-matrix.json` | Requirement → audit → binder (unbound fails) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
 | `AGENTS.md` | Cross-harness standing instructions |
