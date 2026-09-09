@@ -270,7 +270,9 @@ For changes that add or modify boundaries or handoffs:
 - Charter §5.8: Practice integrity (zero variance, hard gates)
 - Charter §16: Systems model -- agent nouns, vocabulary mapping
 - Charter §16.1: Gate ≠ Audit vocabulary
+- Charter R30: Every prescribed step or action has a hard gate
 - [`GATE.md`](GATE.md): Gate noun, G1--G4, incomplete-packet hunt
+- [`ACTIONS.md`](ACTIONS.md): Action noun; gated action catalog; nesting rule
 - [`PRINCIPLES.md`](PRINCIPLES.md) P3: Hard gates (complete/incomplete only)
 - [`../agents/quality-architect/AGENT.md`](../agents/quality-architect/AGENT.md): Fitness preflight and scoring
 - [`../agents/adversarial-auditor/AGENT.md`](../agents/adversarial-auditor/AGENT.md): Adversarial review role

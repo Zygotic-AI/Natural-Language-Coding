@@ -5,6 +5,9 @@ Zero-variance practice integrity for the BBP hub.
 | Path | Role |
 |------|------|
 | [`PRINCIPLES.md`](PRINCIPLES.md) | P1–P7 with binary audits |
+| [`GATE.md`](GATE.md) | Gate noun SSOT (G1–G4, incomplete-packet hunt) |
+| [`BOUNDARY.md`](BOUNDARY.md) | Boundary + Handoff noun SSOT; role-bound SOP |
+| [`ACTIONS.md`](ACTIONS.md) | Action noun SSOT; gated action catalog; nesting rule |
 | [`binding-matrix.md`](binding-matrix.md) | Matrix rules + unbound/promote audits |
 | [`binding-matrix.json`](binding-matrix.json) | Machine index (requirement → audit → binder) |
 | [`audits/`](audits/) | Per-requirement audit definitions |
