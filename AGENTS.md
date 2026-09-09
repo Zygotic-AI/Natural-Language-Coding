@@ -15,6 +15,8 @@ Practice integrity (charter §5.8, [`integrity/PRINCIPLES.md`](integrity/PRINCIP
 
 **SSOT exit evidence required (P-020, S8).** Every produce package must include task/board SSOT exit evidence: `ssot_leaf_ids` (one or more opaque leaf ids) and `ssot_exit_status` (non-empty exit state string). Fitness refuses MET without this evidence; adversarial audit refuses PASS. Missing SSOT exit evidence triggers `handoff_refused` with `SSOT_EXIT_EVIDENCE` in the defect log. Do not normalize leaving SSOT exit evidence for later.
 
+**Operating bindings.** P-series operating policies (P-016 handoff default-closed, P-020 SSOT exit evidence, P-030 raise-readiness refuse, etc.) live in the companion [`BBA-Bindings`](https://github.com/richardpickett/BBA-Bindings) repo. See [`docs/OPERATING_BINDINGS.md`](docs/OPERATING_BINDINGS.md) for the index and how to locate BINDING-MAP.
+
 
 ## Layout
 
