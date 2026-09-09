@@ -25,6 +25,25 @@ input:
       handoff_token:
         type: string
         description: Optional. If present must match complete-produce issuance. Absence allowed when package_path supplied and package checks pass.
+      quality_evidence:
+        type: object
+        description: Quality evidence from prior gate executions (Q1)
+        properties:
+          gate_receipts:
+            type: array
+            items:
+              type: object
+              required: [gate_id, outcome, timestamp]
+              properties:
+                gate_id:
+                  type: string
+                outcome:
+                  enum: [PASS, FAIL, MET, REFUSE]
+                timestamp:
+                  type: string
+                  format: date-time
+                evidence_path:
+                  type: string
 ```
 
 ### Output contract
@@ -43,7 +62,7 @@ output:
         missing:
           type: array
           items:
-            enum: [PLAN, APPLICABILITY, BOUNDARY_IO, ADVERSARIAL_NOTES, VERIFY_SCRIPT, SSOT_EXIT_EVIDENCE]
+            enum: [PLAN, APPLICABILITY, BOUNDARY_IO, ADVERSARIAL_NOTES, VERIFY_SCRIPT, SSOT_EXIT_EVIDENCE, QUALITY_EVIDENCE]
         reason:
           type: string
     ssot_leaf_ids:
@@ -152,6 +171,28 @@ output:
       type: string
       minLength: 1
       description: Exit status verified (echo for receipt)
+    quality_snapshot:
+      type: object
+      description: Quality snapshot at fitness exit (Q3)
+      required: [opportunities, ops, defects, quality]
+      properties:
+        opportunities:
+          type: integer
+          minimum: 0
+          description: Total gate/verb executions in scope
+        ops:
+          type: integer
+          minimum: 0
+          description: Opportunities completed as specified
+        defects:
+          type: integer
+          minimum: 0
+          description: Opportunities that deviated from spec
+        quality:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Quality ratio (ops / opportunities)
 ```
 
 ### Failure mode
@@ -164,12 +205,12 @@ error:
   required: [code, message]
   properties:
     code:
-      enum: [ARTIFACT_NOT_FOUND, PREFLIGHT_NOT_READY, SELF_SCORE, SSOT_EVIDENCE_MISSING]
+      enum: [ARTIFACT_NOT_FOUND, PREFLIGHT_NOT_READY, SELF_SCORE, SSOT_EVIDENCE_MISSING, QUALITY_EVIDENCE_MISSING]
     message:
       type: string
 ```
 
-**Note:** `PREFLIGHT_NOT_READY` error is returned if `preflight_status` is not `ready`. This enforces the default-closed handoff: no scoring without preflight pass. `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; scoring refuses MET without SSOT exit evidence (S8, P-020).
+**Note:** `PREFLIGHT_NOT_READY` error is returned if `preflight_status` is not `ready`. This enforces the default-closed handoff: no scoring without preflight pass. `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; scoring refuses MET without SSOT exit evidence (S8, P-020). `QUALITY_EVIDENCE_MISSING` error is returned if quality evidence (gate receipts) is absent; scoring refuses MET without quality evidence (Q1).
 
 ---
 

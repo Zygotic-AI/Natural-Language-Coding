@@ -15,15 +15,28 @@ Practice integrity (charter §5.8, [`integrity/PRINCIPLES.md`](integrity/PRINCIP
 
 **SSOT exit evidence required (P-020, S8).** Every produce package must include task/board SSOT exit evidence: `ssot_leaf_ids` (one or more opaque leaf ids) and `ssot_exit_status` (non-empty exit state string). Fitness refuses MET without this evidence; adversarial audit refuses PASS. Missing SSOT exit evidence triggers `handoff_refused` with `SSOT_EXIT_EVIDENCE` in the defect log. Do not normalize leaving SSOT exit evidence for later.
 
+**Operating bindings.** P-series operating policies (P-016 handoff default-closed, P-020 SSOT exit evidence, P-030 raise-readiness refuse, etc.) live in the companion [`BBA-Bindings`](https://github.com/richardpickett/BBA-Bindings) repo. See [`docs/OPERATING_BINDINGS.md`](docs/OPERATING_BINDINGS.md) for the index and how to locate BINDING-MAP.
+
 
 ## Layout
 
 - `theory/` — rationale and history (OG draft is frozen under `theory/history/`)
-- `agents/` — how agents apply the charter
+- `agents/` — how agents apply the charter; validate with [`tools/validate-agent-noun-packages.py`](tools/validate-agent-noun-packages.py)
 - `tools/` — enforcement and scaffolding
 - `examples/` — adopter samples
 - `adrs/` — recorded decisions
 - `integrity/` — principles, binding matrix, binary audits
+- `content-types/` — type recipes for adding content (see [`content-types/HOW-TO-ADD.md`](content-types/HOW-TO-ADD.md))
+
+## Contribution standards
+
+Before adding or amending content, follow the shared docs standard and type recipe:
+
+- [`integrity/CONTRIBUTION.md`](integrity/CONTRIBUTION.md) — shared docs standard + Contribution Gate
+- [`integrity/LEXICON.md`](integrity/LEXICON.md) — locked term definitions
+- [`content-types/HOW-TO-ADD.md`](content-types/HOW-TO-ADD.md) — type recipes (ADR, integrity doc, agent noun, audit, example)
+
+Contribution Gate refuse criteria (CG-R1 through CG-R7) apply to all add-X contributions. No person names in SSOT surfaces (CG-R4); role language only.
 
 Do not invent empty “governance / compliance / risk” trees. Put real artifacts where they belong.
 

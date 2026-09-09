@@ -1,0 +1,5 @@
+{
+  "package_id": "pkg-test-invalid-001",
+  "ssot_leaf_ids": ["leaf-001"],
+  "ssot_exit_status": "complete"
+}
