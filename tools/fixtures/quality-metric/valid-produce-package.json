@@ -1,0 +1,19 @@
+{
+  "package_id": "pkg-test-valid-001",
+  "quality_evidence": [
+    {
+      "gate_id": "fitness-preflight",
+      "outcome": "PASS",
+      "timestamp": "2026-09-09T10:00:00Z",
+      "evidence_path": "evidence/preflight.log"
+    },
+    {
+      "gate_id": "fitness-score",
+      "outcome": "MET",
+      "timestamp": "2026-09-09T10:01:00Z",
+      "evidence_path": "evidence/score.log"
+    }
+  ],
+  "ssot_leaf_ids": ["leaf-001"],
+  "ssot_exit_status": "complete"
+}

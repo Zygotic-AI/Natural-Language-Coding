@@ -1,0 +1,9 @@
+{
+  "completion_id": "comp-test-invalid-003",
+  "quality_snapshot": {
+    "opportunities": 100,
+    "ops": 80,
+    "defects": 20,
+    "quality": 0.9
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "package_id": "pkg-test-invalid-002",
+  "quality_evidence": [
+    {
+      "gate_id": "fitness-preflight",
+      "outcome": "PASS"
+    }
+  ],
+  "ssot_leaf_ids": ["leaf-001"],
+  "ssot_exit_status": "complete"
+}

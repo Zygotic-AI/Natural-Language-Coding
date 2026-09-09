@@ -1,0 +1,10 @@
+{
+  "artifact_id": "art-test-invalid-002",
+  "ssot_leaf_ids": ["leaf-001"],
+  "quality_snapshot": {
+    "opportunities": 0,
+    "ops": 0,
+    "defects": 0,
+    "quality": 0
+  }
+}

@@ -10,6 +10,7 @@ Enforcement and scaffolding that make the charter real.
 | [`fitness-no-noun-field-writes.py`](fitness-no-noun-field-writes.py) | Optional argv roots; no args → hub `ROOT` (`domain/`, `goals/`, `workflows/`, `adapters/`, `examples/**`). | `VIOLATION <path>:<line> <field>`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET/PASS; exit **1** = NOT_MET/FAIL. No silent exception swallow. |
 | [`assert-invoice-violation-fails.py`](assert-invoice-violation-fails.py) | No argv. Fixed tree `examples/invoice-violation/`. | `VIOLATION …`, `RESULT:…`, `ASSERT:PASS` or `ASSERT:FAIL …`. | Exit **0** = ASSERT:PASS; exit **1** = ASSERT:FAIL. No silent exception swallow. |
 | [`ci-fitness-check1.sh`](ci-fitness-check1.sh) | No argv. Repo root; assert gate + each `examples/*/` except `invoice-violation`. | Section banners; child stdout; `CI:FAIL …` or `CI:MET`. | Exit **0** = CI:MET/PASS; exit **1** = CI:FAIL. Child failures not swallowed. |
+| [`fitness-quality-metric.py`](fitness-quality-metric.py) | No argv. Scans `tools/fixtures/quality-metric/` for validation fixtures. | `CHECK <req> <fixture>:MET\|NOT_MET [reason]`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET/PASS; exit **1** = NOT_MET/FAIL. No silent exception swallow. |
 
 These docstring/header contracts are documentation for P4/R31. **P4/R31 stay unbound** until a fail-capable checker exists for the contract text itself.
 
@@ -19,6 +20,7 @@ These docstring/header contracts are documentation for P4/R31. **P4/R31 stay unb
 | [`fitness-no-noun-field-writes.py`](fitness-no-noun-field-writes.py) | Fitness check 1 (charter §12.1 / R5 / C4): fail if goals/workflows/adapters assign a noun field |
 | [`assert-invoice-violation-fails.py`](assert-invoice-violation-fails.py) | Known-fail gate: exit 0 only if the invoice-violation fixture still fails check 1 |
 | [`ci-fitness-check1.sh`](ci-fitness-check1.sh) | Hub CI wrapper: fixture gate + non-fixture trees must pass |
+| [`fitness-quality-metric.py`](fitness-quality-metric.py) | Quality metric validation (Q1-Q5, CS9-CS10): produce package evidence, adversarial artifact, binary classification, snapshot consistency, formula |
 
 ## Fitness check 1
 

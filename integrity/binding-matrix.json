@@ -715,8 +715,8 @@
       "surface": "reference",
       "audit_id": "A-Q1",
       "audit_def": "integrity/audits/A-Q1.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-quality-metric.py",
+      "status": "bound"
     },
     {
       "id": "Q2",
@@ -724,8 +724,8 @@
       "surface": "reference",
       "audit_id": "A-Q2",
       "audit_def": "integrity/audits/A-Q2.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-quality-metric.py",
+      "status": "bound"
     },
     {
       "id": "Q3",
@@ -733,8 +733,8 @@
       "surface": "reference",
       "audit_id": "A-Q3",
       "audit_def": "integrity/audits/A-Q3.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-quality-metric.py",
+      "status": "bound"
     },
     {
       "id": "Q4",
@@ -742,8 +742,8 @@
       "surface": "reference",
       "audit_id": "A-Q4",
       "audit_def": "integrity/audits/A-Q4.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-quality-metric.py",
+      "status": "bound"
     },
     {
       "id": "Q5",
@@ -751,8 +751,8 @@
       "surface": "reference",
       "audit_id": "A-Q5",
       "audit_def": "integrity/audits/A-Q5.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-quality-metric.py",
+      "status": "bound"
     },
     {
       "id": "CS9",
@@ -760,8 +760,8 @@
       "surface": "reference",
       "audit_id": "A-CS9",
       "audit_def": "integrity/audits/A-CS9.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-quality-metric.py",
+      "status": "bound"
     },
     {
       "id": "CS10",
@@ -769,8 +769,8 @@
       "surface": "reference",
       "audit_id": "A-CS10",
       "audit_def": "integrity/audits/A-CS10.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-quality-metric.py",
+      "status": "bound"
     }
   ]
 }
