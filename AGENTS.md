@@ -21,11 +21,22 @@ Practice integrity (charter §5.8, [`integrity/PRINCIPLES.md`](integrity/PRINCIP
 ## Layout
 
 - `theory/` — rationale and history (OG draft is frozen under `theory/history/`)
-- `agents/` — how agents apply the charter
+- `agents/` — how agents apply the charter; validate with [`tools/validate-agent-noun-packages.py`](tools/validate-agent-noun-packages.py)
 - `tools/` — enforcement and scaffolding
 - `examples/` — adopter samples
 - `adrs/` — recorded decisions
 - `integrity/` — principles, binding matrix, binary audits
+- `content-types/` — type recipes for adding content (see [`content-types/HOW-TO-ADD.md`](content-types/HOW-TO-ADD.md))
+
+## Contribution standards
+
+Before adding or amending content, follow the shared docs standard and type recipe:
+
+- [`integrity/CONTRIBUTION.md`](integrity/CONTRIBUTION.md) — shared docs standard + Contribution Gate
+- [`integrity/LEXICON.md`](integrity/LEXICON.md) — locked term definitions
+- [`content-types/HOW-TO-ADD.md`](content-types/HOW-TO-ADD.md) — type recipes (ADR, integrity doc, agent noun, audit, example)
+
+Contribution Gate refuse criteria (CG-R1 through CG-R7) apply to all add-X contributions. No person names in SSOT surfaces (CG-R4); role language only.
 
 Do not invent empty “governance / compliance / risk” trees. Put real artifacts where they belong.
 

@@ -45,8 +45,13 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `integrity/` | Principles, binding matrix, audit defs |
 | `integrity/GATE.md` | Gate noun SSOT (G1--G4, incomplete-packet hunt) |
 | `integrity/BOUNDARY.md` | Boundary + Handoff noun SSOT; role-bound SOP |
+| `integrity/BOUNDED_CONTEXT.md` | Bounded Context noun SSOT; living system-as-is knowledge (mechanisms, keys, invariants) |
+| `integrity/CONTRIBUTION.md` | Shared docs standard + Contribution Gate (G1--G4 refuse) |
+| `integrity/LEXICON.md` | Locked term definitions (Action, Content type, Type recipe, etc.) |
+| `integrity/ACTIONS.md` | Action noun SSOT; gated action catalog; nesting rule |
 | `integrity/binding-matrix.json` | Requirement → audit → binder (unbound fails) |
 | `docs/OPERATING_BINDINGS.md` | Operating policy index (P-016…P-031 class); links to BBA-Bindings companion |
+| `content-types/HOW-TO-ADD.md` | Type recipes for adding content (ADR, integrity doc, agent noun, etc.) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
 | `AGENTS.md` | Cross-harness standing instructions |
 | `.agents/` | Portable skills / instructions |
@@ -74,9 +79,48 @@ Boundaries include: Plan, Conduct-RCA, Raise-Readiness, Produce, Fitness, Advers
 
 **Incomplete-packet fixture:** 15855 without §7/R3/R4 must FAIL any raise-readiness handoff. Binder: [P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) on BBA-Bindings main.
 
+## Terminology clarification (action)
+
+- **Action** = named, gated unit of work within a boundary; executes through a Gate or Handoff. See [`integrity/ACTIONS.md`](integrity/ACTIONS.md).
+- **Atomic action** = indivisible unit; exactly one Gate/Handoff.
+- **Compound action** = composed of atomic actions; every sub-gate must execute.
+- **Nesting rule** = every Gate in a compound action executes; no paper-only compounds.
+
+Actions connect the pipeline (Plan → Produce → Fitness → Audit → Ship) to specific enforcement points. Charter R30: every prescribed step or action has a hard gate.
+
 ## Adoption bar
 
 Charter §14: charter present, real noun + goal, fitness check 1 fails a deliberate violation in CI, agent loop written for class A/B, confirmer produces evidence. Plus §5.8: binding matrix audits green (no unbound in-force requirements).
+
+## Binding matrix status
+
+**Current ratio: 40/78 bound (51.3%)**
+
+Bound requirements have fail-capable binders under `tools/`. The 38 unbound reference requirements fall into two categories:
+
+### Requirements needing future binders
+
+These can gain automated binders with additional tooling work:
+
+- **C5, R6**: Verb-path analysis (every state change through public verb) — needs call-graph tooling
+- **R9, R10, C7, C8**: Contract presence checks — needs schema validation tooling
+- **R11, C9**: Field meaning uniqueness — needs semantic schema comparison
+- **C19**: Duplicated law detection — needs AST-based predicate matching
+- **R20**: Charter/ADR/code agreement — needs drift detection tooling
+
+### Requirements staying reference (judgment required)
+
+These require human review or are inherently design-time decisions:
+
+- **R1-R4**: Ownership placement rules — requires understanding intent
+- **R13, R15, R16, C11, C13**: Goal/noun design decisions — judgment calls
+- **R17, R18, C14, C15**: Workflow composition rules — design review
+- **C1-C3**: Change classification and home — proposal-time decisions
+- **C16-C18, R25**: Test coverage and scope — review-time checks
+- **C21-C24**: Proposal integrity — adversarial review items
+- **P2**: Zero variance scope — meta-principle about the system itself
+
+Run `python3 tools/audit-binding-matrix.py` to verify matrix integrity. All in-force requirements must be bound; reference requirements may remain unbound without failing the audit.
 
 ## Conventions in this workspace
 
