@@ -13,10 +13,10 @@ Index of operating policies from the companion BBA-Bindings repository. This doc
 The authoritative operating bindings live in the companion repository:
 
 - **Primary location:** `richardpickett/BBA-Bindings` on GitHub
-- **BINDING-MAP:** `docs/BINDING-MAP.md` (or root `BINDING-MAP.md`)
+- **BINDING-MAP:** `docs/BINDING-MAP.md` (verified)
 - **PR links:** Individual policies reference PRs on that repo (e.g., `BBA-Bindings/pull/9` for P-030)
 
-**Status:** BBA-Bindings repo is pending publication. When published, verify the BINDING-MAP path and update this index. If the repo URL changes, search the org for repositories named `BBA-Bindings`, `Bindings`, or containing `BINDING-MAP`.
+**Status:** BBA-Bindings is published (private). Verified BINDING-MAP path: `docs/BINDING-MAP.md`. If the repo URL changes, search the org for repositories named `BBA-Bindings`, `Bindings`, or containing `BINDING-MAP`.
 
 ## Operating policy index (P-016…P-031 class)
 
@@ -36,7 +36,7 @@ Policies in this class govern handoff gates, evidence requirements, and refuse c
 **P-015 (Bot-auditable packages)**
 - Referenced in: `reviews/README.md`
 - Aligned with: KD-010 quality north star
-- Richard does NOT review PRs; packages must be bot-auditable
+- Human Root-Approver / operator does not review PRs; packages must be bot-auditable
 
 **P-016 (Produce→fitness handoff default-closed)** — ADR 0004
 - Charter rule: S7, CS7
