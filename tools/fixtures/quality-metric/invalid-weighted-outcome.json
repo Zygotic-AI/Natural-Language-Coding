@@ -1,0 +1,7 @@
+{
+  "outcomes": [
+    {"id": "out-001", "classification": "op", "weight": 0.5},
+    {"id": "out-002", "classification": "op", "weight": 1.0},
+    {"id": "out-003", "classification": "defect", "weight": 0.25}
+  ]
+}
