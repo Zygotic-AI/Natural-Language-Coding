@@ -5,8 +5,9 @@ Zero-variance practice integrity for the BBP hub.
 | Path | Role |
 |------|------|
 | [`PRINCIPLES.md`](PRINCIPLES.md) | P1–P7 with binary audits |
-| [`GATE.md`](GATE.md) | Gate noun SSOT (G1–G4, incomplete-packet hunt) |
 | [`BOUNDARY.md`](BOUNDARY.md) | Boundary + Handoff noun SSOT; role-bound SOP |
+| [`BOUNDED_CONTEXT.md`](BOUNDED_CONTEXT.md) | Bounded Context noun SSOT; living system-as-is knowledge |
+| [`GATE.md`](GATE.md) | Gate noun SSOT (G1–G4, incomplete-packet hunt) |
 | [`CONTRIBUTION.md`](CONTRIBUTION.md) | Shared docs standard + Contribution Gate (G1–G4 refuse) |
 | [`LEXICON.md`](LEXICON.md) | Locked term definitions (Action, Content type, Type recipe, etc.) |
 | [`binding-matrix.md`](binding-matrix.md) | Matrix rules + unbound/promote audits |
