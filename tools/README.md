@@ -61,6 +61,30 @@ Two-invocation wrapper (uses the assert gate + non-fixture MET scans):
 bash tools/ci-fitness-check1.sh
 ```
 
+## Agent noun package validation
+
+Validates that agent noun packages under `agents/<name>/` have:
+- `AGENT.md` with required sections (Identity, Invariants, Handoff-in, Completion artifact, Success criteria)
+- `verbs.md` where every verb declares Input contract, Output contract, and Failure mode (per S2 / R31)
+
+| Tool | Input | Output | Failure mode |
+|------|-------|--------|--------------|
+| [`validate-agent-noun-packages.py`](validate-agent-noun-packages.py) | Optional argv = specific agent names; no args → scans all `agents/*/` | `PACKAGE:<name>:VALID\|INVALID`, `AGENT_MISSING_SECTION`, `VERB_MISSING_*`, `RESULT:MET\|NOT_MET`. | Exit **0** = MET/PASS; exit **1** = NOT_MET/FAIL. No silent exception swallow. |
+
+### Commands
+
+```bash
+# Validate all agent noun packages
+python3 tools/validate-agent-noun-packages.py
+
+# Validate specific agent nouns
+python3 tools/validate-agent-noun-packages.py quality-architect adversarial-auditor
+```
+
+### Machine-readable verb schemas
+
+Agent noun verb contracts may also have machine-readable JSON Schema definitions under `agents/<name>/schemas/`. See [`agents/quality-architect/schemas/verbs.schema.json`](../agents/quality-architect/schemas/verbs.schema.json) for example.
+
 ## Other planned tools
 
 - Fitness checks for import boundaries and law locality

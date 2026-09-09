@@ -19,7 +19,7 @@ Practice integrity (charter §5.8, [`integrity/PRINCIPLES.md`](integrity/PRINCIP
 ## Layout
 
 - `theory/` — rationale and history (OG draft is frozen under `theory/history/`)
-- `agents/` — how agents apply the charter
+- `agents/` — how agents apply the charter; validate with [`tools/validate-agent-noun-packages.py`](tools/validate-agent-noun-packages.py)
 - `tools/` — enforcement and scaffolding
 - `examples/` — adopter samples
 - `adrs/` — recorded decisions
