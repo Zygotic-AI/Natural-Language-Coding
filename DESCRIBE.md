@@ -24,6 +24,10 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 - **Produce ≠ Audit ≠ Ship** — separate who creates, who reviews, who authorizes release
 - **Audit roles have no shipping authority** — they produce findings, not decisions
 
+### Integrity note: BBA vs Bindings
+
+**BBA** (Boundary-Based Architecture) is the roof doctrine — confirmable rules in this repo that define how boundaries, handoffs, and integrity work (`CHARTER.md`, `integrity/`). **Bindings** is the operating policy map consumed by agent processes — P-series policies (P-016…P-031 class) that wire refuse criteria and evidence requirements to executable gates. Bindings live in the companion repo (`richardpickett/BBA-Bindings`). See [`docs/OPERATING_BINDINGS.md`](docs/OPERATING_BINDINGS.md) for the policy index.
+
 ## Key paths
 
 | Path | Role |
@@ -46,6 +50,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `integrity/LEXICON.md` | Locked term definitions (Action, Content type, Type recipe, etc.) |
 | `integrity/ACTIONS.md` | Action noun SSOT; gated action catalog; nesting rule |
 | `integrity/binding-matrix.json` | Requirement → audit → binder (unbound fails) |
+| `docs/OPERATING_BINDINGS.md` | Operating policy index (P-016…P-031 class); links to BBA-Bindings companion |
 | `content-types/HOW-TO-ADD.md` | Type recipes for adding content (ADR, integrity doc, agent noun, etc.) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
 | `AGENTS.md` | Cross-harness standing instructions |
