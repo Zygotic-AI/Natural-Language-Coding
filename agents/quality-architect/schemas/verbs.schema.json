@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://boundary-based-programming.dev/agents/quality-architect/verbs.schema.json",
+  "title": "Quality Architect Verbs",
+  "description": "JSON Schema for quality-architect agent noun verb contracts. Each verb declares input contract, output contract, and failure mode per BBP charter S2 and R31.",
+  "type": "object",
+  "properties": {
+    "preflight-fitness-handoff": {
+      "$ref": "#/$defs/preflight-fitness-handoff"
+    },
+    "score-fitness": {
+      "$ref": "#/$defs/score-fitness"
+    }
+  },
+  "$defs": {
+    "preflight-fitness-handoff": {
+      "title": "preflight-fitness-handoff",
+      "description": "Check whether a produce handoff is ready for fitness scoring.",
+      "type": "object",
+      "properties": {
+        "input": {
+          "$ref": "#/$defs/preflight-fitness-handoff-input"
+        },
+        "output": {
+          "$ref": "#/$defs/preflight-fitness-handoff-output"
+        },
+        "error": {
+          "$ref": "#/$defs/preflight-fitness-handoff-error"
+        }
+      },
+      "required": ["input", "output", "error"]
+    },
+    "preflight-fitness-handoff-input": {
+      "title": "Preflight Fitness Handoff Input",
+      "type": "object",
+      "required": ["preflight_request"],
+      "properties": {
+        "preflight_request": {
+          "type": "object",
+          "required": ["artifact_path", "package_path"],
+          "properties": {
+            "artifact_path": {
+              "type": "string",
+              "description": "Path to the change artifact (diff, proposal, code)"
+            },
+            "package_path": {
+              "type": "string",
+              "description": "Path to the produce package directory"
+            },
+            "handoff_token": {
+              "type": "string",
+              "description": "Optional. If present must match complete-produce issuance. Absence allowed when package_path supplied and package checks pass."
+            }
+          }
+        }
+      }
+    },
+    "preflight-fitness-handoff-output": {
+      "title": "Preflight Fitness Handoff Output",
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["ready", "handoff_refused"]
+        },
+        "defect_log": {
+          "type": "object",
+          "description": "Produce-handoff defect details (only if handoff_refused)",
+          "properties": {
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["PLAN", "APPLICABILITY", "BOUNDARY_IO", "ADVERSARIAL_NOTES", "VERIFY_SCRIPT", "SSOT_EXIT_EVIDENCE"]
+              }
+            },
+            "reason": {
+              "type": "string"
+            }
+          }
+        },
+        "ssot_leaf_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Opaque leaf ids from package (only if ready)"
+        },
+        "ssot_exit_status": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Exit state string from package (only if ready)"
+        }
+      }
+    },
+    "preflight-fitness-handoff-error": {
+      "title": "Preflight Fitness Handoff Failure Mode",
+      "description": "Error result returned on infrastructure failures. Note: handoff_refused is NOT an error.",
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": ["ARTIFACT_NOT_FOUND", "PACKAGE_NOT_FOUND"]
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "score-fitness": {
+      "title": "score-fitness",
+      "description": "Score a change artifact against fitness criteria. Precondition: preflight status is ready.",
+      "type": "object",
+      "properties": {
+        "input": {
+          "$ref": "#/$defs/score-fitness-input"
+        },
+        "output": {
+          "$ref": "#/$defs/score-fitness-output"
+        },
+        "error": {
+          "$ref": "#/$defs/score-fitness-error"
+        }
+      },
+      "required": ["input", "output", "error"]
+    },
+    "score-fitness-input": {
+      "title": "Score Fitness Input",
+      "type": "object",
+      "required": ["score_request"],
+      "properties": {
+        "score_request": {
+          "type": "object",
+          "required": ["artifact_path", "preflight_status"],
+          "properties": {
+            "artifact_path": {
+              "type": "string",
+              "description": "Path to the change artifact (diff, proposal, code)"
+            },
+            "preflight_status": {
+              "type": "string",
+              "enum": ["ready"],
+              "description": "Must be ready; handoff_refused artifacts cannot be scored"
+            },
+            "checklist_scope": {
+              "type": "string",
+              "enum": ["software", "systems", "both"],
+              "default": "software",
+              "description": "Which confirmation checklist to apply"
+            },
+            "change_class": {
+              "type": "string",
+              "enum": ["A", "B", "C", "D", "E", "F"],
+              "description": "Change classification (if known)"
+            },
+            "ssot_leaf_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "description": "SSOT leaf ids from preflight (required for MET)"
+            },
+            "ssot_exit_status": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Exit status from preflight (required for MET)"
+            }
+          }
+        }
+      }
+    },
+    "score-fitness-output": {
+      "title": "Score Fitness Output",
+      "type": "object",
+      "required": ["status", "checklist_results"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["MET", "FAIL"]
+        },
+        "checklist_results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["item_id", "status"],
+            "properties": {
+              "item_id": {
+                "type": "string",
+                "description": "Checklist item (C1, C2, CS1, CS8, etc.)"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["PASS", "FAIL", "N/A"]
+              },
+              "evidence": {
+                "type": "string",
+                "description": "File:line or N/A reason"
+              }
+            }
+          }
+        },
+        "blocking_failures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Item ids that caused FAIL status (includes CS8 if SSOT exit evidence missing)"
+        },
+        "ssot_leaf_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "SSOT leaf ids verified (echo for receipt)"
+        },
+        "ssot_exit_status": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Exit status verified (echo for receipt)"
+        }
+      }
+    },
+    "score-fitness-error": {
+      "title": "Score Fitness Failure Mode",
+      "description": "Error result returned on failures. PREFLIGHT_NOT_READY enforces default-closed handoff. SSOT_EVIDENCE_MISSING refuses MET without SSOT exit evidence (S8, P-020).",
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": ["ARTIFACT_NOT_FOUND", "PREFLIGHT_NOT_READY", "SELF_SCORE", "SSOT_EVIDENCE_MISSING"]
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "excluded-verbs": {
+      "title": "Excluded Verbs",
+      "description": "Verbs explicitly excluded from quality-architect (no shipping authority).",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["ratify", "merge", "release", "approve", "implement"]
+      }
+    }
+  }
+}
