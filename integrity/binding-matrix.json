@@ -13,8 +13,8 @@
       "surface": "reference",
       "audit_id": "A-P1",
       "audit_def": "integrity/PRINCIPLES.md#p1--stand-alone-branding",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-branding.py",
+      "status": "bound"
     },
     {
       "id": "P2",
@@ -31,8 +31,8 @@
       "surface": "reference",
       "audit_id": "A-P3",
       "audit_def": "integrity/PRINCIPLES.md#p3--hard-gates-complete--incomplete",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "P4",
@@ -40,8 +40,8 @@
       "surface": "reference",
       "audit_id": "A-P4",
       "audit_def": "integrity/PRINCIPLES.md#p4--hard-boundary-io",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "P5",
@@ -49,8 +49,8 @@
       "surface": "reference",
       "audit_id": "A-P5",
       "audit_def": "integrity/PRINCIPLES.md#p5--binary-requirement-audits",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/audit-binding-matrix.py",
+      "status": "bound"
     },
     {
       "id": "P6",
@@ -76,8 +76,8 @@
       "surface": "reference",
       "audit_id": "A-R26",
       "audit_def": "integrity/audits/A-R26.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/audit-binding-matrix.py",
+      "status": "bound"
     },
     {
       "id": "R27",
@@ -112,8 +112,8 @@
       "surface": "reference",
       "audit_id": "A-R30",
       "audit_def": "integrity/audits/A-R30.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "R31",
@@ -121,8 +121,8 @@
       "surface": "reference",
       "audit_id": "A-R31",
       "audit_def": "integrity/audits/A-R31.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "R1",
@@ -184,8 +184,8 @@
       "surface": "reference",
       "audit_id": "A-R7",
       "audit_def": "integrity/audits/A-R7.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-noun-imports.py",
+      "status": "bound"
     },
     {
       "id": "R8",
@@ -247,8 +247,8 @@
       "surface": "reference",
       "audit_id": "A-R14",
       "audit_def": "integrity/audits/A-R14.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-goal-imports.py",
+      "status": "bound"
     },
     {
       "id": "R15",
@@ -292,8 +292,8 @@
       "surface": "reference",
       "audit_id": "A-R19",
       "audit_def": "integrity/audits/A-R19.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-no-hand-authored-graphs.py",
+      "status": "bound"
     },
     {
       "id": "R20",
@@ -310,8 +310,8 @@
       "surface": "reference",
       "audit_id": "A-R21",
       "audit_def": "integrity/audits/A-R21.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-no-hand-authored-graphs.py",
+      "status": "bound"
     },
     {
       "id": "R22",
@@ -319,8 +319,8 @@
       "surface": "reference",
       "audit_id": "A-R22",
       "audit_def": "integrity/audits/A-R22.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-adr-superseded.py",
+      "status": "bound"
     },
     {
       "id": "R23",
@@ -328,8 +328,8 @@
       "surface": "reference",
       "audit_id": "A-R23",
       "audit_def": "integrity/audits/A-R23.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-no-noun-field-writes.py",
+      "status": "bound"
     },
     {
       "id": "R24",
@@ -337,8 +337,8 @@
       "surface": "reference",
       "audit_id": "A-R24",
       "audit_def": "integrity/audits/A-R24.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-no-noun-field-writes.py",
+      "status": "bound"
     },
     {
       "id": "R25",
@@ -400,8 +400,8 @@
       "surface": "reference",
       "audit_id": "A-C6",
       "audit_def": "integrity/audits/A-C6.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-noun-imports.py",
+      "status": "bound"
     },
     {
       "id": "C7",
@@ -454,8 +454,8 @@
       "surface": "reference",
       "audit_id": "A-C12",
       "audit_def": "integrity/audits/A-C12.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-goal-imports.py",
+      "status": "bound"
     },
     {
       "id": "C13",
@@ -526,8 +526,8 @@
       "surface": "reference",
       "audit_id": "A-C20",
       "audit_def": "integrity/audits/A-C20.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-no-noun-field-writes.py",
+      "status": "bound"
     },
     {
       "id": "C21",
@@ -571,8 +571,8 @@
       "surface": "reference",
       "audit_id": "A-S1",
       "audit_def": "integrity/audits/A-S1.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "S2",
@@ -580,8 +580,8 @@
       "surface": "reference",
       "audit_id": "A-S2",
       "audit_def": "integrity/audits/A-S2.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "S3",
@@ -589,8 +589,8 @@
       "surface": "reference",
       "audit_id": "A-S3",
       "audit_def": "integrity/audits/A-S3.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "S4",
@@ -598,17 +598,17 @@
       "surface": "reference",
       "audit_id": "A-S4",
       "audit_def": "integrity/audits/A-S4.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "S5",
-      "statement": "Produce ≠ Audit ≠ Ship. An agent may not audit its own output as the final gate.",
+      "statement": "Produce \u2260 Audit \u2260 Ship. An agent may not audit its own output as the final gate.",
       "surface": "reference",
       "audit_id": "A-S5",
       "audit_def": "integrity/audits/A-S5.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "S6",
@@ -616,8 +616,8 @@
       "surface": "reference",
       "audit_id": "A-S6",
       "audit_def": "integrity/audits/A-S6.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "CS1",
@@ -625,8 +625,8 @@
       "surface": "reference",
       "audit_id": "A-CS1",
       "audit_def": "integrity/audits/A-CS1.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "CS2",
@@ -634,8 +634,8 @@
       "surface": "reference",
       "audit_id": "A-CS2",
       "audit_def": "integrity/audits/A-CS2.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "CS3",
@@ -643,8 +643,8 @@
       "surface": "reference",
       "audit_id": "A-CS3",
       "audit_def": "integrity/audits/A-CS3.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "CS4",
@@ -652,17 +652,17 @@
       "surface": "reference",
       "audit_id": "A-CS4",
       "audit_def": "integrity/audits/A-CS4.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "CS5",
-      "statement": "Produce ≠ Audit ≠ Ship separation is honored.",
+      "statement": "Produce \u2260 Audit \u2260 Ship separation is honored.",
       "surface": "reference",
       "audit_id": "A-CS5",
       "audit_def": "integrity/audits/A-CS5.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "CS6",
@@ -670,17 +670,17 @@
       "surface": "reference",
       "audit_id": "A-CS6",
       "audit_def": "integrity/audits/A-CS6.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "S7",
-      "statement": "Produce→fitness handoff is default-closed. Produce completion requires change artifacts AND produce package. Without a complete package, fitness preflight returns handoff_refused; content scoring does not open.",
+      "statement": "Produce\u2192fitness handoff is default-closed. Produce completion requires change artifacts AND produce package. Without a complete package, fitness preflight returns handoff_refused; content scoring does not open.",
       "surface": "reference",
       "audit_id": "A-S7",
       "audit_def": "integrity/audits/A-S7.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "CS7",
@@ -688,8 +688,8 @@
       "surface": "reference",
       "audit_id": "A-CS7",
       "audit_def": "integrity/audits/A-CS7.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "S8",
@@ -697,8 +697,8 @@
       "surface": "reference",
       "audit_id": "A-S8",
       "audit_def": "integrity/audits/A-S8.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "CS8",
@@ -706,8 +706,8 @@
       "surface": "reference",
       "audit_id": "A-CS8",
       "audit_def": "integrity/audits/A-CS8.md",
-      "binder": "",
-      "status": "unbound"
+      "binder": "tools/fitness-agent-noun-structure.py",
+      "status": "bound"
     },
     {
       "id": "Q1",

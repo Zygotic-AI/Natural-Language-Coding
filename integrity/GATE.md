@@ -236,6 +236,9 @@ For changes that add or modify gates:
 - Charter §5.7: Enforcement (fitness checks fail the build)
 - Charter §5.8: Practice integrity (zero variance, hard gates)
 - Charter §16.1: Vocabulary mapping (Gate = automated enforcement; Audit = role-based review)
+- Charter R30: Every prescribed step or action has a hard gate
 - [`PRINCIPLES.md`](PRINCIPLES.md) P3: Hard gates (complete/incomplete only)
+- [`BOUNDARY.md`](BOUNDARY.md): Boundary and Handoff nouns; role-bound SOP
+- [`ACTIONS.md`](ACTIONS.md): Action noun; gated action catalog; nesting rule
 - [`../agents/adversarial-auditor/AGENT.md`](../agents/adversarial-auditor/AGENT.md): Adversarial review role
 - [`binding-matrix.json`](binding-matrix.json): Requirement → audit → binder index

@@ -5,15 +5,19 @@
 ✔ Define fitness check 1 (no field writes across noun boundary) under tools/ @done(26-09-04 22:13)
 ✔ Add a minimal example that fails fitness check 1 on a deliberate violation @done(26-09-04 22:13)
 ✔ Bind R5 and C4 to tools/fitness-no-noun-field-writes.py @done(26-09-04 22:13)
-☐ Bind remaining in-force requirements (leave R6/C5 until a verb-path binder exists) with fail-capable binders
+✔ Bind remaining in-force requirements (leave R6/C5 until a verb-path binder exists) with fail-capable binders @done(26-09-09 22:30)
 ☐ Package agent short-form prompt + roles under agents/ (each step hard-gated)
 ☐ Add hard I/O + failure-mode declarations to every public tool/agent boundary in this repo
+✔ Create fail-capable binders for S1–S6 and CS1–CS6 (systems model requirements) @done(26-09-09 22:30)
 ✔ Add Quality metric SSOT (ops vs defects; Q1–Q5) to integrity/ @done(26-09-09 22:20)
-☐ Create fail-capable binders for S1–S6 and CS1–CS6 (systems model requirements)
 ✔ Define ship-role agent noun (ratify, merge, release, waive-finding verbs) @done(26-09-05 20:35)
 ☐ Define additional agent nouns as needed (e.g., deploy-role for environment-specific release)
-☐ Add machine-readable schemas (JSON Schema / OpenAPI) for agent noun verb contracts
+✔ Add machine-readable schemas (JSON Schema / OpenAPI) for agent noun verb contracts @done(26-09-09 22:16)
 ✔ Add standards-steward load-applicability query verb for Session/WU applicability register @done(26-09-05 20:35)
 ✔ Clarify gate ≠ audit terminology in charter §16.1 vocabulary mapping @done(26-09-05 20:35)
 ☐ Wire session gates for agent noun verbs (OUT OF SCOPE for initial systems extension — future work)
-☐ Create tooling to validate agent noun package structure (AGENT.md + verbs.md completeness)
+✔ Create tooling to validate agent noun package structure (AGENT.md + verbs.md completeness) @done(26-09-09 22:30)
+☐ Add verb-path binder for R6/C5 (every state change through public verb)
+☐ Add contract presence binder for R9/R10/C7/C8 (schema validation)
+☐ Add semantic schema comparison for R11/C9 (field meaning uniqueness)
+☐ Add AST-based predicate matching for C19 (duplicated law detection)

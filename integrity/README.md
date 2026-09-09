@@ -5,10 +5,17 @@ Zero-variance practice integrity for the BBP hub.
 | Path | Role |
 |------|------|
 | [`PRINCIPLES.md`](PRINCIPLES.md) | P1–P7 with binary audits |
+| [`BOUNDARY.md`](BOUNDARY.md) | Boundary + Handoff noun SSOT; role-bound SOP |
+| [`BOUNDED_CONTEXT.md`](BOUNDED_CONTEXT.md) | Bounded Context noun SSOT; living system-as-is knowledge |
+| [`GATE.md`](GATE.md) | Gate noun SSOT (G1–G4, incomplete-packet hunt) |
+| [`CONTRIBUTION.md`](CONTRIBUTION.md) | Shared docs standard + Contribution Gate (G1–G4 refuse) |
+| [`LEXICON.md`](LEXICON.md) | Locked term definitions (Action, Content type, Type recipe, etc.) |
+| [`ACTIONS.md`](ACTIONS.md) | Action noun SSOT; gated action catalog; nesting rule |
 | [`QUALITY_METRIC.md`](QUALITY_METRIC.md) | Quality metric SSOT (ops vs defects; Q1–Q5) |
 | [`binding-matrix.md`](binding-matrix.md) | Matrix rules + unbound/promote audits |
 | [`binding-matrix.json`](binding-matrix.json) | Machine index (requirement → audit → binder) |
 | [`audits/`](audits/) | Per-requirement audit definitions |
+| [`../content-types/HOW-TO-ADD.md`](../content-types/HOW-TO-ADD.md) | Type recipes for adding content (ADR, integrity doc, etc.) |
 | [`../adrs/0001-zero-variance-integrity.md`](../adrs/0001-zero-variance-integrity.md) | Ratifying ADR |
 | [`../tools/audit-binding-matrix.py`](../tools/audit-binding-matrix.py) | Binder for matrix audits (lists offenders; exit 1 on not met) |
 
