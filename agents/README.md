@@ -30,8 +30,23 @@ Each package contains:
 
 - `AGENT.md` — identity, invariants, handoff-in, completion artifact, success criteria
 - `verbs.md` — contracted verbs with input/output/failure mode
+- `schemas/` (optional) — machine-readable JSON Schema for verb contracts
 
 See ADR [`0003-systems-extension-agent-nouns.md`](../adrs/0003-systems-extension-agent-nouns.md) for rationale.
+
+### Validation
+
+Use [`tools/validate-agent-noun-packages.py`](../tools/validate-agent-noun-packages.py) to validate package completeness:
+
+```bash
+python3 tools/validate-agent-noun-packages.py
+```
+
+The validator checks:
+- `AGENT.md` contains required sections (Identity, Invariants, Handoff-in, Completion artifact, Success criteria)
+- `verbs.md` declares Input contract, Output contract, and Failure mode for every verb (per S2 / R31)
+
+See [`tools/README.md`](../tools/README.md#agent-noun-package-validation) for full documentation.
 
 ## Ship-role handoff-in
 

@@ -272,6 +272,7 @@ For changes that add or modify boundaries or handoffs:
 - Charter §16.1: Gate ≠ Audit vocabulary
 - Charter R30: Every prescribed step or action has a hard gate
 - [`GATE.md`](GATE.md): Gate noun, G1--G4, incomplete-packet hunt
+- [`BOUNDED_CONTEXT.md`](BOUNDED_CONTEXT.md): Bounded Context noun -- living system-as-is knowledge inside a Boundary
 - [`ACTIONS.md`](ACTIONS.md): Action noun; gated action catalog; nesting rule
 - [`PRINCIPLES.md`](PRINCIPLES.md) P3: Hard gates (complete/incomplete only)
 - [`../agents/quality-architect/AGENT.md`](../agents/quality-architect/AGENT.md): Fitness preflight and scoring
