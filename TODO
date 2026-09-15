@@ -1,47 +1,26 @@
 # TODO — Boundary-Based Programming
 
-SSOT for open work. Charter SSOT is `CHARTER.md` (not section scratch files).
+SSOT for open work. Charter SSOT is `CHARTER.md`.
 
 ## Completed
 
-✔ Bootstrap central BBP repo layout (theory / agents / tools / examples / adrs / integrity) @done(26-09-03 20:23)
-✔ Place OG interview draft under theory/history and install living CHARTER.md @done(26-09-03 20:23)
-✔ Ratify zero-variance integrity (ADR 0001, principles P1–P7, charter §5.8) @done(26-09-04 15:29)
-✔ Install binding matrix + unbound/promote/coverage audits that list offenders @done(26-09-04 15:29)
-✔ Define fitness check 1 (no field writes across noun boundary) under tools/ @done(26-09-04 22:13)
-✔ Add a minimal example that fails fitness check 1 on a deliberate violation @done(26-09-04 22:13)
-✔ Bind R5 and C4 to tools/fitness-no-noun-field-writes.py @done(26-09-04 22:13)
-✔ Bind remaining in-force requirements with fail-capable gates @done(26-09-09 22:30)
-✔ Create fail-capable gates for S1–S6 and CS1–CS6 @done(26-09-09 22:30)
-✔ Add Quality metric SSOT (ops vs defects; Q1–Q5) to integrity/ @done(26-09-09 22:20)
-✔ Define ship-role agent noun @done(26-09-05 20:35)
-✔ Add machine-readable schemas for agent noun verb contracts @done(26-09-09 22:16)
-✔ Clarify gate ≠ audit in charter §16.1 @done(26-09-05 20:35)
-✔ Create tooling to validate agent noun package structure @done(26-09-09 22:30)
-✔ Vocabulary: invariant/law → adjective; enforcement binder → gate (living SSOT) @done(26-09-15)
-✔ Goals may call goals; durability is a runtime, not a peer (CHARTER + matrix) @done(26-09-15)
-✔ Delete CHARTER.merged*.md scratch files; CHARTER.md is the combined spec @done(26-09-15)
-✔ tools + content-types language: Adjectives heading @done(26-09-15)
-✔ Audit statements A-R2, A-R7, A-R14, A-R17 match charter @done(26-09-15)
-
----
-
-## Now — audit files still on old statements
-
-These audit docs must quote the current charter/matrix statement. Same template, new statement only.
-
-- [ ] `integrity/audits/A-R5.md` — drop "workflow" as a writer class
-- [ ] `integrity/audits/A-R18.md` — retries live on the calling (durable) goal
-- [ ] `integrity/audits/A-R19.md` — no hand-authored graph duplicating a durable goal
-- [ ] `integrity/audits/A-R23.md` — goal or adapter field writes
-- [ ] `integrity/audits/A-C3.md` — orchestration lives in a goal
-- [ ] `integrity/audits/A-C6.md` — noun does not import a goal module
-- [ ] `integrity/audits/A-C14.md` — goal-to-goal uses public entrypoints only
-- [ ] `integrity/audits/A-C15.md` — verbs retried by a durable goal are idempotent
+✔ Bootstrap central BBP repo layout @done(26-09-03 20:23)
+✔ Living CHARTER.md + OG draft under theory/history @done(26-09-03 20:23)
+✔ Zero-variance integrity (ADR 0001, P1–P7, §5.8) @done(26-09-04 15:29)
+✔ Binding matrix + unbound/promote/coverage audits @done(26-09-04 15:29)
+✔ Fitness check 1 + invoice-violation fixture; R5/C4 bound @done(26-09-04 22:13)
+✔ In-force requirements have fail-capable gates @done(26-09-09 22:30)
+✔ S1–S8 / CS1–CS8 structure gate + quality metric @done(26-09-09)
+✔ Ship-role agent noun + verb schemas @done(26-09-05 / 26-09-09)
+✔ Vocabulary: adjective / gate (living SSOT) @done(26-09-15)
+✔ Goals may call goals; durability is a runtime, not a peer @done(26-09-15)
+✔ Delete CHARTER.merged*.md; CHARTER.md is the combined spec @done(26-09-15)
+✔ tools + content-types: Adjectives heading @done(26-09-15)
+✔ Audit statements match charter: A-R2 A-R5 A-R7 A-R14 A-R17 A-R18 A-R19 A-R23 A-C3 A-C6 A-C14 A-C15 @done(26-09-15)
+✔ Unbound inventory written (`integrity/UNBOUND.md`); 38 rows stay listed, not fake-bound @done(26-09-15)
 
 Leave `reviews/` and `theory/history/og-interview-draft.md` frozen.
-
-Leave JSON key `binder` until `tools/audit-binding-matrix.py` is updated to read a renamed key.
+Leave JSON key `binder` until `tools/audit-binding-matrix.py` is updated.
 
 ---
 
@@ -49,18 +28,32 @@ Leave JSON key `binder` until `tools/audit-binding-matrix.py` is updated to read
 
 Order is the work order.
 
-1. **Unbound matrix rows** — P2 and most R/C items on `surface=reference`. Either bind with a fail-capable gate or keep them explicitly unbound and listed.
+1. ~~Unbound matrix rows listed~~ — see [`integrity/UNBOUND.md`](integrity/UNBOUND.md).
 2. **R6 / C5 verb-path gate** — every noun state change goes through a public verb (not only "no field writes").
-3. **R24 adjective-locality gate** — status machines / money math / named adjectives may only appear under `domain/<noun>/`.
+3. **R24 adjective-locality gate** — status machines / money math / named adjectives may only appear under `domain/<noun>/`. Current R24 bind is thinner than the statement.
 4. **A5 one-boundary / taint lifetime gate** — an adjective (esp. PII / card data) does not leave the consuming verb.
-5. **A7 escape-hatch gate** — ORM dirty writes, raw SQL, reflection, and similar must fail CI when they write noun fields outside the noun.
-6. **R9 / R10 / C7 / C8 contract-presence gate** — public entrypoint without a schema fails.
-7. **R11 / C9 schema-identity gate** — same field name, different type, fails.
-8. **C19 duplicated-adjective gate** — second implementation of the same adjective in the diff fails.
-9. **P4 / R31 tool-contract checker** — listed public tools must declare input, output, failure mode.
-10. **Generated impact graph** — R21: callers of verbs/goals from code, not hand JSON.
-11. **ACS docs voice** — `docs/ai-compiled-systems/` is product copy. Either point it at CHARTER.md as SSOT or retire conflicting workflow-as-peer sentences.
-12. **Three names** — repo Boundary-Based-Architecture, practice BBP, product ACS. Decide which name a newcomer sees first (README one-liner).
+5. **A7 escape-hatch gate** — ORM dirty writes, raw SQL, reflection fail CI when they write noun fields outside the noun.
+6. **R9 / R10 / C7 / C8 contract-presence gate**
+7. **R11 / C9 schema-identity gate**
+8. **C19 duplicated-adjective gate**
+9. **P4 / R31 tool-contract checker** that covers code boundaries, not only agent packages
+10. **Generated impact graph** (R21 / C21)
+11. **ACS docs voice** — point `docs/ai-compiled-systems/` at CHARTER.md or retire workflow-as-peer sentences
+12. **Three names** — repo / BBP / ACS newcomer line in README
+
+---
+
+## Next slice (item 2)
+
+R6/C5 is not R5. R5 fails `invoice.status =`. R6 fails "the goal called a repository update and skipped `applyPayment`."
+
+Needed before code:
+
+- What counts as a mutation outside a verb (ORM `.save()`, SQL UPDATE, collection replace).
+- Known-fail fixture next to `examples/invoice-violation/` that mutates without calling a verb.
+- Honest scope note: v1 will be language-narrow (Python/JS assignment + obvious `.save(` / `UPDATE `).
+
+Do not bind R6 to `fitness-no-noun-field-writes.py`.
 
 ---
 
