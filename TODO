@@ -4,8 +4,8 @@ SSOT for open work. Charter SSOT is `CHARTER.md`.
 
 ## Completed
 
-✔ Fitness check 1 + verb-path v1 + adjective-locality v1 @done(26-09-15)
-✔ A5 v1 taint-lifetime tool + card-taint-violation fixture @done(26-09-15)
+✔ R5 field-writes + R6 v1 verb-path + R24 v1 locality + A5 v1 taint @done(26-09-15)
+✔ A7 v1 escape-hatch tool + invoice-escape-hatch-violation @done(26-09-15)
 
 Leave `reviews/` and `theory/history/` frozen.
 
@@ -13,11 +13,8 @@ Leave `reviews/` and `theory/history/` frozen.
 
 ## Still open product
 
-1. ~~Unbound rows listed~~
-2. ~~R6/C5 v1~~ — not bound
-3. ~~R24 v1 tool~~ — flip `R24.binder` to `tools/fitness-adjective-locality.py` if JSON still stale
-4. ~~A5 v1 tool + fixture~~ — no matrix row; do not invent one
-5. **A7 escape-hatch gate** (also grows R6 toward bindable)
+1–4. ~~listed / R6 v1 / R24 tool / A5 v1~~
+5. ~~A7 v1~~ — `__dict__` / `vars(` / `exec(` / `eval(` in goals. **No matrix row.** SQL/.save stay on verb-path.
 6. **R9 / R10 / C7 / C8 contract-presence**
 7. **R11 / C9 schema-identity**
 8. **C19 duplicated-adjective**
@@ -25,6 +22,7 @@ Leave `reviews/` and `theory/history/` frozen.
 10. **Generated impact graph**
 11. **ACS docs voice**
 12. **Three names** — README newcomer line
+13. **R24.binder flip** — JSON still names field-writes; set to `tools/fitness-adjective-locality.py`
 
 ---
 
