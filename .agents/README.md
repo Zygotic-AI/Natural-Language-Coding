@@ -1,11 +1,12 @@
 # `.agents/`
 
-Portable SSOT pointer for agent instructions in this repo. Not Cursor-only.
+Portable SSOT pointer for agent instructions. Not Cursor-only.
 
-The full loop is [`CHARTER.md`](../CHARTER.md) **§§6–7** (proposer / reviewer / confirmer) and **§15** (short-form system prompt).
+The full loop is [`CHARTER.md`](../CHARTER.md) **§§6–7** and **§15**.
 
 | File | What |
 |------|------|
-| [`bbp-short-form.md`](bbp-short-form.md) | Charter §15 short-form, for pasting into an agent |
+| [`bbp-short-form.md`](bbp-short-form.md) | Charter §15 paste block |
+| [`skills/`](skills/) | Proposer / reviewer / confirmer / recorder |
 
-Standing harness instructions stay in [`AGENTS.md`](../AGENTS.md). This directory does not replace the charter.
+Standing harness instructions: [`AGENTS.md`](../AGENTS.md). This directory does not replace the charter.
