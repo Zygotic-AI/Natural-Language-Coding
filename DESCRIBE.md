@@ -6,7 +6,7 @@ Single source of truth for **Boundary-Based Programming** (BBP): theory → agen
 
 ## Core model (short)
 
-- **Noun** — identity, private state, invariants; retrieval key for "how does X work?"
+- **Noun** — identity, private state, adjectives; retrieval key for "how does X work?"
 - **Verb (on noun)** — only legal mutation; contracted I/O
 - **Goal** — use-case orchestration (I/O, other nouns, policy); calls verbs; never writes noun fields
 - **Workflow** — durable composition of goals when one in-process call is not enough
@@ -17,7 +17,7 @@ Single source of truth for **Boundary-Based Programming** (BBP): theory → agen
 
 Same structural discipline applied to organizing **agent fleets** — durable roles that operate a system over time. Ratified by ADR 0003.
 
-- **Agent noun** — durable role with identity and invariants
+- **Agent noun** — durable role with identity and adjectives
 - **Verb (on agent noun)** — legal function; contracted I/O with input, output, failure mode
 - **Use-case** — orchestration across agent nouns or to the outside world
 - **Boundary artifact** — handoff-in, completion artifact, success criteria (ops vs defects)
@@ -39,18 +39,18 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `agents/standards-steward/` | Agent noun: charter/ADR steward (no ship authority); query verbs for Session applicability |
 | `agents/adversarial-auditor/` | Agent noun: adversarial review (no ship authority) |
 | `agents/ship-role/` | Agent noun: authorize release (ship authority with mandate) |
-| `tools/` | Fitness checks, scaffolding, matrix auditor |
+| `tools/` | Gates, scaffolding, matrix auditor |
 | `examples/` | Adopter sample systems |
 | `adrs/` | Decision records (`0001` = zero-variance, `0003` = systems extension) |
 | `integrity/` | Principles, binding matrix, audit defs |
 | `integrity/GATE.md` | Gate noun SSOT (G1--G4, incomplete-packet hunt) |
 | `integrity/QUALITY_METRIC.md` | Quality metric SSOT (ops vs defects; Q1--Q5) |
 | `integrity/BOUNDARY.md` | Boundary + Handoff noun SSOT; role-bound SOP |
-| `integrity/BOUNDED_CONTEXT.md` | Bounded Context noun SSOT; living system-as-is knowledge (mechanisms, keys, invariants) |
+| `integrity/BOUNDED_CONTEXT.md` | Bounded Context noun SSOT; living system-as-is knowledge (mechanisms, keys, adjectives) |
 | `integrity/CONTRIBUTION.md` | Shared docs standard + Contribution Gate (G1--G4 refuse) |
 | `integrity/LEXICON.md` | Locked term definitions (Action, Content type, Type recipe, etc.) |
 | `integrity/ACTIONS.md` | Action noun SSOT; gated action catalog; nesting rule |
-| `integrity/binding-matrix.json` | Requirement → audit → binder (unbound fails) |
+| `integrity/binding-matrix.json` | Requirement → audit → gate (JSON key is still `binder` until the auditor is updated) |
 | `docs/OPERATING_BINDINGS.md` | Operating policy index (P-016…P-031 class); links to BBA-Bindings companion |
 | `content-types/HOW-TO-ADD.md` | Type recipes for adding content (ADR, integrity doc, agent noun, etc.) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
@@ -61,9 +61,11 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 
 Do not brand the practice "governance" / "governed." Prefer charter, integrity, adversarial review. "Boundary-Enforced Programming" describes CI, not the practice title.
 
+Settled vocabulary: **adjective** (not invariant/law), **gate** (not binder-as-noun), **binding** (the planning act).
+
 ## Terminology clarification (gate ≠ audit)
 
-- **Gate** = automated enforcement (fitness checks, CI rules); binary PASS/FAIL; blocks automatically; default-closed. See [`integrity/GATE.md`](integrity/GATE.md) for formal definition and all-required PASS fitness bar.
+- **Gate** = automated enforcement (fitness tools, CI rules); binary PASS/FAIL; blocks automatically; default-closed. See [`integrity/GATE.md`](integrity/GATE.md) for formal definition and all-required PASS fitness bar.
 - **Audit** = role-based adversarial review (adversarial-auditor agent noun); produces findings for ship decision
 - **Produce ≠ Audit ≠ Ship** = separate agent nouns for creating artifacts, reviewing them, and authorizing release
 
@@ -73,12 +75,12 @@ Gates and audits both yield binary outcomes (ops vs defects), but differ in mech
 
 ## Terminology clarification (boundary ≠ handoff)
 
-- **Boundary** = named stage in a work pipeline that owns laws, is default-closed, and produces binary advance. See [`integrity/BOUNDARY.md`](integrity/BOUNDARY.md).
+- **Boundary** = named stage in a work pipeline that owns adjectives, is default-closed, and produces binary advance. See [`integrity/BOUNDARY.md`](integrity/BOUNDARY.md).
 - **Handoff** = refuse-wired gate between Boundaries; must meet G1--G4; `handoff_refused` ≠ fitness FAIL (produce-incomplete signal, not content defect).
 
 Boundaries include: Plan, Conduct-RCA, Raise-Readiness, Produce, Fitness, Adversarial Audit, Ship, UAT/Promote, System-Remediate Design, Instance Heal. Role-bound SOP maps boundaries to roles (Plan Steward, Quality Architect, Adversarial Auditor, Ship Role, etc.) -- no person names in SOP tables.
 
-**Incomplete-packet fixture:** 15855 without §7/R3/R4 must FAIL any raise-readiness handoff. Binder: [P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) on BBA-Bindings main.
+**Incomplete-packet fixture:** 15855 without §7/R3/R4 must FAIL any raise-readiness handoff. Policy wire: [P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) on BBA-Bindings main.
 
 ## Terminology clarification (action)
 
@@ -102,22 +104,22 @@ DPMO-class without the academic theater. Binary classification only — no parti
 
 ## Adoption bar
 
-Charter §14: charter present, real noun + goal, fitness check 1 fails a deliberate violation in CI, agent loop written for class A/B, confirmer produces evidence. Plus §5.8: binding matrix audits green (no unbound in-force requirements).
+Charter §14: charter present, real noun + goal, gate 1 fails a deliberate violation in CI, agent loop written for class A/B, confirmer produces evidence. Plus §5.8: binding matrix audits green (no unbound in-force requirements).
 
 ## Binding matrix status
 
 **Current ratio: 40/78 bound (51.3%)**
 
-Bound requirements have fail-capable binders under `tools/`. The 38 unbound reference requirements fall into two categories:
+Bound requirements have fail-capable gates under `tools/`. The 38 unbound reference requirements fall into two categories:
 
-### Requirements needing future binders
+### Requirements needing future gates
 
-These can gain automated binders with additional tooling work:
+These can gain automated gates with additional tooling work:
 
 - **C5, R6**: Verb-path analysis (every state change through public verb) — needs call-graph tooling
 - **R9, R10, C7, C8**: Contract presence checks — needs schema validation tooling
 - **R11, C9**: Field meaning uniqueness — needs semantic schema comparison
-- **C19**: Duplicated law detection — needs AST-based predicate matching
+- **C19**: Duplicated adjective detection — needs AST-based predicate matching
 - **R20**: Charter/ADR/code agreement — needs drift detection tooling
 
 ### Requirements staying reference (judgment required)
