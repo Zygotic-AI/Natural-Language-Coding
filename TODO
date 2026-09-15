@@ -5,32 +5,27 @@ SSOT for open work. Charter SSOT is `CHARTER.md`.
 ## How to read red vs green
 
 Designed red: matching tool on a `*-violation` / `missing-contract` tree → NOT_MET.
-Assert scripts → exit 0 ASSERT:PASS (landmine still live).
+Assert scripts → exit 0 ASSERT:PASS.
 invoice-correct → all MET.
-
 True miss: invoice-correct red, assert exit 1, or a specimen green on its own tool.
-
-Specimens are not a product. Invoice/card are teaching objects for the scanners.
 
 ---
 
 ## Completed
 
-✔ Gates R5 R6v1 R24v1 A5v1 A7v1 contract-presence v1 @done(26-09-15)
-✔ Isolated R5 specimen (no money math); R24 on that tree is MET @done(26-09-15)
-✔ Schemas on violation specimens; only `missing-contract` is red on R9 @done(26-09-15)
-✔ Diagonal matrix: each specimen red on exactly one gate @done(26-09-15)
+✔ Specimen gates through R11 v1 @done(26-09-15)
+✔ Diagonal R5–R9 specimens @done(26-09-15)
 
 ---
 
 ## True gaps still open
 
-- [ ] **R24.binder stale** in `integrity/binding-matrix.json` (still field-writes).
-- [ ] **C20 over-claim** — statement says R23 and R24; binder is field-writes only. Audit file now warns; matrix row not split.
+- [ ] **R24.binder stale** in `integrity/binding-matrix.json`.
+- [ ] **C20 over-claim** — one binder, two requirement ids.
 
 ## Still open product
 
-7. **R11 / C9 schema-identity**
+7. ~~R11 / C9 v1~~ — **not bound.** Name+type only; does not prove shared meaning.
 8. **C19 duplicated-adjective**
 9. **P4 / R31 tool-contract checker** for code boundaries
 10. **Generated impact graph**
