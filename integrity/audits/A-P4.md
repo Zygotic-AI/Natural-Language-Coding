@@ -2,15 +2,20 @@
 
 - Requirement: `P4`
 - Outcome: **met** | **not met** only
+- Gate: `tools/fitness-p4-r31.py`
 
 ## Statement
 
 Every boundary declares hard input, output, and failure mode (error return, throw, or process exit).
 
-## Binary criteria
+## Bind
 
-See integrity/PRINCIPLES.md for authoritative criteria for `A-P4`. Met iff those criteria hold; not met otherwise.
+Wrapper runs both:
 
-## Evidence
+- `tools/fitness-agent-noun-structure.py` (agent nouns; always hub `agents/`)
+- `tools/fitness-boundary-io.py` (code goals/nouns; argv roots)
 
-On met or not met, cite file and symbol (or N/A reason). List failing ids when the audit is a matrix audit.
+Either child `NOT_MET` → P4 `NOT_MET`.
+
+Designed pass (code half): `examples/invoice-correct/`.
+Designed fail (code half): `examples/missing-failure-mode/`.
