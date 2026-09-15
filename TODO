@@ -14,7 +14,8 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 ## Completed product slice
 
 ✔ Specimen gates + generated graph + ACS/BBP/PLANIT names + ACS page voice @done(26-09-15)
-✔ Id prefixes spelled out (P/R/C) + short-form synced to charter §15 @done(26-09-15)
+✔ Bind v1 tools already proven: R6/C5, R9/R10, R11/C9 @done(26-09-15)
+
 
 
 ---

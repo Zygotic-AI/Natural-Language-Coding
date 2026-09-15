@@ -2,17 +2,19 @@
 
 - Requirement: `R9`
 - Outcome: **met** | **not met** only
+- Gate: `tools/fitness-contract-presence.py`
 
 ## Statement
 
 Every public goal entrypoint has an input contract and an output contract.
 
-## V1 tool (not a matrix bind)
+## V1 bind
 
-`tools/fitness-contract-presence.py` — `goals/<id>/` with code must have
-`input.schema.json` and `output.schema.json` that parse as JSON objects.
+A `goals/<id>/` directory that contains code must also contain `input.schema.json` and `output.schema.json` that parse as JSON objects.
 
-Known-fail: `examples/missing-contract/`.
-Known-pass: `examples/invoice-correct/`.
+Presence is not semantic completeness. Empty `{"type":"object"}` still MET.
 
-Presence of a file is not a complete contract. R9 stays unbound.
+Designed fail: `examples/missing-contract/`.
+Designed pass: `examples/invoice-correct/`.
+
+C7 stays unbound: it is "each *changed* goal" (diff-scoped).
