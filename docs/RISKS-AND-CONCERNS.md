@@ -10,7 +10,7 @@ This document qualifies the architecture upfront: the problems it solves, the pr
 
 **Problem.** Agents ship code that passes every local test and still forks a business rule across two goals. Two goals each invent `status`. Both look correct. The user finds the bug at $100,000.
 
-**Solved by.** Nouns own adjectives (the descriptors that must stay true). Verbs are the only mutation path. Goals call verbs; they never write noun fields or re-decide an adjective. A machine binder fails any goal-side write.
+**Solved by.** Nouns own adjectives (the descriptors that must stay true). Verbs are the only mutation path. Goals call verbs; they never write noun fields or re-decide an adjective. A gate fails any goal-side write.
 
 ### 1.2 Anemic domain model
 
@@ -148,11 +148,30 @@ Every artifact creation or change runs an adversarial audit. The audit family gr
 
 ---
 
-## Part 4 — The ledger, one line each
+## Part 4 — Architectural decisions captured
+
+These are the standing decisions from the existential-flaw discussion. They are not risks; they are rules the architecture depends on. They are recorded here so the migration and the audit checklist have one source of truth for them.
+
+1. **Adjective crosses at most one boundary.** An adjective's value never traverses more than one boundary as data. It is consumed inside the boundary that calls the verb. No intermediate noun holds the raw value. (See 1.4, 2.5, 2.8.)
+2. **Private fields and methods are the default enforcement.** In OO languages the adjective is unreachable from outside except through published verbs. The language does the common case; the gate does the rest.
+3. **Taint lifetime, not declared consumer.** The gate does not trust the plan's label of a call site as a consumer. It tracks the value's lifetime: assigned to a field, passed to another boundary, or returned from the consuming verb → violation. Consumed in place or dropped → fine. (See 2.5, A5.)
+4. **Adjectives are noun-owned.** A verb honors them or breaks them; it never redefines them. A new verb version cannot fork an adjective — it is validated against the noun's full adjective set at creation. (See 1.8, 2.10, A2.)
+5. **Versioned verbs for contract churn.** Ship V2 alongside V1; migrate at each caller's pace; retire V1 when the binding graph shows zero callers. Versioning is API-shape only because adjectives cannot move with it. (See 1.8.)
+6. **Gates are default closed.** A gate with no binder registered is marked unbound, never passed. (See vocabulary rules in `MIGRATION.md`.)
+7. **Explicit empty binding.** If a plan step finds no applicable ADRs or requirements, the binding step must declare "no bindings applicable, reason" — that declaration is itself a binding the gate can verify.
+8. **Fat nouns, own-state test.** A noun owns only adjectives and verbs about its own state. Behavior that does not read or write this noun's adjectives belongs on another noun. (See 2.1.)
+9. **Batching verbs are declared, not accidental.** `chargeAndSettle()` is allowed to avoid chatty chains, but batches must be intentional. (See 2.3.)
+10. **No handles.** Data residency is solved by binding-at-plan-time plus taint tracking, not by opaque capability types. (See 2.4.)
+11. **Non-OO escape hatches are a known residual, not an open flaw.** A7 scans for raw SQL, ORM bypass, deserialization, and reflection. (See 2.9, A7.)
+12. **Value-stream cost curve is the rationale for up-front cost.** A defect costs $1 in design, $10 in code, $1,000 in QA, $10,000 in UAT, $100,000 in production. PLANIT spends the extra minutes because the codebase lives five to ten years, and because swapping technology is one requirement change when every swappable concern is a visible adjective. (See 1.6, 2.7.)
+
+---
+
+## Part 5 — The ledger, one line each
 
 | # | Problem solved | Problem introduced | Mitigation |
 |---|----------------|--------------------|------------|
-| 1 | Locally green, globally wrong | — | Nouns own adjectives; binder fails goal-side writes |
+| 1 | Locally green, globally wrong | — | Nouns own adjectives; gate fails goal-side writes |
 | 2 | Anemic domain model | God noun | Noun owns only its own state; else call another noun |
 | 3 | Decay under fast tech change | Regeneration only cheap if adjectives moved | Every swappable concern is a visible adjective |
 | 4 | Sensitive data leakage | Relocated leak if not closed properly | Value never crosses as data; taint lifetime enforced (A5) |
