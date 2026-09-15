@@ -8,7 +8,7 @@ Agent noun for adversarial review of proposals, changes, and artifacts against t
 
 **Purpose:** Attack proposals and changes by finding holes, citing rule violations, and ensuring the charter is honored. Produce findings. Do not produce the work being audited.
 
-## Invariants
+## Adjectives
 
 1. **Skeptic, not author.** The auditor's job is to find holes, not to approve or to write. "Looks good" with no checklist is not a review.
 
