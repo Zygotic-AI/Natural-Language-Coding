@@ -4,54 +4,38 @@ SSOT for open work. Charter SSOT is `CHARTER.md`.
 
 ## How to read red vs green
 
-`RESULT:NOT_MET` / exit 1 on a `*-violation` or `missing-contract` tree is **the test working** when you pointed the *matching* tool at it.
+Designed red: matching tool on a `*-violation` / `missing-contract` tree → NOT_MET.
+Assert scripts → exit 0 ASSERT:PASS (landmine still live).
+invoice-correct → all MET.
 
-`ASSERT:PASS` / exit 0 on `tools/assert-*-fails.py` means: the broken fixture is still broken. That is success.
+True miss: invoice-correct red, assert exit 1, or a specimen green on its own tool.
 
-`RESULT:MET` / exit 0 is required on `examples/invoice-correct` for every gate.
-
-A **true failure** is: invoice-correct goes red, an assert script exits 1, or a fixture goes green on the tool it was built to fail.
-
-Designed pairings (only these reds are intended):
-
-| Tree | Tool that must be red | Everything else on that tree |
-|------|------------------------|------------------------------|
-| invoice-violation | field-writes (R5) | should be green |
-| invoice-verb-path-violation | verb-path (R6 v1) | should be green |
-| invoice-locality-violation | adjective-locality (R24) | should be green |
-| card-taint-violation | taint-lifetime (A5) | should be green |
-| invoice-escape-hatch-violation | escape-hatch (A7) | should be green |
-| missing-contract | contract-presence (R9/R10) | should be green |
-| invoice-correct | none | all green |
+Specimens are not a product. Invoice/card are teaching objects for the scanners.
 
 ---
 
-## Completed gates (designed reds work)
+## Completed
 
-✔ R5 / R6 v1 / R24 v1 / A5 v1 / A7 v1 / contract-presence v1 @done(26-09-15)
-✔ All six assert-*-fails.py scripts exit 0 (fixture still red) @done(26-09-15)
-
----
-
-## True gaps to remediate (not designed fixture reds)
-
-- [ ] **R5 fixture is not isolated.** `examples/invoice-violation` is red on R24 too (`invoice.balance - amount`). Narrow that goal to field assignment only so the table above is diagonal.
-- [ ] **Contract-presence noise.** Every violation tree except `missing-contract` is red on R9 only because schemas were never added. Add the same minimal schema files as `invoice-correct` to those trees so R9 is green there.
-- [ ] **R24.binder stale.** `integrity/binding-matrix.json` still names `fitness-no-noun-field-writes.py`. Set it to `tools/fitness-adjective-locality.py`.
-- [ ] **C20 over-claim.** Bound to the field-write tool but the statement says R23 *and* R24.
+✔ Gates R5 R6v1 R24v1 A5v1 A7v1 contract-presence v1 @done(26-09-15)
+✔ Isolated R5 specimen (no money math); R24 on that tree is MET @done(26-09-15)
+✔ Schemas on violation specimens; only `missing-contract` is red on R9 @done(26-09-15)
+✔ Diagonal matrix: each specimen red on exactly one gate @done(26-09-15)
 
 ---
+
+## True gaps still open
+
+- [ ] **R24.binder stale** in `integrity/binding-matrix.json` (still field-writes).
+- [ ] **C20 over-claim** — statement says R23 and R24; binder is field-writes only. Audit file now warns; matrix row not split.
 
 ## Still open product
 
-7. **R11 / C9 schema-identity** — same field name, different type, fails
+7. **R11 / C9 schema-identity**
 8. **C19 duplicated-adjective**
 9. **P4 / R31 tool-contract checker** for code boundaries
 10. **Generated impact graph**
 11. **ACS docs voice**
 12. **Three names** — README newcomer line
-
-R6, A5, A7, R9–C8 stay **unbound** on purpose (v1 cousin, not the full statement).
 
 ---
 
