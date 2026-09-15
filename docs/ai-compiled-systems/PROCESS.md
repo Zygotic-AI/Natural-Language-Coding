@@ -58,8 +58,8 @@ Humans do not edit the output to help.
 
 Both required:
 
-1. **Machine binder** — at least check 1 (no goal writes noun fields). Exit non-zero = fail.
-2. **Adversarial audit** — a different pass than the generator: statements done, bound reqs/ADRs held, no second copy of an invariant inside a goal.
+1. **Machine gate** — at least check 1 (no goal writes noun fields). Exit non-zero = fail.
+2. **Adversarial audit** — a different pass than the generator: statements done, bound reqs/ADRs held, no second copy of an adjective inside a goal.
 
 Fail → step 1 or 5, then step 6 again.
 
@@ -70,4 +70,4 @@ Fail → step 1 or 5, then step 6 again.
 | Human | Goals, requirements, ADRs, RCA sign-off, accepted audit findings |
 | AI | Nouns, verbs, goal bodies, other derived artifacts |
 
-The red binder is not a human in the file. It is the signal RCA gets before users do.
+The red gate is not a human in the file. It is the signal RCA gets before users do.

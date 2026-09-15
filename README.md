@@ -1,6 +1,6 @@
 # Boundary-Based Architecture
 
-Architecture that keeps agents and code from shipping slop. Central home for theory, agentic application, and tools — so humans and agents can change software and systems without scattering invariants or widening blast radius.
+Architecture that keeps agents and code from shipping slop. Central home for theory, agentic application, and tools — so humans and agents can change software and systems without scattering adjectives or widening blast radius.
 
 **Boundary-Based Programming (BBP)** is the programming practice face of this architecture (charter §§4–14). **Systems model** (§16) extends the same discipline to agent fleets and durable roles.
 
@@ -25,10 +25,10 @@ Architecture that keeps agents and code from shipping slop. Central home for the
 ├─ docs/ai-compiled-systems/  # process layer (AIMS merge)
 ├─ theory/             # essays, rationale, history
 ├─ agents/             # loop roles + agent nouns
-├─ tools/              # fitness checks, scaffolding, generators
+├─ tools/              # gates, scaffolding, generators
 ├─ examples/           # sample systems that adopt the charter
 ├─ adrs/               # decisions that later work must not quietly undo
-├─ integrity/          # checklist + fitness-check home for this meta-repo
+├─ integrity/          # checklist + gate home for this meta-repo
 └─ .agents/            # portable skills / instructions (cross-harness)
 ```
 

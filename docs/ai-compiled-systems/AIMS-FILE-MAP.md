@@ -35,7 +35,7 @@ Those are catalog gravity. They are not the compile gate.
 ## Still to write in this folder
 
 - Goal authoring (from AIMS Goal Authoring Standard + “goals only call verbs”)
-- Requirement authoring (constraints only; invariants stay on the noun)
+- Requirement authoring (constraints only; adjectives stay on the noun)
 - Interview patterns (consult shelf before asking)
 - RCA record shape
 

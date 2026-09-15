@@ -16,13 +16,14 @@ AIMS does not replace BBA. BBA is the instruction set the process is not allowed
 | Say | Do not say | Meaning |
 |-----|------------|---------|
 | BBA standard | standing rules, “fixture” for Invoice.py | Permanent *method*: small boundaries, noun inside, verbs on the edge, goals only call verbs |
-| Invariant | law | A property of a thing that every use must leave true (e.g. no void after paid; balance rules) |
+| Adjective | law, invariant | A descriptor on a noun that every use must leave true (e.g. no void after paid; balance rules) |
 | Requirement | | Constraint on behavior (PCI, “balance never negative”) |
 | ADR | | Dated choice (Postgres, not Oracle) |
 | Goal | | Outcome to produce |
 | Knowledge domain | first-class kind | A *shelf* of standing ADRs + requirements the interview must consult |
-| Binder | the requirement itself | Machine that fails the change when an audit would be not-met |
-| Turns red | | Binder exits non-zero and prints the violation |
+| Gate | binder (as a noun) | Machine that fails the change when an audit would be not-met |
+| Binding | | Planning act of pointing a statement at the rules it must honor |
+| Turns red | | Gate exits non-zero and prints the violation |
 
 ---
 
@@ -55,7 +56,7 @@ Humans do not author noun classes or verb bodies. They hire the compiler.
 
 Process citizens (AIMS): goal, requirement, ADR, interview, RCA.
 
-Design citizens (BBA): noun, verb, goal-as-boundary, contract, binder.
+Design citizens (BBA): noun, verb, goal-as-boundary, contract, gate.
 
 Goal sits on both lists on purpose.
 
@@ -69,7 +70,7 @@ Generation is incomplete unless:
 
 1. Output is BBA-shaped.
 2. Every invoice-shaped fact lives behind an Invoice boundary (noun inside, verbs on the edge).
-3. A binder fails a goal that implements that invariant itself or writes noun fields.
+3. A gate fails a goal that implements that adjective itself or writes noun fields.
 
 Two small goal boxes are fine if both only call Invoice verbs. The failure is a goal box that *is* a second Invoice.
 
@@ -81,9 +82,9 @@ Human = non-coding manager. Passes goals, requirements, ADRs; certifies RCA; val
 
 AI = developer bound to the BBA standard. Writes nouns, verbs, code.
 
-If a human must edit generated files to keep invariants consistent, the architecture failed. Fail → RCA → tighter interview / requirement / ADR / knowledge → regenerate.
+If a human must edit generated files to keep adjectives consistent, the architecture failed. Fail → RCA → tighter interview / requirement / ADR / knowledge → regenerate.
 
-The red binder is not a human in the file. It is the signal RCA gets before users pay.
+The red gate is not a human in the file. It is the signal RCA gets before users pay.
 
 ---
 
@@ -97,7 +98,7 @@ See [PROCESS.md](PROCESS.md) for the full loop (steps 0–7).
 
 - Not “goals and requirements only; shape is optional.”
 - Not “humans confirm by reading Invoice.py into shape.”
-- Not AIMS zip-as-written (those papers omitted noun/verb/binder).
+- Not AIMS zip-as-written (those papers omitted noun/verb/gate).
 - Not a second governance tree. Charter + bind + red check.
 
 ---
@@ -105,5 +106,5 @@ See [PROCESS.md](PROCESS.md) for the full loop (steps 0–7).
 ## Open items (not disagreements)
 
 - How loud a contract-change notice is to the manager.
-- Next binders after check 1 (import boundary, invariant locality).
+- Next gates after check 1 (import boundary, adjective locality).
 - Goal / requirement authoring pages still to land in this folder.
