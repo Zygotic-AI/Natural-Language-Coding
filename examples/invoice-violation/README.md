@@ -1,13 +1,9 @@
 # invoice-violation
 
-Tiny fixture, not a product. Proves charter §14 item 4: fitness check 1 **fails a deliberate violation**.
+Specimen for **R5 only**, not a product.
 
-`goals/record-bank-payment/implementation.py` assigns `invoice.status` (and `invoice.balance`) instead of calling `Invoice.apply_payment`. That is the point.
+The goal assigns `invoice.status` and `invoice.balance`. It does not do
+`balance - amount` (that is the R24 specimen).
 
-From repo root:
-
-```text
-python3 tools/fitness-no-noun-field-writes.py
-```
-
-Expected: exit 1, `VIOLATION` lines for `examples/invoice-violation/goals/record-bank-payment/implementation.py`, then `RESULT:NOT_MET`. If the command exits 0, the checker is wrong.
+Designed fail: `tools/fitness-no-noun-field-writes.py` → NOT_MET.
+R24 on this tree must be MET.

@@ -1,0 +1,8 @@
+{
+  "verbs": {
+    "get_number": {
+      "input": { "type": "object" },
+      "output": { "type": "object" }
+    }
+  }
+}
