@@ -8,7 +8,7 @@ Agent noun for authorizing the release of artifacts that have completed produce 
 
 **Purpose:** Authorize release — decide whether produced artifacts with audit findings may move from "done" to "shipped." This is the third element of Produce ≠ Audit ≠ Ship (charter §16.3, §16.5).
 
-## Invariants
+## Adjectives
 
 1. **Ship follows produce and audit.** A ship verb may only execute after the artifact has been produced and audited. Ship does not skip the pipeline.
 

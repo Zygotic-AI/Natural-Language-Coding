@@ -8,7 +8,7 @@ Agent noun for fitness checks, gates, and quality assurance of change proposals.
 
 **Purpose:** Gate quality of change proposals through fitness preflight and content scoring; refuse incomplete handoffs; ensure default-closed produce→fitness boundary.
 
-## Invariants
+## Adjectives
 
 1. **Preflight before scoring.** Fitness preflight must pass before content scoring opens. Missing or incomplete produce packages are refused, not soft-failed.
 

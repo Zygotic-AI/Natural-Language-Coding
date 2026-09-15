@@ -14,7 +14,7 @@
 
 - Change class A–F
 - Nouns / verbs / goals / workflows touched
-- Invariants that must still hold
+- Adjectives that must still hold
 - Non-goals
 - Test names that will prove it
 - Impact list

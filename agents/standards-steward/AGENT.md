@@ -8,7 +8,7 @@ Agent noun for maintaining charter, ADRs, and constitutional artifacts.
 
 **Purpose:** Maintain the integrity of charter, ADRs, and practice standards; ensure decisions are recorded; prevent silent rule drift.
 
-## Invariants
+## Adjectives
 
 1. **Charter is authoritative.** The charter is the single source of truth for practice rules. No rule exists outside the charter (or an ADR that the charter references).
 
