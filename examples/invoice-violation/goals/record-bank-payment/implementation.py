@@ -1,6 +1,6 @@
-"""DELIBERATE VIOLATION: goal writes noun fields instead of calling apply_payment."""
+"""DELIBERATE VIOLATION (R5 only): assign noun fields. No money math."""
 
 
 def record_bank_payment(invoice, amount: int) -> None:
-    invoice.balance = invoice.balance - amount
     invoice.status = "paid"
+    invoice.balance = 0

@@ -1,0 +1,16 @@
+{
+  "verbs": {
+    "issue": {
+      "input": { "type": "object" },
+      "output": { "type": "object" }
+    },
+    "apply_payment": {
+      "input": { "type": "object" },
+      "output": { "type": "object" }
+    },
+    "void": {
+      "input": { "type": "object" },
+      "output": { "type": "object" }
+    }
+  }
+}

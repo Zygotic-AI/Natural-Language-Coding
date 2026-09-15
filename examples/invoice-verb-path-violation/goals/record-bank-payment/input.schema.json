@@ -1,0 +1,8 @@
+{
+  "type": "object",
+  "required": ["invoice", "amount"],
+  "properties": {
+    "invoice": { "type": "object" },
+    "amount": { "type": "integer" }
+  }
+}
