@@ -50,6 +50,20 @@ This document qualifies the architecture upfront: the problems it solves, the pr
 
 **Status.** Resolved as an architectural problem. What remains is operational: running interviews, finding the misses, tightening the catalog. That is empirical work, not a flaw in the framework.
 
+### 1.8 Contract churn (resolved)
+
+**Problem.** When a verb's meaning changes, every caller has to accept it. In a real codebase with dozens of goals, a changed `applyPayment` is a migration event, not a footnote. The binder can flag the break; it cannot decide whether the callers are ready.
+
+**Solved by.** Two stacked moves.
+
+*Audit readiness.* The binder already knows every caller of a verb — that is the binding graph. When the contract changes, it diffs each call site against the new signature and emits a blast-radius report: here is who breaks. That is detection, not a judgment call. The human decides when callers are ready; the binder tells them who is affected.
+
+*Versioned verbs.* Ship `applyPaymentV2` alongside `applyPayment`. Old callers keep working. New code binds to V2. When the last caller migrates, V1 is deprecated, then removed. No forced migration, no big-bang rewrite.
+
+**The hard rule that makes versioning safe.** Adjectives belong to the noun, never to the verb. A verb can only honor an adjective or break it — it can never redefine it. So V2 cannot fork an adjective at all. It either respects every adjective on the noun or it is invalid on arrival. Versioning is therefore a pure API-shape question: same adjectives, different parameters or return shape. That is a much smaller migration surface than a rule change. If a verb change *did* need a different adjective, that is not a versioning problem — it is a noun redesign, and it goes through the normal PLANIT cycle with a new adjective on the noun.
+
+**Status.** Resolved. The binder does the detection; versioning does the safety; the adjective-ownership rule keeps the two from colliding.
+
 ---
 
 ## Part 2 — Problems this architecture introduces
@@ -108,6 +122,12 @@ This document qualifies the architecture upfront: the problems it solves, the pr
 
 **Mitigation.** A7 on the audit checklist: scan for direct storage access — raw SQL, ORM bypasses, deserialization into noun state, reflection — that mutates or reads a noun's adjectives without going through a published verb. This is a narrow, known hole with a specific check, not an open one. The OO privacy handles the common case; A7 handles the paths the language cannot see.
 
+### 2.10 Versioned verbs that silently drop an adjective (closed by 1.8)
+
+**Problem.** A new verb version could quietly carry a weaker set of adjectives than the one it replaces — `applyPaymentV2` honors balance-never-negative but drops void-after-pay. Callers migrate to V2 and the adjective is forked under a new name. This is the original existential flaw wearing a costume.
+
+**Mitigation.** Closed by the rule in 1.8: adjectives belong to the noun, and a verb can only honor or break them, never redefine them. V2 is validated against the noun's full adjective set at creation (A1/A2). If it drops one, it fails before any caller touches it. Versioning is safe precisely because the adjective surface is noun-owned and checked independently of the verb's API shape.
+
 ---
 
 ## Part 3 — Adversarial audit checklist
@@ -117,7 +137,7 @@ Every artifact creation or change runs an adversarial audit. The audit family gr
 | # | When | What it checks |
 |---|------|----------------|
 | A1 | Noun created | The new noun reaches no other boundary except through that boundary's published verbs. Both directions: it does not read another noun's state, and it does not call into a goal. |
-| A2 | Verb / adjective added or changed | Every caller of a changed contract still satisfies it, or callers were updated in the same change. |
+| A2 | Verb / adjective added or changed | Every caller of a changed contract still satisfies it, or callers were updated in the same change. For a *new verb version*, verify it honors the noun's **full** adjective set — no silent drop. |
 | A3 | Goal completed | The code actually delivers the stated outcome — not just compiles, not just passes local tests. |
 | A4 | Requirement bound | The bound code path enforces the requirement, not merely references it. |
 | A5 | Any sensitive adjective fetched | **Taint lifetime:** the value is not assigned to a field, passed to another boundary, or returned from the consuming verb. Consumed in place or dropped. (Replaces any "declared consumer" check.) |
@@ -139,11 +159,12 @@ Every artifact creation or change runs an adversarial audit. The audit family gr
 | 5 | Context-window explosion | — | One boundary + its contracts per window |
 | 6 | Defect cost compounds | Per-step audit cost | Mechanical per-step (incl. A5), deep per-package (A6) |
 | 7 | Interview quality (design-resolved) | Empirical: catalog must be built in practice | Auditable interview log; misses become catalog entries |
-| 8 | — | Leaky verbs | A5 treats returns and assignments the same |
-| 9 | — | Boundary thrash | Batching verbs, declared not accidental |
-| 10 | — | Adjective outlives verb | A5 taint tracking — no trust in binding declaration |
-| 11 | — | Capability explosion | Reject handles; bind at plan time, enforce by taint |
-| 12 | — | Non-OO escape hatches (residual existential flaw) | A7 scans for raw SQL / ORM / deserialization bypasses |
+| 8 | Contract churn | Versioned verb silently drops an adjective | Adjectives are noun-owned; V2 validated against full adjective set (A2); versioning is API-shape only |
+| 9 | — | Leaky verbs | A5 treats returns and assignments the same |
+| 10 | — | Boundary thrash | Batching verbs, declared not accidental |
+| 11 | — | Adjective outlives verb | A5 taint tracking — no trust in binding declaration |
+| 12 | — | Capability explosion | Reject handles; bind at plan time, enforce by taint |
+| 13 | — | Non-OO escape hatches (residual existential flaw) | A7 scans for raw SQL / ORM / deserialization bypasses |
 
 ---
 
