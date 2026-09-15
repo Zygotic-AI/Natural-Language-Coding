@@ -72,7 +72,7 @@
     },
     {
       "id": "R26",
-      "statement": "Practice integrity principles P1\u2013P7 are in force.",
+      "statement": "Practice integrity principles P1–P7 are in force.",
       "surface": "reference",
       "audit_id": "A-R26",
       "audit_def": "integrity/audits/A-R26.md",
@@ -126,7 +126,7 @@
     },
     {
       "id": "R1",
-      "statement": "If breaking the rule would make *this noun* a lie, the rule lives on the noun, as an invariant or as a verb precondition/postcondition.",
+      "statement": "If breaking the rule would make *this noun* a lie, the rule lives on the noun, as an adjective or as a verb precondition/postcondition.",
       "surface": "reference",
       "audit_id": "A-R1",
       "audit_def": "integrity/audits/A-R1.md",
@@ -144,7 +144,7 @@
     },
     {
       "id": "R3",
-      "statement": "Cross-noun work does not get glued onto the most convenient noun. `allocatePaymentToInvoices` is a goal, or a `PaymentAllocation` noun if it has its own inva...",
+      "statement": "Cross-noun work does not get glued onto the most convenient noun. `allocatePaymentToInvoices` is a goal, or a `PaymentAllocation` noun if it has its own adjectives. It is not `Invoice.allocateAcrossFriends`.",
       "surface": "reference",
       "audit_id": "A-R3",
       "audit_def": "integrity/audits/A-R3.md",
@@ -153,7 +153,7 @@
     },
     {
       "id": "R4",
-      "statement": "If a verb does not need the noun\u2019s invariant set, it does not belong on the noun.",
+      "statement": "If a verb does not need the noun’s adjective set, it does not belong on the noun.",
       "surface": "reference",
       "audit_id": "A-R4",
       "audit_def": "integrity/audits/A-R4.md",
@@ -180,7 +180,7 @@
     },
     {
       "id": "R7",
-      "statement": "Nouns never call goals. Nouns never call workflows. Direction is workflow \u2192 goal \u2192 noun-verb only (plus explicit reads).",
+      "statement": "Nouns never call goals. Nouns never call workflows. Direction is workflow → goal → noun-verb only (plus explicit reads).",
       "surface": "reference",
       "audit_id": "A-R7",
       "audit_def": "integrity/audits/A-R7.md",
@@ -279,7 +279,7 @@
     },
     {
       "id": "R18",
-      "statement": "Compensation and retries live in the workflow or the goal, not inside the noun, unless the noun\u2019s invariant itself requires idempotency of a verb. Verbs must...",
+      "statement": "Compensation and retries live in the workflow or the goal, not inside the noun, unless the noun’s adjective itself requires idempotency of a verb. Verbs must...",
       "surface": "reference",
       "audit_id": "A-R18",
       "audit_def": "integrity/audits/A-R18.md",
@@ -324,7 +324,7 @@
     },
     {
       "id": "R23",
-      "statement": "A fitness check fails the change if a goal (or workflow, or adapter) assigns a noun field or imports a noun internals module.",
+      "statement": "A gate fails the change if a goal (or workflow, or adapter) assigns a noun field or imports a noun internals module.",
       "surface": "reference",
       "audit_id": "A-R23",
       "audit_def": "integrity/audits/A-R23.md",
@@ -333,7 +333,7 @@
     },
     {
       "id": "R24",
-      "statement": "A fitness check fails the change if invoice-equivalent money math, status transitions, or named invariants appear outside the owning noun (copy-paste of the ...",
+      "statement": "A gate fails the change if invoice-equivalent money math, status transitions, or named adjectives appear outside the owning noun (copy-paste of the adjective).",
       "surface": "reference",
       "audit_id": "A-R24",
       "audit_def": "integrity/audits/A-R24.md",
@@ -342,7 +342,7 @@
     },
     {
       "id": "R25",
-      "statement": "Tests for a noun\u2019s invariants live next to the noun and run on every verb. Goal tests do not replace them.",
+      "statement": "Tests for a noun’s adjectives live next to the noun and run on every verb. Goal tests do not replace them.",
       "surface": "reference",
       "audit_id": "A-R25",
       "audit_def": "integrity/audits/A-R25.md",
@@ -351,7 +351,7 @@
     },
     {
       "id": "C1",
-      "statement": "Change class (A\u2013F) is stated.",
+      "statement": "Change class (A–F) is stated.",
       "surface": "reference",
       "audit_id": "A-C1",
       "audit_def": "integrity/audits/A-C1.md",
@@ -360,7 +360,7 @@
     },
     {
       "id": "C2",
-      "statement": "Laws live on the noun named in C1, not in a goal folder.",
+      "statement": "Adjectives live on the noun named in C1, not in a goal folder.",
       "surface": "reference",
       "audit_id": "A-C2",
       "audit_def": "integrity/audits/A-C2.md",
@@ -450,7 +450,7 @@
     },
     {
       "id": "C12",
-      "statement": "No goal imports another goal\u2019s internals.",
+      "statement": "No goal imports another goal’s internals.",
       "surface": "reference",
       "audit_id": "A-C12",
       "audit_def": "integrity/audits/A-C12.md",
@@ -459,7 +459,7 @@
     },
     {
       "id": "C13",
-      "statement": "No new goal exists whose only job is a single noun-verb with no I/O or policy \u2014 or an ADR explains why the wrapper exists.",
+      "statement": "No new goal exists whose only job is a single noun-verb with no I/O or policy — or an ADR explains why the wrapper exists.",
       "surface": "reference",
       "audit_id": "A-C13",
       "audit_def": "integrity/audits/A-C13.md",
@@ -486,7 +486,7 @@
     },
     {
       "id": "C16",
-      "statement": "Every invariant named in the proposal has a test on the noun.",
+      "statement": "Every adjective named in the proposal has a test on the noun.",
       "surface": "reference",
       "audit_id": "A-C16",
       "audit_def": "integrity/audits/A-C16.md",
@@ -495,7 +495,7 @@
     },
     {
       "id": "C17",
-      "statement": "Every new verb has tests for success, precondition failure, and invariant preservation.",
+      "statement": "Every new verb has tests for success, precondition failure, and adjective preservation.",
       "surface": "reference",
       "audit_id": "A-C17",
       "audit_def": "integrity/audits/A-C17.md",
@@ -504,7 +504,7 @@
     },
     {
       "id": "C18",
-      "statement": "Goal tests cover the use-case, not a copy of the noun\u2019s invariant suite.",
+      "statement": "Goal tests cover the use-case, not a copy of the noun’s adjective suite.",
       "surface": "reference",
       "audit_id": "A-C18",
       "audit_def": "integrity/audits/A-C18.md",
@@ -513,7 +513,7 @@
     },
     {
       "id": "C19",
-      "statement": "No second implementation of the same law exists in the diff (search for duplicated predicates).",
+      "statement": "No second implementation of the same adjective exists in the diff (search for duplicated predicates).",
       "surface": "reference",
       "audit_id": "A-C19",
       "audit_def": "integrity/audits/A-C19.md",
@@ -567,7 +567,7 @@
     },
     {
       "id": "S1",
-      "statement": "Every agent noun has an identity file that states purpose and invariants.",
+      "statement": "Every agent noun has an identity file that states purpose and adjectives.",
       "surface": "reference",
       "audit_id": "A-S1",
       "audit_def": "integrity/audits/A-S1.md",
@@ -594,7 +594,7 @@
     },
     {
       "id": "S4",
-      "statement": "Success criteria are binary: ops (work completed as specified) vs defects (deviation from spec or invariants).",
+      "statement": "Success criteria are binary: ops (work completed as specified) vs defects (deviation from spec or adjectives).",
       "surface": "reference",
       "audit_id": "A-S4",
       "audit_def": "integrity/audits/A-S4.md",
@@ -603,7 +603,7 @@
     },
     {
       "id": "S5",
-      "statement": "Produce \u2260 Audit \u2260 Ship. An agent may not audit its own output as the final gate.",
+      "statement": "Produce ≠ Audit ≠ Ship. An agent may not audit its own output as the final gate.",
       "surface": "reference",
       "audit_id": "A-S5",
       "audit_def": "integrity/audits/A-S5.md",
@@ -621,7 +621,7 @@
     },
     {
       "id": "CS1",
-      "statement": "Agent noun has identity and invariants.",
+      "statement": "Agent noun has identity and adjectives.",
       "surface": "reference",
       "audit_id": "A-CS1",
       "audit_def": "integrity/audits/A-CS1.md",
@@ -657,7 +657,7 @@
     },
     {
       "id": "CS5",
-      "statement": "Produce \u2260 Audit \u2260 Ship separation is honored.",
+      "statement": "Produce ≠ Audit ≠ Ship separation is honored.",
       "surface": "reference",
       "audit_id": "A-CS5",
       "audit_def": "integrity/audits/A-CS5.md",
@@ -675,7 +675,7 @@
     },
     {
       "id": "S7",
-      "statement": "Produce\u2192fitness handoff is default-closed. Produce completion requires change artifacts AND produce package. Without a complete package, fitness preflight returns handoff_refused; content scoring does not open.",
+      "statement": "Produce→fitness handoff is default-closed. Produce completion requires change artifacts AND produce package. Without a complete package, fitness preflight returns handoff_refused; content scoring does not open.",
       "surface": "reference",
       "audit_id": "A-S7",
       "audit_def": "integrity/audits/A-S7.md",
