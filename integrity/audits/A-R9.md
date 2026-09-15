@@ -7,10 +7,12 @@
 
 Every public goal entrypoint has an input contract and an output contract.
 
-## Binary criteria
+## V1 tool (not a matrix bind)
 
-Met iff a binder (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no binder ran, binder failed, or evidence is missing.
+`tools/fitness-contract-presence.py` — `goals/<id>/` with code must have
+`input.schema.json` and `output.schema.json` that parse as JSON objects.
 
-## Evidence
+Known-fail: `examples/missing-contract/`.
+Known-pass: `examples/invoice-correct/`.
 
-On met or not met, cite file and symbol (or N/A reason). List failing ids when the audit is a matrix audit.
+Presence of a file is not a complete contract. R9 stays unbound.
