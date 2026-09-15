@@ -27,7 +27,7 @@ The compile is not done if any of these is true:
 - A goal assigns a noun field (R5 red).
 - An adjective exists in two implementations (C19 / R24 red).
 - A product statement from the plan has no binding.
-- A published verb contract changed and callers were not part of the plan.
+- A published verb contract changed and callers were not part of the plan ([ADR 0006](../../adrs/0006-contract-change-notice.md): breaking = prove stays red; additive = impact graph only).
 - A public boundary is missing a failure mode (P4/R31 code-side red).
 
 Deterministic *enough* means: same inputs + same standard → same shape and same contracts. Internals behind a contract may change. The edge may not quietly change.

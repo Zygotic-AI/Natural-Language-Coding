@@ -71,3 +71,6 @@ Fail → step 1 or 5, then step 6 again.
 | AI | Nouns, verbs, goal bodies, other derived artifacts |
 
 The red gate is not a human in the file. It is the signal RCA gets before users do.
+
+Breaking a published verb contract is loud in that same way: prove stays red until the requirement/ADR is accepted and generated callers are in the plan ([ADR 0006](../../adrs/0006-contract-change-notice.md)). Additive contract changes are quiet (impact graph in the packet, no extra sign-off).
+
