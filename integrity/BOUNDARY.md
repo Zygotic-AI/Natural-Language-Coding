@@ -1,6 +1,6 @@
 # Boundary
 
-SSOT for the Boundary and Handoff nouns in Boundary-Based Programming. Boundaries own laws for a stage; handoffs are refuse-wired gates between Boundaries.
+SSOT for the Boundary and Handoff nouns in Boundary-Based Programming. Boundaries own adjectives for a stage; handoffs are refuse-wired gates between Boundaries.
 
 Rationale: charter §16 vocabulary, §5.8 practice integrity. Related: [`GATE.md`](GATE.md), [`PRINCIPLES.md`](PRINCIPLES.md) P3 (hard gates).
 
@@ -10,7 +10,7 @@ Rationale: charter §16 vocabulary, §5.8 practice integrity. Related: [`GATE.md
 
 A **Boundary** is a named stage in a work pipeline that:
 
-1. **Owns laws** -- the invariants, preconditions, and postconditions that govern what may happen at this stage
+1. **Owns adjectives** -- the adjectives, preconditions, and postconditions that govern what may happen at this stage
 2. **Is default-closed** -- work does not enter or exit until handoff criteria are met
 3. **Produces a binary advance** -- work either advances to the next boundary or does not; no partial progress
 
@@ -18,13 +18,13 @@ Boundaries exist in code (noun modules, goal entrypoints) and in the agent pipel
 
 ### Boundary ≠ Phase ≠ Checkpoint
 
-| Concept | Owns laws? | Binary advance? | Has handoff? |
+| Concept | Owns adjectives? | Binary advance? | Has handoff? |
 |---------|------------|-----------------|--------------|
 | **Boundary** | Yes | Yes | Required |
 | Phase | No (convenience grouping) | No | Optional |
 | Checkpoint | Partially (may be advisory) | Sometimes | Sometimes |
 
-**Boundary ≠ Phase.** Phases are convenience groupings for project management. Boundaries own the laws of what happens inside them and enforce binary advance at exit.
+**Boundary ≠ Phase.** Phases are convenience groupings for project management. Boundaries own the adjectives of what happens inside them and enforce binary advance at exit.
 
 ---
 
@@ -43,7 +43,7 @@ A **Handoff** is a refuse-wired gate between two Boundaries. Every handoff must 
 
 ### Handoff ≠ Review
 
-| Mechanism | Authority | Output | Owns laws? |
+| Mechanism | Authority | Output | Owns adjectives? |
 |-----------|-----------|--------|------------|
 | **Handoff** | Refuses automatically | PASS / REFUSE | Yes -- G1--G4 |
 | Review | Human or role judgment | Approval / comments | No |
@@ -201,7 +201,7 @@ System-Remediate Design ──→ Produce ──→ Fitness ──→ Audit ─�
 
 ### Notes on boundary distinctions
 
-1. **Plan boundary:** Currently off Gate noun until a refuse-wired plan exit is implemented. Plan Steward owns completeness criteria; handoff to Produce is manual until binder exists.
+1. **Plan boundary:** Currently off Gate noun until a refuse-wired plan exit is implemented. Plan Steward owns completeness criteria; handoff to Produce is manual until a gate exists.
 
 2. **Conduct-RCA → Raise-Readiness:** This is not code Produce. RCA work feeds the readiness gate (P-030 / R3+R4) before code work begins. Raise-Readiness includes:
    - **Quality Architect** -- gates fitness preflight
@@ -251,7 +251,7 @@ There is no:
 
 For changes that add or modify boundaries or handoffs:
 
-- [ ] CB1. Boundary owns laws (invariants, preconditions, postconditions stated).
+- [ ] CB1. Boundary owns adjectives (adjectives, preconditions, postconditions stated).
 - [ ] CB2. Boundary is default-closed (explicit handoff-in and handoff-out).
 - [ ] CB3. Handoff meets G1--G4 (all-required PASS bar).
 - [ ] CB4. Refuse criteria stated in the handoff tip.
@@ -266,7 +266,7 @@ For changes that add or modify boundaries or handoffs:
 
 ## Cross-references
 
-- Charter §5.7: Enforcement (fitness checks fail the build)
+- Charter §5.7: Enforcement (gates fail the build)
 - Charter §5.8: Practice integrity (zero variance, hard gates)
 - Charter §16: Systems model -- agent nouns, vocabulary mapping
 - Charter §16.1: Gate ≠ Audit vocabulary
@@ -278,4 +278,4 @@ For changes that add or modify boundaries or handoffs:
 - [`../agents/quality-architect/AGENT.md`](../agents/quality-architect/AGENT.md): Fitness preflight and scoring
 - [`../agents/adversarial-auditor/AGENT.md`](../agents/adversarial-auditor/AGENT.md): Adversarial review role
 - [`../agents/ship-role/AGENT.md`](../agents/ship-role/AGENT.md): Ship authority and mandate
-- [P-030 (BBA-Bindings)](https://github.com/richardpickett/BBA-Bindings/pull/9): Raise-readiness refuse wire binder
+- [P-030 (BBA-Bindings)](https://github.com/richardpickett/BBA-Bindings/pull/9): Raise-readiness refuse wire
