@@ -1,0 +1,5 @@
+# Named adjective tokens. Must not appear as literals outside this noun.
+draft
+open
+paid
+void
