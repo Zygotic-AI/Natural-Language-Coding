@@ -15,7 +15,7 @@ Roles for the agent execution loop (§6–7). One model may play them in sequenc
 
 ## Agent nouns (systems model)
 
-Durable organizational positions with identity, invariants, and contracted verbs (§16). Agent nouns are not loop roles — they are persistent capabilities with boundary artifacts.
+Durable organizational positions with identity, adjectives, and contracted verbs (§16). Agent nouns are not loop roles — they are persistent capabilities with boundary artifacts.
 
 | Agent noun | Package | Shipping authority |
 |------------|---------|-------------------|
@@ -28,7 +28,7 @@ Durable organizational positions with identity, invariants, and contracted verbs
 
 Each package contains:
 
-- `AGENT.md` — identity, invariants, handoff-in, completion artifact, success criteria
+- `AGENT.md` — identity, adjectives, handoff-in, completion artifact, success criteria
 - `verbs.md` — contracted verbs with input/output/failure mode
 - `schemas/` (optional) — machine-readable JSON Schema for verb contracts
 
@@ -43,7 +43,7 @@ python3 tools/validate-agent-noun-packages.py
 ```
 
 The validator checks:
-- `AGENT.md` contains required sections (Identity, Invariants, Handoff-in, Completion artifact, Success criteria)
+- `AGENT.md` contains required sections (Identity, Adjectives, Handoff-in, Completion artifact, Success criteria)
 - `verbs.md` declares Input contract, Output contract, and Failure mode for every verb (per S2 / R31)
 
 See [`tools/README.md`](../tools/README.md#agent-noun-package-validation) for full documentation.
@@ -76,4 +76,4 @@ Ship-role does not receive work with open `handoff_refused` status. The producer
 
 ## Skills (optional pointers)
 
-Thin Cursor/portable skills under [`.agents/skills/`](../.agents/skills/) point at these role files. They do not duplicate the full text. These instruction files are **not** fail-capable CI binders; do not mark P2/P3 bound because they exist.
+Thin Cursor/portable skills under [`.agents/skills/`](../.agents/skills/) point at these role files. They do not duplicate the full text. These instruction files are **not** fail-capable CI gates; do not mark P2/P3 bound because they exist.

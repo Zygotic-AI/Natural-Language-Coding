@@ -2,7 +2,7 @@
 """Validate agent noun packages for BBP completeness.
 
 Checks that each agent noun package under agents/<name>/ has:
-  - AGENT.md with identity, invariants, handoff-in, completion artifact, success criteria
+  - AGENT.md with identity, adjectives, handoff-in, completion artifact, success criteria
   - verbs.md where every verb declares input contract, output contract, and failure mode
 
 Input: optional argv[1:] = specific agent names; if none, scans all agents/*/ directories.
@@ -33,7 +33,7 @@ AGENTS_DIR = ROOT / "agents"
 
 AGENT_REQUIRED_SECTIONS = [
     "Identity",
-    "Invariants",
+    "Adjectives",
     "Handoff-in",
     "Completion artifact",
     "Success criteria",
