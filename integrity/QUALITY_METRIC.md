@@ -53,7 +53,7 @@ An **Opportunity** is a single execution of a gate, verb, or handoff where a bin
 
 ## What counts as a Defect
 
-A **Defect** is an opportunity whose outcome deviates from spec or invariants.
+A **Defect** is an opportunity whose outcome deviates from spec or adjectives.
 
 | Outcome | Classification | Reason |
 |---------|----------------|--------|
@@ -219,4 +219,4 @@ For changes that add or modify quality metrics:
 - [`GATE.md`](GATE.md): Gate definition and binary outcomes
 - [`PRINCIPLES.md`](PRINCIPLES.md): P3 (hard gates), P5 (binary audits)
 - [`../agents/quality-architect/AGENT.md`](../agents/quality-architect/AGENT.md): Quality Architect role
-- [`binding-matrix.json`](binding-matrix.json): Requirement → audit → binder index
+- [`binding-matrix.json`](binding-matrix.json): Requirement → audit → gate (JSON key remains `binder` until the auditor is updated)
