@@ -17,16 +17,16 @@ These docstring/header contracts are documentation for P4/R31. **P4/R31 stay unb
 | Tool | Role |
 |------|------|
 | [`audit-binding-matrix.py`](audit-binding-matrix.py) | Binary audits `A-BINDING-COVERAGE`, `A-BINDING-UNBOUND`, `A-BINDING-PROMOTE`; lists offenders; exit 1 on not met |
-| [`fitness-no-noun-field-writes.py`](fitness-no-noun-field-writes.py) | Fitness check 1 (charter §12.1 / R5 / C4): fail if goals/workflows/adapters assign a noun field |
+| [`fitness-no-noun-field-writes.py`](fitness-no-noun-field-writes.py) | Fitness check 1 (charter §12.1 / R5 / C4): fail if goals or adapters assign a noun field |
 | [`assert-invoice-violation-fails.py`](assert-invoice-violation-fails.py) | Known-fail gate: exit 0 only if the invoice-violation fixture still fails check 1 |
 | [`ci-fitness-check1.sh`](ci-fitness-check1.sh) | Hub CI wrapper: fixture gate + non-fixture trees must pass |
-| [`fitness-quality-metric.py`](fitness-quality-metric.py) | Quality metric validation (Q1-Q5, CS9-CS10): produce package evidence, adversarial artifact, binary classification, snapshot consistency, formula |
+| [`fitness-quality-metric.py`](fitness-quality-metric.py) | Quality metric validation (Q1-Q5, CS9-CS10) |
 
 ## Fitness check 1
 
-**Binder for:** R5, C4 only. **Not a binder for:** R6, C5, contracts, workflows-as-law, P2, P4, R31.
+**Gate for:** R5, C4 only. **Not a gate for:** R6, C5, contracts, durability-as-adjective, P2, P4, R31.
 
-Noun modules live under `domain/<noun>/` (and under an example root the same way). Goals, workflows, and adapters live under `goals/`, `workflows/`, `adapters/`. The tool fails if a file in those outside trees assigns to a field declared on a noun.
+Noun modules live under `domain/<noun>/` (and under an example root the same way). Goals and adapters live under `goals/`, `adapters/`. A `workflows/` folder is optional packaging for durable goals, not a fourth primitive. The tool fails if a file in those outside trees assigns to a field declared on a noun.
 
 Field declaration v1: `fields.txt` in the noun dir, or inferred from assignments inside the noun’s own sources. Prints `VIOLATION <path>:<line> <field>` then `RESULT:NOT_MET` or `RESULT:MET`.
 
@@ -66,18 +66,22 @@ bash tools/ci-fitness-check1.sh
 ## Agent noun package validation
 
 Validates that agent noun packages under `agents/<name>/` have:
-- `AGENT.md` with required sections (Identity, Invariants, Handoff-in, Completion artifact, Success criteria)
+- `AGENT.md` with required sections (Identity, Adjectives, Handoff-in, Completion artifact, Success criteria)
 - `verbs.md` where every verb declares Input contract, Output contract, and Failure mode (per S2 / R31)
+
+The structure checker accepts a legacy `## Invariants` heading so existing packages do not fail mid-transition. New packages use `## Adjectives`.
 
 | Tool | Input | Output | Failure mode |
 |------|-------|--------|--------------|
 | [`validate-agent-noun-packages.py`](validate-agent-noun-packages.py) | Optional argv = specific agent names; no args → scans all `agents/*/` | `PACKAGE:<name>:VALID\|INVALID`, `AGENT_MISSING_SECTION`, `VERB_MISSING_*`, `RESULT:MET\|NOT_MET`. | Exit **0** = MET/PASS; exit **1** = NOT_MET/FAIL. No silent exception swallow. |
+| [`fitness-agent-noun-structure.py`](fitness-agent-noun-structure.py) | No argv. Scans `agents/*/` | `CHECK <req> <agent>:MET\|NOT_MET`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET/PASS; exit **1** = NOT_MET/FAIL. |
 
 ### Commands
 
 ```bash
 # Validate all agent noun packages
 python3 tools/validate-agent-noun-packages.py
+python3 tools/fitness-agent-noun-structure.py
 
 # Validate specific agent nouns
 python3 tools/validate-agent-noun-packages.py quality-architect adversarial-auditor
@@ -89,6 +93,8 @@ Agent noun verb contracts may also have machine-readable JSON Schema definitions
 
 ## Other planned tools
 
-- Fitness checks for import boundaries and law locality
+- Fitness checks for import boundaries and adjective locality (R24)
+- One-boundary / taint lifetime gate (A5)
+- Escape-hatch gate for ORM / raw SQL / reflection (A7)
 - A checker that fails when a listed public tool lacks Input/Output/Failure mode (would bind P4/R31)
 - Generators for impact / dependency views from code (not hand-maintained JSON)
