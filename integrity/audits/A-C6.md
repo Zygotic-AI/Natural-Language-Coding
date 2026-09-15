@@ -2,14 +2,15 @@
 
 - Requirement: `C6`
 - Outcome: **met** | **not met** only
+- Gate: `tools/fitness-noun-imports.py`
 
 ## Statement
 
-No noun module imports a goal or workflow module.
+No noun module imports a goal module.
 
 ## Binary criteria
 
-Met iff a binder (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no binder ran, binder failed, or evidence is missing.
+Met iff `tools/fitness-noun-imports.py` exits 0 with `RESULT:MET`. Not met if the gate fails, did not run, or evidence is missing.
 
 ## Evidence
 
