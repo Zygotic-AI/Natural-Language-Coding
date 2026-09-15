@@ -288,3 +288,122 @@ Ratified by [`adrs/0001-zero-variance-integrity.md`](adrs/0001-zero-variance-int
 **R31.** Every public boundary declares hard input, hard output, and failure mode (returned error, thrown exception, or process exit when the boundary is code).
 
 ---
+
+## 6. Order of agent execution
+
+> **TODO (vocabulary):** this section still says *invariant* / *law*. Settled term is **adjective**. Apply in the dedicated vocabulary pass.
+>
+> **TODO (binder → gate):** "binder" language below reads as **gate** per the settled split (binding = planning act; gate = post-generation verification). Rename in the vocabulary pass.
+>
+> **TODO (workflow):** class D still lists workflow as a peer class. ACS: workflow is a goal of goals. Same open question as §2 / §4.4 / §5.5.
+>
+> **ACS integration:** PLANIT (interview → bind → generate → prove) runs *above* this loop. PLANIT's bind step feeds the proposal; PLANIT's prove step is this loop's review + confirm, executed as independent gates. The loop below is the execution spine; PLANIT is the planning spine that feeds it.
+
+This is the default loop for design and code. Skip a step only when an ADR says that class of change is exempt (for example, a one-line copy fix inside an already-ratified verb).
+
+```text
+0. Load charter
+1. Classify the change
+2. Propose
+3. Adversarial review
+4. Revise
+5. Ratify
+6. Implement
+7. Confirm
+8. Record
+```
+
+### Step 0 — Load charter
+
+Read this document and the ADRs that touch the nouns and goals in scope. If the change would violate a rule, stop and propose an ADR first. Under PLANIT this is step 0 (load what already exists) — do not interview for facts already bound.
+
+### Step 1 — Classify the change
+
+Choose exactly one primary class:
+
+| Class | You are changing | Home of the work |
+|---|---|---|
+| A. Adjective | Adjective, status machine, money, eligibility | Noun + its verbs |
+| B. Mutation API | Add/change a verb | Noun-verb contract + noun tests |
+| C. Use-case | Orchestration, I/O, policy around existing verbs | Goal |
+| D. Multi-step | Time, approval, compensation across goals | Workflow (goal of goals) |
+| E. Boundary meaning | Shared field meaning, version, compatibility | Canonical contract + ADR |
+| F. Charter | A rule in this document | ADR first, then this file |
+
+If the request is "change how invoices work," it is class A, not class C. Open the noun. Do not open one goal and improvise.
+
+### Step 2 — Propose (spec, not code)
+
+The proposing agent produces, in one change-set of documents:
+
+- Classification (A–F)
+- Nouns touched, verbs touched, goals touched, workflows touched
+- Draft contracts if any boundary changes
+- Adjectives that must still hold
+- Explicit non-goals ("this does not change tax rounding")
+- Test names that will prove it
+- Impact list: other goals/verbs that call the changed boundary
+- **Bindings:** each atomic statement points to the requirement IDs, ADR IDs, or BBA standard it must honor. A statement with nothing applicable must explicitly declare "no bindings necessary" — that declaration is itself a binding.
+
+No implementation in this step unless the change is already classified as exempt.
+
+**Produce package required for handoff.** Proposal completion includes the produce package: classification (plan A–F as above), applicability statement, boundary I/O declarations, self-adversarial notes, binding declarations, and task/board SSOT exit evidence (`ssot_leaf_ids` + `ssot_exit_status`). A proposal without this package is incomplete. Incomplete proposals do not hand off to fitness or adversarial review.
+
+### Step 2.5 — Fitness preflight
+
+Before adversarial review opens, fitness performs a preflight check:
+
+- **Package present and complete** → proceed to Step 3.
+- **Package missing or incomplete** → return `handoff_refused` with defect log. Do not open content scoring. The proposal is not fitness-FAIL; it is produce-incomplete.
+
+Preflight is not discovery. Fitness does not invent the package, coach the producer, or soft-fail to prompt remediation. The producer fixes the package and resubmits. Do not normalize "re-gate" for missing-package rework.
+
+### Step 3 — Adversarial review
+
+A second agent, with a different role, attacks the proposal. It does not implement. It does not protect the author's feelings. It answers only:
+
+- Where can a goal now write private state?
+- Which adjective is now split across two homes?
+- Which contract field is defined twice with room to drift?
+- Is this a god-noun collecting verbs it should not own?
+- Is this a new goal that should have been a noun-verb?
+- Is this a noun-verb that should have been a goal?
+- What breaks if this verb is retried?
+- What did the impact list miss?
+- Does any sensitive adjective's value escape its consuming verb (stored, passed, or returned)?
+- Does any noun reach past another boundary except through a published verb?
+
+Findings are comments against the proposal. "Looks good" with no checklist is not a review. This is PLANIT's prove gate, run independently of the generator.
+
+### Step 4 — Revise
+
+The proposing agent answers every finding: fix, or record why the finding is wrong. Unresolved findings block ratification.
+
+### Step 5 — Ratify
+
+A human, or an automated gate whose policy an ADR named, accepts the proposal. Ratification is a recorded event: who, when, which proposal version.
+
+Until ratification, implementation is not authorized for class A, B, D, E, or F. Class C may be tightened by ADR for a given repo (some teams ratify every new goal; some do not).
+
+### Step 6 — Implement
+
+Code follows the ratified spec. This is PLANIT's generate step: AI emits BBA-shaped code for bound statements only. Humans do not edit the output.
+
+- Noun internals stay inside the noun module.
+- Goals call verbs only.
+- Contracts generate or validate I/O.
+- Tests named in the proposal are written and pass.
+- Generated code respects all declared bindings; a gate fails any escape.
+
+### Step 7 — Confirm
+
+Run the [Confirmation checklist](#confirmation-checklist). Any fail is a failed change, not a note for later. This is the second half of PLANIT's prove: an independent gate verifies the code holds every binding and delivers the stated outcome. Fail → RCA into interview or bind, then regenerate. Never patch the generated tree to quiet the gate.
+
+### Step 8 — Record
+
+- Update or add the ADR if a decision was made.
+- Leave the generated impact/dependency view in the state the tooling produces.
+- Do not write a parallel "architecture JSON" by hand.
+- Record the interview miss if a fork was caught here — the log is how interview quality compounds.
+
+---
