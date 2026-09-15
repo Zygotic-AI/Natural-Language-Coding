@@ -2,15 +2,18 @@
   "verbs": {
     "issue": {
       "input": { "type": "object", "required": ["amount"] },
-      "output": { "type": "object" }
+      "output": { "type": "object" },
+      "error": { "type": "object" }
     },
     "apply_payment": {
       "input": { "type": "object", "required": ["amount"] },
-      "output": { "type": "object" }
+      "output": { "type": "object" },
+      "error": { "type": "object" }
     },
     "void": {
       "input": { "type": "object" },
-      "output": { "type": "object" }
+      "output": { "type": "object" },
+      "error": { "type": "object" }
     }
   }
 }
