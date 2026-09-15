@@ -39,12 +39,12 @@ Format: `Cx — PASS|FAIL|N/A — reason — file:line` (file:line omitted only 
 ### Classification and home
 
 - C1 — PASS — Change class C stated in this confirmer note — examples/invoice-correct/CONFIRM.md:6
-- C2 — PASS — Status/balance laws live on `Invoice` verbs, not in the goal — examples/invoice-correct/domain/invoice/invoice.py:10
+- C2 — PASS — Status/balance adjectives live on `Invoice` verbs, not in the goal — examples/invoice-correct/domain/invoice/invoice.py:10
 - C3 — PASS — Orchestration is the goal entrypoint `record_bank_payment`, not a method glued onto an unrelated noun — examples/invoice-correct/goals/record-bank-payment/implementation.py:4
 
 ### Mutation path
 
-- C4 — PASS — Fitness check 1 reports RESULT:MET; goal does not assign noun fields — examples/invoice-correct/goals/record-bank-payment/implementation.py:5
+- C4 — PASS — Gate 1 reports RESULT:MET; goal does not assign noun fields — examples/invoice-correct/goals/record-bank-payment/implementation.py:5
 - C5 — PASS — Goal mutates only via public verb `apply_payment` — examples/invoice-correct/goals/record-bank-payment/implementation.py:5
 - C6 — PASS — Noun module has no imports of goals/workflows — examples/invoice-correct/domain/invoice/invoice.py:1
 
@@ -63,7 +63,7 @@ Format: `Cx — PASS|FAIL|N/A — reason — file:line` (file:line omitted only 
 - C14 — N/A — No workflows/ tree in this fixture
 - C15 — N/A — No retrying workflow invokes these verbs in this fixture
 
-### Invariants and tests
+### Adjectives and tests
 
 - C16 — PASS — Verb outcomes covered by noun tests (open/balance, paid-at-zero, void) — examples/invoice-correct/domain/invoice/tests/test_invoice.py:14
 - C17 — FAIL — Success paths tested; no precondition-failure cases for the three verbs — examples/invoice-correct/domain/invoice/tests/test_invoice.py:13
@@ -72,7 +72,7 @@ Format: `Cx — PASS|FAIL|N/A — reason — file:line` (file:line omitted only 
 
 ### Integrity of the change
 
-- C20 — PASS — Fitness check 1 (R23 field-write surface) RESULT:MET for this tree; R24 law-locality linter not installed in hub (N/A portion noted) — tools/fitness-no-noun-field-writes.py (run above)
+- C20 — PASS — Gate 1 (R23 field-write surface) RESULT:MET for this tree; R24 adjective-locality linter not installed in hub (N/A portion noted) — tools/fitness-no-noun-field-writes.py (run above)
 - C21 — N/A — No proposal impact list or generated caller graph for this fixture
 - C22 — N/A — Fixture-only tree; no charter/ADR/contract edits in scope of this confirmer pass
 - C23 — N/A — No adversarial review findings file for this fixture template
