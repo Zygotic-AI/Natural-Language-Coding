@@ -1,5 +1,7 @@
 # TODO — Boundary-Based Programming
 
+SSOT for open work. Charter SSOT is `CHARTER.md` (not section scratch files).
+
 ## Completed
 
 ✔ Bootstrap central BBP repo layout (theory / agents / tools / examples / adrs / integrity) @done(26-09-03 20:23)
@@ -9,28 +11,61 @@
 ✔ Define fitness check 1 (no field writes across noun boundary) under tools/ @done(26-09-04 22:13)
 ✔ Add a minimal example that fails fitness check 1 on a deliberate violation @done(26-09-04 22:13)
 ✔ Bind R5 and C4 to tools/fitness-no-noun-field-writes.py @done(26-09-04 22:13)
-✔ Bind remaining in-force requirements (leave R6/C5 until a verb-path binder exists) with fail-capable binders @done(26-09-09 22:30)
-✔ Create fail-capable binders for S1–S6 and CS1–CS6 (systems model requirements) @done(26-09-09 22:30)
+✔ Bind remaining in-force requirements with fail-capable gates @done(26-09-09 22:30)
+✔ Create fail-capable gates for S1–S6 and CS1–CS6 @done(26-09-09 22:30)
 ✔ Add Quality metric SSOT (ops vs defects; Q1–Q5) to integrity/ @done(26-09-09 22:20)
-✔ Define ship-role agent noun (ratify, merge, release, waive-finding verbs) @done(26-09-05 20:35)
-✔ Add machine-readable schemas (JSON Schema / OpenAPI) for agent noun verb contracts @done(26-09-09 22:16)
-✔ Add standards-steward load-applicability query verb for Session/WU applicability register @done(26-09-05 20:35)
-✔ Clarify gate ≠ audit terminology in charter §16.1 vocabulary mapping @done(26-09-05 20:35)
-✔ Create tooling to validate agent noun package structure (AGENT.md + verbs.md completeness) @done(26-09-09 22:30)
+✔ Define ship-role agent noun @done(26-09-05 20:35)
+✔ Add machine-readable schemas for agent noun verb contracts @done(26-09-09 22:16)
+✔ Clarify gate ≠ audit in charter §16.1 @done(26-09-05 20:35)
+✔ Create tooling to validate agent noun package structure @done(26-09-09 22:30)
+✔ Vocabulary: invariant/law → adjective; enforcement binder → gate (living SSOT) @done(26-09-15)
+✔ Goals may call goals; durability is a runtime, not a peer (CHARTER + matrix) @done(26-09-15)
+✔ Delete CHARTER.merged*.md scratch files; CHARTER.md is the combined spec @done(26-09-15)
+✔ tools + content-types language: Adjectives heading @done(26-09-15)
+✔ Audit statements A-R2, A-R7, A-R14, A-R17 match charter @done(26-09-15)
 
 ---
 
-**In-force bind/fitness debt: 0** (binding matrix 7/7 bound)
+## Now — audit files still on old statements
+
+These audit docs must quote the current charter/matrix statement. Same template, new statement only.
+
+- [ ] `integrity/audits/A-R5.md` — drop "workflow" as a writer class
+- [ ] `integrity/audits/A-R18.md` — retries live on the calling (durable) goal
+- [ ] `integrity/audits/A-R19.md` — no hand-authored graph duplicating a durable goal
+- [ ] `integrity/audits/A-R23.md` — goal or adapter field writes
+- [ ] `integrity/audits/A-C3.md` — orchestration lives in a goal
+- [ ] `integrity/audits/A-C6.md` — noun does not import a goal module
+- [ ] `integrity/audits/A-C14.md` — goal-to-goal uses public entrypoints only
+- [ ] `integrity/audits/A-C15.md` — verbs retried by a durable goal are idempotent
+
+Leave `reviews/` and `theory/history/og-interview-draft.md` frozen.
+
+Leave JSON key `binder` until `tools/audit-binding-matrix.py` is updated to read a renamed key.
+
+---
+
+## Still open product
+
+Order is the work order.
+
+1. **Unbound matrix rows** — P2 and most R/C items on `surface=reference`. Either bind with a fail-capable gate or keep them explicitly unbound and listed.
+2. **R6 / C5 verb-path gate** — every noun state change goes through a public verb (not only "no field writes").
+3. **R24 adjective-locality gate** — status machines / money math / named adjectives may only appear under `domain/<noun>/`.
+4. **A5 one-boundary / taint lifetime gate** — an adjective (esp. PII / card data) does not leave the consuming verb.
+5. **A7 escape-hatch gate** — ORM dirty writes, raw SQL, reflection, and similar must fail CI when they write noun fields outside the noun.
+6. **R9 / R10 / C7 / C8 contract-presence gate** — public entrypoint without a schema fails.
+7. **R11 / C9 schema-identity gate** — same field name, different type, fails.
+8. **C19 duplicated-adjective gate** — second implementation of the same adjective in the diff fails.
+9. **P4 / R31 tool-contract checker** — listed public tools must declare input, output, failure mode.
+10. **Generated impact graph** — R21: callers of verbs/goals from code, not hand JSON.
+11. **ACS docs voice** — `docs/ai-compiled-systems/` is product copy. Either point it at CHARTER.md as SSOT or retire conflicting workflow-as-peer sentences.
+12. **Three names** — repo Boundary-Based-Architecture, practice BBP, product ACS. Decide which name a newcomer sees first (README one-liner).
 
 ---
 
 ## Backlog (non-blocking)
 
-- Package agent short-form prompt + roles under agents/ — packaging; E6–E8 MET
-- Add hard I/O + failure-mode declarations to every public tool/agent boundary — ongoing reference class
-- Define additional agent nouns as needed (e.g., deploy-role) — optional
-- Wire session gates for agent noun verbs — OUT OF SCOPE / future
-- Verb-path binder for R6/C5 (every state change through public verb) — surface=reference
-- Contract presence binder for R9/R10/C7/C8 (schema validation) — surface=reference
-- Semantic schema comparison for R11/C9 (field meaning uniqueness) — surface=reference
-- AST-based predicate matching for C19 (duplicated law detection) — surface=reference
+- Package agent short-form prompt + roles under agents/
+- Define additional agent nouns as needed (e.g., deploy-role)
+- Wire session gates for agent noun verbs — future
