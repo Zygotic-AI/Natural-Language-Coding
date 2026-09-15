@@ -1,12 +1,12 @@
-# Process: load → prove
+# PLANIT: load → prove
 
-The AI-Compiled Systems loop. BBA is bound on every statement by default.
+The ACS loop. BBP is bound on every statement by default.
 
 Fail at prove → RCA into interview or bind, then regenerate. Humans do not patch generated files to silence an audit.
 
 ## 0. Load what already exists
 
-BBA standard (`CHARTER.md`), ADRs, requirements, known boundaries, known verb contracts. Do not interview for facts already bound.
+BBP standard (`CHARTER.md`), ADRs, requirements, known boundaries, known verb contracts. Do not interview for facts already bound.
 
 ## 1. Interview
 
@@ -38,9 +38,9 @@ Every statement points at:
 
 - requirement ids
 - ADR ids
-- the **BBA standard** (always on)
+- the **BBP standard** (always on)
 
-No pointer → unbound. A statement with only “BBA” and no business requirement may still be valid (pure shape work). A business statement with no requirement/ADR and no explicit “none needed, reason X” is unbound.
+No pointer → unbound. A statement with only “BBP” and no business requirement may still be valid (pure shape work). A business statement with no requirement/ADR and no explicit “none needed, reason X” is unbound.
 
 ## 5. Close gaps
 
@@ -48,7 +48,7 @@ Unbound or ambiguous → question → new or clearer requirement, ADR, or knowle
 
 ## 6. Generate
 
-AI emits BBA-shaped code for those statements only.
+AI emits BBP-shaped code for those statements only.
 
 Inside a boundary: self-contained. Neighbors only through hard contracts. The write window is that object plus the contracts it is allowed to call.
 

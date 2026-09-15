@@ -5,16 +5,16 @@ SSOT for open work. Charter SSOT is `CHARTER.md`.
 ## How to read red vs green
 
 Designed red: matching tool on its specimen → NOT_MET.
-Assert-fails scripts → exit 0 ASSERT:PASS (landmine live).
+Assert-fails scripts → exit 0 ASSERT:PASS.
 Designed pass: invoice-correct MET; assert-impact-graph-generated.py ASSERT:PASS.
 True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its own tool.
 
 ---
 
-## Completed
+## Completed product slice
 
-✔ Specimen gates through P4/R31 code-side v1 @done(26-09-15)
-✔ Generated impact graph v1 (stdout, not a checked-in file) @done(26-09-15)
+✔ Specimen gates R5 … P4 + generated graph @done(26-09-15)
+✔ ACS / BBP / PLANIT named on the README @done(26-09-15)
 
 ---
 
@@ -23,17 +23,16 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 - [ ] **R24.binder stale** in `integrity/binding-matrix.json`.
 - [ ] **C20 over-claim** — one binder, two requirement ids.
 - [ ] **P4/R31 matrix binder is agent-only.** Code-side tool exists separately.
+- [ ] Remaining ACS pages still say BBA/AIMS in places (PROCESS done; MERGE/ARCHITECTURE/MANIFESTO/COMPILER not fully voiced).
 
 ## Still open product
 
-10. ~~Generated impact graph v1~~ — regex call sites. Not C21.
-11. **ACS docs voice**
-12. **Three names** — README newcomer line
-
----
+11. ~~ACS docs voice (README + NAMES + PROCESS)~~ — leftover pages still mixed.
+12. ~~Three names — README newcomer line~~
 
 ## Backlog
 
 - Agent short-form packaging
 - Additional agent nouns
 - Session gates — future
+- Voice pass on MERGE / ARCHITECTURE / MANIFESTO / COMPILER

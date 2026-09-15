@@ -1,39 +1,32 @@
 # Boundary-Based Architecture
 
-Architecture that keeps agents and code from shipping slop. Central home for theory, agentic application, and tools — so humans and agents can change software and systems without scattering adjectives or widening blast radius.
+**Locally green, globally wrong — stopped.**
 
-**Boundary-Based Programming (BBP)** is the programming practice face of this architecture (charter §§4–14). **Systems model** (§16) extends the same discipline to agent fleets and durable roles.
+Agents write code that is correct in one file and false across the system. This repo is the compile gate for that failure: small boundaries, adjectives on the noun, verbs as the only mutation path, requirements bound before generate.
 
-**AI-Compiled Systems** is the process face: instead of giving code to a compiler, you give goals and requirements. The AI builds the rest — BBA-shaped, or the build fails. See [`docs/ai-compiled-systems/`](docs/ai-compiled-systems/).
+## Three names
+
+| Name | What it is | What it is not |
+|------|------------|----------------|
+| **ACS** — AI-Compiled Systems | The whole thing. Goals and requirements in; BBP-shaped system out, or the build fails. | Not “AI manages my cluster.” |
+| **BBP** — Boundary-Based Programming | The *shape* the compiler must emit. Nouns, verbs, adjectives, goals. | Not an invoice app. `examples/` are specimens for the gates. |
+| **PLANIT** | The *process*: load, interview, plan, bind, close gaps, generate, prove. | Not a second charter. |
+
+Charter SSOT: [`CHARTER.md`](CHARTER.md). Process pages: [`docs/ai-compiled-systems/`](docs/ai-compiled-systems/). Name card: [`docs/ai-compiled-systems/NAMES.md`](docs/ai-compiled-systems/NAMES.md).
 
 ## Start here
 
 | Artifact | Role |
 |----------|------|
-| [`CHARTER.md`](CHARTER.md) | Living charter (rules, agent loop, systems model, checklists) |
-| [`docs/ai-compiled-systems/`](docs/ai-compiled-systems/) | Process + naming (interview → bind → generate → prove) |
-| [`theory/history/og-interview-draft.md`](theory/history/og-interview-draft.md) | OG interview draft (historical; do not edit) |
+| [`CHARTER.md`](CHARTER.md) | Rules |
+| [`docs/ai-compiled-systems/`](docs/ai-compiled-systems/) | ACS + PLANIT |
+| [`examples/`](examples/) | Specimens the gates scan |
+| [`tools/`](tools/) | Gates and the impact-graph generator |
+| [`TODO`](TODO) | Open work |
 | [`DESCRIBE.md`](DESCRIBE.md) | Repo memory for agents |
-| [`TODO`](TODO) | Work queue |
-| [`agents/`](agents/) | Agent loop roles + agent nouns (standards-steward, adversarial-auditor) |
 
-## Layout
-
-```text
-.
-├─ CHARTER.md          # authoritative practice charter (§4 software, §16 systems)
-├─ docs/ai-compiled-systems/  # process layer (AIMS merge)
-├─ theory/             # essays, rationale, history
-├─ agents/             # loop roles + agent nouns
-├─ tools/              # gates, scaffolding, generators
-├─ examples/           # sample systems that adopt the charter
-├─ adrs/               # decisions that later work must not quietly undo
-├─ integrity/          # checklist + gate home for this meta-repo
-└─ .agents/            # portable skills / instructions (cross-harness)
-```
-
-This repo is the **practice hub**, not an application domain tree. Application repos that adopt BBP should follow the shape in charter §8 (`domain/`, `goals/`, `workflows/`, …).
+This repo is a practice hub. Adopting application repos follow charter §8 (`domain/`, `goals/`, …). They do not copy `examples/invoice-*` as a product.
 
 ## Status
 
-Working charter from a design conversation. Not yet a ratified organizational standard. Adoption "done" criteria are in charter §14. Systems extension (§16) ratified by ADR 0003. AI-Compiled Systems process docs are a first drop; CHARTER.md remains design SSOT.
+Working charter. Not a ratified organizational standard. Adoption “done” is charter §14.
