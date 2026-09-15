@@ -1,13 +1,19 @@
 # Tools
 
+Enforcement. Specimens in `examples/` are not a product.
+
+Hub suite (landmines + invoice-correct + matrix):
+
 ```bash
-python3 tools/assert-invoice-violation-fails.py
-python3 tools/assert-verb-path-violation-fails.py
-python3 tools/assert-adjective-locality-violation-fails.py
-python3 tools/assert-taint-violation-fails.py
-python3 tools/assert-escape-hatch-violation-fails.py
-python3 tools/assert-contract-presence-fails.py
+bash tools/ci-fitness.sh
 ```
 
-Contract-presence v1: schema files exist and parse. Not bound to R9–C8.
-R24.binder still needs a one-field JSON flip to `fitness-adjective-locality.py`.
+Charter §14 check 1 only:
+
+```bash
+bash tools/ci-fitness-check1.sh
+```
+
+Designed fail: matching `tools/assert-*-fails.py` exits 0 (`ASSERT:PASS`).
+Designed pass: `examples/invoice-correct` is MET on the bound v1 tools.
+True miss: an assert exits 1, or invoice-correct is NOT_MET.

@@ -15,9 +15,16 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`duplicated-adjective-violation/`](duplicated-adjective-violation/) | C19 duplicated adjective |
 | [`missing-failure-mode/`](missing-failure-mode/) | P4/R31 failure mode |
 
+Hub suite (every landmine still red; invoice-correct still green):
+
+```bash
+bash tools/ci-fitness.sh
+```
+
 ```bash
 python3 tools/generate-impact-graph.py examples/invoice-correct
 python3 tools/assert-impact-graph-generated.py
 ```
+
 
 Do not commit the JSON that command prints.
