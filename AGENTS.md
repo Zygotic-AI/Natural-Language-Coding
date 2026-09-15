@@ -6,6 +6,8 @@ Standing instructions for any coding harness working in this repository.
 
 This repo is the central home for **Boundary-Based Programming**. Read [`CHARTER.md`](CHARTER.md) before changing theory, agent materials, or tools. Confirmable rules live in the charter; wishes are not rules.
 
+Id prefixes: **P** = principle (hub honesty), **R** = requirement (charter shape), **C** = confirmation (this change). `P-0xx` (hyphen) is an operating policy in the companion bindings repo, not P1–P7.
+
 Practice integrity (charter §5.8, [`integrity/PRINCIPLES.md`](integrity/PRINCIPLES.md)):
 
 - Zero variance: prescribed actions only; hard gates; complete/incomplete.
