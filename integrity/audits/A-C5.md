@@ -9,8 +9,14 @@ Every state change of a noun goes through a public verb.
 
 ## Binary criteria
 
-Met iff a binder (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no binder ran, binder failed, or evidence is missing.
+Met iff a gate has verified this requirement against the current change and recorded PASS with evidence. Not met if no gate ran, the gate failed, or evidence is missing.
+
+## V1 tool (not a matrix bind)
+
+Same tool as A-R6: `tools/fitness-verb-path.py`. Same fixture: `examples/invoice-verb-path-violation/`.
+
+C5 stays `unbound`. Field assignment remains C4 / R5.
 
 ## Evidence
 
-On met or not met, cite file and symbol (or N/A reason). List failing ids when the audit is a matrix audit.
+Cite each `VIOLATION <path>:<line> <kind>`, or `RESULT:MET` with scan roots.
