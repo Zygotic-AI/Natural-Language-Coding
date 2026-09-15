@@ -108,7 +108,4 @@ See [PROCESS.md](PROCESS.md) (PLANIT steps 0–7).
 
 ## Open items (not disagreements)
 
-- R24.binder in the matrix still names the field-write tool.
-- C20 names R23 and R24 and binds one tool.
-- P4/R31 matrix binder is agent-noun structure; code-side tool is separate.
 - How loud a contract-change notice is to the manager.
