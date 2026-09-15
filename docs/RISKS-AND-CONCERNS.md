@@ -94,6 +94,12 @@ This document qualifies the architecture upfront: the problems it solves, the pr
 
 **Mitigation.** The adjective's value never becomes data that crosses a boundary. It is consumed inside the calling statement. No intermediate noun holds the raw value. Combined with 2.5, the audit enforces this mechanically.
 
+### 2.9 Non-OO escape hatches (residual risk of the existential flaw)
+
+**Problem.** Private fields and methods make adjectives unreachable from outside in OO languages. But the language's protection dies the moment a goal reaches the noun through serialization, a raw SQL update, or an ORM that bypasses the object entirely. The noun's adjective is never consulted, so nothing fails, but the rule now lives in two places. This is the residual of the original binder gap — narrowed, not eliminated.
+
+**Mitigation.** A7 on the audit checklist: scan for direct storage access — raw SQL, ORM bypasses, deserialization into noun state, reflection — that mutates or reads a noun's adjectives without going through a published verb. This is a narrow, known hole with a specific check, not an open one. The OO privacy handles the common case; A7 handles the paths the language cannot see.
+
 ---
 
 ## Part 3 — Adversarial audit checklist
@@ -108,8 +114,9 @@ Every artifact creation or change runs an adversarial audit. The audit family gr
 | A4 | Requirement bound | The bound code path enforces the requirement, not merely references it. |
 | A5 | Any sensitive adjective fetched | **Taint lifetime:** the value is not assigned to a field, passed to another boundary, or returned from the consuming verb. Consumed in place or dropped. (Replaces any "declared consumer" check.) |
 | A6 | Work package completed | Deep review: statements done, all bound ADRs/requirements held, no second copy of an adjective inside a goal, no god-noun growth. |
+| A7 | Any noun mutation or read | **Non-OO escape hatches:** no raw SQL, ORM bypass, deserialization, or reflection mutates or reads a noun's adjectives without going through a published verb. Catches the residual of the existential flaw — the paths OO privacy cannot see. |
 
-**Rule:** A5 is mechanical and cheap — it runs at every per-step gate. A6 is the thorough pass at package completion. Do not merge A5 into A6; the cheap taint check is what keeps PLANIT fast.
+**Rule:** A5 is mechanical and cheap — it runs at every per-step gate. A6 is the thorough pass at package completion. A7 runs wherever a noun's storage is touched. Do not merge A5 into A6; the cheap taint check is what keeps PLANIT fast. Do not skip A7 because "we use OO" — the escape hatches are exactly where the existential flaw survives.
 
 ---
 
@@ -127,6 +134,7 @@ Every artifact creation or change runs an adversarial audit. The audit family gr
 | 8 | — | Boundary thrash | Batching verbs, declared not accidental |
 | 9 | — | Adjective outlives verb | A5 taint tracking — no trust in binding declaration |
 | 10 | — | Capability explosion | Reject handles; bind at plan time, enforce by taint |
+| 11 | — | Non-OO escape hatches (residual existential flaw) | A7 scans for raw SQL / ORM / deserialization bypasses |
 
 ---
 
