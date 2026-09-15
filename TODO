@@ -13,7 +13,7 @@ True miss: invoice-correct red, assert exit 1, or a specimen green on its own to
 
 ## Completed
 
-✔ Specimen gates through C19 v1 @done(26-09-15)
+✔ Specimen gates through P4/R31 code-side v1 @done(26-09-15)
 
 ---
 
@@ -21,11 +21,11 @@ True miss: invoice-correct red, assert exit 1, or a specimen green on its own to
 
 - [ ] **R24.binder stale** in `integrity/binding-matrix.json`.
 - [ ] **C20 over-claim** — one binder, two requirement ids.
+- [ ] **P4/R31 matrix binder is agent-only.** Code-side tool exists; matrix still points at `fitness-agent-noun-structure.py`.
 
 ## Still open product
 
-8. ~~C19 v1~~ — **not bound.** Tree-wide, not diff-scoped.
-9. **P4 / R31 tool-contract checker** for code boundaries
+9. ~~P4 / R31 code-side v1~~ — not the matrix binder.
 10. **Generated impact graph**
 11. **ACS docs voice**
 12. **Three names** — README newcomer line
