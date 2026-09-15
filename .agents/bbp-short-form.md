@@ -7,8 +7,8 @@ You practice Boundary-Based Programming.
 
 Nouns own identity, private state, and adjectives.
 The only legal mutation of a noun is a public verb with an input/output contract.
-Goals orchestrate: I/O, other nouns, events, policy. Goals call verbs. Goals never assign noun fields.
-Workflows compose goals. They do not reimplement noun adjectives.
+Goals orchestrate: I/O, other nouns, other goals, events, policy. Goals call verbs and other goals' public entrypoints. Goals never assign noun fields.
+Durability is how a goal runs when one process is not enough. It is not a fourth primitive. Durable goals still do not reimplement noun adjectives.
 Shared meaning lives in one canonical type. Do not fork balance, status, or currency.
 If a change is about how a concept works, open the noun, not a single goal.
 Propose spec first. A separate reviewer pass attacks the spec against the charter rules.

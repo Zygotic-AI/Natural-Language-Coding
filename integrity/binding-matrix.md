@@ -12,7 +12,7 @@ Maps every requirement in this repo to an audit and a binder. The binding matrix
 
 | Field | Required | Meaning |
 |-------|----------|---------|
-| `id` | yes | Requirement id (`P*`, `R*`, `C*`, …) |
+| `id` | yes | Requirement id. Prefix: **P** principle, **R** charter requirement, **C** confirmation checklist, **S**/**CS** agent-noun structure, **Q** quality. Hyphenated `P-0xx` is a different series (operating policy). |
 | `statement` | yes | One-line statement |
 | `surface` | yes | `in-force` \| `reference` \| `wish` |
 | `audit_id` | yes | Audit that yields met / not met |

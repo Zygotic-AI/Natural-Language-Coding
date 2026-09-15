@@ -64,6 +64,22 @@ Useful substitutes if a slot in an older diagram said “Governance Architecture
 
 **Boundary-Enforced Programming** is a true claim about the pipeline. It is a poor name for the practice. Put enforcement in the rules and the CI gate, not in the title.
 
+### Id prefixes
+
+These letters on requirement ids are not interchangeable.
+
+| Prefix | Stands for | What it is |
+|--------|------------|------------|
+| **P** | Principle | How *this practice hub* stays honest (P1–P7 in `integrity/PRINCIPLES.md`). |
+| **R** | Requirement | A charter design rule the emit must obey (R1–R31). |
+| **C** | Confirmation | A per-change checklist item the confirmer scores PASS/FAIL/N/A (C1–C24). |
+| **S** / **CS** | Systems / confirmation-systems | Agent-noun package structure (identity, verbs, handoff). |
+| **Q** | Quality | Ops/opportunities metric at a boundary. |
+
+`P-016`, `P-020` and other hyphenated **P-0xx** ids are *operating policies* in the companion bindings repo. They are not P1–P7.
+
+An **R** can stand without a matching **C**. A **C** usually restates an **R** as something you can tick on *this* change.
+
 ---
 
 ## 4. Core model

@@ -14,6 +14,8 @@ Agents write code that is correct in one file and false across the system. This 
 
 Charter SSOT: [`CHARTER.md`](CHARTER.md). Process pages: [`docs/ai-compiled-systems/`](docs/ai-compiled-systems/). Name card: [`docs/ai-compiled-systems/NAMES.md`](docs/ai-compiled-systems/NAMES.md).
 
+**P / R / C** on rule ids: **P**rinciple (hub honesty), **R**equirement (charter shape), **C**onfirmation (this change). Hyphenated `P-020` is a different series.
+
 ## Start here
 
 | Artifact | Role |
