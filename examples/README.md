@@ -13,7 +13,9 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`missing-contract/`](missing-contract/) | R9/R10 contracts |
 | [`schema-identity-violation/`](schema-identity-violation/) | R11/C9 identity |
 | [`duplicated-adjective-violation/`](duplicated-adjective-violation/) | C19 duplicated adjective |
+| [`extra-goal-entrypoint/`](extra-goal-entrypoint/) | R13 two entrypoints |
 | [`missing-failure-mode/`](missing-failure-mode/) | P4/R31 failure mode |
+
 
 Hub suite (every landmine still red; invoice-correct still green):
 

@@ -34,7 +34,9 @@ for a in \
   tools/assert-boundary-io-fails.py \
   tools/assert-taint-violation-fails.py \
   tools/assert-escape-hatch-violation-fails.py \
-  tools/assert-duplicated-adjective-fails.py
+  tools/assert-duplicated-adjective-fails.py \
+  tools/assert-r13-fails.py
+
 do
   echo "--- $a ---"
   python3 "$a" || fail "$a"
@@ -55,8 +57,10 @@ for t in \
   tools/fitness-taint-lifetime.py \
   tools/fitness-escape-hatch.py \
   tools/fitness-duplicated-adjective.py \
+  tools/fitness-r13-entrypoints.py \
   tools/fitness-c20.py \
   tools/fitness-p4-r31.py
+
 do
   echo "--- $t $CORRECT ---"
   python3 "$t" "$CORRECT" || fail "$t on invoice-correct"
