@@ -1,0 +1,2 @@
+# Value identifiers that must not leave the consuming unit.
+card_number
