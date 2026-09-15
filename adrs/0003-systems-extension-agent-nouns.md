@@ -7,7 +7,7 @@
 
 ## Context
 
-BBP originated as a software practice: nouns own state and invariants, verbs are the only legal mutation, goals orchestrate I/O, workflows compose goals. This model shrinks the search space for agents editing code.
+BBP originated as a software practice: nouns own state and adjectives, verbs are the only legal mutation, goals orchestrate I/O, workflows compose goals. This model shrinks the search space for agents editing code.
 
 The same structural discipline applies to organizing agent fleets and durable roles in a system. Without boundaries, agent responsibilities blur. Handoffs become implicit. Completion is vibes. Audit trails scatter.
 
@@ -21,13 +21,13 @@ Quality north star: highest quality; effectiveness before efficiency; default-cl
 
 | Software BBP | Systems BBP |
 |--------------|-------------|
-| Noun | Agent noun (durable role with identity and invariants) |
+| Noun | Agent noun (durable role with identity and adjectives) |
 | Verb (on noun) | Verb (legal function an agent may perform; contracted I/O) |
 | Goal | Use-case (orchestration across agent nouns or to the outside world) |
 | Workflow | Workflow (durable composition of use-cases) |
 | Contract | Boundary artifact (input, output, failure mode, handoff, completion) |
-| Invariant | Role invariant (what the agent must never violate) |
-| Fitness check | Gate (automated enforcement; binary pass/fail; CI-bound) |
+| Adjective | Role adjective (what the agent must never violate) |
+| Gate | Gate (automated enforcement; binary pass/fail; CI-bound) |
 | Adversarial review | Audit (role-based review against charter; produces findings) |
 
 ### 2. Agent noun structure
@@ -35,7 +35,7 @@ Quality north star: highest quality; effectiveness before efficiency; default-cl
 Every agent noun package declares:
 
 - **Identity:** Role name, purpose (one line)
-- **Invariants:** What the agent must never violate
+- **Adjectives:** What the agent must never violate
 - **Verb list:** Each verb has input contract, output contract, failure mode
 - **Handoff-in:** What must be true before this agent receives work
 - **Completion artifact:** What the agent produces to mark work complete

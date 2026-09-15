@@ -25,7 +25,7 @@ This is not `gcc` with a chatbot.
 The compile is not done if any of these is true:
 
 - A goal assigns a noun field (check 1 red).
-- An invariant exists in two goal bodies.
+- An adjective exists in two goal bodies.
 - A product statement from the plan has no binding.
 - A published verb contract changed and callers were not part of the plan.
 
@@ -33,4 +33,4 @@ Deterministic *enough* means: same inputs + same standard → same shape and sam
 
 ## Failure mode
 
-The compiler does not “almost pass.” Binders exit 0 or 1. RCA consumes the 1. Humans do not negotiate the object file back to green.
+The compiler does not “almost pass.” Gates exit 0 or 1. RCA consumes the 1. Humans do not negotiate the object file back to green.

@@ -9,7 +9,7 @@ Goals + requirements + ADRs     ← humans hold (process)
             ↓
    BBA-shaped system            ← design CHARTER (noun, verb, goal boundary, contract)
             ↓
-   Machine binder + audit
+   Machine gate + audit
             ↓
    Running system
 ```
@@ -32,7 +32,7 @@ If the compiler skips BBA, you get two fine goals and two invoices. Traceability
 - Verb
 - Goal-as-boundary
 - Contract
-- Binder
+- Gate
 
 Goal sits on both lists. A goal is an outcome the manager asked for *and* a boundary that may only call published verbs.
 
@@ -44,7 +44,7 @@ Generation is incomplete unless:
 
 1. Output is BBA-shaped.
 2. Every invoice-shaped fact lives behind one Invoice boundary (noun inside, verbs on the edge).
-3. A binder fails a goal that implements that invariant itself or writes noun fields.
+3. A gate fails a goal that implements that adjective itself or writes noun fields.
 
 Two goal boxes are fine if both only call Invoice verbs.
 
