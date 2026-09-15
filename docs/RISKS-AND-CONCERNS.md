@@ -28,7 +28,7 @@ This document qualifies the architecture upfront: the problems it solves, the pr
 
 **Problem.** A card number or a person's name gets passed around as a bare value through DTOs and intermediate objects. It leaks into logs, caches, and places that should never see it.
 
-**Solved by.** An adjective's value never traverses more than one boundary as data. It is consumed inside the boundary that calls the verb, or returned as a capability only the consuming verb can redeem. No intermediate noun ever holds the raw value.
+**Solved by.** An adjective's value never traverses more than one boundary as data. It is consumed inside the boundary that calls the verb. No intermediate noun ever holds the raw value.
 
 ### 1.5 Context-window explosion
 
@@ -68,19 +68,19 @@ This document qualifies the architecture upfront: the problems it solves, the pr
 
 **Problem.** Solving data residency with opaque handles instead of the binding rule drowns the system in handle types — one handle per sensitive adjective per noun.
 
-**Mitigation.** Do not use handles. Use binding-at-plan-time: the plan declares the call site as the consumer; the audit verifies the value is consumed in place. No second object type. This is why the binding step must be right.
+**Mitigation.** Do not use handles. Use binding-at-plan-time: the plan declares the call site as the consumer; the audit verifies the value is consumed in place. No second object type.
 
-### 2.5 Wrong binding declaration (silent hole)
+### 2.5 Adjective value outlives the consuming verb (supersedes 2.5)
 
-**Problem.** The audit checks the code against the binding, not against reality. If PLANIT mislabels a call site as a consumer when it is not, the audit passes a leak. The system is only as strong as the binding step.
+**Problem.** Even with a correct binding, the fetched value can be stored in another piece of data or returned from the verb that used it. The leak is not about intent — it is about lifetime. `charge(card.getNumber())` is fine; `let n = card.getNumber(); stash(n)` is not.
 
-**Mitigation.** The binding step is itself adversarial. A second pass — different from the generator — reviews each binding declaration: is this call site genuinely the point of use, or is it a relay? Bindings that cannot be justified fail before code is written. The audit is a backstop, not the only line.
+**Mitigation.** The adversarial audit tracks the adjective's **taint lifetime**, not the plan's declared consumer. Rule: a sensitive adjective fetched inside a verb may not be assigned to a field, passed as an argument to another boundary, or returned from that verb. It must be consumed inside the same verb and dropped. The audit is mechanical taint tracking — no trust in the binding declaration. This removes the silent-hole risk entirely: the binder does not need to know whether the site is a consumer; it only needs to know the value never escapes.
 
 ### 2.6 Per-step audit cost
 
 **Problem.** If each atomic step spawns a heavy review, PLANIT becomes slower than writing code directly. The cycle eats its own value.
 
-**Mitigation.** Keep per-step audits mechanical: does this code touch only what it was bound to? Save deep adversarial review for work-package completion. Two tiers — cheap gate per step, thorough review per package.
+**Mitigation.** Keep per-step audits mechanical: does this code touch only what it was bound to, and does no sensitive adjective outlive its verb? Save deep adversarial review for work-package completion. Two tiers — cheap gate per step, thorough review per package.
 
 ### 2.7 Regeneration only stays cheap if adjectives actually moved
 
@@ -92,24 +92,41 @@ This document qualifies the architecture upfront: the problems it solves, the pr
 
 **Problem.** "Invoice calls Customer directly" still moves the name across a boundary. The PDF generator now holds PII in its own memory. The leak is relocated, not closed.
 
-**Mitigation.** The adjective's value never becomes data that crosses a boundary. It is consumed inside the calling statement or returned as a capability only the consuming verb can redeem. No intermediate noun holds the raw value. See the checkout example in the architecture docs.
+**Mitigation.** The adjective's value never becomes data that crosses a boundary. It is consumed inside the calling statement. No intermediate noun holds the raw value. Combined with 2.5, the audit enforces this mechanically.
 
 ---
 
-## Part 3 — The ledger, one line each
+## Part 3 — Adversarial audit checklist
+
+Every artifact creation or change runs an adversarial audit. The audit family grows with the artifact type. None of these trust the generator.
+
+| # | When | What it checks |
+|---|------|----------------|
+| A1 | Noun created | The new noun reaches no other boundary except through that boundary's published verbs. Both directions: it does not read another noun's state, and it does not call into a goal. |
+| A2 | Verb / adjective added or changed | Every caller of a changed contract still satisfies it, or callers were updated in the same change. |
+| A3 | Goal completed | The code actually delivers the stated outcome — not just compiles, not just passes local tests. |
+| A4 | Requirement bound | The bound code path enforces the requirement, not merely references it. |
+| A5 | Any sensitive adjective fetched | **Taint lifetime:** the value is not assigned to a field, passed to another boundary, or returned from the consuming verb. Consumed in place or dropped. (Replaces any "declared consumer" check.) |
+| A6 | Work package completed | Deep review: statements done, all bound ADRs/requirements held, no second copy of an adjective inside a goal, no god-noun growth. |
+
+**Rule:** A5 is mechanical and cheap — it runs at every per-step gate. A6 is the thorough pass at package completion. Do not merge A5 into A6; the cheap taint check is what keeps PLANIT fast.
+
+---
+
+## Part 4 — The ledger, one line each
 
 | # | Problem solved | Problem introduced | Mitigation |
 |---|----------------|--------------------|------------|
 | 1 | Locally green, globally wrong | — | Nouns own adjectives; binder fails goal-side writes |
 | 2 | Anemic domain model | God noun | Noun owns only its own state; else call another noun |
 | 3 | Decay under fast tech change | Regeneration only cheap if adjectives moved | Every swappable concern is a visible adjective |
-| 4 | Sensitive data leakage | Relocated leak if not closed properly | Value never crosses as data; capability or in-place consume |
+| 4 | Sensitive data leakage | Relocated leak if not closed properly | Value never crosses as data; taint lifetime enforced (A5) |
 | 5 | Context-window explosion | — | One boundary + its contracts per window |
-| 6 | Defect cost compounds | Per-step audit cost | Mechanical per-step, deep per-package |
-| 7 | — | Leaky verbs | Audit treats returns like assignments |
+| 6 | Defect cost compounds | Per-step audit cost | Mechanical per-step (incl. A5), deep per-package (A6) |
+| 7 | — | Leaky verbs | A5 treats returns and assignments the same |
 | 8 | — | Boundary thrash | Batching verbs, declared not accidental |
-| 9 | — | Wrong binding (silent hole) | Adversarial binding review before code |
-| 10 | — | Capability explosion | Reject handles; bind at plan time |
+| 9 | — | Adjective outlives verb | A5 taint tracking — no trust in binding declaration |
+| 10 | — | Capability explosion | Reject handles; bind at plan time, enforce by taint |
 
 ---
 
