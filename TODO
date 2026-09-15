@@ -13,8 +13,7 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 
 ## Completed product slice
 
-✔ Specimen gates R5 … P4 + generated graph @done(26-09-15)
-✔ ACS / BBP / PLANIT named on the README @done(26-09-15)
+✔ Specimen gates + generated graph + ACS/BBP/PLANIT names + ACS page voice @done(26-09-15)
 
 ---
 
@@ -23,16 +22,9 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 - [ ] **R24.binder stale** in `integrity/binding-matrix.json`.
 - [ ] **C20 over-claim** — one binder, two requirement ids.
 - [ ] **P4/R31 matrix binder is agent-only.** Code-side tool exists separately.
-- [ ] Remaining ACS pages still say BBA/AIMS in places (PROCESS done; MERGE/ARCHITECTURE/MANIFESTO/COMPILER not fully voiced).
-
-## Still open product
-
-11. ~~ACS docs voice (README + NAMES + PROCESS)~~ — leftover pages still mixed.
-12. ~~Three names — README newcomer line~~
 
 ## Backlog
 
 - Agent short-form packaging
 - Additional agent nouns
 - Session gates — future
-- Voice pass on MERGE / ARCHITECTURE / MANIFESTO / COMPILER

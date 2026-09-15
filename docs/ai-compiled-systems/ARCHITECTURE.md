@@ -1,20 +1,20 @@
 # Architecture
 
-AI-Compiled Systems is two layers of one architecture.
+ACS is two layers of one architecture.
 
 ```text
-Goals + requirements + ADRs     ← humans hold (process)
+Goals + requirements + ADRs     ← humans hold (PLANIT)
             ↓
       AI compiler
             ↓
-   BBA-shaped system            ← design CHARTER (noun, verb, goal boundary, contract)
+   BBP-shaped system            ← CHARTER (noun, verb, adjective, goal, contract)
             ↓
    Machine gate + audit
             ↓
    Running system
 ```
 
-If the compiler skips BBA, you get two fine goals and two invoices. Traceability of slop is not the product.
+If the compiler skips BBP, you get two fine goals and two invoices. Traceability of slop is not the product.
 
 ## Two citizen lists (both in force)
 
@@ -26,7 +26,7 @@ If the compiler skips BBA, you get two fine goals and two invoices. Traceability
 - Interview (procedure)
 - RCA (procedure)
 
-**Design citizens** — emitted by the compiler, required by the BBA standard:
+**Design citizens** — emitted by the compiler, required by the BBP standard:
 
 - Noun
 - Verb
@@ -42,7 +42,7 @@ Not citizens: workflow-as-a-new-type (goal of goals; durable is a property), kno
 
 Generation is incomplete unless:
 
-1. Output is BBA-shaped.
+1. Output is BBP-shaped.
 2. Every invoice-shaped fact lives behind one Invoice boundary (noun inside, verbs on the edge).
 3. A gate fails a goal that implements that adjective itself or writes noun fields.
 
@@ -58,4 +58,4 @@ A particular `Invoice` module, verb bodies, goal code, diagrams, most runbooks. 
 
 A *breaking* change to a published verb contract is a product event: impact on callers, fix the requirement if the behavior was wrong, regenerate. Do not patch the generated contract to hide a defect.
 
-CHARTER.md remains the design SSOT. This page does not replace it.
+`CHARTER.md` remains the design SSOT. This page does not replace it.

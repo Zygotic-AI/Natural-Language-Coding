@@ -15,8 +15,8 @@ Intent
   → goals
   → requirements
   → ADRs
-  → AI compile
-  → BBA-shaped code, tests, ops
+  → AI compile (PLANIT)
+  → BBP-shaped code, tests, ops
 ```
 
 The source is intent. The code is the object file.
@@ -25,7 +25,7 @@ The source is intent. The code is the object file.
 
 If the object file has no rule for where an adjective lives, two goals will each own `status`. Both goals can match the requirements. Users still find the $100k bug.
 
-So the compiler is not free to emit any structure. It emits Boundary-Based Architecture: small boundaries, noun inside, verbs on the edge, goals only call verbs.
+So the compiler is not free to emit any structure. It emits BBP: small boundaries, noun inside, verbs on the edge, goals only call verbs.
 
 Humans do not maintain those noun files. They hire the compiler. If a human must edit generated code to keep adjectives consistent, the architecture failed. The loop is: gate red → RCA → tighter interview / requirement / ADR → regenerate.
 
@@ -33,7 +33,7 @@ Humans do not maintain those noun files. They hire the compiler. If a human must
 
 Humans: outcomes, constraints, dated choices, sign-off on RCA and audits.
 
-AI: architecture-shaped code, tests, regeneration, consistency inside a boundary.
+AI: BBP-shaped code, tests, regeneration, consistency inside a boundary.
 
 ## Measure
 

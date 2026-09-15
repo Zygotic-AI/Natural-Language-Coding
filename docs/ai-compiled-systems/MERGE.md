@@ -1,13 +1,16 @@
-# BBA + AIMS merge (settled)
+# ACS merge (settled)
 
 Date: 2026-09-15
 
 Two layers of one architecture. Not two competing sources of truth.
 
-- **AIMS** — process. How work is interviewed, planned, bound, generated, audited, and sent back through RCA.
-- **BBA** (Boundary-Based Architecture / Boundary-Based Programming) — design. The shape generated code must have.
+- **PLANIT** — process. How work is interviewed, planned, bound, generated, audited, and sent back through RCA.
+- **BBP** — design. The shape generated code must have.
+- **ACS** — the name for both layers together.
 
-AIMS does not replace BBA. BBA is the instruction set the process is not allowed to skip.
+PLANIT does not replace BBP. BBP is the instruction set the process is not allowed to skip.
+
+AIMS was the process draft. BBA was an earlier name for BBP. Use the table in [NAMES.md](NAMES.md).
 
 ---
 
@@ -15,10 +18,10 @@ AIMS does not replace BBA. BBA is the instruction set the process is not allowed
 
 | Say | Do not say | Meaning |
 |-----|------------|---------|
-| BBA standard | standing rules, “fixture” for Invoice.py | Permanent *method*: small boundaries, noun inside, verbs on the edge, goals only call verbs |
-| Adjective | law, invariant | A descriptor on a noun that every use must leave true (e.g. no void after paid; balance rules) |
-| Requirement | | Constraint on behavior (PCI, “balance never negative”) |
-| ADR | | Dated choice (Postgres, not Oracle) |
+| BBP standard | standing rules, “fixture” for Invoice.py | Permanent *method*: small boundaries, noun inside, verbs on the edge, goals only call verbs |
+| Adjective | law, invariant | A descriptor on a noun that every use must leave true |
+| Requirement | | Constraint on behavior |
+| ADR | | Dated choice |
 | Goal | | Outcome to produce |
 | Knowledge domain | first-class kind | A *shelf* of standing ADRs + requirements the interview must consult |
 | Gate | binder (as a noun) | Machine that fails the change when an audit would be not-met |
@@ -29,7 +32,7 @@ AIMS does not replace BBA. BBA is the instruction set the process is not allowed
 
 ## Two lists, both in force
 
-**Human-held (manager artifacts).** People write or sign these.
+**Human-held.** People write or sign these.
 
 - Goals
 - Requirements
@@ -39,14 +42,14 @@ AIMS does not replace BBA. BBA is the instruction set the process is not allowed
 
 Humans do not author noun classes or verb bodies. They hire the compiler.
 
-**Derived (AI emits, disposable).** Regenerable.
+**Derived.** Regenerable.
 
 - A particular noun module (`Invoice`)
 - Verb implementations behind published contracts
 - Goal code
 - Most runbooks and diagrams
 
-**BBA standard** is neither. It is the method. It does not change when Invoice internals are regenerated.
+**BBP standard** is neither. It is the method. It does not change when Invoice internals are regenerated.
 
 **Contracts** are derived but *breaking* a published verb contract is a product event: impact on callers, then fix the *requirement* if the behavior was wrong, then regenerate. Humans do not patch the generated contract to hide a defect.
 
@@ -54,9 +57,9 @@ Humans do not author noun classes or verb bodies. They hire the compiler.
 
 ## Citizens, by layer
 
-Process citizens (AIMS): goal, requirement, ADR, interview, RCA.
+Process citizens (PLANIT): goal, requirement, ADR, interview, RCA.
 
-Design citizens (BBA): noun, verb, goal-as-boundary, contract, gate.
+Design citizens (BBP): noun, verb, goal-as-boundary, contract, gate.
 
 Goal sits on both lists on purpose.
 
@@ -64,11 +67,11 @@ Not citizens: workflow-as-a-new-type (it is a goal of goals; durable is a proper
 
 ---
 
-## The compile gate (non-negotiable)
+## The compile gate
 
 Generation is incomplete unless:
 
-1. Output is BBA-shaped.
+1. Output is BBP-shaped.
 2. Every invoice-shaped fact lives behind an Invoice boundary (noun inside, verbs on the edge).
 3. A gate fails a goal that implements that adjective itself or writes noun fields.
 
@@ -80,7 +83,7 @@ Two small goal boxes are fine if both only call Invoice verbs. The failure is a 
 
 Human = non-coding manager. Passes goals, requirements, ADRs; certifies RCA; validates audit findings.
 
-AI = developer bound to the BBA standard. Writes nouns, verbs, code.
+AI = developer bound to the BBP standard. Writes nouns, verbs, code.
 
 If a human must edit generated files to keep adjectives consistent, the architecture failed. Fail → RCA → tighter interview / requirement / ADR / knowledge → regenerate.
 
@@ -88,9 +91,9 @@ The red gate is not a human in the file. It is the signal RCA gets before users 
 
 ---
 
-## Process (load → prove)
+## Process
 
-See [PROCESS.md](PROCESS.md) for the full loop (steps 0–7).
+See [PROCESS.md](PROCESS.md) (PLANIT steps 0–7).
 
 ---
 
@@ -98,13 +101,14 @@ See [PROCESS.md](PROCESS.md) for the full loop (steps 0–7).
 
 - Not “goals and requirements only; shape is optional.”
 - Not “humans confirm by reading Invoice.py into shape.”
-- Not AIMS zip-as-written (those papers omitted noun/verb/gate).
+- Not the old AIMS zip-as-written (those papers omitted noun/verb/gate).
 - Not a second governance tree. Charter + bind + red check.
 
 ---
 
 ## Open items (not disagreements)
 
+- R24.binder in the matrix still names the field-write tool.
+- C20 names R23 and R24 and binds one tool.
+- P4/R31 matrix binder is agent-noun structure; code-side tool is separate.
 - How loud a contract-change notice is to the manager.
-- Next gates after check 1 (import boundary, adjective locality).
-- Goal / requirement authoring pages still to land in this folder.
