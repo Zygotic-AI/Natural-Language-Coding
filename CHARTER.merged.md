@@ -31,3 +31,6 @@ This exists because AI-assisted engineering fails in two opposite ways:
 
 We shrink the search space for *use-case* changes without exploding the search space for *concept* changes.
 
+## 2. Why this shape
+
+SEE_LOCAL_FILE
