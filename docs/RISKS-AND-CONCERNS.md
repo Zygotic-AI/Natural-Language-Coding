@@ -42,6 +42,14 @@ This document qualifies the architecture upfront: the problems it solves, the pr
 
 **Solved by.** PLANIT spends the extra minutes up front — interview, bind, audit — because the codebase lives five to ten years. The two-minute audit is cheap against a decade of operation.
 
+### 1.7 Interview quality (resolved as design; empirical in practice)
+
+**Problem.** Everything downstream compounds from the interview. A weak interview produces excellent-looking goals that still fork an adjective, and RCA only catches it after the fact. The $1-to-$100k curve only holds if the interview is genuinely good, and genuinely good is the hardest thing to automate.
+
+**Solved by (design).** The interview does not need to be perfect on day one — it needs to be **auditable**. Every question asked, every gap closed, every ADR or requirement produced gets recorded. When a fork surfaces months later, the interview can be replayed to find exactly which question was missed. That miss becomes a new entry in the pattern catalog. Over time the log compounds into what a good interview actually asks — "good" becomes measurable, not assumed.
+
+**Status.** Resolved as an architectural problem. What remains is operational: running interviews, finding the misses, tightening the catalog. That is empirical work, not a flaw in the framework.
+
 ---
 
 ## Part 2 — Problems this architecture introduces
@@ -130,11 +138,12 @@ Every artifact creation or change runs an adversarial audit. The audit family gr
 | 4 | Sensitive data leakage | Relocated leak if not closed properly | Value never crosses as data; taint lifetime enforced (A5) |
 | 5 | Context-window explosion | — | One boundary + its contracts per window |
 | 6 | Defect cost compounds | Per-step audit cost | Mechanical per-step (incl. A5), deep per-package (A6) |
-| 7 | — | Leaky verbs | A5 treats returns and assignments the same |
-| 8 | — | Boundary thrash | Batching verbs, declared not accidental |
-| 9 | — | Adjective outlives verb | A5 taint tracking — no trust in binding declaration |
-| 10 | — | Capability explosion | Reject handles; bind at plan time, enforce by taint |
-| 11 | — | Non-OO escape hatches (residual existential flaw) | A7 scans for raw SQL / ORM / deserialization bypasses |
+| 7 | Interview quality (design-resolved) | Empirical: catalog must be built in practice | Auditable interview log; misses become catalog entries |
+| 8 | — | Leaky verbs | A5 treats returns and assignments the same |
+| 9 | — | Boundary thrash | Batching verbs, declared not accidental |
+| 10 | — | Adjective outlives verb | A5 taint tracking — no trust in binding declaration |
+| 11 | — | Capability explosion | Reject handles; bind at plan time, enforce by taint |
+| 12 | — | Non-OO escape hatches (residual existential flaw) | A7 scans for raw SQL / ORM / deserialization bypasses |
 
 ---
 
