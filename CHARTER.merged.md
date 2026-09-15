@@ -31,6 +31,6 @@ This exists because AI-assisted engineering fails in two opposite ways:
 
 We shrink the search space for *use-case* changes without exploding the search space for *concept* changes.
 
-## 2. Why this shape
+## 2–16
 
-SEE_LOCAL_FILE
+Unchanged from [`CHARTER.md`](CHARTER.md). This working copy currently merges **§1 only**. Later sections land here as each merge pass completes. Until then, read §2–§16 in `CHARTER.md`.
