@@ -11,7 +11,7 @@ Rationale: charter §5.8 (practice integrity), R30 (every prescribed step or act
 An **Action** is a named unit of work that:
 
 1. **Executes through a Gate or Handoff** — no action is paper-only; every action has an enforcement point
-2. **Belongs to a Boundary** — the boundary seat that owns the action's laws
+2. **Belongs to a Boundary** — the boundary seat that owns the action's adjectives
 3. **Is prescribed** — the action exists in the catalog before it is invoked; ad-hoc work is not an action
 
 Actions connect the pipeline (Plan → Produce → Fitness → Audit → Ship) to specific enforcement points. Charter R30: "Every prescribed step or action has a hard gate whose only outcomes are complete or incomplete, with evidence."
@@ -97,7 +97,7 @@ This catalog names the gated Actions in the BBP pipeline. Each action cites its 
 | Action | Type | Gate/Handoff | Binder | Boundary seat | Evidence |
 |--------|------|--------------|--------|---------------|----------|
 | **Contribution/add-X** | Compound | Contribution Gate (TBD) | **UNWIRED — Gate TBD refuse** | Produce | Aligned with CONTRIBUTION.md when tip lands |
-| **Contribution-Add-Noun** | Compound | Add-noun gate (includes R1–R9, contract presence) | UNWIRED+companion | Produce | Noun with identity, private state, verbs, invariant tests |
+| **Contribution-Add-Noun** | Compound | Add-noun gate (includes R1–R9, contract presence) | UNWIRED+companion | Produce | Noun with identity, private state, verbs, adjective tests |
 | **Contribution-Add-Goal** | Compound | Add-goal gate (includes R17–R20, fitness checks) | UNWIRED+companion | Produce | Goal with I/O contract, verb-only writes, fitness green |
 | **Contribution-Add-Agent-Noun** | Compound | Add-agent-noun gate (includes S1–S6) | UNWIRED+companion | Produce | Agent noun with identity, verbs, handoff-in, completion artifact |
 | **Contribution-Add-Audit** | Atomic | Add-audit gate (P5, binding-matrix entry) | wired-local (`tools/audit-binding-matrix.py`) | Produce | Audit definition with binary criteria; matrix row |
@@ -178,5 +178,5 @@ For changes that add or modify actions:
 - [`GATE.md`](GATE.md): Gate noun, G1–G4, incomplete-packet hunt
 - [`BOUNDARY.md`](BOUNDARY.md): Boundary and Handoff nouns, role-bound SOP
 - [`PRINCIPLES.md`](PRINCIPLES.md) P3: Hard gates (complete/incomplete only)
-- [`binding-matrix.json`](binding-matrix.json): Requirement → audit → binder index
+- [`binding-matrix.json`](binding-matrix.json): Requirement → audit → gate (JSON key remains `binder` until the auditor is updated)
 - [`../DESCRIBE.md`](../DESCRIBE.md): Durable project facts
