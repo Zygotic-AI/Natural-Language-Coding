@@ -2,57 +2,36 @@
 
 Enforcement and scaffolding that make the charter real.
 
-## Boundary contracts (P4 / R31 documentation)
-
-| Tool | Input | Output | Failure mode |
-|------|-------|--------|--------------|
-| [`audit-binding-matrix.py`](audit-binding-matrix.py) | No argv. Reads `integrity/binding-matrix.json`, `CHARTER.md`, `integrity/PRINCIPLES.md`. | `A-BINDING-*:MET\|NOT_MET`, lists, `RESULT:MET\|NOT_MET`. | Exit **0** = MET; exit **1** = NOT_MET. |
-| [`fitness-no-noun-field-writes.py`](fitness-no-noun-field-writes.py) | Optional argv roots; no args → hub ROOT. | `VIOLATION <path>:<line> <field>`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET; exit **1** = NOT_MET. |
-| [`fitness-verb-path.py`](fitness-verb-path.py) | Optional argv roots; no args → hub ROOT outside trees. | `VIOLATION <path>:<line> <kind>`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET; exit **1** = NOT_MET. |
-| [`assert-invoice-violation-fails.py`](assert-invoice-violation-fails.py) | Fixed tree `examples/invoice-violation/`. | `ASSERT:PASS` or `ASSERT:FAIL`. | Exit **0** = PASS; exit **1** = FAIL. |
-| [`assert-verb-path-violation-fails.py`](assert-verb-path-violation-fails.py) | Fixed tree `examples/invoice-verb-path-violation/`. | `ASSERT:PASS` or `ASSERT:FAIL`. | Exit **0** = PASS; exit **1** = FAIL. |
-| [`ci-fitness-check1.sh`](ci-fitness-check1.sh) | Repo root; check 1 only. | `CI:FAIL` or `CI:MET`. | Exit **0** = CI:MET; exit **1** = CI:FAIL. |
-| [`fitness-quality-metric.py`](fitness-quality-metric.py) | `tools/fixtures/quality-metric/`. | `CHECK …`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET; exit **1** = NOT_MET. |
-
-## Fitness check 1 (R5 / C4)
-
-**Gate for:** R5, C4 only. **Not a gate for:** R6, C5.
+## Commands
 
 ```bash
 python3 tools/assert-invoice-violation-fails.py
-python3 tools/fitness-no-noun-field-writes.py examples/invoice-correct
-```
-
-Do **not** “fix” `examples/invoice-violation/`.
-
-## Verb-path v1 (R6 / C5 subset — not a matrix bind)
-
-Fails persistence escapes in `goals/`, `adapters/`, and optional `workflows/` packaging: `.save(`, `.update(`, `.execute(`, `UPDATE <table>`, `INSERT INTO`, `DELETE FROM`, `setattr(`.
-
-Does **not** fail `invoice.status =`. That is check 1.
-
-```bash
 python3 tools/assert-verb-path-violation-fails.py
-python3 tools/fitness-verb-path.py examples/invoice-verb-path-violation   # NOT_MET
-python3 tools/fitness-verb-path.py examples/invoice-correct               # MET
-python3 tools/fitness-no-noun-field-writes.py examples/invoice-verb-path-violation  # MET
+python3 tools/assert-adjective-locality-violation-fails.py
 ```
 
-R6 and C5 stay **unbound**. This tool is a cousin of the statement, not the statement.
+| Tool | Proves | Does not prove |
+|------|--------|----------------|
+| [`fitness-no-noun-field-writes.py`](fitness-no-noun-field-writes.py) | R5 / C4 field assignment | Verb path, copied adjectives |
+| [`fitness-verb-path.py`](fitness-verb-path.py) | R6/C5 v1 persistence escapes | Full "every mutation is a verb" |
+| [`fitness-adjective-locality.py`](fitness-adjective-locality.py) | R24 v1: named tokens + field math outside the noun | Duplicated predicates with different spelling (C19) |
 
-## Agent noun package validation
+R6/C5 stay unbound. R24 should be rebound to `fitness-adjective-locality.py` (matrix field still stale).
 
-Required `AGENT.md` heading is `## Adjectives`. Legacy `## Invariants` still passes the structure checker.
+## Adjective locality v1
+
+Tokens: `domain/<noun>/adjectives.txt`. Field math: operators on names in `fields.txt` outside the noun.
 
 ```bash
-python3 tools/validate-agent-noun-packages.py
-python3 tools/fitness-agent-noun-structure.py
+python3 tools/fitness-adjective-locality.py examples/invoice-locality-violation  # NOT_MET
+python3 tools/fitness-no-noun-field-writes.py examples/invoice-locality-violation  # MET
+python3 tools/fitness-verb-path.py examples/invoice-locality-violation              # MET
 ```
 
-## Other planned tools
+## Agent nouns
 
-- Adjective locality (R24) — not field writes
-- One-boundary / taint lifetime (A5)
-- Broader escape hatches (A7) — this is how R6 grows past v1
-- Contract presence / schema identity (R9–R11)
-- Generated impact graphs (R21)
+`AGENT.md` heading is `## Adjectives`. Legacy `## Invariants` still passes.
+
+## Still planned
+
+A5 taint / one-boundary. A7 broader escapes. Contract presence. Generated graphs.
