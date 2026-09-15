@@ -5,14 +5,15 @@ python3 tools/assert-invoice-violation-fails.py
 python3 tools/assert-verb-path-violation-fails.py
 python3 tools/assert-adjective-locality-violation-fails.py
 python3 tools/assert-taint-violation-fails.py
+python3 tools/assert-escape-hatch-violation-fails.py
 ```
 
-| Tool | Proves | Does not prove |
-|------|--------|----------------|
-| field-writes | R5 / C4 assignment | verb path, copied adjectives, taint return |
-| verb-path | R6/C5 v1 `.save(` / SQL | every mutation is a verb |
-| adjective-locality | R24 named tokens + field math | C19 different spelling |
-| taint-lifetime | A5 v1 `return` / store of taint tokens | value never reaches a gateway |
+| Tool | Proves | Leaves |
+|------|--------|--------|
+| field-writes | R5 assignment | hatches, taint return |
+| verb-path | R6 v1 `.save(` / SQL / setattr | `__dict__` |
+| adjective-locality | R24 tokens + field math | C19 spelling forks |
+| taint-lifetime | A5 v1 return/store of taint | gateway dataflow |
+| escape-hatch | A7 v1 `__dict__` / vars / exec / eval | ORM dialects |
 
-R6/C5 and A5 stay unbound (A5 has no matrix row).
-R24 should use `fitness-adjective-locality.py` as its binder.
+A5 and A7 have no matrix id. R6 stays unbound. Flip `R24.binder` to locality.
