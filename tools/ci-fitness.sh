@@ -17,7 +17,11 @@ fail() {
   exit 1
 }
 
+echo "=== session preflight v1 ==="
+bash tools/session-preflight.sh || fail "session preflight"
+
 echo "=== charter §14 check 1 ==="
+
 bash tools/ci-fitness-check1.sh || fail "check 1"
 
 echo "=== designed-fail landmines (assert exit 0 = landmine live) ==="
