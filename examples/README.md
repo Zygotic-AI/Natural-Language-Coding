@@ -4,7 +4,7 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 
 | Tree | Designed red on |
 |------|-----------------|
-| [`invoice-correct/`](invoice-correct/) | none |
+| [`invoice-correct/`](invoice-correct/) | none (also the generated-graph pass tree) |
 | [`invoice-violation/`](invoice-violation/) | R5 field-writes |
 | [`invoice-verb-path-violation/`](invoice-verb-path-violation/) | R6 verb-path |
 | [`invoice-locality-violation/`](invoice-locality-violation/) | R24 locality |
@@ -14,3 +14,10 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`schema-identity-violation/`](schema-identity-violation/) | R11/C9 identity |
 | [`duplicated-adjective-violation/`](duplicated-adjective-violation/) | C19 duplicated adjective |
 | [`missing-failure-mode/`](missing-failure-mode/) | P4/R31 failure mode |
+
+```bash
+python3 tools/generate-impact-graph.py examples/invoice-correct
+python3 tools/assert-impact-graph-generated.py
+```
+
+Do not commit the JSON that command prints.
