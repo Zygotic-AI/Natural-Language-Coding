@@ -65,6 +65,226 @@ That is the whole model. Everything else is how we keep it honest.
 
 ---
 
-## 3–16
+## 3. Naming
 
-Unchanged from [`CHARTER.md`](CHARTER.md). This working copy currently merges **§1–§2**. Later sections land here as each merge pass completes. Until then, read §3–§16 in `CHARTER.md`.
+**Practice name:** Boundary-Based Programming.
+
+**Mechanism:** boundaries are enforced (contracts, privacy of fields, fitness checks, review).
+
+Do not name the practice “governance” or “governed.” Those words imply a committee ruling subjects. The artifacts that hold decisions are a **charter** (this document, plus ADRs). The property we protect is **integrity**. The act that keeps agents honest is **adversarial review against the charter**.
+
+Useful substitutes if a slot in an older diagram said “Governance Architecture”:
+
+| Avoid | Use |
+|---|---|
+| Governance | Charter, integrity, covenant, protocol |
+| Governed system | Bounded system, charter-bound system |
+| Governance review | Adversarial review, integrity check |
+
+**Boundary-Enforced Programming** is a true claim about the pipeline. It is a poor name for the practice. Put enforcement in the rules and the CI gate, not in the title.
+
+---
+
+## 4. Core model
+
+### 4.1 Noun
+
+A noun is a domain concept with identity and laws.
+
+Examples: `Invoice`, `Customer`, `Order`, `PaymentAllocation`.
+
+A noun contains:
+
+- Identity
+- Private state
+- Invariants
+- A short public verb list
+- Tests that prove the invariants hold after every verb
+
+A noun does **not** contain:
+
+- HTTP, file, queue, or database adapter code
+- Multi-noun orchestration
+- “Send the reminder email”
+- “Render the PDF”
+- “Export to QuickBooks”
+
+Those are goals, or they belong to a different noun.
+
+### 4.2 Verb (on a noun)
+
+A verb is a state change that must leave the noun truthful.
+
+Examples on `Invoice`: `issue`, `applyPayment`, `void`.
+
+Every verb has:
+
+- A name
+- An input contract
+- An output contract (result or error)
+- Preconditions
+- Postconditions / invariants
+- Tests
+
+Verbs are the contracted boundary of the noun. There is no other public mutation path.
+
+### 4.3 Goal
+
+A goal is an executable business use-case.
+
+Examples: `CreateInvoice`, `RecordBankPayment`, `ApproveOrder`, `GenerateYearEndReport`.
+
+A goal contains:
+
+- Purpose
+- Input / output contract
+- One public entrypoint
+- Orchestration: load nouns, call verbs, persist, publish, talk to the outside world
+- Explicit dependencies
+- Tests for the use-case, not for the noun’s invariants (those live on the noun)
+
+A goal does **not**:
+
+- Assign noun fields
+- Reimplement noun invariants
+- Become a second home for “how invoices work”
+
+A goal that only calls one noun-verb and does no I/O or policy is optional. Do not invent YAML theater for a pass-through. Expose the noun-verb. Add the goal when there is orchestration to justify it.
+
+### 4.4 Workflow
+
+A workflow is an ordered, durable composition of goals.
+
+Use a workflow when:
+
+- Work spans time (waits, human approval, retries)
+- Work spans nouns that cannot share a single transaction
+- Failure requires compensation
+
+Do not use a workflow as a second implementation of a noun invariant. The workflow calls goals. Goals call verbs. Verbs protect the noun.
+
+If the runtime is Temporal (or equivalent), the workflow definition *is* the execution graph for that multi-step outcome. Do not maintain a hand-written execution graph that duplicates it.
+
+### 4.5 Contract
+
+A contract is a machine-readable schema for a boundary.
+
+Two layers, one meaning:
+
+1. **Noun-verb contract** — canonical payload and result for `Invoice.applyPayment`.
+2. **Goal contract** — the use-case envelope (actor, source system, idempotency key, the verb payload).
+
+The goal wraps the verb contract. It does not fork the meaning of `balance`, `status`, or `currency`. Shared fields come from one canonical type.
+
+### 4.6 Charter and ADR
+
+The **charter** is this document plus accepted ADRs.
+
+An **ADR** records a decision that later work must not quietly undo:
+
+- Why this noun exists
+- Which verbs it exposes
+- Which goals may call them
+- What was rejected and why
+
+ADRs are not essays. They are decisions with consequences.
+
+---
+
+## 5. Rules
+
+> **TODO (vocabulary):** throughout this section the charter says *invariant* / *law*. Settled term is **adjective** — a descriptor on the noun that no verb may violate. Apply the rename in the dedicated vocabulary pass, not here.
+>
+> **TODO (binder → gate):** R21, R23–R31 and the binding-matrix language still say "binder." Settled split: **binding** is the planning act (each atomic step linked to the ADRs/requirements it must honor); **gate** is the machine that fails the change after generation. R30 already uses "hard gate" — keep that. Rename the rest in the vocabulary pass. Until then, read "binder" here as "gate."
+>
+> **TODO (workflow):** R2, R7, R17–R19 treat workflow as a peer of goal. ACS: workflow is a goal of goals (durable is a property). Same open question as §2 / §4.4 — confirm before this section is considered final.
+>
+> **ACS addition:** these rules are not only checked at review time. Under PLANIT, each atomic step is *bound* to the applicable rules before generation, and a **gate** verifies the binding after. A step with no applicable rule must explicitly declare "no bindings necessary" — that declaration is itself a binding.
+
+Rules are written so an implementing agent can confirm or fail them. "Should" is not a rule.
+
+### 5.1 Ownership
+
+**R1.** If breaking the rule would make *this noun* a lie, the rule lives on the noun, as an adjective or as a verb precondition/postcondition.
+
+**R2.** If the work spans nouns, I/O, or a business outcome, it is a goal (or a workflow of goals).
+
+**R3.** Cross-noun work does not get glued onto the most convenient noun. `allocatePaymentToInvoices` is a goal, or a `PaymentAllocation` noun if it has its own adjectives. It is not `Invoice.allocateAcrossFriends`.
+
+**R4.** If a verb does not need the noun's adjective set, it does not belong on the noun.
+
+### 5.2 Mutation
+
+**R5.** Noun fields are private. No goal, workflow, adapter, or other noun writes them.
+
+**R6.** The only legal mutation of a noun is a public verb on that noun.
+
+**R7.** Nouns never call goals. Nouns never call workflows. Direction is workflow → goal → noun-verb only (plus explicit reads).
+
+**R8.** Goals may read what the noun chooses to expose (queries / snapshots). Goals may not reach through that snapshot and write. A sensitive adjective fetched through a verb may cross only one boundary — the consuming verb — and must be consumed in place or dropped. It must not be stored, passed to another boundary, or returned. The gate tracks the value's lifetime, not a declared label.
+
+### 5.3 Contracts
+
+**R9.** Every public goal entrypoint has an input contract and an output contract.
+
+**R10.** Every public noun-verb has an input contract and an output contract.
+
+**R11.** A field that means the same thing in two contracts is defined once and referenced. Duplicate independent definitions of the same meaning are a defect.
+
+**R12.** Contracts are versioned. Breaking changes require a new version and an ADR. A new verb version must honor every adjective on its noun — it may add behavior but never drop or silently change an adjective. Versioning changes API shape, not ownership of adjectives.
+
+### 5.4 Goal shape
+
+**R13.** One public entrypoint per goal.
+
+**R14.** Goal internals are not callable from other goals. If two goals need the same orchestration fragment, extract a noun-verb, a shared library with its own contract, or a smaller goal. Do not import another goal's internals.
+
+**R15.** Shared domain logic that protects a noun lives on the noun, not in a helper copied into two goals.
+
+**R16.** A new goal is created only when there is a distinct use-case. Do not create a goal per function (`ValidateEmail` as a sibling of `CreateCustomer` unless it is a real standalone capability).
+
+### 5.5 Workflows
+
+**R17.** Workflows compose goals. They do not call noun-verbs directly unless the runtime has no goal layer and the workflow *is* the goal. Prefer one rule in a given codebase and state it in an ADR.
+
+**R18.** Compensation and retries live in the workflow or the goal, not inside the noun, unless the noun's adjective itself requires idempotency of a verb. Verbs must be safe to retry if the workflow retries them. Declare that on the verb.
+
+**R19.** Do not maintain a separate hand-authored execution-graph file that duplicates the workflow definition.
+
+### 5.6 Knowledge and drift
+
+**R20.** The charter, contracts, and code must agree. If they disagree, the build fails. Code does not win by existing. Spec does not win by being newer. They must be reconciled in the same change.
+
+**R21.** Dependency and impact information is generated from code and contracts, not authored as a parallel JSON document. The binding matrix is the requirement index for this practice hub (requirement → audit → gate); it is not a dependency or impact graph, and R21 applies to generated "what breaks" views in adopting codebases, not to that matrix. Knowledge domains are shelves of standing ADRs and requirements the interview consults before asking.
+
+**R22.** ADRs that are superseded are marked superseded, not deleted. The trail is part of integrity.
+
+### 5.7 Enforcement
+
+**R23.** A gate fails the change if a goal (or workflow, or adapter) assigns a noun field or imports a noun internals module.
+
+**R24.** A gate fails the change if invoice-equivalent money math, status transitions, or named adjectives appear outside the owning noun (copy-paste of the adjective).
+
+**R25.** Tests for a noun's adjectives live next to the noun and run on every verb. Goal tests do not replace them.
+
+**R25a.** A gate fails the change if a sensitive adjective's value is stored in another datum, passed to another boundary, or returned from the consuming verb. The value must be consumed in place or dropped. This is taint-lifetime tracking, not label-checking.
+
+**R25b.** A gate scans for non-OO escape hatches — raw SQL, ORM bypasses, deserialization, reflection — that touch a noun's adjectives without going through a published verb.
+
+### 5.8 Practice integrity (zero variance)
+
+Ratified by [`adrs/0001-zero-variance-integrity.md`](adrs/0001-zero-variance-integrity.md). P2 scope: [`adrs/0002-p2-scope.md`](adrs/0002-p2-scope.md). Detail: [`integrity/PRINCIPLES.md`](integrity/PRINCIPLES.md). Matrix: [`integrity/binding-matrix.json`](integrity/binding-matrix.json).
+
+**R26.** Practice integrity principles P1–P7 are in force: stand-alone branding, zero variance, hard gates, hard boundary I/O, binary requirement audits, unbound-matrix failure with listing, promote-only-when-bindable with listing.
+
+**R27.** Every published requirement in this repo appears in the binding matrix with an audit id. Audit `A-BINDING-COVERAGE` fails and lists any missing id.
+
+**R28.** Unbound binding-matrix entries fail audit `A-BINDING-UNBOUND`. The audit report lists every unbound requirement id.
+
+**R29.** In-force requirements that are not bindable fail audit `A-BINDING-PROMOTE`. The audit report lists every offending requirement id.
+
+**R30.** Every prescribed step or action has a hard gate whose only outcomes are complete or incomplete, with evidence. Gates are default-closed: a gate with no binder registered is marked **unbound**, never passed.
+
+**R31.** Every public boundary declares hard input, hard output, and failure mode (returned error, thrown exception, or process exit when the boundary is code).
+
+---
