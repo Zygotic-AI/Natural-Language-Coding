@@ -5,7 +5,7 @@
 
 ## Statement
 
-Success criteria are binary: ops (work completed as specified) vs defects (deviation from spec or invariants).
+Success criteria are binary: ops (work completed as specified) vs defects (deviation from spec or adjectives).
 
 ## Binary criteria
 

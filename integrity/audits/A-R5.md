@@ -2,7 +2,7 @@
 
 - Requirement: `R5`
 - Outcome: **met** | **not met** only
-- Binder: `tools/fitness-no-noun-field-writes.py`
+- Gate: `tools/fitness-no-noun-field-writes.py`
 
 ## Statement
 
@@ -14,7 +14,7 @@ Met iff `tools/fitness-no-noun-field-writes.py` exits 0 on the scanned tree(s) (
 
 Not met iff the tool prints one or more `VIOLATION` lines and exits 1 (`RESULT:NOT_MET`).
 
-Scope of this binder: **field assignments** from outside the noun module (`goals/`, `workflows/`, `adapters/`). It does not prove every mutation goes through a public verb (see R6 / C5).
+Scope of this gate: **field assignments** from outside the noun module (`goals/`, `workflows/`, `adapters/`). It does not prove every mutation goes through a public verb (see R6 / C5).
 
 ## Evidence
 
