@@ -3,13 +3,9 @@
 
 Not a semantic contract checker. V1 only proves files exist and parse.
 
-Goals: a directory under goals/ that contains implementation.py (or *.py)
-must contain input.schema.json and output.schema.json (JSON objects).
-
-Nouns: a directory under domain/<noun>/ that contains a *.py module
-(not tests/) must contain schemas/verbs.schema.json. That file must parse
-as JSON and declare at least one verb with `input` and `output` keys
-(either top-level or under a `verbs` object).
+Goals: goals/<id>/ with *.py needs input.schema.json and output.schema.json.
+Nouns: domain/<noun>/ with *.py needs schemas/verbs.schema.json declaring
+at least one verb with input and output.
 
 Input: optional argv roots. No args → hub ROOT.
 Output: VIOLATION <path> <kind>
@@ -37,41 +33,21 @@ def rel(path: Path) -> str:
         return str(path)
 
 
-def goal_dirs(root: Path) -> list[Path]:
+def collect_named_children(root: Path, folder: str) -> list[Path]:
     found: list[Path] = []
-    for base in [root / "goals", *sorted((root / "examples").rglob("goals")) if (root / "examples").is_dir() else []]:
-        if not base.is_dir() or is_skipped_dir(base):
-            continue
-        for child in sorted(base.iterdir()):
-            if child.is_dir() and not is_skipped_dir(child):
-                found.append(child)
-    # also when scan_root is an example tree
-    goals = root / "goals"
-    if goals.is_dir():
-        for child in sorted(goals.iterdir()):
-            if child.is_dir() and not is_skipped_dir(child) and child not in found:
-                found.append(child)
-    return sorted(set(found))
-
-
-def noun_dirs(root: Path) -> list[Path]:
-    found: list[Path] = []
-    domain = root / "domain"
-    if domain.is_dir():
-        found.extend(sorted(p for p in domain.iterdir() if p.is_dir()))
+    direct = root / folder
+    if direct.is_dir():
+        found.extend(p for p in direct.iterdir() if p.is_dir() and not is_skipped_dir(p))
     examples = root / "examples"
     if examples.is_dir():
-        for domain_dir in sorted(examples.rglob("domain")):
-            if domain_dir.is_dir() and domain_dir.name == "domain" and not is_skipped_dir(domain_dir):
-                found.extend(sorted(p for p in domain_dir.iterdir() if p.is_dir()))
+        for named in examples.rglob(folder):
+            if named.is_dir() and named.name == folder and not is_skipped_dir(named):
+                found.extend(p for p in named.iterdir() if p.is_dir() and not is_skipped_dir(p))
     return sorted(set(found))
 
 
 def has_py(dir_path: Path) -> bool:
-    for p in dir_path.glob("*.py"):
-        if p.is_file():
-            return True
-    return False
+    return any(p.is_file() for p in dir_path.glob("*.py"))
 
 
 def load_json(path: Path):
@@ -83,37 +59,33 @@ def load_json(path: Path):
 
 
 def noun_schema_ok(data: dict) -> bool:
-    verbs = data.get("verbs") if isinstance(data.get("verbs"), dict) else data
-    if not isinstance(verbs, dict) or not verbs:
+    verbs = data["verbs"] if isinstance(data.get("verbs"), dict) else data
+    if not verbs:
         return False
-    # skip json-schema metadata keys
     skip = {"$schema", "$id", "$defs", "title", "description", "type", "properties"}
-    candidates = verbs.get("properties") if isinstance(verbs.get("properties"), dict) else verbs
-    found = False
+    candidates = verbs["properties"] if isinstance(verbs.get("properties"), dict) else verbs
     for key, spec in candidates.items():
         if key in skip or not isinstance(spec, dict):
             continue
         if "input" in spec and "output" in spec:
-            found = True
-        elif isinstance(spec.get("properties"), dict):
-            props = spec["properties"]
-            if "input" in props and "output" in props:
-                found = True
-    return found
+            return True
+        props = spec.get("properties")
+        if isinstance(props, dict) and "input" in props and "output" in props:
+            return True
+    return False
 
 
 def scan_one(scan_root: Path) -> list[tuple[str, str]]:
     violations: list[tuple[str, str]] = []
-    for goal in goal_dirs(scan_root):
+    for goal in collect_named_children(scan_root, "goals"):
         if not has_py(goal):
             continue
         for name, kind in (("input.schema.json", "missing-goal-input"), ("output.schema.json", "missing-goal-output")):
             path = goal / name
             if not path.is_file() or load_json(path) is None:
-                violations.append((rel(path if path.parent.exists() else goal / name), kind))
-    for noun in noun_dirs(scan_root):
-        py_files = [p for p in noun.glob("*.py") if p.is_file()]
-        if not py_files:
+                violations.append((rel(path), kind))
+    for noun in collect_named_children(scan_root, "domain"):
+        if not has_py(noun):
             continue
         schema = noun / "schemas" / "verbs.schema.json"
         data = load_json(schema) if schema.is_file() else None
