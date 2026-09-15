@@ -4,11 +4,14 @@ Architecture that keeps agents and code from shipping slop. Central home for the
 
 **Boundary-Based Programming (BBP)** is the programming practice face of this architecture (charter §§4–14). **Systems model** (§16) extends the same discipline to agent fleets and durable roles.
 
+**AI-Compiled Systems** is the process face: instead of giving code to a compiler, you give goals and requirements. The AI builds the rest — BBA-shaped, or the build fails. See [`docs/ai-compiled-systems/`](docs/ai-compiled-systems/).
+
 ## Start here
 
 | Artifact | Role |
 |----------|------|
 | [`CHARTER.md`](CHARTER.md) | Living charter (rules, agent loop, systems model, checklists) |
+| [`docs/ai-compiled-systems/`](docs/ai-compiled-systems/) | Process + naming (interview → bind → generate → prove) |
 | [`theory/history/og-interview-draft.md`](theory/history/og-interview-draft.md) | OG interview draft (historical; do not edit) |
 | [`DESCRIBE.md`](DESCRIBE.md) | Repo memory for agents |
 | [`TODO`](TODO) | Work queue |
@@ -19,11 +22,9 @@ Architecture that keeps agents and code from shipping slop. Central home for the
 ```text
 .
 ├─ CHARTER.md          # authoritative practice charter (§4 software, §16 systems)
+├─ docs/ai-compiled-systems/  # process layer (AIMS merge)
 ├─ theory/             # essays, rationale, history
 ├─ agents/             # loop roles + agent nouns
-│   ├─ proposer.md, reviewer.md, …     # loop roles
-│   ├─ standards-steward/              # agent noun
-│   └─ adversarial-auditor/            # agent noun
 ├─ tools/              # fitness checks, scaffolding, generators
 ├─ examples/           # sample systems that adopt the charter
 ├─ adrs/               # decisions that later work must not quietly undo
@@ -35,4 +36,4 @@ This repo is the **practice hub**, not an application domain tree. Application r
 
 ## Status
 
-Working charter from a design conversation. Not yet a ratified organizational standard. Adoption "done" criteria are in charter §14. Systems extension (§16) ratified by ADR 0003.
+Working charter from a design conversation. Not yet a ratified organizational standard. Adoption "done" criteria are in charter §14. Systems extension (§16) ratified by ADR 0003. AI-Compiled Systems process docs are a first drop; CHARTER.md remains design SSOT.
