@@ -4,7 +4,7 @@ SSOT for open work. Charter SSOT is `CHARTER.md`.
 
 ## How to read red vs green
 
-Designed red: matching tool on a `*-violation` / `missing-contract` tree → NOT_MET.
+Designed red: matching tool on its specimen → NOT_MET.
 Assert scripts → exit 0 ASSERT:PASS.
 invoice-correct → all MET.
 True miss: invoice-correct red, assert exit 1, or a specimen green on its own tool.
@@ -13,8 +13,7 @@ True miss: invoice-correct red, assert exit 1, or a specimen green on its own to
 
 ## Completed
 
-✔ Specimen gates through R11 v1 @done(26-09-15)
-✔ Diagonal R5–R9 specimens @done(26-09-15)
+✔ Specimen gates through C19 v1 @done(26-09-15)
 
 ---
 
@@ -25,8 +24,7 @@ True miss: invoice-correct red, assert exit 1, or a specimen green on its own to
 
 ## Still open product
 
-7. ~~R11 / C9 v1~~ — **not bound.** Name+type only; does not prove shared meaning.
-8. **C19 duplicated-adjective**
+8. ~~C19 v1~~ — **not bound.** Tree-wide, not diff-scoped.
 9. **P4 / R31 tool-contract checker** for code boundaries
 10. **Generated impact graph**
 11. **ACS docs voice**
