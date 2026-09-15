@@ -5,11 +5,11 @@
 
 ## Statement
 
-If a verb does not need the noun’s invariant set, it does not belong on the noun.
+If a verb does not need the noun's adjective set, it does not belong on the noun.
 
 ## Binary criteria
 
-Met iff a binder (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no binder ran, binder failed, or evidence is missing.
+Met iff a gate (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no gate ran, gate failed, or evidence is missing.
 
 ## Evidence
 

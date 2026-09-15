@@ -5,11 +5,11 @@
 
 ## Statement
 
-If breaking the rule would make *this noun* a lie, the rule lives on the noun, as an invariant or as a verb precondition/postcondition.
+If breaking the rule would make *this noun* a lie, the rule lives on the noun, as an adjective or as a verb precondition/postcondition.
 
 ## Binary criteria
 
-Met iff a binder (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no binder ran, binder failed, or evidence is missing.
+Met iff a gate (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no gate ran, gate failed, or evidence is missing.
 
 ## Evidence
 

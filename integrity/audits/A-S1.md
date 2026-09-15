@@ -5,16 +5,16 @@
 
 ## Statement
 
-Every agent noun has an identity file that states purpose and invariants.
+Every agent noun has an identity file that states purpose and adjectives.
 
 ## Binary criteria
 
 Met iff every agent noun package under `agents/<name>/` contains an `AGENT.md` (or equivalent) that states:
 1. Role name
 2. Purpose (one line)
-3. Invariants (list)
+3. Adjectives (list)
 
-Not met if any agent noun package is missing identity or invariants, or if they are vague/missing binary criteria.
+Not met if any agent noun package is missing identity or adjectives, or if they are vague/missing binary criteria.
 
 ## Evidence
 
