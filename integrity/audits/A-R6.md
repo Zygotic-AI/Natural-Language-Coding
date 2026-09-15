@@ -2,25 +2,20 @@
 
 - Requirement: `R6`
 - Outcome: **met** | **not met** only
+- Gate: `tools/fitness-verb-path.py`
 
 ## Statement
 
 The only legal mutation of a noun is a public verb on that noun.
 
-## Binary criteria
+## V1 bind
 
-Met iff a gate has verified this requirement against the current change and recorded PASS with evidence. Not met if no gate ran, the gate failed, or evidence is missing.
+Fails persistence escapes in `goals/` / `adapters/` / `workflows/`:
+`.save(`, `.update(`, `.execute(`, `UPDATE`, `INSERT INTO`, `DELETE FROM`, `setattr(`.
 
-## V1 tool (not a matrix bind)
+Does **not** replace R5 (field assignment). Direct `invoice.status =` is R5.
 
-`tools/fitness-verb-path.py` fails persistence escapes in `goals/` / `adapters/` / `workflows/`:
-`.save(`, `.update(`, `.execute(`, `UPDATE <table>`, `INSERT INTO`, `DELETE FROM`, `setattr(`.
+Designed fail: `examples/invoice-verb-path-violation/`.
+Designed pass: `examples/invoice-correct/`.
 
-Known-fail: `examples/invoice-verb-path-violation/`.
-Known-pass: `examples/invoice-correct/` (and the R5 field-write fixture, which this tool does not treat as a verb-path fail).
-
-This is a **subset** of R6. It does not prove every mutation is a public verb. R6 stays `unbound` in the matrix until the gate covers the statement, not a cousin of it.
-
-## Evidence
-
-Cite each `VIOLATION <path>:<line> <kind>`, or `RESULT:MET` with scan roots.
+Surface stays `reference`. V1 is SQL/ORM/setattr, not "every possible mutation".

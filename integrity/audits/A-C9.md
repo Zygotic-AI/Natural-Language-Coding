@@ -2,11 +2,10 @@
 
 - Requirement: `C9`
 - Outcome: **met** | **not met** only
+- Gate: `tools/fitness-schema-identity.py`
 
 ## Statement
 
 Shared meanings use a shared type; no forked `balance` / `status` / `currency`.
 
-## V1
-
-Same tool as A-R11. Name+type only. C9 stays unbound.
+Same binder as A-R11. V1 is name+JSON type only.
