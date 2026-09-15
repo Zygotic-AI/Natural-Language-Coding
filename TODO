@@ -4,35 +4,35 @@ SSOT for open work. Charter SSOT is `CHARTER.md`.
 
 ## Completed
 
-✔ Living CHARTER.md + matrix + fitness check 1 + invoice-violation @done(26-09-03..09)
-✔ Vocabulary adjective/gate; goals may call goals; section scratch deleted @done(26-09-15)
-✔ Audit statements aligned; unbound inventory written @done(26-09-15)
-✔ R6/C5 v1 tool + fixture + assert; R6/C5 stay unbound @done(26-09-15)
+✔ Living CHARTER.md + matrix + fitness check 1 @done(26-09-03..09)
+✔ Vocabulary + goals-may-call-goals + scratch deleted @done(26-09-15)
+✔ Audit statements + unbound inventory @done(26-09-15)
+✔ R6/C5 v1 tool; stays unbound @done(26-09-15)
+✔ R24 v1 adjective-locality tool + fixture @done(26-09-15)
 
-Leave `reviews/` and `theory/history/og-interview-draft.md` frozen.
-Leave JSON key `binder` until the matrix auditor is updated.
+Leave `reviews/` and `theory/history/` frozen.
 
 ---
 
 ## Still open product
 
-1. ~~Unbound rows listed~~ — [`integrity/UNBOUND.md`](integrity/UNBOUND.md)
-2. ~~R6/C5 v1 tool~~ — `tools/fitness-verb-path.py` + `examples/invoice-verb-path-violation/`. **Not bound.** Grow via item 5 before promoting.
-3. **R24 adjective-locality gate** — status machines / money math only under `domain/<noun>/`
+1. ~~Unbound rows listed~~
+2. ~~R6/C5 v1~~ — not bound
+3. ~~R24 v1 tool + fixture~~ — **matrix `R24.binder` still points at field-writes.** Flip it to `tools/fitness-adjective-locality.py` (one field).
 4. **A5 one-boundary / taint lifetime gate**
-5. **A7 escape-hatch gate** — also the path that makes R6 bindable
-6. **R9 / R10 / C7 / C8 contract-presence gate**
-7. **R11 / C9 schema-identity gate**
-8. **C19 duplicated-adjective gate**
+5. **A7 escape-hatch gate** (also grows R6 toward bindable)
+6. **R9 / R10 / C7 / C8 contract-presence**
+7. **R11 / C9 schema-identity**
+8. **C19 duplicated-adjective** (cousin of R24; keep separate)
 9. **P4 / R31 tool-contract checker** for code boundaries
-10. **Generated impact graph** (R21 / C21)
+10. **Generated impact graph**
 11. **ACS docs voice**
 12. **Three names** — README newcomer line
 
 ---
 
-## Backlog (non-blocking)
+## Backlog
 
-- Package agent short-form prompt + roles under agents/
-- Define additional agent nouns as needed
-- Wire session gates for agent noun verbs — future
+- Agent short-form packaging
+- Additional agent nouns
+- Session gates — future
