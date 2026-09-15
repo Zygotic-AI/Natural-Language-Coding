@@ -14,17 +14,17 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 ## Completed product slice
 
 ✔ Specimen gates + generated graph + ACS/BBP/PLANIT names + ACS page voice @done(26-09-15)
+✔ Matrix honesty: R24 binder, C20 wrapper, P4/R31 wrapper @done(26-09-15)
 
 ---
 
 ## True gaps still open
 
-- [ ] **R24.binder stale** in `integrity/binding-matrix.json`.
-- [ ] **C20 over-claim** — one binder, two requirement ids.
-- [ ] **P4/R31 matrix binder is agent-only.** Code-side tool exists separately.
+(none)
 
 ## Backlog
 
 - Agent short-form packaging
 - Additional agent nouns
 - Session gates — future
+- How loud a contract-change notice is to the manager
