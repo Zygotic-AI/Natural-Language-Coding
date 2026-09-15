@@ -11,4 +11,5 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`card-taint-violation/`](card-taint-violation/) | A5 taint |
 | [`invoice-escape-hatch-violation/`](invoice-escape-hatch-violation/) | A7 escape |
 | [`missing-contract/`](missing-contract/) | R9/R10 contracts |
-| [`schema-identity-violation/`](schema-identity-violation/) | R11/C9 schema-identity |
+| [`schema-identity-violation/`](schema-identity-violation/) | R11/C9 identity |
+| [`duplicated-adjective-violation/`](duplicated-adjective-violation/) | C19 duplicated adjective |
