@@ -1,6 +1,6 @@
 # Boundary-Based Programming
 
-A working spec for software that humans and agents can change without scattering invariants or widening blast radius.
+A working spec for software that humans and agents can change without scattering adjectives or widening blast radius.
 
 This document is the charter. Implementation must be confirmable against the rules in [Confirmation checklist](#confirmation-checklist). If a rule cannot be checked, it is not a rule yet — it is a wish.
 
@@ -16,12 +16,12 @@ An agent (or a person) should be able to answer three questions before touching 
 2. What is allowed to mutate state?
 3. If I change this, what else must still be true?
 
-Boundary-Based Programming organizes a system around **nouns** that own laws, **verbs** that are the only legal way to change those nouns, and **goals** that orchestrate work across nouns and the outside world. Boundaries are not documentation. They are contracts plus enforcement.
+Boundary-Based Programming organizes a system around **nouns** that own adjectives, **verbs** that are the only legal way to change those nouns, and **goals** that orchestrate work across nouns and the outside world. Boundaries are not documentation. They are contracts plus enforcement.
 
 This exists because AI-assisted engineering fails in two opposite ways:
 
 - The agent sees the whole repository and thrashes.
-- The agent sees one folder, makes that folder green, and silently breaks a law that lived somewhere else.
+- The agent sees one folder, makes that folder green, and silently breaks an adjective that lived somewhere else.
 
 We shrink the search space for *use-case* changes without exploding the search space for *concept* changes.
 
@@ -31,13 +31,13 @@ We shrink the search space for *use-case* changes without exploding the search s
 
 Layered architecture groups code by technical concern. Agents then hunt across controllers, services, and repositories to change one business outcome.
 
-Goal-only architecture groups code by verb. That helps a single use-case edit. It hurts when the law is a noun: invoice status, money rounding, eligibility. Those laws get copied into every verb folder. Each copy looks correct. The system becomes several slightly different truths.
+Goal-only architecture groups code by verb. That helps a single use-case edit. It hurts when the adjective is a noun: invoice status, money rounding, eligibility. Those adjectives get copied into every verb folder. Each copy looks correct. The system becomes several slightly different truths.
 
-Object-only architecture concentrates the laws and hides the use-case. Agents cannot find “the work to do.” Blast radius becomes “the Invoice class.”
+Object-only architecture concentrates the adjectives and hides the use-case. Agents cannot find “the work to do.” Blast radius becomes “the Invoice class.”
 
 The combined shape:
 
-- **Noun** = identity, state, invariants. The retrieval key for “how does an invoice work?”
+- **Noun** = identity, state, adjectives. The retrieval key for “how does an invoice work?”
 - **Verb on the noun** = a contracted mutation. The only way state changes.
 - **Goal** = a use-case that reaches the edge: I/O, other nouns, events, policy. It calls verbs. It does not write fields.
 - **Workflow** = a durable sequence of goals when one in-process call is not enough.
@@ -50,7 +50,7 @@ That is the whole model. Everything else is how we keep it honest.
 
 **Practice name:** Boundary-Based Programming.
 
-**Mechanism:** boundaries are enforced (contracts, privacy of fields, fitness checks, review).
+**Mechanism:** boundaries are enforced (contracts, privacy of fields, gates, review).
 
 Do not name the practice “governance” or “governed.” Those words imply a committee ruling subjects. The artifacts that hold decisions are a **charter** (this document, plus ADRs). The property we protect is **integrity**. The act that keeps agents honest is **adversarial review against the charter**.
 
@@ -70,7 +70,7 @@ Useful substitutes if a slot in an older diagram said “Governance Architecture
 
 ### 4.1 Noun
 
-A noun is a domain concept with identity and laws.
+A noun is a domain concept with identity and adjectives.
 
 Examples: `Invoice`, `Customer`, `Order`, `PaymentAllocation`.
 
@@ -78,9 +78,9 @@ A noun contains:
 
 - Identity
 - Private state
-- Invariants
+- Adjectives
 - A short public verb list
-- Tests that prove the invariants hold after every verb
+- Tests that prove the adjectives hold after every verb
 
 A noun does **not** contain:
 
@@ -104,7 +104,7 @@ Every verb has:
 - An input contract
 - An output contract (result or error)
 - Preconditions
-- Postconditions / invariants
+- Postconditions / adjectives
 - Tests
 
 Verbs are the contracted boundary of the noun. There is no other public mutation path.
@@ -122,12 +122,12 @@ A goal contains:
 - One public entrypoint
 - Orchestration: load nouns, call verbs, persist, publish, talk to the outside world
 - Explicit dependencies
-- Tests for the use-case, not for the noun’s invariants (those live on the noun)
+- Tests for the use-case, not for the noun’s adjectives (those live on the noun)
 
 A goal does **not**:
 
 - Assign noun fields
-- Reimplement noun invariants
+- Reimplement noun adjectives
 - Become a second home for “how invoices work”
 
 A goal that only calls one noun-verb and does no I/O or policy is optional. Do not invent YAML theater for a pass-through. Expose the noun-verb. Add the goal when there is orchestration to justify it.
@@ -142,7 +142,7 @@ Use a workflow when:
 - Work spans nouns that cannot share a single transaction
 - Failure requires compensation
 
-Do not use a workflow as a second implementation of a noun invariant. The workflow calls goals. Goals call verbs. Verbs protect the noun.
+Do not use a workflow as a second implementation of a noun adjective. The workflow calls goals. Goals call verbs. Verbs protect the noun.
 
 If the runtime is Temporal (or equivalent), the workflow definition *is* the execution graph for that multi-step outcome. Do not maintain a hand-written execution graph that duplicates it.
 
@@ -178,13 +178,13 @@ Rules are written so an implementing agent can confirm or fail them. “Should�
 
 ### 5.1 Ownership
 
-**R1.** If breaking the rule would make *this noun* a lie, the rule lives on the noun, as an invariant or as a verb precondition/postcondition.
+**R1.** If breaking the rule would make *this noun* a lie, the rule lives on the noun, as an adjective or as a verb precondition/postcondition.
 
 **R2.** If the work spans nouns, I/O, or a business outcome, it is a goal (or a workflow of goals).
 
-**R3.** Cross-noun work does not get glued onto the most convenient noun. `allocatePaymentToInvoices` is a goal, or a `PaymentAllocation` noun if it has its own invariants. It is not `Invoice.allocateAcrossFriends`.
+**R3.** Cross-noun work does not get glued onto the most convenient noun. `allocatePaymentToInvoices` is a goal, or a `PaymentAllocation` noun if it has its own adjectives. It is not `Invoice.allocateAcrossFriends`.
 
-**R4.** If a verb does not need the noun’s invariant set, it does not belong on the noun.
+**R4.** If a verb does not need the noun’s adjective set, it does not belong on the noun.
 
 ### 5.2 Mutation
 
@@ -220,7 +220,7 @@ Rules are written so an implementing agent can confirm or fail them. “Should�
 
 **R17.** Workflows compose goals. They do not call noun-verbs directly unless the runtime has no goal layer and the workflow *is* the goal. Prefer one rule in a given codebase and state it in an ADR.
 
-**R18.** Compensation and retries live in the workflow or the goal, not inside the noun, unless the noun’s invariant itself requires idempotency of a verb. Verbs must be safe to retry if the workflow retries them. Declare that on the verb.
+**R18.** Compensation and retries live in the workflow or the goal, not inside the noun, unless the noun’s adjective itself requires idempotency of a verb. Verbs must be safe to retry if the workflow retries them. Declare that on the verb.
 
 **R19.** Do not maintain a separate hand-authored execution-graph file that duplicates the workflow definition.
 
@@ -228,17 +228,17 @@ Rules are written so an implementing agent can confirm or fail them. “Should�
 
 **R20.** The charter, contracts, and code must agree. If they disagree, the build fails. Code does not win by existing. Spec does not win by being newer. They must be reconciled in the same change.
 
-**R21.** Dependency and impact information is generated from code and contracts, not authored as a parallel JSON document. The binding matrix is the requirement index for this practice hub (requirement → audit → binder); it is not a dependency or impact graph, and R21 applies to generated “what breaks” views in adopting codebases, not to that matrix.
+**R21.** Dependency and impact information is generated from code and contracts, not authored as a parallel JSON document. The binding matrix is the requirement index for this practice hub (requirement → audit → gate); it is not a dependency or impact graph, and R21 applies to generated “what breaks” views in adopting codebases, not to that matrix.
 
 **R22.** ADRs that are superseded are marked superseded, not deleted. The trail is part of integrity.
 
 ### 5.7 Enforcement
 
-**R23.** A fitness check fails the change if a goal (or workflow, or adapter) assigns a noun field or imports a noun internals module.
+**R23.** A gate fails the change if a goal (or workflow, or adapter) assigns a noun field or imports a noun internals module.
 
-**R24.** A fitness check fails the change if invoice-equivalent money math, status transitions, or named invariants appear outside the owning noun (copy-paste of the law).
+**R24.** A gate fails the change if invoice-equivalent money math, status transitions, or named adjectives appear outside the owning noun (copy-paste of the adjective).
 
-**R25.** Tests for a noun’s invariants live next to the noun and run on every verb. Goal tests do not replace them.
+**R25.** Tests for a noun’s adjectives live next to the noun and run on every verb. Goal tests do not replace them.
 
 ### 5.8 Practice integrity (zero variance)
 
@@ -284,7 +284,7 @@ Choose exactly one primary class:
 
 | Class | You are changing | Home of the work |
 |---|---|---|
-| A. Law | Invariant, status machine, money, eligibility | Noun + its verbs |
+| A. Adjective | Status machine, money, eligibility | Noun + its verbs |
 | B. Mutation API | Add/change a verb | Noun-verb contract + noun tests |
 | C. Use-case | Orchestration, I/O, policy around existing verbs | Goal |
 | D. Multi-step | Time, approval, compensation across goals | Workflow |
@@ -300,7 +300,7 @@ The proposing agent produces, in one change-set of documents:
 - Classification (A–F)
 - Nouns touched, verbs touched, goals touched, workflows touched
 - Draft contracts if any boundary changes
-- Invariants that must still hold
+- Adjectives that must still hold
 - Explicit non-goals (“this does not change tax rounding”)
 - Test names that will prove it
 - Impact list: other goals/verbs that call the changed boundary
@@ -323,7 +323,7 @@ Preflight is not discovery. Fitness does not invent the package, coach the produ
 A second agent, with a different role, attacks the proposal. It does not implement. It does not protect the author’s feelings. It answers only:
 
 - Where can a goal now write private state?
-- Which invariant is now split across two homes?
+- Which adjective is now split across two homes?
 - Which contract field is defined twice with room to drift?
 - Is this a god-noun collecting verbs it should not own?
 - Is this a new goal that should have been a noun-verb?
@@ -434,7 +434,7 @@ The original sketch was weak where it:
 - Treated security, data, observability, audit, and evidence as sibling trees instead of annotations on nouns, verbs, and goals
 - Put Agent concerns in a later tier even though agents are the primary consumer
 - Assumed hand-maintained `dependency-graph.json` and `impact-analysis.json`
-- Isolated goals without a noun, which scatters invariants and invites duplication
+- Isolated goals without a noun, which scatters adjectives and invites duplication
 - Used “governance” as a bucket instead of a charter plus review
 
 Those higher-level views (product, portfolio, strategy) can be derived later. They are not the foundation agents implement against.
@@ -443,11 +443,11 @@ Those higher-level views (product, portfolio, strategy) can be derived later. Th
 
 ## 10. Pitfalls and remediations
 
-### 10.1 Scattered invariants
+### 10.1 Scattered adjectives
 
 **Pitfall.** “Cannot void after payment” lives in `VoidInvoice` and a slightly different version lives in `ApplyPayment`. An agent edits one.
 
-**Remediation.** The invariant lives on `Invoice`. Both verbs consult it. Goal tests are not the home of the law. Fitness check fails if the status machine is reimplemented in a goal.
+**Remediation.** The adjective lives on `Invoice`. Both verbs consult it. Goal tests are not the home of the adjective. Gate fails if the status machine is reimplemented in a goal.
 
 ### 10.2 Duplication that looks locally correct
 
@@ -459,7 +459,7 @@ Those higher-level views (product, portfolio, strategy) can be derived later. Th
 
 **Pitfall.** “Allow partial payments” is implemented only in `ApplyPayment` the goal. `VoidInvoice` still assumes full-payment status values.
 
-**Remediation.** Classification step. Conceptual change is class A. Proposer must open the noun and list every verb that assumes the old law.
+**Remediation.** Classification step. Conceptual change is class A. Proposer must open the noun and list every verb that assumes the old adjective.
 
 ### 10.4 Hidden coupling through shared data
 
@@ -477,7 +477,7 @@ Those higher-level views (product, portfolio, strategy) can be derived later. Th
 
 **Pitfall.** `Invoice.renderPdf`, `Invoice.sendReminder`, `Invoice.exportQuickBooks`.
 
-**Remediation.** R4. If the verb does not need the invariant set, it is a goal or another noun. Reviewer checklist includes god-noun.
+**Remediation.** R4. If the verb does not need the adjective set, it is a goal or another noun. Reviewer checklist includes god-noun.
 
 ### 10.7 Two contract layers that drift
 
@@ -507,7 +507,7 @@ Those higher-level views (product, portfolio, strategy) can be derived later. Th
 
 **Pitfall.** Temporal workflow re-implements “when an invoice is paid” instead of calling `applyPayment`.
 
-**Remediation.** R17–R18. Workflows compose goals; verbs keep the law. Reviewer asks where the status machine lives.
+**Remediation.** R17–R18. Workflows compose goals; verbs keep the adjective. Reviewer asks where the status machine lives.
 
 ---
 
@@ -518,7 +518,7 @@ An implementing agent must print this list with `PASS`, `FAIL`, or `N/A` and a p
 ### Classification and home
 
 - [ ] C1. Change class (A–F) is stated.
-- [ ] C2. Laws live on the noun named in C1, not in a goal folder.
+- [ ] C2. Adjectives live on the noun named in C1, not in a goal folder.
 - [ ] C3. New orchestration lives in a goal or workflow, not as a method on an unrelated noun.
 
 ### Mutation path
@@ -542,12 +542,12 @@ An implementing agent must print this list with `PASS`, `FAIL`, or `N/A` and a p
 - [ ] C14. Workflows call goals (or the ADR-chosen single exception is documented).
 - [ ] C15. Verbs invoked from a retrying workflow are idempotent, or the workflow uses an idempotency key the verb honors.
 
-### Invariants and tests
+### Adjectives and tests
 
-- [ ] C16. Every invariant named in the proposal has a test on the noun.
-- [ ] C17. Every new verb has tests for success, precondition failure, and invariant preservation.
-- [ ] C18. Goal tests cover the use-case, not a copy of the noun’s invariant suite.
-- [ ] C19. No second implementation of the same law exists in the diff (search for duplicated predicates).
+- [ ] C16. Every adjective named in the proposal has a test on the noun.
+- [ ] C17. Every new verb has tests for success, precondition failure, and adjective preservation.
+- [ ] C18. Goal tests cover the use-case, not a copy of the noun’s adjective suite.
+- [ ] C19. No second implementation of the same adjective exists in the diff (search for duplicated predicates).
 
 ### Integrity of the change
 
@@ -561,18 +561,18 @@ If C4, C5, C9, C16, C19, or C20 fail, the change is not complete.
 
 ---
 
-## 12. Minimal fitness checks to install
+## 12. Minimal gates to install
 
 These are the smallest enforcement set. Language-specific tools vary (module visibility, ESLint boundaries, ArchUnit, import-linter, custom grep in CI). The check must fail the build, not warn.
 
 1. **No field writes across the noun boundary.** Goal, workflow, and adapter packages cannot assign noun fields.
 2. **No imports of noun internals.** Only the noun’s public verb module is importable.
 3. **No imports of goal internals from another goal.**
-4. **Law locality.** A denylist of invariant identifiers or modules (status transition tables, rounding functions) that may only appear under `domain/<noun>/`.
+4. **Adjective locality.** A denylist of adjective identifiers or modules (status transition tables, rounding functions) that may only appear under `domain/<noun>/`.
 5. **Contract presence.** A public entrypoint without a schema file (or generated schema) fails CI.
 6. **Schema identity.** Same property name + different type across contracts in one change fails CI or a review bot.
 
-Until check 1 exists, the charter is not in force. Start there.
+Until gate 1 exists, the charter is not in force. Start there.
 
 ---
 
@@ -582,7 +582,7 @@ Use these; do not reimplement them under new folder names.
 
 | Need | Existing tool or pattern |
 |---|---|
-| Noun + invariant-preserving verbs | DDD aggregate; methods or typed commands on the aggregate |
+| Noun + adjective-preserving verbs | DDD aggregate; methods or typed commands on the aggregate |
 | Typed mutation contracts on the noun | Axon commands; Orleans / actor grain interface; Design by Contract |
 | Goal as use-case folder | Vertical slice; Clean Architecture handler / MediatR command |
 | Module privacy enforced in CI | Spring Modulith + ArchUnit; ESLint boundaries; import-linter |
@@ -592,7 +592,7 @@ Use these; do not reimplement them under new folder names.
 | Recorded decisions | ADRs |
 | Drift as a merge failure | Contract tests (Pact, schemathesis); spec-code gate |
 
-No single downloaded framework is “Boundary-Based Programming.” The assembly is: noun module with private state, verb contracts, goal folders, workflow runtime if needed, generated graphs, fitness checks, ADR charter, two-role review.
+No single downloaded framework is “Boundary-Based Programming.” The assembly is: noun module with private state, verb contracts, goal folders, workflow runtime if needed, generated graphs, gates, ADR charter, two-role review.
 
 In Node, that assembly is typically: domain class + private fields, Zod or TypeBox as verb and goal contracts, one handler file per goal, Temporal for multi-noun time, lint/import rules that fail when a goal touches noun internals.
 
@@ -605,7 +605,7 @@ A codebase has adopted Boundary-Based Programming when all of the following are 
 1. This charter (or a dated descendant) is in the repo.
 2. At least one real noun has private state and contracted verbs.
 3. At least one real goal calls those verbs and does not write fields.
-4. Fitness check 1 from section 12 fails a deliberate violation in CI.
+4. Gate 1 from section 12 fails a deliberate violation in CI.
 5. The agent loop in section 6 is the written procedure for class A and B changes.
 6. An implementing agent can run section 11 and produce evidence, not vibes.
 
@@ -620,15 +620,15 @@ You may paste this block into an agent. The rest of this file remains authoritat
 ```text
 You practice Boundary-Based Programming.
 
-Nouns own identity, private state, and invariants.
+Nouns own identity, private state, and adjectives.
 The only legal mutation of a noun is a public verb with an input/output contract.
 Goals orchestrate: I/O, other nouns, events, policy. Goals call verbs. Goals never assign noun fields.
-Workflows compose goals. They do not reimplement noun laws.
+Workflows compose goals. They do not reimplement noun adjectives.
 Shared meaning lives in one canonical type. Do not fork balance, status, or currency.
 If a change is about how a concept works, open the noun, not a single goal.
 Propose spec first. A separate reviewer pass attacks the spec against the charter rules.
 Do not approve your own proposal in the same pass.
-Confirm with the checklist: private fields, verb-only writes, contract presence, invariant tests on the noun, no duplicated laws, fitness checks green.
+Confirm with the checklist: private fields, verb-only writes, contract presence, adjective tests on the noun, no duplicated adjectives, gates green.
 If charter, contracts, and code disagree, stop and reconcile them in one change.
 ```
 
@@ -638,22 +638,22 @@ If charter, contracts, and code disagree, stop and reconcile them in one change.
 
 Ratified by [`adrs/0003-systems-extension-agent-nouns.md`](adrs/0003-systems-extension-agent-nouns.md).
 
-The software model (§4) organizes code so agents can change it without scattering invariants. The same structural discipline organizes **agent fleets** — durable roles that operate a system over time.
+The software model (§4) organizes code so agents can change it without scattering adjectives. The same structural discipline organizes **agent fleets** — durable roles that operate a system over time.
 
 ### 16.1 Vocabulary mapping
 
 | Software BBP | Systems BBP |
 |--------------|-------------|
-| Noun | Agent noun — durable role with identity and invariants |
+| Noun | Agent noun — durable role with identity and adjectives |
 | Verb (on noun) | Verb — legal function an agent may perform; contracted I/O |
 | Goal | Use-case — orchestration across agent nouns or to the outside world |
 | Workflow | Workflow — durable composition of use-cases |
 | Contract | Boundary artifact — input, output, failure mode, handoff, completion |
-| Invariant | Role invariant — what the agent must never violate |
-| Fitness check | Gate — automated enforcement; binary pass/fail; CI-bound |
+| Adjective | Role adjective — what the agent must never violate |
+| Gate | Gate — automated enforcement; binary pass/fail; CI-bound |
 | Adversarial review | Audit — role-based review against charter; produces findings |
 
-**Gate ≠ Audit.** Gates are automated enforcement mechanisms (fitness checks, CI rules) that fail the build. Audits are role-based adversarial reviews (adversarial-auditor agent noun) that produce findings for a ship decision. Both yield binary outcomes (ops vs defects), but differ in mechanism and authority:
+**Gate ≠ Audit.** Gates are automated enforcement mechanisms (gates, CI rules) that fail the build. Audits are role-based adversarial reviews (adversarial-auditor agent noun) that produce findings for a ship decision. Both yield binary outcomes (ops vs defects), but differ in mechanism and authority:
 - Gates block automatically; no human or role decides.
 - Audits produce findings; a ship-role or human decides whether findings block.
 
@@ -668,7 +668,7 @@ Every agent noun package (under `agents/<name>/`) declares:
 | Element | Purpose |
 |---------|---------|
 | **Identity** | Role name, purpose (one line) |
-| **Invariants** | What the agent must never violate |
+| **Adjectives** | What the agent must never violate |
 | **Verb list** | Each verb has input contract, output contract, failure mode |
 | **Handoff-in** | What must be true before this agent receives work |
 | **Completion artifact** | What the agent produces to mark work complete |
@@ -683,7 +683,7 @@ An agent that **produces** an artifact may not be the final **auditor** of that 
 Separate:
 
 1. **Produce** — create the artifact
-2. **Audit** — adversarial review against charter/invariants
+2. **Audit** — adversarial review against charter/adjectives
 3. **Ship** — authorize release
 
 This is §7 applied to systems: proposer ≠ reviewer ≠ confirmer.
@@ -706,7 +706,7 @@ Ship is a first-class agent noun, separate from produce and audit. The ship noun
 
 **Purpose:** Authorize the release of artifacts that have completed produce and audit phases. Decide whether work moves from "done" to "shipped."
 
-#### Invariants
+#### Adjectives
 
 1. **Ship follows produce and audit.** A ship verb may only execute after the artifact has been produced and audited. Ship does not skip the pipeline.
 
@@ -751,13 +751,13 @@ Each verb has input contract, output contract, and failure mode. See agent noun 
 
 ### 16.6 Rules for agent nouns
 
-**S1.** Every agent noun has an identity file that states purpose and invariants.
+**S1.** Every agent noun has an identity file that states purpose and adjectives.
 
 **S2.** Every verb on an agent noun has an input contract, output contract, and failure mode — just like noun-verbs in code (R10).
 
 **S3.** Every agent noun declares handoff-in (preconditions) and completion artifact (postconditions).
 
-**S4.** Success criteria are binary: ops (work completed as specified) vs defects (deviation from spec or invariants).
+**S4.** Success criteria are binary: ops (work completed as specified) vs defects (deviation from spec or adjectives).
 
 **S5.** Produce ≠ Audit ≠ Ship. An agent may not audit its own output as the final gate.
 
@@ -793,7 +793,7 @@ Where **Opportunities** are gate/verb executions with binary outcomes, **Ops** a
 
 For changes that touch agent nouns:
 
-- [ ] CS1. Agent noun has identity and invariants.
+- [ ] CS1. Agent noun has identity and adjectives.
 - [ ] CS2. Each verb has input, output, and failure mode.
 - [ ] CS3. Handoff-in and completion artifact are declared.
 - [ ] CS4. Success criteria are binary (ops vs defects).
