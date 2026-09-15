@@ -165,7 +165,7 @@ Integrity documents define nouns (Gate, Boundary, Lexicon) and principles (P1–
 
 ## Agent Noun
 
-Durable agent role with identity, invariants, and contracted verbs.
+Durable agent role with identity, adjectives, and contracted verbs.
 
 ### Inputs
 
@@ -173,14 +173,14 @@ Durable agent role with identity, invariants, and contracted verbs.
 |-------|----------|-------------|
 | Role name | Yes | Agent noun identity (lowercase) |
 | Purpose | Yes | What the role does |
-| Invariants | Yes | What the role must always maintain |
+| Adjectives | Yes | What the role must never violate |
 | Verbs | Yes | Public operations with I/O contracts |
 | Ship authority | Yes | Whether role can authorize release |
 
 ### Steps
 
 1. **Create folder** — `agents/<name>/`.
-2. **Create `AGENT.md`** — entry point with role definition.
+2. **Create `AGENT.md`** — entry point with role definition. Required heading: `## Adjectives`.
 3. **Create `verbs.md`** — verb catalog with I/O contracts.
 4. **Update `agents/README.md`** — add row to agent noun index.
 5. **Cross-link** — update DESCRIBE.md, role glossary in BOUNDARY.md SOP.
@@ -191,6 +191,7 @@ Durable agent role with identity, invariants, and contracted verbs.
 | Criterion | Check |
 |-----------|-------|
 | Path correct | `agents/<name>/AGENT.md` exists |
+| Adjectives heading | `AGENT.md` has `## Adjectives` |
 | Verbs documented | `agents/<name>/verbs.md` exists with I/O contracts |
 | No person names | Role language only |
 | Indexes updated | `agents/README.md` includes role |
