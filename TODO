@@ -4,61 +4,35 @@ SSOT for open work. Charter SSOT is `CHARTER.md`.
 
 ## Completed
 
-✔ Bootstrap central BBP repo layout @done(26-09-03 20:23)
-✔ Living CHARTER.md + OG draft under theory/history @done(26-09-03 20:23)
-✔ Zero-variance integrity (ADR 0001, P1–P7, §5.8) @done(26-09-04 15:29)
-✔ Binding matrix + unbound/promote/coverage audits @done(26-09-04 15:29)
-✔ Fitness check 1 + invoice-violation fixture; R5/C4 bound @done(26-09-04 22:13)
-✔ In-force requirements have fail-capable gates @done(26-09-09 22:30)
-✔ S1–S8 / CS1–CS8 structure gate + quality metric @done(26-09-09)
-✔ Ship-role agent noun + verb schemas @done(26-09-05 / 26-09-09)
-✔ Vocabulary: adjective / gate (living SSOT) @done(26-09-15)
-✔ Goals may call goals; durability is a runtime, not a peer @done(26-09-15)
-✔ Delete CHARTER.merged*.md; CHARTER.md is the combined spec @done(26-09-15)
-✔ tools + content-types: Adjectives heading @done(26-09-15)
-✔ Audit statements match charter: A-R2 A-R5 A-R7 A-R14 A-R17 A-R18 A-R19 A-R23 A-C3 A-C6 A-C14 A-C15 @done(26-09-15)
-✔ Unbound inventory written (`integrity/UNBOUND.md`); 38 rows stay listed, not fake-bound @done(26-09-15)
+✔ Living CHARTER.md + matrix + fitness check 1 + invoice-violation @done(26-09-03..09)
+✔ Vocabulary adjective/gate; goals may call goals; section scratch deleted @done(26-09-15)
+✔ Audit statements aligned; unbound inventory written @done(26-09-15)
+✔ R6/C5 v1 tool + fixture + assert; R6/C5 stay unbound @done(26-09-15)
 
 Leave `reviews/` and `theory/history/og-interview-draft.md` frozen.
-Leave JSON key `binder` until `tools/audit-binding-matrix.py` is updated.
+Leave JSON key `binder` until the matrix auditor is updated.
 
 ---
 
 ## Still open product
 
-Order is the work order.
-
-1. ~~Unbound matrix rows listed~~ — see [`integrity/UNBOUND.md`](integrity/UNBOUND.md).
-2. **R6 / C5 verb-path gate** — every noun state change goes through a public verb (not only "no field writes").
-3. **R24 adjective-locality gate** — status machines / money math / named adjectives may only appear under `domain/<noun>/`. Current R24 bind is thinner than the statement.
-4. **A5 one-boundary / taint lifetime gate** — an adjective (esp. PII / card data) does not leave the consuming verb.
-5. **A7 escape-hatch gate** — ORM dirty writes, raw SQL, reflection fail CI when they write noun fields outside the noun.
+1. ~~Unbound rows listed~~ — [`integrity/UNBOUND.md`](integrity/UNBOUND.md)
+2. ~~R6/C5 v1 tool~~ — `tools/fitness-verb-path.py` + `examples/invoice-verb-path-violation/`. **Not bound.** Grow via item 5 before promoting.
+3. **R24 adjective-locality gate** — status machines / money math only under `domain/<noun>/`
+4. **A5 one-boundary / taint lifetime gate**
+5. **A7 escape-hatch gate** — also the path that makes R6 bindable
 6. **R9 / R10 / C7 / C8 contract-presence gate**
 7. **R11 / C9 schema-identity gate**
 8. **C19 duplicated-adjective gate**
-9. **P4 / R31 tool-contract checker** that covers code boundaries, not only agent packages
+9. **P4 / R31 tool-contract checker** for code boundaries
 10. **Generated impact graph** (R21 / C21)
-11. **ACS docs voice** — point `docs/ai-compiled-systems/` at CHARTER.md or retire workflow-as-peer sentences
-12. **Three names** — repo / BBP / ACS newcomer line in README
-
----
-
-## Next slice (item 2)
-
-R6/C5 is not R5. R5 fails `invoice.status =`. R6 fails "the goal called a repository update and skipped `applyPayment`."
-
-Needed before code:
-
-- What counts as a mutation outside a verb (ORM `.save()`, SQL UPDATE, collection replace).
-- Known-fail fixture next to `examples/invoice-violation/` that mutates without calling a verb.
-- Honest scope note: v1 will be language-narrow (Python/JS assignment + obvious `.save(` / `UPDATE `).
-
-Do not bind R6 to `fitness-no-noun-field-writes.py`.
+11. **ACS docs voice**
+12. **Three names** — README newcomer line
 
 ---
 
 ## Backlog (non-blocking)
 
 - Package agent short-form prompt + roles under agents/
-- Define additional agent nouns as needed (e.g., deploy-role)
+- Define additional agent nouns as needed
 - Wire session gates for agent noun verbs — future
