@@ -108,4 +108,5 @@ See [PROCESS.md](PROCESS.md) (PLANIT steps 0–7).
 
 ## Open items (not disagreements)
 
-- How loud a contract-change notice is to the manager.
+None. Contract-change loudness is [ADR 0006](../../adrs/0006-contract-change-notice.md).
+
