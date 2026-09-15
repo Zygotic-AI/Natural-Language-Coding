@@ -6,7 +6,7 @@
 
 ## Statement
 
-Noun fields are private. No goal, workflow, adapter, or other noun writes them.
+Noun fields are private. No goal, adapter, or other noun writes them.
 
 ## Binary criteria
 
@@ -14,7 +14,7 @@ Met iff `tools/fitness-no-noun-field-writes.py` exits 0 on the scanned tree(s) (
 
 Not met iff the tool prints one or more `VIOLATION` lines and exits 1 (`RESULT:NOT_MET`).
 
-Scope of this gate: **field assignments** from outside the noun module (`goals/`, `workflows/`, `adapters/`). It does not prove every mutation goes through a public verb (see R6 / C5).
+Scope of this gate: **field assignments** from outside the noun module (`goals/`, `adapters/`, and optional `workflows/` packaging for durable goals). It does not prove every mutation goes through a public verb (see R6 / C5).
 
 ## Evidence
 
