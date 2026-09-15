@@ -4,8 +4,8 @@ SSOT for open work. Charter SSOT is `CHARTER.md`.
 
 ## Completed
 
-✔ R5 field-writes + R6 v1 verb-path + R24 v1 locality + A5 v1 taint @done(26-09-15)
-✔ A7 v1 escape-hatch tool + invoice-escape-hatch-violation @done(26-09-15)
+✔ R5 / R6 v1 / R24 v1 / A5 v1 / A7 v1 @done(26-09-15)
+✔ Contract-presence v1 (R9/R10/C7/C8 files exist + parse) @done(26-09-15)
 
 Leave `reviews/` and `theory/history/` frozen.
 
@@ -13,16 +13,14 @@ Leave `reviews/` and `theory/history/` frozen.
 
 ## Still open product
 
-1–4. ~~listed / R6 v1 / R24 tool / A5 v1~~
-5. ~~A7 v1~~ — `__dict__` / `vars(` / `exec(` / `eval(` in goals. **No matrix row.** SQL/.save stay on verb-path.
-6. **R9 / R10 / C7 / C8 contract-presence**
-7. **R11 / C9 schema-identity**
+6. ~~R9/R10/C7/C8 v1 tool~~ — **not bound.** Files ≠ complete contracts. Change-scoped C7/C8 not implemented.
+7. **R11 / C9 schema-identity** — same field name, different type, fails
 8. **C19 duplicated-adjective**
 9. **P4 / R31 tool-contract checker** for code boundaries
 10. **Generated impact graph**
 11. **ACS docs voice**
 12. **Three names** — README newcomer line
-13. **R24.binder flip** — JSON still names field-writes; set to `tools/fitness-adjective-locality.py`
+13. **R24.binder flip** — JSON still names field-writes
 
 ---
 
