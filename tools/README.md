@@ -6,95 +6,53 @@ Enforcement and scaffolding that make the charter real.
 
 | Tool | Input | Output | Failure mode |
 |------|-------|--------|--------------|
-| [`audit-binding-matrix.py`](audit-binding-matrix.py) | No argv. Reads `integrity/binding-matrix.json`, `CHARTER.md`, `integrity/PRINCIPLES.md`. | `A-BINDING-*:MET\|NOT_MET`, `MISSING_FROM_MATRIX`, `MISSING_AUDIT_ID`, `UNBOUND`, `IN_FORCE_UNBINDABLE`, `RESULT:MET\|NOT_MET`. | Exit **0** = MET/PASS; exit **1** = NOT_MET/FAIL. No silent exception swallow. |
-| [`fitness-no-noun-field-writes.py`](fitness-no-noun-field-writes.py) | Optional argv roots; no args → hub `ROOT` (`domain/`, `goals/`, `workflows/`, `adapters/`, `examples/**`). | `VIOLATION <path>:<line> <field>`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET/PASS; exit **1** = NOT_MET/FAIL. No silent exception swallow. |
-| [`assert-invoice-violation-fails.py`](assert-invoice-violation-fails.py) | No argv. Fixed tree `examples/invoice-violation/`. | `VIOLATION …`, `RESULT:…`, `ASSERT:PASS` or `ASSERT:FAIL …`. | Exit **0** = ASSERT:PASS; exit **1** = ASSERT:FAIL. No silent exception swallow. |
-| [`ci-fitness-check1.sh`](ci-fitness-check1.sh) | No argv. Repo root; assert gate + each `examples/*/` except `invoice-violation`. | Section banners; child stdout; `CI:FAIL …` or `CI:MET`. | Exit **0** = CI:MET/PASS; exit **1** = CI:FAIL. Child failures not swallowed. |
-| [`fitness-quality-metric.py`](fitness-quality-metric.py) | No argv. Scans `tools/fixtures/quality-metric/` for validation fixtures. | `CHECK <req> <fixture>:MET\|NOT_MET [reason]`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET/PASS; exit **1** = NOT_MET/FAIL. No silent exception swallow. |
+| [`audit-binding-matrix.py`](audit-binding-matrix.py) | No argv. Reads `integrity/binding-matrix.json`, `CHARTER.md`, `integrity/PRINCIPLES.md`. | `A-BINDING-*:MET\|NOT_MET`, lists, `RESULT:MET\|NOT_MET`. | Exit **0** = MET; exit **1** = NOT_MET. |
+| [`fitness-no-noun-field-writes.py`](fitness-no-noun-field-writes.py) | Optional argv roots; no args → hub ROOT. | `VIOLATION <path>:<line> <field>`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET; exit **1** = NOT_MET. |
+| [`fitness-verb-path.py`](fitness-verb-path.py) | Optional argv roots; no args → hub ROOT outside trees. | `VIOLATION <path>:<line> <kind>`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET; exit **1** = NOT_MET. |
+| [`assert-invoice-violation-fails.py`](assert-invoice-violation-fails.py) | Fixed tree `examples/invoice-violation/`. | `ASSERT:PASS` or `ASSERT:FAIL`. | Exit **0** = PASS; exit **1** = FAIL. |
+| [`assert-verb-path-violation-fails.py`](assert-verb-path-violation-fails.py) | Fixed tree `examples/invoice-verb-path-violation/`. | `ASSERT:PASS` or `ASSERT:FAIL`. | Exit **0** = PASS; exit **1** = FAIL. |
+| [`ci-fitness-check1.sh`](ci-fitness-check1.sh) | Repo root; check 1 only. | `CI:FAIL` or `CI:MET`. | Exit **0** = CI:MET; exit **1** = CI:FAIL. |
+| [`fitness-quality-metric.py`](fitness-quality-metric.py) | `tools/fixtures/quality-metric/`. | `CHECK …`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET; exit **1** = NOT_MET. |
 
-These docstring/header contracts are documentation for P4/R31. **P4/R31 stay unbound** until a fail-capable checker exists for the contract text itself.
+## Fitness check 1 (R5 / C4)
 
-| Tool | Role |
-|------|------|
-| [`audit-binding-matrix.py`](audit-binding-matrix.py) | Binary audits `A-BINDING-COVERAGE`, `A-BINDING-UNBOUND`, `A-BINDING-PROMOTE`; lists offenders; exit 1 on not met |
-| [`fitness-no-noun-field-writes.py`](fitness-no-noun-field-writes.py) | Fitness check 1 (charter §12.1 / R5 / C4): fail if goals or adapters assign a noun field |
-| [`assert-invoice-violation-fails.py`](assert-invoice-violation-fails.py) | Known-fail gate: exit 0 only if the invoice-violation fixture still fails check 1 |
-| [`ci-fitness-check1.sh`](ci-fitness-check1.sh) | Hub CI wrapper: fixture gate + non-fixture trees must pass |
-| [`fitness-quality-metric.py`](fitness-quality-metric.py) | Quality metric validation (Q1-Q5, CS9-CS10) |
-
-## Fitness check 1
-
-**Gate for:** R5, C4 only. **Not a gate for:** R6, C5, contracts, durability-as-adjective, P2, P4, R31.
-
-Noun modules live under `domain/<noun>/` (and under an example root the same way). Goals and adapters live under `goals/`, `adapters/`. A `workflows/` folder is optional packaging for durable goals, not a fourth primitive. The tool fails if a file in those outside trees assigns to a field declared on a noun.
-
-Field declaration v1: `fields.txt` in the noun dir, or inferred from assignments inside the noun’s own sources. Prints `VIOLATION <path>:<line> <field>` then `RESULT:NOT_MET` or `RESULT:MET`.
-
-### Required hub commands
+**Gate for:** R5, C4 only. **Not a gate for:** R6, C5.
 
 ```bash
-# 1) Known-fail fixture gate — must exit 0 (meaning the example still fails check 1)
 python3 tools/assert-invoice-violation-fails.py
-
-# 2) Fitness check on any other example tree — must be MET (exit 0)
-python3 tools/fitness-no-noun-field-writes.py examples/<other-example>
+python3 tools/fitness-no-noun-field-writes.py examples/invoice-correct
 ```
 
-| Command | Required outcome |
-|---------|------------------|
-| `assert-invoice-violation-fails.py` | Exit **0**: fixture is NOT_MET and at least one `VIOLATION` cites `goals/record-bank-payment/`. Exit **1** if the example is clean (checker dead or example “fixed”). |
-| `fitness-no-noun-field-writes.py` on any other `examples/*/` tree | Exit **0** (`RESULT:MET`). Do not point this at `examples/invoice-violation/`. |
+Do **not** “fix” `examples/invoice-violation/`.
 
-Do **not** “fix” `examples/invoice-violation/` to make check 1 green.
+## Verb-path v1 (R6 / C5 subset — not a matrix bind)
 
-### Other invocations
+Fails persistence escapes in `goals/`, `adapters/`, and optional `workflows/` packaging: `.save(`, `.update(`, `.execute(`, `UPDATE <table>`, `INSERT INTO`, `DELETE FROM`, `setattr(`.
+
+Does **not** fail `invoice.status =`. That is check 1.
 
 ```bash
-# Whole hub (includes known-fail fixture → typically NOT_MET)
-python3 tools/fitness-no-noun-field-writes.py
-
-# Explicit fixture scan (expect NOT_MET; prefer assert-invoice-violation-fails.py in CI)
-python3 tools/fitness-no-noun-field-writes.py examples/invoice-violation
+python3 tools/assert-verb-path-violation-fails.py
+python3 tools/fitness-verb-path.py examples/invoice-verb-path-violation   # NOT_MET
+python3 tools/fitness-verb-path.py examples/invoice-correct               # MET
+python3 tools/fitness-no-noun-field-writes.py examples/invoice-verb-path-violation  # MET
 ```
 
-Two-invocation wrapper (uses the assert gate + non-fixture MET scans):
-
-```bash
-bash tools/ci-fitness-check1.sh
-```
+R6 and C5 stay **unbound**. This tool is a cousin of the statement, not the statement.
 
 ## Agent noun package validation
 
-Validates that agent noun packages under `agents/<name>/` have:
-- `AGENT.md` with required sections (Identity, Adjectives, Handoff-in, Completion artifact, Success criteria)
-- `verbs.md` where every verb declares Input contract, Output contract, and Failure mode (per S2 / R31)
-
-The structure checker accepts a legacy `## Invariants` heading so existing packages do not fail mid-transition. New packages use `## Adjectives`.
-
-| Tool | Input | Output | Failure mode |
-|------|-------|--------|--------------|
-| [`validate-agent-noun-packages.py`](validate-agent-noun-packages.py) | Optional argv = specific agent names; no args → scans all `agents/*/` | `PACKAGE:<name>:VALID\|INVALID`, `AGENT_MISSING_SECTION`, `VERB_MISSING_*`, `RESULT:MET\|NOT_MET`. | Exit **0** = MET/PASS; exit **1** = NOT_MET/FAIL. No silent exception swallow. |
-| [`fitness-agent-noun-structure.py`](fitness-agent-noun-structure.py) | No argv. Scans `agents/*/` | `CHECK <req> <agent>:MET\|NOT_MET`; `RESULT:MET\|NOT_MET`. | Exit **0** = MET/PASS; exit **1** = NOT_MET/FAIL. |
-
-### Commands
+Required `AGENT.md` heading is `## Adjectives`. Legacy `## Invariants` still passes the structure checker.
 
 ```bash
-# Validate all agent noun packages
 python3 tools/validate-agent-noun-packages.py
 python3 tools/fitness-agent-noun-structure.py
-
-# Validate specific agent nouns
-python3 tools/validate-agent-noun-packages.py quality-architect adversarial-auditor
 ```
-
-### Machine-readable verb schemas
-
-Agent noun verb contracts may also have machine-readable JSON Schema definitions under `agents/<name>/schemas/`. See [`agents/quality-architect/schemas/verbs.schema.json`](../agents/quality-architect/schemas/verbs.schema.json) for example.
 
 ## Other planned tools
 
-- Fitness checks for import boundaries and adjective locality (R24)
-- One-boundary / taint lifetime gate (A5)
-- Escape-hatch gate for ORM / raw SQL / reflection (A7)
-- A checker that fails when a listed public tool lacks Input/Output/Failure mode (would bind P4/R31)
-- Generators for impact / dependency views from code (not hand-maintained JSON)
+- Adjective locality (R24) — not field writes
+- One-boundary / taint lifetime (A5)
+- Broader escape hatches (A7) — this is how R6 grows past v1
+- Contract presence / schema identity (R9–R11)
+- Generated impact graphs (R21)
