@@ -12,7 +12,8 @@ BBP standard (`CHARTER.md`), ADRs, requirements, known boundaries, known verb co
 
 Outcome, not feature. Stop when goals and constraints can be named. Incomplete interview → no plan.
 
-The window stays small later because this step names the objects. A poor interview creates two Invoices.
+The window stays small later because this step names the objects. A poor interview creates two Invoices. Call knowledge-steward `load-shelf` / `flag-gap` before generate; new facts wait for the manager (`propose-fact`).
+
 
 ## 2. Plan
 

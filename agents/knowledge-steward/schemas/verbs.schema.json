@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Knowledge Steward Verbs",
+  "verbs": {
+    "load-shelf": {
+      "input": { "type": "object", "required": ["scope"] },
+      "output": { "type": "object", "required": ["status", "facts"] },
+      "error": { "type": "object", "required": ["code", "message"] }
+    },
+    "propose-fact": {
+      "input": { "type": "object", "required": ["statement", "rationale"] },
+      "output": { "type": "object", "required": ["path", "status"] },
+      "error": { "type": "object", "required": ["code", "message"] }
+    },
+    "flag-gap": {
+      "input": { "type": "object", "required": ["statement_id", "question"] },
+      "output": { "type": "object", "required": ["gap_id", "status"] },
+      "error": { "type": "object", "required": ["code", "message"] }
+    }
+  }
+}

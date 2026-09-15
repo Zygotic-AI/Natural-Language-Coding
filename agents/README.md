@@ -22,9 +22,12 @@ Durable organizational positions with identity, adjectives, and contracted verbs
 | Standards steward | [`standards-steward/`](standards-steward/) | None |
 | Quality architect | [`quality-architect/`](quality-architect/) | None |
 | Adversarial auditor | [`adversarial-auditor/`](adversarial-auditor/) | None |
+| Knowledge steward | [`knowledge-steward/`](knowledge-steward/) | None |
 | Ship role | [`ship-role/`](ship-role/) | Yes — with mandate |
 
-**Produce ≠ Audit ≠ Ship** (§16.3, §16.5): these three agent nouns cover the full pipeline. Standards steward and adversarial auditor produce artifacts and findings; ship-role authorizes release.
+
+**Produce ≠ Audit ≠ Ship** (§16.3, §16.5). Knowledge steward is the fact shelf for interview/bind, not a fourth pipeline phase.
+
 
 Each package contains:
 
