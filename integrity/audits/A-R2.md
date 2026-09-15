@@ -5,11 +5,11 @@
 
 ## Statement
 
-If the work spans nouns, I/O, or a business outcome, it is a goal (or a workflow of goals).
+If the work spans nouns, I/O, other goals, or a business outcome, it is a goal.
 
 ## Binary criteria
 
-Met iff a binder (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no binder ran, binder failed, or evidence is missing.
+Met iff a gate (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no gate ran, the gate failed, or evidence is missing.
 
 ## Evidence
 
