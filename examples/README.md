@@ -78,3 +78,4 @@ Do not commit the JSON that command prints.
 
 | [`changed-only-ok/`](changed-only-ok/) | C7/C11 CHANGED lists good; bad is dirty but out of scope |
 | [`changed-missing-schema/`](changed-missing-schema/) | C7 CHANGED lists a goal with no schemas |
+| [`product-no-confirm/`](product-no-confirm/) | C1 product tree, no CONFIRM.md |

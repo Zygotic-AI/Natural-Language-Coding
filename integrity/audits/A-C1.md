@@ -8,14 +8,14 @@
 
 Change class (A–F) is stated.
 
-## V1 bind
+## V2 bind
 
-If `PROPOSAL.md` or `CONFIRM.md` exists at the scan root, it must match
-`change class` + A–F.
+Product trees (`goals/` or `domain/`, README not a specimen) must have
+CONFIRM.md/PROPOSAL.md stating `change class` + A–F.
 
-No note file → skip (MET). That is not proof the change was classified.
+Specimens skip if they have no note.
 
 Does not check the class is *correct*.
 
-Designed fail: `examples/missing-change-class/`.
+Designed fail: `examples/missing-change-class/`, `examples/product-no-confirm/`.
 Designed pass: `examples/invoice-correct/`.

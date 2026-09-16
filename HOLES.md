@@ -61,13 +61,11 @@ Still not a human signature.
 
 ---
 
-## 8. C1 / C21 / C24 — skip-if-no-note
+## 8. C1 / C21 / C24 — skip-if-no-note — DONE
 
-**Today.** No `CONFIRM.md` → MET. An agent can skip the note and go green.
-
-**Tighten.** If the scan root has `goals/` or `domain/` *and* this is a
-product tree (not a designed-fail specimen), require CONFIRM.md. Specimens
-stay exempt via README `Specimen.` marker already used.
+v2: product trees (goals/ or domain/, README not Specimen/Designed red/
+Known-fail) require CONFIRM.md. Specimens still skip. Class still not
+checked for *correctness*.
 
 ---
 

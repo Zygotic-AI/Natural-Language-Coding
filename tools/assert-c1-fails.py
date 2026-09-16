@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Known-fail fixture gate for C1 v1."""
+"""Known-fail fixture gate for C1 missing change class."""
 
 from __future__ import annotations
 
@@ -27,15 +27,18 @@ def main() -> int:
         print(f"ASSERT:FAIL missing fixture {FIXTURE.relative_to(ROOT)}")
         return 1
     fitness = load_fitness()
-    missing = fitness.scan_one(FIXTURE.resolve())
-    for path in missing:
-        print(f"VIOLATION {path} missing-change-class")
-    if not missing:
+    violations = fitness.scan_one(FIXTURE.resolve())
+    for path, kind in violations:
+        print(f"VIOLATION {path} {kind}")
+    if not violations:
         print("RESULT:MET")
         print("ASSERT:FAIL fixture is clean")
         return 1
     print("RESULT:NOT_MET")
-    print("ASSERT:PASS fixture still fails C1 v1")
+    if not any(v[1] == "missing-change-class" for v in violations):
+        print("ASSERT:FAIL expected missing-change-class")
+        return 1
+    print("ASSERT:PASS fixture still fails C1 (missing-change-class)")
     return 0
 
 
