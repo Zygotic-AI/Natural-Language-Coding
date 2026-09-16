@@ -43,6 +43,7 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`missing-c22/`](missing-c22/) | C22 no same-change line |
 | [`c22-na-with-both/`](c22-na-with-both/) | C22 N/A with charter and code |
 | [`open-findings/`](open-findings/) | C23 open FINDINGS.md checkbox |
+| [`confirmer-open-fail/`](confirmer-open-fail/) | C23 confirmer FAIL unrebutted |
 
 
 

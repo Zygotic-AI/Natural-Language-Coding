@@ -37,13 +37,14 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 
 ## Open — tighten v1 holes
 
-SSOT: [`HOLES.md`](HOLES.md). Next: **7. C23 confirmer FAIL is a finding**.
+SSOT: [`HOLES.md`](HOLES.md). Next: **8. C1/C21/C24 require CONFIRM on product trees**.
 ✔ C17 v2: each verb has a failure-path test @done(26-09-15)
 ✔ C18 v2: goal with code must have a use-case test @done(26-09-15)
 ✔ R32 v2: taint follows aliases in the same function @done(26-09-15)
 ✔ C15 v2: retrying goal must pass an idempotency key @done(26-09-15)
 ✔ C22 v2: N/A illegal when charter and code share a tree @done(26-09-15)
 ✔ C7/C8/C11 v2: CHANGED: list scopes schema/entrypoint checks @done(26-09-15)
+✔ C23 v2: confirmer Cx — FAIL is an open finding @done(26-09-15)
 
 
 
