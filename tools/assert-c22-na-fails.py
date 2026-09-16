@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Known-fail fixture gate for C22 missing label."""
+"""Known-fail fixture gate for C22 v2 N/A with charter and code."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FIXTURE = ROOT / "examples" / "missing-c22"
+FIXTURE = ROOT / "examples" / "c22-na-with-both"
 FITNESS = ROOT / "tools" / "fitness-c22.py"
 
 
@@ -35,10 +35,10 @@ def main() -> int:
         print("ASSERT:FAIL fixture is clean")
         return 1
     print("RESULT:NOT_MET")
-    if not any(v[1] == "missing-c22" for v in violations):
-        print("ASSERT:FAIL expected missing-c22")
+    if not any(v[1] == "c22-na-with-both" for v in violations):
+        print("ASSERT:FAIL expected c22-na-with-both")
         return 1
-    print("ASSERT:PASS fixture still fails C22 (missing-c22)")
+    print("ASSERT:PASS fixture still fails C22 (N/A with charter and code)")
     return 0
 
 
