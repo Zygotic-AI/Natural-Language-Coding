@@ -16,11 +16,10 @@ for a static gate (judgment, a human, or code we do not have).
 | C10 breaking at version 1 | CLOSED |
 | C1 note required; class C illegal when charter is in the change | CLOSED |
 | C23 confirmer FAIL is a finding | CLOSED as far as text goes. Out of reach: a cryptographic human signature. C24 refuses `Ratified-by: agent`. |
-
 | R4 read/write self.field | CLOSED. Out of reach: verb belongs on *this* noun. |
 | R1 / C3 / P2 | Out of reach: “would this noun be a lie”, “related”, every human action gated. |
 | Ship | `python3 tools/release-audit.py <tree>` is the pipeline hook. Compile-green ≠ released. |
-
+| Language | Source-level gates are **Python-only**. Contract/CONFIRM/matrix are not. Expanding to another language is **spec then adapter**, parked: [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md). |
 
 Work one item per pass. Don’t mint new matrix ids unless the charter
 gained a new promise.
