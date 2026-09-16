@@ -36,7 +36,9 @@ for a in \
   tools/assert-escape-hatch-violation-fails.py \
   tools/assert-duplicated-adjective-fails.py \
   tools/assert-r13-fails.py \
-  tools/assert-c21-fails.py
+  tools/assert-c21-fails.py \
+  tools/assert-r25-fails.py
+
 
 
 do
@@ -63,7 +65,9 @@ for t in \
   tools/fitness-c21.py \
   tools/fitness-goal-imports.py \
   tools/fitness-c20.py \
-  tools/fitness-p4-r31.py
+  tools/fitness-p4-r31.py \
+  tools/fitness-r25-noun-tests.py
+
 
 do
   echo "--- $t $CORRECT ---"
