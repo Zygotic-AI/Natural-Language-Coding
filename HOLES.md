@@ -62,10 +62,19 @@ checked for *correctness*.
 
 ---
 
-## 9. R20 — schema field vs code — DONE
+## 9. R20 — schema field vs code — CLOSED
 
-v2: required fields named in the verb; annotated types must match JSON.
-Charter-vs-matrix is still R27. Unannotated params skip the type check.
+Required fields must be named *and annotated*. JSON type must match when present.
+
+## 11. R32 helpers / R33 ORM — CLOSED
+
+Same-file helpers that return taint taint their callers.
+Escape hatch includes setattr / .save( / SQL execute.
+Out of reach: taint across files.
+
+## 12. C10 — breaking, not “version ≠ 1” — CLOSED
+
+Dropped required fields vs `*.previous.json` need an ADR even at version 1.
 
 ---
 
@@ -77,20 +86,15 @@ noun rather than another.
 
 ---
 
-## 11. R32 locals leftover / R33 ORM
+## 11. R32 locals leftover / R33 ORM — CLOSED
 
-Taint still won’t follow `n = f(x); g(n)` through helpers. Escape hatch
-still isn’t raw SQL / `.save(`. Only do these after 3.
+Same-file helpers that return taint taint their callers.
+Escape hatch includes setattr / .save( / SQL execute.
+Out of reach: taint across files.
 
----
+## 12. C10 — breaking, not “version ≠ 1” — CLOSED
 
-## 12. C10 — breaking, not “version ≠ 1”
-
-**Today.** Version 2 with no local `adrs/` fails. Version 1 → skip even if
-the schema dropped a required field.
-
-**Tighten.** After 5–6 (diff): a removed/renamed required field is breaking
-and needs an ADR, regardless of the version number.
+Dropped required fields vs `*.previous.json` need an ADR even at version 1.
 
 ---
 

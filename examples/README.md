@@ -87,3 +87,8 @@ Do not commit the JSON that command prints.
 | [`retrying-nested-no-key/`](retrying-nested-no-key/) | C15 nested parens, no key |
 | [`retrying-key-unused/`](retrying-key-unused/) | C15 key passed, verb ignores it |
 | [`retrying-nested-ok/`](retrying-nested-ok/) | C15 nested parens, verb honors key |
+| [`schema-unannotated/`](schema-unannotated/) | R20 required field unannotated |
+| [`imported-goal-helper/`](imported-goal-helper/) | R15 two goals import the same helper |
+| [`card-taint-helper/`](card-taint-helper/) | R32 taint through a helper |
+| [`sql-escape-hatch/`](sql-escape-hatch/) | R33 SQL execute in a goal |
+| [`breaking-no-adr/`](breaking-no-adr/) | C10 version 1 dropped a required field |

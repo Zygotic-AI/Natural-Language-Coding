@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
-"""R20 v2: verbs.schema.json required fields are named in the verb.
+"""R20: verbs.schema.json required fields are named and typed in the verb.
 
-For each verb in domain/<noun>/schemas/verbs.schema.json, every
-input.required name must appear in that method's signature or body.
-If the signature annotates the name, JSON type must match (integer→int,
-string→str, boolean→bool, number→int|float).
-
-Does not prove charter text matches code. That stays R27.
-
-Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <noun> <verb> missing-field|type-mismatch <name>
-Failure mode: exit 0 = MET; exit 1 = NOT_MET.
+Every input.required name must appear in that method's signature or body
+and be annotated. If the schema gives a JSON type, it must match
+(integer→int, string→str, boolean→bool, number→int|float).
 """
+
 
 from __future__ import annotations
 
@@ -137,9 +131,13 @@ def scan_one(scan_root: Path) -> list[tuple[str, str, str, str]]:
                     violations.append((rel(noun), vname, "missing-field", field))
                     continue
                 ann = annotation(sig, field)
+                if not ann:
+                    violations.append((rel(noun), vname, "missing-annotation", field))
+                    continue
                 jt = json_type(spec, field)
-                if ann and jt in JSON_TO_PY and ann not in JSON_TO_PY[jt]:
+                if jt in JSON_TO_PY and ann not in JSON_TO_PY[jt]:
                     violations.append((rel(noun), vname, "type-mismatch", field))
+
     return violations
 
 

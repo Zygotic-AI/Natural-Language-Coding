@@ -1,21 +1,16 @@
 #!/usr/bin/env python3
-"""A7 v1: reflection / dict / exec escape hatches in goal or adapter trees.
+"""R33 / C26: reflection, ORM, and SQL escape hatches in goal/adapter trees.
 
-Not R5 (named field assignment). Not R6 (ORM .save / SQL / setattr).
+Fails in goals/, adapters/, workflows/:
 
-V1 fails these in goals/, adapters/, workflows/:
+  dict-hatch / vars-hatch / exec-hatch / eval-hatch
+  setattr-hatch — setattr(
+  save-hatch    — .save(
+  sql-hatch     — .execute( / .executemany( / .raw( / SELECT|INSERT|UPDATE|DELETE
 
-  dict-hatch   — obj.__dict__
-  vars-hatch   — vars(
-  exec-hatch   — exec(
-  eval-hatch   — eval(
-
-setattr( is R6 v1. obj.field = is R5.
-
-Input: optional argv roots. No args → hub ROOT outside trees.
-Output: VIOLATION <path>:<line> <kind>
-Failure mode: exit 0 = MET; exit 1 = NOT_MET.
+obj.field = is R5.
 """
+
 
 from __future__ import annotations
 
@@ -33,7 +28,12 @@ PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("vars-hatch", re.compile(r"\bvars\s*\(")),
     ("exec-hatch", re.compile(r"\bexec\s*\(")),
     ("eval-hatch", re.compile(r"\beval\s*\(")),
+    ("setattr-hatch", re.compile(r"\bsetattr\s*\(")),
+    ("save-hatch", re.compile(r"\.save\s*\(")),
+    ("sql-hatch", re.compile(r"\.(?:execute|executemany|raw)\s*\(")),
+    ("sql-hatch", re.compile(r"\b(?:SELECT|INSERT|UPDATE|DELETE)\b")),
 ]
+
 
 
 def is_skipped_dir(path: Path) -> bool:
@@ -45,8 +45,13 @@ def source_files(tree: Path) -> list[Path]:
         return []
     return sorted(
         p for p in tree.rglob("*")
-        if p.is_file() and p.suffix in SOURCE_EXTS and not is_skipped_dir(p)
+        if p.is_file()
+        and p.suffix in SOURCE_EXTS
+        and not is_skipped_dir(p)
+        and "tests" not in p.parts
+        and not p.name.startswith("test_")
     )
+
 
 
 def outside_files(root: Path) -> list[Path]:

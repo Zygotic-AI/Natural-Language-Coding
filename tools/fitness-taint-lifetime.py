@@ -148,9 +148,16 @@ def tainted_from(expr: str, tainted: set[str]) -> bool:
     return bool(names_in(expr) & tainted)
 
 
-def scan_function(path: str, start: int, body: list[str], tokens: set[str]) -> list[tuple[str, int, str]]:
+def scan_function(path: str, start: int, body: list[str], tokens: set[str], taint_fns: set[str]) -> list[tuple[str, int, str]]:
     tainted: set[str] = set(tokens)
-    # Seed aliases from assignments (fixpoint).
+
+    def from_expr(expr: str) -> bool:
+        if GET_CALL.search(expr):
+            return True
+        if any(re.search(rf"\b{re.escape(fn)}\s*\(", expr) for fn in taint_fns):
+            return True
+        return bool(names_in(expr) & tainted)
+
     changed = True
     while changed:
         changed = False
@@ -162,7 +169,7 @@ def scan_function(path: str, start: int, body: list[str], tokens: set[str]) -> l
             if not m:
                 continue
             lhs, rhs = m.group(2), m.group(3)
-            if lhs not in tainted and tainted_from(rhs, tainted):
+            if lhs not in tainted and from_expr(rhs):
                 tainted.add(lhs)
                 changed = True
 
@@ -173,12 +180,12 @@ def scan_function(path: str, start: int, body: list[str], tokens: set[str]) -> l
         if is_comment(stripped) or not stripped:
             continue
         ret = RETURN.search(stripped)
-        if ret and tainted_from(ret.group(1), tainted):
+        if ret and from_expr(ret.group(1)):
             leaked = (names_in(ret.group(1)) & tainted) or {"get"}
             violations.append((path, lineno, f"return-taint:{next(iter(leaked))}"))
             continue
         store = STORE.search(stripped)
-        if store and tainted_from(store.group(1), tainted):
+        if store and from_expr(store.group(1)):
             leaked = (names_in(store.group(1)) & tainted) or {"get"}
             violations.append((path, lineno, f"store-taint:{next(iter(leaked))}"))
             continue
@@ -195,6 +202,36 @@ def scan_function(path: str, start: int, body: list[str], tokens: set[str]) -> l
     return violations
 
 
+def function_returns_taint(body: list[str], tokens: set[str], taint_fns: set[str]) -> bool:
+    tainted: set[str] = set(tokens)
+    changed = True
+    while changed:
+        changed = False
+        for line in body:
+            if is_comment(line.strip()):
+                continue
+            m = ASSIGN.match(line.rstrip())
+            if not m:
+                continue
+            lhs, rhs = m.group(2), m.group(3)
+            hit = bool(GET_CALL.search(rhs) or (names_in(rhs) & tainted))
+            if not hit:
+                hit = any(re.search(rf"\b{re.escape(fn)}\s*\(", rhs) for fn in taint_fns)
+            if lhs not in tainted and hit:
+                tainted.add(lhs)
+                changed = True
+    for line in body:
+        ret = RETURN.search(line.strip())
+        if not ret:
+            continue
+        expr = ret.group(1)
+        if GET_CALL.search(expr) or (names_in(expr) & tainted):
+            return True
+        if any(re.search(rf"\b{re.escape(fn)}\s*\(", expr) for fn in taint_fns):
+            return True
+    return False
+
+
 def scan_one(scan_root: Path) -> list[tuple[str, int, str]]:
     tokens: set[str] = set()
     for noun_dir in noun_dirs(scan_root):
@@ -204,8 +241,19 @@ def scan_one(scan_root: Path) -> list[tuple[str, int, str]]:
     violations: list[tuple[str, int, str]] = []
     for path in outside_files(scan_root):
         text = path.read_text(errors="replace")
-        for _name, start, body in functions(text):
-            violations.extend(scan_function(rel(path), start, body, tokens))
+        fns = functions(text)
+        taint_fns: set[str] = set()
+        changed = True
+        while changed:
+            changed = False
+            for name, _start, body in fns:
+                if name in taint_fns:
+                    continue
+                if function_returns_taint(body, tokens, taint_fns):
+                    taint_fns.add(name)
+                    changed = True
+        for name, start, body in fns:
+            violations.extend(scan_function(rel(path), start, body, tokens, taint_fns))
     return violations
 
 

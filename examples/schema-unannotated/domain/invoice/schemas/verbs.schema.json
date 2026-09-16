@@ -1,0 +1,13 @@
+{
+  "version": "1",
+  "verbs": {
+    "apply_payment": {
+      "input": {
+        "type": "object",
+        "required": ["amount"],
+        "properties": { "amount": { "type": "integer" } }
+      },
+      "output": { "type": "object" }
+    }
+  }
+}
