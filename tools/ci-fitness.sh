@@ -33,6 +33,8 @@ done
 
 echo "=== designed-pass impact graph ==="
 python3 tools/assert-impact-graph-generated.py || fail "impact graph"
+python3 tools/assert-release-signed-passes.py || fail "release signed"
+
 
 echo "=== invoice-correct must MET on bound tools ==="
 CORRECT=examples/invoice-correct
