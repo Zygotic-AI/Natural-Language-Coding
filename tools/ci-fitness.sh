@@ -48,6 +48,8 @@ for a in \
   tools/assert-r12-fails.py \
   tools/assert-c1-fails.py \
   tools/assert-c1-no-note-fails.py \
+  tools/assert-r20-fails.py \
+  tools/assert-r20-type-fails.py \
   tools/assert-r15-fails.py \
   tools/assert-r17-fails.py \
   tools/assert-r18-fails.py \
@@ -121,6 +123,7 @@ for t in \
   tools/fitness-r4.py \
   tools/fitness-c13.py \
   tools/fitness-c10.py \
+  tools/fitness-r20.py \
   tools/fitness-c22.py \
   tools/fitness-c23.py
 
