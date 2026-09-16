@@ -32,6 +32,8 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`orchestration-on-noun/`](orchestration-on-noun/) | C3/R3 Customer calls Invoice verb |
 | [`stray-verb/`](stray-verb/) | R4 verb never touches adjectives |
 | [`wrapper-goal/`](wrapper-goal/) | C13/R16 one-verb goal, no I/O schemas |
+| [`version-bump-no-adr/`](version-bump-no-adr/) | C10 version 2, no ADR |
+
 
 
 

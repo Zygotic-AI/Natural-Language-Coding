@@ -2,15 +2,7 @@
 
 - Requirement: `R2`
 - Outcome: **met** | **not met** only
+- Gate: `tools/fitness-c3.py`
 
-## Statement
-
-If the work spans nouns, I/O, other goals, or a business outcome, it is a goal.
-
-## Binary criteria
-
-Met iff a gate (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no gate ran, the gate failed, or evidence is missing.
-
-## Evidence
-
-On met or not met, cite file and symbol (or N/A reason). List failing ids when the audit is a matrix audit.
+Cousin of C3/R3. Mechanical half: work that spans nouns is not a method on
+one of them. Does not detect “this should have been a goal” when no second noun exists.

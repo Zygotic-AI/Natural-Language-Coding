@@ -4,9 +4,9 @@ Status SSOT: [`binding-matrix.json`](binding-matrix.json).
 
 ## Keep unbound (no honest v1 yet)
 
-Classification: R1 R2.
-Integrity: P2 R20.
-Still git/diff: C10 C22 C23.
+Still git/diff: C22 C23.
 
-C7/C8/C11 are bound as tree-wide cousins (not “changed”).
-C13/R16 v1 is one-verb + no schemas; `invoice-correct` has schemas so it passes.
+R1 → adjective-locality (cousin of R24).
+R2 → fitness-c3 (cousin of C3).
+P2/R20 → binding-matrix auditor (cousins of R28/R27).
+C10 v1: version other than 1 needs `adrs/` under the scan root.
