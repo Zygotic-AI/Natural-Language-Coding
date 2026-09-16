@@ -45,13 +45,11 @@ source. PASS must cite existing paths. Still does not inspect git.
 
 ---
 
-## 6. C7 / C8 / C11 — “changed”, not tree-wide
+## 6. C7 / C8 / C11 — “changed”, not tree-wide — DONE
 
-**Today.** Cousins of R9 / R10 / R13 on the whole tree.
-
-**Tighten.** Only entrypoints whose files are in the change (git, or a
-`CHANGED:` list in CONFIRM). Unchanged goals with missing schemas must not
-fail a product PR that didn’t touch them.
+v2: `CHANGED:` in CONFIRM wins; else dirty git under the scan root; else
+tree-wide. Unchanged goals with missing schemas / extra doors do not fail.
+Still not `origin/main...HEAD` on a clean CI checkout of a PR (no list → tree-wide).
 
 ---
 
