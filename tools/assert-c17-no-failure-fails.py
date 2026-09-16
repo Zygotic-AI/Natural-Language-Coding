@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Known-fail fixture gate for C17 name-missing."""
+"""Known-fail fixture gate for C17 v2 failure-path."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FIXTURE = ROOT / "examples" / "verb-untested"
+FIXTURE = ROOT / "examples" / "verb-success-only"
 FITNESS = ROOT / "tools" / "fitness-c17.py"
 
 
@@ -35,10 +35,10 @@ def main() -> int:
         print("ASSERT:FAIL fixture is clean")
         return 1
     print("RESULT:NOT_MET")
-    if not any(v[1] == "untested-verb" and v[2] == "apply_payment" for v in violations):
-        print("ASSERT:FAIL expected untested apply_payment")
+    if not any(v[1] == "verb-no-failure-test" and v[2] == "apply_payment" for v in violations):
+        print("ASSERT:FAIL expected verb-no-failure-test apply_payment")
         return 1
-    print("ASSERT:PASS fixture still fails C17 (untested-verb)")
+    print("ASSERT:PASS fixture still fails C17 (no failure path)")
     return 0
 
 
