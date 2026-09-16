@@ -37,8 +37,10 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 
 ## Open — tighten v1 holes
 
-SSOT: [`HOLES.md`](HOLES.md). Next: **2. C18 goal tests**.
+SSOT: [`HOLES.md`](HOLES.md). Next: **3. R32 taint across statements**.
 ✔ C17 v2: each verb has a failure-path test @done(26-09-15)
+✔ C18 v2: goal with code must have a use-case test @done(26-09-15)
+
 
 
 

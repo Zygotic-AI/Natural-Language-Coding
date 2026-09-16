@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""C18 v1: goal tests must not copy the noun's adjective tokens.
+"""C18 v2: a goal with code has a use-case test; that test is not the noun suite.
 
-If goals/**/tests (or test_*.py under a goal) mention a token from
-domain/<noun>/adjectives.txt, that is a copied adjective suite.
-
-No goal tests → skip (MET). That is not proof the use-case is tested.
+If goals/<id> has implementation .py and no tests → missing-goal-test.
+If a goal test mentions a token from domain/*/adjectives.txt → copied-adjective.
 
 Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <path> copied-adjective <token>
+Output: VIOLATION <path> missing-goal-test|copied-adjective <detail>
 Failure mode: exit 0 = MET; exit 1 = NOT_MET.
 """
 
@@ -60,17 +58,37 @@ def adjective_tokens(root: Path) -> list[str]:
     return tokens
 
 
-def goal_test_files(root: Path) -> list[Path]:
-    files: list[Path] = []
+def goal_dirs(root: Path) -> list[Path]:
+    found: list[Path] = []
     for goals in collect_named(root, "goals"):
-        for path in goals.rglob("*"):
-            if not path.is_file() or path.suffix not in SOURCE_EXTS:
-                continue
-            if is_skipped(path):
-                continue
-            if "tests" in path.parts or path.name.startswith("test_") or path.name.endswith("_test.py"):
-                files.append(path)
-    return sorted(set(files))
+        found.extend(p for p in goals.iterdir() if p.is_dir() and not is_skipped(p))
+    return found
+
+
+def impl_files(goal: Path) -> list[Path]:
+    return [
+        p for p in goal.glob("*.py")
+        if p.is_file()
+        and not p.name.startswith("test_")
+        and not p.name.endswith("_test.py")
+    ]
+
+
+def test_files(goal: Path) -> list[Path]:
+    files: list[Path] = []
+    tests = goal / "tests"
+    if tests.is_dir():
+        files.extend(
+            p for p in tests.rglob("*")
+            if p.is_file() and p.suffix in SOURCE_EXTS and not is_skipped(p)
+        )
+    files.extend(
+        p for p in goal.iterdir()
+        if p.is_file()
+        and p.suffix in SOURCE_EXTS
+        and (p.name.startswith("test_") or p.name.endswith("_test.py"))
+    )
+    return files
 
 
 def token_in_text(token: str, text: str) -> bool:
@@ -80,16 +98,21 @@ def token_in_text(token: str, text: str) -> bool:
     )
 
 
-def scan_one(scan_root: Path) -> list[tuple[str, str]]:
+def scan_one(scan_root: Path) -> list[tuple[str, str, str]]:
     tokens = adjective_tokens(scan_root)
-    if not tokens:
-        return []
-    violations = []
-    for path in goal_test_files(scan_root):
-        text = path.read_text(errors="replace")
-        for token in tokens:
-            if token_in_text(token, text):
-                violations.append((rel(path), token))
+    violations: list[tuple[str, str, str]] = []
+    for goal in goal_dirs(scan_root):
+        if not impl_files(goal):
+            continue
+        tests = test_files(goal)
+        if not tests:
+            violations.append((rel(goal), "missing-goal-test", goal.name))
+            continue
+        for path in tests:
+            text = path.read_text(errors="replace")
+            for token in tokens:
+                if token_in_text(token, text):
+                    violations.append((rel(path), "copied-adjective", token))
     return violations
 
 
@@ -107,8 +130,8 @@ def main() -> int:
                 continue
             seen.add(item)
             printed.append(item)
-            path, token = item
-            print(f"VIOLATION {path} copied-adjective {token}")
+            path, kind, detail = item
+            print(f"VIOLATION {path} {kind} {detail}")
     if printed:
         print("RESULT:NOT_MET")
         return 1

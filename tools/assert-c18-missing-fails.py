@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Known-fail fixture gate for C18 copied-adjective."""
+"""Known-fail fixture gate for C18 v2 missing goal test."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FIXTURE = ROOT / "examples" / "goal-tests-copy-adjectives"
+FIXTURE = ROOT / "examples" / "goal-untested"
 FITNESS = ROOT / "tools" / "fitness-c18.py"
 
 
@@ -35,10 +35,10 @@ def main() -> int:
         print("ASSERT:FAIL fixture is clean")
         return 1
     print("RESULT:NOT_MET")
-    if not any(v[1] == "copied-adjective" and v[2] == "paid" for v in violations):
-        print("ASSERT:FAIL expected copied token paid")
+    if not any(v[1] == "missing-goal-test" for v in violations):
+        print("ASSERT:FAIL expected missing-goal-test")
         return 1
-    print("ASSERT:PASS fixture still fails C18 (copied-adjective)")
+    print("ASSERT:PASS fixture still fails C18 (missing-goal-test)")
     return 0
 
 

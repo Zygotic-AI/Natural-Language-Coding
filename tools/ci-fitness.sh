@@ -42,6 +42,7 @@ for a in \
   tools/assert-c17-fails.py \
   tools/assert-c17-no-failure-fails.py \
   tools/assert-c18-fails.py \
+  tools/assert-c18-missing-fails.py \
   tools/assert-r12-fails.py \
   tools/assert-c1-fails.py \
   tools/assert-r15-fails.py \

@@ -15,13 +15,11 @@ Still does not check adjective *preservation*.
 
 ---
 
-## 2. C18 — no goal tests is not “use-case tested”
+## 2. C18 — no goal tests is not “use-case tested” — DONE
 
-**Today.** No `goals/**/tests` → skip MET.
-
-**Tighten.** If a goal has `implementation.py`, it needs a test that is
-*not* a copy of the noun adjective suite (C18 already bans the copy).
-invoice-correct would need a small goal test (e.g. “called apply_payment”).
+v2: goal with implementation.py must have tests; those tests must not
+copy adjective tokens. invoice-correct has a use-case test (called
+apply_payment). Still does not prove the test *runs* the goal.
 
 ---
 
