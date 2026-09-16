@@ -23,6 +23,9 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 ✔ C16/C17 v1 name-in-tests; C19 skips test files @done(26-09-15)
 ✔ C18 v1: goal tests must not copy noun adjective tokens @done(26-09-15)
 ✔ R32/C25 taint + R33/C26 escape promoted from A5/A7 and bound @done(26-09-15)
+✔ R12 v1: public contract JSON carries a version field @done(26-09-15)
+
+
 
 
 

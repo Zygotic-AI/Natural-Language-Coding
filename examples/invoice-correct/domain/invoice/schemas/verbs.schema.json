@@ -1,4 +1,5 @@
 {
+  "version": "1",
   "verbs": {
     "issue": {
       "input": { "type": "object", "required": ["amount"] },

@@ -21,6 +21,8 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`verb-untested/`](verb-untested/) | C17 verb never named in tests |
 | [`goal-tests-copy-adjectives/`](goal-tests-copy-adjectives/) | C18 goal tests copy noun adjectives |
 | [`missing-failure-mode/`](missing-failure-mode/) | P4/R31 failure mode |
+| [`unversioned-contract/`](unversioned-contract/) | R12 schema has no version |
+
 
 
 
