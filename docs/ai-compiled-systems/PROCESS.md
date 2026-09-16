@@ -75,3 +75,7 @@ The red gate is not a human in the file. It is the signal RCA gets before users 
 
 Breaking a published verb contract is loud in that same way: prove stays red until the requirement/ADR is accepted and generated callers are in the plan ([ADR 0006](../../adrs/0006-contract-change-notice.md)). Additive contract changes are quiet (impact graph in the packet, no extra sign-off).
 
+## Agent orchestration
+
+Agents run this loop through the **`planit`** skill ([`.agents/skills/planit/SKILL.md`](../../.agents/skills/planit/SKILL.md)), which overlays **audited work loop (AWL)** gates and verdicts on these steps. Map, tiers, and leaf routing: [`PLANIT-ORCHESTRATION.md`](PLANIT-ORCHESTRATION.md).
+

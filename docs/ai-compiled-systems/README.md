@@ -12,6 +12,7 @@ This folder is process and naming. [`CHARTER.md`](../../CHARTER.md) is still the
 |------|------|
 | [NAMES.md](NAMES.md) | ACS vs BBP vs PLANIT |
 | [PROCESS.md](PROCESS.md) | PLANIT: load → prove |
+| [PLANIT-ORCHESTRATION.md](PLANIT-ORCHESTRATION.md) | `/planit` skill: AWL + PLANIT + BBP hub |
 | [MERGE.md](MERGE.md) | How AIMS and BBP were joined |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Two layers, compile gate |
 | [MANIFESTO.md](MANIFESTO.md) | Why intent is the source |

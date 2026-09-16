@@ -14,7 +14,7 @@ Status: **in force** = charter/tool exists. **Parked** = decided, not executable
 | ID | Story | Status |
 |----|--------|--------|
 | UC1 | **Interview.** Human states an outcome. Compiler interviews until goals, ADRs/standards, knowledge facts, and dependencies are bound. Unbound statement → keep interviewing, do not emit. | In force as PLANIT start / binding idea. Interview skill still thin. |
-| UC2 | **Execute a goal (PLANIT).** From a bound goal: classify → plan → atomic statements → bind → emit → adversarial audit. | In force: charter §6. Skills are pointers. |
+| UC2 | **Execute a goal (PLANIT).** From a bound goal: classify → plan → atomic statements → bind → emit → adversarial audit. | In force: charter §6; orchestrator [`planit`](../.agents/skills/planit/SKILL.md) + leaf `bbp-*` skills; see [`PLANIT-ORCHESTRATION.md`](ai-compiled-systems/PLANIT-ORCHESTRATION.md). |
 | UC3 | **Standard / req / business rule → ADR.** PCI, Temporal, “do not store PAN,” etc. become a decision: why, rejected, consequences. | Process. No conversion gate. |
 | UC4 | **ADR → if/then.** Reduce to tags, primitives, facts, rules. If the closed set cannot speak, add a tag/fact/primitive first (itself an ADR). | ADR 0007. Runner parked. |
 | UC5 | **Rules → emit.** Verb declares primitive + tagged target. Compiler applies the rule (encrypt, forbid return, Temporal engine) or the gate fails. Prompt memory is not the bind. | Promised. v1 stand-in: `taint.txt` + Python fitness. |
