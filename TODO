@@ -37,7 +37,7 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 
 ## Open — tighten v1 holes
 
-SSOT: [`HOLES.md`](HOLES.md). Next: **R20 unannotated types**.
+SSOT: [`HOLES.md`](HOLES.md). Next: none — in-reach holes closed.
 ✔ C17 closed: failure + adjective preservation @done(26-09-15)
 ✔ C18 closed: goal test must call the goal @done(26-09-15)
 ✔ C15 closed: nested parens + verb honors the key @done(26-09-16)
@@ -112,3 +112,5 @@ SSOT: [`HOLES.md`](HOLES.md). Next: **R20 unannotated types**.
 
 
 
+
+✔ R20/R15/R32/R33/C10 closed @done(26-09-16)

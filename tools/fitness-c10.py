@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""C10 v1: a schema version other than 1 requires an ADR.
+"""C10: a breaking schema change needs an ADR, even at version 1.
 
-Does not detect that a change was breaking. R12 already requires a version
-field. This only fires when version is not 1 / "1".
-
-Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <path> version-bump-no-adr <version>
-Failure mode: exit 0 = MET; exit 1 = NOT_MET.
+Version other than 1 / "1" requires adrs/*.md.
+Dropped required fields vs verbs.previous.json (or input.previous.json)
+also require an ADR — that is breaking, not "version ≠ 1".
 """
+
 
 from __future__ import annotations
 
@@ -57,6 +55,35 @@ def has_adr(root: Path) -> bool:
 
 
 
+def required_from(data: dict) -> set[str]:
+    names: set[str] = set()
+    if isinstance(data.get("required"), list):
+        names.update(str(x) for x in data["required"])
+    verbs = data.get("verbs")
+    if isinstance(verbs, dict):
+        for spec in verbs.values():
+            if not isinstance(spec, dict):
+                continue
+            inp = spec.get("input")
+            if isinstance(inp, dict) and isinstance(inp.get("required"), list):
+                names.update(str(x) for x in inp["required"])
+    return names
+
+
+def previous_schema(path: Path) -> dict | None:
+    prev = path.with_name(path.name.replace(".schema.json", ".previous.json"))
+    if not prev.is_file():
+        # verbs.schema.json -> verbs.previous.json
+        prev = path.with_name(path.stem.replace(".schema", "") + ".previous.json")
+    if not prev.is_file():
+        return None
+    try:
+        data = json.loads(prev.read_text())
+    except (OSError, json.JSONDecodeError):
+        return None
+    return data if isinstance(data, dict) else None
+
+
 def scan_one(scan_root: Path) -> list[tuple[str, str]]:
     adr = has_adr(scan_root)
     violations = []
@@ -68,11 +95,16 @@ def scan_one(scan_root: Path) -> list[tuple[str, str]]:
         if not isinstance(data, dict) or "version" not in data:
             continue
         ver = data["version"]
-        if is_one(ver):
-            continue
-        if not adr:
+        if not is_one(ver) and not adr:
             violations.append((rel(path), str(ver)))
+        prev = previous_schema(path)
+        if prev is None:
+            continue
+        dropped = required_from(prev) - required_from(data)
+        if dropped and not adr:
+            violations.append((rel(path), "breaking:" + ",".join(sorted(dropped))))
     return violations
+
 
 
 def main() -> int:
@@ -90,7 +122,8 @@ def main() -> int:
             seen.add(item)
             printed.append(item)
             path, ver = item
-            print(f"VIOLATION {path} version-bump-no-adr {ver}")
+            print(f"VIOLATION {path} version-bump-no-adr {ver}" if not str(ver).startswith("breaking:") else f"VIOLATION {path} breaking-no-adr {ver}")
+
     if printed:
         print("RESULT:NOT_MET")
         return 1

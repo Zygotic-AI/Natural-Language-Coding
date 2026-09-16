@@ -1,15 +1,10 @@
 #!/usr/bin/env python3
-"""R15 v1: the same helper body must not be copied into two goals.
+"""R15: the same helper must not be copied or imported into two goals.
 
-A function of 3+ non-empty, non-comment lines whose normalized body
-appears under two different goals/<id>/ dirs fails.
-
-One-liners (a single verb call) are ignored. Logic belongs on the noun.
-
-Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <fn> copied-helper <goal> <goal>
-Failure mode: exit 0 = MET; exit 1 = NOT_MET.
+A function of 3+ lines whose body appears under two goals/<id>/ dirs fails.
+The same `from <non-domain, non-stdlib> import name` in two goals fails.
 """
+
 
 from __future__ import annotations
 
@@ -21,7 +16,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv", "tests"}
 FN = re.compile(r"^def\s+([A-Za-z_][A-Za-z0-9_]*)\s*\([^)]*\)\s*:\s*$", re.M)
+FROM = re.compile(r"^from\s+([A-Za-z0-9_.]+)\s+import\s+(.+)$")
 MIN_LINES = 3
+STDLIB = {
+    "sys", "os", "re", "json", "typing", "pathlib", "collections", "unittest",
+    "datetime", "math", "itertools", "functools", "abc", "enum", "dataclasses",
+    "copy", "hashlib", "uuid", "logging", "io", "ast", "subprocess", "pytest",
+}
+
 
 
 def is_skipped(path: Path) -> bool:
@@ -80,12 +82,33 @@ def functions(text: str) -> list[tuple[str, str]]:
     return found
 
 
+def imported_helpers(text: str) -> list[str]:
+    found: list[str] = []
+    for raw in text.splitlines():
+        line = raw.strip()
+        m = FROM.match(line)
+        if not m:
+            continue
+        mod = m.group(1)
+        top = mod.split(".", 1)[0]
+        if top in STDLIB or top == "domain" or mod.startswith("domain."):
+            continue
+        for part in m.group(2).split(","):
+            name = part.strip().split(" as ", 1)[0].strip()
+            if name and name != "*":
+                found.append(f"{mod}.{name}")
+    return found
+
+
 def scan_one(scan_root: Path) -> list[tuple[str, str, list[str]]]:
     by_body: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    by_import: dict[str, set[str]] = defaultdict(set)
     for gid, path in goal_py(scan_root):
         text = path.read_text(errors="replace")
         for name, body in functions(text):
             by_body[body].append((gid, name))
+        for key in imported_helpers(text):
+            by_import[key].add(gid)
     violations = []
     for body, hits in by_body.items():
         goals = sorted({g for g, _ in hits})
@@ -94,7 +117,12 @@ def scan_one(scan_root: Path) -> list[tuple[str, str, list[str]]]:
         names = sorted({n for _, n in hits})
         fn = names[0]
         violations.append((fn, body.split("\n")[0], goals))
+    for key, goals in by_import.items():
+        if len(goals) < 2:
+            continue
+        violations.append((f"import:{key}", "copied-import", sorted(goals)))
     return violations
+
 
 
 def main() -> int:
@@ -112,7 +140,8 @@ def main() -> int:
                 continue
             seen.add(key)
             printed.append(key)
-            print(f"VIOLATION {fn} copied-helper " + " ".join(goals))
+            print(f"VIOLATION {fn} copied-helper " + " ".join(goals) if not fn.startswith("import:") else f"VIOLATION {fn} copied-import " + " ".join(goals))
+
     if printed:
         print("RESULT:NOT_MET")
         return 1
