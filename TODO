@@ -27,6 +27,9 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 ✔ C1 v1: proposal/confirm states change class A–F @done(26-09-15)
 ✔ R15 v1: same helper body must not be copied into two goals @done(26-09-15)
 ✔ R17 v1: workflows/ must not clone a goal @done(26-09-15)
+✔ R18 v1 noun must not own retries; C15 v1 retrying goal needs idempotent verbs @done(26-09-15)
+
+
 
 
 
