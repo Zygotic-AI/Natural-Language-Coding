@@ -15,4 +15,8 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0005-ssot-exit-evidence.md`](0005-ssot-exit-evidence.md) | SSOT exit evidence in produce packages | needs_review |
 | [`0006-contract-change-notice.md`](0006-contract-change-notice.md) | How loud a published-contract change is | Accepted |
 | [`0007-tags-primitives-reduced-adrs.md`](0007-tags-primitives-reduced-adrs.md) | Tags, primitives, reduced ADRs | Accepted |
+| [`0008-no-noun-inheritance.md`](0008-no-noun-inheritance.md) | Nouns do not inherit nouns | Accepted |
+| [`0009-primitive-interior-functions.md`](0009-primitive-interior-functions.md) | Primitives are interior functions | Accepted |
+| [`0010-gate-after-every-generate.md`](0010-gate-after-every-generate.md) | Gate immediately after every generate | Accepted |
+
 

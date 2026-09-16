@@ -46,7 +46,8 @@ Do not start **plan** (PLANIT 2), **applicability** durable writes, or **generat
 | 3 Plan | 2 Plan, 3 Product statements | Work items (goal / boundary / requirement / ADR / **rule**), atomic statements, leaf skill column |
 | 4 Plan audit | (before bind) | PASS/FAIL + `GATE-STD` on planned artifacts |
 | — Bind | **4–5 Bind / close gaps** | Bound statements; bind gate PASS. **Not execute.** |
-| 5 Execute | **6 Generate only** | Code for bound statements |
+| 5 Execute | **6 Generate one artifact** then **6.5 gate it** | Code/skill/doc; immediate default-closed gate. FAIL stops the next row. |
+
 | — Prove | **7 Prove** | Machine gate + adversarial audit. Compile, not ship. |
 | 6 Execution audit | After prove | Evidence on artifacts under test; `GATE-STD` on paths |
 | 7 Record | Hub §6 step 8 | ADR/recorder handoff, back-propagation when applicable |

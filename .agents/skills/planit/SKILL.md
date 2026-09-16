@@ -133,7 +133,8 @@ Use AWL **Appendix D** plan template. Add **Leaf skill / procedure** column when
 
 **Do not** implement or generate in the same prose block as Phase 3. Use a **fresh section or subagent pass**. Use AWL **Appendix E** plan audit memo and checklist. **Fail-closed** per AWL §4.
 
-Attack plan and statements: unbound items, god-noun, split adjectives, missing impact, wrong charter class. **Hub:** **`bbp-reviewer`** on the proposal package; findings cite `R*` / `C*` / `P*`.
+Attack plan and statements: unbound items, god-noun, split adjectives, **noun inheritance** (ADR 0008), missing impact, wrong charter class, raw I/O that is not a primitive function (ADR 0009). **Hub:** **`bbp-reviewer`** on the proposal package; findings cite `R*` / `C*` / `P*`.
+
 
 **Register rows must include:** `GATE-STD` (planned artifacts will ship with §2-compliant gates).
 
@@ -158,7 +159,9 @@ Run approved plan steps **in order**. Bind gate must already **PASS**. This phas
 
 1. **Before each step** — confirm prior stop predicate met; emit §4 verdict when the step blocks downstream work.
 2. **Leaf skill step** — read **`.agents/skills/<name>/SKILL.md`** (or `.cursor/skills/`); run Gate → Procedure; verify leaf output meets §2. Inspect files, diffs, and machine exit codes — do not accept a subagent summary as PASS.
-3. **PLANIT step 6 — Generate:** hub implementation only after charter **ratification** (§6 steps 4–5) unless ADR-exempt. Route **`bbp-proposer`**. BBP-shaped code for bound statements only; humans do not edit output to help audits pass.
+3. **PLANIT step 6 — Generate:** hub implementation only after charter **ratification** (§6 steps 4–5) unless ADR-exempt. Route **`bbp-proposer`**. **One artifact.** Metrics for that artifact must already be in the plan ([ADR 0010](../../../adrs/0010-gate-after-every-generate.md)). Primitive I/O only via [`integrity/primitives.md`](../../../integrity/primitives.md) names ([ADR 0009](../../../adrs/0009-primitive-interior-functions.md)). Humans do not edit output to help audits pass.
+4. **PLANIT step 6.5 — Gate that artifact:** run the named metrics immediately. Default fail. FAIL → stop; do not start the next row. PASS → next statement only.
+
 4. **Inline step** — cite commands and exit codes of the **artifact under test**. INCONCLUSIVE is BLOCKED.
 5. **KCR sub-gate** — if step touches durable **ai vault** layers, **stop** until KCR accepted ([`references/knowledge-change-review-standard.md`](references/knowledge-change-review-standard.md)); prefer routing to **`~/.agents/skills/planit`**.
 6. **Failure** — jidoka: stop; RCA if non-trivial ([`references/root-cause-analysis-standard.md`](references/root-cause-analysis-standard.md) or `/conduct-root-cause-analysis`); then PLANIT **1** or **5**, then **6** again. Do not patch generated files to silence audits.
@@ -246,7 +249,9 @@ When no leaf skill fits, execute inline under this procedure with full AWL audit
 - Applicability register closed (AWL Phase 2)
 - Plan audit **PASS** with `GATE-STD` planned — every named step PASS, FAIL, or `skip: <reason>` — §4 verdict before execute
 - Bind gate **PASS** before generate
+- Each generate has metrics in the plan; each artifact is gated **before** the next statement (ADR 0010)
 - Prove **PASS** (machine + adversarial); hub confirmer output when hub touched. Prove is compile, not ship.
+
 - Ship is optional in this skill: `python3 tools/release-audit.py <tree>` after a human `Released-by:` — not part of process PASS
 
 - Execution audit **PASS** with `GATE-STD` on delivered artifacts; evidence is the artifact under test, not a delegate summary — §4 verdict before record

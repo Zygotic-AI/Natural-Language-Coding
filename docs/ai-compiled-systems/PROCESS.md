@@ -53,13 +53,26 @@ Unbound or ambiguous → question → new or clearer requirement, ADR, or knowle
 
 ## 6. Generate
 
-AI emits BBP-shaped code for those statements only.
+**Before:** the plan already names measurable criteria for *this* artifact (fitness command, charter rows, skill Gate table). No metrics → do not generate ([ADR 0010](../../adrs/0010-gate-after-every-generate.md)).
 
-Inside a boundary: self-contained. Neighbors only through hard contracts. The write window is that object plus the contracts it is allowed to call.
+AI emits **one** statement / one artifact (one boundary, or one skill file). BBP-shaped. Neighbors only through hard contracts.
+
+Primitive work inside a verb is calls to [`integrity/primitives.md`](../../integrity/primitives.md) functions, not raw I/O ([ADR 0009](../../adrs/0009-primitive-interior-functions.md)).
 
 Humans do not edit the output to help.
 
+## 6.5 Gate that artifact (mandatory)
+
+Immediately. Default-closed. Default fail. Run the metrics named in the plan. Missing evidence = FAIL.
+
+**FAIL** → stop. RCA to interview or bind. Do not start the next statement.
+
+**PASS** → only then the next statement.
+
+This applies to code, skills, prompts, and docs PLANIT emits, and to anything PLANIT is later used to create.
+
 ## 7. Prove
+
 
 Both required. This is **compile**, not ship.
 
