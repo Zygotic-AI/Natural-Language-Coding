@@ -86,7 +86,8 @@ An **R** can stand without a matching **C**. A **C** usually restates an **R** a
 
 ### 4.1 Noun
 
-A noun is a domain concept with identity and adjectives.
+A noun is a domain concept with identity and adjectives. **A noun does not inherit another noun** ([`adrs/0008-no-noun-inheritance.md`](adrs/0008-no-noun-inheritance.md)). Reuse is a protocol or composition via verbs. Value objects are interior data, not parent classes.
+
 
 Examples: `Invoice`, `Customer`, `Order`, `PaymentAllocation`.
 
@@ -122,7 +123,8 @@ Every verb has:
 - Preconditions
 - Postconditions / adjectives
 - Tests
-- **Primitives** it performs and the tagged adjectives they act on ([§4.7](#47-tags-primitives-and-reduced-adrs))
+- **Primitives** it performs, by **calling interior functions** named in [`integrity/primitives.md`](integrity/primitives.md) ([§4.7](#47-tags-primitives-and-reduced-adrs), [ADR 0009](adrs/0009-primitive-interior-functions.md)). Those names are not public verbs. The call tree under the verb *is* the primitive inventory.
+
 
 Verbs are the contracted boundary of the noun. There is no other public mutation path.
 
@@ -191,11 +193,12 @@ When an ADR constrains emit (data policy, runtime, shape), it **reduces** to if-
 ### 4.7 Tags, primitives, and reduced ADRs
 
 - **Tag** — classification on an adjective or noun (`pan`, `runtime=temporal`).
-- **Primitive** — closed action (`store`, `return`, `log`, `display`, `transmit`, `copy`, `retain`, `retry`, `wait`, `ship`). New primitive or tag = ADR, not an AI vocabulary.
+- **Primitive** — closed interior function names in [`integrity/primitives.md`](integrity/primitives.md) (`read`, `write`, `return`, `log`, …). Not public verbs. New primitive = ADR. Call-tree inventory is the audit point ([ADR 0009](adrs/0009-primitive-interior-functions.md)).
 - **Rule** — `if tags ∧ primitives ∧ facts → must | forbid`.
-- Verbs declare primitives and targets. Body that does an undeclared primitive fails (default closed).
+- Verbs call primitive functions; a body that does `write`-work without calling `write` fails (default closed).
 - Prefer a new tag or fact before a new primitive. Temporal is `goal.durable ∧ engine.runtime ≠ temporal → forbid`, not a special parser.
 - v1 `taint.txt` is the stand-in for tags on sensitive adjectives (R32). A rule-IR gate is not in force yet; do not mint an **R** id until it is bindable (R27).
+
 
 
 ---
@@ -850,6 +853,10 @@ For changes that touch agent nouns:
 - Subject: Boundary-Based Architecture (BBA) — Boundary-Based Programming (BBP) is the programming practice (§§4–14); systems model (§16) extends to agent fleets
 - Systems extension: agent nouns (§16), ratified by ADR 0003
 - Reduced ADRs: tags + primitives + if-thens, ratified by ADR 0007
+- No noun inheritance, ratified by ADR 0008
+- Primitive interior functions, ratified by ADR 0009
+- Gate after every generate, ratified by ADR 0010
+
 
 - Companion rejected name: Boundary-Enforced Programming (keep as a description of CI, not the practice title)
 - Companion rejected frame: “governance / governed” as the name of the integrity loop

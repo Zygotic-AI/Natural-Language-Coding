@@ -47,7 +47,8 @@ When a human adopts a requirement (PCI, Temporal, …):
 
 ### Examples (normative shape, not a PCI implementation)
 
-- `pan ∧ store → encrypt; key not in this noun`
+- `pan ∧ write → encrypt; key not in this noun` (`store` in earlier drafts = `write`)
+
 - `pan ∧ use → consuming verb only; clear after`
 - `pan ∧ log → forbid`
 - `pan ∧ return → forbid` (R32 is this rule for v1 `taint.txt`)
@@ -63,7 +64,8 @@ Same if-then shape as PAN. No fourth design primitive.
 
 ## Consequences
 
-- Charter §4.7 points here. No new **R** id until a rule-IR gate exists (R27).
+- Charter §4.7 points here. Primitive **names** are [`integrity/primitives.md`](../integrity/primitives.md) (ADR 0009). No new **R** id until a rule-IR gate exists (R27).
+
 - v1 `taint.txt` is the Python-era stand-in for tags on sensitive adjectives.
 - Executable rule runner is **parked**, same class of work as [`docs/LANGUAGE-SCANNER.md`](../docs/LANGUAGE-SCANNER.md): spec the IR, then the gate. Do not fork prose ADRs into prompt checklists.
 - Process ADRs (ratify class A, no noun inheritance) use facts (`change.class`, `noun.inherits`) on the same rule machine. They do not get a fake `store`.

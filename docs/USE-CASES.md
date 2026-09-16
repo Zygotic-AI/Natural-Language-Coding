@@ -33,7 +33,7 @@ Same conversation may produce UC1–UC4. Three artifacts, three gates: **goal**,
 | UC9 | **Change a requirement.** Human changes one ADR/rule. Compiler diffs tagged nouns/verbs/goals and regenerates that blast radius only. | Why boundaries exist. Impact graph v1. Full delta-regen missing. |
 | UC10 | **Defect is upstream.** Emit wrong → RCA to interview / ADR / rule. Human does not patch generated code. | Charter + ADR 0006. |
 | UC11 | **Breaking contract.** Additive = quiet. Break stays red until the human accepts the *requirement*, not the schema. | ADR 0006. |
-| UC12 | **Expand the closed set.** New primitive or tag is an ADR, then rules may use it. Prefer tag/fact before a new primitive. | Named in 0007. No `primitives` SSOT file (see TODO). |
+| UC12 | **Expand the closed set.** New primitive or tag is an ADR, then a row in [`integrity/primitives.md`](../integrity/primitives.md). Prefer tag/fact before a new primitive. | In force as SSOT file. Runner parked. |
 | UC13 | **Durable goal → engine tag.** `goal.durable ∧ engine.runtime ≠ (named runtime) → forbid`. Temporal is a tagged noun, not a fourth citizen. | ADR 0007. |
 | UC14 | **Rule conflict at adopt-time.** Two if/thens contradict (must store encrypted vs must not store). Fail the **adoption**, not the emit. | Missing. |
 | UC15 | **Adopt in a repo.** Drop charter, first invoice-shaped noun, hook `release-audit.py` before merge/deploy. | Teaching tree only. Bootstrap story missing. |
@@ -41,6 +41,9 @@ Same conversation may produce UC1–UC4. Three artifacts, three gates: **goal**,
 | UC17 | **Record / supersede.** New decision = ADR. Old ADR marked superseded, not deleted. | In force: R22. |
 | UC18 | **Knowledge facts.** Interview writes facts the rules can bind (invoice receives payments, PAN is in scope). Unbound fact → UC1 continues. | Named. No fact SSOT beyond ADRs. |
 | UC19 | **Worked PCI (or equivalent) reduction.** One real standard through UC3 → UC4 → tags on adjectives → UC5, so 0007 has an example. | Missing. |
+| UC20 | **Call-tree inventory.** Verb → interior primitive functions. Extra/missing primitive vs bind list fails. | ADR 0009. Gate parked. |
+| UC21 | **Gate after every generate.** Metrics first; default-fail gate on that artifact before the next statement. | ADR 0010 / PLANIT 6.5. Binder parked. |
+
 
 ---
 
@@ -51,8 +54,8 @@ These are not a someday list. The spine does not close without them.
 | ID | Why it is needed |
 |----|------------------|
 | UC9 (full delta-regen) | Without it, “change one requirement” is a slogan. Impact graph v1 only *lists* callers. |
-| UC12 primitives SSOT | 0007 says new primitive = ADR. There is no versioned list to add *to*. |
-| UC14 rule conflict | Two adopted if/thens can forbid and require the same store. That must fail at **adopt**, or emit is a coin flip. |
+| UC14 rule conflict | Two adopted if/thens can forbid and require the same write. That must fail at **adopt**, or emit is a coin flip. |
+
 | UC15 bootstrap | A second repo cannot adopt from the teaching tree alone. |
 | UC18 fact SSOT | Interview binds facts; they currently live only as ADR prose. |
 | UC19 worked reduction | 0007 has no end-to-end example. PCI (or equivalent) is the proof the conversion is real. |

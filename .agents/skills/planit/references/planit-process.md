@@ -26,8 +26,10 @@ BBP is bound on every statement by default (`CHARTER.md` is always on).
 | 4 | Bind | Any statement lacks requirement ids, ADR ids, rule ids when 0007 applies, or explicit unbound handling |
 
 | 5 | Close gaps | Any statement still unbound or ambiguous |
-| 6 | Generate | Scope exceeds bound statements; humans edit output to “help” |
+| 6 | Generate | Scope exceeds one artifact; no metrics in the plan; humans edit output to “help” |
+| 6.5 | Gate that artifact | Gate not run, evidence missing, or FAIL — do not start the next statement |
 | 7 | Prove | Machine gate non-zero or adversarial audit not PASS |
+
 
 ## Prove (both required — compile, not ship)
 
