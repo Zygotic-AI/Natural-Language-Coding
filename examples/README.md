@@ -84,3 +84,6 @@ Do not commit the JSON that command prints.
 | [`mention-only-verb/`](mention-only-verb/) | R4 string mention is not use |
 | [`verb-no-preserve/`](verb-no-preserve/) | C17 no adjective preservation |
 | [`goal-test-no-call/`](goal-test-no-call/) | C18 test exists, never calls the goal |
+| [`retrying-nested-no-key/`](retrying-nested-no-key/) | C15 nested parens, no key |
+| [`retrying-key-unused/`](retrying-key-unused/) | C15 key passed, verb ignores it |
+| [`retrying-nested-ok/`](retrying-nested-ok/) | C15 nested parens, verb honors key |
