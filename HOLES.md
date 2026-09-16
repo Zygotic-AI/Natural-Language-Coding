@@ -21,5 +21,5 @@ for a static gate (judgment, a human, or code we do not have).
 | Ship | `python3 tools/release-audit.py <tree>` is the pipeline hook. Compile-green ≠ released. |
 | Language | Source-level gates are **Python-only**. Contract/CONFIRM/matrix are not. Expanding to another language is **spec then adapter**, parked: [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md). |
 
-Work one item per pass. Don’t mint new matrix ids unless the charter
-gained a new promise.
+Leftover queue (needed / parked / human): [`FINDINGS.md`](FINDINGS.md).
+
