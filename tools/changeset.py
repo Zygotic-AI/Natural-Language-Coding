@@ -1,7 +1,7 @@
-"""Change set for C7/C8/C11 v2: CONFIRM CHANGED: list, else git, else all.
+"""Change set: CONFIRM CHANGED: list, else dirty git, else origin/main...HEAD.
 
-None means tree-wide (no list, no dirty git). A non-empty set means only
-those paths (and their parent units) are in scope.
+None means tree-wide (no list, no diff). A non-empty set means only those
+paths (and their parent units) are in scope.
 """
 
 from __future__ import annotations
@@ -33,22 +33,50 @@ def parse_changed_list(text: str) -> list[str]:
     return paths
 
 
-def git_changed(repo: Path) -> list[str]:
-    cmds = (
-        ["git", "-C", str(repo), "diff", "--name-only"],
-        ["git", "-C", str(repo), "diff", "--cached", "--name-only"],
-    )
+def _git_names(repo: Path, args: list[str]) -> list[str]:
+    try:
+        out = subprocess.check_output(
+            ["git", "-C", str(repo), *args],
+            stderr=subprocess.DEVNULL,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return []
     names: list[str] = []
-    for cmd in cmds:
-        try:
-            out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL, text=True)
-        except (OSError, subprocess.CalledProcessError):
-            continue
-        for line in out.splitlines():
-            line = line.strip().replace("\\", "/")
-            if line:
-                names.append(line)
+    for line in out.splitlines():
+        line = line.strip().replace("\\", "/")
+        if line:
+            names.append(line)
     return names
+
+
+def git_changed(repo: Path) -> list[str]:
+    return _git_names(repo, ["diff", "--name-only"]) + _git_names(
+        repo, ["diff", "--cached", "--name-only"]
+    )
+
+
+def git_pr_changed(repo: Path) -> list[str]:
+    for base in ("origin/main", "origin/master", "main"):
+        names = _git_names(repo, ["diff", "--name-only", f"{base}...HEAD"])
+        if names:
+            return names
+    return []
+
+
+def _scope(names: list[str], scan_root: Path, repo_root: Path) -> list[str]:
+    scoped: list[str] = []
+    scan_rel = ""
+    try:
+        scan_rel = scan_root.resolve().relative_to(repo_root.resolve()).as_posix()
+    except ValueError:
+        scan_rel = ""
+    for d in names:
+        if not scan_rel or d == scan_rel or d.startswith(scan_rel + "/"):
+            scoped.append(d)
+            if scan_rel and d.startswith(scan_rel + "/"):
+                scoped.append(d[len(scan_rel) + 1 :])
+    return scoped
 
 
 def changed_paths(scan_root: Path, repo_root: Path) -> set[str] | None:
@@ -57,24 +85,31 @@ def changed_paths(scan_root: Path, repo_root: Path) -> set[str] | None:
         path = scan_root / name
         if path.is_file():
             listed.extend(parse_changed_list(path.read_text(errors="replace")))
-    dirty = git_changed(repo_root)
-    scoped: list[str] = []
-    scan_rel = ""
-    try:
-        scan_rel = scan_root.resolve().relative_to(repo_root.resolve()).as_posix()
-    except ValueError:
-        scan_rel = ""
-    for d in dirty:
-        if not scan_rel or d == scan_rel or d.startswith(scan_rel + "/"):
-            scoped.append(d)
-            if scan_rel and d.startswith(scan_rel + "/"):
-                scoped.append(d[len(scan_rel) + 1 :])
     if listed:
         return set(listed)
+    scoped = _scope(git_changed(repo_root), scan_root, repo_root)
+    if scoped:
+        return set(scoped)
+    scoped = _scope(git_pr_changed(repo_root), scan_root, repo_root)
     if scoped:
         return set(scoped)
     return None
 
+
+def is_charter_path(path: str) -> bool:
+    n = path.replace("\\", "/")
+    return n.endswith("CHARTER.md") or "/adrs/" in f"/{n}" or n.startswith("adrs/")
+
+
+def is_code_path(path: str) -> bool:
+    n = path.replace("\\", "/")
+    return (
+        "/goals/" in f"/{n}"
+        or "/domain/" in f"/{n}"
+        or n.endswith(".schema.json")
+        or n.startswith("goals/")
+        or n.startswith("domain/")
+    )
 
 
 def unit_touched(unit: Path, changed: set[str], scan_root: Path, repo_root: Path) -> bool:
@@ -96,9 +131,6 @@ def unit_touched(unit: Path, changed: set[str], scan_root: Path, repo_root: Path
             if cn == r or cn.startswith(r + "/") or r.startswith(cn.rstrip("/") + "/"):
                 return True
             parent = str(Path(cn).parent).replace("\\", "/")
-            if parent in {r, "."}:
-                if parent == r:
-                    return True
-            if parent.startswith(r + "/"):
+            if parent == r or parent.startswith(r + "/"):
                 return True
     return False

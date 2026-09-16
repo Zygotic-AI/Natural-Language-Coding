@@ -37,10 +37,11 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 
 ## Open — tighten v1 holes
 
-SSOT: [`HOLES.md`](HOLES.md). Next: **C22 git / same change**.
+SSOT: [`HOLES.md`](HOLES.md). Next: **R20 unannotated types**.
 ✔ C17 closed: failure + adjective preservation @done(26-09-15)
 ✔ C18 closed: goal test must call the goal @done(26-09-15)
 ✔ C15 closed: nested parens + verb honors the key @done(26-09-16)
+✔ C22/C7 closed: change set is git + origin/main...HEAD @done(26-09-16)
 ✔ C17 v2: each verb has a failure-path test @done(26-09-15)
 
 ✔ C18 v2: goal with code must have a use-case test @done(26-09-15)

@@ -33,18 +33,16 @@ No retry → skip.
 
 ---
 
-## 5. C22 — same change, actually — DONE
+## 5. C22 — same change, actually — CLOSED
 
-v2: N/A is illegal when the tree has CHARTER/adrs *and* goals/domain
-source. PASS must cite existing paths. Still does not inspect git.
+N/A is illegal when the change set (CHANGED: / dirty git /
+`origin/main...HEAD`) includes charter and code. Tree shape alone is not
+the test.
 
----
+## 6. C7 / C8 / C11 — “changed”, not tree-wide — CLOSED
 
-## 6. C7 / C8 / C11 — “changed”, not tree-wide — DONE
-
-v2: `CHANGED:` in CONFIRM wins; else dirty git under the scan root; else
-tree-wide. Unchanged goals with missing schemas / extra doors do not fail.
-Still not `origin/main...HEAD` on a clean CI checkout of a PR (no list → tree-wide).
+Same change set as C22. Clean main checkout with no list still tree-wide
+(nothing changed). A PR diff against `origin/main` scopes the check.
 
 ---
 

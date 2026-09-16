@@ -2,4 +2,8 @@
 
 **Change class:** C
 
-- C22 — N/A — This line is the lie: charter and code both live in this tree.
+- C22 — N/A — This line is the lie: the change set includes charter and code.
+
+CHANGED:
+- CHARTER.md
+- goals/pay/implementation.py
