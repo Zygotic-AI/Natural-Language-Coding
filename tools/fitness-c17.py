@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""C17 v1: each public noun-verb name appears in the noun's tests.
+"""C17 v2: each public verb is named in tests *and* has a failure path.
 
-Does not check success vs precondition vs preservation. That stays unbound.
+Failure path: a test function whose body mentions the verb and
+assertRaises / pytest.raises / raises(.
+
+Does not check adjective preservation. Does not run the tests.
 
 Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <noun> untested-verb <verb>
+Output: VIOLATION <noun> untested-verb|verb-no-failure-test <verb>
 Failure mode: exit 0 = MET; exit 1 = NOT_MET.
 """
 
@@ -18,6 +21,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv"}
 SOURCE_EXTS = {".py", ".ts", ".js"}
+RAISES = re.compile(r"assertRaises|pytest\.raises|\braises\s*\(")
+TEST_FN = re.compile(
+    r"^(\s*)def\s+(test_[A-Za-z0-9_]+)\s*\([^)]*\)\s*(?:->[^:]*)?:\s*$"
+)
 
 
 def is_skipped(path: Path) -> bool:
@@ -58,29 +65,73 @@ def verb_names(noun: Path) -> list[str]:
     return [str(k) for k in verbs.keys()]
 
 
-def test_blob(noun: Path) -> str:
-    files = []
+def test_files(noun: Path) -> list[Path]:
+    files: list[Path] = []
     tests = noun / "tests"
     if tests.is_dir():
-        files.extend(p for p in tests.rglob("*") if p.is_file() and p.suffix in SOURCE_EXTS)
+        files.extend(
+            p for p in tests.rglob("*")
+            if p.is_file() and p.suffix in SOURCE_EXTS
+        )
     files.extend(
         p for p in noun.iterdir()
-        if p.is_file() and p.suffix in SOURCE_EXTS
+        if p.is_file()
+        and p.suffix in SOURCE_EXTS
         and (p.name.startswith("test_") or p.name.endswith("_test.py"))
     )
-    return "\n".join(p.read_text(errors="replace") for p in files)
+    return files
 
 
-def scan_one(scan_root: Path) -> list[tuple[str, str]]:
-    violations = []
+def test_functions(text: str) -> list[tuple[str, str]]:
+    lines = text.splitlines()
+    found: list[tuple[str, str]] = []
+    i = 0
+    while i < len(lines):
+        m = TEST_FN.match(lines[i])
+        if not m:
+            i += 1
+            continue
+        indent, name = m.group(1), m.group(2)
+        body: list[str] = []
+        i += 1
+        while i < len(lines):
+            raw = lines[i]
+            if raw.strip() == "":
+                i += 1
+                continue
+            if raw.startswith(indent + "    ") or raw.startswith(indent + "\t"):
+                body.append(raw)
+                i += 1
+                continue
+            break
+        found.append((name, "\n".join(body)))
+    return found
+
+
+def scan_one(scan_root: Path) -> list[tuple[str, str, str]]:
+    violations: list[tuple[str, str, str]] = []
     for noun in noun_dirs(scan_root):
         names = verb_names(noun)
         if not names:
             continue
-        blob = test_blob(noun)
+        fns: list[tuple[str, str]] = []
+        blob_parts: list[str] = []
+        for path in test_files(noun):
+            text = path.read_text(errors="replace")
+            blob_parts.append(text)
+            fns.extend(test_functions(text))
+        blob = "\n".join(blob_parts)
         for name in names:
             if re.search(rf"\b{re.escape(name)}\b", blob) is None:
-                violations.append((rel(noun), name))
+                violations.append((rel(noun), "untested-verb", name))
+                continue
+            has_failure = False
+            for _tname, body in fns:
+                if re.search(rf"\b{re.escape(name)}\b", body) and RAISES.search(body):
+                    has_failure = True
+                    break
+            if not has_failure:
+                violations.append((rel(noun), "verb-no-failure-test", name))
     return violations
 
 
@@ -98,8 +149,8 @@ def main() -> int:
                 continue
             seen.add(item)
             printed.append(item)
-            noun, name = item
-            print(f"VIOLATION {noun} untested-verb {name}")
+            noun, kind, name = item
+            print(f"VIOLATION {noun} {kind} {name}")
     if printed:
         print("RESULT:NOT_MET")
         return 1

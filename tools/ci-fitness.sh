@@ -40,6 +40,7 @@ for a in \
   tools/assert-r25-fails.py \
   tools/assert-c16-fails.py \
   tools/assert-c17-fails.py \
+  tools/assert-c17-no-failure-fails.py \
   tools/assert-c18-fails.py \
   tools/assert-r12-fails.py \
   tools/assert-c1-fails.py \

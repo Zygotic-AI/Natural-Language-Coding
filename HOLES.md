@@ -7,16 +7,11 @@ document the new hole if any remains.
 
 ---
 
-## 1. C17 — tests must cover failure, not just names
+## 1. C17 — tests must cover failure, not just names — DONE
 
-**Today.** Verb *name* appears in `tests/`. invoice-correct even records
-`C17 — FAIL` (no precondition-failure cases).
-
-**Tighten.** For each public verb, tests must include a path that expects
-failure (raise / error / rejected precondition), not only success.
-
-**Specimen.** A tree whose tests call `apply_payment` but never a failure
-path.
+v2: name in tests **and** a test with assertRaises/pytest.raises.
+invoice-correct now has preconditions + failure tests.
+Still does not check adjective *preservation*.
 
 ---
 

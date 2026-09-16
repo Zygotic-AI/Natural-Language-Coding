@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Known-fail fixture gate for C17 v1."""
+"""Known-fail fixture gate for C17 name-missing."""
 
 from __future__ import annotations
 
@@ -28,17 +28,17 @@ def main() -> int:
         return 1
     fitness = load_fitness()
     violations = fitness.scan_one(FIXTURE.resolve())
-    for noun, name in violations:
-        print(f"VIOLATION {noun} untested-verb {name}")
+    for noun, kind, name in violations:
+        print(f"VIOLATION {noun} {kind} {name}")
     if not violations:
         print("RESULT:MET")
         print("ASSERT:FAIL fixture is clean")
         return 1
     print("RESULT:NOT_MET")
-    if not any(v[1] == "apply_payment" for v in violations):
+    if not any(v[1] == "untested-verb" and v[2] == "apply_payment" for v in violations):
         print("ASSERT:FAIL expected untested apply_payment")
         return 1
-    print("ASSERT:PASS fixture still fails C17 v1")
+    print("ASSERT:PASS fixture still fails C17 (untested-verb)")
     return 0
 
 
