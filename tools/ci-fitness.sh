@@ -25,65 +25,8 @@ echo "=== charter §14 check 1 ==="
 bash tools/ci-fitness-check1.sh || fail "check 1"
 
 echo "=== designed-fail landmines (assert exit 0 = landmine live) ==="
-for a in \
-  tools/assert-invoice-violation-fails.py \
-  tools/assert-verb-path-violation-fails.py \
-  tools/assert-adjective-locality-violation-fails.py \
-  tools/assert-contract-presence-fails.py \
-  tools/assert-changed-missing-fails.py \
-  tools/assert-schema-identity-fails.py \
-  tools/assert-boundary-io-fails.py \
-  tools/assert-taint-violation-fails.py \
-  tools/assert-taint-alias-fails.py \
-  tools/assert-escape-hatch-violation-fails.py \
-  tools/assert-duplicated-adjective-fails.py \
-  tools/assert-r13-fails.py \
-  tools/assert-c21-fails.py \
-  tools/assert-r25-fails.py \
-  tools/assert-c16-fails.py \
-  tools/assert-c17-fails.py \
-  tools/assert-c17-no-failure-fails.py \
-  tools/assert-c18-fails.py \
-  tools/assert-c18-missing-fails.py \
-  tools/assert-r12-fails.py \
-  tools/assert-c1-fails.py \
-  tools/assert-c1-no-note-fails.py \
-  tools/assert-r20-fails.py \
-  tools/assert-r20-type-fails.py \
-  tools/assert-r15-fails.py \
-  tools/assert-r17-fails.py \
-  tools/assert-r18-fails.py \
-  tools/assert-c15-fails.py \
-  tools/assert-c15-key-fails.py \
-  tools/assert-c2-fails.py \
-  tools/assert-c24-fails.py \
-  tools/assert-c3-fails.py \
-  tools/assert-r4-fails.py \
-  tools/assert-r4-mention-fails.py \
-  tools/assert-c13-fails.py \
-  tools/assert-c10-fails.py \
-  tools/assert-c22-fails.py \
-  tools/assert-c22-na-fails.py \
-  tools/assert-c23-fails.py \
-  tools/assert-c23-confirm-fails.py
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-do
+shopt -s nullglob
+for a in tools/assert-*-fails.py; do
   echo "--- $a ---"
   python3 "$a" || fail "$a"
 done
@@ -91,58 +34,10 @@ done
 echo "=== designed-pass impact graph ==="
 python3 tools/assert-impact-graph-generated.py || fail "impact graph"
 
-echo "=== invoice-correct must MET on bound v1 tools ==="
+echo "=== invoice-correct must MET on bound tools ==="
 CORRECT=examples/invoice-correct
-for t in \
-  tools/fitness-no-noun-field-writes.py \
-  tools/fitness-verb-path.py \
-  tools/fitness-adjective-locality.py \
-  tools/fitness-contract-presence.py \
-  tools/fitness-schema-identity.py \
-  tools/fitness-boundary-io.py \
-  tools/fitness-taint-lifetime.py \
-  tools/fitness-escape-hatch.py \
-  tools/fitness-duplicated-adjective.py \
-  tools/fitness-r13-entrypoints.py \
-  tools/fitness-c21.py \
-  tools/fitness-goal-imports.py \
-  tools/fitness-c20.py \
-  tools/fitness-p4-r31.py \
-  tools/fitness-r25-noun-tests.py \
-  tools/fitness-c16.py \
-  tools/fitness-c17.py \
-  tools/fitness-c18.py \
-  tools/fitness-r12-version.py \
-  tools/fitness-c1.py \
-  tools/fitness-r15-copied-helpers.py \
-  tools/fitness-r17-workflow-citizen.py \
-  tools/fitness-r18-noun-retries.py \
-  tools/fitness-c15-idempotent.py \
-  tools/fitness-c2.py \
-  tools/fitness-c24.py \
-  tools/fitness-c3.py \
-  tools/fitness-r4.py \
-  tools/fitness-c13.py \
-  tools/fitness-c10.py \
-  tools/fitness-r20.py \
-  tools/fitness-c22.py \
-  tools/fitness-c23.py
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-do
+shopt -s nullglob
+for t in tools/fitness-*.py; do
   echo "--- $t $CORRECT ---"
   python3 "$t" "$CORRECT" || fail "$t on invoice-correct"
 done

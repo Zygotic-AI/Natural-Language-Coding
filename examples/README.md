@@ -82,3 +82,5 @@ Do not commit the JSON that command prints.
 | [`schema-field-missing/`](schema-field-missing/) | R20 required field absent from verb |
 | [`schema-type-mismatch/`](schema-type-mismatch/) | R20 integer vs str |
 | [`mention-only-verb/`](mention-only-verb/) | R4 string mention is not use |
+| [`verb-no-preserve/`](verb-no-preserve/) | C17 no adjective preservation |
+| [`goal-test-no-call/`](goal-test-no-call/) | C18 test exists, never calls the goal |
