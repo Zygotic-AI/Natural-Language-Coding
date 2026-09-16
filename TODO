@@ -24,5 +24,6 @@ SSOT: [`HOLES.md`](HOLES.md) (judgment / human). Next implementation is **not** 
 
 - **Language scanner** — parked. Spec first, then a thin adapter. Do not fork `fitness-*.py` per language. SSOT: [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md).
 - **Rule IR** — parked. ADR 0007 is accepted; no `R` id until a bindable if-then gate exists. Tags/primitives/rules are charter, not v1 Python regex.
-- **Use-cases** — SSOT: [`docs/USE-CASES.md`](docs/USE-CASES.md). Spine UC1–UC5; beside UC6–UC19. Missing: UC14 rule conflict, UC15 bootstrap, UC19 worked PCI reduction; also no versioned primitives file (UC12).
+- **Use-cases** — SSOT: [`docs/USE-CASES.md`](docs/USE-CASES.md). **Needed (not optional):** UC9 full delta-regen, UC12 primitives file, UC14 rule-conflict at adopt, UC15 bootstrap, UC18 fact SSOT, UC19 worked PCI reduction. Parked: language scanner, rule IR.
+
 

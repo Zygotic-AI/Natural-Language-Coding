@@ -4,8 +4,8 @@ SSOT for what this practice *does*. Code is derived. Actors: **human manager**
 (non-coder) and **compiler** (AI). One compile, staged outputs — do not fuse
 goal, ADR, and if/then into one blob.
 
-Status: **in force** = charter/tool exists. **Parked** = decided, not executable.
-**Missing** = named here, no ADR/tool yet.
+Status: **in force** = charter/tool exists. **Parked** = decided, not executable (still needed when that expansion happens). **Missing** = **needed** — the product is incomplete without it; not optional polish.
+
 
 ---
 
@@ -44,7 +44,25 @@ Same conversation may produce UC1–UC4. Three artifacts, three gates: **goal**,
 
 ---
 
+## Needed (Missing rows are required)
+
+These are not a someday list. The spine does not close without them.
+
+| ID | Why it is needed |
+|----|------------------|
+| UC9 (full delta-regen) | Without it, “change one requirement” is a slogan. Impact graph v1 only *lists* callers. |
+| UC12 primitives SSOT | 0007 says new primitive = ADR. There is no versioned list to add *to*. |
+| UC14 rule conflict | Two adopted if/thens can forbid and require the same store. That must fail at **adopt**, or emit is a coin flip. |
+| UC15 bootstrap | A second repo cannot adopt from the teaching tree alone. |
+| UC18 fact SSOT | Interview binds facts; they currently live only as ADR prose. |
+| UC19 worked reduction | 0007 has no end-to-end example. PCI (or equivalent) is the proof the conversion is real. |
+
+Parked (needed at expansion, not now): UC16 language scanner, Rule IR for UC4/UC5.
+
+---
+
 ## Not human stories
+
 
 - Design the Invoice class
 - Write or patch generated source to “make it green”
