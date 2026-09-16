@@ -35,6 +35,11 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 ✔ R1/R2/P2/R20 cousin binds; C10 v1 version≠1 needs an ADR @done(26-09-15)
 ✔ C22/C23 v1: confirmer records C22; FINDINGS.md open items must be rebutted @done(26-09-15)
 
+## Open — tighten v1 holes
+
+SSOT: [`HOLES.md`](HOLES.md). Next: **1. C17 failure-path tests**.
+
+
 
 
 
