@@ -60,11 +60,24 @@ def load_tokens(noun: Path) -> list[str]:
     return out
 
 
+def is_test_path(path: Path) -> bool:
+    return (
+        "tests" in path.parts
+        or path.name.startswith("test_")
+        or path.name.endswith("_test.py")
+        or path.name.endswith("_test.ts")
+    )
+
+
 def source_files(noun: Path) -> list[Path]:
     return sorted(
         p for p in noun.rglob("*")
-        if p.is_file() and p.suffix in SOURCE_EXTS and not is_skipped(p)
+        if p.is_file()
+        and p.suffix in SOURCE_EXTS
+        and not is_skipped(p)
+        and not is_test_path(p)
     )
+
 
 
 def token_in_file(token: str, text: str) -> bool:

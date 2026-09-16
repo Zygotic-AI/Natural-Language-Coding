@@ -1,0 +1,9 @@
+{
+  "verbs": {
+    "apply_payment": {
+      "input": { "type": "object" },
+      "output": { "type": "object" },
+      "error": { "type": "object" }
+    }
+  }
+}
