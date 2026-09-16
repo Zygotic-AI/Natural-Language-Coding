@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Known-fail fixture gate for C18 v1."""
+"""Known-fail fixture gate for C18 copied-adjective."""
 
 from __future__ import annotations
 
@@ -28,17 +28,17 @@ def main() -> int:
         return 1
     fitness = load_fitness()
     violations = fitness.scan_one(FIXTURE.resolve())
-    for path, token in violations:
-        print(f"VIOLATION {path} copied-adjective {token}")
+    for path, kind, detail in violations:
+        print(f"VIOLATION {path} {kind} {detail}")
     if not violations:
         print("RESULT:MET")
         print("ASSERT:FAIL fixture is clean")
         return 1
     print("RESULT:NOT_MET")
-    if not any(v[1] == "paid" for v in violations):
+    if not any(v[1] == "copied-adjective" and v[2] == "paid" for v in violations):
         print("ASSERT:FAIL expected copied token paid")
         return 1
-    print("ASSERT:PASS fixture still fails C18 v1")
+    print("ASSERT:PASS fixture still fails C18 (copied-adjective)")
     return 0
 
 

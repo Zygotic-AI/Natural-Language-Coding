@@ -26,6 +26,16 @@ def is_skipped(path: Path) -> bool:
     return any(part in SKIP_DIR_NAMES for part in path.parts)
 
 
+def is_test(path: Path) -> bool:
+    return (
+        "tests" in path.parts
+        or path.name.startswith("test_")
+        or path.name.endswith("_test.py")
+    )
+
+
+
+
 def rel(path: Path) -> str:
     try:
         return str(path.relative_to(ROOT))
@@ -39,14 +49,16 @@ def goal_files(root: Path) -> list[Path]:
         direct = root / base_name
         if direct.is_dir():
             files.extend(
-                p for p in direct.rglob("*.py") if p.is_file() and not is_skipped(p)
+                p for p in direct.rglob("*.py") if p.is_file() and not is_skipped(p) and not is_test(p)
+
             )
     examples = root / "examples"
     if examples.is_dir():
         for goals in examples.rglob("goals"):
             if goals.is_dir() and goals.name == "goals" and not is_skipped(goals):
                 files.extend(
-                    p for p in goals.rglob("*.py") if p.is_file() and not is_skipped(p)
+                    p for p in goals.rglob("*.py") if p.is_file() and not is_skipped(p) and not is_test(p)
+
                 )
     return sorted(set(files))
 

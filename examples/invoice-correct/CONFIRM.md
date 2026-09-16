@@ -68,7 +68,8 @@ Format: `Cx — PASS|FAIL|N/A — reason — file:line` (file:line omitted only 
 - C16 — PASS — Verb outcomes covered by noun tests (open/balance, paid-at-zero, void) — examples/invoice-correct/domain/invoice/tests/test_invoice.py:14
 - C17 — PASS — Each verb has a success test and assertRaises precondition — examples/invoice-correct/domain/invoice/tests/test_invoice.py
 
-- C18 — N/A — No separate goal-level test suite in this tiny fixture
+- C18 — PASS — Goal test checks the use-case (called apply_payment), not noun adjectives — examples/invoice-correct/goals/record-bank-payment/tests/test_record_bank_payment.py
+
 - C19 — PASS — Status/balance transitions appear only under the noun, not reimplemented in the goal — examples/invoice-correct/goals/record-bank-payment/implementation.py:5
 
 ### Integrity of the change
