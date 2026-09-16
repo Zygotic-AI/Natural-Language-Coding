@@ -17,4 +17,6 @@ bash tools/ci-fitness.sh
 
 **Incomplete:** checklist without evidence, or only check 1 when the hub suite exists.
 
+**You do not ratify.** For class A/B/D/E/F leave `Ratified-by:` blank. Do not write your name, `agent`, `confirmer`, or any model name on that line. A human fills it. C24 fails `agent-ratified` if you sign it.
+
 Designed red vs designed pass: assert scripts exit 0 when the landmine is still live. `invoice-correct` must be MET.
