@@ -31,6 +31,8 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`unsigned-class-a/`](unsigned-class-a/) | C24 class A, no ratification |
 | [`orchestration-on-noun/`](orchestration-on-noun/) | C3/R3 Customer calls Invoice verb |
 | [`stray-verb/`](stray-verb/) | R4 verb never touches adjectives |
+| [`wrapper-goal/`](wrapper-goal/) | C13/R16 one-verb goal, no I/O schemas |
+
 
 
 
