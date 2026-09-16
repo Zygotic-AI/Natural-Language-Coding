@@ -14,3 +14,5 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0004-produce-fitness-handoff.md`](0004-produce-fitness-handoff.md) | Produce→fitness handoff default-closed | needs_review |
 | [`0005-ssot-exit-evidence.md`](0005-ssot-exit-evidence.md) | SSOT exit evidence in produce packages | needs_review |
 | [`0006-contract-change-notice.md`](0006-contract-change-notice.md) | How loud a published-contract change is | Accepted |
+| [`0007-tags-primitives-reduced-adrs.md`](0007-tags-primitives-reduced-adrs.md) | Tags, primitives, reduced ADRs | Accepted |
+

@@ -23,3 +23,4 @@ SSOT: [`HOLES.md`](HOLES.md) (judgment / human). Next implementation is **not** 
 ## Backlog
 
 - **Language scanner** — parked. Spec first, then a thin adapter. Do not fork `fitness-*.py` per language. SSOT: [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md).
+- **Rule IR** — parked. ADR 0007 is accepted; no `R` id until a bindable if-then gate exists. Tags/primitives/rules are charter, not v1 Python regex.

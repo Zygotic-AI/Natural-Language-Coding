@@ -94,7 +94,7 @@ A noun contains:
 
 - Identity
 - Private state
-- Adjectives
+- Adjectives, which may carry **tags** (classification: `pan`, `pii`). A noun may also carry tags (`runtime=temporal`, `pci-scope`). See [§4.7](#47-tags-primitives-and-reduced-adrs).
 - A short public verb list
 - Tests that prove the adjectives hold after every verb
 
@@ -122,6 +122,7 @@ Every verb has:
 - Preconditions
 - Postconditions / adjectives
 - Tests
+- **Primitives** it performs and the tagged adjectives they act on ([§4.7](#47-tags-primitives-and-reduced-adrs))
 
 Verbs are the contracted boundary of the noun. There is no other public mutation path.
 
@@ -154,7 +155,8 @@ A goal may call another goal only through that goal's public contract. The start
 
 There is no fourth design primitive named workflow.
 
-When a goal cannot finish in one process — waits, human approval, retries, compensation, or work that cannot share a single transaction — that goal is durable. The durable engine (Temporal or equivalent) is how the goal runs. The goal still calls verbs and other goals' public entrypoints. Verbs still protect the noun.
+When a goal cannot finish in one process — waits, human approval, retries, compensation, or work that cannot share a single transaction — that goal is durable. The durable engine (Temporal or equivalent) is how the goal runs. The engine is a noun tagged `runtime=temporal` (or the runtime the ADR named). A durable goal may only call an engine with that tag ([§4.7](#47-tags-primitives-and-reduced-adrs), [`adrs/0007-tags-primitives-reduced-adrs.md`](adrs/0007-tags-primitives-reduced-adrs.md)). The goal still calls verbs and other goals' public entrypoints. Verbs still protect the noun.
+
 
 Do not use the durable engine as a second home for a noun adjective. Do not maintain a hand-written execution graph that duplicates the engine's definition.
 
@@ -183,6 +185,18 @@ An **ADR** records a decision that later work must not quietly undo:
 - What was rejected and why
 
 ADRs are not essays. They are decisions with consequences.
+
+When an ADR constrains emit (data policy, runtime, shape), it **reduces** to if-thens over tags, primitives, and facts. The ADR remains the why. The compiler applies the rules. Ratified: [`adrs/0007-tags-primitives-reduced-adrs.md`](adrs/0007-tags-primitives-reduced-adrs.md).
+
+### 4.7 Tags, primitives, and reduced ADRs
+
+- **Tag** — classification on an adjective or noun (`pan`, `runtime=temporal`).
+- **Primitive** — closed action (`store`, `return`, `log`, `display`, `transmit`, `copy`, `retain`, `retry`, `wait`, `ship`). New primitive or tag = ADR, not an AI vocabulary.
+- **Rule** — `if tags ∧ primitives ∧ facts → must | forbid`.
+- Verbs declare primitives and targets. Body that does an undeclared primitive fails (default closed).
+- Prefer a new tag or fact before a new primitive. Temporal is `goal.durable ∧ engine.runtime ≠ temporal → forbid`, not a special parser.
+- v1 `taint.txt` is the stand-in for tags on sensitive adjectives (R32). A rule-IR gate is not in force yet; do not mint an **R** id until it is bindable (R27).
+
 
 ---
 
@@ -835,5 +849,7 @@ For changes that touch agent nouns:
 - Home: this file (`CHARTER.md`) is authoritative for the practice. Do not edit the OG history copy.
 - Subject: Boundary-Based Architecture (BBA) — Boundary-Based Programming (BBP) is the programming practice (§§4–14); systems model (§16) extends to agent fleets
 - Systems extension: agent nouns (§16), ratified by ADR 0003
+- Reduced ADRs: tags + primitives + if-thens, ratified by ADR 0007
+
 - Companion rejected name: Boundary-Enforced Programming (keep as a description of CI, not the practice title)
 - Companion rejected frame: “governance / governed” as the name of the integrity loop
