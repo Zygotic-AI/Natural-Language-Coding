@@ -13,106 +13,13 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 
 ## Completed product slice
 
-✔ Specimen gates + generated graph + ACS/BBP/PLANIT names + ACS page voice @done(26-09-15)
-✔ Hub CI suite: landmines + invoice-correct + matrix (`tools/ci-fitness.sh`) @done(26-09-15)
-✔ Agent short-form packaging: four loop skills + confirmer runs hub suite @done(26-09-15)
-✔ Knowledge-steward agent noun + session-preflight v1 @done(26-09-15)
-✔ R13 v1 (one entrypoint) + C19 bound to duplicated-adjective tool @done(26-09-15)
-✔ C14 → goal-imports; C21 v1 impact-list vs generated callers @done(26-09-15)
-✔ R8 cousin to field-writes; R25 v1 tests next to noun @done(26-09-15)
-✔ C16/C17 v1 name-in-tests; C19 skips test files @done(26-09-15)
-✔ C18 v1: goal tests must not copy noun adjective tokens @done(26-09-15)
-✔ R32/C25 taint + R33/C26 escape promoted from A5/A7 and bound @done(26-09-15)
-✔ R12 v1: public contract JSON carries a version field @done(26-09-15)
-✔ C1 v1: proposal/confirm states change class A–F @done(26-09-15)
-✔ R15 v1: same helper body must not be copied into two goals @done(26-09-15)
-✔ R17 v1: workflows/ must not clone a goal @done(26-09-15)
-✔ R18 v1 noun must not own retries; C15 v1 retrying goal needs idempotent verbs @done(26-09-15)
-✔ C2 adjectives not in goals/; C24 class A/B/D/E/F records ratification @done(26-09-15)
-✔ C3/R3 v1: a noun must not call another noun’s verb @done(26-09-15)
-✔ R4 v1: public verbs must mention a field or adjective @done(26-09-15)
-✔ C7/C8/C11 cousin binds; C13/R16 v1 wrapper-goal with no I/O @done(26-09-15)
-✔ R1/R2/P2/R20 cousin binds; C10 v1 version≠1 needs an ADR @done(26-09-15)
-✔ C22/C23 v1: confirmer records C22; FINDINGS.md open items must be rebutted @done(26-09-15)
+In-reach v1/v2 gates, hub CI, release-audit, matrix bound. Log: git history.
+HOLES.md names what a static gate cannot do.
 
-## Open — tighten v1 holes
+## Open — not now
 
-SSOT: [`HOLES.md`](HOLES.md). Next: none — remaining leftovers are out of reach.
-✔ C17 closed: failure + adjective preservation @done(26-09-15)
-✔ C18 closed: goal test must call the goal @done(26-09-15)
-✔ C15 closed: nested parens + verb honors the key @done(26-09-16)
-✔ C22/C7 closed: change set is git + origin/main...HEAD @done(26-09-16)
-✔ C17 v2: each verb has a failure-path test @done(26-09-15)
-
-✔ C18 v2: goal with code must have a use-case test @done(26-09-15)
-✔ R32 v2: taint follows aliases in the same function @done(26-09-15)
-✔ C15 v2: retrying goal must pass an idempotency key @done(26-09-15)
-✔ C22 v2: N/A illegal when charter and code share a tree @done(26-09-15)
-✔ C7/C8/C11 v2: CHANGED: list scopes schema/entrypoint checks @done(26-09-15)
-✔ C23 v2: confirmer Cx — FAIL is an open finding @done(26-09-15)
-✔ C1/C21/C24 v2: product trees require CONFIRM.md @done(26-09-15)
-✔ R20 v2: schema required fields named in the verb @done(26-09-15)
-✔ R4: verbs must read/write self.<field>, not mention the word @done(26-09-15)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-
-## True gaps still open
-
-(none)
+SSOT: [`HOLES.md`](HOLES.md) (judgment / human). Next implementation is **not** more Python gates.
 
 ## Backlog
 
-(none — session-preflight is v1, not a P2 bind)
-
-
-
-
-✔ R20/R15/R32/R33/C10 closed @done(26-09-16)
-✔ R32 cross-file taint + C1 wrong-class (charter vs C) @done(26-09-16)
-✔ C24 refuses agent self-ratification @done(26-09-16)
+- **Language scanner** — parked. Spec first, then a thin adapter. Do not fork `fitness-*.py` per language. SSOT: [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md).
