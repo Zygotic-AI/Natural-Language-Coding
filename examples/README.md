@@ -33,6 +33,9 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`stray-verb/`](stray-verb/) | R4 verb never touches adjectives |
 | [`wrapper-goal/`](wrapper-goal/) | C13/R16 one-verb goal, no I/O schemas |
 | [`version-bump-no-adr/`](version-bump-no-adr/) | C10 version 2, no ADR |
+| [`missing-c22/`](missing-c22/) | C22 no same-change line |
+| [`open-findings/`](open-findings/) | C23 open FINDINGS.md checkbox |
+
 
 
 

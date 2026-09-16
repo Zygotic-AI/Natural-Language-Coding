@@ -52,7 +52,10 @@ for a in \
   tools/assert-c3-fails.py \
   tools/assert-r4-fails.py \
   tools/assert-c13-fails.py \
-  tools/assert-c10-fails.py
+  tools/assert-c10-fails.py \
+  tools/assert-c22-fails.py \
+  tools/assert-c23-fails.py
+
 
 
 
@@ -108,7 +111,10 @@ for t in \
   tools/fitness-c3.py \
   tools/fitness-r4.py \
   tools/fitness-c13.py \
-  tools/fitness-c10.py
+  tools/fitness-c10.py \
+  tools/fitness-c22.py \
+  tools/fitness-c23.py
+
 
 
 
