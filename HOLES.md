@@ -53,14 +53,11 @@ Still not `origin/main...HEAD` on a clean CI checkout of a PR (no list → tree-
 
 ---
 
-## 7. C23 — confirmer FAIL is a finding
+## 7. C23 — confirmer FAIL is a finding — DONE
 
-**Today.** Only `FINDINGS.md` open checkboxes. invoice-correct `C17 — FAIL`
-is invisible.
-
-**Tighten.** Every `Cx — FAIL` in CONFIRM is an open finding unless the
-same line contains `rebut` / `hole` / `accepted`. Patch invoice-correct
-C17 to name the hole or add the missing tests (ties to item 1).
+v2: `- C12 — FAIL` in CONFIRM is an open finding unless the line has
+rebut/accepted/hole. invoice-correct has no FAIL lines (C17 is PASS).
+Still not a human signature.
 
 ---
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""C23 v1: FINDINGS.md open items must be closed or rebutted.
+"""C23 v2: open findings in FINDINGS.md *or* confirmer FAIL lines.
 
-Looks for FINDINGS.md (any depth under the scan root). Lines matching
-`- [ ]` or `OPEN:` without rebut/accepted/hole on the same line fail.
+FINDINGS.md: `- [ ]` / `OPEN:` without rebut/accepted/hole on the line.
+CONFIRM.md / PROPOSAL.md: `- C12 — FAIL` without rebut/accepted/hole.
 
-No FINDINGS.md → skip (MET). That is not proof a review ran.
+The format legend `PASS|FAIL|N/A` is not a finding.
 
 Input: optional argv roots. No args → hub ROOT.
 Output: VIOLATION <path>:<line> open-finding
@@ -20,7 +20,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv"}
 OPEN = re.compile(r"^\s*(-\s*\[\s*\]|OPEN:)", re.I)
+FAIL = re.compile(r"^\s*[-*]\s*C\d+\s*—\s*FAIL\b")
 REBUT = re.compile(r"rebut|accepted|hole|wontfix|won't fix", re.I)
+NOTES = ("CONFIRM.md", "PROPOSAL.md")
 
 
 def is_skipped(path: Path) -> bool:
@@ -41,14 +43,24 @@ def findings_files(root: Path) -> list[Path]:
     ]
 
 
+def note_files(root: Path) -> list[Path]:
+    found = []
+    for name in NOTES:
+        path = root / name
+        if path.is_file():
+            found.append(path)
+    return found
+
+
 def scan_one(scan_root: Path) -> list[tuple[str, int]]:
-    files = findings_files(scan_root)
-    if not files:
-        return []
     violations = []
-    for path in files:
+    for path in findings_files(scan_root):
         for lineno, line in enumerate(path.read_text(errors="replace").splitlines(), 1):
             if OPEN.match(line) and REBUT.search(line) is None:
+                violations.append((rel(path), lineno))
+    for path in note_files(scan_root):
+        for lineno, line in enumerate(path.read_text(errors="replace").splitlines(), 1):
+            if FAIL.match(line) and REBUT.search(line) is None:
                 violations.append((rel(path), lineno))
     return violations
 
