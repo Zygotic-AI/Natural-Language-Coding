@@ -3,7 +3,9 @@
 
 Looks for PROPOSAL.md or CONFIRM.md under the scan root.
 Callers come from generate-impact-graph.build (not a hand JSON).
-No proposal file → skip (MET). That is not "the change had no impact."
+No proposal file on a specimen → skip (MET). Product trees without a
+note fail missing-confirm (see product_tree.requires_confirm).
+
 
 Input: optional argv roots. No args → hub ROOT (will skip; hub has no single proposal).
 Output: VIOLATION <path> missing-caller <goal> <call>
@@ -17,7 +19,10 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import product_tree  # noqa: E402
 GRAPH = ROOT / "tools" / "generate-impact-graph.py"
+
 NOTES = ("PROPOSAL.md", "CONFIRM.md")
 
 
@@ -28,6 +33,13 @@ def load_graph():
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
+
+
+def rel_note(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 
 def note_files(scan_root: Path) -> list[Path]:
@@ -42,7 +54,10 @@ def note_files(scan_root: Path) -> list[Path]:
 def scan_one(scan_root: Path) -> list[tuple[str, str, str]]:
     notes = note_files(scan_root)
     if not notes:
+        if product_tree.requires_confirm(scan_root):
+            return [(rel_note(scan_root / "CONFIRM.md"), "-", "missing-confirm")]
         return []
+
     text = "\n".join(p.read_text(errors="replace") for p in notes).casefold()
     graph = load_graph().build(scan_root)
     violations = []
@@ -68,7 +83,11 @@ def main() -> int:
             seen.add(item)
             printed.append(item)
             path, gid, call = item
-            print(f"VIOLATION {path} missing-caller {gid} {call}")
+            if call == "missing-confirm":
+                print(f"VIOLATION {path} missing-confirm")
+            else:
+                print(f"VIOLATION {path} missing-caller {gid} {call}")
+
     if printed:
         print("RESULT:NOT_MET")
         return 1

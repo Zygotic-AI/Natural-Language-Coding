@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Known-fail fixture gate for C1 missing change class."""
+"""Known-fail: product tree with no CONFIRM.md."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FIXTURE = ROOT / "examples" / "missing-change-class"
+FIXTURE = ROOT / "examples" / "product-no-confirm"
 FITNESS = ROOT / "tools" / "fitness-c1.py"
 
 
@@ -35,10 +35,10 @@ def main() -> int:
         print("ASSERT:FAIL fixture is clean")
         return 1
     print("RESULT:NOT_MET")
-    if not any(v[1] == "missing-change-class" for v in violations):
-        print("ASSERT:FAIL expected missing-change-class")
+    if not any(v[1] == "missing-confirm" for v in violations):
+        print("ASSERT:FAIL expected missing-confirm")
         return 1
-    print("ASSERT:PASS fixture still fails C1 (missing-change-class)")
+    print("ASSERT:PASS fixture still fails C1 (missing-confirm)")
     return 0
 
 
