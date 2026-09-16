@@ -22,8 +22,10 @@ Work items only, not an essay. Each item is one of:
 - new/changed **goal**
 - new/changed **boundary** (noun + verbs)
 - new/changed **requirement** or **ADR**
+- new/changed **rule** (tags / primitives / if-then; [ADR 0007](../../adrs/0007-tags-primitives-reduced-adrs.md))
 
-If the plan cannot say which, it is not a plan.
+If the plan cannot say which, it is not a plan. A standard that never becomes a rule is not done.
+
 
 ## 3. Product statements
 
@@ -39,7 +41,9 @@ Every statement points at:
 
 - requirement ids
 - ADR ids
+- **rule** ids when the statement is data-policy or runtime (ADR 0007)
 - the **BBP standard** (always on)
+
 
 No pointer → unbound. A statement with only “BBP” and no business requirement may still be valid (pure shape work). A business statement with no requirement/ADR and no explicit “none needed, reason X” is unbound.
 
@@ -57,12 +61,15 @@ Humans do not edit the output to help.
 
 ## 7. Prove
 
-Both required:
+Both required. This is **compile**, not ship.
 
-1. **Machine gate** — at least check 1 (no goal writes noun fields). Exit non-zero = fail.
-2. **Adversarial audit** — a different pass than the generator: statements done, bound reqs/ADRs held, no second copy of an adjective inside a goal.
+1. **Machine gate** — hub: `bash tools/ci-fitness.sh` (full confirmer suite, not “check 1 only”). Adopter: the fitness suite that tree bound. Exit non-zero = fail.
+2. **Adversarial audit** — a different pass than the generator: statements done, bound reqs/ADRs/rules held, no second copy of an adjective inside a goal.
 
 Fail → step 1 or 5, then step 6 again.
+
+**Ship** is after prove and after a human writes `Released-by:` (and `Ratified-by:` when class A/B/D/E/F): `python3 tools/release-audit.py <tree>`. Prove PASS is not a release.
+
 
 ## Roles
 

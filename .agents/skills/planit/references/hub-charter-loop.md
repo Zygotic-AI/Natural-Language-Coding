@@ -15,8 +15,10 @@ Use **in addition to** PLANIT when the outcome changes the practice hub (charter
 | 3 Adversarial review | Plan/bind audit + proposal review | `bbp-reviewer` |
 | 4–5 Revise / ratify | Human or named gate | — |
 | 6 Implement | PLANIT step 6 | `bbp-proposer` (implement) |
-| 7 Confirm | PLANIT step 7 | `bbp-confirmer` |
+| 7 Confirm | PLANIT step 7 (compile) | `bbp-confirmer` — `ci-fitness.sh` + §11. Not ship. |
 | 8 Record | After prove PASS | `bbp-recorder` |
+| Ship | After human `Released-by:` | `python3 tools/release-audit.py <tree>` |
+
 
 **Produce package (hub handoff):** classification, applicability, boundary I/O, self-adversarial notes, `ssot_leaf_ids` + `ssot_exit_status` per [`AGENTS.md`](../../../../AGENTS.md).
 

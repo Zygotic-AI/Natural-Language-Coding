@@ -70,7 +70,8 @@ Phases **4** and **6** are **separate executions** from Phases **3** and **5** (
 
 Authoring or amending **this standard** is **T2 minimum**.
 
-**Authorized skill runs:** Phase 0 may be satisfied by invocation (`/planit` — general AWL orchestrator; human labels **Vishvakarma** / **vishva** / **builder**), `/local-author-or-extend-knowledge` (vault durable authoring), `/local-dsi-converge`, etc.). Do **not** re-confirm authorized work ([`lean-operating-principles.md`](lean-operating-principles.md) §2). Phase 3 may compress; Phases 4 and 6 still run (may be lightweight for T0/T1).
+**Authorized skill runs:** Phase 0 may be satisfied by invocation (`/planit` — PLANIT / AWL orchestrator), `/local-author-or-extend-knowledge` (vault durable authoring), `/local-dsi-converge`, etc.). Do **not** re-confirm authorized work ([`lean-operating-principles.md`](lean-operating-principles.md) §2). Phase 3 may compress; Phases 4 and 6 still run (may be lightweight for T0/T1).
+
 
 **General orchestrator:** For arbitrary multi-step work (vault or consumer), invoke **`skills/planit/SKILL.md`** (`/planit`). It runs the full loop, routes steps to leaf skills, and keeps plan/execution audits distinct. Vault-only durable-knowledge authoring may use `/local-author-or-extend-knowledge` directly or as a routed step inside Planit.
 
