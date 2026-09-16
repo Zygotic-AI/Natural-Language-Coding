@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
-"""C22 v2: N/A is a lie if this tree holds a charter *and* code.
+"""C22: N/A is a lie if *this change* touches charter and code.
 
 If PROPOSAL.md / CONFIRM.md exists:
   missing-c22            — no `C22 — PASS|N/A`
-  c22-na-with-both       — C22 is N/A but the tree has CHARTER.md/adrs/ *and*
-                           goals/ or domain/ source
-  c22-pass-missing-cite  — C22 is PASS but the note cites neither a charter/adr
-                           path nor a code path that exists
+  c22-na-with-both       — C22 is N/A but the change set (CHANGED: / git /
+                           origin/main...HEAD) includes charter/adrs *and* code
+  c22-pass-missing-cite  — C22 is PASS but the note does not cite the sides
+                           the change actually touched
 
-No note → skip (MET). Does not inspect git.
-
-Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <path> <kind>
-Failure mode: exit 0 = MET; exit 1 = NOT_MET.
+No note → skip (MET).
 """
+
 
 from __future__ import annotations
 
@@ -22,6 +19,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import changeset  # noqa: E402
+
 NOTES = ("PROPOSAL.md", "CONFIRM.md")
 C22 = re.compile(r"\bC22\s*—\s*(PASS|N/A)\b")
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv"}
@@ -92,8 +92,7 @@ def scan_one(scan_root: Path) -> list[tuple[str, str]]:
     notes = [scan_root / n for n in NOTES if (scan_root / n).is_file()]
     if not notes:
         return []
-    charter = has_charter(scan_root)
-    code = bool(code_files(scan_root))
+    changed = changeset.changed_paths(scan_root, ROOT)
     violations: list[tuple[str, str]] = []
     for path in notes:
         text = path.read_text(errors="replace")
@@ -102,16 +101,19 @@ def scan_one(scan_root: Path) -> list[tuple[str, str]]:
             violations.append((rel(path), "missing-c22"))
             continue
         verdict = m.group(1).upper()
+        charter_touch = bool(changed) and any(changeset.is_charter_path(c) for c in changed)
+        code_touch = bool(changed) and any(changeset.is_code_path(c) for c in changed)
         if verdict == "N/A":
-            if charter and code:
+            if charter_touch and code_touch:
                 violations.append((rel(path), "c22-na-with-both"))
             continue
         cited_charter, cited_code = cited_existing(text, scan_root)
-        if charter and not cited_charter:
+        if charter_touch and not cited_charter:
             violations.append((rel(path), "c22-pass-missing-cite"))
-        elif code and not cited_code:
+        elif code_touch and not cited_code:
             violations.append((rel(path), "c22-pass-missing-cite"))
     return violations
+
 
 
 def main() -> int:
