@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Known-fail fixture gate for C15 missing idempotent flag."""
+"""Known-fail fixture gate for C15 v2 missing idempotency key at the call."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FIXTURE = ROOT / "examples" / "retrying-goal"
+FIXTURE = ROOT / "examples" / "retrying-no-key"
 FITNESS = ROOT / "tools" / "fitness-c15-idempotent.py"
 
 
@@ -35,10 +35,10 @@ def main() -> int:
         print("ASSERT:FAIL fixture is clean")
         return 1
     print("RESULT:NOT_MET")
-    if not any(v[1] == "missing-idempotent" and v[2] == "apply_payment" for v in violations):
-        print("ASSERT:FAIL expected missing-idempotent apply_payment")
+    if not any(v[1] == "missing-idempotency-key" and v[2] == "apply_payment" for v in violations):
+        print("ASSERT:FAIL expected missing-idempotency-key apply_payment")
         return 1
-    print("ASSERT:PASS fixture still fails C15 (missing-idempotent)")
+    print("ASSERT:PASS fixture still fails C15 (missing-idempotency-key)")
     return 0
 
 

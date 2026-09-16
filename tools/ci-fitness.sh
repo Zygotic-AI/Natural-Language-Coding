@@ -50,6 +50,7 @@ for a in \
   tools/assert-r17-fails.py \
   tools/assert-r18-fails.py \
   tools/assert-c15-fails.py \
+  tools/assert-c15-key-fails.py \
   tools/assert-c2-fails.py \
   tools/assert-c24-fails.py \
   tools/assert-c3-fails.py \
