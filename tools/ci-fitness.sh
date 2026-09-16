@@ -43,7 +43,9 @@ for a in \
   tools/assert-c18-fails.py \
   tools/assert-r12-fails.py \
   tools/assert-c1-fails.py \
-  tools/assert-r15-fails.py
+  tools/assert-r15-fails.py \
+  tools/assert-r17-fails.py
+
 
 
 
@@ -83,7 +85,9 @@ for t in \
   tools/fitness-c18.py \
   tools/fitness-r12-version.py \
   tools/fitness-c1.py \
-  tools/fitness-r15-copied-helpers.py
+  tools/fitness-r15-copied-helpers.py \
+  tools/fitness-r17-workflow-citizen.py
+
 
 
 
