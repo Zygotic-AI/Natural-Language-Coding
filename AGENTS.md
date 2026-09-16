@@ -44,7 +44,7 @@ Do not invent empty “governance / compliance / risk” trees. Put real artifac
 
 ## Portable agent content
 
-Skills and portable instructions live under [`.agents/`](.agents/). Cursor-only rules stay under `.cursor/`. See project rule `agents-portable-ssot`.
+Skills and portable instructions live under [`.agents/`](.agents/). End-to-end compile work: [`planit`](.agents/skills/planit/SKILL.md) ([`docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md`](docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md)). Cursor-only rules stay under `.cursor/`. See project rule `agents-portable-ssot`.
 
 ## Memory files
 

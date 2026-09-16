@@ -4,6 +4,7 @@ Portable Agent Skills. Pointers plus gate/complete criteria. Role SSOT stays und
 
 | Skill | Gate | Role |
 |-------|------|------|
+| [`planit`](planit/SKILL.md) | AWL 0–7 + PLANIT 0–7 gates (`GATE-STD`, operation-verdict §2) | [`docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md`](../../docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md) |
 | [`bbp-proposer`](bbp-proposer/SKILL.md) | `G-PROPOSE` | [`agents/proposer.md`](../../agents/proposer.md) |
 | [`bbp-reviewer`](bbp-reviewer/SKILL.md) | `G-REVIEW` | [`agents/reviewer.md`](../../agents/reviewer.md) |
 | [`bbp-confirmer`](bbp-confirmer/SKILL.md) | `G-CONFIRM` | [`agents/confirmer.md`](../../agents/confirmer.md) |
