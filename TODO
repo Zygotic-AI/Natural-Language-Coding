@@ -37,7 +37,7 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 
 ## Open — tighten v1 holes
 
-SSOT: [`HOLES.md`](HOLES.md). Next: **10. R4 mentions vs needs**.
+SSOT: [`HOLES.md`](HOLES.md). Next: **11. R32 helpers / R33 ORM**.
 ✔ C17 v2: each verb has a failure-path test @done(26-09-15)
 ✔ C18 v2: goal with code must have a use-case test @done(26-09-15)
 ✔ R32 v2: taint follows aliases in the same function @done(26-09-15)
@@ -47,6 +47,7 @@ SSOT: [`HOLES.md`](HOLES.md). Next: **10. R4 mentions vs needs**.
 ✔ C23 v2: confirmer Cx — FAIL is an open finding @done(26-09-15)
 ✔ C1/C21/C24 v2: product trees require CONFIRM.md @done(26-09-15)
 ✔ R20 v2: schema required fields named in the verb @done(26-09-15)
+✔ R4: verbs must read/write self.<field>, not mention the word @done(26-09-15)
 
 
 

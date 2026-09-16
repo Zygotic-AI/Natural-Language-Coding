@@ -8,12 +8,16 @@
 
 If a verb does not need the noun's adjective set, it does not belong on the noun.
 
-## V1 bind
+## Bind
 
-Public methods (not `__init__` / `_private`) must mention a token from
-`fields.txt` or `adjectives.txt`.
+Public methods must **read or write** `self.<token>` / `this.<token>` or
+`getattr`/`setattr(self, "<token>")` for a name in `fields.txt` or
+`adjectives.txt`. A string that contains the word is not use.
 
-No field/adjective lists → skip (MET). Token presence, not that the verb *needs* the adjective.
+No lists → skip.
 
-Designed fail: `examples/stray-verb/`.
+Out of reach: a verb that *does* touch state but still shouldn't live on
+this noun (wrong bounded context). That is a design judgment, not this gate.
+
+Designed fail: `examples/stray-verb/`, `examples/mention-only-verb/`.
 Designed pass: `examples/invoice-correct/`.
