@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
-"""C19 v1: the same adjective is implemented in two files of one noun.
+"""C16 v1: each adjectives.txt token appears in the noun's tests.
 
-Not R24 (token outside the noun). This gate stays inside domain/<noun>/.
-
-For each noun with adjectives.txt, each token must appear in at most one
-source file in that noun directory. Two files both containing `== "void"`
-is a second implementation.
+Not C19 (two implementations). Tests are allowed to name adjectives.
+Not C17 (verbs). Tokens only.
 
 Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <noun> <token> <path> <path>
+Output: VIOLATION <noun> untested-adjective <token>
 Failure mode: exit 0 = MET; exit 1 = NOT_MET.
 """
 
@@ -16,12 +13,11 @@ from __future__ import annotations
 
 import re
 import sys
-from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_EXTS = {".ts", ".js", ".py", ".mjs", ".cjs", ".tsx", ".jsx"}
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv"}
+SOURCE_EXTS = {".py", ".ts", ".js"}
 
 
 def is_skipped(path: Path) -> bool:
@@ -60,48 +56,37 @@ def load_tokens(noun: Path) -> list[str]:
     return out
 
 
-def is_test_path(path: Path) -> bool:
-    return (
-        "tests" in path.parts
-        or path.name.startswith("test_")
-        or path.name.endswith("_test.py")
-        or path.name.endswith("_test.ts")
+def test_files(noun: Path) -> list[Path]:
+    files = []
+    tests = noun / "tests"
+    if tests.is_dir():
+        files.extend(p for p in tests.rglob("*") if p.is_file() and p.suffix in SOURCE_EXTS)
+    files.extend(
+        p for p in noun.iterdir()
+        if p.is_file() and p.suffix in SOURCE_EXTS
+        and (p.name.startswith("test_") or p.name.endswith("_test.py"))
     )
+    return sorted(set(files))
 
 
-def source_files(noun: Path) -> list[Path]:
-    return sorted(
-        p for p in noun.rglob("*")
-        if p.is_file()
-        and p.suffix in SOURCE_EXTS
-        and not is_skipped(p)
-        and not is_test_path(p)
-    )
-
-
-
-def token_in_file(token: str, text: str) -> bool:
+def token_in_text(token: str, text: str) -> bool:
     return (
         re.search(rf'["\']{re.escape(token)}["\']', text) is not None
         or re.search(rf"\b{re.escape(token)}\b", text) is not None
     )
 
 
-def scan_one(scan_root: Path) -> list[tuple[str, str, list[str]]]:
+def scan_one(scan_root: Path) -> list[tuple[str, str]]:
     violations = []
     for noun in noun_dirs(scan_root):
         tokens = load_tokens(noun)
         if not tokens:
             continue
-        files = source_files(noun)
+        tests = test_files(noun)
+        blob = "\n".join(p.read_text(errors="replace") for p in tests)
         for token in tokens:
-            hits = []
-            for path in files:
-                text = path.read_text(errors="replace")
-                if token_in_file(token, text):
-                    hits.append(rel(path))
-            if len(hits) >= 2:
-                violations.append((noun.name, token, hits))
+            if not token_in_text(token, blob):
+                violations.append((rel(noun), token))
     return violations
 
 
@@ -114,13 +99,13 @@ def main() -> int:
     seen = set()
     printed = []
     for scan_root in scan_roots:
-        for noun, token, hits in scan_one(scan_root):
-            key = (noun, token, tuple(hits))
-            if key in seen:
+        for item in scan_one(scan_root):
+            if item in seen:
                 continue
-            seen.add(key)
-            printed.append(key)
-            print(f"VIOLATION {noun} {token} " + " ".join(hits))
+            seen.add(item)
+            printed.append(item)
+            noun, token = item
+            print(f"VIOLATION {noun} untested-adjective {token}")
     if printed:
         print("RESULT:NOT_MET")
         return 1

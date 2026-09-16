@@ -37,7 +37,10 @@ for a in \
   tools/assert-duplicated-adjective-fails.py \
   tools/assert-r13-fails.py \
   tools/assert-c21-fails.py \
-  tools/assert-r25-fails.py
+  tools/assert-r25-fails.py \
+  tools/assert-c16-fails.py \
+  tools/assert-c17-fails.py
+
 
 
 
@@ -66,7 +69,10 @@ for t in \
   tools/fitness-goal-imports.py \
   tools/fitness-c20.py \
   tools/fitness-p4-r31.py \
-  tools/fitness-r25-noun-tests.py
+  tools/fitness-r25-noun-tests.py \
+  tools/fitness-c16.py \
+  tools/fitness-c17.py
+
 
 
 do

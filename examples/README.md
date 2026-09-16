@@ -16,7 +16,10 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`extra-goal-entrypoint/`](extra-goal-entrypoint/) | R13 two entrypoints |
 | [`impact-list-mismatch/`](impact-list-mismatch/) | C21 missing generated caller |
 | [`noun-without-tests/`](noun-without-tests/) | R25 no tests next to noun |
+| [`adjective-untested/`](adjective-untested/) | C16 adjective never named in tests |
+| [`verb-untested/`](verb-untested/) | C17 verb never named in tests |
 | [`missing-failure-mode/`](missing-failure-mode/) | P4/R31 failure mode |
+
 
 
 
