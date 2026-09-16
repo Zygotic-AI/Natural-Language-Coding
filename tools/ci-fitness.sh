@@ -41,7 +41,9 @@ for a in \
   tools/assert-c16-fails.py \
   tools/assert-c17-fails.py \
   tools/assert-c18-fails.py \
-  tools/assert-r12-fails.py
+  tools/assert-r12-fails.py \
+  tools/assert-c1-fails.py
+
 
 
 
@@ -77,7 +79,9 @@ for t in \
   tools/fitness-c16.py \
   tools/fitness-c17.py \
   tools/fitness-c18.py \
-  tools/fitness-r12-version.py
+  tools/fitness-r12-version.py \
+  tools/fitness-c1.py
+
 
 
 
