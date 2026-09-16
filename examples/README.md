@@ -29,6 +29,8 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`retrying-goal/`](retrying-goal/) | C15 retrying goal, verb not idempotent |
 | [`adjectives-in-goal/`](adjectives-in-goal/) | C2 adjectives.txt under a goal |
 | [`unsigned-class-a/`](unsigned-class-a/) | C24 class A, no ratification |
+| [`orchestration-on-noun/`](orchestration-on-noun/) | C3/R3 Customer calls Invoice verb |
+
 
 
 
