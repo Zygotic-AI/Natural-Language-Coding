@@ -2,15 +2,20 @@
 
 - Requirement: `C1`
 - Outcome: **met** | **not met** only
+- Gate: `tools/fitness-c1.py`
 
 ## Statement
 
 Change class (A–F) is stated.
 
-## Binary criteria
+## V1 bind
 
-Met iff a binder (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no binder ran, binder failed, or evidence is missing.
+If `PROPOSAL.md` or `CONFIRM.md` exists at the scan root, it must match
+`change class` + A–F.
 
-## Evidence
+No note file → skip (MET). That is not proof the change was classified.
 
-On met or not met, cite file and symbol (or N/A reason). List failing ids when the audit is a matrix audit.
+Does not check the class is *correct*.
+
+Designed fail: `examples/missing-change-class/`.
+Designed pass: `examples/invoice-correct/`.
