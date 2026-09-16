@@ -42,7 +42,9 @@ for a in \
   tools/assert-c17-fails.py \
   tools/assert-c18-fails.py \
   tools/assert-r12-fails.py \
-  tools/assert-c1-fails.py
+  tools/assert-c1-fails.py \
+  tools/assert-r15-fails.py
+
 
 
 
@@ -80,7 +82,9 @@ for t in \
   tools/fitness-c17.py \
   tools/fitness-c18.py \
   tools/fitness-r12-version.py \
-  tools/fitness-c1.py
+  tools/fitness-c1.py \
+  tools/fitness-r15-copied-helpers.py
+
 
 
 
