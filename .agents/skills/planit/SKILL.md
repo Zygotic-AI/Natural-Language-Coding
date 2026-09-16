@@ -47,7 +47,8 @@ After all **blocking** rows are **true**, emit **`## Verdict — Planit intake g
 
 ## Procedure
 
-**Planit** (human labels **Vishvakarma**, **vishva**, **builder**) runs AWL **0–7** with PLANIT **0–7** embedded per [`PLANIT-ORCHESTRATION.md`](../../../docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md). Use AWL **Appendices A–F** for intake, plan, audit memos, handoffs, and Phase 7 record — do not duplicate those templates here.
+**PLANIT** runs AWL **0–7** with PLANIT **0–7** embedded per [`PLANIT-ORCHESTRATION.md`](../../../docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md). The name is PLANIT (`/planit`). Use AWL **Appendices A–F** for intake, plan, audit memos, handoffs, and Phase 7 record — do not duplicate those templates here.
+
 
 This skill **orchestrates** existing norms and leaf skills — it does not replace KCR (ai vault), RCA, DSI stop checks, or VPR gates.
 
@@ -81,7 +82,10 @@ Any **runnable or durable output** Planit creates, edits, or accepts from a leaf
 
 ### AWL Phase 1 — Intake (+ PLANIT 0–1)
 
-Follow AWL **Appendix C** and [`references/information-completion-contract.md`](references/information-completion-contract.md). Emit the **resolution table** and satisfy the **Gate** table above. Apply **tier compression** for T0/T1 per AWL §5.
+Follow AWL **Appendix C** and [`references/information-completion-contract.md`](references/information-completion-contract.md). Emit the **resolution table** and satisfy the **Gate** table above.
+
+**T0/T1 compression (write it, or agents run T3 on class C):** skip Appendix B; skip multi-step flag; one plan table; still **intake + bind + prove**. T2+ keeps full AWL §5 ceremony.
+
 
 **PLANIT step 0 — Load** (evidence in intake gate):
 
@@ -110,7 +114,8 @@ Use AWL **Appendix D** plan template. Add **Leaf skill / procedure** column when
 | # | Step | Leaf skill / procedure | Stop predicate | Audit hook |
 | - | ---- | ---------------------- | -------------- | ---------- |
 
-**PLANIT step 2 — Plan:** work items only — each item is new/changed **goal**, **boundary** (noun + verbs), **requirement**, or **ADR**. If the plan cannot say which, it is not a plan. **Hub:** classify change **A–F** (charter §6 step 1) in the plan header.
+**PLANIT step 2 — Plan:** work items only — each item is new/changed **goal**, **boundary** (noun + verbs), **requirement**, **ADR**, or **rule** (tags / primitives / if-then; ADR 0007). A standard that never becomes a rule is not done. If the plan cannot say which, it is not a plan. **Hub:** classify change **A–F** (charter §6 step 1) in the plan header.
+
 
 **PLANIT step 3 — Product statements:** single-step statements one boundary can finish (see [`PROCESS.md`](../../../docs/ai-compiled-systems/PROCESS.md)).
 
@@ -138,7 +143,8 @@ Emit **`## Verdict — Planit plan audit`** per [`operation-verdict-standard.md`
 
 ### PLANIT steps 4–5 — Bind and close gaps
 
-**Step 4 — Bind:** every statement points at requirement ids, ADR ids, and **BBP standard** (always on). No pointer → unbound.
+**Step 4 — Bind:** every statement points at requirement ids, ADR ids, **rule** ids when ADR 0007 applies, and **BBP standard** (always on). No pointer → unbound.
+
 
 **Step 5 — Close gaps:** loop until every statement is bound. **Do not generate yet.**
 
@@ -146,21 +152,32 @@ Emit **`## Verdict — Planit bind gate`** per §4 before PLANIT step 6. On **FA
 
 ---
 
-### AWL Phase 5 — Execute (+ PLANIT 6–7)
+### AWL Phase 5 — Execute (+ PLANIT 6)
 
-Run approved plan steps **in order**.
+Run approved plan steps **in order**. Bind gate must already **PASS**. This phase is generate only — not bind, not prove.
 
 1. **Before each step** — confirm prior stop predicate met; emit §4 verdict when the step blocks downstream work.
 2. **Leaf skill step** — read **`.agents/skills/<name>/SKILL.md`** (or `.cursor/skills/`); run Gate → Procedure; verify leaf output meets §2. Inspect files, diffs, and machine exit codes — do not accept a subagent summary as PASS.
 3. **PLANIT step 6 — Generate:** hub implementation only after charter **ratification** (§6 steps 4–5) unless ADR-exempt. Route **`bbp-proposer`**. BBP-shaped code for bound statements only; humans do not edit output to help audits pass.
-4. **PLANIT step 7 — Prove:** **both** required — (1) **machine gate** (at least check 1: no goal writes noun fields); (2) **adversarial audit** separate from generator. **Hub:** **`bbp-confirmer`** (`bash tools/ci-fitness.sh` + charter §11 with evidence).
-5. **Inline step** — cite commands and exit codes of the **artifact under test**; §4 verdict after machine gates. INCONCLUSIVE is BLOCKED.
-6. **KCR sub-gate** — if step touches durable **ai vault** layers, **stop** until KCR accepted ([`references/knowledge-change-review-standard.md`](references/knowledge-change-review-standard.md)); prefer routing to **`~/.agents/skills/planit`**.
-7. **Failure** — jidoka: stop; RCA if non-trivial ([`references/root-cause-analysis-standard.md`](references/root-cause-analysis-standard.md) or `/conduct-root-cause-analysis`); then PLANIT **1** or **5**, then **6** again. Do not patch generated files to silence audits.
-8. **Handoff between steps** — AWL Appendix D step handoff template.
-9. **Pre-write check** — no durable file write until target artifact’s **Gate** (§2) is defined in plan or draft.
+4. **Inline step** — cite commands and exit codes of the **artifact under test**. INCONCLUSIVE is BLOCKED.
+5. **KCR sub-gate** — if step touches durable **ai vault** layers, **stop** until KCR accepted ([`references/knowledge-change-review-standard.md`](references/knowledge-change-review-standard.md)); prefer routing to **`~/.agents/skills/planit`**.
+6. **Failure** — jidoka: stop; RCA if non-trivial ([`references/root-cause-analysis-standard.md`](references/root-cause-analysis-standard.md) or `/conduct-root-cause-analysis`); then PLANIT **1** or **5**, then **6** again. Do not patch generated files to silence audits.
+7. **Handoff between steps** — AWL Appendix D step handoff template.
+8. **Pre-write check** — no durable file write until target artifact’s **Gate** (§2) is defined in plan or draft.
+
+---
+
+### PLANIT step 7 — Prove (compile, not ship)
+
+**Both** required:
+
+1. **Machine gate** — hub: **`bbp-confirmer`** (`bash tools/ci-fitness.sh` + charter §11 with evidence). Adopter: the fitness suite that tree bound. Exit non-zero = fail.
+2. **Adversarial audit** — separate from the generator: statements done, bindings held, no second copy of an adjective inside a goal.
+
+Compile-green is not released. **Ship** is later: `python3 tools/release-audit.py <tree>` after a human writes `Released-by:` (and `Ratified-by:` when class A/B/D/E/F). Do not treat prove PASS as ship. Do not write those lines as the confirmer.
 
 Emit **`## Verdict — Planit prove`** per §4 when step 7 completes.
+
 
 ---
 
@@ -229,7 +246,9 @@ When no leaf skill fits, execute inline under this procedure with full AWL audit
 - Applicability register closed (AWL Phase 2)
 - Plan audit **PASS** with `GATE-STD` planned — every named step PASS, FAIL, or `skip: <reason>` — §4 verdict before execute
 - Bind gate **PASS** before generate
-- Prove **PASS** (machine + adversarial); hub confirmer output when hub touched
+- Prove **PASS** (machine + adversarial); hub confirmer output when hub touched. Prove is compile, not ship.
+- Ship is optional in this skill: `python3 tools/release-audit.py <tree>` after a human `Released-by:` — not part of process PASS
+
 - Execution audit **PASS** with `GATE-STD` on delivered artifacts; evidence is the artifact under test, not a delegate summary — §4 verdict before record
 - Appendix B meta-audit **PASS** when T2+
 - Phase 7 handoff includes per-artifact gate-standard compliance

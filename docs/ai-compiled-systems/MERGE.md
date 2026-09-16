@@ -57,7 +57,8 @@ Humans do not author noun classes or verb bodies. They hire the compiler.
 
 ## Citizens, by layer
 
-Process citizens (PLANIT): goal, requirement, ADR, interview, RCA.
+Process citizens (PLANIT): goal, requirement, ADR, rule, interview, RCA.
+
 
 Design citizens (BBP): noun, verb, goal-as-boundary, contract, gate.
 
