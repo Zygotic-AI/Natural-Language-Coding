@@ -7,19 +7,15 @@ document the new hole if any remains.
 
 ---
 
-## 1. C17 — tests must cover failure, not just names — DONE
+## 1. C17 — tests must cover failure, not just names — CLOSED
 
-v2: name in tests **and** a test with assertRaises/pytest.raises.
-invoice-correct now has preconditions + failure tests.
-Still does not check adjective *preservation*.
+Success + `assertRaises` + a non-raises test that names an adjective and
+asserts. Execution is CI, not this scanner.
 
----
+## 2. C18 — no goal tests is not “use-case tested” — CLOSED
 
-## 2. C18 — no goal tests is not “use-case tested” — DONE
-
-v2: goal with implementation.py must have tests; those tests must not
-copy adjective tokens. invoice-correct has a use-case test (called
-apply_payment). Still does not prove the test *runs* the goal.
+Goal tests must call a public impl function (`name(`). Copied adjectives
+still fail. Execution is CI.
 
 ---
 

@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
-"""C17 v2: each public verb is named in tests *and* has a failure path.
+"""C17: each verb has success, precondition failure, and adjective preservation.
 
-Failure path: a test function whose body mentions the verb and
-assertRaises / pytest.raises / raises(.
+For each verb in verbs.schema.json:
+  untested-verb            — name never appears in noun tests
+  verb-no-failure-test     — no test that names the verb and assertRaises/raises
+  verb-no-preservation-test — no non-raises test that names the verb, an
+                              adjective token, and an assert
 
-Does not check adjective preservation. Does not run the tests.
+No adjectives.txt → preservation skipped (nothing to preserve).
+Does not execute the tests; CI does.
 
 Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <noun> untested-verb|verb-no-failure-test <verb>
+Output: VIOLATION <noun> <kind> <verb>
 Failure mode: exit 0 = MET; exit 1 = NOT_MET.
 """
 
@@ -22,6 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv"}
 SOURCE_EXTS = {".py", ".ts", ".js"}
 RAISES = re.compile(r"assertRaises|pytest\.raises|\braises\s*\(")
+ASSERT = re.compile(r"\bassert(Equal|NotEqual|True|False)?\b|\b==\b")
 TEST_FN = re.compile(
     r"^(\s*)def\s+(test_[A-Za-z0-9_]+)\s*\([^)]*\)\s*(?:->[^:]*)?:\s*$"
 )
@@ -63,6 +68,18 @@ def verb_names(noun: Path) -> list[str]:
     if not isinstance(verbs, dict):
         return []
     return [str(k) for k in verbs.keys()]
+
+
+def adjectives(noun: Path) -> set[str]:
+    path = noun / "adjectives.txt"
+    if not path.is_file():
+        return set()
+    names = set()
+    for raw in path.read_text(errors="replace").splitlines():
+        line = raw.split("#", 1)[0].strip()
+        if line:
+            names.add(line)
+    return names
 
 
 def test_files(noun: Path) -> list[Path]:
@@ -108,12 +125,22 @@ def test_functions(text: str) -> list[tuple[str, str]]:
     return found
 
 
+def names_adj(body: str, tokens: set[str]) -> bool:
+    for tok in tokens:
+        if re.search(rf"['\"]{re.escape(tok)}['\"]", body) or re.search(
+            rf"\b{re.escape(tok)}\b", body
+        ):
+            return True
+    return False
+
+
 def scan_one(scan_root: Path) -> list[tuple[str, str, str]]:
     violations: list[tuple[str, str, str]] = []
     for noun in noun_dirs(scan_root):
         names = verb_names(noun)
         if not names:
             continue
+        adjs = adjectives(noun)
         fns: list[tuple[str, str]] = []
         blob_parts: list[str] = []
         for path in test_files(noun):
@@ -126,12 +153,19 @@ def scan_one(scan_root: Path) -> list[tuple[str, str, str]]:
                 violations.append((rel(noun), "untested-verb", name))
                 continue
             has_failure = False
+            has_preserve = False
             for _tname, body in fns:
-                if re.search(rf"\b{re.escape(name)}\b", body) and RAISES.search(body):
+                if re.search(rf"\b{re.escape(name)}\b", body) is None:
+                    continue
+                if RAISES.search(body):
                     has_failure = True
-                    break
+                    continue
+                if adjs and names_adj(body, adjs) and ASSERT.search(body):
+                    has_preserve = True
             if not has_failure:
                 violations.append((rel(noun), "verb-no-failure-test", name))
+            if adjs and not has_preserve:
+                violations.append((rel(noun), "verb-no-preservation-test", name))
     return violations
 
 

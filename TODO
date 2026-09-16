@@ -37,8 +37,11 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 
 ## Open — tighten v1 holes
 
-SSOT: [`HOLES.md`](HOLES.md). Next: **11. R32 helpers / R33 ORM**.
+SSOT: [`HOLES.md`](HOLES.md). Next: **C15 nested parens / key used**.
+✔ C17 closed: failure + adjective preservation @done(26-09-15)
+✔ C18 closed: goal test must call the goal @done(26-09-15)
 ✔ C17 v2: each verb has a failure-path test @done(26-09-15)
+
 ✔ C18 v2: goal with code must have a use-case test @done(26-09-15)
 ✔ R32 v2: taint follows aliases in the same function @done(26-09-15)
 ✔ C15 v2: retrying goal must pass an idempotency key @done(26-09-15)

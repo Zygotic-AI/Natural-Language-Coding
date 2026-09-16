@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""C18 v2: a goal with code has a use-case test; that test is not the noun suite.
+"""C18: a goal with code has a use-case test that *calls* the goal.
 
-If goals/<id> has implementation .py and no tests → missing-goal-test.
-If a goal test mentions a token from domain/*/adjectives.txt → copied-adjective.
+missing-goal-test   — implementation.py, no tests
+goal-test-no-call   — tests exist but never call a public function from impl
+copied-adjective    — goal tests mention noun adjective tokens
 
 Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <path> missing-goal-test|copied-adjective <detail>
+Output: VIOLATION <path> <kind> <detail>
 Failure mode: exit 0 = MET; exit 1 = NOT_MET.
 """
 
@@ -18,6 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv"}
 SOURCE_EXTS = {".py", ".ts", ".js"}
+DEF = re.compile(r"^def\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(")
 
 
 def is_skipped(path: Path) -> bool:
@@ -74,6 +76,16 @@ def impl_files(goal: Path) -> list[Path]:
     ]
 
 
+def impl_names(goal: Path) -> list[str]:
+    names: list[str] = []
+    for path in impl_files(goal):
+        for line in path.read_text(errors="replace").splitlines():
+            m = DEF.match(line)
+            if m and not m.group(1).startswith("_"):
+                names.append(m.group(1))
+    return names
+
+
 def test_files(goal: Path) -> list[Path]:
     files: list[Path] = []
     tests = goal / "tests"
@@ -108,6 +120,10 @@ def scan_one(scan_root: Path) -> list[tuple[str, str, str]]:
         if not tests:
             violations.append((rel(goal), "missing-goal-test", goal.name))
             continue
+        names = impl_names(goal)
+        blob = "\n".join(p.read_text(errors="replace") for p in tests)
+        if names and not any(re.search(rf"\b{re.escape(n)}\s*\(", blob) for n in names):
+            violations.append((rel(tests[0]), "goal-test-no-call", names[0]))
         for path in tests:
             text = path.read_text(errors="replace")
             for token in tokens:
