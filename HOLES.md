@@ -76,13 +76,11 @@ Charter-vs-matrix is still R27. Unannotated params skip the type check.
 
 ---
 
-## 10. R4 — “mentions” vs “needs”
+## 10. R4 — “mentions” vs “needs” — DONE
 
-**Today.** Token from `fields.txt` / `adjectives.txt` anywhere in the
-method.
-
-**Tighten.** The verb must *read or write* `self.<field>` (or equivalent),
-not merely mention the word in a string.
+Public verbs must read/write `self.<field>` (or getattr/setattr). String
+mention is not use. Out of reach: whether a *using* verb belongs on this
+noun rather than another.
 
 ---
 

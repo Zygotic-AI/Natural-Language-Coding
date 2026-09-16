@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
-"""R4 v1: a public verb on a noun must mention a field or adjective.
+"""R4: a public verb must read or write noun state, not just mention it.
 
-Methods other than `__init__` / `_private` whose body never contains a token
-from fields.txt or adjectives.txt do not belong on the noun.
+Charter: if a verb does not need the noun's adjective/field set, it does
+not belong on the noun.
 
-No fields.txt and no adjectives.txt → skip (MET).
+A public method (not __init__ / _private) must access `self.<token>` or
+`this.<token>` or getattr/setattr(self, "<token>") for a name in
+fields.txt or adjectives.txt. A string that merely contains the word is
+not enough.
+
+No lists → skip (MET). Cannot prove a *using* verb is in the right
+bounded context — only that it touches this noun's state.
 
 Input: optional argv roots. No args → hub ROOT.
 Output: VIOLATION <path> stray-verb <name>
@@ -19,7 +25,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv", "tests"}
-DEF = re.compile(r"^(\s*)def\s+([A-Za-z_][A-Za-z0-9_]*)\s*\([^)]*\)\s*(?:->[^:]*)?:\s*$")
+IDENT = r"[A-Za-z_][A-Za-z0-9_]*"
+DEF = re.compile(rf"^(\s*)def\s+({IDENT})\s*\([^)]*\)\s*(?:->[^:]*)?:\s*$")
+ACCESS = re.compile(rf"\b(self|this)\s*\.\s*({IDENT})\b")
+ATTR = re.compile(
+    rf"""\b(?:getattr|setattr)\(\s*(?:self|this)\s*,\s*['\"]({IDENT})['\"]"""
+)
 
 
 def is_skipped(path: Path) -> bool:
@@ -86,11 +97,12 @@ def methods(text: str) -> list[tuple[str, str]]:
     return found
 
 
-def uses_token(body: str, names: set[str]) -> bool:
-    for token in names:
-        if re.search(rf"\b{re.escape(token)}\b", body):
+def uses_state(body: str, names: set[str]) -> bool:
+    for match in ACCESS.finditer(body):
+        if match.group(2) in names:
             return True
-        if f'"{token}"' in body or f"'{token}'" in body:
+    for match in ATTR.finditer(body):
+        if match.group(1) in names:
             return True
     return False
 
@@ -110,7 +122,7 @@ def scan_one(scan_root: Path) -> list[tuple[str, str]]:
             for name, body in methods(text):
                 if name.startswith("_"):
                     continue
-                if not uses_token(body, names):
+                if not uses_state(body, names):
                     violations.append((rel(path), name))
     return violations
 

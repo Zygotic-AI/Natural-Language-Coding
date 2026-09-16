@@ -59,6 +59,7 @@ for a in \
   tools/assert-c24-fails.py \
   tools/assert-c3-fails.py \
   tools/assert-r4-fails.py \
+  tools/assert-r4-mention-fails.py \
   tools/assert-c13-fails.py \
   tools/assert-c10-fails.py \
   tools/assert-c22-fails.py \

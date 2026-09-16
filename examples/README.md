@@ -81,3 +81,4 @@ Do not commit the JSON that command prints.
 | [`product-no-confirm/`](product-no-confirm/) | C1 product tree, no CONFIRM.md |
 | [`schema-field-missing/`](schema-field-missing/) | R20 required field absent from verb |
 | [`schema-type-mismatch/`](schema-type-mismatch/) | R20 integer vs str |
+| [`mention-only-verb/`](mention-only-verb/) | R4 string mention is not use |
