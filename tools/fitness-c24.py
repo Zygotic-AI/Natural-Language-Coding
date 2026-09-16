@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
-"""C24 v2: classes A/B/D/E/F record ratification; product trees need a note.
+"""C24: classes A/B/D/E/F need Ratified-by: a human, not the agent.
 
-No note on a product tree → missing-confirm. Specimens skip.
-Class C with a note → skip ratification.
+missing-confirm      — product tree, no note
+missing-ratification — class A/B/D/E/F, no `Ratified-by:` line
+agent-ratified       — Ratified-by names the agent / AI / bot / confirmer
+
+Class C → skip. Specimens without a note skip.
+This is not a cryptographic signature. It is “the bot did not sign for you.”
 """
 
 from __future__ import annotations
@@ -17,7 +21,11 @@ import product_tree  # noqa: E402
 
 NOTES = ("PROPOSAL.md", "CONFIRM.md")
 CLASS = re.compile(r"change\s*class\s*[:*\s]*([ABDEF])\b", re.I)
-RATIFY = re.compile(r"\bratify|\bratification\b", re.I)
+RATIFIED = re.compile(r"^Ratified-by:\s*(.*)$", re.I | re.M)
+AGENT = re.compile(
+    r"\b(agent|ai|bot|assistant|grok|confirmer|bbp-confirmer|claude|gpt|copilot)\b",
+    re.I,
+)
 
 
 def rel(path: Path) -> str:
@@ -38,8 +46,13 @@ def scan_one(scan_root: Path) -> list[tuple[str, str]]:
         text = path.read_text(errors="replace")
         if CLASS.search(text) is None:
             continue
-        if RATIFY.search(text) is None:
+        m = RATIFIED.search(text)
+        if m is None:
             missing.append((rel(path), "missing-ratification"))
+            continue
+        name = m.group(1).strip()
+        if not name or AGENT.search(name):
+            missing.append((rel(path), "agent-ratified"))
     return missing
 
 

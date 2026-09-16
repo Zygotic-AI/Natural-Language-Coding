@@ -115,3 +115,4 @@ SSOT: [`HOLES.md`](HOLES.md). Next: none — remaining leftovers are out of reac
 
 ✔ R20/R15/R32/R33/C10 closed @done(26-09-16)
 ✔ R32 cross-file taint + C1 wrong-class (charter vs C) @done(26-09-16)
+✔ C24 refuses agent self-ratification @done(26-09-16)

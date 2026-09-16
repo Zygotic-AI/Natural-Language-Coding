@@ -94,3 +94,4 @@ Do not commit the JSON that command prints.
 | [`breaking-no-adr/`](breaking-no-adr/) | C10 version 1 dropped a required field |
 | [`card-taint-crossfile/`](card-taint-crossfile/) | R32 taint through a helper in another file |
 | [`class-c-on-charter/`](class-c-on-charter/) | C1 class C while CHARTER.md is in the change |
+| [`agent-ratified/`](agent-ratified/) | C24 confirmer signed Ratified-by |
