@@ -19,7 +19,8 @@ for a static gate (judgment, a human, or code we do not have).
 
 | R4 read/write self.field | CLOSED. Out of reach: verb belongs on *this* noun. |
 | R1 / C3 / P2 | Out of reach: “would this noun be a lie”, “related”, every human action gated. |
-| R32 third-party packages | Out of reach. |
+| Ship | `python3 tools/release-audit.py <tree>` is the pipeline hook. Compile-green ≠ released. |
+
 
 Work one item per pass. Don’t mint new matrix ids unless the charter
 gained a new promise.
