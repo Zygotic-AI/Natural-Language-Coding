@@ -25,6 +25,9 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`missing-change-class/`](missing-change-class/) | C1 no change class A–F |
 | [`copied-goal-helper/`](copied-goal-helper/) | R15 helper copied into two goals |
 | [`workflow-as-goal/`](workflow-as-goal/) | R17 workflows/ clones a goal |
+| [`noun-retries/`](noun-retries/) | R18 retry loop on the noun |
+| [`retrying-goal/`](retrying-goal/) | C15 retrying goal, verb not idempotent |
+
 
 
 

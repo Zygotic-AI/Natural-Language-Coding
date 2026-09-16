@@ -7,11 +7,8 @@ Status SSOT: [`binding-matrix.json`](binding-matrix.json).
 Classification: R1 R2 R3 R4 R16 C2 C3 C13 C22 C23 C24.
 
 Contracts leftover: C7 C8 C10 C11.
-
-Composition: R18 C15.
-
-
 Integrity: P2 R20.
+
 
 R32/C25 (taint) and R33/C26 (escape) are bound v1.
 
