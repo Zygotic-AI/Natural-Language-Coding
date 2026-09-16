@@ -33,6 +33,9 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 ✔ R4 v1: public verbs must mention a field or adjective @done(26-09-15)
 ✔ C7/C8/C11 cousin binds; C13/R16 v1 wrapper-goal with no I/O @done(26-09-15)
 ✔ R1/R2/P2/R20 cousin binds; C10 v1 version≠1 needs an ADR @done(26-09-15)
+✔ C22/C23 v1: confirmer records C22; FINDINGS.md open items must be rebutted @done(26-09-15)
+
+
 
 
 
