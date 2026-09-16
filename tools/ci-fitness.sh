@@ -46,7 +46,10 @@ for a in \
   tools/assert-r15-fails.py \
   tools/assert-r17-fails.py \
   tools/assert-r18-fails.py \
-  tools/assert-c15-fails.py
+  tools/assert-c15-fails.py \
+  tools/assert-c2-fails.py \
+  tools/assert-c24-fails.py
+
 
 
 
@@ -91,7 +94,10 @@ for t in \
   tools/fitness-r15-copied-helpers.py \
   tools/fitness-r17-workflow-citizen.py \
   tools/fitness-r18-noun-retries.py \
-  tools/fitness-c15-idempotent.py
+  tools/fitness-c15-idempotent.py \
+  tools/fitness-c2.py \
+  tools/fitness-c24.py
+
 
 
 

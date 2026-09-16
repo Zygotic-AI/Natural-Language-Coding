@@ -2,15 +2,17 @@
 
 - Requirement: `C2`
 - Outcome: **met** | **not met** only
+- Gate: `tools/fitness-c2.py`
 
 ## Statement
 
 Adjectives live on the noun named in C1, not in a goal folder.
 
-## Binary criteria
+## V1 bind
 
-Met iff a gate (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no gate ran, gate failed, or evidence is missing.
+`adjectives.txt` and `fields.txt` must not appear under `goals/`.
 
-## Evidence
+Does not parse the noun named in C1.
 
-On met or not met, cite file and symbol (or N/A reason). List failing ids when the audit is a matrix audit.
+Designed fail: `examples/adjectives-in-goal/`.
+Designed pass: `examples/invoice-correct/`.
