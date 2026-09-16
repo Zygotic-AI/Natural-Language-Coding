@@ -2,11 +2,6 @@
 
 - Requirement: `C7`
 - Outcome: **met** | **not met** only
+- Gate: `tools/fitness-contract-presence.py`
 
-## Statement
-
-Each changed public goal has input and output schemas.
-
-## V1
-
-Same tool as A-R9. Change-scoped "each changed" is not implemented; v1 is tree-wide presence. C7 stays unbound.
+Cousin of R9. Tree-wide schema presence, not diff-scoped “changed.”

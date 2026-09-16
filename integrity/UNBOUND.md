@@ -4,18 +4,9 @@ Status SSOT: [`binding-matrix.json`](binding-matrix.json).
 
 ## Keep unbound (no honest v1 yet)
 
-Classification: R1 R2 R16 C13 C22 C23.
-
-
-
-
-Contracts leftover: C7 C8 C10 C11.
+Classification: R1 R2.
 Integrity: P2 R20.
+Still git/diff: C10 C22 C23.
 
-
-R32/C25 (taint) and R33/C26 (escape) are bound v1.
-
-
-C17 v1 is name-in-tests only, not success/precondition/preservation.
-C18 v1 is adjective tokens in goal tests, not “the use-case is tested.”
-
+C7/C8/C11 are bound as tree-wide cousins (not “changed”).
+C13/R16 v1 is one-verb + no schemas; `invoice-correct` has schemas so it passes.

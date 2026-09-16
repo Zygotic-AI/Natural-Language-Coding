@@ -31,6 +31,9 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 ✔ C2 adjectives not in goals/; C24 class A/B/D/E/F records ratification @done(26-09-15)
 ✔ C3/R3 v1: a noun must not call another noun’s verb @done(26-09-15)
 ✔ R4 v1: public verbs must mention a field or adjective @done(26-09-15)
+✔ C7/C8/C11 cousin binds; C13/R16 v1 wrapper-goal with no I/O @done(26-09-15)
+
+
 
 
 
