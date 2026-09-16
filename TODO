@@ -25,6 +25,9 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 ✔ R32/C25 taint + R33/C26 escape promoted from A5/A7 and bound @done(26-09-15)
 ✔ R12 v1: public contract JSON carries a version field @done(26-09-15)
 ✔ C1 v1: proposal/confirm states change class A–F @done(26-09-15)
+✔ R15 v1: same helper body must not be copied into two goals @done(26-09-15)
+
+
 
 
 

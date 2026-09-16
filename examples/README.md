@@ -23,6 +23,8 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`missing-failure-mode/`](missing-failure-mode/) | P4/R31 failure mode |
 | [`unversioned-contract/`](unversioned-contract/) | R12 schema has no version |
 | [`missing-change-class/`](missing-change-class/) | C1 no change class A–F |
+| [`copied-goal-helper/`](copied-goal-helper/) | R15 helper copied into two goals |
+
 
 
 
