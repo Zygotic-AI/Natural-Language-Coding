@@ -9,7 +9,8 @@ Contracts leftover: R12 C7 C8 C10 C11.
 Composition: R15 R17 R18 C15.
 Integrity: P2 R20.
 
-A5 (taint) and A7 (escape hatch) have v1 tools. They are **not** matrix ids.
+R32/C25 (taint) and R33/C26 (escape) are bound v1.
+
 
 C17 v1 is name-in-tests only, not success/precondition/preservation.
 C18 v1 is adjective tokens in goal tests, not “the use-case is tested.”

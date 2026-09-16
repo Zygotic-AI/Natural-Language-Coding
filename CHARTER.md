@@ -254,7 +254,12 @@ Rules are written so an implementing agent can confirm or fail them. “Should�
 
 **R25.** Tests for a noun’s adjectives live next to the noun and run on every verb. Goal tests do not replace them.
 
+**R32.** A sensitive adjective listed in `taint.txt` may cross one boundary: the consuming verb. It is not returned, stored on another object, or passed to another boundary.
+
+**R33.** Noun state is not mutated through non-OO escape hatches (`__dict__`, `vars()`, `exec()`, `eval()`, or equivalent reflection) from outside a published verb.
+
 ### 5.8 Practice integrity (zero variance)
+
 
 Ratified by [`adrs/0001-zero-variance-integrity.md`](adrs/0001-zero-variance-integrity.md). P2 scope: [`adrs/0002-p2-scope.md`](adrs/0002-p2-scope.md). Detail: [`integrity/PRINCIPLES.md`](integrity/PRINCIPLES.md). Matrix: [`integrity/binding-matrix.json`](integrity/binding-matrix.json).
 
@@ -562,8 +567,11 @@ An implementing agent must print this list with `PASS`, `FAIL`, or `N/A` and a p
 - [ ] C17. Every new verb has tests for success, precondition failure, and adjective preservation.
 - [ ] C18. Goal tests cover the use-case, not a copy of the noun’s adjective suite.
 - [ ] C19. No second implementation of the same adjective exists in the diff (search for duplicated predicates).
+- [ ] C25. Sensitive adjectives fetched in a unit are not returned, stored, or passed across another boundary.
+- [ ] C26. No `__dict__` / `vars()` / `exec()` / `eval()` (or equivalent) mutates noun state from outside a published verb.
 
 ### Integrity of the change
+
 
 - [ ] C20. Fitness / lint rules for R23 and R24 passed.
 - [ ] C21. Impact list in the proposal matches generated callers of the changed verbs/goals.
@@ -571,7 +579,8 @@ An implementing agent must print this list with `PASS`, `FAIL`, or `N/A` and a p
 - [ ] C23. Adversarial review findings are all fixed or explicitly rebutted.
 - [ ] C24. Ratification is recorded for classes that require it.
 
-If C4, C5, C9, C16, C19, or C20 fail, the change is not complete.
+If C4, C5, C9, C16, C19, C20, C25, or C26 fail, the change is not complete.
+
 
 ---
 
