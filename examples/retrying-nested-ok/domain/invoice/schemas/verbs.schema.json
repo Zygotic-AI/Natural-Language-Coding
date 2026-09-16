@@ -1,0 +1,17 @@
+{
+  "version": "1",
+  "verbs": {
+    "apply_payment": {
+      "idempotent": true,
+      "input": {
+        "type": "object",
+        "required": ["amount", "idempotency_key"],
+        "properties": {
+          "amount": { "type": "integer" },
+          "idempotency_key": { "type": "string" }
+        }
+      },
+      "output": { "type": "object" }
+    }
+  }
+}

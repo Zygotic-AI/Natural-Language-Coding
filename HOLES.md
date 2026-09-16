@@ -26,11 +26,10 @@ tokens) fail on return/store/pass. Still does not follow helpers.
 
 ---
 
-## 4. C15 — idempotency *key*, not only a flag — DONE
+## 4. C15 — idempotency *key*, not only a flag — CLOSED
 
-v2: retrying goal needs `"idempotent": true`, the key in the schema, and
-`idempotency_key=` at the call. Nested parens not parsed. invoice-correct
-has no retry marker → skip.
+Nested parens parsed. Call must pass the key; the verb body must use it.
+No retry → skip.
 
 ---
 

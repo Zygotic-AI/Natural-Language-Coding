@@ -45,6 +45,8 @@ done
 echo "=== changed-only-ok must MET on C7/C11 ==="
 python3 tools/fitness-contract-presence.py examples/changed-only-ok || fail "C7 on changed-only-ok"
 python3 tools/fitness-r13-entrypoints.py examples/changed-only-ok || fail "C11 on changed-only-ok"
+echo "=== retrying-nested-ok must MET on C15 ==="
+python3 tools/fitness-c15-idempotent.py examples/retrying-nested-ok || fail "C15 on retrying-nested-ok"
 
 echo "=== binding matrix ==="
 python3 tools/audit-binding-matrix.py || fail "binding matrix"
