@@ -1,30 +1,7 @@
-# TODO — Boundary-Based Programming
+# TODO
 
-SSOT for open work. Charter SSOT is `CHARTER.md`.
+Open work SSOT: [`FINDINGS.md`](FINDINGS.md).
 
-## How to read red vs green
+Charter SSOT: `CHARTER.md`.
 
-Designed red: matching tool on its specimen → NOT_MET.
-Assert-fails scripts → exit 0 ASSERT:PASS.
-Designed pass: invoice-correct MET; assert-impact-graph-generated.py ASSERT:PASS.
-True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its own tool.
-
----
-
-## Completed product slice
-
-In-reach v1/v2 gates, hub CI, release-audit, matrix bound. Log: git history.
-HOLES.md names what a static gate cannot do.
-
-## Open — not now
-
-SSOT: [`HOLES.md`](HOLES.md) (judgment / human). Next implementation is **not** more Python gates.
-
-## Backlog
-
-- **Language scanner** — parked. Spec first, then a thin adapter. Do not fork `fitness-*.py` per language. SSOT: [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md).
-- **Rule IR / call-tree gate** — parked. ADR 0007–0010 accepted. Primitives SSOT: [`integrity/primitives.md`](integrity/primitives.md). No **R** id until bindable.
-- **Use-cases** — SSOT: [`docs/USE-CASES.md`](docs/USE-CASES.md). **Needed:** UC9 full delta-regen, UC14 rule-conflict at adopt, UC15 bootstrap, UC18 fact SSOT, UC19 worked PCI reduction. Parked: language scanner, rule IR.
-
-
-
+How to read red vs green (hub CI): designed red on its specimen → NOT_MET; assert-fails → ASSERT:PASS; invoice-correct MET; true miss = invoice-correct red or a specimen green on its own tool.
