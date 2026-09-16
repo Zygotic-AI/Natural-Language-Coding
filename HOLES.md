@@ -69,14 +69,10 @@ checked for *correctness*.
 
 ---
 
-## 9. R20 — schema field vs code
+## 9. R20 — schema field vs code — DONE
 
-**Today.** Charter ids sit in the matrix. A schema `amount: integer` vs
-code `amount: str` still passes.
-
-**Tighten.** For each `verbs.schema.json` required field, the verb’s
-signature or body must name that field. Complementary to R11 (type
-identity across files).
+v2: required fields named in the verb; annotated types must match JSON.
+Charter-vs-matrix is still R27. Unannotated params skip the type check.
 
 ---
 
