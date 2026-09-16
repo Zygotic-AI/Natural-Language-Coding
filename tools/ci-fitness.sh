@@ -35,7 +35,9 @@ for a in \
   tools/assert-taint-violation-fails.py \
   tools/assert-escape-hatch-violation-fails.py \
   tools/assert-duplicated-adjective-fails.py \
-  tools/assert-r13-fails.py
+  tools/assert-r13-fails.py \
+  tools/assert-c21-fails.py
+
 
 do
   echo "--- $a ---"
@@ -58,6 +60,8 @@ for t in \
   tools/fitness-escape-hatch.py \
   tools/fitness-duplicated-adjective.py \
   tools/fitness-r13-entrypoints.py \
+  tools/fitness-c21.py \
+  tools/fitness-goal-imports.py \
   tools/fitness-c20.py \
   tools/fitness-p4-r31.py
 

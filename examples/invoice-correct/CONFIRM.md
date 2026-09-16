@@ -73,7 +73,8 @@ Format: `Cx — PASS|FAIL|N/A — reason — file:line` (file:line omitted only 
 ### Integrity of the change
 
 - C20 — PASS — Gate 1 (R23 field-write surface) RESULT:MET for this tree; R24 adjective-locality linter not installed in hub (N/A portion noted) — tools/fitness-no-noun-field-writes.py (run above)
-- C21 — N/A — No proposal impact list or generated caller graph for this fixture
+- C21 — PASS — Generated caller `invoice.apply_payment` is named in this note (header + this line) — examples/invoice-correct/goals/record-bank-payment/implementation.py:5
+
 - C22 — N/A — Fixture-only tree; no charter/ADR/contract edits in scope of this confirmer pass
 - C23 — N/A — No adversarial review findings file for this fixture template
 - C24 — N/A — No ratification log required for this teaching fixture (not a class A/B/D/E/F product change)
