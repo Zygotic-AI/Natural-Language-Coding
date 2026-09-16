@@ -4,7 +4,8 @@ Status SSOT: [`binding-matrix.json`](binding-matrix.json).
 
 ## Keep unbound (no honest v1 yet)
 
-Classification: R1 R2 R4 R16 C13 C22 C23.
+Classification: R1 R2 R16 C13 C22 C23.
+
 
 
 
