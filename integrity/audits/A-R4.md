@@ -2,15 +2,18 @@
 
 - Requirement: `R4`
 - Outcome: **met** | **not met** only
+- Gate: `tools/fitness-r4.py`
 
 ## Statement
 
 If a verb does not need the noun's adjective set, it does not belong on the noun.
 
-## Binary criteria
+## V1 bind
 
-Met iff a gate (CI check, confirmer step, or fitness tool) has verified this requirement against the current change and recorded PASS with evidence. Not met if no gate ran, gate failed, or evidence is missing.
+Public methods (not `__init__` / `_private`) must mention a token from
+`fields.txt` or `adjectives.txt`.
 
-## Evidence
+No field/adjective lists → skip (MET). Token presence, not that the verb *needs* the adjective.
 
-On met or not met, cite file and symbol (or N/A reason). List failing ids when the audit is a matrix audit.
+Designed fail: `examples/stray-verb/`.
+Designed pass: `examples/invoice-correct/`.

@@ -49,7 +49,9 @@ for a in \
   tools/assert-c15-fails.py \
   tools/assert-c2-fails.py \
   tools/assert-c24-fails.py \
-  tools/assert-c3-fails.py
+  tools/assert-c3-fails.py \
+  tools/assert-r4-fails.py
+
 
 
 
@@ -99,7 +101,9 @@ for t in \
   tools/fitness-c15-idempotent.py \
   tools/fitness-c2.py \
   tools/fitness-c24.py \
-  tools/fitness-c3.py
+  tools/fitness-c3.py \
+  tools/fitness-r4.py
+
 
 
 
