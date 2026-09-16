@@ -39,7 +39,9 @@ for a in \
   tools/assert-c21-fails.py \
   tools/assert-r25-fails.py \
   tools/assert-c16-fails.py \
-  tools/assert-c17-fails.py
+  tools/assert-c17-fails.py \
+  tools/assert-c18-fails.py
+
 
 
 
@@ -71,7 +73,9 @@ for t in \
   tools/fitness-p4-r31.py \
   tools/fitness-r25-noun-tests.py \
   tools/fitness-c16.py \
-  tools/fitness-c17.py
+  tools/fitness-c17.py \
+  tools/fitness-c18.py
+
 
 
 

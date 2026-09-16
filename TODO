@@ -21,6 +21,9 @@ True miss: invoice-correct red, assert-fails exit 1, or a specimen green on its 
 ✔ C14 → goal-imports; C21 v1 impact-list vs generated callers @done(26-09-15)
 ✔ R8 cousin to field-writes; R25 v1 tests next to noun @done(26-09-15)
 ✔ C16/C17 v1 name-in-tests; C19 skips test files @done(26-09-15)
+✔ C18 v1: goal tests must not copy noun adjective tokens @done(26-09-15)
+
+
 
 
 

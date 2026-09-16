@@ -18,7 +18,9 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`noun-without-tests/`](noun-without-tests/) | R25 no tests next to noun |
 | [`adjective-untested/`](adjective-untested/) | C16 adjective never named in tests |
 | [`verb-untested/`](verb-untested/) | C17 verb never named in tests |
+| [`goal-tests-copy-adjectives/`](goal-tests-copy-adjectives/) | C18 goal tests copy noun adjectives |
 | [`missing-failure-mode/`](missing-failure-mode/) | P4/R31 failure mode |
+
 
 
 
