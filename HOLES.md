@@ -30,13 +30,11 @@ tokens) fail on return/store/pass. Still does not follow helpers.
 
 ---
 
-## 4. C15 — idempotency *key*, not only a flag
+## 4. C15 — idempotency *key*, not only a flag — DONE
 
-**Today.** Retrying goal + `"idempotent": true` on the verb. A key argument
-is not required or checked.
-
-**Tighten.** Retrying goal must pass a named key (`idempotency_key` /
-`idempotent_key`) that the verb schema declares.
+v2: retrying goal needs `"idempotent": true`, the key in the schema, and
+`idempotency_key=` at the call. Nested parens not parsed. invoice-correct
+has no retry marker → skip.
 
 ---
 

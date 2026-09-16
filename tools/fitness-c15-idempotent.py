@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""C15 v1: a retrying goal must call verbs marked idempotent.
+"""C15 v2: a retrying goal must call an idempotent verb *and* pass a key.
 
-If a goal .py contains retry/temporalio/durable/`for attempt in`, each
-`obj.verb(` call must have `"idempotent": true` on that verb in some
-domain/*/schemas/verbs.schema.json.
+If a goal .py contains retry/temporalio/durable/`for attempt in`:
+  missing-idempotent     — called verb lacks `"idempotent": true`
+  missing-key-in-schema  — verb is idempotent but schema does not declare
+                           idempotency_key / idempotent_key
+  missing-idempotency-key — call site does not pass that key by name
 
 No retry marker → skip (MET).
 
 Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <goal> missing-idempotent <verb>
+Output: VIOLATION <goal> <kind> <verb>
 Failure mode: exit 0 = MET; exit 1 = NOT_MET.
 """
 
@@ -22,8 +24,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv", "tests"}
 RETRY = re.compile(r"\b(retry|temporalio|durable)\b|for\s+attempt\s+in", re.I)
-CALL = re.compile(r"\b[A-Za-z_][A-Za-z0-9_]*\.([A-Za-z_][A-Za-z0-9_]*)\s*\(")
+CALL = re.compile(
+    r"\b[A-Za-z_][A-Za-z0-9_]*\.([A-Za-z_][A-Za-z0-9_]*)\s*\(([^)]*)\)"
+)
 SKIP_VERBS = {"print", "append", "get", "set", "update"}
+KEY_NAMES = ("idempotency_key", "idempotent_key")
+KEY_ARG = re.compile(r"\b(idempotency_key|idempotent_key)\s*=")
 
 
 def is_skipped(path: Path) -> bool:
@@ -50,8 +56,8 @@ def collect(root: Path, name: str) -> list[Path]:
     return found
 
 
-def idempotent_verbs(root: Path) -> set[str]:
-    names: set[str] = set()
+def verb_specs(root: Path) -> dict[str, dict]:
+    specs: dict[str, dict] = {}
     for domain in collect(root, "domain"):
         for schema in domain.rglob("verbs.schema.json"):
             try:
@@ -62,9 +68,21 @@ def idempotent_verbs(root: Path) -> set[str]:
             if not isinstance(verbs, dict):
                 continue
             for key, spec in verbs.items():
-                if isinstance(spec, dict) and spec.get("idempotent") is True:
-                    names.add(str(key))
-    return names
+                if isinstance(spec, dict):
+                    specs[str(key)] = spec
+    return specs
+
+
+def schema_has_key(spec: dict) -> bool:
+    inp = spec.get("input")
+    if not isinstance(inp, dict):
+        return False
+    required = inp.get("required") or []
+    props = inp.get("properties") or {}
+    for name in KEY_NAMES:
+        if name in required or name in props:
+            return True
+    return spec.get("idempotency_key") is True
 
 
 def goal_py(root: Path) -> list[Path]:
@@ -77,9 +95,9 @@ def goal_py(root: Path) -> list[Path]:
     return files
 
 
-def scan_one(scan_root: Path) -> list[tuple[str, str]]:
-    marked = idempotent_verbs(scan_root)
-    violations = []
+def scan_one(scan_root: Path) -> list[tuple[str, str, str]]:
+    specs = verb_specs(scan_root)
+    violations: list[tuple[str, str, str]] = []
     for path in goal_py(scan_root):
         text = path.read_text(errors="replace")
         body = "\n".join(
@@ -88,11 +106,17 @@ def scan_one(scan_root: Path) -> list[tuple[str, str]]:
         if RETRY.search(body) is None:
             continue
         for match in CALL.finditer(body):
-            verb = match.group(1)
+            verb, args = match.group(1), match.group(2)
             if verb in SKIP_VERBS:
                 continue
-            if verb not in marked:
-                violations.append((rel(path), verb))
+            spec = specs.get(verb)
+            if not isinstance(spec, dict) or spec.get("idempotent") is not True:
+                violations.append((rel(path), "missing-idempotent", verb))
+                continue
+            if not schema_has_key(spec):
+                violations.append((rel(path), "missing-key-in-schema", verb))
+            if KEY_ARG.search(args) is None:
+                violations.append((rel(path), "missing-idempotency-key", verb))
     return violations
 
 
@@ -110,8 +134,8 @@ def main() -> int:
                 continue
             seen.add(item)
             printed.append(item)
-            path, verb = item
-            print(f"VIOLATION {path} missing-idempotent {verb}")
+            path, kind, verb = item
+            print(f"VIOLATION {path} {kind} {verb}")
     if printed:
         print("RESULT:NOT_MET")
         return 1

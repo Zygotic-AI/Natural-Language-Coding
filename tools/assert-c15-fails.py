@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Known-fail fixture gate for C15 v1."""
+"""Known-fail fixture gate for C15 missing idempotent flag."""
 
 from __future__ import annotations
 
@@ -28,17 +28,17 @@ def main() -> int:
         return 1
     fitness = load_fitness()
     violations = fitness.scan_one(FIXTURE.resolve())
-    for path, verb in violations:
-        print(f"VIOLATION {path} missing-idempotent {verb}")
+    for path, kind, verb in violations:
+        print(f"VIOLATION {path} {kind} {verb}")
     if not violations:
         print("RESULT:MET")
         print("ASSERT:FAIL fixture is clean")
         return 1
     print("RESULT:NOT_MET")
-    if not any(v[1] == "apply_payment" for v in violations):
-        print("ASSERT:FAIL expected apply_payment")
+    if not any(v[1] == "missing-idempotent" and v[2] == "apply_payment" for v in violations):
+        print("ASSERT:FAIL expected missing-idempotent apply_payment")
         return 1
-    print("ASSERT:PASS fixture still fails C15 v1")
+    print("ASSERT:PASS fixture still fails C15 (missing-idempotent)")
     return 0
 
 
