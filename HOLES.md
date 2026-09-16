@@ -23,13 +23,10 @@ apply_payment). Still does not prove the test *runs* the goal.
 
 ---
 
-## 3. R32 / C25 — taint across statements
+## 3. R32 / C25 — taint across statements — DONE
 
-**Today.** `return card_number` fails; `n = card.get_number(); return n`
-does not.
-
-**Tighten.** Same-function assignment then return/store/pass of a tainted
-name. Still not full dataflow.
+v2: same-function aliases from `get_`/`read_`/`export_` (and from taint
+tokens) fail on return/store/pass. Still does not follow helpers.
 
 ---
 

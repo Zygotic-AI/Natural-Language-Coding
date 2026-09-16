@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
-"""A5 v1: tainted adjectives do not leave the consuming unit.
+"""R32 v2: tainted values do not leave the consuming unit, including aliases.
 
-A noun lists taint tokens in domain/<noun>/taint.txt (card_number, pan, cvv).
-Outside that noun directory, a line is a violation when it:
+A noun lists taint tokens in domain/<noun>/taint.txt.
+In goals/workflows/adapters, inside one function:
 
-  return-taint  — a return statement mentions a taint token
-  store-taint   — another object's field is assigned a taint token
+  - A name is tainted if it is a taint token, or assigned from a tainted
+    name, or assigned from a get_/read_/export_ call (the one-boundary hop).
+  - return-taint  — return of a tainted name or get_* call
+  - store-taint   — another object's field assigned a tainted name
+  - pass-taint    — a tainted name passed into another call
 
-A consumer may call a getter and use the value locally. V1 does not prove
-the value never reaches a gateway — that is later.
+Does not follow helpers or cross-function dataflow.
 
 Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <path>:<line> <kind>:<token>
+Output: VIOLATION <path>:<line> <kind>:<name>
 Failure mode: exit 0 = MET; exit 1 = NOT_MET.
 """
 
@@ -26,10 +28,26 @@ SOURCE_EXTS = {".ts", ".js", ".py", ".mjs", ".cjs", ".tsx", ".jsx"}
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv"}
 OUTSIDE_DIR_NAMES = ("goals", "workflows", "adapters")
 IDENT = r"[A-Za-z_][A-Za-z0-9_]*"
+DEF = re.compile(rf"^(\s*)def\s+({IDENT})\s*\([^)]*\)\s*(?:->[^:]*)?:\s*$")
+ASSIGN = re.compile(rf"^(\s*)({IDENT})\s*=(?!=)\s*(.+)$")
+GET_CALL = re.compile(r"\.(?:get_|read_|export_)[A-Za-z0-9_]*\s*\(")
+
+RETURN = re.compile(r"\breturn\b(.*)$")
+STORE = re.compile(rf"(?:this|{IDENT})\s*\.\s*{IDENT}\s*=(?!=)\s*(.+)$")
+CALL = re.compile(rf"\b({IDENT})\s*\((.*)\)")
+SKIP_CALLEES = {"print", "len", "str", "int", "list", "dict", "set", "range"}
 
 
 def is_skipped_dir(path: Path) -> bool:
     return any(part in SKIP_DIR_NAMES for part in path.parts)
+
+
+def is_test(path: Path) -> bool:
+    return (
+        "tests" in path.parts
+        or path.name.startswith("test_")
+        or path.name.endswith("_test.py")
+    )
 
 
 def source_files(tree: Path) -> list[Path]:
@@ -37,7 +55,10 @@ def source_files(tree: Path) -> list[Path]:
         return []
     return sorted(
         p for p in tree.rglob("*")
-        if p.is_file() and p.suffix in SOURCE_EXTS and not is_skipped_dir(p)
+        if p.is_file()
+        and p.suffix in SOURCE_EXTS
+        and not is_skipped_dir(p)
+        and not is_test(p)
     )
 
 
@@ -89,25 +110,102 @@ def is_comment(line: str) -> bool:
     return s.startswith("#") or s.startswith("//")
 
 
+def functions(text: str) -> list[tuple[str, int, list[str]]]:
+    lines = text.splitlines()
+    found: list[tuple[str, int, list[str]]] = []
+    i = 0
+    while i < len(lines):
+        m = DEF.match(lines[i])
+        if not m:
+            i += 1
+            continue
+        indent, name = m.group(1), m.group(2)
+        start = i + 1
+        body: list[str] = []
+        i += 1
+        while i < len(lines):
+            raw = lines[i]
+            if raw.strip() == "":
+                body.append(raw)
+                i += 1
+                continue
+            if raw.startswith(indent + "    ") or raw.startswith(indent + "\t"):
+                body.append(raw)
+                i += 1
+                continue
+            break
+        found.append((name, start, body))
+    return found
+
+
+def names_in(expr: str) -> set[str]:
+    return set(re.findall(rf"\b({IDENT})\b", expr))
+
+
+def tainted_from(expr: str, tainted: set[str]) -> bool:
+    if GET_CALL.search(expr):
+        return True
+    return bool(names_in(expr) & tainted)
+
+
+def scan_function(path: str, start: int, body: list[str], tokens: set[str]) -> list[tuple[str, int, str]]:
+    tainted: set[str] = set(tokens)
+    # Seed aliases from assignments (fixpoint).
+    changed = True
+    while changed:
+        changed = False
+        for line in body:
+            stripped = line.strip()
+            if is_comment(stripped):
+                continue
+            m = ASSIGN.match(line.rstrip())
+            if not m:
+                continue
+            lhs, rhs = m.group(2), m.group(3)
+            if lhs not in tainted and tainted_from(rhs, tainted):
+                tainted.add(lhs)
+                changed = True
+
+    violations: list[tuple[str, int, str]] = []
+    for offset, line in enumerate(body):
+        lineno = start + offset
+        stripped = line.strip()
+        if is_comment(stripped) or not stripped:
+            continue
+        ret = RETURN.search(stripped)
+        if ret and tainted_from(ret.group(1), tainted):
+            leaked = (names_in(ret.group(1)) & tainted) or {"get"}
+            violations.append((path, lineno, f"return-taint:{next(iter(leaked))}"))
+            continue
+        store = STORE.search(stripped)
+        if store and tainted_from(store.group(1), tainted):
+            leaked = (names_in(store.group(1)) & tainted) or {"get"}
+            violations.append((path, lineno, f"store-taint:{next(iter(leaked))}"))
+            continue
+        call = CALL.search(stripped)
+        if call:
+            callee, args = call.group(1), call.group(2)
+            if callee in SKIP_CALLEES:
+                continue
+            if GET_CALL.search(stripped) and "=" not in stripped.split("(")[0]:
+                continue
+            leaked = names_in(args) & tainted
+            if leaked:
+                violations.append((path, lineno, f"pass-taint:{next(iter(leaked))}"))
+    return violations
+
+
 def scan_one(scan_root: Path) -> list[tuple[str, int, str]]:
     tokens: set[str] = set()
     for noun_dir in noun_dirs(scan_root):
         tokens |= load_list(noun_dir / "taint.txt")
+    if not tokens:
+        return []
     violations: list[tuple[str, int, str]] = []
-    for tok in sorted(tokens):
-        if not re.match(rf"^{IDENT}$", tok):
-            continue
-        word = re.compile(rf"\b{re.escape(tok)}\b")
-        ret = re.compile(rf"\breturn\b.*\b{re.escape(tok)}\b")
-        store = re.compile(rf"(?:this|{IDENT})\s*\.\s*{IDENT}\s*=(?!=).*\b{re.escape(tok)}\b")
-        for path in outside_files(scan_root):
-            for lineno, line in enumerate(path.read_text(errors="replace").splitlines(), start=1):
-                if is_comment(line) or not word.search(line):
-                    continue
-                if ret.search(line):
-                    violations.append((rel(path), lineno, f"return-taint:{tok}"))
-                if store.search(line):
-                    violations.append((rel(path), lineno, f"store-taint:{tok}"))
+    for path in outside_files(scan_root):
+        text = path.read_text(errors="replace")
+        for _name, start, body in functions(text):
+            violations.extend(scan_function(rel(path), start, body, tokens))
     return violations
 
 

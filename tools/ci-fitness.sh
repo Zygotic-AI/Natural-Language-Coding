@@ -33,6 +33,7 @@ for a in \
   tools/assert-schema-identity-fails.py \
   tools/assert-boundary-io-fails.py \
   tools/assert-taint-violation-fails.py \
+  tools/assert-taint-alias-fails.py \
   tools/assert-escape-hatch-violation-fails.py \
   tools/assert-duplicated-adjective-fails.py \
   tools/assert-r13-fails.py \
