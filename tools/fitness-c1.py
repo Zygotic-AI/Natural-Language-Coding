@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""C1 v2: product trees have a note that states change class A–F.
+"""C1: product trees have a note; class letter matches the change set.
 
-No note on a product tree (goals/ or domain/, not a specimen) → missing-confirm.
-Specimens (README Specimen / Designed red / Known-fail) still skip.
-
-Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <path> missing-confirm|missing-change-class
-Failure mode: exit 0 = MET; exit 1 = NOT_MET.
+missing-confirm      — product tree, no note
+missing-change-class — note exists, no A–F
+wrong-class          — change set includes CHARTER/adrs but class is C
 """
+
 
 from __future__ import annotations
 
@@ -18,9 +16,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import product_tree  # noqa: E402
+import changeset  # noqa: E402
 
 NOTES = ("PROPOSAL.md", "CONFIRM.md")
-CLASS = re.compile(r"change\s*class\s*[:*\s]*[A-F]\b", re.I)
+CLASS = re.compile(r"change\s*class\s*[:*\s]*([A-F])\b", re.I)
+
 
 
 def rel(path: Path) -> str:
@@ -41,11 +41,18 @@ def scan_one(scan_root: Path) -> list[tuple[str, str]]:
             return [(rel(scan_root / "CONFIRM.md"), "missing-confirm")]
         return []
     missing = []
+    changed = changeset.changed_paths(scan_root, ROOT)
+    charter_touch = bool(changed) and any(changeset.is_charter_path(c) for c in changed)
     for path in notes:
         text = path.read_text(errors="replace")
-        if CLASS.search(text) is None:
+        m = CLASS.search(text)
+        if m is None:
             missing.append((rel(path), "missing-change-class"))
+            continue
+        if charter_touch and m.group(1).upper() == "C":
+            missing.append((rel(path), "wrong-class"))
     return missing
+
 
 
 def main() -> int:

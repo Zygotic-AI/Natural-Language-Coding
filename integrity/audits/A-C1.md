@@ -8,14 +8,13 @@
 
 Change class (A–F) is stated.
 
-## V2 bind
+## Bind
 
-Product trees (`goals/` or `domain/`, README not a specimen) must have
-CONFIRM.md/PROPOSAL.md stating `change class` + A–F.
+Product trees need CONFIRM.md/PROPOSAL.md with `change class` + A–F.
+If the change set includes CHARTER.md/adrs/, class **C** is wrong-class.
 
-Specimens skip if they have no note.
+Specimens skip if they have no note. Does not prove A vs B vs D.
 
-Does not check the class is *correct*.
-
-Designed fail: `examples/missing-change-class/`, `examples/product-no-confirm/`.
+Designed fail: `examples/missing-change-class/`, `examples/product-no-confirm/`,
+`examples/class-c-on-charter/`.
 Designed pass: `examples/invoice-correct/`.

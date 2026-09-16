@@ -1,21 +1,13 @@
 #!/usr/bin/env python3
-"""R32 v2: tainted values do not leave the consuming unit, including aliases.
+"""R32: tainted values do not leave the consuming unit.
 
-A noun lists taint tokens in domain/<noun>/taint.txt.
-In goals/workflows/adapters, inside one function:
+Same-file and other files under goals/adapters/workflows: a helper that
+returns taint taints its callers. Nested imports that call that helper
+name are followed when the helper is in the scan root.
 
-  - A name is tainted if it is a taint token, or assigned from a tainted
-    name, or assigned from a get_/read_/export_ call (the one-boundary hop).
-  - return-taint  — return of a tainted name or get_* call
-  - store-taint   — another object's field assigned a tainted name
-  - pass-taint    — a tainted name passed into another call
-
-Does not follow helpers or cross-function dataflow.
-
-Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <path>:<line> <kind>:<name>
-Failure mode: exit 0 = MET; exit 1 = NOT_MET.
+Out of reach: helpers outside the scan root / third-party packages.
 """
+
 
 from __future__ import annotations
 
@@ -238,23 +230,27 @@ def scan_one(scan_root: Path) -> list[tuple[str, int, str]]:
         tokens |= load_list(noun_dir / "taint.txt")
     if not tokens:
         return []
-    violations: list[tuple[str, int, str]] = []
+    files = []
     for path in outside_files(scan_root):
         text = path.read_text(errors="replace")
-        fns = functions(text)
-        taint_fns: set[str] = set()
-        changed = True
-        while changed:
-            changed = False
+        files.append((path, text, functions(text)))
+    taint_fns: set[str] = set()
+    changed = True
+    while changed:
+        changed = False
+        for _path, _text, fns in files:
             for name, _start, body in fns:
                 if name in taint_fns:
                     continue
                 if function_returns_taint(body, tokens, taint_fns):
                     taint_fns.add(name)
                     changed = True
+    violations: list[tuple[str, int, str]] = []
+    for path, _text, fns in files:
         for name, start, body in fns:
             violations.extend(scan_function(rel(path), start, body, tokens, taint_fns))
     return violations
+
 
 
 def main() -> int:
