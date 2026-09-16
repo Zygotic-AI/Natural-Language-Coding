@@ -30,6 +30,7 @@ for a in \
   tools/assert-verb-path-violation-fails.py \
   tools/assert-adjective-locality-violation-fails.py \
   tools/assert-contract-presence-fails.py \
+  tools/assert-changed-missing-fails.py \
   tools/assert-schema-identity-fails.py \
   tools/assert-boundary-io-fails.py \
   tools/assert-taint-violation-fails.py \
@@ -138,6 +139,10 @@ do
   echo "--- $t $CORRECT ---"
   python3 "$t" "$CORRECT" || fail "$t on invoice-correct"
 done
+
+echo "=== changed-only-ok must MET on C7/C11 ==="
+python3 tools/fitness-contract-presence.py examples/changed-only-ok || fail "C7 on changed-only-ok"
+python3 tools/fitness-r13-entrypoints.py examples/changed-only-ok || fail "C11 on changed-only-ok"
 
 echo "=== binding matrix ==="
 python3 tools/audit-binding-matrix.py || fail "binding matrix"

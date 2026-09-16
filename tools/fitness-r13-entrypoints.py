@@ -1,15 +1,10 @@
 #!/usr/bin/env python3
-"""R13 v1: one public entrypoint file per goal directory.
+"""R13/C11 v2: one public entrypoint file per *changed* goal directory.
 
-Counts files whose stem is implementation|run|main|index|handler|entry|public
-inside goals/<id>/. Two or more is a second door.
-
-Does not parse exports. C11 stays unbound (diff-scoped).
-
-Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <goal> extra-entrypoint <file> ...
-Failure mode: exit 0 = MET; exit 1 = NOT_MET.
+If CONFIRM has CHANGED: (or git is dirty under the scan root), only touched
+goals are checked. No list and clean git → tree-wide.
 """
+
 
 from __future__ import annotations
 
@@ -17,6 +12,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import changeset  # noqa: E402
+
 SOURCE_EXTS = {".ts", ".js", ".py", ".mjs", ".cjs", ".tsx", ".jsx"}
 ENTRY_STEMS = {"implementation", "run", "main", "index", "handler", "entry", "public"}
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv"}
@@ -48,7 +46,10 @@ def goal_dirs(root: Path) -> list[Path]:
 
 def scan_one(scan_root: Path) -> list[tuple[str, list[str]]]:
     violations = []
+    changed = changeset.changed_paths(scan_root, ROOT)
     for goal in goal_dirs(scan_root):
+        if changed is not None and not changeset.unit_touched(goal, changed, scan_root, ROOT):
+            continue
         entries = sorted(
             p.name
             for p in goal.iterdir()
@@ -57,6 +58,7 @@ def scan_one(scan_root: Path) -> list[tuple[str, list[str]]]:
         if len(entries) > 1:
             violations.append((rel(goal), entries))
     return violations
+
 
 
 def main() -> int:

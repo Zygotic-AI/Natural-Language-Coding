@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
-"""R9/R10/C7/C8 v1: public entrypoints have schema files.
+"""R9/R10/C7/C8 v2: public entrypoints have schema files.
 
-Not a semantic contract checker. V1 only proves files exist and parse.
+If CONFIRM has a CHANGED: list (or git is dirty under the scan root), only
+touched goal/noun dirs are checked. No list and clean git → tree-wide.
 
-Goals: goals/<id>/ with *.py needs input.schema.json and output.schema.json.
-Nouns: domain/<noun>/ with *.py needs schemas/verbs.schema.json declaring
-at least one verb with input and output.
-
-Input: optional argv roots. No args → hub ROOT.
-Output: VIOLATION <path> <kind>
-Failure mode: exit 0 = MET; exit 1 = NOT_MET.
+Not a semantic contract checker. Files must exist and parse.
 """
+
 
 from __future__ import annotations
 
@@ -19,6 +15,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import changeset  # noqa: E402
+
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv", "tests"}
 
 
@@ -77,8 +76,11 @@ def noun_schema_ok(data: dict) -> bool:
 
 def scan_one(scan_root: Path) -> list[tuple[str, str]]:
     violations: list[tuple[str, str]] = []
+    changed = changeset.changed_paths(scan_root, ROOT)
     for goal in collect_named_children(scan_root, "goals"):
         if not has_py(goal):
+            continue
+        if changed is not None and not changeset.unit_touched(goal, changed, scan_root, ROOT):
             continue
         for name, kind in (("input.schema.json", "missing-goal-input"), ("output.schema.json", "missing-goal-output")):
             path = goal / name
@@ -87,11 +89,14 @@ def scan_one(scan_root: Path) -> list[tuple[str, str]]:
     for noun in collect_named_children(scan_root, "domain"):
         if not has_py(noun):
             continue
+        if changed is not None and not changeset.unit_touched(noun, changed, scan_root, ROOT):
+            continue
         schema = noun / "schemas" / "verbs.schema.json"
         data = load_json(schema) if schema.is_file() else None
         if data is None or not noun_schema_ok(data):
             violations.append((rel(schema), "missing-noun-verbs-schema"))
     return violations
+
 
 
 def main() -> int:
