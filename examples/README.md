@@ -41,6 +41,7 @@ These trees exist so a gate has something to scan. They are not an invoice app.
 | [`wrapper-goal/`](wrapper-goal/) | C13/R16 one-verb goal, no I/O schemas |
 | [`version-bump-no-adr/`](version-bump-no-adr/) | C10 version 2, no ADR |
 | [`missing-c22/`](missing-c22/) | C22 no same-change line |
+| [`c22-na-with-both/`](c22-na-with-both/) | C22 N/A with charter and code |
 | [`open-findings/`](open-findings/) | C23 open FINDINGS.md checkbox |
 
 

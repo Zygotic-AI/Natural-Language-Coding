@@ -38,14 +38,10 @@ has no retry marker → skip.
 
 ---
 
-## 5. C22 — same change, actually
+## 5. C22 — same change, actually — DONE
 
-**Today.** Confirmer contains `C22 — PASS|N/A`. No git.
-
-**Tighten.** If the diff (or a named file list in the note) touches
-`CHARTER.md` / `adrs/` / `*.schema.json` / `domain|goals`, the other
-affected sides must appear in that same change. Needs git or an explicit
-file list the confirmer cites that we stat.
+v2: N/A is illegal when the tree has CHARTER/adrs *and* goals/domain
+source. PASS must cite existing paths. Still does not inspect git.
 
 ---
 

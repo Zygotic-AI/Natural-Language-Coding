@@ -58,6 +58,7 @@ for a in \
   tools/assert-c13-fails.py \
   tools/assert-c10-fails.py \
   tools/assert-c22-fails.py \
+  tools/assert-c22-na-fails.py \
   tools/assert-c23-fails.py
 
 
