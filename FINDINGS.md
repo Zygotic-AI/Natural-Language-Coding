@@ -51,9 +51,10 @@ Reviewers treat the parked rows as **findings** until those gates exist.
 | Item | Note |
 |------|------|
 | ADR 0004, 0005 | Status still `needs_review` (AIMS leftover). |
-| Repo name | GitHub is still Boundary-Based-Architecture; practice name is ACS + BBP + PLANIT. |
+| Repo name | GitHub: `Zygotic-AI/Natural-Language-Coding`. Consumer brand: NLC (ADR 0011). |
 | Dual PLANIT | `~/.agents/skills/planit` vs this repo. Prefer newer is a wish, not a gate. |
-| Interview skill | UC1 still thin pointers. |
+| Interview skill | `/interview` skill added; deepen pattern catalog empirically (UC1). |
+| UC15 bootstrap | Doc + template stub shipped; no one-shot CLI yet. |
 
 ---
 

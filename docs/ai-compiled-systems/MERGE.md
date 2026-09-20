@@ -6,7 +6,7 @@ Two layers of one architecture. Not two competing sources of truth.
 
 - **PLANIT** — process. How work is interviewed, planned, bound, generated, audited, and sent back through RCA.
 - **BBP** — design. The shape generated code must have.
-- **ACS** — the name for both layers together.
+- **NLC** — product umbrella; **compiler** + **compiled system** per ADR 0011 (legacy “ACS = both” retired).
 
 PLANIT does not replace BBP. BBP is the instruction set the process is not allowed to skip.
 

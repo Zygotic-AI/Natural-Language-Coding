@@ -20,35 +20,35 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 
 **Naming reconciliation (blocks consistent consumer docs):**
 
-- ☐ ADR or `docs/ai-compiled-systems/NAMES.md` pass: retire “ACS = whole product”; **NLC** = umbrella; **compiled system** (optional acronym **ACS** = artifact only) vs **AI system compiler** (optional **ASC** = engine). Align `README.md`, `DESCRIBE.md`, `FINDINGS.md` repo-name row.
-- ☐ Tagline SSOT (one line): problem-first, no acronym soup—candidate direction: *describe outcomes and rules in plain language; get a gated, boundary-shaped system—or a failed compile you can trust.*
-- ☐ Glossary page or README § “Words we use” (NLC, compiler, compiled system, BBA/BBP, `/interview`, `/planit`; PLANIT as process name optional for consumers).
+- ✔ ADR 0011 + `NAMES.md` + `README.md` / `DESCRIBE.md` / `FINDINGS.md` @done(26-09-20 08:15)
+- ✔ Tagline in root `README.md` @done(26-09-20 08:15)
+- ✔ [`GLOSSARY.md`](docs/ai-compiled-systems/GLOSSARY.md) @done(26-09-20 08:15)
 
 **README + first-run (consumer front door):**
 
-- ☐ Rewrite root `README.md`: title **Natural Language Coding**; tagline; 2–3 paragraphs (problem → how you work → what you get); three-layer table; “not for you if…”; link to charter for adopters.
-- ☐ **Quick install** — `curl -fsSL …/install.sh | bash` (macOS / Linux / WSL only until PowerShell exists); installs or syncs portable skills (`.agents/skills/`), repo-local Cursor skills (`.cursor/skills/` or documented copy), and prints harness prerequisites (Cursor + Agent chat minimum).
+- ✔ Consumer `README.md` rewrite @done(26-09-20 08:15)
+- ✔ [`scripts/install.sh`](scripts/install.sh) + curl one-liner (mac/linux/WSL) @done(26-09-20 08:15)
 - ☐ **Quick install (Windows)** — `install.ps1` or documented gap + issue link if deferred.
 - ☐ Pin install URL to tagged release (not floating `main`) once release story exists (`FINDINGS.md` Ship row).
-- ☐ “5-minute path” doc: clone or install → open app repo → `/interview` → `/planit` → where green/red output lives (`ci-fitness.sh`, `release-audit.py`).
+- ✔ [`GETTING-STARTED.md`](docs/ai-compiled-systems/GETTING-STARTED.md) @done(26-09-20 08:15)
 - ✔ Manifesto + intent/quality/how-it-codes pages @done(26-09-17 10:15) — [`MANIFESTO.md`](docs/ai-compiled-systems/MANIFESTO.md), [`INTENT-SURFACE.md`](docs/ai-compiled-systems/INTENT-SURFACE.md), [`QUALITY-PROCESSES.md`](docs/ai-compiled-systems/QUALITY-PROCESSES.md), [`HOW-IT-CODES.md`](docs/ai-compiled-systems/HOW-IT-CODES.md).
 
 **Slash commands / skills (UC1 + UC2 consumer UX):**
 
-- ☐ **`/interview` skill** — dedicated entry (today interview is thin / folded into Planit Phase 1; `FINDINGS.md` Interview skill row, UC1). Gate: outcome + bound goals, requirements, and knowledge domains before handoff to `/planit`.
-- ☐ **`/planit` consumer doc** — one page: when to invoke after interview; what “prove” means; no vault maintainer routes.
-- ☐ Skill discovery: ensure `.cursor/skills` symlink to `.agents/skills` per portable SSOT; document Customize → Skills after install.
+- ✔ **`/interview` skill** v1 @done(26-09-20 08:15) — [`.agents/skills/interview/SKILL.md`](.agents/skills/interview/SKILL.md); deepen UC1 catalog in use.
+- ✔ **`/planit` consumer path** via GETTING-STARTED + PROCESS @done(26-09-20 08:15)
+- ✔ `.cursor/skills` → `.agents/skills` symlink; install script documents next steps @done(26-09-20 08:15)
 
 **Adopt a real application repo (UC15 — required for “use it on my app”):**
 
-- ☐ Bootstrap kit: minimal `domain/`, `goals/`, charter hook, CI wiring—not only `examples/invoice-*` teaching tree.
-- ☐ Document: hub repo vs adopter repo layout (charter §8); what install puts on disk vs what lives in the app repo.
+- ☐ Bootstrap kit: generated `domain/` + `goals/` skeleton CLI (doc + [`templates/adopter/`](templates/adopter/) stub only for now).
+- ✔ [`docs/adoption/BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) hub vs adopter @done(26-09-20 08:15)
 
 **Product spine gaps (consumer-visible if we promise compile):** see [`FINDINGS.md`](FINDINGS.md) Needed table—track here for visibility:
 
 - ☐ UC9 full delta-regen when a requirement changes
 - ☐ UC14 contradictory rules fail at adopt-time
-- ☐ UC15 second-repo bootstrap (kit above)
+- ☐ UC15 second-repo bootstrap (CLI kit; doc shipped)
 - ☐ UC18 fact SSOT beyond ADR prose
 - ☐ UC19 one worked PCI (or equivalent) UC3→UC5 walkthrough for marketing + onboarding
 

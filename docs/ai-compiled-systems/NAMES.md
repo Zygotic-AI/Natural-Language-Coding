@@ -1,14 +1,18 @@
-# Three names
+# Names
 
-Use these on purpose. Do not stack them as if they were synonyms.
+Use these on purpose ([ADR 0011](../../adrs/0011-natural-language-coding-naming.md)). Do not stack them as synonyms.
 
 | Say | When |
-|-----|------|
-| **ACS** | The product story: intent in, compiled system out. |
-| **BBP** | The code shape: noun / verb / adjective / goal. |
-| **PLANIT** | The loop that produces that shape from an interview. |
+| ----- | ---- |
+| **NLC** | The product: Natural Language Coding. |
+| **Compiler** | Interview → plan → bind → generate → prove. Optional **ASC** in integrator docs only. |
+| **Compiled system** | Runnable output in an adopter repo. Optional **ACS** = artifact only. |
+| **BBP** | Emit shape: noun / verb / adjective / goal. |
+| **PLANIT** | The orchestrated loop; `/planit` in Cursor. |
 
-Retired in running prose: BBA (same as BBP), AIMS (folded into ACS + PLANIT), workflow-as-peer (goals may call goals).
+Consumer glossary: [GLOSSARY.md](GLOSSARY.md).
+
+Retired in running prose: **ACS = whole product**; BBA as consumer hero (use BBP/BBA under the covers); AIMS (folded into NLC + PLANIT); workflow-as-peer (goals may call goals).
 
 ## Id prefixes (P, R, C)
 
@@ -20,5 +24,4 @@ Retired in running prose: BBA (same as BBP), AIMS (folded into ACS + PLANIT), wo
 
 Also: **S**/**CS** (agent-noun structure), **Q** (quality metric).
 
-Specimens in `examples/` are not ACS applications. They exist so a gate can go red or green.
-
+Specimens in `examples/` are not compiled systems. They exist so a gate can go red or green.

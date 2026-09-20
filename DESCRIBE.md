@@ -2,7 +2,7 @@
 
 ## What this repo is
 
-Single source of truth for **Boundary-Based Programming** (BBP): theory → agentic application → tools. Tagline: stopping agents from shipping slop. Stand-alone branding: no foreign brand packages in integrity; copy and re/unbrand if a shape is useful.
+**Natural Language Coding (NLC)** hub: goals and requirements in; compiler out a BBP-shaped **compiled system** or refuse. BBP/BBA remain the design SSOT under the covers (`CHARTER.md`, `integrity/`). Tagline (consumer): stopping agents from shipping slop by compiling intent, not patching emit. Stand-alone branding: no foreign brand packages in integrity; copy and re/unbrand if a shape is useful. Naming: ADR 0011, [`docs/ai-compiled-systems/GLOSSARY.md`](docs/ai-compiled-systems/GLOSSARY.md).
 
 ## Core model (short)
 

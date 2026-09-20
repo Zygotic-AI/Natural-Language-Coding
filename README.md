@@ -1,34 +1,57 @@
-# Boundary-Based Architecture
+# Natural Language Coding
 
-**Locally green, globally wrong — stopped.**
+**Describe outcomes and rules in plain language—get a gated, boundary-shaped system, or a failed compile you can trust.**
 
-Agents write code that is correct in one file and false across the system. This repo is the compile gate for that failure: small boundaries, adjectives on the noun, verbs as the only mutation path, requirements bound before generate.
+Agents make one file green and fork the business rule next door. Natural Language Coding (NLC) stops that at the compile gate: you state **what** the software must do (goals) and **how** it must behave (requirements, ADRs, adopted rules, knowledge domains). The **compiler** emits and proves a **compiled system** in your repo—or refuses with evidence.
 
-## Three names
+## How you work
 
-| Name | What it is | What it is not |
-|------|------------|----------------|
-| **ACS** — AI-Compiled Systems | The whole thing. Goals and requirements in; BBP-shaped system out, or the build fails. | Not “AI manages my cluster.” |
-| **BBP** — Boundary-Based Programming | The *shape* the compiler must emit. Nouns, verbs, adjectives, goals. | Not an invoice app. `examples/` are specimens for the gates. |
-| **PLANIT** | The *process*: load, interview, plan, bind, close gaps, generate, prove. | Not a second charter. |
+1. **Install** the hub skills and tools (macOS, Linux, or WSL):
 
-Charter SSOT: [`CHARTER.md`](CHARTER.md). Process pages: [`docs/ai-compiled-systems/`](docs/ai-compiled-systems/). Name card: [`docs/ai-compiled-systems/NAMES.md`](docs/ai-compiled-systems/NAMES.md).
+   ```bash
+   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
+   ```
 
-**P / R / C** on rule ids: **P**rinciple (hub honesty), **R**equirement (charter shape), **C**onfirmation (this change). Hyphenated `P-020` is a different series.
+   Or clone this repo and run `bash scripts/install.sh` from the root.
+
+2. **Open your application repo** in [Cursor](https://cursor.com) (Agent chat).
+
+3. Run **`/interview`** (or start Planit interview) until goals, requirements, and knowledge domains are bound.
+
+4. Run **`/planit`** to plan, bind, generate one artifact at a time, gate, and prove.
+
+Compile green is not release. Ship requires human `Released-by:` per [`tools/release-audit.py`](tools/release-audit.py).
+
+## Three layers
+
+| Layer | You say | What it is |
+| ----- | ------- | ---------- |
+| **NLC** | Natural Language Coding | The product: intent in, compile or refuse. |
+| **Compiler** | AI system compiler | PLANIT + agent harness + [`tools/`](tools/) gates. |
+| **Compiled system** | Your app tree | BBP-shaped code in *your* repo—not [`examples/`](examples/) (those are gate specimens). |
+
+Under the covers: boundary-based architecture ([`CHARTER.md`](CHARTER.md)). Glossary: [`docs/ai-compiled-systems/GLOSSARY.md`](docs/ai-compiled-systems/GLOSSARY.md).
 
 ## Start here
 
 | Artifact | Role |
-|----------|------|
-| [`CHARTER.md`](CHARTER.md) | Rules |
-| [`docs/ai-compiled-systems/`](docs/ai-compiled-systems/) | ACS + PLANIT |
-| [`examples/`](examples/) | Specimens the gates scan |
-| [`tools/`](tools/) | Gates and the impact-graph generator |
-| [`TODO`](TODO) | Open work |
-| [`DESCRIBE.md`](DESCRIBE.md) | Repo memory for agents |
+| -------- | ---- |
+| [`docs/ai-compiled-systems/GETTING-STARTED.md`](docs/ai-compiled-systems/GETTING-STARTED.md) | Install, `/interview`, `/planit`, fitness |
+| [`docs/ai-compiled-systems/MANIFESTO.md`](docs/ai-compiled-systems/MANIFESTO.md) | Why intent is the product |
+| [`docs/adoption/BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) | Adopt NLC in a new app repo (UC15) |
+| [`CHARTER.md`](CHARTER.md) | Design rules (adopters) |
+| [`docs/USE-CASES.md`](docs/USE-CASES.md) | What the practice does |
+| [`FINDINGS.md`](FINDINGS.md) | Open product gaps |
+| [`TODO`](TODO) | Hub task queue |
 
-This repo is a practice hub. Adopting application repos follow charter §8 (`domain/`, `goals/`, …). They do not copy `examples/invoice-*` as a product.
+## Not for you if
+
+- You want to hand-edit generated noun code to stay green without changing intent.
+- You need a finished low-code UI today—several compile-spine use-cases are still open ([`FINDINGS.md`](FINDINGS.md)).
+- You only want CI lint rules without goals, requirements, and prove/ship separation.
 
 ## Status
 
-Working charter. Not a ratified organizational standard. Adoption “done” is charter §14.
+Working charter and hub gates. Not a ratified organizational standard. Adoption “done” is charter §14.
+
+**P / R / C** on rule ids: **P**rinciple, **R**equirement, **C**onfirmation. Hyphenated `P-020` is operating policy in the bindings companion repo.
