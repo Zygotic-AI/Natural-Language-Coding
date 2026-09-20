@@ -95,7 +95,7 @@ Follow AWL **Appendix C** and [`references/information-completion-contract.md`](
 **PLANIT step 1 — Interview** (start; may continue into Phase 3):
 
 1. Outcome, not feature list. Stop when goals and constraints can be named. Incomplete interview → **no plan**.
-2. knowledge-steward **`load-shelf`** / **`flag-gap`** before generate; new facts via **`propose-fact`**. SSOT: [`agents/knowledge-steward/AGENT.md`](../../../agents/knowledge-steward/AGENT.md).
+2. knowledge-steward **`load-knowledge-domain`** / **`flag-gap`** before generate; new facts via **`propose-fact`**. SSOT: [`agents/knowledge-steward/AGENT.md`](../../../agents/knowledge-steward/AGENT.md).
 
 ---
 
@@ -159,14 +159,16 @@ Run approved plan steps **in order**. Bind gate must already **PASS**. This phas
 
 1. **Before each step** — confirm prior stop predicate met; emit §4 verdict when the step blocks downstream work.
 2. **Leaf skill step** — read **`.agents/skills/<name>/SKILL.md`** (or `.cursor/skills/`); run Gate → Procedure; verify leaf output meets §2. Inspect files, diffs, and machine exit codes — do not accept a subagent summary as PASS.
-3. **PLANIT step 6 — Generate:** hub implementation only after charter **ratification** (§6 steps 4–5) unless ADR-exempt. Route **`bbp-proposer`**. **One artifact.** Metrics for that artifact must already be in the plan ([ADR 0010](../../../adrs/0010-gate-after-every-generate.md)). Primitive I/O only via [`integrity/primitives.md`](../../../integrity/primitives.md) names ([ADR 0009](../../../adrs/0009-primitive-interior-functions.md)). Humans do not edit output to help audits pass.
-4. **PLANIT step 6.5 — Gate that artifact:** run the named metrics immediately. Default fail. FAIL → stop; do not start the next row. PASS → next statement only.
+3. **Before PLANIT step 6 — Knowledge domain (UC18):** run `python3 tools/nlc-before-generate.py --repo <tree> --scope …` for every scope the plan touches. **FAIL** → PLANIT 1 or 5. See [`references/nlc-before-generate.md`](references/nlc-before-generate.md).
+4. **Requirement / contract change (UC9):** if this step is regen after an ADR/rule/verb change, run `python3 tools/nlc-delta-regen.py` first and execute its `steps` in order.
+5. **PLANIT step 6 — Generate:** hub implementation only after charter **ratification** (§6 steps 4–5) unless ADR-exempt. Route **`bbp-proposer`**. **One artifact.** Metrics for that artifact must already be in the plan ([ADR 0010](../../../adrs/0010-gate-after-every-generate.md)). Primitive I/O only via [`integrity/primitives.md`](../../../integrity/primitives.md) names ([ADR 0009](../../../adrs/0009-primitive-interior-functions.md)). Humans do not edit output to help audits pass.
+6. **PLANIT step 6.5 — Gate that artifact:** run the named metrics immediately. Default fail. FAIL → stop; do not start the next row. PASS → next statement only.
 
-4. **Inline step** — cite commands and exit codes of the **artifact under test**. INCONCLUSIVE is BLOCKED.
-5. **KCR sub-gate** — if step touches durable **ai vault** layers, **stop** until KCR accepted ([`references/knowledge-change-review-standard.md`](references/knowledge-change-review-standard.md)); prefer routing to **`~/.agents/skills/planit`**.
-6. **Failure** — jidoka: stop; RCA if non-trivial ([`references/root-cause-analysis-standard.md`](references/root-cause-analysis-standard.md) or `/conduct-root-cause-analysis`); then PLANIT **1** or **5**, then **6** again. Do not patch generated files to silence audits.
-7. **Handoff between steps** — AWL Appendix D step handoff template.
-8. **Pre-write check** — no durable file write until target artifact’s **Gate** (§2) is defined in plan or draft.
+7. **Inline step** — cite commands and exit codes of the **artifact under test**. INCONCLUSIVE is BLOCKED.
+8. **KCR sub-gate** — if step touches durable **ai vault** layers, **stop** until KCR accepted ([`references/knowledge-change-review-standard.md`](references/knowledge-change-review-standard.md)); prefer routing to **`~/.agents/skills/planit`**.
+9. **Failure** — jidoka: stop; RCA if non-trivial ([`references/root-cause-analysis-standard.md`](references/root-cause-analysis-standard.md) or `/conduct-root-cause-analysis`); then PLANIT **1** or **5**, then **6** again. Do not patch generated files to silence audits.
+10. **Handoff between steps** — AWL Appendix D step handoff template.
+11. **Pre-write check** — no durable file write until target artifact’s **Gate** (§2) is defined in plan or draft.
 
 ---
 
@@ -174,7 +176,7 @@ Run approved plan steps **in order**. Bind gate must already **PASS**. This phas
 
 **Both** required:
 
-1. **Machine gate** — hub: **`bbp-confirmer`** (`bash tools/ci-fitness.sh` + charter §11 with evidence). Adopter: the fitness suite that tree bound. Exit non-zero = fail.
+1. **Machine gate** — hub: **`bbp-confirmer`** (`python3 tools/ci_fitness.py` + charter §11 with evidence). Adopter: the fitness suite that tree bound. Exit non-zero = fail.
 2. **Adversarial audit** — separate from the generator: statements done, bindings held, no second copy of an adjective inside a goal.
 
 Compile-green is not released. **Ship** is later: `python3 tools/release-audit.py <tree>` after a human writes `Released-by:` (and `Ratified-by:` when class A/B/D/E/F). Do not treat prove PASS as ship. Do not write those lines as the confirmer.
@@ -223,7 +225,7 @@ Emit **`## Verdict — Planit process`** (process-level §5 rollup). **PASS** on
 | Adversarial review | `bbp-reviewer` |
 | Prove + hub fitness | `bbp-confirmer` |
 | ADR / record | `bbp-recorder` |
-| Shelf facts / gaps | `agents/knowledge-steward` |
+| Knowledge domain facts / gaps | `agents/knowledge-steward` |
 | Root cause | `/conduct-root-cause-analysis` or `references/root-cause-analysis-standard.md` |
 | DSI, greenfield WO, make-a-skill, ai vault `local-*` | **`~/.agents/skills/planit`** |
 

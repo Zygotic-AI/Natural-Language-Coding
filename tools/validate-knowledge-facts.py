@@ -9,11 +9,15 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from nlc_requirements import hub_tool  # noqa: E402
+
 ID_RE = re.compile(r"^KF-[a-z0-9][a-z0-9-]*$", re.I)
 STATUSES = frozenset({"proposed", "confirmed", "superseded"})
 
 
 def main() -> int:
+    hub_tool()
     root = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.cwd()
     path = root / "knowledge" / "facts.json"
     if not path.is_file():

@@ -57,7 +57,7 @@ These are not a someday list. The spine does not close without them.
 | UC14 edge cases | Composable obligations and cross-primitive policy need richer IR over time. |
 
 | UC15 brownfield | Automated inventory/migration not shipped. |
-| UC18 steward wire-up | `load-shelf` should read `facts.json` by default in adopters (documented; full agent wire optional). |
+| UC18 steward wire-up | Agents should invoke `load-knowledge-domain` / `tools/load-knowledge-domain.py` before generate. |
 | UC19 full PCI | PAN example is normative shape, not certification. |
 
 Parked (needed at expansion, not now): UC16 language scanner, Rule IR for UC4/UC5.

@@ -10,7 +10,7 @@ Agent noun for the knowledge domain the interview must consult. Not a second cha
 
 ## Adjectives
 
-1. **Shelf is not the charter.** Rules live in `CHARTER.md` and ADRs. Facts live here. Do not smuggle an R* into a fact card.
+1. **Knowledge domain is not the charter.** Rules live in `CHARTER.md` and ADRs. Facts live in `knowledge/facts.json`. Do not smuggle an R* into a fact card.
 
 2. **Facts are confirmed.** A new fact is a proposal until a human manager accepts it. The steward does not ratify its own facts.
 
@@ -30,7 +30,7 @@ See [`verbs.md`](verbs.md).
 
 | Verb | Kind | Purpose |
 |------|------|---------|
-| `load-shelf` | query | Facts in scope; read `knowledge/facts.json` (confirmed) for adopters |
+| `load-knowledge-domain` | query | Facts in scope via `tools/load-knowledge-domain.py` → `knowledge/facts.json` |
 | `propose-fact` | produce | Draft a fact card for human confirm |
 | `flag-gap` | produce | Name an unbound statement that needs a fact, requirement, or ADR |
 
@@ -45,10 +45,10 @@ See [`verbs.md`](verbs.md).
 
 | Artifact | When |
 |----------|------|
-| Knowledge domain excerpt | `load-shelf` |
+| Knowledge domain excerpt | `load-knowledge-domain` |
 | Fact proposal | `propose-fact` |
 | Gap list | `flag-gap` |
-| No-change note | Shelf already answers the question |
+| No-change note | Knowledge domain already answers the question |
 
 ## Success criteria
 

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Knowledge Steward Verbs",
   "verbs": {
-    "load-shelf": {
+    "load-knowledge-domain": {
       "input": { "type": "object", "required": ["scope"] },
       "output": { "type": "object", "required": ["status", "facts"] },
       "error": { "type": "object", "required": ["code", "message"] }

@@ -16,10 +16,10 @@ Name change: do not lead with “AIMS” or “AI-Managed” (ambiguous; ISO 420
 | Ontology + metamodel + reference ontology | ARCHITECTURE citizen lists; CHARTER §§4–5 |
 | Repo structure spec | CHARTER §8; generated/ is derived |
 | Goal / Requirement authoring, ADR standard | Keep as later pages; CHARTER + PROCESS until written |
-| Interview engine + pattern catalog | PROCESS steps 0–1, 5 |
+| Interview engine + pattern catalog | PROCESS steps 0–1, 5; [INTERVIEW-PATTERNS.md](INTERVIEW-PATTERNS.md) |
 | RCA + Regeneration | PROCESS steps 6–7 |
 | Traceability + dependency modeling + graph schema | Generated graph only (CHARTER R21) |
-| Knowledge domain spec | “Shelf” in MERGE.md |
+| Knowledge domain spec | MERGE.md + `knowledge/facts.json` |
 | Roles | PROCESS roles table |
 
 ## Drop (do not freshen)
@@ -36,7 +36,7 @@ Those are catalog gravity. They are not the compile gate.
 
 - Goal authoring (from AIMS Goal Authoring Standard + “goals only call verbs”)
 - Requirement authoring (constraints only; adjectives stay on the noun)
-- Interview patterns (consult knowledge domain before asking)
+- Interview patterns — v1 [INTERVIEW-PATTERNS.md](INTERVIEW-PATTERNS.md); deepen miss log from real compiles
 - RCA record shape
 
 CHARTER.md stays the design SSOT while those pages land.

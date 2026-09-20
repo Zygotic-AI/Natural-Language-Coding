@@ -6,13 +6,30 @@ Agents make one file green and fork the business rule next door. Natural Languag
 
 ## How you work
 
-1. **Install** the hub skills and tools (macOS, Linux, or WSL):
+1. **Install** the hub skills and tools:
+
+   **macOS, Linux, or WSL:**
 
    ```bash
    curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
    ```
 
-   Or clone this repo and run `bash scripts/install.sh` from the root.
+   **Windows (PowerShell):**
+
+   ```powershell
+   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+   irm https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.ps1 | iex
+   ```
+
+   Or clone this repo and run `bash scripts/install.sh` or `powershell -File scripts/install.ps1` from the root. Hub lands under `%USERPROFILE%\.local\share\nlc\` (versioned store + `hub` pointer; same layout on Unix). Remote install pulls the latest **semver release** (override with `NLC_VERSION`); verify uses [`integrity/nlc-install-hashes.json`](integrity/nlc-install-hashes.json) unless `NLC_SKIP_VERIFY=1`. App repos pin hub via [`.nlc/lock.json`](integrity/schemas/nlc-lock.schema.json); upgrade with `tools/nlc-update.py` (ADR 0014–0015).
+
+   **Prove (compile)** from the hub root:
+
+   ```bash
+   python3 tools/ci_fitness.py
+   ```
+
+   Windows: `python tools\ci_fitness.py` or `powershell -File tools\ci-fitness.ps1`.
 
 2. **Greenfield app repo** (preferred):
 
@@ -62,5 +79,7 @@ Under the covers: boundary-based architecture ([`CHARTER.md`](CHARTER.md)). Glos
 ## Status
 
 Working charter and hub gates. Not a ratified organizational standard. Adoption “done” is charter §14.
+
+**v0.1.0 (first release)** — greenfield adopt (`nlc-init`, `.nlc/lock.json`), curl/PowerShell install, semver hub store, `/interview` + `/planit`, compile spine v1 (UC9/14/18/19 as documented in [`docs/spine/README.md`](docs/spine/README.md)). Not in 0.1.0: brownfield automation, full PCI walkthrough, orchestrated delta-regen, rule IR. See [`FINDINGS.md`](FINDINGS.md). Pre-tag check: `bash scripts/nlc-release-smoke.sh`.
 
 **P / R / C** on rule ids: **P**rinciple, **R**equirement, **C**onfirmation. Hyphenated `P-020` is operating policy in the bindings companion repo.

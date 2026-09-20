@@ -3,13 +3,13 @@
 This repository is a **compiled system** under Natural Language Coding (NLC).
 
 - **Charter:** link or copy from [Natural-Language-Coding `CHARTER.md`](https://github.com/Zygotic-AI/Natural-Language-Coding/blob/main/CHARTER.md).
-- **Intent:** `goals/`, `adrs/`, requirements prose, knowledge domains (interview shelf).
+- **Intent:** `goals/`, `adrs/`, requirements prose, knowledge domains.
 - **Emit:** `domain/`, `goals/*/implementation*` — regenerate; do not patch to silence gates.
 
 ## Prove and ship
 
 ```bash
-bash /path/to/nlc-hub/tools/ci-fitness.sh    # or your bound fitness suite
+python3 /path/to/nlc-hub/tools/ci_fitness.py
 python3 /path/to/nlc-hub/tools/release-audit.py .
 ```
 

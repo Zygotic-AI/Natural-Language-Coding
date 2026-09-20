@@ -20,5 +20,8 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0010-gate-after-every-generate.md`](0010-gate-after-every-generate.md) | Gate immediately after every generate | Accepted |
 | [`0011-natural-language-coding-naming.md`](0011-natural-language-coding-naming.md) | NLC product naming (compiler vs compiled system) | Accepted |
 | [`0012-adr-precedence-and-rule-conflicts.md`](0012-adr-precedence-and-rule-conflicts.md) | ADR precedence tiers and adopt-time rule conflicts | Accepted |
+| [`0013-requirements-preflight.md`](0013-requirements-preflight.md) | Requirements checked at entry; list all missing | Accepted |
+| [`0014-semver-upgrade-steps-and-noop-migrations.md`](0014-semver-upgrade-steps-and-noop-migrations.md) | Semver upgrade chain; explicit noop migrations and UPGRADE:* logs | Accepted |
+| [`0015-distribution-lock-and-version-store.md`](0015-distribution-lock-and-version-store.md) | Version store, `.nlc/lock.json`, tarball install, two layouts | Accepted |
 
 

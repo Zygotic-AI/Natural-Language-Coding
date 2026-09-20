@@ -2,9 +2,9 @@
 
 Each verb has input, output, and failure mode.
 
-## load-shelf
+## load-knowledge-domain
 
-Query. Return confirmed facts for a scope. Does not grant write authority.
+Query. Return confirmed facts for a scope from `knowledge/facts.json`. Harness: `python3 tools/load-knowledge-domain.py <scope> [repo-root]`. Does not grant write authority.
 
 ### Input contract
 
@@ -42,7 +42,7 @@ error:
   required: [code, message]
   properties:
     code:
-      enum: [INVALID_SCOPE, SHELF_UNAVAILABLE]
+      enum: [INVALID_SCOPE, DOMAIN_UNAVAILABLE]
 ```
 
 ## propose-fact

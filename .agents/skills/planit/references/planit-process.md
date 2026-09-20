@@ -33,7 +33,7 @@ BBP is bound on every statement by default (`CHARTER.md` is always on).
 
 ## Prove (both required — compile, not ship)
 
-1. **Machine gate** — hub: `bash tools/ci-fitness.sh`. Adopter: that tree’s bound fitness suite. Non-zero exit = fail.
+1. **Machine gate** — hub: `python3 tools/ci_fitness.py`. Adopter: that tree’s bound fitness suite. Non-zero exit = fail.
 2. **Adversarial audit** — separate from the generator: statements done, bindings held, no second copy of an adjective inside a goal.
 
 Fail → step **1** or **5**, then step **6** again.
@@ -43,4 +43,6 @@ Fail → step **1** or **5**, then step **6** again.
 
 ## Knowledge domain (step 1)
 
-Before generate: knowledge-steward `load-shelf` / `flag-gap`; new facts via `propose-fact` (human manager accepts). See [`agents/knowledge-steward/AGENT.md`](../../../../agents/knowledge-steward/AGENT.md).
+Before generate (machine gate): `python3 tools/nlc-before-generate.py --repo <tree> --scope …`. Steward verbs: `load-knowledge-domain` / `flag-gap`; new facts via `propose-fact`. See [`nlc-before-generate.md`](nlc-before-generate.md) and [`agents/knowledge-steward/AGENT.md`](../../../../agents/knowledge-steward/AGENT.md).
+
+After requirement / verb / rule change: `python3 tools/nlc-delta-regen.py` → execute JSON `steps` before emit.

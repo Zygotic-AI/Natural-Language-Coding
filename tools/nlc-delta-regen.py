@@ -25,6 +25,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from nlc_requirements import hub_tool  # noqa: E402
 
 
 def impact_graph(root: Path) -> dict:
@@ -83,6 +85,7 @@ def plan_steps(goal_ids: list[str], graph: dict, reason: str) -> list[dict]:
 
 
 def main() -> int:
+    hub_tool()
     parser = argparse.ArgumentParser(description="UC9 delta-regen plan")
     parser.add_argument("root", nargs="?", default=".", type=Path)
     parser.add_argument(
@@ -122,7 +125,7 @@ def main() -> int:
         "change": {"kind": kind, "id": ident},
         "goals_to_regen": goal_ids,
         "steps": plan_steps(goal_ids, graph, reason),
-        "prove": "bash tools/ci-fitness.sh (or adopter-bound suite) on full tree after all steps",
+        "prove": "python3 tools/ci_fitness.py (or adopter-bound suite) on full tree after all steps",
         "note": "Machine plan only; run PLANIT per step. Do not patch emit without intent change.",
     }
     json.dump(payload, sys.stdout, indent=2)

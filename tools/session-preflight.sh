@@ -20,8 +20,8 @@ test -f .agents/bbp-short-form.md || fail "missing short-form"
 echo "SESSION:LOAD charter CHARTER.md"
 test -f CHARTER.md || fail "missing charter"
 
-echo "SESSION:REMIND knowledge-steward load-shelf (knowledge domain) before generate"
-echo "SESSION:REMIND confirmer bash tools/ci-fitness.sh"
+echo "SESSION:REMIND knowledge-steward load-knowledge-domain before generate"
+echo "SESSION:REMIND confirmer python3 tools/ci_fitness.py"
 echo "SESSION:REMIND ADR 0006 breaking contracts stay red until callers are in the plan"
 
 echo "SESSION:MATRIX"

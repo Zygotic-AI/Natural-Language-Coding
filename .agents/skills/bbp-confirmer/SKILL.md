@@ -10,7 +10,7 @@ Gate: `G-CONFIRM`. PLANIT step 7 (prove).
 SSOT role: [`agents/confirmer.md`](../../../agents/confirmer.md).
 
 ```bash
-bash tools/ci-fitness.sh
+python3 tools/ci_fitness.py
 ```
 
 **Complete:** every C1–C24 row is PASS / FAIL / N/A with `file:line` or N/A reason, and the suite output is included (`CI:MET` or an honest `CI:FAIL`).

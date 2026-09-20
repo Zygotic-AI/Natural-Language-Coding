@@ -87,6 +87,11 @@ def changed_paths(scan_root: Path, repo_root: Path) -> set[str] | None:
             listed.extend(parse_changed_list(path.read_text(errors="replace")))
     if listed:
         return set(listed)
+    try:
+        scan_root.resolve().relative_to(repo_root.resolve())
+    except ValueError:
+        # Temp/adopter tree outside hub repo — do not inherit hub git dirty state (C1).
+        return None
     scoped = _scope(git_changed(repo_root), scan_root, repo_root)
     if scoped:
         return set(scoped)

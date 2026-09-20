@@ -21,4 +21,4 @@ python3 tools/validate-knowledge-facts.py [repo-root]
 
 Exit 0 = `FACTS:MET`. Exit 1 = `FACTS:NOT_MET` with defects.
 
-Knowledge steward `load-shelf` reads confirmed facts for scope. New facts: `propose-fact` → human sets `status: confirmed`.
+Knowledge steward `load-knowledge-domain` (`tools/load-knowledge-domain.py`) reads confirmed facts for scope. New facts: `propose-fact` → human sets `status: confirmed`.

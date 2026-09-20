@@ -12,6 +12,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from nlc_requirements import hub_tool  # noqa: E402
 
 
 def load_json(path: Path) -> dict:
@@ -70,6 +72,7 @@ def winner(
 
 
 def main() -> int:
+    hub_tool()
     if len(sys.argv) < 2:
         sys.stderr.write(
             "usage: check-rule-adoption.py <rules.json> [--overrides path]\n"

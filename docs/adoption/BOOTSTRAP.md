@@ -36,13 +36,17 @@ Refuses non-empty `domain/` or `goals/` (brownfield: [BROWNFIELD.md](BROWNFIELD.
    curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
    ```
 
+   Remote install fetches the latest **semver release tarball** (or `NLC_VERSION` / `NLC_REF` override). Hub lands in `~/.local/share/nlc/versions/<semver>/` with an active `hub` pointer. Verify: [`integrity/nlc-install-hashes.json`](../../integrity/nlc-install-hashes.json) unless `NLC_SKIP_VERIFY=1`.
+
+   Greenfield scaffold writes [`.nlc/lock.json`](../../integrity/schemas/nlc-lock.schema.json). Upgrade later: `python3 ~/.local/share/nlc/hub/tools/nlc-update.py` from the app repo (ADR 0014).
+
 3. **Add charter** — copy [`CHARTER.md`](../../CHARTER.md) or link in root `README.md` to the hub revision you adopt.
 
 4. **Copy CI hooks** from hub (adjust paths):
 
    ```bash
    # From hub root (${NLC_INSTALL_ROOT}/hub or this clone)
-   bash tools/ci-fitness.sh          # prove — compile
+   python3 tools/ci_fitness.py       # prove — compile (Windows: ci-fitness.ps1)
    python3 tools/release-audit.py .  # ship — after human Released-by:
    ```
 

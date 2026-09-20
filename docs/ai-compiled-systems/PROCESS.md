@@ -12,7 +12,9 @@ BBP standard (`CHARTER.md`), ADRs, requirements, known boundaries, known verb co
 
 Outcome, not feature. Stop when goals and constraints can be named. Incomplete interview → no plan.
 
-The window stays small later because this step names the objects. A poor interview creates two Invoices. Call knowledge-steward `load-shelf` / `flag-gap` before generate; new facts wait for the manager (`propose-fact`).
+The window stays small later because this step names the objects. A poor interview creates two Invoices. Call knowledge-steward `load-knowledge-domain` / `flag-gap` before generate; new facts wait for the manager (`propose-fact`).
+
+Prompt catalog (empirical, grows from RCA): [INTERVIEW-PATTERNS.md](INTERVIEW-PATTERNS.md).
 
 
 ## 2. Plan
@@ -76,7 +78,7 @@ This applies to code, skills, prompts, and docs PLANIT emits, and to anything PL
 
 Both required. This is **compile**, not ship.
 
-1. **Machine gate** — hub: `bash tools/ci-fitness.sh` (full confirmer suite, not “check 1 only”). Adopter: the fitness suite that tree bound. Exit non-zero = fail.
+1. **Machine gate** — hub: `python3 tools/ci_fitness.py` (full confirmer suite, not “check 1 only”). Adopter: the fitness suite that tree bound. Exit non-zero = fail.
 2. **Adversarial audit** — a different pass than the generator: statements done, bound reqs/ADRs/rules held, no second copy of an adjective inside a goal.
 
 Fail → step 1 or 5, then step 6 again.

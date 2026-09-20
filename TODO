@@ -28,40 +28,51 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 
 - ✔ Consumer `README.md` rewrite @done(26-09-20 08:15)
 - ✔ [`scripts/install.sh`](scripts/install.sh) + curl one-liner (mac/linux/WSL) @done(26-09-20 08:15)
-- ☐ **Quick install (Windows)** — `install.ps1` or documented gap + issue link if deferred.
-- ☐ Pin install URL to tagged release (not floating `main`) once release story exists (`FINDINGS.md` Ship row).
+- ✔ [`scripts/install.ps1`](scripts/install.ps1) + README / GETTING-STARTED Windows install @done(26-09-20 08:25)
+- ✔ **Windows prove path** — [`tools/ci_fitness.py`](tools/ci_fitness.py), [`tools/ci-fitness.ps1`](tools/ci-fitness.ps1); `ci-fitness.sh` delegates @done(26-09-20 08:25)
+- ✔ Distribution v0 — ADR 0015, tarball fetch, version store, lock, `nlc-update`/`nlc-fetch-hub`, release workflow @done(26-09-20 09:30)
+- ✔ v0.1.0 **pre-release** — scope in README, [`RELEASE-v0.1.0.md`](docs/adoption/RELEASE-v0.1.0.md), `nlc-release-smoke.sh`, CI on tag @done(26-09-20 09:45)
+- ☐ **Last:** push `v0.1.0` tag + GitHub Release (see RELEASE-v0.1.0.md).
+- ✔ Install hub **checksum verify** — [`integrity/nlc-install-hashes.json`](integrity/nlc-install-hashes.json), [`nlc-install-verify.py`](tools/nlc-install-verify.py); `NLC_SKIP_VERIFY=1` to skip @done(26-09-20 09:00)
 - ✔ [`GETTING-STARTED.md`](docs/ai-compiled-systems/GETTING-STARTED.md) @done(26-09-20 08:15)
-- ✔ Manifesto + intent/quality/how-it-codes pages @done(26-09-17 10:15) — [`MANIFESTO.md`](docs/ai-compiled-systems/MANIFESTO.md), [`INTENT-SURFACE.md`](docs/ai-compiled-systems/INTENT-SURFACE.md), [`QUALITY-PROCESSES.md`](docs/ai-compiled-systems/QUALITY-PROCESSES.md), [`HOW-IT-CODES.md`](docs/ai-compiled-systems/HOW-IT-CODES.md).
+- ✔ Manifesto + intent/quality/how-it-codes pages @done(26-09-17 10:15)
 
 **Slash commands / skills (UC1 + UC2 consumer UX):**
 
-- ✔ **`/interview` skill** v1 @done(26-09-20 08:15) — [`.agents/skills/interview/SKILL.md`](.agents/skills/interview/SKILL.md); deepen UC1 catalog in use.
+- ✔ **`/interview` skill** v1 @done(26-09-20 08:15)
+- ✔ UC1 **interview pattern catalog** v1 — [`INTERVIEW-PATTERNS.md`](docs/ai-compiled-systems/INTERVIEW-PATTERNS.md); grow miss log from RCA @done(26-09-20 09:10)
 - ✔ **`/planit` consumer path** via GETTING-STARTED + PROCESS @done(26-09-20 08:15)
-- ✔ `.cursor/skills` → `.agents/skills` symlink; install script documents next steps @done(26-09-20 08:15)
+- ✔ `.cursor/skills` → `.agents/skills` symlink @done(26-09-20 08:15)
 
-**Adopt a real application repo (UC15 — required for “use it on my app”):**
+**Adopt a real application repo (UC15):**
 
-- ☐ Bootstrap kit: generated `domain/` + `goals/` skeleton CLI (doc + [`templates/adopter/`](templates/adopter/) stub only for now).
-- ✔ [`docs/adoption/BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) hub vs adopter @done(26-09-20 08:15)
+- ✔ Greenfield [`tools/nlc-init.py`](tools/nlc-init.py) @done(26-09-20 08:15)
+- ✔ [`docs/adoption/BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) + [`BROWNFIELD.md`](docs/adoption/BROWNFIELD.md) @done(26-09-20 08:15)
+- ☐ UC15 **brownfield** automation (inventory / migrate legacy modules).
 
-**Product spine gaps (consumer-visible if we promise compile):** see [`FINDINGS.md`](FINDINGS.md) Needed table—track here for visibility:
+**Compile spine (UC9 / UC14 / UC18 / UC19) — v1 shipped, v2 open:**
 
-- ☐ UC9 full delta-regen when a requirement changes
-- ☐ UC14 contradictory rules fail at adopt-time
-- ☐ UC15 second-repo bootstrap (CLI kit; doc shipped)
-- ☐ UC18 fact SSOT beyond ADR prose
-- ☐ UC19 one worked PCI (or equivalent) UC3→UC5 walkthrough for marketing + onboarding
+- ✔ UC9 v1 [`tools/nlc-delta-regen.py`](tools/nlc-delta-regen.py) + [`docs/spine/README.md`](docs/spine/README.md) @done(26-09-20 08:15)
+- ✔ UC9 v2 Planit procedure + [`nlc-before-generate.md`](.agents/skills/planit/references/nlc-before-generate.md) @done(26-09-20 08:50)
+- ✔ UC14 v1 ADR 0012 + [`tools/check-rule-adoption.py`](tools/check-rule-adoption.py) @done(26-09-20 08:15)
+- ☐ UC14 v2 composable obligations, cross-primitive policy, rule IR runner (ADR 0007 parked).
+- ✔ UC18 v1 [`knowledge/facts.json`](knowledge/facts.json) + [`validate-knowledge-facts.py`](tools/validate-knowledge-facts.py) @done(26-09-20 08:15)
+- ✔ UC18 verb + CLI: `load-knowledge-domain` / [`load-knowledge-domain.py`](tools/load-knowledge-domain.py) @done(26-09-20 08:35)
+- ✔ UC18 [`tools/nlc-before-generate.py`](tools/nlc-before-generate.py) + Planit step 6 gate @done(26-09-20 08:50)
+- ✔ UC19 v1 [`docs/worked-examples/pan-handling/`](docs/worked-examples/pan-handling/README.md) @done(26-09-20 08:15)
+- ☐ UC19 full PCI (or equivalent) certification-style walkthrough.
+
+**Parked spine (FINDINGS):** Rule IR, language scanner, primitive call-tree gate (UC20), per-generate binder (UC21), noun inheritance scan — see [`FINDINGS.md`](FINDINGS.md).
+
+- ✔ ADR 0013 requirements preflight + [`nlc_requirements.py`](tools/nlc_requirements.py) on hub CLIs/installers @done(26-09-20 08:30)
 
 **Repo / distribution housekeeping:**
 
-- ☐ GitHub repo rename / display name: **Natural-Language-Coding** (or chosen slug) vs legacy Boundary-Based-Architecture (`FINDINGS.md`)
-- ☐ Public install host (raw.githubusercontent vs release asset) + integrity check (checksum) in install script
-- ☐ “Status” band honest in README: working charter, what works today vs what install enables vs what needs UC rows
-
-**Architecture / code segregation (mirror README layers):**
-
-- ☐ Directory or doc map: `docs/nlc/` or top-level pointers—NLC (product) → `docs/ai-compiled-systems/` (compiler) → `CHARTER.md` + `integrity/` (BBA/BBP shape)
-- ☐ Avoid teaching specimens (`examples/`) reading as the product; keep “specimens for gates” in consumer README
+- ✔ ADR 0014 explicit noop migrations + `UPGRADE:*` log lines — [`migrations/README.md`](migrations/README.md) @done(26-09-20 09:15)
+- ✔ `nlc-update.py` v0 (artifact store, lock pin, semver chain, noop migrations) — extend for interview/script migrations @done(26-09-20 09:30)
+- ☐ Update FINDINGS “Last pass” git sha after spine/NLC commits land on `main`.
+- ✔ Public install **checksum** in install scripts (sh + ps1) @done(26-09-20 09:00)
+- ☐ `docs/nlc/` or doc map (NLC → compiler docs → charter) — optional tidy.
 
 ---
 

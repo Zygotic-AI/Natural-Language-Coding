@@ -27,7 +27,7 @@ From [`docs/USE-CASES.md`](docs/USE-CASES.md). Not optional polish.
 | UC9 | Orchestrated delta-regen (v1: `nlc-delta-regen.py` plan only). |
 | UC14 | Richer conflict model over time (v1: `check-rule-adoption.py` + ADR 0012). |
 | UC15 | Brownfield bootstrap automation (greenfield: `nlc-init.py`). |
-| UC18 | Steward `load-shelf` auto-read of `facts.json` in all harnesses. |
+| UC18 | Deeper harness auto-call of `load-knowledge-domain` (CLI exists). |
 | UC19 | Full PCI certification path (v1: PAN worked example). |
 
 ---
@@ -53,7 +53,7 @@ Reviewers treat the parked rows as **findings** until those gates exist.
 | ADR 0004, 0005 | Status still `needs_review` (AIMS leftover). |
 | Repo name | GitHub: `Zygotic-AI/Natural-Language-Coding`. Consumer brand: NLC (ADR 0011). |
 | Dual PLANIT | `~/.agents/skills/planit` vs this repo. Prefer newer is a wish, not a gate. |
-| Interview skill | `/interview` skill added; deepen pattern catalog empirically (UC1). |
+| Interview skill | `/interview` + [INTERVIEW-PATTERNS.md](docs/ai-compiled-systems/INTERVIEW-PATTERNS.md) v1; grow miss log from compiles. |
 | UC15 bootstrap | Doc + template stub shipped; no one-shot CLI yet. |
 
 ---

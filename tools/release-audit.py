@@ -24,6 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import product_tree  # noqa: E402
+from nlc_requirements import hub_tool  # noqa: E402
 
 NOTES = ("CONFIRM.md", "PROPOSAL.md")
 CLASS = re.compile(r"change\s*class\s*[:*\s]*([A-F])\b", re.I)
@@ -85,6 +86,7 @@ def print_unmet(n: int, gate: str, steps: list[str]) -> None:
 
 
 def main() -> int:
+    hub_tool()
     tree = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.cwd().resolve()
     rel_tree = str(tree.relative_to(ROOT) if tree.is_relative_to(ROOT) else tree)
     unmet: list[tuple[str, list[str]]] = []

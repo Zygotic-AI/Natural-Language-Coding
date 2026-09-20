@@ -29,7 +29,7 @@ Optional split for clarity in conversation only:
 | -------- | ----------- | ------------- | --------------- |
 | **Goal** | yes — outcomes, priorities | when class requires `Ratified-by:` | emits goal implementation; never assigns noun fields |
 | **Requirement** | yes — constraints, standards, policies | when promoted to ratified charter/rule class | binds statements to requirement ids; does not invent business law silently |
-| **Knowledge domain** | yes — facts, scope, references | fact adoption / gap closure (`propose-fact`, steward verbs) | `load-shelf` (loads knowledge domain); flags gaps; does not emit from prompt memory |
+| **Knowledge domain** | yes — facts, scope, references | fact adoption / gap closure (`propose-fact`, steward verbs) | `load-knowledge-domain`; flags gaps; does not emit from prompt memory |
 | **ADR** | yes — context, options, consequences | **yes** — dated decision adopted | keeps ADR as *why*; reduces to rules when adopted ([ADR 0007](../../adrs/0007-tags-primitives-reduced-adrs.md)) |
 | **Rule** (if/then over tags, primitives, facts) | review drafts | **yes** — rule set **adopted** with the ADR | applies adopted rules at emit; unbound rule → gate fails |
 | **Tags** on nouns / adjectives | name classifications in adoption | **yes** — part of adopt (mark IR) | proposes / applies markings per adopted rules; tags feed if/thens |

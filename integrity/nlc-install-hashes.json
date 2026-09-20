@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "files": {
+    "scripts/install.sh": "5d559f964d19d2ae038cf3cbff4634f5a68ba454789a96d8b7e0a29dd21431a4",
+    "scripts/install.ps1": "e5a8d9b2c05ffb175fe1d77ccca2ab4f10d4cce6cb33f14bbc4b75b7c1ca9b50",
+    "CHARTER.md": "84b50e1d93e213d1ceefc98ee9cbf6605b5c607b9a0041e64bba2172302a866a",
+    "tools/ci_fitness.py": "16c7c2e808be6d096deb60a54c965e6bd80d1a099c97358dd51b84db2ab275e9",
+    "tools/ci-fitness.ps1": "a852e9fe423329fc83f068f7ffc70b1898f6a0f3ffd3426e1e73c03f410bd47d",
+    "tools/nlc_requirements.py": "1ef82642e35984b00f0c6e329bea30aeb6f770c9b488572af3f2d3c3469be861",
+    "tools/nlc-install-verify.py": "2299db54f7f26115c1e97ff188bc9cdac8dac37907be3a416f111d27c4c1258a",
+    "tools/nlc-before-generate.py": "2bb25049ac223e9f418d05482d72da8d23246a5de827b388c1c342fec4337620",
+    "tools/load-knowledge-domain.py": "a1768b7e408a487a6ea05d98af0e38cefe5ac098679aa141dbfaf980e4c37327",
+    "tools/nlc-init.py": "e2a2712b20427ee0329069f478828296be61bdaab1906141d9482fade5ef2fd8",
+    "tools/validate-knowledge-facts.py": "f51656294fa60080294e8bc3edb2a82be2e81a0e496278d498468d8bc95f2ca2",
+    "tools/release-audit.py": "b114bec8bccf6618e82da87c6fd0cbe7e9df66205f150603e9354f5bc1f65bdc",
+    "tools/nlc-delta-regen.py": "e02e03bd7d1e0511e2a160be19676fe8c450c710a261c0426ca40b8d7bb77cf1",
+    "tools/nlc-fetch-hub.py": "e8ed52cd9b133021ebc03297638b3c508a161cbadaf704d198130da473e5fea1",
+    "tools/nlc-install-hash-update.py": "15da4983b8709edcad184fa904e023516ee0814834f8456b8bcb847f1cc3ab8e",
+    "tools/nlc-release-build.py": "ffba2f77a7793fcd4aee8bfba9d1f201832d462add42419ca75b449a059866b2",
+    "tools/nlc-update.py": "62c32721445cac6c9af42349b39c5d51660be08c6128bbee74aa7b6f1b4ce13b",
+    ".agents/skills/bbp-confirmer/SKILL.md": "5571cff264d26c0a817763df64001752fa1221f5ce7095cbea1527b481935ae3",
+    ".agents/skills/bbp-proposer/SKILL.md": "4b73c99774287f4eb030774104e63d4c7f26e34843b0ae4c4d7a3d6f19823c99",
+    ".agents/skills/bbp-recorder/SKILL.md": "fbfb4ace84b276f5c1d1be488579acbff7011917e4d6be2d9ff9a9e5c4a2116b",
+    ".agents/skills/bbp-reviewer/SKILL.md": "9e2c9daab14dc7ab2c30d3bf3e270de29b7e3956be0b417961d60b45ee39d651",
+    ".agents/skills/interview/SKILL.md": "83ca4d4c8601850aeede947636fa2e3e260233d475e252125335bd4ac92323be",
+    ".agents/skills/planit/SKILL.md": "eedbd4404d38fee561197b5f3442e9784cf73f1a5e82310435228df493019492"
+  }
+}
