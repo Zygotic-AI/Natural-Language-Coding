@@ -4,7 +4,7 @@ SSOT for undone work. Do not hunt TODO vs HOLES vs USE-CASES.
 Charter SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: `pending` (run `bash scripts/nlc-release-prep.sh` before tag).
+Last pass: `1f184aa` (release prep; tag v0.1.0 when ready).
 
 ---
 
