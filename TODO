@@ -32,7 +32,7 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 - ✔ **Windows prove path** — [`tools/ci_fitness.py`](tools/ci_fitness.py), [`tools/ci-fitness.ps1`](tools/ci-fitness.ps1); `ci-fitness.sh` delegates @done(26-09-20 08:25)
 - ✔ Distribution v0 — ADR 0015, tarball fetch, version store, lock, `nlc-update`/`nlc-fetch-hub`, release workflow @done(26-09-20 09:30)
 - ✔ v0.1.0 **pre-release** — scope in README, [`RELEASE-v0.1.0.md`](docs/adoption/RELEASE-v0.1.0.md), `nlc-release-smoke.sh`, CI on tag @done(26-09-20 09:45)
-- ☐ **Last:** push `v0.1.0` tag + GitHub Release (see RELEASE-v0.1.0.md).
+- ☐ **Last:** `git push origin main && git push origin v0.1.0` (tag `v0.1.0` exists locally; push failed 401 in agent env).
 - ✔ Install hub **checksum verify** — [`integrity/nlc-install-hashes.json`](integrity/nlc-install-hashes.json), [`nlc-install-verify.py`](tools/nlc-install-verify.py); `NLC_SKIP_VERIFY=1` to skip @done(26-09-20 09:00)
 - ✔ [`GETTING-STARTED.md`](docs/ai-compiled-systems/GETTING-STARTED.md) @done(26-09-20 08:15)
 - ✔ Manifesto + intent/quality/how-it-codes pages @done(26-09-17 10:15)
