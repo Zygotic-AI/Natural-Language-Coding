@@ -70,7 +70,7 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 
 - ✔ ADR 0014 explicit noop migrations + `UPGRADE:*` log lines — [`migrations/README.md`](migrations/README.md) @done(26-09-20 09:15)
 - ✔ `nlc-update.py` v0 (artifact store, lock pin, semver chain, noop migrations) — extend for interview/script migrations @done(26-09-20 09:30)
-- ☐ Update FINDINGS “Last pass” git sha after spine/NLC commits land on `main`.
+- ✔ Update FINDINGS “Last pass” git sha (`cbe5703` pre-tag) @done(26-09-20 09:48)
 - ✔ Public install **checksum** in install scripts (sh + ps1) @done(26-09-20 09:00)
 - ☐ `docs/nlc/` or doc map (NLC → compiler docs → charter) — optional tidy.
 
