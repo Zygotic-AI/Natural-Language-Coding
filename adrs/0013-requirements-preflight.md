@@ -1,4 +1,4 @@
-# ADR 0013 — Requirements preflight (fail fast, list all)
+# [ADR](../docs/TERMS.md#adr) 0013 — Requirements preflight (fail fast, list all)
 
 - Status: Accepted
 - Date: 2026-09-20
@@ -7,7 +7,7 @@
 
 ## Context
 
-Install and prove scripts assumed `python3`, `git`, or other tools were present. Failures surfaced mid-run after partial work. Operators need one clear signal listing **every** missing prerequisite.
+Install and [prove](../docs/TERMS.md#prove) scripts assumed `python3`, `git`, or other tools were present. Failures surfaced mid-run after partial work. Operators need one clear signal listing **every** missing prerequisite.
 
 ## Decision
 
@@ -29,11 +29,11 @@ Install and prove scripts assumed `python3`, `git`, or other tools were present.
 
 ## Consequences
 
-- Hub prove entrypoints call `hub_prove` preflight (`ci_fitness.py`, `ci-fitness.ps1`).
+- [Hub](../docs/TERMS.md#hub) [prove](../docs/TERMS.md#prove) entrypoints call `hub_prove` preflight (`ci_fitness.py`, `ci-fitness.ps1`).
 - Consumer-facing CLIs under `tools/nlc-*.py` call `hub_tool` preflight.
-- New scripts with external dependencies must preflight per this ADR.
+- New scripts with external dependencies must preflight per this [ADR](../docs/TERMS.md#adr).
 
 ## Rejected
 
 - **Lazy failure** halfway through a fitness suite or install copy.
-- **Different error formats** per script without documenting an exception ADR.
+- **Different error formats** per script without documenting an exception [ADR](../docs/TERMS.md#adr).

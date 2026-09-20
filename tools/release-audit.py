@@ -23,6 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import markdown_plain  # noqa: E402
 import product_tree  # noqa: E402
 from nlc_requirements import hub_tool  # noqa: E402
 
@@ -39,7 +40,7 @@ def note_text(tree: Path) -> tuple[Path | None, str]:
     for name in NOTES:
         path = tree / name
         if path.is_file():
-            return path, path.read_text(errors="replace")
+            return path, markdown_plain.strip_links(path.read_text(errors="replace"))
     return None, ""
 
 

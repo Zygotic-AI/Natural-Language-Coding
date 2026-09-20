@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Natural Language Coding — run from your app repo root: ./nlc
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+if [[ -n "${NLC_HUB:-}" ]]; then
+  HUB="${NLC_HUB}"
+else
+  HUB="${HOME}/.local/share/nlc/hub"
+fi
+if [[ ! -f "${HUB}/tools/nlc.py" ]]; then
+  echo "NLC:NOT_MET install hub first (see README install), or set NLC_HUB"
+  exit 1
+fi
+exec python3 "${HUB}/tools/nlc.py" --project "${ROOT}" "$@"

@@ -6,7 +6,7 @@ Each verb has input, output, and failure mode.
 
 Query. Return confirmed facts for a scope from `knowledge/facts.json`. Harness: `python3 tools/load-knowledge-domain.py <scope> [repo-root]`. Does not grant write authority.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -20,7 +20,7 @@ input:
       default: false
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -49,7 +49,7 @@ error:
 
 Draft a fact card. Status is `needs_confirm` until a human manager accepts it.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -65,7 +65,7 @@ input:
         type: string
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -91,9 +91,9 @@ error:
 
 ## flag-gap
 
-Name a product statement with no fact, requirement, or ADR.
+Name a product statement with no fact, [requirement](../../docs/TERMS.md#requirement), or [ADR](../../docs/TERMS.md#adr).
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -105,7 +105,7 @@ input:
       type: string
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:

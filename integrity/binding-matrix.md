@@ -1,6 +1,6 @@
-# Binding matrix
+# [Binding matrix](../docs/TERMS.md#binding-matrix)
 
-Maps every requirement in this repo to an audit and a binder. The binding matrix is the requirement index for this practice hub (requirement → audit → binder); it is not a dependency or impact graph, and R21 applies to generated “what breaks” views in adopting codebases, not to this file.
+Maps every [requirement](../docs/TERMS.md#requirement) in this repo to an [audit](../docs/TERMS.md#audit) and a binder. The [binding matrix](../docs/TERMS.md#binding-matrix) is the [requirement](../docs/TERMS.md#requirement) index for this practice [hub](../docs/TERMS.md#hub) (requirement → audit → binder); it is not a dependency or impact graph, and R21 applies to generated “what breaks” views in adopting codebases, not to this file.
 
 **In-force** means a fail-capable binder exists. Requirements without a binder stay `surface=reference` (still indexed, still have audit ids and audit markdown); they are not promoted to in-force until a binder can fail the change. Do not mark a row `bound` without that binder.
 
@@ -12,12 +12,12 @@ Maps every requirement in this repo to an audit and a binder. The binding matrix
 
 | Field | Required | Meaning |
 |-------|----------|---------|
-| `id` | yes | Requirement id. Prefix: **P** principle, **R** charter requirement, **C** confirmation checklist, **S**/**CS** agent-noun structure, **Q** quality. Hyphenated `P-0xx` is a different series (operating policy). |
+| `id` | yes | [Requirement](../docs/TERMS.md#requirement) id. Prefix: **P** principle, **R** [charter](../docs/TERMS.md#charter) [requirement](../docs/TERMS.md#requirement), **C** confirmation checklist, **S**/**CS** agent-noun structure, **Q** [quality](../docs/TERMS.md#quality). Hyphenated `P-0xx` is a different series (operating policy). |
 | `statement` | yes | One-line statement |
 | `surface` | yes | `in-force` \| `reference` \| `wish` |
-| `audit_id` | yes | Audit that yields met / not met |
-| `audit_def` | yes | Path to audit definition |
-| `binder` | yes when bound | CI check, confirmer step, or tool id that can fail |
+| `audit_id` | yes | [Audit](../docs/TERMS.md#audit) that yields [met](../docs/TERMS.md#met) / not [met](../docs/TERMS.md#met) |
+| `audit_def` | yes | Path to [audit](../docs/TERMS.md#audit) definition |
+| `binder` | yes when bound | CI check, [confirmer](../docs/TERMS.md#confirmer) step, or tool id that can fail |
 | `status` | yes | `bound` \| `unbound` |
 
 `wish` rows are allowed only outside in-force surfaces (e.g. theory backlog). They still need `audit_id` once promoted.
@@ -26,20 +26,20 @@ Maps every requirement in this repo to an audit and a binder. The binding matrix
 
 ### `A-BINDING-UNBOUND`
 
-- **Met:** every row with `surface=in-force` has `status=bound` and a non-empty `binder`. Reference and wish rows may be unbound.
-- **Not met:** any in-force row that is unbound or has an empty binder.
+- **[Met](../docs/TERMS.md#met):** every row with `surface=in-force` has `status=bound` and a non-empty `binder`. Reference and wish rows may be unbound.
+- **Not [met](../docs/TERMS.md#met):** any in-force row that is unbound or has an empty binder.
 - **Report:** list every unbound in-force `id` (required on not met).
 
 ### `A-BINDING-PROMOTE`
 
-- **Met:** every row with `surface=in-force` is `bound` and its binder can fail a change.
-- **Not met:** any in-force row that is unbindable or unbound.
+- **[Met](../docs/TERMS.md#met):** every row with `surface=in-force` is `bound` and its binder can fail a change.
+- **Not [met](../docs/TERMS.md#met):** any in-force row that is unbindable or unbound.
 - **Report:** list every offending `id` (required on not met).
 
 ### `A-BINDING-COVERAGE`
 
-- **Met:** every requirement id published in `CHARTER.md`, `integrity/PRINCIPLES.md`, and accepted ADRs appears as a matrix row with an `audit_id`.
-- **Not met:** any published requirement missing from the matrix or missing `audit_id`.
+- **[Met](../docs/TERMS.md#met):** every [requirement](../docs/TERMS.md#requirement) id published in `CHARTER.md`, `integrity/PRINCIPLES.md`, and accepted ADRs appears as a matrix row with an `audit_id`.
+- **Not [met](../docs/TERMS.md#met):** any published [requirement](../docs/TERMS.md#requirement) missing from the matrix or missing `audit_id`.
 - **Report:** list every missing `id`.
 
 Do not mark a row `bound` or `in-force` early. Promote to in-force only when a fail-capable binder exists.

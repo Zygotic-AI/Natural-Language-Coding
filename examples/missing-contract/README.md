@@ -2,8 +2,8 @@
 
 Known-fail fixture for R9 / R10 / C7 / C8 **v1**.
 
-A goal and a noun exist. Schema files do not. The code can even call a verb;
-that does not count as a contract.
+A [goal](../../docs/TERMS.md#goal) and a [noun](../../docs/TERMS.md#noun) exist. Schema files do not. The code can even call a verb;
+that does not count as a [contract](../../docs/TERMS.md#contract).
 
 ```bash
 python3 tools/fitness-contract-presence.py examples/missing-contract

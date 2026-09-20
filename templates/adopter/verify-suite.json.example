@@ -1,0 +1,5 @@
+{
+  "schema": 1,
+  "command": ["python3", "tools/my-adopter-fitness.py"],
+  "cwd": "."
+}

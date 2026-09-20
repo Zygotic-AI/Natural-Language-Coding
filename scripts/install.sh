@@ -14,12 +14,12 @@ requirements_preflight() {
     command -v curl >/dev/null 2>&1 || missing+=("curl")
   fi
   if ((${#missing[@]} > 0)); then
-    echo "REQUIREMENTS:NOT_MET"
+    echo "Install can't continue — this machine is missing required tools." >&2
     local m
     for m in "${missing[@]}"; do
-      echo "  missing: ${m}"
+      echo "  What's wrong: missing ${m}" >&2
     done
-    echo "  hint: install missing tools or clone this repo and re-run install.sh"
+    echo "  Fix: install the tools above, or clone this repo and run: bash scripts/install.sh" >&2
     exit 1
   fi
 }
@@ -78,7 +78,7 @@ fi
 
 if [[ -d "${HOME}/.cursor" ]]; then
   mkdir -p "${CURSOR_SKILLS}"
-  for skill in bbp-confirmer bbp-proposer bbp-recorder bbp-reviewer interview planit; do
+  for skill in bbp-confirmer bbp-proposer bbp-recorder bbp-reviewer interview planit verify; do
     if [[ -d "${src_root}/.cursor/skills/${skill}" ]]; then
       rm -rf "${CURSOR_SKILLS}/${skill}"
       cp -R "${src_root}/.cursor/skills/${skill}" "${CURSOR_SKILLS}/${skill}"
@@ -90,13 +90,25 @@ fi
 if [[ -z "${NLC_SKIP_VERIFY:-}" ]] && [[ -f "${INSTALL_ROOT}/hub/tools/nlc-install-verify.py" ]]; then
   echo "  verify: hub file hashes"
   python3 "${INSTALL_ROOT}/hub/tools/nlc-install-verify.py" "${INSTALL_ROOT}/hub" || {
-    echo "INSTALL:NOT_MET hub verify failed (set NLC_SKIP_VERIFY=1 to skip)"
+    echo "Install could not verify the compiler file fingerprints."
+    echo "  Fix: re-run install from a clean checkout, or repair the hub tree."
+    echo "  Optional: NLC_SKIP_VERIFY=1 only if you accept running an unverified hub."
+    echo "INSTALL:NOT_MET hub verify failed" >&2
     exit 1
   }
 fi
 
 if [[ -f "${INSTALL_ROOT}/current" ]]; then
   echo "  hub version: $(tr -d '\n' < "${INSTALL_ROOT}/current")"
+fi
+
+BIN_DIR="${HOME}/.local/bin"
+mkdir -p "${BIN_DIR}"
+launcher="${INSTALL_ROOT}/hub/scripts/nlc-launcher.sh"
+if [[ -f "${launcher}" ]]; then
+  cp "${launcher}" "${BIN_DIR}/nlc"
+  chmod +x "${BIN_DIR}/nlc"
+  echo "  command: ${BIN_DIR}/nlc (add ~/.local/bin to PATH if needed)"
 fi
 
 cat <<EOF
@@ -107,10 +119,8 @@ Hub copy (tools, charter): ${INSTALL_ROOT}/hub
 Portable skills: ${AGENTS_SKILLS}
 
 Next:
-  1. Open your application repo in Cursor.
-  2. /interview — bind goals, requirements, knowledge domains.
-  3. /planit — build and prove (see ${INSTALL_ROOT}/hub/docs/ai-compiled-systems/PROCESS.md)
+  Run: nlc   (human menu — see ${INSTALL_ROOT}/hub/docs/nlc/MENU.md)
 
-Prove (from hub): python3 ${INSTALL_ROOT}/hub/tools/ci_fitness.py
+  Or in Cursor: /interview then /planit
 
 EOF

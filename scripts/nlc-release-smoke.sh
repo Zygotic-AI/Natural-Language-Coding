@@ -12,9 +12,11 @@ cleanup() {
 }
 trap cleanup EXIT
 
+VER="$(python3 -c "import json; print(json.load(open('${ROOT}/integrity/nlc-version.json'))['version'])")"
+
 python3 "${ROOT}/tools/nlc-fetch-hub.py" --install-root "${STORE}" --from-path "${ROOT}"
 test -f "${STORE}/hub/tools/nlc-update.py"
-test "$(tr -d '\n' < "${STORE}/current")" = "0.1.0"
+test "$(tr -d '\n' < "${STORE}/current")" = "${VER}"
 
 export NLC_HUB="${STORE}/hub"
 python3 "${STORE}/hub/tools/nlc-init.py" "${APP}" --name SmokeApp
@@ -22,7 +24,7 @@ test -f "${APP}/.nlc/lock.json"
 python3 -c "
 import json, sys
 lock = json.load(open('${APP}/.nlc/lock.json'))
-assert lock.get('hub') == '0.1.0', lock
+assert lock.get('hub') == '${VER}', lock
 assert lock.get('schema') == 1
 "
 

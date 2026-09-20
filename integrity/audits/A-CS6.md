@@ -1,16 +1,16 @@
 # A-CS6
 
-- Requirement: `CS6`
-- Outcome: **met** | **not met** only
+- [Requirement](../../docs/TERMS.md#requirement): `CS6`
+- Outcome: **[met](../../docs/TERMS.md#met)** | **not [met](../../docs/TERMS.md#met)** only
 
 ## Statement
 
-Audit roles have no ship verbs.
+[Audit](../../docs/TERMS.md#audit) roles have no [ship](../../docs/TERMS.md#ship) verbs.
 
 ## Binary criteria
 
-Met iff any agent noun whose purpose is audit/review has no ship verbs (ratify, merge, release, approve) and has explicit excluded verbs section. Not met if an audit-purpose agent noun has ship verbs.
+[Met](../../docs/TERMS.md#met) iff any [agent noun](../../docs/TERMS.md#agent-noun) whose purpose is audit/review has no [ship](../../docs/TERMS.md#ship) verbs (ratify, merge, release, approve) and has explicit excluded verbs section. Not [met](../../docs/TERMS.md#met) if an audit-purpose [agent noun](../../docs/TERMS.md#agent-noun) has [ship](../../docs/TERMS.md#ship) verbs.
 
 ## Evidence
 
-On met or not met, cite `agents/<name>/AGENT.md` shipping authority and `verbs.md` excluded verbs section.
+On [met](../../docs/TERMS.md#met) or not [met](../../docs/TERMS.md#met), cite `agents/<name>/AGENT.md` shipping authority and `verbs.md` excluded verbs section.

@@ -15,9 +15,9 @@ if (-not (Test-Path -LiteralPath $PlanitMarkerEarly)) {
     }
 }
 if ($ReqMissing.Count -gt 0) {
-    Write-Host 'REQUIREMENTS:NOT_MET'
-    foreach ($m in $ReqMissing) { Write-Host "  missing: $m" }
-    Write-Host '  hint: install missing tools or clone this repo and re-run install.ps1'
+    Write-Host 'Install cannot continue — missing required tools.' -ForegroundColor Red
+    foreach ($m in $ReqMissing) { Write-Host "  What's wrong: missing $m" }
+    Write-Host '  Fix: install the tools above, or clone this repo and run install.ps1'
     exit 1
 }
 
@@ -27,7 +27,7 @@ $InstallRoot = if ($env:NLC_INSTALL_ROOT) { $env:NLC_INSTALL_ROOT } else { Join-
 $Py = if (Get-Command python -ErrorAction SilentlyContinue) { 'python' } else { 'py' }
 $AgentsSkills = Join-Path $env:USERPROFILE '.agents\skills'
 $CursorSkills = Join-Path $env:USERPROFILE '.cursor\skills'
-$CursorSkillsRepo = @('bbp-confirmer', 'bbp-proposer', 'bbp-recorder', 'bbp-reviewer', 'interview', 'planit')
+$CursorSkillsRepo = @('bbp-confirmer', 'bbp-proposer', 'bbp-recorder', 'bbp-reviewer', 'interview', 'planit', 'verify')
 
 Write-Host 'Natural Language Coding — install'
 Write-Host "  target: $InstallRoot"
@@ -126,7 +126,10 @@ if (-not $env:NLC_SKIP_VERIFY) {
         $Va += $HubDest
         & $Py @Va
         if ($LASTEXITCODE -ne 0) {
-            Write-Host 'INSTALL:NOT_MET hub verify failed (set NLC_SKIP_VERIFY=1 to skip)'
+            Write-Host 'Install could not verify the compiler file fingerprints.'
+            Write-Host '  Fix: re-run install from a clean checkout, or repair the hub tree.'
+            Write-Host '  Optional: NLC_SKIP_VERIFY=1 only if you accept running an unverified hub.'
+            [Console]::Error.WriteLine('INSTALL:NOT_MET hub verify failed')
             exit 1
         }
     }
@@ -149,12 +152,22 @@ Write-Host "Hub copy (tools, charter): $HubDest"
 Write-Host "Portable skills: $AgentsSkills"
 Write-Host ''
 Write-Host 'Next:'
-Write-Host '  1. Open your application repo in Cursor.'
-Write-Host '  2. /interview — bind goals, requirements, knowledge domains.'
-Write-Host '  3. /planit — build and prove (see docs\ai-compiled-systems\PROCESS.md under hub)'
+Write-Host '  Run ./nlc in your app repo (or nlc on PATH). See docs\nlc\MENU.md under hub.'
 Write-Host ''
 Write-Host "Greenfield scaffold: python $($HubTools)\nlc-init.py $env:USERPROFILE\projects\my-app --name MyApp"
 Write-Host ''
-Write-Host 'Prove (compile fitness):'
-Write-Host "  python $(Join-Path $HubTools 'ci_fitness.py')"
-Write-Host "  powershell -File $(Join-Path $HubTools 'ci-fitness.ps1')"
+$UserBin = Join-Path $env:USERPROFILE '.local\bin'
+New-Item -ItemType Directory -Path $UserBin -Force | Out-Null
+$NlcCmdSrc = Join-Path $HubDest 'templates\adopter\nlc.cmd'
+if (Test-Path -LiteralPath $NlcCmdSrc) {
+    Copy-Item -LiteralPath $NlcCmdSrc -Destination (Join-Path $UserBin 'nlc.cmd') -Force
+    $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+    if ($userPath -notlike "*$UserBin*") {
+        [Environment]::SetEnvironmentVariable('Path', "$userPath;$UserBin", 'User')
+        Write-Host "  PATH: added $UserBin (new shells)"
+    }
+    Write-Host "  command: $(Join-Path $UserBin 'nlc.cmd')"
+}
+Write-Host 'Verify (in app repo):'
+Write-Host '  ./nlc verify'
+Write-Host '  ./nlc verify-deep'

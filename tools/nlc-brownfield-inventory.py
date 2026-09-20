@@ -13,8 +13,12 @@ NLC_MARKERS = frozenset(
 )
 SKIP = frozenset({".git", "node_modules", "__pycache__", ".venv", "venv", "dist"})
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nlc_requirements import hub_tool  # noqa: E402
+
 
 def main() -> int:
+    hub_tool()
     parser = argparse.ArgumentParser(description="Brownfield inventory (UC15 beta)")
     parser.add_argument("root", nargs="?", default=".", type=Path)
     args = parser.parse_args()

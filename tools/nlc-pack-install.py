@@ -10,6 +10,7 @@ import tarfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nlc_human_gap import emit_gap  # noqa: E402
 from nlc_requirements import hub_tool  # noqa: E402
 
 
@@ -23,9 +24,12 @@ def main() -> int:
     root = args.root.resolve()
     archive = args.archive.resolve()
     if not archive.is_file():
-        print("PACK_INSTALL:NOT_MET", file=sys.stderr)
-        print(f"  missing: {archive}", file=sys.stderr)
-        return 1
+        return emit_gap(
+            "Pack install needs the .tar.gz file you received.",
+            missing=[f"no file at {archive}"],
+            examples=["./nlc pack install ./dist/pack-name-1.0.0.tar.gz"],
+            machine="PACK_INSTALL:NOT_MET",
+        )
 
     with tarfile.open(archive, "r:gz") as tf:
         manifest_member = tf.getmember("pack-manifest.json")
@@ -35,9 +39,14 @@ def main() -> int:
                 continue
             dest = root / member.name
             if dest.exists() and not args.force:
-                print("PACK_INSTALL:NOT_MET", file=sys.stderr)
-                print(f"  exists: {dest} (use --force)", file=sys.stderr)
-                return 1
+                return emit_gap(
+                    "This pack would overwrite files already in your repo.",
+                    missing=[str(dest.relative_to(root))],
+                    ask="Review the pack, then reinstall with --force if you intend to replace those files?",
+                    choices=["Abort and diff the pack", "Install with --force after review"],
+                    examples=[f"./nlc pack install {archive.name} --force"],
+                    machine="PACK_INSTALL:NOT_MET",
+                )
             dest.parent.mkdir(parents=True, exist_ok=True)
             src = tf.extractfile(member)
             if src is None:

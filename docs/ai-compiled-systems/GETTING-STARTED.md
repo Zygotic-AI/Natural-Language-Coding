@@ -15,19 +15,14 @@
    irm https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.ps1 | iex
    ```
 
-2. **Open your app repo** in Cursor (or work in this hub for charter/tool changes).
+2. **Open your [app repo](../TERMS.md#adopter)** in Cursor (or work in this hub for charter/tool changes).
 
-3. **`/interview`** — state the outcome; bind goals, requirements, and knowledge domains. Use [INTERVIEW-PATTERNS.md](INTERVIEW-PATTERNS.md) when stuck. Stop when gaps are closed or explicitly waived. Do not emit product code in this pass.
+   From the repo root run **`./nlc`** (dashboard). See [`docs/nlc/MENU.md`](../nlc/MENU.md).
 
-4. **`/planit`** — load → plan → bind → generate (one artifact) → gate → prove. See [PROCESS.md](PROCESS.md).
+3. **`/interview`** — state the outcome; bind goals, requirements, and [knowledge domains](../TERMS.md#knowledge-domain). Use [INTERVIEW-PATTERNS.md](INTERVIEW-PATTERNS.md) when stuck. Stop when gaps are closed or explicitly [waived](../TERMS.md#waived). Do not emit product code in this pass.
 
-5. **Red vs green** — from hub install path (`$env:USERPROFILE\.local\share\nlc\hub` on Windows):
+4. **`/planit`** — load → plan → bind → generate (one artifact) → [gate](../TERMS.md#gate) → [verify](../TERMS.md#verify) (`./nlc verify-deep`). See [PROCESS.md](PROCESS.md).
 
-   ```bash
-   python3 tools/ci_fitness.py
-   python3 tools/release-audit.py /path/to/your-app
-   ```
-
-   Windows: `python tools\ci_fitness.py` or `powershell -File tools\ci-fitness.ps1`. Prove PASS is compile. Ship needs human `Released-by:`.
+5. **Red vs green** — in your [app repo](../TERMS.md#adopter): `./nlc verify` (CI) and `./nlc ship-check`. Use `/verify` in the agent when [verify](../TERMS.md#verify) fails. [Ship](../TERMS.md#ship) needs human `Released-by:` on `CONFIRM.md`.
 
 Adopt a new repo: [BOOTSTRAP.md](../adoption/BOOTSTRAP.md). Words: [GLOSSARY.md](GLOSSARY.md).

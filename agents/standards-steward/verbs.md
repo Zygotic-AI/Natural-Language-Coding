@@ -1,6 +1,6 @@
 # Standards Steward — Verbs
 
-Contracted verbs for the standards-steward agent noun. Each verb has input contract, output contract, and failure mode.
+Contracted verbs for the standards-steward [agent noun](../../docs/TERMS.md#agent-noun). Each verb has input [contract](../../docs/TERMS.md#contract), output [contract](../../docs/TERMS.md#contract), and failure mode.
 
 ---
 
@@ -12,9 +12,9 @@ These verbs provide applicability information to Sessions/Work Units without gra
 
 ## load-applicability
 
-Return the applicability register for a given scope. A Session/WU calls this verb to learn which charter rules, ADRs, checklists, and agent noun constraints apply before materializing work. This is a query — it does not produce, modify, or ratify any standard.
+Return the applicability register for a given scope. A Session/WU calls this verb to learn which [charter](../../docs/TERMS.md#charter) rules, ADRs, checklists, and [agent noun](../../docs/TERMS.md#agent-noun) constraints apply before materializing work. This is a query — it does not produce, modify, or ratify any standard.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -52,7 +52,7 @@ input:
         description: Include related ADR references
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -136,7 +136,7 @@ error:
 
 This verb is **read-only**. Calling `load-applicability` does NOT:
 - Grant the caller produce authority over standards
-- Allow the caller to modify charter, ADRs, or binding matrix
+- Allow the caller to modify [charter](../../docs/TERMS.md#charter), ADRs, or [binding matrix](../../docs/TERMS.md#binding-matrix)
 - Create any artifact or side effect
 
 The Session obtains an applicability register; it does not become the steward.
@@ -145,15 +145,15 @@ The Session obtains an applicability register; it does not become the steward.
 
 ## Produce verbs (write authority)
 
-These verbs produce or modify standards artifacts. Only the standards-steward agent noun may execute these. A Session that called `load-applicability` does not gain produce authority.
+These verbs produce or modify standards artifacts. Only the standards-steward [agent noun](../../docs/TERMS.md#agent-noun) may execute these. A Session that called `load-applicability` does not gain produce authority.
 
 ---
 
 ## draft-adr
 
-Draft an ADR for a decision that constrains future work.
+Draft an [ADR](../../docs/TERMS.md#adr) for a decision that constrains future work.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -179,7 +179,7 @@ input:
         description: ADR ids this relates to or supersedes
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -230,9 +230,9 @@ error:
 
 ## draft-charter-edit
 
-Propose an edit to the charter.
+Propose an edit to the [charter](../../docs/TERMS.md#charter).
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -259,7 +259,7 @@ input:
         description: ADR that ratifies this change (required for rule changes)
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -300,9 +300,9 @@ error:
 
 ## supersede-adr
 
-Mark an ADR as superseded and record the successor.
+Mark an [ADR](../../docs/TERMS.md#adr) as superseded and record the successor.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -321,7 +321,7 @@ input:
         description: Why the supersession is needed
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -358,9 +358,9 @@ error:
 
 ## review-drift
 
-Check whether charter, ADRs, and code agree. Report drift.
+Check whether [charter](../../docs/TERMS.md#charter), ADRs, and code agree. Report drift.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -377,7 +377,7 @@ input:
         description: Specific files to check (optional)
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -423,9 +423,9 @@ error:
 
 ## complete-produce
 
-Signal that produce work is complete and ready for fitness handoff.
+Signal that produce work is complete and ready for fitness [handoff](../../docs/TERMS.md#handoff).
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -444,7 +444,7 @@ input:
         description: Change class (§6 Step 1)
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -488,7 +488,7 @@ error:
       type: string
 ```
 
-**Note:** `handoff_token` is issued when status is `complete` for convenience. Fitness preflight may accept a token OR validate package paths directly; the hard gate is package completeness (S7) and SSOT exit evidence (S8, P-020), not token presence. Token is optional on preflight input.
+**Note:** `handoff_token` is issued when status is `complete` for convenience. Fitness preflight may accept a token OR validate package paths directly; the hard [gate](../../docs/TERMS.md#gate) is package completeness (S7) and [SSOT exit evidence](../../docs/TERMS.md#ssot-exit-evidence) (S8, P-020), not token presence. Token is optional on preflight input.
 
 ---
 
@@ -501,4 +501,4 @@ The following verbs are **explicitly excluded** from standards-steward:
 - `release` — publish or deploy
 - `approve` — grant final approval
 
-Standards steward produces proposals. Ship decisions belong to another role.
+Standards steward produces proposals. [Ship](../../docs/TERMS.md#ship) decisions belong to another role.

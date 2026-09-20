@@ -76,7 +76,7 @@ def noun_schema_ok(data: dict) -> bool:
 
 def scan_one(scan_root: Path) -> list[tuple[str, str]]:
     violations: list[tuple[str, str]] = []
-    changed = changeset.changed_paths(scan_root, ROOT)
+    changed = changeset.effective_changed(scan_root, ROOT)
     for goal in collect_named_children(scan_root, "goals"):
         if not has_py(goal):
             continue

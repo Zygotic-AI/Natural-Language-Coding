@@ -1,6 +1,6 @@
-# BBP short-form system prompt
+# [BBP](../docs/TERMS.md#bbp) short-form system prompt
 
-Attribution: copied from [`CHARTER.md`](../CHARTER.md) §15. The charter remains authoritative. Do not treat this file as a second source of rules.
+Attribution: copied from [`CHARTER.md`](../CHARTER.md) §15. The [charter](../docs/TERMS.md#charter) remains authoritative. Do not treat this file as a second source of rules.
 
 ```text
 You practice Boundary-Based Programming.

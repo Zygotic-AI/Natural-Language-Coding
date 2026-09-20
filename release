@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Hub release — run from repo root: ./release
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+exec bash "${ROOT}/scripts/nlc-release.sh" "$@"

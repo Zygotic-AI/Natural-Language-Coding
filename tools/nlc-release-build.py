@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nlc_distribution import normalize_version, read_hub_version  # noqa: E402
+from nlc_requirements import hub_tool  # noqa: E402
 
 EXCLUDE_DIRS = {".git", ".github", "dist", "__pycache__", ".venv", "node_modules"}
 
@@ -23,6 +24,7 @@ def should_skip(path: Path) -> bool:
 
 
 def main() -> int:
+    hub_tool()
     parser = argparse.ArgumentParser(description="Build release tarball")
     parser.add_argument("--out-dir", type=Path, default=ROOT / "dist")
     parser.add_argument("--version", default=None, help="Override version (default integrity/nlc-version.json)")

@@ -1,10 +1,10 @@
-# Bootstrap an adopter repo (UC15)
+# Bootstrap an [adopter repo](../TERMS.md#adopter) (UC15)
 
-Use this when the **compiled system** lives in **your** repository—not in this hub’s `examples/` specimens.
+Use this when the **[compiled system](../TERMS.md#compiled-system)** lives in **your** repository—not in this [hub](../TERMS.md#hub)’s `examples/` specimens.
 
 ## Minimum layout
 
-Per charter §8 ([`CHARTER.md`](../../CHARTER.md)):
+Per [charter](../TERMS.md#charter) §8 ([`CHARTER.md`](../../CHARTER.md)):
 
 ```text
 your-app/
@@ -18,7 +18,7 @@ your-app/
 
 Reference shape (Python specimen): [`examples/invoice-correct/`](../../examples/invoice-correct/) — **fixture only**, not a product template.
 
-## Greenfield (preferred)
+## [Greenfield](../TERMS.md#greenfield) (preferred)
 
 ```bash
 python3 /path/to/nlc-hub/tools/nlc-init.py ~/projects/my-app --name MyApp
@@ -28,45 +28,45 @@ Refuses non-empty `domain/` or `goals/` (brownfield: [BROWNFIELD.md](BROWNFIELD.
 
 ## Steps
 
-1. **Create the repo** — greenfield: `nlc-init` above; brownfield: existing codebase (beta).
+1. **Create the repo** — [greenfield](../TERMS.md#greenfield): `nlc-init` above; [brownfield](../TERMS.md#brownfield): existing codebase (beta).
 
-2. **Install NLC** on the machine that runs agents:
+2. **Install [NLC](../TERMS.md#nlc)** on the machine that runs agents:
 
    ```bash
    curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
    ```
 
-   Remote install fetches the latest **semver release tarball** (or `NLC_VERSION` / `NLC_REF` override). Hub lands in `~/.local/share/nlc/versions/<semver>/` with an active `hub` pointer. Verify: [`integrity/nlc-install-hashes.json`](../../integrity/nlc-install-hashes.json) unless `NLC_SKIP_VERIFY=1`.
+   Remote install fetches the latest **semver release tarball** (or `NLC_VERSION` / `NLC_REF` override). [Hub](../TERMS.md#hub) lands in `~/.local/share/nlc/versions/<semver>/` with an active `hub` pointer. [Verify](../TERMS.md#verify): [`integrity/nlc-install-hashes.json`](../../integrity/nlc-install-hashes.json) unless `NLC_SKIP_VERIFY=1`.
 
-   Greenfield scaffold writes [`.nlc/lock.json`](../../integrity/schemas/nlc-lock.schema.json). Upgrade later: `python3 ~/.local/share/nlc/hub/tools/nlc-update.py` from the app repo (ADR 0014).
+   [Greenfield](../TERMS.md#greenfield) scaffold writes [`.nlc/lock.json`](../../integrity/schemas/nlc-lock.schema.json). Upgrade later: `python3 ~/.local/share/nlc/hub/tools/nlc-update.py` from the [app repo](../TERMS.md#adopter) (ADR 0014).
 
-3. **Add charter** — copy [`CHARTER.md`](../../CHARTER.md) or link in root `README.md` to the hub revision you adopt.
+3. **Add [charter](../TERMS.md#charter)** — copy [`CHARTER.md`](../../CHARTER.md) or link in root `README.md` to the [hub](../TERMS.md#hub) revision you adopt.
 
-4. **Copy CI hooks** from hub (adjust paths):
+4. **Copy CI hooks** from [hub](../TERMS.md#hub) (adjust paths):
 
    ```bash
    # From hub root (${NLC_INSTALL_ROOT}/hub or this clone)
-   python3 tools/ci_fitness.py       # prove — compile (Windows: ci-fitness.ps1)
+   ./nlc verify-deep && ./nlc verify   # compile gates (hub: ci_fitness via verify-deep)
    python3 tools/release-audit.py .  # ship — after human Released-by:
    ```
 
-5. **Interview** in Cursor on the app repo: goals, requirements, knowledge domains bound before emit.
+5. **[Interview](../TERMS.md#interview)** in Cursor on the [app repo](../TERMS.md#adopter): goals, requirements, [knowledge domains](../TERMS.md#knowledge-domain) bound before emit.
 
-6. **Planit** first boundary: one noun + verbs, or one goal calling existing verbs—prove before the next statement ([`PROCESS.md`](../ai-compiled-systems/PROCESS.md), ADR 0010).
+6. **[Planit](../TERMS.md#planit)** first [boundary](../TERMS.md#boundary): one [noun](../TERMS.md#noun) + verbs, or one [goal](../TERMS.md#goal) calling existing verbs—[prove](../TERMS.md#prove) before the next statement ([`PROCESS.md`](../ai-compiled-systems/PROCESS.md), [ADR](../TERMS.md#adr) 0010).
 
-7. **Adoption done** when charter §14 is true (real noun, real goal, deliberate gate red in CI, written agent loop).
+7. **Adoption done** when [charter](../TERMS.md#charter) §14 is true (real noun, real goal, deliberate gate red in CI, written agent loop).
 
-## Hub vs adopter
+## [Hub](../TERMS.md#hub) vs [adopter](../TERMS.md#adopter)
 
-| Lives in hub | Lives in adopter |
+| Lives in [hub](../TERMS.md#hub) | Lives in [adopter](../TERMS.md#adopter) |
 | ------------ | ---------------- |
-| Charter SSOT, integrity theory, `tools/` sources | Your `domain/`, `goals/`, app ADRs |
-| `examples/*` gate specimens | Your compiled system |
-| Portable skills (install copies to `~/.agents/skills`) | Repo-specific fitness binding (which tools scan which tree) |
+| [Charter](../TERMS.md#charter) SSOT, [integrity](../TERMS.md#integrity) theory, `tools/` sources | Your `domain/`, `goals/`, app ADRs |
+| `examples/*` [gate](../TERMS.md#gate) specimens | Your [compiled system](../TERMS.md#compiled-system) |
+| Portable skills (install copies to `~/.agents/skills`) | Repo-specific fitness [binding](../TERMS.md#binding) (which tools scan which tree) |
 
 ## Still missing (honest)
 
-Full automated “create repo from template” CLI is not shipped. Fact SSOT (UC18), rule-conflict at adopt (UC14), and delta-regen (UC9) are open — see [`FINDINGS.md`](../../FINDINGS.md).
+Full automated “create repo from template” CLI is not shipped. Fact SSOT (UC18), rule-conflict at adopt (UC14), and [delta-regen](../TERMS.md#delta-regen-queue) (UC9) are open — see [`FINDINGS.md`](../../FINDINGS.md).
 
 ## Template stub
 

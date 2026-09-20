@@ -32,7 +32,7 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 - ✔ **Windows prove path** — [`tools/ci_fitness.py`](tools/ci_fitness.py), [`tools/ci-fitness.ps1`](tools/ci-fitness.ps1); `ci-fitness.sh` delegates @done(26-09-20 08:25)
 - ✔ Distribution v0 — ADR 0015, tarball fetch, version store, lock, `nlc-update`/`nlc-fetch-hub`, release workflow @done(26-09-20 09:30)
 - ✔ v0.1.0 **pre-release** — scope in README, [`RELEASE-v0.1.0.md`](docs/adoption/RELEASE-v0.1.0.md), `nlc-release-smoke.sh`, CI on tag @done(26-09-20 09:45)
-- ☐ **Last:** `git push origin main && git push origin v0.1.0` (tag `v0.1.0` exists locally; push failed 401 in agent env).
+- ☐ **Last:** `./release` at repo root (or `./release --bump keep --yes` to ship `0.1.0` without bump) — see [`docs/adoption/RELEASE.md`](docs/adoption/RELEASE.md).
 - ✔ Install hub **checksum verify** — [`integrity/nlc-install-hashes.json`](integrity/nlc-install-hashes.json), [`nlc-install-verify.py`](tools/nlc-install-verify.py); `NLC_SKIP_VERIFY=1` to skip @done(26-09-20 09:00)
 - ✔ [`GETTING-STARTED.md`](docs/ai-compiled-systems/GETTING-STARTED.md) @done(26-09-20 08:15)
 - ✔ Manifesto + intent/quality/how-it-codes pages @done(26-09-17 10:15)
@@ -66,7 +66,87 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 - ✔ ADR 0016 retire UC19 / hub carries no product requirements @done(26-09-20 11:15)
 - ✔ ADR 0004 / 0005 Accepted @done(26-09-20 11:15)
 
-**Parked spine (FINDINGS):** Requirement **packs** v0.2; language packs (UC16); call-tree packs (UC20); rule IR; per-generate binder (UC21); noun inheritance scan.
+**Human interface (ADR 0017):**
+
+- ✔ `nlc` CLI + [`docs/nlc/MENU.md`](docs/nlc/MENU.md) v1 @done(26-09-20 12:00)
+- ✔ Repo-root **`./nlc`** (hub + `nlc-init` template) @done(26-09-20 12:15)
+- ✔ Dashboard v1 — auto queue from ADRs, regen queue, lock, CONFIRM, greenfield hint @done(26-09-20 12:15)
+- ✔ Dashboard: rules conflicts, planit-in-progress file, command-map step on queue @done(26-09-20 13:30)
+- ✔ `~/.local/bin/nlc` launcher (sh); Windows `nlc.cmd` on user PATH @done(26-09-20 13:30)
+- ✔ Harness hooks example + HARNESS.md (v2 wiring) @done(26-09-20 13:30)
+- ✔ Human UX batch: ADR 0018 gaps, verify split, maintainer subcommands, prove removed @done(26-09-20 13:30)
+- ✔ Human UX follow-through: guide CLI, UC9 regen-continue/advance, APP-VERIFY, judgment doc, hooks.example only, prove→verify doc sweep @done(26-09-20 14:00)
+
+**Parked spine (FINDINGS):** Requirement **packs** v0.2; code packs (UC16); call-tree packs (UC20); rule IR; per-generate binder (UC21); noun inheritance scan.
+
+---
+
+## ADR compliance — bring code up to policy (enforcement SSOT)
+
+Policy lives in ADRs + PROCESS + planit; this section is **machine wiring** so compile/validation cannot green when required gates are skipped. Cross-ref [`FINDINGS.md`](FINDINGS.md) parked “Per-generate gate binder.” **Section complete** @done(26-09-20 16:20) — remaining release work is housekeeping below (`v0.1.0` push).
+
+### ADR 0010 — gate immediately after every generate
+
+- ✔ **Per-artifact gate record** — `.nlc/gate-records.json` + [`nlc_gate_record.py`](tools/nlc_gate_record.py) @done(26-09-20 15:00)
+- ✔ **`./nlc maintainer gate-record`** — verify fails when `goals/**/implementation.py` newer than last PASS receipt @done(26-09-20 15:00)
+- ✔ **Planit skill** — step 6.5 calls `gate-record` @done(26-09-20 15:00)
+- ✔ **Harness** — adopter `templates/adopter/hooks.example.json` + `.nlc/hooks.example.json` (doc only) @done(26-09-20 16:00)
+- ✔ **Landmine** — `assert-batch-generate-policy-fails.py` + `assert-verify-gate-record-fails.py` in `ci_fitness.py` @done(26-09-20 16:00)
+
+### ADR 0004 + 0005 — produce package + SSOT exit evidence
+
+- ✔ **Fitness preflight** — [`nlc_produce_package.py`](tools/nlc_produce_package.py) `handoff_refused` in `ci_fitness.py` @done(26-09-20 16:00)
+- ✔ **PR / verify-deep path** — [`nlc_compliance.py`](tools/nlc_compliance.py) `produce_package_blockers` + hub `.nlc/produce-package.json` @done(26-09-20 16:00)
+- ✔ **`ssot_leaf_ids` + `quality_evidence`** — Q1/SSOT in produce preflight + verify-deep @done(26-09-20 16:00)
+- ✔ **Agent nouns** — [`validate-agent-noun-packages.py`](tools/validate-agent-noun-packages.py) in [`ci_fitness.py`](tools/ci_fitness.py) @done(26-09-20 15:00)
+
+### ADR 0003 + PROCESS §7 — adversarial review (machine, not optional)
+
+- ✔ **Rewrite [`HUMAN-JUDGMENT-GATES.md`](docs/nlc/HUMAN-JUDGMENT-GATES.md)** @done(26-09-20 15:00)
+- ✔ **Verify pipeline** — `verify-deep` + [`nlc_compliance.py`](tools/nlc_compliance.py) hub/app adversarial JSON @done(26-09-20 15:00)
+- ✔ **Planit skill** — `plan-audit` + verify while planit active @done(26-09-20 16:00)
+
+### Ratification, approval, default-closed (C24, ADR 0012, proposed ADR)
+
+- ✔ **Hub CI** — fitness + `nlc --project . verify` @done(26-09-20 15:00)
+- ✔ **`nlc verify` fast** — rule conflicts + stamp + gate records via [`nlc_compliance.py`](tools/nlc_compliance.py) @done(26-09-20 15:00)
+- ✔ **`Waived:`** — empty `Waived:` lines in `adrs/*.md` fail `verify` via `nlc_compliance` @done(26-09-20 16:00)
+- ✔ **Ratified-by / Released-by** — cross-walk in [`VERIFY-AND-SHIP.md`](docs/nlc/VERIFY-AND-SHIP.md) @done(26-09-20 15:00)
+- ✔ **ADR status** — [`nlc_adr_scan.py`](tools/nlc_adr_scan.py) SSOT @done(26-09-20 15:00)
+
+### ADR 0021 + 0019 — verify paths (hub + app)
+
+- ✔ **Hub PR gate** — `ci_fitness.py` + `nlc verify` in CI @done(26-09-20 15:00)
+- ✔ **Adopter template** — workflow + [`templates/adopter/README.md`](templates/adopter/README.md) `verified.json` guidance @done(26-09-20 16:00)
+- ✔ **`verify-deep` hub** — `.nlc/produce-package.json` (Q1 + SSOT + Q2) @done(26-09-20 16:00)
+
+### UC18 / PLANIT 6 — before generate
+
+- ✔ **Stamp enforcement** — in `verify` via `nlc_compliance` @done(26-09-20 15:00)
+- ✔ **Planit** — `guide before-generate` + verify stamp check @done(26-09-20 15:00)
+
+### ADR 0013 + 0018 — preflight and human CLI
+
+- ✔ Audit `tools/nlc-*.py` hub CLIs + pack/install + requirements/upgrade/install-verify interview stderr @done(26-09-20 16:15)
+- ✔ Install scripts: interview before `INSTALL:NOT_MET` on stderr; pack uses `emit_gap` @done(26-09-20 16:15)
+
+### ADR 0014–0015 — distribution (compliance with own locks)
+
+- ✔ Release workflow: tag build runs verify + fitness @done(26-09-20 15:00)
+- ✔ `nlc-init` scaffold — verify workflow, hooks example, change-adversarial example @done(26-09-20 16:00)
+
+### Charter / matrix (supporting gates)
+
+- ✔ **R27 binder** — [`docs/nlc/GATE-RECORD-BINDER.md`](docs/nlc/GATE-RECORD-BINDER.md) + `nlc_gate_record.py --describe` @done(26-09-20 16:15)
+- ✔ **ADR 0006** — `assert-verify-regen-queue-fails.py` + `examples/regen-queue-pending` in `ci_fitness` @done(26-09-20 16:15)
+
+### Done when (acceptance)
+
+- ✔ No merge to `main` on hub with Proposed ADR or failed `./nlc verify` (CI + `nlc_compliance`) @done(26-09-20 16:00)
+- ✔ App `verify-deep` refuses missing change adversarial + produce when `goals/**/implementation*` exists @done(26-09-20 16:00)
+- ✔ Generate path wired: gate-record + landmines + produce/plan-audit compliance (plan/change adversarial still skill-led export) @done(26-09-20 16:00)
+
+---
 
 ## Hub v0.2.0 — requirement packs (ship target)
 
@@ -84,7 +164,9 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 - ✔ `docs/nlc/` doc map + [`PROVE-AND-SHIP.md`](docs/nlc/PROVE-AND-SHIP.md) @done(26-09-20 11:15)
 - ✔ `scripts/nlc-release-prep.sh` dummy-proof pre-tag @done(26-09-20 11:15)
 - ✔ Public install **checksum** in install scripts (sh + ps1) @done(26-09-20 09:00)
-- ☐ **Last:** `v0.1.0` tag + push (after `nlc-release-prep.sh`, commit FINDINGS).
+- ☐ **Last:** hub ship via **`./release`** (replaces hand-rolled prep/tag/push).
+- ☐ **Version class on every change** — hub or adopter: agents ask patch/minor/major when unclear; heuristic hints (PCI/new ADR → minor; breaking contract → major). SSOT: [`.agents/instructions/change-version-class.md`](.agents/instructions/change-version-class.md); wire into `/interview`, `/planit`, and Cursor rules when productized.
+- ✔ **`./release` orchestrator** — verify-deep, bump, prep, commit, tag, push @done(26-09-20 16:30)
 
 ---
 

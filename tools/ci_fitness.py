@@ -125,6 +125,35 @@ def main() -> int:
     print("=== binding matrix ===")
     run("binding matrix", [sys.executable, str(TOOLS / "audit-binding-matrix.py")])
 
+    print("=== agent noun packages ===")
+    run(
+        "validate-agent-noun-packages",
+        [sys.executable, str(TOOLS / "validate-agent-noun-packages.py")],
+    )
+
+    print("=== ADR 0010 policy landmines ===")
+    run(
+        "assert-batch-generate-policy",
+        [sys.executable, str(TOOLS / "assert-batch-generate-policy-fails.py")],
+    )
+    run(
+        "assert-verify-gate-record",
+        [sys.executable, str(TOOLS / "assert-verify-gate-record-fails.py")],
+    )
+    run(
+        "assert-verify-regen-queue",
+        [sys.executable, str(TOOLS / "assert-verify-regen-queue-fails.py")],
+    )
+
+    print("=== produce handoff preflight ===")
+    from nlc_produce_package import preflight_handoff
+
+    handoff = preflight_handoff(ROOT)
+    if handoff == 2:
+        fail("handoff_refused produce package")
+    if handoff != 0:
+        fail("produce preflight")
+
     print("CI:MET")
     return 0
 

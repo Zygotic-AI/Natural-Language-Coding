@@ -12,11 +12,16 @@ echo "RELEASE_PREP:MET ci_fitness"
 
 python3 tools/nlc-install-hash-update.py
 if ! git diff --quiet -- integrity/nlc-install-hashes.json; then
-  echo "RELEASE_PREP:NOT_MET"
-  echo "  stale: integrity/nlc-install-hashes.json (commit hash update, re-run this script)"
-  exit 1
+  if [[ -n "${NLC_RELEASE_ORCHESTRATOR:-}" ]]; then
+    echo "RELEASE_PREP:NOTE install hashes updated (will commit in ./release step)"
+  else
+    echo "RELEASE_PREP:NOT_MET"
+    echo "  stale: integrity/nlc-install-hashes.json (commit hash update, re-run this script)"
+    exit 1
+  fi
+else
+  echo "RELEASE_PREP:MET install_hashes"
 fi
-echo "RELEASE_PREP:MET install_hashes"
 
 bash scripts/nlc-release-smoke.sh
 echo "RELEASE_PREP:MET smoke"

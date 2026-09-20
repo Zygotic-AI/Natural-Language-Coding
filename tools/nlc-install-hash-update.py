@@ -9,6 +9,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from nlc_requirements import hub_tool  # noqa: E402
+
 OUT = ROOT / "integrity" / "nlc-install-hashes.json"
 
 GLOBS = [
@@ -22,6 +25,7 @@ GLOBS = [
     "tools/nlc-before-generate.py",
     "tools/load-knowledge-domain.py",
     "tools/nlc-init.py",
+    "tools/nlc.py",
     "tools/validate-knowledge-facts.py",
     "tools/release-audit.py",
 ]
@@ -36,6 +40,7 @@ def sha256_file(path: Path) -> str:
 
 
 def main() -> int:
+    hub_tool()
     files: dict[str, str] = {}
     for rel in GLOBS:
         path = ROOT / rel

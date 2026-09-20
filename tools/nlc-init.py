@@ -42,18 +42,17 @@ Greenfield **compiled system** under Natural Language Coding (NLC).
 ## Agent workflow
 
 1. `/interview` — goals, requirements, knowledge domains
-2. `/planit` — bind, generate, gate, prove
+2. `/planit` — bind, generate, gate, verify (`./nlc verify`)
 
-## Prove and ship
+## Verify and ship
 
 ```bash
-python3 "$NLC_HUB/tools/ci_fitness.py"
-python3 "$NLC_HUB/tools/release-audit.py" .
+./nlc verify-deep
+./nlc verify
+./nlc ship-check
 ```
 
-Set `NLC_HUB` to your hub install (default `~/.local/share/nlc/hub`).
-
-Prove PASS ≠ shipped. Human `Released-by:` on `CONFIRM.md` when required.
+Verify PASS ≠ shipped. Human `Released-by:` on `CONFIRM.md` when required. See `docs/nlc/APP-VERIFY.md` in the hub for custom fitness.
 """
 
 CONFIRM = """# Confirm
@@ -134,12 +133,31 @@ def main() -> int:
             hub_root = ROOT
     hub_ver = read_hub_version(hub_root)
     lock_path = write_project_lock(target, hub_version=hub_ver, store="user")
+    (target / ".nlc" / "work-queue.json").write_text(
+        json.dumps({"schema": 1, "items": []}, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    hooks_src = ROOT / "templates" / "adopter" / "hooks.example.json"
+    if not hooks_src.is_file():
+        hooks_src = ROOT / ".nlc" / "hooks.example.json"
+    if hooks_src.is_file():
+        shutil.copy2(hooks_src, target / ".nlc" / "hooks.example.json")
+    adv_src = ROOT / "templates" / "adopter" / "change-adversarial.json.example"
+    if adv_src.is_file():
+        shutil.copy2(adv_src, target / ".nlc" / "change-adversarial.json.example")
 
-    wf_src = ROOT / "templates" / "adopter" / "github-workflows-nlc-prove.yml"
+    wf_src = ROOT / "templates" / "adopter" / "github-workflows-nlc-verify.yml"
     if wf_src.is_file():
-        wf_dest = target / ".github" / "workflows" / "nlc-prove.yml"
+        wf_dest = target / ".github" / "workflows" / "nlc-verify.yml"
         wf_dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(wf_src, wf_dest)
+    for launcher in ("nlc", "nlc.cmd"):
+        src = ROOT / "templates" / "adopter" / launcher
+        if src.is_file():
+            dest = target / launcher
+            shutil.copy2(src, dest)
+            if launcher == "nlc":
+                dest.chmod(0o755)
 
     sys.stdout.write(f"NLC_INIT:MET\npath: {target}\n")
     sys.stdout.write(f"lock: {lock_path}\nhub: {hub_ver}\n")

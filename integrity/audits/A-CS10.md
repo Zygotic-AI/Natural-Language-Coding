@@ -1,12 +1,12 @@
-# Audit A-CS10 — Quality snapshot recorded at boundary exit
+# [Audit](../../docs/TERMS.md#audit) A-CS10 — [Quality snapshot](../../docs/TERMS.md#quality-snapshot) recorded at [boundary](../../docs/TERMS.md#boundary) exit
 
-Requirement: CS10 (Confirmation checklist — systems)
+[Requirement](../../docs/TERMS.md#requirement): CS10 (Confirmation checklist — systems)
 
 ## Criterion
 
-Quality snapshot recorded at boundary exit (`{ opportunities, ops, defects, quality }`).
+[Quality snapshot](../../docs/TERMS.md#quality-snapshot) recorded at [boundary](../../docs/TERMS.md#boundary) exit (`{ opportunities, ops, defects, quality }`).
 
-## Met when
+## [Met](../../docs/TERMS.md#met) when
 
 Completion artifact includes `quality_snapshot` with all four fields:
 
@@ -19,7 +19,7 @@ AND consistency holds:
 - `ops + defects = opportunities`
 - `quality ≈ ops / opportunities` (within floating-point tolerance)
 
-## Not met when
+## Not [met](../../docs/TERMS.md#met) when
 
 - `quality_snapshot` missing from completion artifact
 - Any of the four required fields missing
@@ -35,5 +35,5 @@ AND consistency holds:
 
 ## Cross-references
 
-- [`../QUALITY_METRIC.md`](../QUALITY_METRIC.md) Q3 — Quality snapshot recorded at boundary exit
-- Charter §16.9 CS10
+- [`../QUALITY_METRIC.md`](../QUALITY_METRIC.md) Q3 — [Quality snapshot](../../docs/TERMS.md#quality-snapshot) recorded at [boundary](../../docs/TERMS.md#boundary) exit
+- [Charter](../../docs/TERMS.md#charter) §16.9 CS10

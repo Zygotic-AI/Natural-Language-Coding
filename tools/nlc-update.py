@@ -45,8 +45,13 @@ def main() -> int:
     try:
         lock = read_project_lock(project)
     except FileNotFoundError:
+        print(
+            "Upgrade needs a compiled-system lock file in this repo.",
+            file=sys.stderr,
+        )
+        print("  What's wrong: missing .nlc/lock.json", file=sys.stderr)
+        print("  Fix: ./nlc new <folder> or copy lock from a prior nlc-init", file=sys.stderr)
         print("UPGRADE:NOT_MET", file=sys.stderr)
-        print("  missing: .nlc/lock.json (run nlc-init or create lock)", file=sys.stderr)
         return 1
 
     install_root = (
@@ -56,8 +61,10 @@ def main() -> int:
     )
     hub = hub_active_path(install_root)
     if not hub.is_dir():
+        print("The compiler install in your store looks missing or broken.", file=sys.stderr)
+        print(f"  What's wrong: no hub at {hub}", file=sys.stderr)
+        print("  Fix: bash scripts/install.sh (or reinstall from the hub repo)", file=sys.stderr)
         print("UPGRADE:NOT_MET", file=sys.stderr)
-        print(f"  missing: hub at {hub}", file=sys.stderr)
         return 1
 
     repo_root = hub.resolve()
@@ -73,8 +80,9 @@ def main() -> int:
             repo=args.repo,
         )
     except RuntimeError as exc:
+        print("Upgrade could not resolve a target hub version.", file=sys.stderr)
+        print(f"  What's wrong: {exc}", file=sys.stderr)
         print("UPGRADE:NOT_MET", file=sys.stderr)
-        print(f"  missing: {exc}", file=sys.stderr)
         return 1
 
     catalog = github_published_versions(args.repo)
@@ -83,8 +91,9 @@ def main() -> int:
     try:
         steps = semver_upgrade_steps(catalog, from_v, target)
     except ValueError as exc:
+        print("Upgrade path between versions is not valid.", file=sys.stderr)
+        print(f"  What's wrong: {exc}", file=sys.stderr)
         print("UPGRADE:NOT_MET", file=sys.stderr)
-        print(f"  missing: {exc}", file=sys.stderr)
         return 1
 
     for step_from, step_to in steps:

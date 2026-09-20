@@ -38,11 +38,15 @@ def preflight(
 def emit_and_exit(gaps: list[str], hints: list[str] | None = None) -> None:
     if not gaps:
         return
-    print("REQUIREMENTS:NOT_MET", file=sys.stderr)
+    print(
+        "Natural Language Coding can't run on this machine until the gaps below are fixed.",
+        file=sys.stderr,
+    )
     for g in gaps:
-        print(f"  missing: {g}", file=sys.stderr)
+        print(f"  What's wrong: {g}", file=sys.stderr)
     for h in hints or []:
-        print(f"  hint: {h}", file=sys.stderr)
+        print(f"  Fix: {h}", file=sys.stderr)
+    print("REQUIREMENTS:NOT_MET", file=sys.stderr)
     sys.exit(1)
 
 

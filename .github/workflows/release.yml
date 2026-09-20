@@ -20,6 +20,9 @@ jobs:
       - name: Hub fitness suite
         run: python3 tools/ci_fitness.py
 
+      - name: NLC verify (policy + fingerprints)
+        run: python3 tools/nlc.py --project . verify
+
       - name: Release smoke (install store + lock)
         run: bash scripts/nlc-release-smoke.sh
 

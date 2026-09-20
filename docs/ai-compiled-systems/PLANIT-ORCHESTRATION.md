@@ -1,18 +1,18 @@
-# PLANIT orchestration (agent skill)
+# [PLANIT](../TERMS.md#planit) orchestration (agent skill)
 
-How the **ACS compile loop** ([`PROCESS.md`](PROCESS.md)) and the **audited work loop (AWL)** run together when an agent invokes **`/planit`** in this repository.
+How the **[ACS](../TERMS.md#acs) compile loop** ([`PROCESS.md`](PROCESS.md)) and the **audited work loop (AWL)** run together when an agent invokes **`/planit`** in this repository.
 
 | Layer | SSOT | Role |
 |-------|------|------|
-| **PLANIT** | [`PROCESS.md`](PROCESS.md) | What to produce: load → interview → plan → statements → bind → close gaps → generate → prove |
-| **AWL** | [`.agents/skills/planit/references/audited-work-loop-standard.md`](../../.agents/skills/planit/references/audited-work-loop-standard.md) | How to run work safely: intake, applicability, audits, gates, record |
-| **BBP** | [`CHARTER.md`](../../CHARTER.md) | Shape of generated code and hub change order (§6–7, §11) |
+| **[PLANIT](../TERMS.md#planit)** | [`PROCESS.md`](PROCESS.md) | What to produce: load → [interview](../TERMS.md#interview) → plan → statements → bind → close gaps → generate → [verify](../TERMS.md#verify) |
+| **[AWL](../TERMS.md#awl)** | [`.agents/skills/planit/references/audited-work-loop-standard.md`](../../.agents/skills/planit/references/audited-work-loop-standard.md) | How to run work safely: intake, applicability, audits, gates, record |
+| **[BBP](../TERMS.md#bbp)** | [`CHARTER.md`](../../CHARTER.md) | Shape of generated code and [hub](../TERMS.md#hub) change order (§6–7, §11) |
 
-PLANIT does not replace BBP ([`MERGE.md`](MERGE.md)). AWL does not replace PLANIT — it adds **default-closed gates**, **tier ceremony**, and **operation verdicts** on every phase and durable artifact ([`operation-verdict-standard.md`](../../.agents/skills/planit/references/operation-verdict-standard.md)).
+[PLANIT](../TERMS.md#planit) does not replace [BBP](../TERMS.md#bbp) ([`MERGE.md`](MERGE.md)). [AWL](../TERMS.md#awl) does not replace [PLANIT](../TERMS.md#planit) — it adds **[default-closed](../TERMS.md#default-closed) gates**, **tier ceremony**, and **operation verdicts** on every phase and durable artifact ([`operation-verdict-standard.md`](../../.agents/skills/planit/references/operation-verdict-standard.md)).
 
 **Skill entrypoint:** [`.agents/skills/planit/SKILL.md`](../../.agents/skills/planit/SKILL.md) (Cursor: `.cursor/skills/planit`).
 
-**Org-global Planit** (`~/.agents/skills/planit`) remains the orchestrator for ai-vault-only routes (DSI, `local-*` maintainer skills). This repo skill is authoritative **here** for ACS + BBP hub work.
+**Org-global [Planit](../TERMS.md#planit)** (`~/.agents/skills/planit`) remains the orchestrator for ai-vault-only routes (DSI, `local-*` maintainer skills). This repo skill is authoritative **here** for [ACS](../TERMS.md#acs) + [BBP](../TERMS.md#bbp) [hub](../TERMS.md#hub) work.
 
 ---
 
@@ -25,55 +25,55 @@ PLANIT 2–3 (plan, product statements)      + AWL 3 (plan template: leaf, stop 
 AWL 4 (adversarial plan audit)             + GATE-STD on touch list
 PLANIT 4–5 (bind, close gaps)              + bind gate verdict
 AWL 5 (execute)                            + PLANIT 6 (generate) + hub ratify rules
-PLANIT 7 (prove)                           + machine gate + adversarial prove
+PLANIT 7 (verify)                          + machine gate + adversarial audit
 AWL 6 (execution audit)                    + GATE-STD on delivered paths + meta-audit when T2+
 AWL 7 (record)                             + PLANIT record + charter §6 step 8 (hub)
 ```
 
-Do not start **plan** (PLANIT 2), **applicability** durable writes, or **generate** until **intake** passes. Do not **generate** until **bind gate** passes. Do not hand off until **prove** and **execution audit** pass. Prove is compile. Ship is `python3 tools/release-audit.py <tree>` after a human `Released-by:` — not the same gate.
+Do not start **plan** (PLANIT 2), **applicability** durable writes, or **generate** until **intake** passes. Do not **generate** until **bind [gate](../TERMS.md#gate)** passes. Do not hand off until **[verify](../TERMS.md#verify)** and **execution [audit](../TERMS.md#audit)** pass. [Verify](../TERMS.md#verify) is compile. [Ship](../TERMS.md#ship) is `./nlc ship-check` or `release-audit.py` after a human `Released-by:` — not the same [gate](../TERMS.md#gate).
 
-**T0/T1:** skip Appendix B, skip multi-step flag, one plan table, still intake + bind + prove. If this is not followed, the run is T3.
+**T0/T1:** skip Appendix B, skip multi-step flag, one plan table, still intake + bind + [verify](../TERMS.md#verify). If this is not followed, the run is T3.
 
 ---
 
 ## Phase map
 
-| AWL phase | PLANIT step(s) | Primary outputs |
+| [AWL](../TERMS.md#awl) phase | [PLANIT](../TERMS.md#planit) step(s) | Primary outputs |
 |-----------|----------------|-----------------|
 | 0 Authorize | — | Outcome, scope |
-| 1 Intake | 0 Load (evidence row), 1 Interview (start) | Resolution table, tier (T2+), load list |
-| 2 Applicability | 0 (norms in scope) | Register: charter, PROCESS, ADRs, R*, rules, fitness, operation-verdict §2 for writes |
+| 1 Intake | 0 Load (evidence row), 1 [Interview](../TERMS.md#interview) (start) | Resolution table, tier (T2+), load list |
+| 2 Applicability | 0 (norms in scope) | Register: [charter](../TERMS.md#charter), PROCESS, ADRs, R*, rules, fitness, operation-verdict §2 for writes |
 | 3 Plan | 2 Plan, 3 Product statements | Work items (goal / boundary / requirement / ADR / **rule**), atomic statements, leaf skill column |
-| 4 Plan audit | (before bind) | PASS/FAIL + `GATE-STD` on planned artifacts |
-| — Bind | **4–5 Bind / close gaps** | Bound statements; bind gate PASS. **Not execute.** |
-| 5 Execute | **6 Generate one artifact** then **6.5 gate it** | Code/skill/doc; immediate default-closed gate. FAIL stops the next row. |
+| 4 [Plan audit](../TERMS.md#plan-audit) | (before bind) | PASS/FAIL + `GATE-STD` on planned artifacts |
+| — Bind | **4–5 Bind / close gaps** | Bound statements; bind [gate](../TERMS.md#gate) PASS. **Not execute.** |
+| 5 Execute | **6 Generate one artifact** then **6.5 [gate](../TERMS.md#gate) it** | Code/skill/doc; immediate [default-closed](../TERMS.md#default-closed) [gate](../TERMS.md#gate). FAIL stops the next row. |
 
-| — Prove | **7 Prove** | Machine gate + adversarial audit. Compile, not ship. |
-| 6 Execution audit | After prove | Evidence on artifacts under test; `GATE-STD` on paths |
-| 7 Record | Hub §6 step 8 | ADR/recorder handoff, back-propagation when applicable |
-| — Ship | After human sign | `release-audit.py` — `Released-by:` required |
+| — [Verify](../TERMS.md#verify) | **7 [Verify](../TERMS.md#verify)** | `./nlc verify-deep` / fitness + adversarial [audit](../TERMS.md#audit). Compile, not [ship](../TERMS.md#ship). |
+| 6 Execution [audit](../TERMS.md#audit) | After [verify](../TERMS.md#verify) | Evidence on artifacts under test; `GATE-STD` on paths |
+| 7 Record | [Hub](../TERMS.md#hub) §6 step 8 | ADR/recorder [handoff](../TERMS.md#handoff), back-propagation when applicable |
+| — [Ship](../TERMS.md#ship) | After human sign | `release-audit.py` — `Released-by:` required |
 
 ---
 
 ## Gates and verdicts
 
-| Gate | When | Standard |
+| [Gate](../TERMS.md#gate) | When | Standard |
 |------|------|----------|
-| Intake | Before PLANIT 2 / AWL 2 | ICC + skill intake table; verdict per operation-verdict §4 |
-| Bind | Before PLANIT 6 | All statements bound (incl. rules when 0007 applies) |
-| Prove | PLANIT 7 | Hub: `tools/ci-fitness.sh` + §11. Adopter: that tree’s bound fitness suite. Adversarial audit separate from generate. |
-| Ship | After prove, human signed | `python3 tools/release-audit.py <tree>`. Compile-green is not released. |
+| Intake | Before [PLANIT](../TERMS.md#planit) 2 / [AWL](../TERMS.md#awl) 2 | ICC + skill intake table; verdict per operation-verdict §4 |
+| Bind | Before [PLANIT](../TERMS.md#planit) 6 | All statements bound (incl. rules when 0007 applies) |
+| [Verify](../TERMS.md#verify) | [PLANIT](../TERMS.md#planit) 7 | [Hub](../TERMS.md#hub): `ci_fitness.py` + §11. [Adopter](../TERMS.md#adopter): `./nlc verify` / `verify-deep` ([`APP-VERIFY.md`](../nlc/APP-VERIFY.md)). Adversarial [audit](../TERMS.md#audit) separate from generate. |
+| [Ship](../TERMS.md#ship) | After [verify](../TERMS.md#verify), human signed | `./nlc ship-check`. Compile-green is not released. |
 | Produced artifact | Before each durable write | operation-verdict §2 (skills, prompts, plans, handoffs) |
-| `GATE-STD` | Plan audit + execution audit | Every touched path has default-closed gate or N/A with reason |
+| `GATE-STD` | [Plan audit](../TERMS.md#plan-audit) + execution [audit](../TERMS.md#audit) | Every touched path has [default-closed](../TERMS.md#default-closed) [gate](../TERMS.md#gate) or N/A with reason |
 
 Verdict headings: `## Verdict — Planit intake gate`, `plan audit`, `bind gate`, `prove`, `execution audit`, `process`.
 
 
 ---
 
-## Failure and RCA
+## Failure and [RCA](../TERMS.md#rca)
 
-**Prove FAIL** → stop (jidoka). Non-trivial failure → [`root-cause-analysis-standard.md`](../../.agents/skills/planit/references/root-cause-analysis-standard.md) or `/conduct-root-cause-analysis`, then PLANIT **1** (interview) or **5** (bind), then **6** (regenerate). Humans do not patch generated files to silence audits ([`PROCESS.md`](PROCESS.md)).
+**[Prove](../TERMS.md#prove) FAIL** → stop (jidoka). Non-trivial failure → [`root-cause-analysis-standard.md`](../../.agents/skills/planit/references/root-cause-analysis-standard.md) or `/conduct-root-cause-analysis`, then [PLANIT](../TERMS.md#planit) **1** (interview) or **5** (bind), then **6** (regenerate). Humans do not patch generated files to silence audits ([`PROCESS.md`](PROCESS.md)).
 
 ---
 
@@ -84,11 +84,11 @@ Verdict headings: `## Verdict — Planit intake gate`, `plan audit`, `bind gate`
 | Orchestrator | `planit` |
 | Propose / implement | `bbp-proposer` |
 | Adversarial review | `bbp-reviewer` |
-| Prove / fitness | `bbp-confirmer` |
+| [Prove](../TERMS.md#prove) / fitness | `bbp-confirmer` |
 | Record | `bbp-recorder` |
-| Knowledge domains | `agents/knowledge-steward` |
+| [Knowledge domains](../TERMS.md#knowledge-domain) | `agents/knowledge-steward` |
 
-Hub charter loop detail: [`.agents/skills/planit/references/hub-charter-loop.md`](../../.agents/skills/planit/references/hub-charter-loop.md).
+[Hub](../TERMS.md#hub) [charter](../TERMS.md#charter) loop detail: [`.agents/skills/planit/references/hub-charter-loop.md`](../../.agents/skills/planit/references/hub-charter-loop.md).
 
 ---
 

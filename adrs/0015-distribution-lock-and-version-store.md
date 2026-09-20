@@ -1,4 +1,4 @@
-# ADR 0015 — Distribution: version store, lock file, two layouts
+# [ADR](../docs/TERMS.md#adr) 0015 — Distribution: [version store](../docs/TERMS.md#version-store), [lock file](../docs/TERMS.md#lock-file), two layouts
 
 - Status: Accepted
 - Date: 2026-09-20
@@ -7,31 +7,31 @@
 
 ## Context
 
-Adopters work in **their** application repos. NLC must not require a git submodule of the hub (git-in-git). Distribution should resemble **pip / npm**: immutable semver artifacts, a small committed lock in the app repo, and install/update commands—not `git pull` on the hub inside the product tree.
+Adopters work in **their** application repos. [NLC](../docs/TERMS.md#nlc) must not require a git submodule of the [hub](../docs/TERMS.md#hub) (git-in-git). Distribution should resemble **pip / npm**: immutable semver artifacts, a small committed lock in the [app repo](../docs/TERMS.md#adopter), and install/update commands—not `git pull` on the [hub](../docs/TERMS.md#hub) inside the product tree.
 
 Two supported layouts:
 
-1. **Per repo (default)** — lock at `.nlc/lock.json`; hub payloads live in the **user store** (`~/.local/share/nlc/versions/<semver>/`, active `hub` pointer).
+1. **Per repo (default)** — lock at `.nlc/lock.json`; [hub](../docs/TERMS.md#hub) payloads live in the **user store** (`~/.local/share/nlc/versions/<semver>/`, active `hub` pointer).
 2. **Workspace root** — shared store at a workspace path; child repos use `store: workspace` and `store_path` in the lock.
 
 ## Decision
 
-1. **Hub semver SSOT:** [`integrity/nlc-version.json`](../integrity/nlc-version.json) in each release artifact.
+1. **[Hub](../docs/TERMS.md#hub) semver SSOT:** [`integrity/nlc-version.json`](../integrity/nlc-version.json) in each release artifact.
 
 2. **Project lock:** [`.nlc/lock.json`](../integrity/schemas/nlc-lock.schema.json) — `schema`, `hub` (semver), `store` (`user` | `workspace` | `project`), optional `store_path`.
 
 3. **User store layout:**
-   - `versions/<semver>/` — full hub tree for that release
+   - `versions/<semver>/` — full [hub](../docs/TERMS.md#hub) tree for that release
    - `current` — single-line active semver
    - `hub` — symlink (or copy on Windows) to `versions/<current>/`
 
 4. **Remote install:** [`tools/nlc-fetch-hub.py`](../tools/nlc-fetch-hub.py) downloads release tarball `nlc-<semver>.tar.gz` (or registers a local checkout with `--from-path`). Shell installers call this instead of `git clone` for consumers.
 
-5. **Upgrade:** [`tools/nlc-update.py`](../tools/nlc-update.py) advances the lock along the published semver catalog, one hop at a time, per [ADR 0014](0014-semver-upgrade-steps-and-noop-migrations.md). Migration units ship in the **target** release tree.
+5. **Upgrade:** [`tools/nlc-update.py`](../tools/nlc-update.py) advances the lock along the published semver catalog, one hop at a time, per [ADR 0014](0014-semver-upgrade-steps-and-noop-migrations.md). Migration units [ship](../docs/TERMS.md#ship) in the **target** release tree.
 
-6. **Release build:** Tag `vX.Y.Z` triggers CI fitness + [`tools/nlc-release-build.py`](../tools/nlc-release-build.py) + GitHub Release asset upload.
+6. **Release build:** [Tag](../docs/TERMS.md#tag) `vX.Y.Z` triggers CI fitness + [`tools/nlc-release-build.py`](../tools/nlc-release-build.py) + GitHub Release asset upload.
 
-7. **Greenfield:** [`tools/nlc-init.py`](../tools/nlc-init.py) writes `.nlc/lock.json` pinned to the installed hub version.
+7. **[Greenfield](../docs/TERMS.md#greenfield):** [`tools/nlc-init.py`](../tools/nlc-init.py) writes `.nlc/lock.json` pinned to the installed [hub](../docs/TERMS.md#hub) version.
 
 ## Consequences
 
@@ -41,5 +41,5 @@ Two supported layouts:
 
 ## Rejected
 
-- Hub as git submodule inside adopter repos.
+- [Hub](../docs/TERMS.md#hub) as git submodule inside [adopter](../docs/TERMS.md#adopter) repos.
 - Implicit “latest” with no lock in the application repo.

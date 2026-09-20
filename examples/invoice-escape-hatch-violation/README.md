@@ -2,7 +2,7 @@
 
 Known-fail fixture for A7 **v1**.
 
-The goal reaches through `invoice.__dict__` instead of calling a verb.
+The [goal](../../docs/TERMS.md#goal) reaches through `invoice.__dict__` instead of calling a verb.
 It does not assign `invoice.status` and does not call `.save(` / `setattr(`.
 
 ```bash

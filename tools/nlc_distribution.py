@@ -168,9 +168,11 @@ def log_upgrade_met(to_v: str) -> None:
 
 
 def emit_upgrade_not_met(missing: Iterable[str]) -> None:
-    print("UPGRADE:NOT_MET", file=sys.stderr)
+    print("Upgrade can't continue — something required is missing or invalid.", file=sys.stderr)
     for item in missing:
-        print(f"  missing: {item}", file=sys.stderr)
+        print(f"  What's wrong: {item}", file=sys.stderr)
+    print("  Fix: run ./nlc doctor fix or reinstall the hub, then ./nlc upgrade", file=sys.stderr)
+    print("UPGRADE:NOT_MET", file=sys.stderr)
 
 
 def run_migration_step(repo_root: Path, from_v: str, to_v: str) -> None:

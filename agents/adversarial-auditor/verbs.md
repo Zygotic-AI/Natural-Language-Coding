@@ -1,14 +1,14 @@
 # Adversarial Auditor — Verbs
 
-Contracted verbs for the adversarial-auditor agent noun. Each verb has input contract, output contract, and failure mode.
+Contracted verbs for the adversarial-auditor [agent noun](../../docs/TERMS.md#agent-noun). Each verb has input [contract](../../docs/TERMS.md#contract), output [contract](../../docs/TERMS.md#contract), and failure mode.
 
 ---
 
 ## audit-proposal
 
-Audit a proposal (spec, ADR draft, charter edit) against charter rules.
+[Audit](../../docs/TERMS.md#audit) a proposal (spec, ADR draft, charter edit) against [charter](../../docs/TERMS.md#charter) rules.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -41,7 +41,7 @@ input:
         description: Exit state string from fitness receipt (required for PASS per P-020)
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -100,15 +100,15 @@ error:
       type: string
 ```
 
-**Note:** `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; audit refuses PASS without SSOT exit evidence (S8, P-020).
+**Note:** `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; [audit](../../docs/TERMS.md#audit) refuses PASS without [SSOT exit evidence](../../docs/TERMS.md#ssot-exit-evidence) (S8, P-020).
 
 ---
 
 ## audit-diff
 
-Audit a code diff against charter rules and confirmation checklist.
+[Audit](../../docs/TERMS.md#audit) a code diff against [charter](../../docs/TERMS.md#charter) rules and confirmation checklist.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -138,7 +138,7 @@ input:
         description: Exit state string from fitness receipt (required for PASS per P-020)
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -197,15 +197,15 @@ error:
       type: string
 ```
 
-**Note:** `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; audit refuses PASS without SSOT exit evidence (S8, P-020).
+**Note:** `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; [audit](../../docs/TERMS.md#audit) refuses PASS without [SSOT exit evidence](../../docs/TERMS.md#ssot-exit-evidence) (S8, P-020).
 
 ---
 
 ## audit-binding-matrix
 
-Audit the binding matrix for unbound, unbindable, or missing requirements.
+[Audit](../../docs/TERMS.md#audit) the [binding matrix](../../docs/TERMS.md#binding-matrix) for unbound, unbindable, or missing requirements.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -224,7 +224,7 @@ input:
         description: Check that all charter rules appear in matrix
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -271,7 +271,7 @@ error:
 
 Challenge a previous finding (request re-audit with rebuttal).
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -290,7 +290,7 @@ input:
         description: Evidence supporting the rebuttal
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -333,4 +333,4 @@ The following verbs are **explicitly excluded** from adversarial-auditor:
 - `approve` — grant final approval
 - `implement` — write the artifact being audited
 
-Adversarial auditor produces findings. Ship decisions and production belong to other roles.
+Adversarial auditor produces findings. [Ship](../../docs/TERMS.md#ship) decisions and production belong to other roles.

@@ -1,8 +1,8 @@
-# Hub semver migrations (adopter contract)
+# [Hub](../docs/TERMS.md#hub) semver migrations (adopter contract)
 
 SSOT: [ADR 0014](../adrs/0014-semver-upgrade-steps-and-noop-migrations.md).
 
-Each published hub version has a migration unit for the step **from the previous semver** into this version. **Absence is an error**; a release with no adopter-facing changes still ships an explicit **no-op** unit.
+Each published [hub](../docs/TERMS.md#hub) version has a [migration unit](../docs/TERMS.md#migration-unit) for the step **from the previous semver** into this version. **Absence is an error**; a release with no adopter-facing changes still ships an explicit **no-op** unit.
 
 ## Layout (target)
 
@@ -39,6 +39,6 @@ UPGRADE:NOT_MET
   missing: migration 1.2.2_to_1.2.3
 ```
 
-Orchestrator: [`tools/nlc-update.py`](../tools/nlc-update.py). Hub artifact replace and lock bump happen in the same step as the migration unit runs.
+Orchestrator: [`tools/nlc-update.py`](../tools/nlc-update.py). [Hub](../docs/TERMS.md#hub) artifact replace and lock bump happen in the same step as the [migration unit](../docs/TERMS.md#migration-unit) runs.
 
-Bootstrap step `0.0.0_to_0.1.0` (noop) documents the first published hub; app locks start at `0.1.0`.
+Bootstrap step `0.0.0_to_0.1.0` (noop) documents the first published [hub](../docs/TERMS.md#hub); app locks start at `0.1.0`.

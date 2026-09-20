@@ -1,0 +1,27 @@
+# Copy to your app repo: .github/workflows/nlc-verify.yml
+# PR: fast verify (fingerprints vs .nlc/verified.json).
+# main: verify-deep then commit refreshed .nlc/verified.json when MET.
+
+name: nlc-verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fast verify (fingerprints)
+        run: |
+          chmod +x ./nlc 2>/dev/null || true
+          ./nlc verify || nlc verify
+      - name: Deep verify on main only (optional)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          ./nlc verify-deep || nlc verify-deep

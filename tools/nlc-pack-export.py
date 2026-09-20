@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
+from nlc_human_gap import emit_gap  # noqa: E402
 from nlc_requirements import hub_tool  # noqa: E402
 
 
@@ -52,9 +53,12 @@ def main() -> int:
         members.append((facts, "knowledge/facts.json"))
 
     if not members:
-        print("PACK_EXPORT:NOT_MET", file=sys.stderr)
-        print("  missing: adrs/, rules/adopted.json, or knowledge/facts.json", file=sys.stderr)
-        return 1
+        return emit_gap(
+            "Export needs ratified requirements content in this repo first.",
+            missing=["no adrs/*.md, rules/adopted.json, or knowledge/facts.json to include"],
+            examples=["./nlc pack export --name mypack --version 1.0.0"],
+            machine="PACK_EXPORT:NOT_MET",
+        )
 
     archive = out_dir / f"pack-{args.name}-{args.version}.tar.gz"
     with tarfile.open(archive, "w:gz") as tf:
