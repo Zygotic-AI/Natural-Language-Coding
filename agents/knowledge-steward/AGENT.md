@@ -30,7 +30,7 @@ See [`verbs.md`](verbs.md).
 
 | Verb | Kind | Purpose |
 |------|------|---------|
-| `load-shelf` | query | Facts in scope for this interview/plan |
+| `load-shelf` | query | Facts in scope; read `knowledge/facts.json` (confirmed) for adopters |
 | `propose-fact` | produce | Draft a fact card for human confirm |
 | `flag-gap` | produce | Name an unbound statement that needs a fact, requirement, or ADR |
 

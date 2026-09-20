@@ -1,0 +1,22 @@
+{
+  "adoptions": [
+    {
+      "rule_id": "pan-return-forbid",
+      "adr_id": "0012-example-a",
+      "precedence_tier": "org",
+      "precedence_rank": 10,
+      "match": { "tags_all": ["pan"], "primitive": "return" },
+      "effect": "forbid",
+      "obligation": null
+    },
+    {
+      "rule_id": "pan-return-must-export",
+      "adr_id": "0012-example-b",
+      "precedence_tier": "org",
+      "precedence_rank": 10,
+      "match": { "tags_all": ["pan"], "primitive": "return" },
+      "effect": "must",
+      "obligation": "export_to_processor"
+    }
+  ]
+}

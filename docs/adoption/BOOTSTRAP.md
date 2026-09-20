@@ -18,9 +18,17 @@ your-app/
 
 Reference shape (Python specimen): [`examples/invoice-correct/`](../../examples/invoice-correct/) — **fixture only**, not a product template.
 
+## Greenfield (preferred)
+
+```bash
+python3 /path/to/nlc-hub/tools/nlc-init.py ~/projects/my-app --name MyApp
+```
+
+Refuses non-empty `domain/` or `goals/` (brownfield: [BROWNFIELD.md](BROWNFIELD.md)).
+
 ## Steps
 
-1. **Create the repo** (empty app or existing codebase you will migrate intent-first).
+1. **Create the repo** — greenfield: `nlc-init` above; brownfield: existing codebase (beta).
 
 2. **Install NLC** on the machine that runs agents:
 

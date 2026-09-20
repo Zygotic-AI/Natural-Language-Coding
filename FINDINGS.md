@@ -24,11 +24,11 @@ From [`docs/USE-CASES.md`](docs/USE-CASES.md). Not optional polish.
 
 | ID | Gap |
 |----|-----|
-| UC9 | Full delta-regen when a requirement changes. Impact graph only *lists* callers. |
-| UC14 | Two if/thens contradict at **adopt** (must write encrypted vs must not write). Fail adoption, not emit. |
-| UC15 | Bootstrap a second repo (not the teaching tree). |
-| UC18 | Fact SSOT. Interview facts live only as ADR prose. |
-| UC19 | One worked PCI (or equivalent) through ADR → rule → tags → emit. |
+| UC9 | Orchestrated delta-regen (v1: `nlc-delta-regen.py` plan only). |
+| UC14 | Richer conflict model over time (v1: `check-rule-adoption.py` + ADR 0012). |
+| UC15 | Brownfield bootstrap automation (greenfield: `nlc-init.py`). |
+| UC18 | Steward `load-shelf` auto-read of `facts.json` in all harnesses. |
+| UC19 | Full PCI certification path (v1: PAN worked example). |
 
 ---
 

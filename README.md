@@ -14,11 +14,19 @@ Agents make one file green and fork the business rule next door. Natural Languag
 
    Or clone this repo and run `bash scripts/install.sh` from the root.
 
-2. **Open your application repo** in [Cursor](https://cursor.com) (Agent chat).
+2. **Greenfield app repo** (preferred):
 
-3. Run **`/interview`** (or start Planit interview) until goals, requirements, and knowledge domains are bound.
+   ```bash
+   python3 ~/.local/share/nlc/hub/tools/nlc-init.py ~/projects/my-app --name MyApp
+   ```
 
-4. Run **`/planit`** to plan, bind, generate one artifact at a time, gate, and prove.
+   Brownfield existing code: [beta guide](docs/adoption/BROWNFIELD.md).
+
+3. **Open the app repo** in [Cursor](https://cursor.com) (Agent chat).
+
+4. Run **`/interview`** until goals, requirements, and knowledge domains are bound.
+
+5. Run **`/planit`** to plan, bind, generate one artifact at a time, gate, and prove.
 
 Compile green is not release. Ship requires human `Released-by:` per [`tools/release-audit.py`](tools/release-audit.py).
 
@@ -39,6 +47,7 @@ Under the covers: boundary-based architecture ([`CHARTER.md`](CHARTER.md)). Glos
 | [`docs/ai-compiled-systems/GETTING-STARTED.md`](docs/ai-compiled-systems/GETTING-STARTED.md) | Install, `/interview`, `/planit`, fitness |
 | [`docs/ai-compiled-systems/MANIFESTO.md`](docs/ai-compiled-systems/MANIFESTO.md) | Why intent is the product |
 | [`docs/adoption/BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) | Adopt NLC in a new app repo (UC15) |
+| [`docs/spine/README.md`](docs/spine/README.md) | UC9 / UC14 / UC18 / UC19 tools |
 | [`CHARTER.md`](CHARTER.md) | Design rules (adopters) |
 | [`docs/USE-CASES.md`](docs/USE-CASES.md) | What the practice does |
 | [`FINDINGS.md`](FINDINGS.md) | Open product gaps |

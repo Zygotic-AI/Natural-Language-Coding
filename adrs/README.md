@@ -19,5 +19,6 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0009-primitive-interior-functions.md`](0009-primitive-interior-functions.md) | Primitives are interior functions | Accepted |
 | [`0010-gate-after-every-generate.md`](0010-gate-after-every-generate.md) | Gate immediately after every generate | Accepted |
 | [`0011-natural-language-coding-naming.md`](0011-natural-language-coding-naming.md) | NLC product naming (compiler vs compiled system) | Accepted |
+| [`0012-adr-precedence-and-rule-conflicts.md`](0012-adr-precedence-and-rule-conflicts.md) | ADR precedence tiers and adopt-time rule conflicts | Accepted |
 
 

@@ -30,17 +30,17 @@ Same conversation may produce UC1–UC4. Three artifacts, three gates: **goal**,
 | UC6 | **Classify A–F.** Adjective / verb / goal / durable / contract / charter. Wrong class fails (C on a charter change is illegal). | In force: C1. |
 | UC7 | **Adversarial review.** Second role attacks the plan before emit. Open FAIL blocks ship unless rebutted. | In force: C23. |
 | UC8 | **Prove / ship.** AI gates green = compile. `Ratified-by` (class A/B/D/E/F) and `Released-by` (always) = ship. Unmet gate prints Step 1…N. | In force: `ci-fitness.sh`, `release-audit.py`, C24. |
-| UC9 | **Change a requirement.** Human changes one ADR/rule. Compiler diffs tagged nouns/verbs/goals and regenerates that blast radius only. | Why boundaries exist. Impact graph v1. Full delta-regen missing. |
+| UC9 | **Change a requirement.** Human changes one ADR/rule. Compiler diffs tagged nouns/verbs/goals and regenerates that blast radius only. | v1: `nlc-delta-regen.py` plan; orchestrated regen still PLANIT. |
 | UC10 | **Defect is upstream.** Emit wrong → RCA to interview / ADR / rule. Human does not patch generated code. | Charter + ADR 0006. |
 | UC11 | **Breaking contract.** Additive = quiet. Break stays red until the human accepts the *requirement*, not the schema. | ADR 0006. |
 | UC12 | **Expand the closed set.** New primitive or tag is an ADR, then a row in [`integrity/primitives.md`](../integrity/primitives.md). Prefer tag/fact before a new primitive. | In force as SSOT file. Runner parked. |
 | UC13 | **Durable goal → engine tag.** `goal.durable ∧ engine.runtime ≠ (named runtime) → forbid`. Temporal is a tagged noun, not a fourth citizen. | ADR 0007. |
-| UC14 | **Rule conflict at adopt-time.** Two if/thens contradict (must store encrypted vs must not store). Fail the **adoption**, not the emit. | Missing. |
-| UC15 | **Adopt in a repo.** Drop charter, first invoice-shaped noun, hook `release-audit.py` before merge/deploy. | Teaching tree only. Bootstrap story missing. |
+| UC14 | **Rule conflict at adopt-time.** Same tag+primitive match with incompatible effects (e.g. `pan ∧ return → forbid` vs `pan ∧ return → must export`). Higher **ADR precedence tier** wins; tie → human records override (ADR 0012). Not “encrypt vs cannot store” (those compose). | v1: `check-rule-adoption.py`. |
+| UC15 | **Adopt in a repo.** Greenfield: `nlc-init`. Brownfield: beta manual path. | Greenfield CLI v1; brownfield doc only. |
 | UC16 | **Language / interior swap.** Same contracts; replace one noun’s interior (Python → Rust, file log → Logstash). | Parked: `docs/LANGUAGE-SCANNER.md`. Engine tag: 0007. |
 | UC17 | **Record / supersede.** New decision = ADR. Old ADR marked superseded, not deleted. | In force: R22. |
-| UC18 | **Knowledge facts.** Interview writes facts the rules can bind (invoice receives payments, PAN is in scope). Unbound fact → UC1 continues. | Named. No fact SSOT beyond ADRs. |
-| UC19 | **Worked PCI (or equivalent) reduction.** One real standard through UC3 → UC4 → tags on adjectives → UC5, so 0007 has an example. | Missing. |
+| UC18 | **Knowledge facts.** Interview writes facts the rules can bind (invoice receives payments, PAN is in scope). Unbound fact → UC1 continues. | `knowledge/facts.json` + `validate-knowledge-facts.py`. |
+| UC19 | **Worked PCI (or equivalent) reduction.** One real standard through UC3 → UC4 → tags on adjectives → UC5, so 0007 has an example. | PAN walkthrough: `docs/worked-examples/pan-handling/`. |
 | UC20 | **Call-tree inventory.** Verb → interior primitive functions. Extra/missing primitive vs bind list fails. | ADR 0009. Gate parked. |
 | UC21 | **Gate after every generate.** Metrics first; default-fail gate on that artifact before the next statement. | ADR 0010 / PLANIT 6.5. Binder parked. |
 
@@ -53,12 +53,12 @@ These are not a someday list. The spine does not close without them.
 
 | ID | Why it is needed |
 |----|------------------|
-| UC9 (full delta-regen) | Without it, “change one requirement” is a slogan. Impact graph v1 only *lists* callers. |
-| UC14 rule conflict | Two adopted if/thens can forbid and require the same write. That must fail at **adopt**, or emit is a coin flip. |
+| UC9 (orchestrated regen) | v1 plan tool exists; PLANIT must still execute each step automatically in a later release. |
+| UC14 edge cases | Composable obligations and cross-primitive policy need richer IR over time. |
 
-| UC15 bootstrap | A second repo cannot adopt from the teaching tree alone. |
-| UC18 fact SSOT | Interview binds facts; they currently live only as ADR prose. |
-| UC19 worked reduction | 0007 has no end-to-end example. PCI (or equivalent) is the proof the conversion is real. |
+| UC15 brownfield | Automated inventory/migration not shipped. |
+| UC18 steward wire-up | `load-shelf` should read `facts.json` by default in adopters (documented; full agent wire optional). |
+| UC19 full PCI | PAN example is normative shape, not certification. |
 
 Parked (needed at expansion, not now): UC16 language scanner, Rule IR for UC4/UC5.
 
