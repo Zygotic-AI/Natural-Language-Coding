@@ -12,7 +12,15 @@ python3 tools/nlc-before-generate.py --repo <adopter-or-hub-root> --scope <noun-
 
 Name scopes from the plan (nouns, `pii`, `invoice`, etc.). Hub work on this repo: at least `--scope invoice` when invoice-shaped.
 
-# After requirement / contract change (UC9 v2)
+# After requirement / contract change (UC9)
+
+```bash
+python3 tools/nlc-delta-regen.py . --change verb:Noun.verb --orchestrate --write-queue
+```
+
+Execute each `DELTA_REGEN:STEP` via Planit; gate after every generate (ADR 0010).
+
+# Before generate (UC18)
 
 When an ADR, rule, or published verb contract changed, produce a regen checklist **before** editing emit:
 

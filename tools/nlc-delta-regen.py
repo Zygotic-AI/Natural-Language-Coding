@@ -93,6 +93,16 @@ def main() -> int:
         required=True,
         help="kind:id e.g. verb:Invoice.apply_payment, goal:record-bank-payment, noun:Invoice, rule:pan-no-return",
     )
+    parser.add_argument(
+        "--orchestrate",
+        action="store_true",
+        help="Emit DELTA_REGEN:STEP lines and optional queue file (UC9 v2)",
+    )
+    parser.add_argument(
+        "--write-queue",
+        action="store_true",
+        help="Write .nlc/delta-regen-queue.json under repo root",
+    )
     args = parser.parse_args()
     root = args.root.resolve()
 
@@ -118,16 +128,31 @@ def main() -> int:
         sys.stderr.write(f"unknown kind: {kind}\n")
         return 2
 
+    steps = plan_steps(goal_ids, graph, reason)
     payload = {
         "uc": "UC9",
-        "version": 1,
+        "version": 2 if args.orchestrate else 1,
         "root": str(root),
         "change": {"kind": kind, "id": ident},
         "goals_to_regen": goal_ids,
-        "steps": plan_steps(goal_ids, graph, reason),
+        "steps": steps,
         "prove": "python3 tools/ci_fitness.py (or adopter-bound suite) on full tree after all steps",
-        "note": "Machine plan only; run PLANIT per step. Do not patch emit without intent change.",
+        "note": "Run PLANIT per step; gate after each generate (ADR 0010). Do not patch emit without intent change.",
     }
+    if args.write_queue:
+        queue_dir = root / ".nlc"
+        queue_dir.mkdir(parents=True, exist_ok=True)
+        queue_path = queue_dir / "delta-regen-queue.json"
+        queue_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+        print(f"DELTA_REGEN:QUEUE path={queue_path}", file=sys.stderr)
+    if args.orchestrate:
+        total = len(steps)
+        for i, step in enumerate(steps, start=1):
+            gid = step.get("goal_id", "")
+            print(f"DELTA_REGEN:STEP index={i} total={total} goal={gid}")
+            print(f"  path: {step.get('path', '')}")
+            print(f"  reason: {step.get('reason', '')}")
+        print(f"DELTA_REGEN:ORCHESTRATE total={total} change={args.change}")
     json.dump(payload, sys.stdout, indent=2)
     sys.stdout.write("\n")
     return 0

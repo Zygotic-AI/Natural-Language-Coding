@@ -64,7 +64,8 @@ Under the covers: boundary-based architecture ([`CHARTER.md`](CHARTER.md)). Glos
 | [`docs/ai-compiled-systems/GETTING-STARTED.md`](docs/ai-compiled-systems/GETTING-STARTED.md) | Install, `/interview`, `/planit`, fitness |
 | [`docs/ai-compiled-systems/MANIFESTO.md`](docs/ai-compiled-systems/MANIFESTO.md) | Why intent is the product |
 | [`docs/adoption/BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) | Adopt NLC in a new app repo (UC15) |
-| [`docs/spine/README.md`](docs/spine/README.md) | UC9 / UC14 / UC18 / UC19 tools |
+| [`docs/nlc/README.md`](docs/nlc/README.md) | Doc map (start here for navigation) |
+| [`docs/spine/README.md`](docs/spine/README.md) | UC9 / UC14 / UC18 tools |
 | [`CHARTER.md`](CHARTER.md) | Design rules (adopters) |
 | [`docs/USE-CASES.md`](docs/USE-CASES.md) | What the practice does |
 | [`FINDINGS.md`](FINDINGS.md) | Open product gaps |
@@ -80,6 +81,6 @@ Under the covers: boundary-based architecture ([`CHARTER.md`](CHARTER.md)). Glos
 
 Working charter and hub gates. Not a ratified organizational standard. Adoption “done” is charter §14.
 
-**v0.1.0 (first release)** — greenfield adopt (`nlc-init`, `.nlc/lock.json`), curl/PowerShell install, semver hub store, `/interview` + `/planit`, compile spine v1 (UC9/14/18/19 as documented in [`docs/spine/README.md`](docs/spine/README.md)). Not in 0.1.0: brownfield automation, full PCI walkthrough, orchestrated delta-regen, rule IR. See [`FINDINGS.md`](FINDINGS.md). Pre-tag check: `bash scripts/nlc-release-smoke.sh`.
+**v0.1.0 (first release)** — greenfield adopt, install, lock, `/interview` + `/planit`, impact graph + delta-regen orchestration, UC14/UC18 spine. Hub ships **no** product requirements (ADR 0016). **v0.2** — requirement packs. See [`FINDINGS.md`](FINDINGS.md). Pre-tag: `bash scripts/nlc-release-prep.sh`.
 
 **P / R / C** on rule ids: **P**rinciple, **R**equirement, **C**onfirmation. Hyphenated `P-020` is operating policy in the bindings companion repo.

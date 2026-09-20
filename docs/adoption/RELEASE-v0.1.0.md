@@ -4,10 +4,13 @@ Human steps when the tree is ready. **Tag and GitHub Release are last.**
 
 ## Before tag
 
-1. `python3 tools/ci_fitness.py` → `CI:MET`
-2. `python3 tools/nlc-install-hash-update.py` — commit `integrity/nlc-install-hashes.json` if it changed
-3. `bash scripts/nlc-release-smoke.sh` → `RELEASE_SMOKE:MET`
-4. Confirm `integrity/nlc-version.json` matches the tag you will push (`0.1.0`)
+Run once from repo root:
+
+```bash
+bash scripts/nlc-release-prep.sh
+```
+
+That runs fitness, verifies install hashes are committed, smoke test, and updates FINDINGS last-pass sha. Commit any FINDINGS change, then tag.
 
 ## Tag (last)
 

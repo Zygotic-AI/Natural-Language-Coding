@@ -4,7 +4,7 @@ SSOT for undone work. Do not hunt TODO vs HOLES vs USE-CASES.
 Charter SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: `42ccb31` (v0.1.0 pre-release; tag not pushed yet). This file records leftovers after that.
+Last pass: `pending` (run `bash scripts/nlc-release-prep.sh` before tag).
 
 ---
 
@@ -12,7 +12,7 @@ Last pass: `42ccb31` (v0.1.0 pre-release; tag not pushed yet). This file records
 
 | Item | What to do |
 |------|------------|
-| Ship | Hook `python3 tools/release-audit.py <tree>` in the real pipeline. Write `Released-by:` / `Ratified-by:` yourself. Compile-green ≠ released. |
+| Promotion / ship | Run fitness on every PR; gate each generate (ADR 0010); use `release-audit.py` at QA/promotion — not only production. See [`docs/nlc/PROVE-AND-SHIP.md`](docs/nlc/PROVE-AND-SHIP.md). |
 | Judgment | “Would this noun be a lie?”, “are these related?”, “does this verb belong on *this* noun?” — R1 / C3 / R4. No static gate. |
 | Signature | C24 refuses `Ratified-by: agent`. Cryptographic human signature is out of reach. |
 
@@ -20,15 +20,15 @@ Last pass: `42ccb31` (v0.1.0 pre-release; tag not pushed yet). This file records
 
 ## Needed (product incomplete without these)
 
-From [`docs/USE-CASES.md`](docs/USE-CASES.md). Not optional polish.
+From [`docs/USE-CASES.md`](docs/USE-CASES.md). Hub ships **tools**, not product requirements (ADR 0016).
 
 | ID | Gap |
 |----|-----|
-| UC9 | Orchestrated delta-regen (v1: `nlc-delta-regen.py` plan only). |
+| UC9 | Rule-tagged blast radius (v2); orchestrate queue shipped — execute via Planit per step. |
 | UC14 | Richer conflict model over time (v1: `check-rule-adoption.py` + ADR 0012). |
 | UC15 | Brownfield bootstrap automation (greenfield: `nlc-init.py`). |
-| UC18 | Deeper harness auto-call of `load-knowledge-domain` (CLI exists). |
-| UC19 | Full PCI certification path (v1: PAN worked example). |
+| UC18 | Harness must call `nlc-before-generate` every generate — see [`docs/nlc/HARNESS.md`](docs/nlc/HARNESS.md). |
+| **Packs v0.2** | Requirement packs: ingest → ratify → export → consume. |
 
 ---
 
@@ -36,13 +36,11 @@ From [`docs/USE-CASES.md`](docs/USE-CASES.md). Not optional polish.
 
 | Item | ADR / doc | Missing gate |
 |------|-----------|--------------|
-| Language scanner | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Spec, then thin adapter. Source gates are Python-only. |
+| Language packs (UC16) | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Per-stack scanner adapter. |
+| Call-tree packs (UC20) | ADR 0009, [`integrity/primitives.md`](integrity/primitives.md) | Primitive interior inventory per language. |
 | Rule IR | ADR 0007 | If-then runner over tags × primitives × facts. |
-| Primitive interiors | ADR 0009, [`integrity/primitives.md`](integrity/primitives.md) | Call-tree inventory; raw I/O outside `write`/`read`/… fails. |
-| Per-generate gate | ADR 0010, PLANIT 6.5 | Record that metrics existed and the artifact gate ran before the next statement. |
+| Per-generate gate binder | ADR 0010, PLANIT 6.5 | Record that metrics existed and the artifact gate ran. |
 | No noun inheritance | ADR 0008 | Bindable scan for subclass/mixin between nouns. |
-
-Reviewers treat the parked rows as **findings** until those gates exist.
 
 ---
 
@@ -50,11 +48,10 @@ Reviewers treat the parked rows as **findings** until those gates exist.
 
 | Item | Note |
 |------|------|
-| ADR 0004, 0005 | Status still `needs_review` (AIMS leftover). |
 | Repo name | GitHub: `Zygotic-AI/Natural-Language-Coding`. Consumer brand: NLC (ADR 0011). |
+| Doc map | [`docs/nlc/README.md`](docs/nlc/README.md) |
 | Dual PLANIT | `~/.agents/skills/planit` vs this repo. Prefer newer is a wish, not a gate. |
-| Interview skill | `/interview` + [INTERVIEW-PATTERNS.md](docs/ai-compiled-systems/INTERVIEW-PATTERNS.md) v1; grow miss log from compiles. |
-| UC15 bootstrap | Doc + template stub shipped; no one-shot CLI yet. |
+| Interview skill | Grow miss log from compiles — [`INTERVIEW-PATTERNS.md`](docs/ai-compiled-systems/INTERVIEW-PATTERNS.md). |
 
 ---
 
@@ -62,9 +59,9 @@ Reviewers treat the parked rows as **findings** until those gates exist.
 
 - Merge AIMS + BBP into CHARTER
 - Binding matrix v1 (all published ids bound)
-- In-reach fitness + landmines + `ci-fitness.sh`
+- In-reach fitness + landmines + `ci_fitness.py`
 - `release-audit.py` (unsigned invoice-correct cannot ship)
-- PLANIT 0–7 + 6.5 in PROCESS / skill (ceremony, not the runner)
-- ADRs 0006–0010 Accepted
+- PLANIT 0–7 + 6.5 in PROCESS / skill
+- ADRs 0004–0006, 0008–0016 Accepted (0004/0005 accepted 2026-09-20)
 - Primitives SSOT file exists (v1 names)
-- Use-case map UC1–UC21
+- Use-case map UC1–UC21 (UC19 retired per ADR 0016)

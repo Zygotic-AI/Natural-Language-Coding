@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import sys
 from pathlib import Path
 
@@ -129,6 +130,12 @@ def main() -> int:
             hub_root = ROOT
     hub_ver = read_hub_version(hub_root)
     lock_path = write_project_lock(target, hub_version=hub_ver, store="user")
+
+    wf_src = ROOT / "templates" / "adopter" / "github-workflows-nlc-prove.yml"
+    if wf_src.is_file():
+        wf_dest = target / ".github" / "workflows" / "nlc-prove.yml"
+        wf_dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(wf_src, wf_dest)
 
     sys.stdout.write(f"NLC_INIT:MET\npath: {target}\n")
     sys.stdout.write(f"lock: {lock_path}\nhub: {hub_ver}\n")

@@ -1,6 +1,6 @@
-# Worked example: PAN handling (UC19)
+# Worked example: PAN handling (shape only)
 
-End-to-end path for ADR 0007: **ADR → adopted rules → tags on adjectives → emit obligations**. Not a PCI certification—normative shape only.
+Illustrates ADR 0007 path: **ADR → adopted rules → tags on adjectives → emit obligations**. Not a hub requirement, not PCI certification — adopters bring their own packs (ADR 0016).
 
 ## UC3 — Decision (ADR)
 

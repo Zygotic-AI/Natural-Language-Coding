@@ -1,10 +1,10 @@
 # ADR 0004 — Produce→fitness handoff is default-closed
 
-- Status: needs_review
+- Status: Accepted
 - Date: 2026-09-05
-- Deciders: Reed (Quality Architect) draft; adversarial + ship separately
+- Deciders: Human manager; Quality Architect role; Adversarial auditor role
 - Class: F (charter/agent)
-- Tags: grokbot, systems, handoff, P-016
+- Tags: systems, handoff, P-016
 
 ## Context
 

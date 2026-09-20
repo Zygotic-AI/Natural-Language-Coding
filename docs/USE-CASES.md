@@ -30,7 +30,7 @@ Same conversation may produce UC1–UC4. Three artifacts, three gates: **goal**,
 | UC6 | **Classify A–F.** Adjective / verb / goal / durable / contract / charter. Wrong class fails (C on a charter change is illegal). | In force: C1. |
 | UC7 | **Adversarial review.** Second role attacks the plan before emit. Open FAIL blocks ship unless rebutted. | In force: C23. |
 | UC8 | **Prove / ship.** AI gates green = compile. `Ratified-by` (class A/B/D/E/F) and `Released-by` (always) = ship. Unmet gate prints Step 1…N. | In force: `ci-fitness.sh`, `release-audit.py`, C24. |
-| UC9 | **Change a requirement.** Human changes one ADR/rule. Compiler diffs tagged nouns/verbs/goals and regenerates that blast radius only. | v1: `nlc-delta-regen.py` plan; orchestrated regen still PLANIT. |
+| UC9 | **Change a requirement.** Human changes one ADR/rule. Compiler diffs tagged nouns/verbs/goals and regenerates that blast radius only. | Impact graph + `nlc-delta-regen.py`; `--orchestrate` queue (see [`IMPACT-GRAPH.md`](spine/IMPACT-GRAPH.md)). |
 | UC10 | **Defect is upstream.** Emit wrong → RCA to interview / ADR / rule. Human does not patch generated code. | Charter + ADR 0006. |
 | UC11 | **Breaking contract.** Additive = quiet. Break stays red until the human accepts the *requirement*, not the schema. | ADR 0006. |
 | UC12 | **Expand the closed set.** New primitive or tag is an ADR, then a row in [`integrity/primitives.md`](../integrity/primitives.md). Prefer tag/fact before a new primitive. | In force as SSOT file. Runner parked. |
@@ -40,7 +40,7 @@ Same conversation may produce UC1–UC4. Three artifacts, three gates: **goal**,
 | UC16 | **Language / interior swap.** Same contracts; replace one noun’s interior (Python → Rust, file log → Logstash). | Parked: `docs/LANGUAGE-SCANNER.md`. Engine tag: 0007. |
 | UC17 | **Record / supersede.** New decision = ADR. Old ADR marked superseded, not deleted. | In force: R22. |
 | UC18 | **Knowledge facts.** Interview writes facts the rules can bind (invoice receives payments, PAN is in scope). Unbound fact → UC1 continues. | `knowledge/facts.json` + `validate-knowledge-facts.py`. |
-| UC19 | **Worked PCI (or equivalent) reduction.** One real standard through UC3 → UC4 → tags on adjectives → UC5, so 0007 has an example. | PAN walkthrough: `docs/worked-examples/pan-handling/`. |
+| ~~UC19~~ | *Retired (ADR 0016).* Hub does not ship product requirements. Shape example only: `docs/worked-examples/pan-handling/`. | **Requirement packs** — v0.2 (`TODO`). |
 | UC20 | **Call-tree inventory.** Verb → interior primitive functions. Extra/missing primitive vs bind list fails. | ADR 0009. Gate parked. |
 | UC21 | **Gate after every generate.** Metrics first; default-fail gate on that artifact before the next statement. | ADR 0010 / PLANIT 6.5. Binder parked. |
 
@@ -53,14 +53,13 @@ These are not a someday list. The spine does not close without them.
 
 | ID | Why it is needed |
 |----|------------------|
-| UC9 (orchestrated regen) | v1 plan tool exists; PLANIT must still execute each step automatically in a later release. |
+| UC9 (rule-tagged blast radius) | v2: narrow `rule:` changes via tag bindings, not all goals. |
 | UC14 edge cases | Composable obligations and cross-primitive policy need richer IR over time. |
-
 | UC15 brownfield | Automated inventory/migration not shipped. |
-| UC18 steward wire-up | Agents should invoke `load-knowledge-domain` / `tools/load-knowledge-domain.py` before generate. |
-| UC19 full PCI | PAN example is normative shape, not certification. |
+| UC18 harness wire-up | Mandatory `load-knowledge-domain` / `nlc-before-generate` on every generate path. |
+| Requirement packs (v0.2) | Ingest → ratify → export → consume ADR/rule bundles (ADR 0016). Not UC19. |
 
-Parked (needed at expansion, not now): UC16 language scanner, Rule IR for UC4/UC5.
+Parked (needed at expansion): UC16 language packs, UC20 call-tree packs, Rule IR for UC4/UC5.
 
 ---
 

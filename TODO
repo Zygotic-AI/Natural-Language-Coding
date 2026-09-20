@@ -50,19 +50,30 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 - ✔ [`docs/adoption/BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) + [`BROWNFIELD.md`](docs/adoption/BROWNFIELD.md) @done(26-09-20 08:15)
 - ☐ UC15 **brownfield** automation (inventory / migrate legacy modules).
 
-**Compile spine (UC9 / UC14 / UC18 / UC19) — v1 shipped, v2 open:**
+**Compile spine (UC9 / UC14 / UC18) — v1 shipped, v2 open:**
 
+- ✔ UC9 impact graph [`IMPACT-GRAPH.md`](docs/spine/IMPACT-GRAPH.md), [`nlc-impact-graph.py`](tools/nlc-impact-graph.py), delta-regen `--orchestrate` @done(26-09-20 11:15)
 - ✔ UC9 v1 [`tools/nlc-delta-regen.py`](tools/nlc-delta-regen.py) + [`docs/spine/README.md`](docs/spine/README.md) @done(26-09-20 08:15)
 - ✔ UC9 v2 Planit procedure + [`nlc-before-generate.md`](.agents/skills/planit/references/nlc-before-generate.md) @done(26-09-20 08:50)
+- ☐ UC9 rule-tagged blast radius (narrow `rule:` changes).
 - ✔ UC14 v1 ADR 0012 + [`tools/check-rule-adoption.py`](tools/check-rule-adoption.py) @done(26-09-20 08:15)
 - ☐ UC14 v2 composable obligations, cross-primitive policy, rule IR runner (ADR 0007 parked).
 - ✔ UC18 v1 [`knowledge/facts.json`](knowledge/facts.json) + [`validate-knowledge-facts.py`](tools/validate-knowledge-facts.py) @done(26-09-20 08:15)
 - ✔ UC18 verb + CLI: `load-knowledge-domain` / [`load-knowledge-domain.py`](tools/load-knowledge-domain.py) @done(26-09-20 08:35)
 - ✔ UC18 [`tools/nlc-before-generate.py`](tools/nlc-before-generate.py) + Planit step 6 gate @done(26-09-20 08:50)
-- ✔ UC19 v1 [`docs/worked-examples/pan-handling/`](docs/worked-examples/pan-handling/README.md) @done(26-09-20 08:15)
-- ☐ UC19 full PCI (or equivalent) certification-style walkthrough.
+- ✔ UC18 harness doc [`docs/nlc/HARNESS.md`](docs/nlc/HARNESS.md) + session preflight + `nlc-init` CI template @done(26-09-20 11:15)
+- ✔ ADR 0016 retire UC19 / hub carries no product requirements @done(26-09-20 11:15)
+- ✔ ADR 0004 / 0005 Accepted @done(26-09-20 11:15)
 
-**Parked spine (FINDINGS):** Rule IR, language scanner, primitive call-tree gate (UC20), per-generate binder (UC21), noun inheritance scan — see [`FINDINGS.md`](FINDINGS.md).
+**Parked spine (FINDINGS):** Requirement **packs** v0.2; language packs (UC16); call-tree packs (UC20); rule IR; per-generate binder (UC21); noun inheritance scan.
+
+## Hub v0.2.0 — requirement packs (ship target)
+
+- ☐ Pack schema (versioned bundle: ADRs, `rules/`, facts metadata, export manifest).
+- ☐ Ingest prompt/skill: source docs → candidate ADRs + if/then (human ratifies).
+- ☐ Export CLI: ratified tree → `pack-<name>-<semver>.tar.gz`.
+- ☐ Consume: install pack into app repo, scope data/tags, trigger UC9 regen as needed.
+- ☐ Optional public registry repo (out of band).
 
 - ✔ ADR 0013 requirements preflight + [`nlc_requirements.py`](tools/nlc_requirements.py) on hub CLIs/installers @done(26-09-20 08:30)
 
@@ -70,9 +81,10 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 
 - ✔ ADR 0014 explicit noop migrations + `UPGRADE:*` log lines — [`migrations/README.md`](migrations/README.md) @done(26-09-20 09:15)
 - ✔ `nlc-update.py` v0 (artifact store, lock pin, semver chain, noop migrations) — extend for interview/script migrations @done(26-09-20 09:30)
-- ✔ Update FINDINGS “Last pass” git sha (`42ccb31` pre-tag) @done(26-09-20 09:48)
+- ✔ `docs/nlc/` doc map + [`PROVE-AND-SHIP.md`](docs/nlc/PROVE-AND-SHIP.md) @done(26-09-20 11:15)
+- ✔ `scripts/nlc-release-prep.sh` dummy-proof pre-tag @done(26-09-20 11:15)
 - ✔ Public install **checksum** in install scripts (sh + ps1) @done(26-09-20 09:00)
-- ☐ `docs/nlc/` or doc map (NLC → compiler docs → charter) — optional tidy.
+- ☐ **Last:** `v0.1.0` tag + push (after `nlc-release-prep.sh`, commit FINDINGS).
 
 ---
 

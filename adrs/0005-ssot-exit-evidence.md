@@ -1,10 +1,10 @@
 # ADR 0005 — Task/board SSOT exit evidence required in produce packages
 
-- Status: needs_review
+- Status: Accepted
 - Date: 2026-09-05
-- Deciders: Reed (Quality Architect) draft; adversarial + ship separately
+- Deciders: Human manager; Quality Architect role; Adversarial auditor role
 - Class: F (charter/agent)
-- Tags: grokbot, systems, handoff, P-020
+- Tags: systems, handoff, P-020
 - File: `adrs/0005-ssot-exit-evidence.md` (replaces Notion-named ADR 0005 filename)
 
 ## Context
