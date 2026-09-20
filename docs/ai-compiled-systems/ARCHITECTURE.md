@@ -36,7 +36,7 @@ If the compiler skips BBP, you get two fine goals and two invoices. Traceability
 
 Goal sits on both lists. A goal is an outcome the manager asked for *and* a boundary that may only call published verbs.
 
-Not citizens: workflow-as-a-new-type (goal of goals; durable is a property), knowledge-domain-as-a-new-kind (shelf of ADRs + requirements), business-need-as-a-document (optional tag on a goal).
+Not citizens: workflow-as-a-new-type (goal of goals; durable is a property), knowledge-domain-as-a-new-kind (standing ADRs + requirements + facts), business-need-as-a-document (optional tag on a goal).
 
 ## Compile gate
 

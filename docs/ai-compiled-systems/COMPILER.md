@@ -9,7 +9,7 @@ This is not `gcc` with a chatbot.
 - Goals (outcomes)
 - Requirements (constraints)
 - ADRs (dated choices)
-- Knowledge shelf (standing ADRs + requirements the interview already answered)
+- Knowledge domains (standing ADRs + requirements the interview already answered)
 - BBP standard (always on — `CHARTER.md`)
 - Published verb contracts already in the tree
 

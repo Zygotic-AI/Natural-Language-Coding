@@ -24,7 +24,7 @@ Each primitive assumes only the ones above it. Do not introduce a term before it
 6. **Contract** — the published input, output, and failure mode of a verb.
 7. **Requirement** — a constraint on behavior, bound to goals, verbs, or nouns.
 8. **ADR** — a dated decision; treated as any rule in the system.
-9. **Knowledge domain** — a shelf of standing ADRs and requirements the interview consults.
+9. **Knowledge domain** — standing ADRs, requirements, and facts the interview consults.
 10. **PLANIT** — the process: interview, decompose into work packages, bind, generate, audit.
 11. **Binding** — the planning act of linking each atomic step to the ADRs and requirements it must honor. An explicit "no bindings applicable" declaration is itself a binding.
 12. **Gate** — the verification act. Runs after generation. Checks that the code held the bindings. Default closed: a gate with no binder registered is marked unbound, never passed.

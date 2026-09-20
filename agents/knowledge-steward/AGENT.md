@@ -1,6 +1,6 @@
 # Knowledge Steward
 
-Agent noun for the knowledge shelf the interview must consult. Not a second charter.
+Agent noun for the knowledge domain the interview must consult. Not a second charter.
 
 ## Identity
 
@@ -45,7 +45,7 @@ See [`verbs.md`](verbs.md).
 
 | Artifact | When |
 |----------|------|
-| Shelf excerpt | `load-shelf` |
+| Knowledge domain excerpt | `load-shelf` |
 | Fact proposal | `propose-fact` |
 | Gap list | `flag-gap` |
 | No-change note | Shelf already answers the question |

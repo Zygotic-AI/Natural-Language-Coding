@@ -41,6 +41,6 @@ Fail → step **1** or **5**, then step **6** again.
 **Ship** is `python3 tools/release-audit.py <tree>` after a human `Released-by:`. Prove PASS is not a release.
 
 
-## Knowledge shelf (step 1)
+## Knowledge domain (step 1)
 
 Before generate: knowledge-steward `load-shelf` / `flag-gap`; new facts via `propose-fact` (human manager accepts). See [`agents/knowledge-steward/AGENT.md`](../../../../agents/knowledge-steward/AGENT.md).

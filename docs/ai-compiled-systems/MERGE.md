@@ -23,7 +23,7 @@ AIMS was the process draft. BBA was an earlier name for BBP. Use the table in [N
 | Requirement | | Constraint on behavior |
 | ADR | | Dated choice |
 | Goal | | Outcome to produce |
-| Knowledge domain | first-class kind | A *shelf* of standing ADRs + requirements the interview must consult |
+| Knowledge domain | first-class kind | Standing ADRs + requirements + facts the interview must consult |
 | Gate | binder (as a noun) | Machine that fails the change when an audit would be not-met |
 | Binding | | Planning act of pointing a statement at the rules it must honor |
 | Turns red | | Gate exits non-zero and prints the violation |
@@ -64,7 +64,7 @@ Design citizens (BBP): noun, verb, goal-as-boundary, contract, gate.
 
 Goal sits on both lists on purpose.
 
-Not citizens: workflow-as-a-new-type (it is a goal of goals; durable is a property), business-need-as-a-document (optional tag on a goal), process-as-an-object (it is the generated body of a goal), knowledge-domain-as-a-new-kind (it is a shelf).
+Not citizens: workflow-as-a-new-type (it is a goal of goals; durable is a property), business-need-as-a-document (optional tag on a goal), process-as-an-object (it is the generated body of a goal), knowledge-domain-as-a-new-kind (it is standing ADRs + requirements + facts, not a code citizen).
 
 ---
 

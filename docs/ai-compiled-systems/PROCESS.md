@@ -49,7 +49,7 @@ No pointer → unbound. A statement with only “BBP” and no business requirem
 
 ## 5. Close gaps
 
-Unbound or ambiguous → question → new or clearer requirement, ADR, or knowledge-shelf fact. Loop until every statement is bound. Do not generate yet.
+Unbound or ambiguous → question → new or clearer requirement, ADR, or knowledge-domain fact. Loop until every statement is bound. Do not generate yet.
 
 ## 6. Generate
 

@@ -36,7 +36,7 @@ Those are catalog gravity. They are not the compile gate.
 
 - Goal authoring (from AIMS Goal Authoring Standard + “goals only call verbs”)
 - Requirement authoring (constraints only; adjectives stay on the noun)
-- Interview patterns (consult shelf before asking)
+- Interview patterns (consult knowledge domain before asking)
 - RCA record shape
 
 CHARTER.md stays the design SSOT while those pages land.

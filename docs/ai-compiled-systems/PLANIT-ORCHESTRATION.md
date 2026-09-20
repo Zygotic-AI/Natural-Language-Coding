@@ -86,7 +86,7 @@ Verdict headings: `## Verdict — Planit intake gate`, `plan audit`, `bind gate`
 | Adversarial review | `bbp-reviewer` |
 | Prove / fitness | `bbp-confirmer` |
 | Record | `bbp-recorder` |
-| Knowledge shelf | `agents/knowledge-steward` |
+| Knowledge domains | `agents/knowledge-steward` |
 
 Hub charter loop detail: [`.agents/skills/planit/references/hub-charter-loop.md`](../../.agents/skills/planit/references/hub-charter-loop.md).
 

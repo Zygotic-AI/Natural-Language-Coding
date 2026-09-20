@@ -26,7 +26,7 @@ Durable organizational positions with identity, adjectives, and contracted verbs
 | Ship role | [`ship-role/`](ship-role/) | Yes — with mandate |
 
 
-**Produce ≠ Audit ≠ Ship** (§16.3, §16.5). Knowledge steward is the fact shelf for interview/bind, not a fourth pipeline phase.
+**Produce ≠ Audit ≠ Ship** (§16.3, §16.5). Knowledge steward holds knowledge-domain facts for interview/bind, not a fourth pipeline phase.
 
 
 Each package contains:

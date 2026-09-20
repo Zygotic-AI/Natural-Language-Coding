@@ -10,12 +10,15 @@ This folder is process and naming. [`CHARTER.md`](../../CHARTER.md) is still the
 
 | Page | Role |
 |------|------|
+| [MANIFESTO.md](MANIFESTO.md) | Why intent is the product; value stream; system vs symptoms |
+| [INTENT-SURFACE.md](INTENT-SURFACE.md) | Goals, requirements, knowledge domains; touch vs approve vs emit |
+| [HOW-IT-CODES.md](HOW-IT-CODES.md) | Under the covers: compile pipeline and what gets built |
+| [QUALITY-PROCESSES.md](QUALITY-PROCESSES.md) | Lean / Six Sigma terms and how NLC uses them |
 | [NAMES.md](NAMES.md) | ACS vs BBP vs PLANIT |
 | [PROCESS.md](PROCESS.md) | PLANIT: load → prove |
 | [PLANIT-ORCHESTRATION.md](PLANIT-ORCHESTRATION.md) | `/planit` skill: AWL + PLANIT + BBP hub |
 | [MERGE.md](MERGE.md) | How AIMS and BBP were joined |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Two layers, compile gate |
-| [MANIFESTO.md](MANIFESTO.md) | Why intent is the source |
 | [COMPILER.md](COMPILER.md) | When generation is incomplete |
 | [AIMS-FILE-MAP.md](AIMS-FILE-MAP.md) | Old AIMS suite |
 

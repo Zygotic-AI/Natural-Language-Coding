@@ -5,3 +5,66 @@ Open work SSOT: [`FINDINGS.md`](FINDINGS.md).
 Charter SSOT: `CHARTER.md`.
 
 How to read red vs green (hub CI): designed red on its specimen → NOT_MET; assert-fails → ASSERT:PASS; invoice-correct MET; true miss = invoice-correct red or a specimen green on its own tool.
+
+---
+
+## Consumable grade — Natural Language Coding (NLC)
+
+**Target story (three layers, one README spine).** Consumer-facing copy leads with the problem and usage; acronyms stay in a short glossary (NLC + BBA only in hero; spell out “compiler” and “compiled system” in prose).
+
+| Layer | Consumer name | Technical / doc name | Role |
+| ----- | ------------- | -------------------- | ---- |
+| 1 | **Natural Language Coding (NLC)** | This repo / product | You describe **what** (goals) and **how** (requirements, ADRs, policy) in natural language; gates and compile produce software or refuse. |
+| 2 | **AI system compiler** | Today: PLANIT + agent harness + `tools/` gates; doc cluster `docs/ai-compiled-systems/` | The worker that interviews, plans, binds, generates, and proves. Prefer “the compiler” in README; introduce **ASC** only in glossary if we keep it. |
+| 3 | **Compiled system** | BBP-shaped tree the compiler emits; **BBA** = roof architecture (`CHARTER.md`, `integrity/`) | Runnable artifact in *your* app repo—not the teaching specimens in `examples/`. |
+
+**Naming reconciliation (blocks consistent consumer docs):**
+
+- ☐ ADR or `docs/ai-compiled-systems/NAMES.md` pass: retire “ACS = whole product”; **NLC** = umbrella; **compiled system** (optional acronym **ACS** = artifact only) vs **AI system compiler** (optional **ASC** = engine). Align `README.md`, `DESCRIBE.md`, `FINDINGS.md` repo-name row.
+- ☐ Tagline SSOT (one line): problem-first, no acronym soup—candidate direction: *describe outcomes and rules in plain language; get a gated, boundary-shaped system—or a failed compile you can trust.*
+- ☐ Glossary page or README § “Words we use” (NLC, compiler, compiled system, BBA/BBP, `/interview`, `/planit`; PLANIT as process name optional for consumers).
+
+**README + first-run (consumer front door):**
+
+- ☐ Rewrite root `README.md`: title **Natural Language Coding**; tagline; 2–3 paragraphs (problem → how you work → what you get); three-layer table; “not for you if…”; link to charter for adopters.
+- ☐ **Quick install** — `curl -fsSL …/install.sh | bash` (macOS / Linux / WSL only until PowerShell exists); installs or syncs portable skills (`.agents/skills/`), repo-local Cursor skills (`.cursor/skills/` or documented copy), and prints harness prerequisites (Cursor + Agent chat minimum).
+- ☐ **Quick install (Windows)** — `install.ps1` or documented gap + issue link if deferred.
+- ☐ Pin install URL to tagged release (not floating `main`) once release story exists (`FINDINGS.md` Ship row).
+- ☐ “5-minute path” doc: clone or install → open app repo → `/interview` → `/planit` → where green/red output lives (`ci-fitness.sh`, `release-audit.py`).
+- ✔ Manifesto + intent/quality/how-it-codes pages @done(26-09-17 10:15) — [`MANIFESTO.md`](docs/ai-compiled-systems/MANIFESTO.md), [`INTENT-SURFACE.md`](docs/ai-compiled-systems/INTENT-SURFACE.md), [`QUALITY-PROCESSES.md`](docs/ai-compiled-systems/QUALITY-PROCESSES.md), [`HOW-IT-CODES.md`](docs/ai-compiled-systems/HOW-IT-CODES.md).
+
+**Slash commands / skills (UC1 + UC2 consumer UX):**
+
+- ☐ **`/interview` skill** — dedicated entry (today interview is thin / folded into Planit Phase 1; `FINDINGS.md` Interview skill row, UC1). Gate: outcome + bound goals, requirements, and knowledge domains before handoff to `/planit`.
+- ☐ **`/planit` consumer doc** — one page: when to invoke after interview; what “prove” means; no vault maintainer routes.
+- ☐ Skill discovery: ensure `.cursor/skills` symlink to `.agents/skills` per portable SSOT; document Customize → Skills after install.
+
+**Adopt a real application repo (UC15 — required for “use it on my app”):**
+
+- ☐ Bootstrap kit: minimal `domain/`, `goals/`, charter hook, CI wiring—not only `examples/invoice-*` teaching tree.
+- ☐ Document: hub repo vs adopter repo layout (charter §8); what install puts on disk vs what lives in the app repo.
+
+**Product spine gaps (consumer-visible if we promise compile):** see [`FINDINGS.md`](FINDINGS.md) Needed table—track here for visibility:
+
+- ☐ UC9 full delta-regen when a requirement changes
+- ☐ UC14 contradictory rules fail at adopt-time
+- ☐ UC15 second-repo bootstrap (kit above)
+- ☐ UC18 fact SSOT beyond ADR prose
+- ☐ UC19 one worked PCI (or equivalent) UC3→UC5 walkthrough for marketing + onboarding
+
+**Repo / distribution housekeeping:**
+
+- ☐ GitHub repo rename / display name: **Natural-Language-Coding** (or chosen slug) vs legacy Boundary-Based-Architecture (`FINDINGS.md`)
+- ☐ Public install host (raw.githubusercontent vs release asset) + integrity check (checksum) in install script
+- ☐ “Status” band honest in README: working charter, what works today vs what install enables vs what needs UC rows
+
+**Architecture / code segregation (mirror README layers):**
+
+- ☐ Directory or doc map: `docs/nlc/` or top-level pointers—NLC (product) → `docs/ai-compiled-systems/` (compiler) → `CHARTER.md` + `integrity/` (BBA/BBP shape)
+- ☐ Avoid teaching specimens (`examples/`) reading as the product; keep “specimens for gates” in consumer README
+
+---
+
+## Checklist style
+
+Use `☐` open, `✔ … @done(YY-MM-DD HH:MM)` when done.
