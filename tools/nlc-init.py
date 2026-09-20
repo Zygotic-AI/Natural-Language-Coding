@@ -110,6 +110,10 @@ def main() -> int:
         json.dumps({"adoptions": []}, indent=2) + "\n",
         encoding="utf-8",
     )
+    (target / "rules" / "goal-bindings.json").write_text(
+        json.dumps({"goals": {}}, indent=2) + "\n",
+        encoding="utf-8",
+    )
     gitignore = target / ".gitignore"
     extra = ".nlc/store/\n"
     if gitignore.is_file():

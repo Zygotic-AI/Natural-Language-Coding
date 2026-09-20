@@ -10,7 +10,7 @@ Input:
 Kinds:
   verb   — Invoice.apply_payment  (Noun.verb)
   goal   — record-bank-payment     (goal folder name)
-  rule   — pan-no-return           (conservative: all goals; cite rule id in plan)
+  rule   — pan-no-return           (goals via rules/goal-bindings.json + rule tags)
   noun   — Invoice                 (all goals calling any Invoice.* verb)
 
 Output: JSON on stdout. Exit 0. Exit 2 if --change missing or unknown kind.
@@ -27,6 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 from nlc_requirements import hub_tool  # noqa: E402
+from nlc_uc9_bindings import goals_for_rule_change  # noqa: E402
 
 
 def impact_graph(root: Path) -> dict:
@@ -122,8 +123,9 @@ def main() -> int:
         goal_ids = goals_calling_noun(graph, ident)
         reason = f"caller of noun {ident} verbs"
     elif kind == "rule":
-        goal_ids = all_goal_ids(graph)
-        reason = f"conservative regen for rule {ident} (v1: all goals; narrow in UC9 v2)"
+        goal_ids, reason = goals_for_rule_change(
+            root, graph, ident, all_goal_ids(graph)
+        )
     else:
         sys.stderr.write(f"unknown kind: {kind}\n")
         return 2

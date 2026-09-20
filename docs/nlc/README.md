@@ -41,7 +41,7 @@ This repo is the **hub**: the compiler, gates, and skills. It does **not** ship 
 | Version | Focus |
 | ------- | ----- |
 | **v0.1.0** | Install, lock, greenfield, spine v1, prove path |
-| **v0.2.0** | Requirement **packs** (ingest → ratify → export → consume) — see [`TODO`](../../TODO) |
+| **v0.2.0** | Requirement **packs** — [`REQUIREMENT-PACKS.md`](REQUIREMENT-PACKS.md), `nlc-pack-export.py` / `nlc-pack-install.py` |
 | **Packs (types)** | **Requirement packs** — ADRs + rules + facts. **Language packs** — UC16 scanner + UC20 call-tree per stack (Python, Node, …). **Rule IR** — engine for requirement packs (ADR 0007), not a language pack. |
 
 ## Integrity & decisions

@@ -41,7 +41,7 @@ python3 tools/nlc-impact-graph.py /path/to/app-repo --write
 | `verb:Invoice.apply_payment` | Goals that call that verb |
 | `noun:Invoice` | Goals calling any `Invoice.*` verb |
 | `goal:record-bank-payment` | That goal only |
-| `rule:<id>` | v1: conservative (all goals); v2: goals bound to rule tags |
+| `rule:<id>` | Goals listed in [`rules/goal-bindings.json`](../../rules/goal-bindings.json) by `rules` / `tags` overlap with the adopted rule’s match tags; else conservative (all goals) |
 
 ## Orchestrated regen
 

@@ -48,14 +48,15 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 
 - ✔ Greenfield [`tools/nlc-init.py`](tools/nlc-init.py) @done(26-09-20 08:15)
 - ✔ [`docs/adoption/BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) + [`BROWNFIELD.md`](docs/adoption/BROWNFIELD.md) @done(26-09-20 08:15)
-- ☐ UC15 **brownfield** automation (inventory / migrate legacy modules).
+- ✔ UC15 **brownfield** inventory beta — [`nlc-brownfield-inventory.py`](tools/nlc-brownfield-inventory.py) @done(26-09-20 11:30)
+- ☐ UC15 brownfield migrate automation (beyond inventory).
 
 **Compile spine (UC9 / UC14 / UC18) — v1 shipped, v2 open:**
 
 - ✔ UC9 impact graph [`IMPACT-GRAPH.md`](docs/spine/IMPACT-GRAPH.md), [`nlc-impact-graph.py`](tools/nlc-impact-graph.py), delta-regen `--orchestrate` @done(26-09-20 11:15)
 - ✔ UC9 v1 [`tools/nlc-delta-regen.py`](tools/nlc-delta-regen.py) + [`docs/spine/README.md`](docs/spine/README.md) @done(26-09-20 08:15)
 - ✔ UC9 v2 Planit procedure + [`nlc-before-generate.md`](.agents/skills/planit/references/nlc-before-generate.md) @done(26-09-20 08:50)
-- ☐ UC9 rule-tagged blast radius (narrow `rule:` changes).
+- ✔ UC9 rule-tagged blast radius — `rules/goal-bindings.json` + [`nlc_uc9_bindings.py`](tools/nlc_uc9_bindings.py) @done(26-09-20 11:30)
 - ✔ UC14 v1 ADR 0012 + [`tools/check-rule-adoption.py`](tools/check-rule-adoption.py) @done(26-09-20 08:15)
 - ☐ UC14 v2 composable obligations, cross-primitive policy, rule IR runner (ADR 0007 parked).
 - ✔ UC18 v1 [`knowledge/facts.json`](knowledge/facts.json) + [`validate-knowledge-facts.py`](tools/validate-knowledge-facts.py) @done(26-09-20 08:15)
@@ -69,10 +70,9 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 
 ## Hub v0.2.0 — requirement packs (ship target)
 
-- ☐ Pack schema (versioned bundle: ADRs, `rules/`, facts metadata, export manifest).
+- ✔ Pack schema + export/install CLIs v0.2 foundation — [`REQUIREMENT-PACKS.md`](docs/nlc/REQUIREMENT-PACKS.md) @done(26-09-20 11:30)
 - ☐ Ingest prompt/skill: source docs → candidate ADRs + if/then (human ratifies).
-- ☐ Export CLI: ratified tree → `pack-<name>-<semver>.tar.gz`.
-- ☐ Consume: install pack into app repo, scope data/tags, trigger UC9 regen as needed.
+- ☐ Consume: scope data/tags + auto UC9 regen hook after pack install.
 - ☐ Optional public registry repo (out of band).
 
 - ✔ ADR 0013 requirements preflight + [`nlc_requirements.py`](tools/nlc_requirements.py) on hub CLIs/installers @done(26-09-20 08:30)
