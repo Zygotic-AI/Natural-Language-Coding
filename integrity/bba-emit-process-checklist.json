@@ -1,0 +1,57 @@
+{
+  "id": "bba-emit-process-checklist",
+  "corpus": "bba",
+  "status": "draft",
+  "principle": "fractal_spine",
+  "note": "Each step is itself an emit: artifact + manifest + audit + specific counterpoint gate + bound ADRs. Gates are specific to the step's output, never generic.",
+  "steps": [
+    {
+      "n": 1,
+      "name": "noun_inventory",
+      "artifact": "noun_inventory.json",
+      "gate": "every noun has SSOT entry; no duplicates",
+      "gate_id": "bba-gate-noun-ssot"
+    },
+    {
+      "n": 2,
+      "name": "adjective_attachment",
+      "artifact": "noun_adjectives.json",
+      "gate": "every adjective declared in vocabulary; no orphans",
+      "gate_id": "bba-gate-adj-declared"
+    },
+    {
+      "n": 3,
+      "name": "verb_assignment",
+      "artifact": "verb_assignment.json",
+      "gate": "every verb in closed atomic set; no compound verbs",
+      "gate_id": "bba-gate-verb-atomic"
+    },
+    {
+      "n": 4,
+      "name": "data_type_tagging",
+      "artifact": "tagged_data.json",
+      "gate": "no untagged datum an applicable policy would match",
+      "gate_id": "bba-gate-tag-coverage"
+    },
+    {
+      "n": 5,
+      "name": "policy_overlay",
+      "artifact": "overlay_result.json",
+      "gate": "every applicable rule fired; no silent skip",
+      "gate_id": "bba-gate-overlay-fired",
+      "schema": "docs/bba/POLICY-OVERLAY-SCHEMA.md"
+    },
+    {
+      "n": 6,
+      "name": "code_generation",
+      "artifact": "bba_tree + manifest",
+      "gate": "BBA-shaped (nouns/verbs/contracts, no inheritance); manifest valid",
+      "gate_id": "bba-gate-emit-shape"
+    }
+  ],
+  "open_questions": [
+    "closed atomic verb set (starter list illustrative)",
+    "adjective SSOT: same file as nouns or sibling",
+    "policy-rule versioning vs vocabulary versioning"
+  ]
+}
