@@ -1,7 +1,11 @@
 # Holes
 
-In-reach items are **CLOSED**. Named leftovers below are out of reach
-for a static gate (judgment, a human, or code we do not have).
+**Not the live gap SSOT.** This file is a historical closed-gate ledger.
+Open leftovers live in [`FINDINGS.md`](FINDINGS.md) only.
+
+In-reach items below are **CLOSED**. Named leftovers are out of reach
+for a static gate (judgment, a human, or code we do not have) and are
+tracked under FINDINGS Human / Parked — do not maintain a second queue here.
 
 | Item | Status |
 |---|---|
@@ -21,5 +25,4 @@ for a static gate (judgment, a human, or code we do not have).
 | Ship | `python3 tools/release-audit.py <tree>` is the pipeline hook. Compile-green ≠ released. |
 | Language | Source-level gates are **Python-only**. Contract/CONFIRM/matrix are not. Expanding to another language is **spec then adapter**, parked: [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md). |
 
-Leftover queue (needed / parked / human): [`FINDINGS.md`](FINDINGS.md).
-
+Live queue: [`FINDINGS.md`](FINDINGS.md).
