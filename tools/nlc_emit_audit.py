@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""X5 v1: emit manifests must carry a non-pending audit. Unused fields = na."""
+"""X5 v1: emit manifests must carry a non-pending audit. Unused fields = na.
+
+If `path` is a directory, scans it for emit-manifest.json files.
+"""
 
 from __future__ import annotations
 
@@ -49,6 +52,8 @@ def validate_manifest(data: object) -> list[str]:
 
 
 def iter_manifests(root: Path) -> list[Path]:
+    if root.is_file() and root.name == "emit-manifest.json":
+        return [root.resolve()]
     return sorted({p.resolve() for p in root.rglob("emit-manifest.json") if p.is_file()})
 
 

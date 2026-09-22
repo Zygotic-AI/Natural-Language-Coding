@@ -10,7 +10,8 @@ Every emit-manifest.json in the tree must:
   - carry gate.default == "closed"
 
 Default-closed: a tree with no manifests passes (nothing to enforce), but any
-manifest present is fully validated.
+manifest present is fully validated. If `path` is a directory, scans it for
+emit-manifest.json files.
 """
 
 from __future__ import annotations
@@ -64,6 +65,8 @@ def validate(data: object, schema: dict | None) -> list[str]:
 
 
 def iter_manifests(root: Path) -> list[Path]:
+    if root.is_file() and root.name == "emit-manifest.json":
+        return [root.resolve()]
     return sorted({p.resolve() for p in root.rglob("emit-manifest.json") if p.is_file()})
 
 

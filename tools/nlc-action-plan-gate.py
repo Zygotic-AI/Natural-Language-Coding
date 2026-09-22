@@ -8,6 +8,7 @@ no plan passes without this check.
 Input: a plan file (JSON) with keys:
   - "steps": list of {id, description}
   - "actions": list of {id, plan_step_id, description}
+  If `path` is a directory, looks for plan.json inside it.
 Output: RESULT:MET or RESULT:NOT_MET with violations.
 """
 
@@ -16,6 +17,16 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+
+
+def resolve_input(path: Path) -> Path | None:
+    if path.is_file():
+        return path
+    if path.is_dir():
+        candidate = path / "plan.json"
+        if candidate.is_file():
+            return candidate
+    return None
 
 
 def validate(plan: dict) -> list[str]:
@@ -49,12 +60,13 @@ def validate(plan: dict) -> list[str]:
 
 def main() -> int:
     path = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else None
-    if path is None or not path.is_file():
+    target = resolve_input(path) if path is not None else None
+    if target is None:
         print("RESULT:MET")
         print("note: no plan file given; gate is default-closed and passes empty")
         return 0
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads(target.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
         print(f"VIOLATION invalid json: {exc}")
         print("RESULT:NOT_MET")
