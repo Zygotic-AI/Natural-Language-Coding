@@ -4,7 +4,7 @@ SSOT for undone work. Do not hunt TODO vs HOLES vs USE-CASES.
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: `0e57e3a` (release prep; tag v0.1.1 when ready).
+Last pass: `ddecc40` (release prep; tag v0.2.0 when ready).
 
 ---
 

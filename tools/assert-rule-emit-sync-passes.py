@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,8 +22,9 @@ def main() -> int:
         (work / "goals" / "demo").mkdir(parents=True)
         nlc = work / ".nlc"
         nlc.mkdir(parents=True)
+        stamp_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         (nlc / "before-generate-stamp.json").write_text(
-            '{"ok":true,"at":"2026-09-20T20:00:00Z","scopes":["demo"]}\n',
+            f'{{"ok":true,"at":"{stamp_at}","scopes":["demo"]}}\n',
             encoding="utf-8",
         )
         (work / "goals" / "demo" / "implementation.py").write_text(

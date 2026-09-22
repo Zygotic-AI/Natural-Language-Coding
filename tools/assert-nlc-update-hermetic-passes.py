@@ -28,12 +28,22 @@ def main() -> int:
         store = work / "store"
         app = work / "app"
         store.mkdir()
-        ver_from = read_hub_version(ROOT)
-        install_hub_from_path(store, ROOT)
+        hub_from = work / "hub-from"
+        shutil.copytree(
+            ROOT,
+            hub_from,
+            ignore=shutil.ignore_patterns(".git", "__pycache__", ".venv", "node_modules"),
+        )
+        ver_from = "0.1.0"
+        (hub_from / "integrity" / "nlc-version.json").write_text(
+            json.dumps({"version": ver_from}, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        install_hub_from_path(store, hub_from)
 
         hub_next = work / "hub-next"
         shutil.copytree(
-            ROOT,
+            hub_from,
             hub_next,
             ignore=shutil.ignore_patterns(".git", "__pycache__", ".venv", "node_modules"),
         )

@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "algorithm": "sha256",
-  "recorded_at": "2026-09-20T21:41:09Z",
-  "hub": "0.1.0",
+  "recorded_at": "2026-09-22T02:11:46Z",
+  "hub": "0.2.0",
   "files": {
     "adrs/0001-zero-variance-integrity.md": "3c5979c1832bab283044d51e7c9f9c30db418e0bbaa725258e76dc73ad52c767",
     "adrs/0002-p2-scope.md": "57778fd60be4c7b4dd1ee07199851216822c22d2040f9bccbc52c3dafaca2f1c",
@@ -25,7 +25,9 @@
     "adrs/0019-guided-orchestration.md": "fa37b3b6009cc9d3d574d7b8292d3ee107ab9f511f65f9463190073cc0b9faec",
     "adrs/0020-human-vs-agent-commands.md": "3084fecf23499ab256428afd92374e9201203bcdda7c734fe1c4513d6f9bb3f5",
     "adrs/0021-verify-fast-and-deep.md": "4ea63c1ab7c0cd1a5fd036232ab332cf64313e53abbbec1a7f6201ef36d97cad",
-    "adrs/README.md": "dba61adf5f411fcf73c7415b7952a943898e0f917bbef201f7631ded584ef1e4",
+    "adrs/0022-hub-release-fail-early.md": "080f54978dedebf2c78d47d6ca18505d077fd68a6825d4a726d5510f18fcd464",
+    "adrs/0023-rule-instance-trace-and-instant-audit-scope.md": "1dfc2cf9f4c1bd094412c2383c8e06be0b35cad8f4631e8dd336379a94b20fd2",
+    "adrs/README.md": "26c966398b4cba7a2dc4ef9f824b843bfee1573e2f41c6cd06495fd413d4480d",
     "rules/goal-bindings.json": "9956a3632532a8878e57aed3cd6ba26aa607d1b06ddffb882d10e50872255ba8",
     "knowledge/facts.json": "2087fe02479cf0c3489c3f3f46a3f6701e67d8a835742a09f44d0095df49b395"
   }
