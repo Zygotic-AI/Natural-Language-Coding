@@ -1,7 +1,7 @@
 {
   "$id": "nlc-emit-manifest/v0",
-  "title": "NLC emit manifest (X3 draft)",
-  "description": "v0 schema. Unused fields must be present as na. Not a live gate.",
+  "title": "NLC emit manifest (v0)",
+  "description": "v0 schema. Unused fields must be present as na. Enforced by tools/nlc-emit-manifest-enforce.py (ADR 0026).",
   "type": "object",
   "additionalProperties": false,
   "required": [
