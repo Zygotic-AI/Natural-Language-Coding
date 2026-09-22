@@ -1,0 +1,45 @@
+{
+  "$id": "nlc-emit-manifest/v0",
+  "title": "NLC emit manifest (X3 draft)",
+  "description": "v0 schema. Unused fields must be present as na. Not a live gate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "emit_id",
+    "action_id",
+    "artifact_path",
+    "bound_adr_ids",
+    "audit",
+    "gate",
+    "decision_trace",
+    "thought_anchors",
+    "unused"
+  ],
+  "properties": {
+    "schema": { "const": "nlc-emit-manifest/v0" },
+    "emit_id": { "type": "string" },
+    "action_id": { "type": "string" },
+    "artifact_path": { "type": "string" },
+    "bound_adr_ids": { "type": "array", "items": { "type": "string" } },
+    "audit": {
+      "type": "object",
+      "required": ["status", "path"],
+      "properties": {
+        "status": { "enum": ["pending", "pass", "fail", "na"] },
+        "path": { "type": "string" }
+      }
+    },
+    "gate": {
+      "type": "object",
+      "required": ["status", "default"],
+      "properties": {
+        "status": { "enum": ["closed", "pass", "fail"] },
+        "default": { "const": "closed" }
+      }
+    },
+    "decision_trace": { "type": "array", "items": { "type": "string" } },
+    "thought_anchors": { "type": "array", "items": { "type": "string" } },
+    "unused": { "const": "na" }
+  }
+}
