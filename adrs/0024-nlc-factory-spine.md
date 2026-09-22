@@ -31,7 +31,8 @@ Unbound prose is not a [rule](../docs/TERMS.md#rule). [Emit](../docs/TERMS.md#co
 ## Consequences
 
 - v1 binder: [`tools/fitness-adr-0024-binder.py`](../tools/fitness-adr-0024-binder.py) — spine files exist; corpus map covers published R/C/P; rules file lists NLC-0024-* ids.
-- Full action↔plan and emit-audit runners remain expansion; they do not weaken this decision.
+- Pipeline steps 2, 4, and 5–6 are machine-enforced by ADR 0026: [`tools/nlc-action-plan-gate.py`](../tools/nlc-action-plan-gate.py), [`tools/nlc-reverse-audit.py`](../tools/nlc-reverse-audit.py), [`tools/nlc-emit-manifest-enforce.py`](../tools/nlc-emit-manifest-enforce.py).
+- Remaining expansion: X4 hub BBA interiors, X5 full emit-audit runner.
 - [`docs/ADR-ENFORCEMENT.md`](../docs/ADR-ENFORCEMENT.md) row 0024.
 
 ## Rejected
@@ -47,3 +48,4 @@ Unbound prose is not a [rule](../docs/TERMS.md#rule). [Emit](../docs/TERMS.md#co
 - [ADR 0005](0005-ssot-exit-evidence.md) — produce package evidence
 - [ADR 0010](0010-gate-after-every-generate.md) — gate after generate
 - [ADR 0023](0023-rule-instance-trace-and-instant-audit-scope.md) — rule receipts
+- [ADR 0026](0026-promote-x1-x3-runners.md) — promoted X1–X3 to law
