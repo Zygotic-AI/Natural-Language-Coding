@@ -1,10 +1,21 @@
 # Findings — what is left
 
-SSOT for undone work. Do not hunt TODO vs HOLES vs USE-CASES.
+**Live gap SSOT.** Human / Needed / Parked / Housekeeping live here.
+Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md`](docs/USE-CASES.md) as a second queue.
+
+| File | Role |
+|------|------|
+| **This file** | Live undone-work SSOT |
+| [`docs/USE-CASES.md`](docs/USE-CASES.md) | Narrative UC map (what the practice *does*) |
+| [`integrity/uc-product-status.json`](integrity/uc-product-status.json) | Machine product/binder status; CI gates TODO `@done` |
+| [`TODO`](TODO) | Historical work log + CI evidence rows — **not** a second queue |
+| [`HOLES.md`](HOLES.md) | Historical closed-gate ledger — **not** live SSOT |
+| [`docs/nlc/SESSION-FOLLOWTHROUGH.md`](docs/nlc/SESSION-FOLLOWTHROUGH.md) | Eval-session execution queue (E/X ids) |
+
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: `ddecc40` (release prep; tag v0.2.0 when ready).
+Last pass: `feat/adr-0024-nlc-spine` (E7 tracker SSOT + ADR 0024/0025).
 
 ---
 
@@ -12,23 +23,22 @@ Last pass: `ddecc40` (release prep; tag v0.2.0 when ready).
 
 | Item | What to do |
 |------|------------|
-| Promotion / [ship](docs/TERMS.md#ship) | `./nlc verify` on PRs; `./nlc verify-deep` after material changes; `ship-check` at promotion. See [`docs/nlc/VERIFY-AND-SHIP.md`](docs/nlc/VERIFY-AND-SHIP.md), [`APP-VERIFY.md`](docs/nlc/APP-VERIFY.md). |
-| Judgment | C24 / ratification / [noun](docs/TERMS.md#noun) honesty — see [ADR](docs/TERMS.md#adr) compliance TODO; fix [`HUMAN-JUDGMENT-GATES.md`](docs/nlc/HUMAN-JUDGMENT-GATES.md) drift (adversarial is machine+skill, not “human only”). |
+| Promotion / [ship](docs/TERMS.md#ship) | `./nlc verify` on PRs; `./nlc verify-deep` after material changes; `ship-check` at promotion. |
+| Judgment | C24 / ratification / [noun](docs/TERMS.md#noun) honesty. Machine vs human split is current in [`docs/nlc/HUMAN-JUDGMENT-GATES.md`](docs/nlc/HUMAN-JUDGMENT-GATES.md). |
 | Signature | C24 refuses `Ratified-by: agent`. Cryptographic human signature is out of reach. |
 
 ---
 
 ## Needed (product incomplete without these)
 
-From [`docs/USE-CASES.md`](docs/USE-CASES.md). [Hub](docs/TERMS.md#hub) ships **tools**, not product requirements (ADR 0016).
+v1 binders for UC9 / UC14 / UC15 / UC18 are **product-closed** in [`integrity/uc-product-status.json`](integrity/uc-product-status.json).
 
 | ID | Gap |
 |----|-----|
-| [UC9](docs/TERMS.md#uc9) | Guided path: `./nlc maintainer regen-continue` / `regen-advance` + `/planit` per [goal](docs/TERMS.md#goal). |
-| [UC14](docs/TERMS.md#uc14) | Richer conflict model over time (v1: `check-rule-adoption.py` + [ADR](docs/TERMS.md#adr) 0012). |
-| [UC15](docs/TERMS.md#uc15) | [Brownfield](docs/TERMS.md#brownfield) bootstrap automation (greenfield: `nlc-init.py`). |
-| [UC18](docs/TERMS.md#uc18) | Agent: `./nlc maintainer guide before-generate` before [PLANIT](docs/TERMS.md#planit) generate — documented in [`HARNESS.md`](docs/nlc/HARNESS.md); hooks v2 example only (`.nlc/hooks.example.json`). |
-| **Packs v0.2** | [Requirement packs](docs/TERMS.md#requirement-pack): ingest → ratify → export → consume. |
+| **Packs v0.2 consume** | `hub_v02.pack_consume_regen` is **open**: scope data/tags + auto UC9 regen hook after pack install. Ingest is closed. |
+| **Packs registry** | `hub_v02.pack_registry` is **open** (optional / out of band). |
+
+Hub ship remains a **human** last step (`./release`).
 
 ---
 
@@ -36,11 +46,14 @@ From [`docs/USE-CASES.md`](docs/USE-CASES.md). [Hub](docs/TERMS.md#hub) ships **
 
 | Item | [ADR](docs/TERMS.md#adr) / doc | Missing [gate](docs/TERMS.md#gate) |
 |------|-----------|--------------|
-| [Code packs](docs/TERMS.md#code-pack) (UC16) | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Per-stack scanner adapter. |
-| Call-tree packs (UC20) | [ADR](docs/TERMS.md#adr) 0009, [`integrity/primitives.md`](integrity/primitives.md) | [Primitive](docs/TERMS.md#primitive) interior inventory per language. |
-| [Rule IR](docs/TERMS.md#rule-ir) | [ADR](docs/TERMS.md#adr) 0007 | If-then runner over tags × primitives × facts. |
-| Per-generate [gate](docs/TERMS.md#gate) binder | [ADR](docs/TERMS.md#adr) 0010, [PLANIT](docs/TERMS.md#planit) 6.5 | Record that metrics existed and the artifact [gate](docs/TERMS.md#gate) ran. **[Work queue](docs/TERMS.md#work-queue):** [`TODO`](TODO) § [ADR](docs/TERMS.md#adr) compliance. |
-| No [noun inheritance](docs/TERMS.md#noun-inheritance) | [ADR](docs/TERMS.md#adr) 0008 | Bindable scan for subclass/mixin between nouns. |
+| Action↔plan runner (X1) | ADR 0024 / NLC-0024-04 | expansion |
+| Reverse-audit runner (X2) | ADR 0024 / NLC-0024-05 | expansion |
+| Full emit manifest (X3) | ADR 0024 / NLC-0024-06 | expansion |
+| Hub BBA interiors (X4) | ADR 0024 corpus `bba` | expansion |
+| Machine emit-audit (X5) | ADR 0024 + “every emit has an audit” | expansion |
+| [Code packs](docs/TERMS.md#code-pack) (UC16) | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Per-stack scanner adapter |
+| Call-tree packs (UC20) | ADR 0009 | Per-stack packs beyond Python `domain/` |
+| [Rule IR](docs/TERMS.md#rule-ir) | ADR 0007 | Full semantic runners |
 
 ---
 
@@ -48,20 +61,17 @@ From [`docs/USE-CASES.md`](docs/USE-CASES.md). [Hub](docs/TERMS.md#hub) ships **
 
 | Item | Note |
 |------|------|
-| Repo name | GitHub: `Zygotic-AI/Natural-Language-Coding`. Consumer brand: [NLC](docs/TERMS.md#nlc) (ADR 0011). |
-| Doc map | [`docs/nlc/README.md`](docs/nlc/README.md) |
-| Dual [PLANIT](docs/TERMS.md#planit) | `~/.agents/skills/planit` vs this repo. Prefer newer is a wish, not a [gate](docs/TERMS.md#gate). |
-| [Interview](docs/TERMS.md#interview) skill | Grow miss log from compiles — [`INTERVIEW-PATTERNS.md`](docs/ai-compiled-systems/INTERVIEW-PATTERNS.md). |
+| E1 CHARTER corpus sentence | Two-line insert still open if not on `CHARTER.md` |
+| E2 TERMS obligation/corpus | Drafted; land with TERMS edit |
+| E3 explicit ci_fitness 0024 | Glob already runs `fitness-*.py`; explicit run optional |
+| CHARTER / DESCRIBE door | Still opens as BBP |
 
 ---
 
 ## Explicitly not left undone
 
-- Merge [AIMS](docs/TERMS.md#aims) + [BBP](docs/TERMS.md#bbp) into [CHARTER](docs/TERMS.md#charter)
-- [Binding matrix](docs/TERMS.md#binding-matrix) v1 (all published ids bound)
-- In-reach fitness + landmines + `ci_fitness.py`
-- `release-audit.py` (unsigned invoice-correct cannot ship)
-- [PLANIT](docs/TERMS.md#planit) 0–7 + 6.5 in PROCESS / skill
-- ADRs 0004–0006, 0008–0016 Accepted (0004/0005 accepted 2026-09-20)
-- Primitives SSOT file exists (v1 names)
-- Use-case map [UC1–UC21](docs/TERMS.md#uc1uc21) (UC19 retired per ADR 0016)
+- ADR 0024 factory spine + corpus map + v1 binder
+- ADR 0025 no-blame / climb / buck-stops rules file
+- Manifesto Belief section
+- `nlc-hub-audit` skill
+- FINDINGS as sole live gap queue
