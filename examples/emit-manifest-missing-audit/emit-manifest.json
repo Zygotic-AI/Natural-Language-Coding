@@ -1,0 +1,12 @@
+{
+  "schema": "nlc-emit-manifest/v0",
+  "emit_id": "specimen-missing-audit",
+  "action_id": "generate",
+  "artifact_path": "goals/x/implementation.py",
+  "bound_adr_ids": ["0024"],
+  "audit": { "status": "pending", "path": "" },
+  "gate": { "status": "closed", "default": "closed" },
+  "decision_trace": ["na"],
+  "thought_anchors": ["na"],
+  "unused": "na"
+}

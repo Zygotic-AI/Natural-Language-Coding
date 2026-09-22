@@ -1,0 +1,12 @@
+{
+  "schema": "nlc-emit-manifest/v0",
+  "emit_id": "specimen-ok",
+  "action_id": "generate",
+  "artifact_path": "goals/x/implementation.py",
+  "bound_adr_ids": ["0024", "0025"],
+  "audit": { "status": "pass", "path": "docs/nlc/emit-manifest.schema.json" },
+  "gate": { "status": "pass", "default": "closed" },
+  "decision_trace": ["bound-0024", "audited"],
+  "thought_anchors": ["ADR-0024-decision-3"],
+  "unused": "na"
+}
