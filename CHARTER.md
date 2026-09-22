@@ -64,6 +64,8 @@ Useful substitutes if a slot in an older diagram said “Governance Architecture
 
 **Boundary-Enforced Programming** is a true claim about the pipeline. It is a poor name for the practice. Put enforcement in the rules and the CI [gate](docs/TERMS.md#gate), not in the title.
 
+Corpus tags for every published **R** / **C** / **P** id live in `integrity/rule-corpus.json` (ADR 0024): `bba` = emit shape, `nlc` = factory process.
+
 ### Id prefixes
 
 These letters on [requirement](docs/TERMS.md#requirement) ids are not interchangeable.
@@ -280,583 +282,66 @@ Rules are written so an implementing agent can confirm or fail them. “Should�
 
 Ratified by [`adrs/0001-zero-variance-integrity.md`](adrs/0001-zero-variance-integrity.md). P2 scope: [`adrs/0002-p2-scope.md`](adrs/0002-p2-scope.md). Detail: [`integrity/PRINCIPLES.md`](integrity/PRINCIPLES.md). Matrix: [`integrity/binding-matrix.json`](integrity/binding-matrix.json).
 
-**R26.** Practice [integrity](docs/TERMS.md#integrity) principles P1–P7 are in force: stand-alone branding, [zero variance](docs/TERMS.md#zero-variance), hard gates, hard [boundary](docs/TERMS.md#boundary) I/O, binary [requirement](docs/TERMS.md#requirement) audits, unbound-matrix failure with listing, promote-only-when-bindable with listing.
+**R26.** Practice [integrity](docs/TERMS.md#integrity) principles P1–P7 are in force: stand-alone branding, [zero variance](docs/TERMS.md#zero-variance), and [binding](docs/TERMS.md#binding) of every published rule to a [gate](docs/TERMS.md#gate).
 
-**R27.** Every published [requirement](docs/TERMS.md#requirement) in this repo appears in the [binding matrix](docs/TERMS.md#binding-matrix) with an [audit](docs/TERMS.md#audit) id. [Audit](docs/TERMS.md#audit) `A-BINDING-COVERAGE` fails and lists any missing id.
+**R27.** No published **R** id exists without a binder in this repo. A rule without a gate is a wish, not a rule.
 
-**R28.** Unbound binding-matrix entries fail [audit](docs/TERMS.md#audit) `A-BINDING-UNBOUND`. The [audit](docs/TERMS.md#audit) report lists every unbound [requirement](docs/TERMS.md#requirement) id.
+**R28.** The [hub](docs/TERMS.md#hub) does not ship product requirements; it ships the compiler and its gates ([ADR 0016](adrs/0016-hub-no-product-requirements.md)).
 
-**R29.** In-force requirements that are not bindable fail [audit](docs/TERMS.md#audit) `A-BINDING-PROMOTE`. The [audit](docs/TERMS.md#audit) report lists every offending [requirement](docs/TERMS.md#requirement) id.
+**R29.** Every [gate](docs/TERMS.md#gate) is default-closed: it starts NOT_MET and only becomes MET when its evidence is present.
 
-**R30.** Every prescribed step or [action](docs/TERMS.md#action) has a hard [gate](docs/TERMS.md#gate) whose only outcomes are complete or incomplete, with evidence.
+**R30.** [Fitness](docs/TERMS.md#fitness) output is machine-readable and stable enough for agents to act on without parsing prose.
 
-**R31.** Every public [boundary](docs/TERMS.md#boundary) declares hard input, hard output, and failure mode (returned error, thrown exception, or process exit when the boundary is code).
-
----
-
-## 6. Order of agent execution
-
-This is the default loop for design and code. Skip a step only when an [ADR](docs/TERMS.md#adr) says that class of change is exempt (for example, a one-line copy fix inside an already-ratified verb).
-
-```text
-0. Load charter
-1. Classify the change
-2. Propose
-3. Adversarial review
-4. Revise
-5. Ratify
-6. Implement
-7. Confirm
-8. Record
-```
-
-### Step 0 — Load [charter](docs/TERMS.md#charter)
-
-Read this document and the ADRs that touch the nouns and goals in scope. If the change would violate a [rule](docs/TERMS.md#rule), stop and propose an [ADR](docs/TERMS.md#adr) first.
-
-### Step 1 — Classify the change
-
-Choose exactly one primary class:
-
-| Class | You are changing | Home of the work |
-|---|---|---|
-| A. [Adjective](docs/TERMS.md#adjective) | Status machine, money, eligibility | [Noun](docs/TERMS.md#noun) + its verbs |
-| B. Mutation API | Add/change a verb | Noun-verb [contract](docs/TERMS.md#contract) + [noun](docs/TERMS.md#noun) tests |
-| C. Use-case | Orchestration, I/O, policy around existing verbs | [Goal](docs/TERMS.md#goal) |
-| D. Durable use-case | Time, approval, compensation across goals | [Goal](docs/TERMS.md#goal) + durable runtime |
-| E. [Boundary](docs/TERMS.md#boundary) meaning | Shared field meaning, version, compatibility | Canonical [contract](docs/TERMS.md#contract) + [ADR](docs/TERMS.md#adr) |
-| F. [Charter](docs/TERMS.md#charter) | A [rule](docs/TERMS.md#rule) in this document | [ADR](docs/TERMS.md#adr) first, then this file |
-
-If the request is “change how invoices work,” it is class A, not class C. Open the [noun](docs/TERMS.md#noun). Do not open one [goal](docs/TERMS.md#goal) and improvise.
-
-### Step 2 — Propose (spec, not code)
-
-The proposing agent produces, in one change-set of documents:
-
-- Classification (A–F)
-- Nouns touched, verbs touched, goals touched, durable goals named
-- Draft contracts if any [boundary](docs/TERMS.md#boundary) changes
-- Adjectives that must still hold
-- Explicit non-goals (“this does not change tax rounding”)
-- Test names that will [prove](docs/TERMS.md#prove) it
-- Impact list: other goals/verbs that call the changed [boundary](docs/TERMS.md#boundary)
-
-No implementation in this step unless the change is already classified as exempt.
-
-**[Produce package](docs/TERMS.md#produce-package) required for [handoff](docs/TERMS.md#handoff).** Proposal completion includes the [produce package](docs/TERMS.md#produce-package): classification (plan A–F as above), applicability statement, [boundary](docs/TERMS.md#boundary) I/O declarations, self-adversarial notes, and task/board [SSOT exit evidence](docs/TERMS.md#ssot-exit-evidence) (`ssot_leaf_ids` + `ssot_exit_status`). A proposal without this package is incomplete. Incomplete proposals do not hand off to fitness or adversarial review.
-
-### Step 2.5 — Fitness preflight
-
-Before adversarial review opens, fitness performs a preflight check:
-
-- **Package present and complete** → proceed to Step 3.
-- **Package missing or incomplete** → return `handoff_refused` with [defect](docs/TERMS.md#defect) log. Do not open content scoring. The proposal is not fitness-FAIL; it is produce-incomplete.
-
-Preflight is not discovery. Fitness does not invent the package, coach the producer, or soft-fail to prompt remediation. The producer fixes the package and resubmits. Do not normalize "re-gate" for missing-package rework.
-
-### Step 3 — Adversarial review
-
-A second agent, with a different role, attacks the proposal. It does not implement. It does not protect the author’s feelings. It answers only:
-
-- Where can a [goal](docs/TERMS.md#goal) now write private state?
-- Which [adjective](docs/TERMS.md#adjective) is now split across two homes?
-- Which [contract](docs/TERMS.md#contract) field is defined twice with room to drift?
-- Is this a [god-noun](docs/TERMS.md#god-noun) collecting verbs it should not own?
-- Is this a new [goal](docs/TERMS.md#goal) that should have been a noun-verb?
-- Is this a noun-verb that should have been a [goal](docs/TERMS.md#goal)?
-- What breaks if this verb is retried?
-- What did the impact list miss?
-
-Findings are comments against the proposal. “Looks good” with no checklist is not a review.
-
-### Step 4 — Revise
-
-The proposing agent answers every finding: fix, or record why the finding is wrong. Unresolved findings block ratification.
-
-### Step 5 — Ratify
-
-A human, or an automated [gate](docs/TERMS.md#gate) whose policy an [ADR](docs/TERMS.md#adr) named, accepts the proposal. Ratification is a recorded event: who, when, which proposal version.
-
-Until ratification, implementation is not authorized for class A, B, D, E, or F. Class C may be tightened by [ADR](docs/TERMS.md#adr) for a given repo (some teams ratify every new goal; some do not).
-
-### Step 6 — Implement
-
-Code follows the ratified spec.
-
-- [Noun](docs/TERMS.md#noun) internals stay inside the [noun](docs/TERMS.md#noun) module.
-- Goals call verbs and other goals' public entrypoints. Goals never write [noun](docs/TERMS.md#noun) fields.
-- Contracts generate or validate I/O.
-- Tests named in the proposal are written and pass.
-
-### Step 7 — Confirm
-
-Run the [Confirmation checklist](#confirmation-checklist). Any fail is a failed change, not a note for later.
-
-### Step 8 — Record
-
-- Update or add the [ADR](docs/TERMS.md#adr) if a decision was made.
-- Leave the generated impact/dependency view in the state the tooling produces.
-- Do not write a parallel “architecture JSON” by hand.
+**R31.** The [hub](docs/TERMS.md#hub) is the only place that may change the [charter](docs/TERMS.md#charter), ADRs, or rules. Adopter repos consume; they do not author.
 
 ---
 
-## 7. Agent roles
+## 6. Confirmation checklist
 
-Separate roles. One model may play them in sequence, but not in the same pass as both author and skeptic of its own work.
+Score each item PASS / FAIL / N/A for *this* change. N/A requires a one-line reason.
 
-| Role | Allowed to do | Not allowed to do |
-|---|---|---|
-| Proposer | Draft spec, then implement after ratification | Grade its own proposal as final |
-| Reviewer | Attack the spec and the diff against this [charter](docs/TERMS.md#charter) | Write the implementation in the same turn |
-| [Confirmer](docs/TERMS.md#confirmer) | Run checklist, report pass/fail with evidence | “Approve” without evidence |
-| Recorder | Write ADRs and status | Change rules without an [ADR](docs/TERMS.md#adr) |
+### 6.1 Ownership and mutation
 
-The reviewer prompt is: you are the skeptic. Find the hole. Cite the [rule](docs/TERMS.md#rule) number.
+**C1.** The change touches only the [noun](docs/TERMS.md#noun) or [goal](docs/TERMS.md#goal) it claims to.
+**C2.** No [noun](docs/TERMS.md#noun) field is assigned outside a published verb.
+**C3.** No [goal](docs/TERMS.md#goal) writes a [noun](docs/TERMS.md#noun) field.
+**C4.** No copied [adjective](docs/TERMS.md#adjective) — the same meaning defined in two places.
+**C5.** Verbs call [primitive](docs/TERMS.md#primitive) interior functions; no raw `write` outside them.
 
----
+### 6.2 Contracts
 
-## 8. Repository shape
+**C6.** Every public entrypoint has an input and output [contract](docs/TERMS.md#contract).
+**C7.** Shared fields come from one canonical type.
+**C8.** Breaking [contract](docs/TERMS.md#contract) change has a new version and an [ADR](docs/TERMS.md#adr).
 
-Suggested layout. Adapt names; keep the separations.
+### 6.3 [Goal](docs/TERMS.md#goal) shape
 
-```text
-repo/
-├─ CHARTER.md                          # this document, or a pointer to it
-├─ adrs/
-│   ├─ 0001-boundary-based-programming.md
-│   └─ 0002-invoice-verbs.md
-├─ domain/
-│   └─ invoice/
-│       ├─ invoice.ts                  # noun, private state
-│       ├─ verbs/
-│       │   ├─ issue.ts
-│       │   ├─ apply-payment.ts
-│       │   └─ void.ts
-│       ├─ contracts/                  # canonical verb schemas
-│       └─ tests/
-├─ goals/
-│   └─ record-bank-payment/
-│       ├─ goal.yaml                   # purpose, owner, entrypoint, deps
-│       ├─ contract-input.json
-│       ├─ contract-output.json
-│       ├─ implementation/
-│       └─ tests/
-├─ workflows/                          # optional packaging for durable goals; not a fourth primitive
-│   └─ collect-invoice-payment/
-├─ contracts-shared/                   # canonical types referenced by both layers
-└─ integrity/
-    ├─ fitness/                        # lint/arch rules
-    └─ checklist.md                    # or generate from this document
-```
+**C9.** One public entrypoint per [goal](docs/TERMS.md#goal).
+**C10.** [Goal](docs/TERMS.md#goal) calls [goal](docs/TERMS.md#goal) only through public contracts.
+**C11.** No pass-through [goal](docs/TERMS.md#goal) theater.
+**C12.** [Goal](docs/TERMS.md#goal) tests cover the use-case, not the [noun](docs/TERMS.md#noun) adjectives.
 
-`capabilities/` as a second tree is optional. Do not add `governance/`, `compliance/`, `risk/` folders unless a real artifact has nowhere else to live. Empty architecture folders are how charters rot.
+### 6.4 Drift and enforcement
+
+**C13.** [Charter](docs/TERMS.md#charter), contracts, and code agree in this change.
+**C14.** No superseded [ADR](docs/TERMS.md#adr) is treated as live.
+**C15.** No [gate](docs/TERMS.md#gate) is skipped or soft-green.
+**C16.** [Fitness](docs/TERMS.md#fitness) output is present and parseable.
+**C17.** The change is [ratified](docs/TERMS.md#ratified-by) when its class requires it.
+**C18.** The change is [released](docs/TERMS.md#released-by) by a human when required.
+**C19.** No agent acts as releaser.
+**C20.** Adversarial review ran and findings are addressed or rebutted.
+**C21.** [Binding matrix](docs/TERMS.md#binding-matrix) row for touched rules is updated.
+**C22.** No new [primitive](docs/TERMS.md#primitive) without an [ADR](docs/TERMS.md#adr).
+**C23.** Sensitive [adjective](docs/TERMS.md#adjective) crossing is limited to the consuming verb.
+**C24.** Release audit refuses agent-as-releaser.
 
 ---
 
-## 9. What we took from the original “AI-First” sketch — and what we did not
+## 7. Ratification
 
-The original sketch was right about:
-
-- Organize work so agents have a small, named unit of change
-- Machine-readable contracts on boundaries
-- Explicit dependencies aimed at “if I change X, what breaks?”
-- Co-located tests
-- ADRs as recorded decisions
-- Validation as proof, not prose
-
-The original sketch was weak where it:
-
-- Named thirty “architectures” as peer systems
-- Treated security, data, observability, [audit](docs/TERMS.md#audit), and evidence as sibling trees instead of annotations on nouns, verbs, and goals
-- Put Agent concerns in a later tier even though agents are the primary consumer
-- Assumed hand-maintained `dependency-graph.json` and `impact-analysis.json`
-- Isolated goals without a [noun](docs/TERMS.md#noun), which scatters adjectives and invites duplication
-- Used “governance” as a bucket instead of a [charter](docs/TERMS.md#charter) plus review
-
-Those higher-level views (product, portfolio, strategy) can be derived later. They are not the foundation agents implement against.
+Ratified decisions: [0001](adrs/0001-zero-variance-integrity.md), [0002](adrs/0002-p2-scope.md), [0003](adrs/0003-agent-nouns.md), [0007](adrs/0007-tags-primitives-reduced-adrs.md), [0008](adrs/0008-no-noun-inheritance.md), [0009](adrs/0009-primitive-interior-functions.md), [0010](adrs/0010-gate-after-generate.md).
 
 ---
 
-## 10. Pitfalls and remediations
-
-### 10.1 Scattered adjectives
-
-**Pitfall.** “Cannot void after payment” lives in `VoidInvoice` and a slightly different version lives in `ApplyPayment`. An agent edits one.
-
-**Remediation.** The [adjective](docs/TERMS.md#adjective) lives on `Invoice`. Both verbs consult it. [Goal](docs/TERMS.md#goal) tests are not the home of the [adjective](docs/TERMS.md#adjective). [Gate](docs/TERMS.md#gate) fails if the status machine is reimplemented in a [goal](docs/TERMS.md#goal).
-
-### 10.2 Duplication that looks locally correct
-
-**Pitfall.** The agent’s context is the current [goal](docs/TERMS.md#goal). It reimplements tax rounding. CI on that [goal](docs/TERMS.md#goal) is green.
-
-**Remediation.** R15 and R24. Money math has one module. Reviewer asks “where else does this formula exist?” [Confirmer](docs/TERMS.md#confirmer) greps.
-
-### 10.3 Conceptual changes treated as [goal](docs/TERMS.md#goal) changes
-
-**Pitfall.** “Allow partial payments” is implemented only in `ApplyPayment` the [goal](docs/TERMS.md#goal). `VoidInvoice` still assumes full-payment status values.
-
-**Remediation.** Classification step. Conceptual change is class A. Proposer must open the [noun](docs/TERMS.md#noun) and list every verb that assumes the old [adjective](docs/TERMS.md#adjective).
-
-### 10.4 Hidden coupling through shared data
-
-**Pitfall.** Goals look independent. They write the same row. The call graph does not show that `status` means two things.
-
-**Remediation.** Only verbs write. Generated impact includes “who calls this verb,” not only “which [goal](docs/TERMS.md#goal) folder changed.” Shared tables are behind the [noun](docs/TERMS.md#noun)’s persistence adapter, not open to every [goal](docs/TERMS.md#goal).
-
-### 10.5 [Goal](docs/TERMS.md#goal) explosion or god-goal
-
-**Pitfall.** One function per [goal](docs/TERMS.md#goal), or one [goal](docs/TERMS.md#goal) that does the entire billing domain.
-
-**Remediation.** R16 and the pass-through [rule](docs/TERMS.md#rule). Reviewer flags both. Sizing heuristic: a [goal](docs/TERMS.md#goal) names a use-case a stakeholder would recognize; a verb names a state change the [noun](docs/TERMS.md#noun) must survive.
-
-### 10.6 [God-noun](docs/TERMS.md#god-noun)
-
-**Pitfall.** `Invoice.renderPdf`, `Invoice.sendReminder`, `Invoice.exportQuickBooks`.
-
-**Remediation.** R4. If the verb does not need the [adjective](docs/TERMS.md#adjective) set, it is a [goal](docs/TERMS.md#goal) or another [noun](docs/TERMS.md#noun). Reviewer checklist includes [god-noun](docs/TERMS.md#god-noun).
-
-### 10.7 Two [contract](docs/TERMS.md#contract) layers that drift
-
-**Pitfall.** [Goal](docs/TERMS.md#goal) input defines `balance` one way. Verb input defines it another.
-
-**Remediation.** R11. Canonical type. [Goal](docs/TERMS.md#goal) [contract](docs/TERMS.md#contract) references it. [Confirmer](docs/TERMS.md#confirmer) diffs schemas for same-named fields with different types.
-
-### 10.8 Hand-maintained graphs that lie
-
-**Pitfall.** `dependency-graph.json` is stale. Agents trust it.
-
-**Remediation.** R21. Generate from imports, durable-goal definitions, and registered verb calls. If it cannot be generated, do not pretend the file is a source of truth.
-
-### 10.9 Convention without enforcement
-
-**Pitfall.** “Internals are private” is a README sentence. The third agent session writes `invoice.status = 'paid'` from a [goal](docs/TERMS.md#goal).
-
-**Remediation.** R5, R6, R23. Language visibility, module boundaries, and a CI [rule](docs/TERMS.md#rule). Convention is not a [boundary](docs/TERMS.md#boundary).
-
-### 10.10 Author grades its own homework
-
-**Pitfall.** The same pass proposes and approves.
-
-**Remediation.** Step 3 as a separate role. Review with [rule](docs/TERMS.md#rule) numbers. “Looks good” is not evidence.
-
-### 10.11 [Durability](docs/TERMS.md#durability) as a second domain model
-
-**Pitfall.** A Temporal definition re-implements “when an invoice is paid” instead of calling `applyPayment`, or a new [goal](docs/TERMS.md#goal) is invented only to wrap one other [goal](docs/TERMS.md#goal).
-
-**Remediation.** R14, R16–R18. Goals call public contracts. Verbs keep the [adjective](docs/TERMS.md#adjective). The starting [goal](docs/TERMS.md#goal) owns the outcome. Reviewer asks where the status machine lives and whether the extra [goal](docs/TERMS.md#goal) earns its keep.
-
----
-
-## 11. Confirmation checklist
-
-An implementing agent must print this list with `PASS`, `FAIL`, or `N/A` and a pointer (file and symbol) for every non-N/A item. `N/A` requires a one-line reason.
-
-### Classification and home
-
-- [ ] C1. [Change class](docs/TERMS.md#change-class) (A–F) is stated.
-- [ ] C2. Adjectives live on the [noun](docs/TERMS.md#noun) named in C1, not in a [goal](docs/TERMS.md#goal) folder.
-- [ ] C3. New orchestration lives in a [goal](docs/TERMS.md#goal), not as a method on an unrelated [noun](docs/TERMS.md#noun).
-
-### Mutation path
-
-- [ ] C4. No assignment to [noun](docs/TERMS.md#noun) fields occurs outside the [noun](docs/TERMS.md#noun) module.
-- [ ] C5. Every state change of a [noun](docs/TERMS.md#noun) goes through a public verb.
-- [ ] C6. No [noun](docs/TERMS.md#noun) module imports a [goal](docs/TERMS.md#goal) module.
-
-### Contracts
-
-- [ ] C7. Each changed public [goal](docs/TERMS.md#goal) has input and output schemas.
-- [ ] C8. Each changed public verb has input and output schemas.
-- [ ] C9. Shared meanings use a shared type; no forked `balance` / `status` / `currency`.
-- [ ] C10. Breaking schema changes have a new version and an [ADR](docs/TERMS.md#adr).
-
-### [Goal](docs/TERMS.md#goal) shape
-
-- [ ] C11. Each changed [goal](docs/TERMS.md#goal) has exactly one public entrypoint.
-- [ ] C12. No [goal](docs/TERMS.md#goal) imports another [goal](docs/TERMS.md#goal)’s internals.
-- [ ] C13. No new [goal](docs/TERMS.md#goal) exists whose only job is a single noun-verb with no I/O or policy — or an [ADR](docs/TERMS.md#adr) explains why the wrapper exists.
-- [ ] C14. Goal-to-goal calls use public entrypoints only; no imports of another [goal](docs/TERMS.md#goal)'s internals.
-- [ ] C15. Verbs invoked from a retrying (durable) [goal](docs/TERMS.md#goal) are idempotent, or the caller uses an idempotency key the verb honors.
-
-### Adjectives and tests
-
-- [ ] C16. Every [adjective](docs/TERMS.md#adjective) named in the proposal has a test on the [noun](docs/TERMS.md#noun).
-- [ ] C17. Every new verb has tests for success, precondition failure, and [adjective](docs/TERMS.md#adjective) preservation.
-- [ ] C18. [Goal](docs/TERMS.md#goal) tests cover the use-case, not a copy of the [noun](docs/TERMS.md#noun)’s [adjective](docs/TERMS.md#adjective) suite.
-- [ ] C19. No second implementation of the same [adjective](docs/TERMS.md#adjective) exists in the diff (search for duplicated predicates).
-- [ ] C25. Sensitive adjectives fetched in a unit are not returned, stored, or passed across another [boundary](docs/TERMS.md#boundary).
-- [ ] C26. No `__dict__` / `vars()` / `exec()` / `eval()` (or equivalent) mutates [noun](docs/TERMS.md#noun) state from outside a published verb.
-
-### [Integrity](docs/TERMS.md#integrity) of the change
-
-
-- [ ] C20. Fitness / lint rules for R23 and R24 passed.
-- [ ] C21. Impact list in the proposal matches generated callers of the changed verbs/goals.
-- [ ] C22. Charter/ADR/code/contracts were updated in the same change if they were affected.
-- [ ] C23. Adversarial review findings are all fixed or explicitly rebutted.
-- [ ] C24. Ratification is recorded for classes that require it.
-
-If C4, C5, C9, C16, C19, C20, C25, or C26 fail, the change is not complete.
-
-
----
-
-## 12. Minimal gates to install
-
-These are the smallest enforcement set. Language-specific tools vary (module visibility, ESLint boundaries, ArchUnit, import-linter, custom grep in CI). The check must fail the build, not warn.
-
-1. **No field writes across the [noun](docs/TERMS.md#noun) [boundary](docs/TERMS.md#boundary).** [Goal](docs/TERMS.md#goal) and adapter packages cannot assign [noun](docs/TERMS.md#noun) fields.
-2. **No imports of [noun](docs/TERMS.md#noun) internals.** Only the [noun](docs/TERMS.md#noun)’s public verb module is importable.
-3. **No imports of [goal](docs/TERMS.md#goal) internals from another [goal](docs/TERMS.md#goal).**
-4. **[Adjective](docs/TERMS.md#adjective) locality.** A denylist of [adjective](docs/TERMS.md#adjective) identifiers or modules (status transition tables, rounding functions) that may only appear under `domain/<noun>/`.
-5. **[Contract](docs/TERMS.md#contract) presence.** A public entrypoint without a schema file (or generated schema) fails CI.
-6. **Schema identity.** Same property name + different type across contracts in one change fails CI or a review bot.
-
-Until [gate](docs/TERMS.md#gate) 1 exists, the [charter](docs/TERMS.md#charter) is not in force. Start there.
-
----
-
-## 13. Mapping to things that already exist
-
-Use these; do not reimplement them under new folder names.
-
-| Need | Existing tool or pattern |
-|---|---|
-| [Noun](docs/TERMS.md#noun) + adjective-preserving verbs | DDD aggregate; methods or typed commands on the aggregate |
-| Typed mutation contracts on the [noun](docs/TERMS.md#noun) | Axon commands; Orleans / actor grain interface; Design by [Contract](docs/TERMS.md#contract) |
-| [Goal](docs/TERMS.md#goal) as use-case folder | Vertical slice; Clean Architecture handler / MediatR command |
-| Module privacy enforced in CI | Spring Modulith + ArchUnit; ESLint boundaries; import-linter |
-| Durable multi-goal execution | Temporal (or equivalent) workflows |
-| Design-first I/O contracts | JSON Schema / Zod / TypeBox; OpenAPI; Smithy; Goa |
-| Generated “what breaks” at package grain | Nx project graph / `affected`; language import graph |
-| Recorded decisions | ADRs |
-| Drift as a merge failure | [Contract](docs/TERMS.md#contract) tests (Pact, schemathesis); spec-code [gate](docs/TERMS.md#gate) |
-
-No single downloaded framework is “[Boundary-Based Programming](docs/TERMS.md#bbp).” The assembly is: [noun](docs/TERMS.md#noun) module with private state, verb contracts, [goal](docs/TERMS.md#goal) folders, durable runtime if needed, generated graphs, gates, [ADR](docs/TERMS.md#adr) [charter](docs/TERMS.md#charter), two-role review.
-
-In Node, that assembly is typically: domain class + private fields, Zod or TypeBox as verb and [goal](docs/TERMS.md#goal) contracts, one handler file per [goal](docs/TERMS.md#goal), Temporal for multi-noun time, lint/import rules that fail when a [goal](docs/TERMS.md#goal) touches [noun](docs/TERMS.md#noun) internals.
-
----
-
-## 14. What “done” means for adopting this
-
-A codebase has adopted [Boundary-Based Programming](docs/TERMS.md#bbp) when all of the following are true:
-
-1. This [charter](docs/TERMS.md#charter) (or a dated descendant) is in the repo.
-2. At least one real [noun](docs/TERMS.md#noun) has private state and contracted verbs.
-3. At least one real [goal](docs/TERMS.md#goal) calls those verbs and does not write fields.
-4. [Gate](docs/TERMS.md#gate) 1 from section 12 fails a deliberate violation in CI.
-5. The agent loop in section 6 is the written procedure for class A and B changes.
-6. An implementing agent can run section 11 and produce evidence, not vibes.
-
-Until item 4 is true, treat the rest as a style guide.
-
----
-
-## 15. Short form for an agent system prompt
-
-You may paste this block into an agent. The rest of this file remains authoritative.
-
-```text
-You practice Boundary-Based Programming.
-
-Nouns own identity, private state, and adjectives.
-The only legal mutation of a noun is a public verb with an input/output contract.
-Goals orchestrate: I/O, other nouns, other goals, events, policy. Goals call verbs and other goals' public entrypoints. Goals never assign noun fields.
-Durability is how a goal runs when one process is not enough. It is not a fourth primitive. Durable goals still do not reimplement noun adjectives.
-Shared meaning lives in one canonical type. Do not fork balance, status, or currency.
-If a change is about how a concept works, open the noun, not a single goal.
-Propose spec first. A separate reviewer pass attacks the spec against the charter rules.
-Do not approve your own proposal in the same pass.
-Confirm with the checklist: private fields, verb-only writes, contract presence, adjective tests on the noun, no duplicated adjectives, gates green.
-If charter, contracts, and code disagree, stop and reconcile them in one change.
-```
-
----
-
-## 16. Systems model — [agent nouns](docs/TERMS.md#agent-noun)
-
-Ratified by [`adrs/0003-systems-extension-agent-nouns.md`](adrs/0003-systems-extension-agent-nouns.md).
-
-The software model (§4) organizes code so agents can change it without scattering adjectives. The same structural discipline organizes **agent fleets** — durable roles that operate a system over time.
-
-### 16.1 Vocabulary mapping
-
-| Software [BBP](docs/TERMS.md#bbp) | Systems [BBP](docs/TERMS.md#bbp) |
-|--------------|-------------|
-| [Noun](docs/TERMS.md#noun) | [Agent noun](docs/TERMS.md#agent-noun) — durable role with identity and adjectives |
-| [Verb (on noun)](docs/TERMS.md#verb-on-noun) | Verb — legal function an agent may perform; contracted I/O |
-| [Goal](docs/TERMS.md#goal) | Use-case — orchestration across [agent nouns](docs/TERMS.md#agent-noun), other goals, or the outside world |
-| [Durability](docs/TERMS.md#durability) | Runtime property of a [goal](docs/TERMS.md#goal) — not a separate citizen |
-| [Contract](docs/TERMS.md#contract) | [Boundary artifact](docs/TERMS.md#boundary-artifact) — input, output, failure mode, [handoff](docs/TERMS.md#handoff), completion |
-| [Adjective](docs/TERMS.md#adjective) | Role [adjective](docs/TERMS.md#adjective) — what the agent must never violate |
-| [Gate](docs/TERMS.md#gate) | [Gate](docs/TERMS.md#gate) — automated enforcement; binary pass/fail; CI-bound |
-| Adversarial review | [Audit](docs/TERMS.md#audit) — role-based review against [charter](docs/TERMS.md#charter); produces findings |
-
-**[Gate](docs/TERMS.md#gate) ≠ [Audit](docs/TERMS.md#audit).** Gates are automated enforcement mechanisms (gates, CI rules) that fail the build. Audits are role-based adversarial reviews (adversarial-auditor agent noun) that produce findings for a [ship](docs/TERMS.md#ship) decision. Both yield binary outcomes (ops vs defects), but differ in mechanism and authority:
-- Gates block automatically; no human or role decides.
-- Audits produce findings; a ship-role or human decides whether findings block.
-
-For the formal [Gate](docs/TERMS.md#gate) definition, all-required PASS fitness bar (G1--G4), and design rules, see [`integrity/GATE.md`](integrity/GATE.md).
-
-**[Handoff refused](docs/TERMS.md#handoff_refused) ≠ fitness FAIL.** When fitness preflight returns `handoff_refused` (produce package missing/incomplete), that is not a fitness FAIL. It is a produce-incomplete signal. The [Gate](docs/TERMS.md#gate) remains the CI enforcement point for fitness scoring; preflight refusal is upstream of [Gate](docs/TERMS.md#gate). Do not normalize "re-gate" language for missing-package rework — that masks the produce-handoff [defect](docs/TERMS.md#defect).
-
-### 16.2 [Agent noun](docs/TERMS.md#agent-noun) structure
-
-Every [agent noun](docs/TERMS.md#agent-noun) package (under `agents/<name>/`) declares:
-
-| Element | Purpose |
-|---------|---------|
-| **Identity** | Role name, purpose (one line) |
-| **Adjectives** | What the agent must never violate |
-| **Verb list** | Each verb has input [contract](docs/TERMS.md#contract), output [contract](docs/TERMS.md#contract), failure mode |
-| **Handoff-in** | What must be true before this agent receives work |
-| **Completion artifact** | What the agent produces to mark work complete |
-| **Success criteria** | Ops vs defects; binary auditable outcomes |
-
-Packages may use structured markdown or machine-readable schemas; the [boundary](docs/TERMS.md#boundary) declarations must be confirmer-checkable.
-
-### 16.3 Produce ≠ [Audit](docs/TERMS.md#audit)
-
-An agent that **produces** an artifact may not be the final **auditor** of that artifact. The agent that **ships** (ratifies, merges, releases) may not be the same agent that grades itself.
-
-Separate:
-
-1. **Produce** — create the artifact
-2. **[Audit](docs/TERMS.md#audit)** — adversarial review against charter/adjectives
-3. **[Ship](docs/TERMS.md#ship)** — authorize release
-
-This is §7 applied to systems: proposer ≠ reviewer ≠ [confirmer](docs/TERMS.md#confirmer).
-
-### 16.4 [Audit](docs/TERMS.md#audit) roles have no shipping authority
-
-[Agent nouns](docs/TERMS.md#agent-noun) whose purpose is **adversarial review**, **[audit](docs/TERMS.md#audit)**, or **standards enforcement** do not have shipping authority.
-
-- They may **not** ratify, merge, or release.
-- They **produce findings**. Another role (or human) decides whether findings block the [ship](docs/TERMS.md#ship).
-- Their verb lists explicitly exclude [ship](docs/TERMS.md#ship) verbs.
-
-### 16.5 [Ship](docs/TERMS.md#ship) [noun](docs/TERMS.md#noun)
-
-[Ship](docs/TERMS.md#ship) is a first-class [agent noun](docs/TERMS.md#agent-noun), separate from produce and [audit](docs/TERMS.md#audit). The [ship](docs/TERMS.md#ship) [noun](docs/TERMS.md#noun) authorizes release — it decides whether produced artifacts with [audit](docs/TERMS.md#audit) findings may be released.
-
-#### Identity
-
-**Name:** ship-role (or specific variants: ratify-role, merge-role, release-role)
-
-**Purpose:** Authorize the release of artifacts that have completed produce and [audit](docs/TERMS.md#audit) phases. Decide whether work moves from "done" to "shipped."
-
-#### Adjectives
-
-1. **[Ship](docs/TERMS.md#ship) follows produce and [audit](docs/TERMS.md#audit).** A [ship](docs/TERMS.md#ship) verb may only execute after the artifact has been produced and audited. [Ship](docs/TERMS.md#ship) does not skip the pipeline.
-
-2. **[Ship](docs/TERMS.md#ship) is a decision, not a review.** [Ship](docs/TERMS.md#ship) decides whether [audit](docs/TERMS.md#audit) findings block release. [Ship](docs/TERMS.md#ship) does not re-audit.
-
-3. **[Ship](docs/TERMS.md#ship) is recorded.** Every [ship](docs/TERMS.md#ship) [action](docs/TERMS.md#action) records who, when, what artifact version, and what [audit](docs/TERMS.md#audit) findings were accepted or required to be fixed.
-
-4. **[Ship](docs/TERMS.md#ship) authority is granted.** [Ship](docs/TERMS.md#ship) verbs require explicit [charter](docs/TERMS.md#charter) mandate or human delegation. An [agent noun](docs/TERMS.md#agent-noun) does not assume [ship](docs/TERMS.md#ship) authority.
-
-#### Verbs
-
-| Verb | Purpose | Precondition |
-|------|---------|--------------|
-| `ratify` | Accept a proposal as final | [Audit](docs/TERMS.md#audit) complete; findings addressed or [waived](docs/TERMS.md#waived) |
-| `merge` | Merge a change to target branch | [Audit](docs/TERMS.md#audit) complete; CI green (or waiver recorded) |
-| `release` | Publish or deploy an artifact | Merge complete; release criteria [met](docs/TERMS.md#met) |
-| `waive-finding` | Accept a finding without fix | Finding documented; risk acknowledged |
-
-Each verb has input [contract](docs/TERMS.md#contract), output [contract](docs/TERMS.md#contract), and failure mode. See [agent noun](docs/TERMS.md#agent-noun) package for schemas.
-
-#### Handoff-in
-
-| Condition | Evidence |
-|-----------|----------|
-| Artifact produced | Path to artifact or proposal |
-| [Audit](docs/TERMS.md#audit) complete | [Audit](docs/TERMS.md#audit) report with findings or clean status |
-| [Ship](docs/TERMS.md#ship) authority granted | [Charter](docs/TERMS.md#charter) mandate or delegation record |
-
-#### Completion artifact
-
-| Artifact | Contents |
-|----------|----------|
-| [Ship](docs/TERMS.md#ship) record | Who, when, artifact version, findings disposition |
-
-#### Success criteria
-
-| Measure | Ops (success) | [Defect](docs/TERMS.md#defect) |
-|---------|---------------|--------|
-| Pipeline honored | [Ship](docs/TERMS.md#ship) followed produce and [audit](docs/TERMS.md#audit) | [Ship](docs/TERMS.md#ship) skipped a phase |
-| Decision recorded | [Ship](docs/TERMS.md#ship) record exists with all fields | [Ship](docs/TERMS.md#ship) [action](docs/TERMS.md#action) without record |
-| Authority verified | [Ship](docs/TERMS.md#ship) authority checked before verb | [Ship](docs/TERMS.md#ship) without authority |
-
-### 16.6 Rules for [agent nouns](docs/TERMS.md#agent-noun)
-
-**S1.** Every [agent noun](docs/TERMS.md#agent-noun) has an identity file that states purpose and adjectives.
-
-**S2.** Every verb on an [agent noun](docs/TERMS.md#agent-noun) has an input [contract](docs/TERMS.md#contract), output [contract](docs/TERMS.md#contract), and failure mode — just like noun-verbs in code (R10).
-
-**S3.** Every [agent noun](docs/TERMS.md#agent-noun) declares handoff-in (preconditions) and completion artifact (postconditions).
-
-**S4.** Success criteria are binary: ops (work completed as specified) vs defects (deviation from spec or adjectives).
-
-**S5.** [Produce ≠ Audit ≠ Ship](docs/TERMS.md#produce-audit-ship). An agent may not [audit](docs/TERMS.md#audit) its own output as the final [gate](docs/TERMS.md#gate).
-
-**S6.** [Audit](docs/TERMS.md#audit) roles have no [ship](docs/TERMS.md#ship) verbs. Adversarial auditors produce findings; another role decides.
-
-**S7.** Produce→fitness [handoff](docs/TERMS.md#handoff) is [default-closed](docs/TERMS.md#default-closed). Produce completion requires change artifacts AND [produce package](docs/TERMS.md#produce-package). Without a complete package, fitness preflight returns `handoff_refused`; content scoring does not open.
-
-**S8.** Produce packages require task/board [SSOT exit evidence](docs/TERMS.md#ssot-exit-evidence). Packages must include `ssot_leaf_ids` (one or more opaque leaf ids from the task/board SSOT) and `ssot_exit_status` (non-empty exit state string). Missing [SSOT exit evidence](docs/TERMS.md#ssot-exit-evidence) triggers `handoff_refused` (same refuse class as S7); fitness scoring refuses [MET](docs/TERMS.md#met); adversarial [audit](docs/TERMS.md#audit) refuses PASS (P-020).
-
-### 16.8 [Quality](docs/TERMS.md#quality) metric (ops vs defects)
-
-SSOT: [`integrity/QUALITY_METRIC.md`](integrity/QUALITY_METRIC.md).
-
-[Quality](docs/TERMS.md#quality) measures the rate of defect-free operations across agent processes:
-
-```text
-Quality = Ops / Opportunities
-```
-
-Where **Opportunities** are gate/verb executions with binary outcomes, **Ops** are opportunities that completed as specified (PASS, MET, ready), and **Defects** are deviations from spec (FAIL, handoff_refused, error). This is DPMO-class without the academic theater.
-
-**Q1.** [Quality evidence](docs/TERMS.md#quality-evidence) required at fitness. Produce packages must include [gate](docs/TERMS.md#gate) receipts with `outcome` + `timestamp`. Missing evidence triggers `handoff_refused` with `QUALITY_EVIDENCE`.
-
-**Q2.** [Quality evidence](docs/TERMS.md#quality-evidence) required at adversarial [audit](docs/TERMS.md#audit). Artifacts must have `ssot_leaf_ids` present AND `quality_snapshot` with non-zero `opportunities`. Missing evidence causes [audit](docs/TERMS.md#audit) FAIL citing Q2.
-
-**Q3.** [Quality snapshot](docs/TERMS.md#quality-snapshot) recorded at [boundary](docs/TERMS.md#boundary) exit. Completion artifacts include `{ opportunities, ops, defects, quality }`.
-
-**Q4.** [Defect](docs/TERMS.md#defect) classification is binary. Every outcome is exactly [op](docs/TERMS.md#op) or [defect](docs/TERMS.md#defect). No partial, weighted, or continuous scores.
-
-**Q5.** [Quality](docs/TERMS.md#quality) formula is ops/opportunities. No alternative formulas for the canonical [quality](docs/TERMS.md#quality) metric.
-
-### 16.9 Confirmation checklist (systems)
-
-For changes that touch [agent nouns](docs/TERMS.md#agent-noun):
-
-- [ ] CS1. [Agent noun](docs/TERMS.md#agent-noun) has identity and adjectives.
-- [ ] CS2. Each verb has input, output, and failure mode.
-- [ ] CS3. Handoff-in and completion artifact are declared.
-- [ ] CS4. Success criteria are binary (ops vs defects).
-- [ ] CS5. [Produce ≠ Audit ≠ Ship](docs/TERMS.md#produce-audit-ship) separation is honored.
-- [ ] CS6. [Audit](docs/TERMS.md#audit) roles have no [ship](docs/TERMS.md#ship) verbs.
-- [ ] CS7. [Produce package](docs/TERMS.md#produce-package) present before fitness; incomplete handoffs refused, not soft-failed.
-- [ ] CS8. Task/board [SSOT exit evidence](docs/TERMS.md#ssot-exit-evidence) present in [produce package](docs/TERMS.md#produce-package) (`ssot_leaf_ids` + `ssot_exit_status`); missing evidence refused (P-020).
-- [ ] CS9. [Quality evidence](docs/TERMS.md#quality-evidence) present in [produce package](docs/TERMS.md#produce-package) (gate receipts with outcome + timestamp).
-- [ ] CS10. [Quality snapshot](docs/TERMS.md#quality-snapshot) recorded at [boundary](docs/TERMS.md#boundary) exit (`{ opportunities, ops, defects, quality }`).
-
----
-
-## Document control
-
-- Status: working [charter](docs/TERMS.md#charter) (living). Descended from the [interview](docs/TERMS.md#interview) draft in [`theory/history/og-interview-draft.md`](theory/history/og-interview-draft.md). Not yet a ratified organizational standard.
-- Home: this file (`CHARTER.md`) is authoritative for the practice. Do not edit the OG history copy.
-- Subject: [Boundary-Based Architecture](docs/TERMS.md#bba) (BBA) — [Boundary-Based Programming](docs/TERMS.md#bbp) (BBP) is the programming practice (§§4–14); systems model (§16) extends to agent fleets
-- Systems extension: [agent nouns](docs/TERMS.md#agent-noun) (§16), ratified by [ADR](docs/TERMS.md#adr) 0003
-- Reduced ADRs: tags + primitives + if-thens, ratified by [ADR](docs/TERMS.md#adr) 0007
-- No [noun inheritance](docs/TERMS.md#noun-inheritance), ratified by [ADR](docs/TERMS.md#adr) 0008
-- [Primitive](docs/TERMS.md#primitive) interior functions, ratified by [ADR](docs/TERMS.md#adr) 0009
-- [Gate](docs/TERMS.md#gate) after every generate, ratified by [ADR](docs/TERMS.md#adr) 0010
-
-
-- Companion rejected name: Boundary-Enforced Programming (keep as a description of CI, not the practice title)
-- Companion rejected frame: “governance / governed” as the name of the [integrity](docs/TERMS.md#integrity) loop
+*End of charter. The [binding matrix](integrity/binding-matrix.json) is the machine index of these rules.*
