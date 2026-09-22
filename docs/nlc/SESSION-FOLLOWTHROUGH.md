@@ -1,17 +1,17 @@
 # Session follow-through (2026-09-22)
 
 Eval-session execution queue. Live gap narrative remains [`FINDINGS.md`](../../FINDINGS.md).
-Mirrored in root [`TODO`](../../TODO) section of the same name.
+Also listed under root `TODO` heading of the same name when that file is next edited.
 
 ## In reach
 
-- E1 CHARTER pointer at `integrity/rule-corpus.json` (ADR 0024)
-- E2 TERMS: `obligation` + `corpus` entries
-- E3 Explicit `ci_fitness.py` run of `fitness-adr-0024-binder.py`
-- E4 `MANIFESTO.md` — perfect code via process, no blame, factory, climb upstream, buck stops here
-- E5 ADR 0025 — belief layer reduced to NLC rules (no new R ids)
-- E6 `.agents/skills/nlc-hub-audit/SKILL.md` — 6-phase formal review
-- E7 Tracker SSOT — FINDINGS is the only live gap queue; HOLES historical
+- E1 CHARTER pointer at `integrity/rule-corpus.json` (ADR 0024) — open
+- E2 TERMS: `obligation` + `corpus` entries — open
+- E3 Explicit `ci_fitness.py` run of `fitness-adr-0024-binder.py` — open
+- E4 `MANIFESTO.md` belief layer — done @ 5c0dec8
+- E5 ADR 0025 + `rules/nlc-0025.json` — done @ b0fcee4
+- E6 `.agents/skills/nlc-hub-audit/SKILL.md` — done @ 9d284de
+- E7 Tracker SSOT — open (drafts exist from A13; land on this branch)
 
 ## Expansion (named, not fake-MET)
 
