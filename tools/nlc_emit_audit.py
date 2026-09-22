@@ -49,12 +49,7 @@ def validate_manifest(data: object) -> list[str]:
 
 
 def iter_manifests(root: Path) -> list[Path]:
-    found: list[Path] = []
-    for base in (root / "examples", root / ".nlc"):
-        if not base.exists():
-            continue
-        found.extend(base.rglob("emit-manifest.json"))
-    return found
+    return sorted({p.resolve() for p in root.rglob("emit-manifest.json") if p.is_file()})
 
 
 def main() -> int:
