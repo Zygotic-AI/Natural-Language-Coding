@@ -1,11 +1,5 @@
-# Hub BBA dogfood (X4)
+# X4 — hub BBA dogfood (partial)
 
-Hub *process* is NLC. Hub *emit* — when this repo writes a compiled-system tree — is BBA.
+**Landed:** `tools/nlc-init.py` scaffolds `nouns/` and `goals/` with BBA READMEs; `templates/adopter/{nouns,goals}/README.md` match; `tools/fitness-hub-bba-dogfood.py` gates the scaffold.
 
-v1 bound on `nlc-init` + adopter template:
-
-- `tools/nlc-init.py` creates `nouns/` and `goals/` with READMEs
-- `templates/adopter/nouns/` and `templates/adopter/goals/` exist
-- `tools/fitness-hub-bba-dogfood.py` refuses if those homes disappear
-
-Not this pass: rewriting hub `tools/*.py` interiors into noun/verb packages.
+**Not started (honest):** rewriting hub `tools/*.py` interiors as noun/verb packages. That is a real refactor, not a marker — do not mark MET.
