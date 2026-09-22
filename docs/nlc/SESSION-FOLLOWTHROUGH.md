@@ -4,16 +4,13 @@ Live gap narrative: [`FINDINGS.md`](../../FINDINGS.md).
 
 ## In reach
 
-- E1 CHARTER pointer — short-form + `docs/nlc/CHARTER-CORPUS.md` landed; two-line `CHARTER.md` §3 insert still open (file size)
-- E2 TERMS obligation/corpus/BBA — **done** (`docs/TERMS.md`)
-- E3 ci_fitness 0024 — **done** via `fitness-*.py` glob
-- E4 Manifesto belief — done
-- E5 ADR 0025 — done
-- E6 nlc-hub-audit skill — done
-- E7 Tracker SSOT — done
+- E1 CHARTER.md §3 two-line insert — still open; pointer + `fitness-charter-corpus-pointer.py` accept CHARTER-CORPUS.md
+- E2 TERMS — done
+- E3 ci_fitness glob — done
+- E4–E7 — done
 
 ## Expansion
 
-- X1–X3 named + parked binder — done as named-not-MET
-- X4 Hub BBA interiors — v1 note `docs/nlc/HUB-BBA-DOGFOOD.md`; rewrite still open
-- X5 Machine emit-audit — **v1 done** (`tools/nlc_emit_audit.py`, specimens, `fitness-nlc-emit-audit.py`)
+- X1–X3 named-not-MET — done
+- X4 nlc-init + template nouns/goals + fitness — **v1 done**; hub tool interiors still open
+- X5 emit-audit validator — v1 done
