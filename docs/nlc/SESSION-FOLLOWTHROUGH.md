@@ -11,6 +11,6 @@ Live gap narrative: [`FINDINGS.md`](../../FINDINGS.md).
 
 ## Expansion
 
-- X1–X3 named-not-MET — done
+- X1–X3 — **promoted to law** via ADR 0026; runners + specimens + fitness
 - X4 nlc-init + template nouns/goals + fitness — **v1 done**; hub tool interiors still open
-- X5 emit-audit validator — v1 done
+- X5 emit-audit validator — v1 done (`nlc_emit_audit.py`); full schema enforcement now in X3 runner
