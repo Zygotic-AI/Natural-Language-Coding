@@ -15,7 +15,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: `feat/nlc-pipeline-wiring` (X1/X2/X3/X5/X6 sequenced by `nlc-pipeline-wire.py`).
+Last pass: `feat/nlc-emit-from-prose` (ADR 0027 emit-from-prose compiler).
 
 ---
 
@@ -57,8 +57,8 @@ Hub ship remains a **human** last step (`./release`).
 
 | Item | Note |
 |------|------|
-| E1 CHARTER corpus sentence | Two-line insert still open if not on `CHARTER.md` |
-| E2 TERMS obligation/corpus | Drafted; land with TERMS edit |
+| E1 CHARTER corpus sentence | Landed on `feat/adr-0024-nlc-spine` (PR 22) |
+| E2 TERMS obligation/corpus | Landed with TERMS edit |
 | E3 explicit ci_fitness 0024 | Glob already runs `fitness-*.py`; explicit run optional |
 | CHARTER / DESCRIBE door | Still opens as BBP |
 
@@ -68,8 +68,9 @@ Hub ship remains a **human** last step (`./release`).
 
 - ADR 0024 factory spine + corpus map + v1 binder
 - ADR 0025 no-blame / climb / buck-stops rules file
-- ADR 0026: X1 action-plan, X2 reverse-audit, X3 emit-manifest, X5 emit-audit, X6 bound ADR gates — **sequenced by `nlc-pipeline-wire.py`**
+- ADR 0026: X1 action-plan gate, X2 reverse-audit, X3 full emit-manifest enforcement
+- ADR 0026b: pipeline wire sequencing X1/X2/X3/X5/X6 around every emit
+- ADR 0027: emit-from-prose compiler (prose plan -> plan/audit/manifest JSON)
 - Manifesto Belief section
 - `nlc-hub-audit` skill
 - FINDINGS as sole live gap queue
-- PLANIT skill + HARNESS + PROCESS + ORCHESTRATION wired to the pipeline
