@@ -28,6 +28,7 @@ Every **Accepted** [ADR](../adrs/README.md) must map to **runnable** binders (to
 | 0021 | `nlc verify` / `verify-deep` | bound |
 | 0022 | `./release`, release workflow, preflight | bound |
 | 0023 | `rule_coverage_blockers` + `nlc_rule_emit.py` + binder fitness + landmines | bound |
+| 0028 | verb-set contribution gate + lineage tip resolver (tools deferred) | **gap** (v1: docs + TERMS; `verbs.json` schema + lineage index = expansion) |
 
 **0007/0009 gap:** full semantic rule runners and per-language call-tree packs are not MET; v1 binders are `rule-runner`, `rule-emit`, and `call-tree`. ADR 0023 marker emit is bound via `rule-emit` / `goal-scaffold` / verify audit.
 
