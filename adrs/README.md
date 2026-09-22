@@ -29,5 +29,7 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0019-guided-orchestration.md`](0019-guided-orchestration.md) | Guided flow: queue, resume unfinished work | Accepted |
 | [`0020-human-vs-agent-commands.md`](0020-human-vs-agent-commands.md) | Human shell vs agent-invoked tools (requirements/build) | Accepted |
 | [`0021-verify-fast-and-deep.md`](0021-verify-fast-and-deep.md) | `./nlc verify` fingerprints; `verify-deep`; `/verify` skill | Accepted |
+| [`0022-hub-release-fail-early.md`](0022-hub-release-fail-early.md) | `./release` preflight, notes [gate](../docs/TERMS.md#gate) before [verify](../docs/TERMS.md#verify), [tag](../docs/TERMS.md#tag) baseline | Accepted |
+| [`0023-rule-instance-trace-and-instant-audit-scope.md`](0023-rule-instance-trace-and-instant-audit-scope.md) | [Compiler](../docs/TERMS.md#compiler) [rule](../docs/TERMS.md#rule) receipts, instant [audit](../docs/TERMS.md#audit) scope (prescribed path only) | Accepted |
 
 

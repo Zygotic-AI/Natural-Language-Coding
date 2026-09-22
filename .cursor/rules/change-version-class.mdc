@@ -1,0 +1,12 @@
+---
+description: Ask patch/minor/major before material hub or adopter changes
+alwaysApply: true
+---
+
+# Change version class
+
+Before material changes in this repo or an adopter compiled system, ask **patch / minor / major** when it is not obvious.
+
+SSOT: [`AGENTS.md`](../../AGENTS.md) and [`.agents/instructions/change-version-class.md`](../../.agents/instructions/change-version-class.md).
+
+Hub ship: human runs **`./release`** ([`docs/adoption/RELEASE.md`](../../docs/adoption/RELEASE.md)), not ad-hoc tags.

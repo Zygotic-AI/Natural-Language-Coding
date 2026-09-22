@@ -14,6 +14,6 @@ When you change a repo that uses [NLC](../../docs/TERMS.md#nlc) (this hub or an 
 - Renaming or tightening a [published verb contract](../../docs/TERMS.md#published-verb-contract) → **major** ([ADR 0006](../../adrs/0006-contract-change-notice.md)).
 - Fixing [gate](../../docs/TERMS.md#gate) tooling or [interview](../../docs/TERMS.md#interview) copy with no [requirement](../../docs/TERMS.md#requirement) change → **patch**.
 
-[Hub](../../docs/TERMS.md#hub) releases: human runs **`./release`** at repo root (do not hand-roll tag/push unless they ask).
+[Hub](../../docs/TERMS.md#hub) releases: **`./release`** (default waits for PR merge, then tags) or **`./release prepare`** / **`./release finish`**. No [tag](../../docs/TERMS.md#tag) before merge. Commit **`docs/adoption/RELEASE-vX.Y.Z.md`** with a filled **Highlights** section; draft the **Changes since** block with `python3 tools/nlc_release_notes.py --write-draft --version X.Y.Z --to HEAD` (see [`RELEASE.md`](../../docs/adoption/RELEASE.md)).
 
 [Adopter](../../docs/TERMS.md#adopter) repos: bump is usually “material compile change” vs doc-only; align with `CONFIRM.md` [change class](../../docs/TERMS.md#change-class) and `./nlc verify-deep` before [ship](../../docs/TERMS.md#ship).

@@ -13,4 +13,6 @@ Always on (charter §15): nouns own adjectives; only public verbs mutate; goals 
 
 **Complete:** proposal lists [change class](../../../docs/TERMS.md#change-class) A–F, nouns/verbs/goals touched, adjectives that must hold, non-goals, test names, impact list (generated callers, not a hand JSON).
 
+**Generate:** at each adopted [rule](../../../docs/TERMS.md#rule) enforcement site emit `# nlc:rule=<rule_id>` ([ADR 0023](../../../adrs/0023-rule-instance-trace-and-instant-audit-scope.md)) via `./nlc maintainer rule-marker --id <rule_id>`; for `goals/<id>/implementation.py` finish with `./nlc maintainer rule-emit --goal <id>` so markers stay compiler-owned.
+
 **Incomplete:** code in the same pass as the first proposal, or missing [change class](../../../docs/TERMS.md#change-class).

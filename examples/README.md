@@ -8,6 +8,10 @@ These trees exist so a [gate](../docs/TERMS.md#gate) has something to scan. They
 | [`invoice-violation/`](invoice-violation/) | R5 field-writes |
 | [`invoice-verb-path-violation/`](invoice-verb-path-violation/) | R6 verb-path |
 | [`invoice-locality-violation/`](invoice-locality-violation/) | R24 locality |
+| [`noun-inheritance-violation/`](noun-inheritance-violation/) | ADR 0008 noun inherits noun |
+| [`rule-adoption-conflict/`](rule-adoption-conflict/) | ADR 0012 conflicting adoptions |
+| [`c10-changed-out-of-scope/`](c10-changed-out-of-scope/) | ADR 0006 diff-scoped C10 |
+| [`c21-changed-out-of-scope/`](c21-changed-out-of-scope/) | ADR 0006 diff-scoped C21 |
 | [`card-taint-violation/`](card-taint-violation/) | R32 / C25 taint by name |
 | [`card-taint-alias/`](card-taint-alias/) | R32 `n = get_number(); return n` |
 
@@ -18,6 +22,19 @@ These trees exist so a [gate](../docs/TERMS.md#gate) has something to scan. They
 | [`duplicated-adjective-violation/`](duplicated-adjective-violation/) | C19 duplicated [adjective](../docs/TERMS.md#adjective) |
 | [`extra-goal-entrypoint/`](extra-goal-entrypoint/) | R13 two entrypoints |
 | [`impact-list-mismatch/`](impact-list-mismatch/) | C21 missing generated caller |
+| [`verify-impact-c21/`](verify-impact-c21/) | `./nlc verify` ADR 0006 / C21 landmine |
+| [`verify-breaking-accept/`](verify-breaking-accept/) | `./nlc verify` ADR 0006 acceptance landmine |
+| [`verify-no-before-stamp/`](verify-no-before-stamp/) | `./nlc verify` missing UC18 stamp |
+| [`verify-stale-stamp/`](verify-stale-stamp/) | `./nlc verify` stale before-generate stamp |
+| [`verify-skill-ungated/`](verify-skill-ungated/) | `./nlc verify` gate-scoped SKILL without receipt |
+| [`verify-produce-handoff/`](verify-produce-handoff/) | verify-deep incomplete produce package (SSOT) |
+| [`verify-produce-self-audit/`](verify-produce-self-audit/) | verify-deep produce package self-audit roles (CS5) |
+| [`regen-queue-pending/`](regen-queue-pending/) | open delta-regen queue on verify |
+| [`rule-coverage-minimal/`](rule-coverage-minimal/) | ADR 0023 rule-coverage MET |
+| [`rule-coverage-missing/`](rule-coverage-missing/) | ADR 0023 verify `rule_coverage_blockers` |
+| [`adopter-verify-fast-green/`](adopter-verify-fast-green/) | ADR 0021/0023 adopter `verify_fast` MET |
+| [`interview-packet-missing/`](interview-packet-missing/) | UC1 `./nlc verify` blocks missing interview-packet |
+| [`rule-marker-domain/`](rule-marker-domain/) | ADR 0023 marker without gate-record |
 | [`noun-without-tests/`](noun-without-tests/) | R25 no tests next to [noun](../docs/TERMS.md#noun) |
 | [`adjective-untested/`](adjective-untested/) | C16 [adjective](../docs/TERMS.md#adjective) never named in tests |
 | [`verb-untested/`](verb-untested/) | C17 verb never named in tests |

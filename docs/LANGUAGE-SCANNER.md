@@ -1,6 +1,6 @@
-# [Code packs](TERMS.md#code-pack) — language scanner spec (parked)
+# [Code packs](TERMS.md#code-pack) — language scanner spec
 
-**[Code packs](TERMS.md#code-pack) (UC16):** per-stack source adapters for the same [charter](TERMS.md#charter) gates. **Do not do this work now.** Open this file when [ACS](TERMS.md#acs) expands past Python *source*.
+**[Code packs](TERMS.md#code-pack) (UC16):** per-stack source adapters for the same [charter](TERMS.md#charter) gates. **v1 product:** `./nlc maintainer language-scan` inventories languages; ACS source enforcement stays **Python-only** until step 2 below ships.
 
 The **runner** may stay Python (`python3 tools/…`). That is a toolchain [rule](TERMS.md#rule).
 The **[charter](TERMS.md#charter) sentences** (field writes, taint, verb signatures, helpers) are not

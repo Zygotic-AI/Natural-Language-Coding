@@ -1,0 +1,22 @@
+{
+  "adoptions": [
+    {
+      "rule_id": "pci-write-must-log",
+      "adr_id": "0012",
+      "precedence_tier": "project",
+      "precedence_rank": 1,
+      "match": { "tags_all": ["pci"], "primitive": "write" },
+      "effect": "must",
+      "obligation": "audit-log"
+    },
+    {
+      "rule_id": "pci-write-forbid-log",
+      "adr_id": "0012",
+      "precedence_tier": "project",
+      "precedence_rank": 1,
+      "match": { "tags_all": ["pci"], "primitive": "write" },
+      "effect": "forbid",
+      "obligation": null
+    }
+  ]
+}

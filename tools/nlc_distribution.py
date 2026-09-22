@@ -337,6 +337,11 @@ def fetch_hub_version(
     repo: str = DEFAULT_REPO,
 ) -> Path:
     ver = normalize_version(version)
+    dest = version_install_path(install_root, ver)
+    if (dest / "integrity" / "nlc-version.json").is_file():
+        write_current_version(install_root, ver)
+        link_or_copy_hub(install_root, ver)
+        return dest
     try:
         with tempfile.TemporaryDirectory() as td:
             tar_path = Path(td) / f"nlc-{ver}.tar.gz"

@@ -258,6 +258,10 @@ What humans touch vs what the **compiler** emits—[INTENT-SURFACE.md](ai-compil
 
 ## J
 
+### Jobs to be done
+
+Adopter outcomes and **honest** mechanism status—[`JOBS-TO-BE-DONE.md`](JOBS-TO-BE-DONE.md) (not the UC id list in [USE-CASES.md](USE-CASES.md)).
+
 ### Jidoka
 
 Stop on gate FAIL; **RCA** upstream—do not patch emit to green.

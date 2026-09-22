@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema", "source", "candidate_adrs", "ratify"],
+  "properties": {
+    "schema": { "const": 1 },
+    "source": { "type": "string", "minLength": 1 },
+    "candidate_adrs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["title", "status", "requirements"],
+        "properties": {
+          "title": { "type": "string" },
+          "status": { "type": "string" },
+          "requirements": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "candidate_rules": { "type": "array" },
+    "ratify": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": true
+}

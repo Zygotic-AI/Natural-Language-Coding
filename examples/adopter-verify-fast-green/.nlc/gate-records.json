@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "records": [
+    {
+      "artifact": "goals/demo/implementation.py",
+      "gate_id": "fitness-demo",
+      "outcome": "PASS",
+      "command": "python3 tools/fitness-demo.py examples/adopter-verify-fast-green",
+      "at": "2099-01-01T00:00:00Z"
+    }
+  ]
+}

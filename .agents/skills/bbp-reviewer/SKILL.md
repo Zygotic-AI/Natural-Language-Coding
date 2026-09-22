@@ -15,6 +15,8 @@ Always on (charter §15): do not write the implementation in this pass. “Looks
 
 **Complete:** findings cite [charter](../../../docs/TERMS.md#charter) ids (`R*`, `C*`, `P*`) with file pointers.
 
+**ADR 0008 (nouns):** on `domain/**/*.py` diffs, flag noun-on-noun inheritance; hub check: `python3 tools/fitness-no-noun-inheritance.py <adopter-root>`.
+
 **Incomplete:** implementation in the same turn, or approval without [rule](../../../docs/TERMS.md#rule) numbers.
 
 Prefix trap: **P1–P7** are [hub](../../../docs/TERMS.md#hub) principles. Hyphenated `P-020` is an operating policy in the companion bindings repo.

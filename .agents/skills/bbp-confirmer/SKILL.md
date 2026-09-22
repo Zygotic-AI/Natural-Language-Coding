@@ -13,6 +13,8 @@ SSOT role: [`agents/confirmer.md`](../../../agents/confirmer.md).
 python3 tools/ci_fitness.py
 ```
 
+When the change touched **`TODO` → Build a compiled system** or **`docs/USE-CASES.md`** spine, also confirm `python3 tools/fitness-todo-use-cases-ssot.py` → `RESULT:MET` against [`integrity/uc-product-status.json`](../../../integrity/uc-product-status.json).
+
 **Complete:** every C1–C24 row is PASS / FAIL / N/A with `file:line` or N/A reason, and the suite output is included (`CI:MET` or an honest `CI:FAIL`).
 
 **Incomplete:** checklist without evidence, or only check 1 when the [hub](../../../docs/TERMS.md#hub) suite exists.

@@ -48,6 +48,8 @@ Skills and portable instructions live under [`.agents/`](.agents/). End-to-end c
 
 **Version class:** Before material [hub](docs/TERMS.md#hub) or [adopter](docs/TERMS.md#adopter) changes, ask patch / minor / major when unclear — see [`.agents/instructions/change-version-class.md`](.agents/instructions/change-version-class.md). [Hub](docs/TERMS.md#hub) [ship](docs/TERMS.md#ship): human runs **`./release`** ([`docs/adoption/RELEASE.md`](docs/adoption/RELEASE.md)), not ad-hoc [tag](docs/TERMS.md#tag) commands.
 
+**Product UC TODO:** Do not mark [`TODO`](TODO) “Build a compiled system” rows `@done` for full USE-CASE closure while [`docs/USE-CASES.md`](docs/USE-CASES.md) still lists Parked/Needed — see [`.agents/instructions/todo-product-uc-completion.md`](.agents/instructions/todo-product-uc-completion.md). CI: `tools/fitness-todo-use-cases-ssot.py`.
+
 ## Memory files
 
 - [`DESCRIBE.md`](DESCRIBE.md) — durable project facts for agents

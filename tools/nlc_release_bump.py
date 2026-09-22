@@ -10,11 +10,16 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from nlc_requirements import hub_tool  # noqa: E402
 VERSION_PATH = ROOT / "integrity" / "nlc-version.json"
 
+# Major hints apply only on charter/policy paths — not docs mentioning "breaking change".
+POLICY_PATH_PREFIXES = ("adrs/", "rules/", "knowledge/", "integrity/")
 MAJOR_HINTS = (
-    "breaking",
-    "removed",
+    "breaking change",
+    "breaking:",
+    "removed obligation",
     "incompatible",
 )
 MINOR_PATH_PREFIXES = ("adrs/", "rules/", "knowledge/", "integrity/examples/")
@@ -103,9 +108,38 @@ def diff_blob() -> str:
     return (text + (proc2.stdout or "")).lower()
 
 
+def _is_policy_path(path: str) -> bool:
+    if path.rstrip("/") == "CHARTER.md":
+        return True
+    return any(path.startswith(prefix) for prefix in POLICY_PATH_PREFIXES)
+
+
+def policy_diff_blob(paths: list[str]) -> str:
+    policy = [p for p in paths if _is_policy_path(p)]
+    if not policy:
+        return ""
+    proc = subprocess.run(
+        ["git", "diff", "HEAD", "--", *policy],
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    text = (proc.stdout or "") + (proc.stderr or "")
+    proc2 = subprocess.run(
+        ["git", "diff", "--cached", "--", *policy],
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return (text + (proc2.stdout or "")).lower()
+
+
 def suggest_bump() -> tuple[str, list[str]]:
     paths = changed_paths()
     blob = diff_blob()
+    policy_blob = policy_diff_blob(paths)
     reasons: list[str] = []
     level = "patch"
 
@@ -113,12 +147,14 @@ def suggest_bump() -> tuple[str, list[str]]:
         return "major", ["CHARTER.md changed — treat as major unless you know otherwise"]
 
     for p in paths:
-        if any(h in p.lower() for h in ("breaking", "remove-")):
+        if p.startswith("examples/"):
+            continue
+        if "/remove-" in p or p.startswith("remove-"):
             return "major", [f"breaking-looking path: {p}"]
 
     for hint in MAJOR_HINTS:
-        if hint in blob and "non-breaking" not in blob:
-            reasons.append(f"diff mentions “{hint}”")
+        if hint in policy_blob and "non-breaking" not in policy_blob:
+            reasons.append(f"policy diff mentions “{hint}”")
             level = "major"
             break
 
@@ -144,24 +180,9 @@ def suggest_bump() -> tuple[str, list[str]]:
     return level, reasons
 
 
-def migration_dir_name(from_v: str, to_v: str) -> str:
-    return f"{from_v}_to_{to_v}"
-
-
-def ensure_migration(from_v: str, to_v: str) -> Path:
-    mig_root = ROOT / "migrations" / migration_dir_name(from_v, to_v)
-    if mig_root.is_dir():
-        return mig_root
-    mig_root.mkdir(parents=True, exist_ok=True)
-    yaml_path = mig_root / "migration.yaml"
-    yaml_path.write_text(
-        f"from: {from_v}\n" f"to: {to_v}\n" "kind: noop\n",
-        encoding="utf-8",
-    )
-    return mig_root
-
-
 def apply_bump(level: str | None, keep: bool) -> tuple[str, str]:
+    from nlc_migration_catalog import ensure_migration_chain
+
     current = read_version()
     if keep:
         return current, current
@@ -170,12 +191,13 @@ def apply_bump(level: str | None, keep: bool) -> tuple[str, str]:
     new = bump_semver(current, level)
     if new == current:
         raise ValueError("bump produced same version")
-    ensure_migration(current, new)
+    ensure_migration_chain(ROOT, current, new)
     write_version(new)
     return current, new
 
 
 def main() -> int:
+    hub_tool()
     parser = argparse.ArgumentParser(description="Hub release version helper")
     parser.add_argument("--suggest", action="store_true", help="Print suggested bump level")
     parser.add_argument("--current", action="store_true", help="Print current version")
@@ -184,7 +206,20 @@ def main() -> int:
         choices=("patch", "minor", "major", "keep"),
         help="Bump (or keep) and write integrity/nlc-version.json + migration",
     )
+    parser.add_argument(
+        "--peek",
+        choices=("patch", "minor", "major", "keep"),
+        help="Print target version without writing files",
+    )
     args = parser.parse_args()
+
+    if args.peek:
+        current = read_version()
+        if args.peek == "keep":
+            print(current)
+        else:
+            print(bump_semver(current, args.peek))
+        return 0
 
     if args.current:
         print(read_version())

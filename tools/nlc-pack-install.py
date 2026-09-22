@@ -60,6 +60,21 @@ def main() -> int:
     record = packs_dir / f"{name}-{version}.json"
     record.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(f"PACK_INSTALL:MET name={name} version={version}")
+    if (root / "rules" / "adopted.json").is_file():
+        pending = root / ".nlc" / "requirements-sync-pending.json"
+        pending.parent.mkdir(parents=True, exist_ok=True)
+        pending.write_text(
+            json.dumps(
+                {
+                    "reason": "requirement pack install",
+                    "pack": f"{name}@{version}",
+                    "uc9_hint": "./nlc maintainer regen-plan --change rule:<id> --write-queue",
+                },
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
     print("  next: review ADRs/rules, ratify, run UC9 delta-regen if rules changed")
     return 0
 

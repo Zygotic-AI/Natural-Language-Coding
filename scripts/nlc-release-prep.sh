@@ -47,11 +47,9 @@ RELEASE_PREP:READY
   version: ${VER}
   commit:  ${SHA}
 
-Tag (last — human):
-  git tag -a v${VER} -m "Natural Language Coding hub v${VER}"
-  git push origin main
-  git push origin v${VER}
+After merge to main:
+  ./release finish
 
-See docs/adoption/RELEASE-v0.1.0.md and docs/nlc/README.md
+See docs/adoption/RELEASE.md
 
 EOF

@@ -4,6 +4,10 @@ SSOT for what this practice *does*. Code is derived. Actors: **human manager**
 (non-coder) and **[compiler](TERMS.md#compiler)** (AI). One compile, staged outputs — do not fuse
 [goal](TERMS.md#goal), [ADR](TERMS.md#adr), and if/then into one blob.
 
+**Why adopters show up (jobs + honest availability):** [`JOBS-TO-BE-DONE.md`](JOBS-TO-BE-DONE.md).
+
+**Product/binder SSOT (machine):** [`integrity/uc-product-status.json`](../integrity/uc-product-status.json) — `fitness-todo-use-cases-ssot.py` gates TODO `@done` against this file. **Proof index:** [`USE-CASES-PROOF.md`](USE-CASES-PROOF.md).
+
 Status: **in force** = charter/tool exists. **Parked** = decided, not executable (still needed when that expansion happens). **Missing** = **needed** — the product is incomplete without it; not optional polish.
 
 
@@ -13,11 +17,11 @@ Status: **in force** = charter/tool exists. **Parked** = decided, not executable
 
 | ID | Story | Status |
 |----|--------|--------|
-| UC1 | **[Interview](TERMS.md#interview).** Human states an outcome. [Compiler](TERMS.md#compiler) interviews until goals, ADRs/standards, knowledge facts, and dependencies are bound. Unbound statement → keep interviewing, do not emit. | In force as [PLANIT](TERMS.md#planit) start / [binding](TERMS.md#binding) idea. [Interview](TERMS.md#interview) skill still thin. |
+| UC1 | **[Interview](TERMS.md#interview).** Human states an outcome. [Compiler](TERMS.md#compiler) interviews until goals, ADRs/standards, knowledge facts, and dependencies are bound. Unbound statement → keep interviewing, do not emit. | In force: `/interview` + `.nlc/interview-packet.json` (`requirements`, `knowledge_domains`, `bind_ready`); `./nlc verify` refuses compiled surface without it. |
 | UC2 | **Execute a [goal](TERMS.md#goal) (PLANIT).** From a bound [goal](TERMS.md#goal): classify → plan → atomic statements → bind → emit → adversarial [audit](TERMS.md#audit). | In force: [charter](TERMS.md#charter) §6; orchestrator [`planit`](../.agents/skills/planit/SKILL.md) + leaf `bbp-*` skills; see [`PLANIT-ORCHESTRATION.md`](ai-compiled-systems/PLANIT-ORCHESTRATION.md). |
-| UC3 | **Standard / req / business [rule](TERMS.md#rule) → [ADR](TERMS.md#adr).** PCI, Temporal, “do not store PAN,” etc. become a decision: why, rejected, consequences. | Process. No conversion [gate](TERMS.md#gate). |
-| UC4 | **[ADR](TERMS.md#adr) → if/then.** Reduce to tags, primitives, facts, rules. If the closed set cannot speak, add a tag/fact/primitive first (itself an ADR). | [ADR](TERMS.md#adr) 0007. Runner parked. |
-| UC5 | **Rules → emit.** Verb declares [primitive](TERMS.md#primitive) + tagged target. [Compiler](TERMS.md#compiler) applies the [rule](TERMS.md#rule) (encrypt, forbid return, Temporal engine) or the [gate](TERMS.md#gate) fails. Prompt memory is not the bind. | Promised. v1 stand-in: `taint.txt` + Python fitness. |
+| UC3 | **Standard / req / business [rule](TERMS.md#rule) → [ADR](TERMS.md#adr).** PCI, Temporal, “do not store PAN,” etc. become a decision: why, rejected, consequences. | In force v1: Proposed ADRs block `./nlc verify` on compiled surface; ratify before generate. |
+| UC4 | **[ADR](TERMS.md#adr) → if/then.** Reduce to tags, primitives, facts, rules. If the closed set cannot speak, add a tag/fact/primitive first (itself an ADR). | In force v1: `rules/adopted.json` IR + `./nlc maintainer rule-runner --materialize` / verify snapshot check. |
+| UC5 | **Rules → emit.** Verb declares [primitive](TERMS.md#primitive) + tagged target. [Compiler](TERMS.md#compiler) applies the [rule](TERMS.md#rule) (encrypt, forbid return, Temporal engine) or the [gate](TERMS.md#gate) fails. Prompt memory is not the bind. | In force v1: `rule-emit` / `goal-scaffold` + `rule-coverage --check` on verify (semantic runners still expand per ADR 0007). |
 
 Same conversation may produce UC1–UC4. Three artifacts, three gates: **[goal](TERMS.md#goal)**, **[ADR](TERMS.md#adr)**, **[rule](TERMS.md#rule)**.
 
@@ -30,36 +34,35 @@ Same conversation may produce UC1–UC4. Three artifacts, three gates: **[goal](
 | UC6 | **Classify A–F.** [Adjective](TERMS.md#adjective) / verb / [goal](TERMS.md#goal) / durable / [contract](TERMS.md#contract) / [charter](TERMS.md#charter). Wrong class fails (C on a charter change is illegal). | In force: C1. |
 | UC7 | **Adversarial review.** Second role attacks the plan before emit. Open FAIL blocks [ship](TERMS.md#ship) unless rebutted. | In force: C23. |
 | UC8 | **[Prove](TERMS.md#prove) / [ship](TERMS.md#ship).** AI gates green = compile. `Ratified-by` (class A/B/D/E/F) and `Released-by` (always) = [ship](TERMS.md#ship). Unmet [gate](TERMS.md#gate) prints Step 1…N. | In force: `ci-fitness.sh`, `release-audit.py`, C24. |
-| [UC9](TERMS.md#uc9) | **Change a [requirement](TERMS.md#requirement).** Human changes one ADR/rule. [Compiler](TERMS.md#compiler) diffs tagged nouns/verbs/goals and regenerates that [blast radius](TERMS.md#blast-radius) only. | Impact graph + `nlc-delta-regen.py`; `--orchestrate` queue (see [`IMPACT-GRAPH.md`](spine/IMPACT-GRAPH.md)). |
-| UC10 | **[Defect](TERMS.md#defect) is upstream.** Emit wrong → [RCA](TERMS.md#rca) to [interview](TERMS.md#interview) / [ADR](TERMS.md#adr) / [rule](TERMS.md#rule). Human does not patch generated code. | [Charter](TERMS.md#charter) + [ADR](TERMS.md#adr) 0006. |
-| UC11 | **Breaking [contract](TERMS.md#contract).** Additive = quiet. Break stays red until the human accepts the *[requirement](TERMS.md#requirement)*, not the schema. | [ADR](TERMS.md#adr) 0006. |
-| UC12 | **Expand the closed set.** New [primitive](TERMS.md#primitive) or [tag](TERMS.md#tag) is an [ADR](TERMS.md#adr), then a row in [`integrity/primitives.md`](../integrity/primitives.md). Prefer tag/fact before a new [primitive](TERMS.md#primitive). | In force as SSOT file. Runner parked. |
-| UC13 | **Durable [goal](TERMS.md#goal) → engine [tag](TERMS.md#tag).** `goal.durable ∧ engine.runtime ≠ (named runtime) → forbid`. Temporal is a tagged [noun](TERMS.md#noun), not a fourth citizen. | [ADR](TERMS.md#adr) 0007. |
-| [UC14](TERMS.md#uc14) | **[Rule](TERMS.md#rule) conflict at adopt-time.** Same [tag](TERMS.md#tag)+[primitive](TERMS.md#primitive) match with incompatible effects (e.g. `pan ∧ return → forbid` vs `pan ∧ return → must export`). Higher **[ADR](TERMS.md#adr) precedence tier** wins; tie → human records override (ADR 0012). Not “encrypt vs cannot store” (those compose). | v1: `check-rule-adoption.py`. |
-| [UC15](TERMS.md#uc15) | **Adopt in a repo.** [Greenfield](TERMS.md#greenfield): `nlc-init`. [Brownfield](TERMS.md#brownfield): beta manual path. | [Greenfield](TERMS.md#greenfield) CLI v1; [brownfield](TERMS.md#brownfield) doc only. |
-| [UC16](TERMS.md#uc16) | **[Code packs](TERMS.md#code-pack) / interior swap.** Same contracts; replace one [noun](TERMS.md#noun)’s interior (Python → Rust, file log → Logstash). | Parked: `docs/LANGUAGE-SCANNER.md`. Engine [tag](TERMS.md#tag): 0007. |
+| [UC9](TERMS.md#uc9) | **Change a [requirement](TERMS.md#requirement).** Human changes one ADR/rule. [Compiler](TERMS.md#compiler) diffs tagged nouns/verbs/goals and regenerates that [blast radius](TERMS.md#blast-radius) only. | Impact graph + `nlc-delta-regen.py`; multi-goal repos require `rules/goal-bindings.json` on verify. |
+| UC10 | **[Defect](TERMS.md#defect) is upstream.** Emit wrong → [RCA](TERMS.md#rca) to [interview](TERMS.md#interview) / [ADR](TERMS.md#adr) / [rule](TERMS.md#rule). Human does not patch generated code. | In force v1: `verify-deep` refuses goal implementations without `.nlc/generate-provenance.json`; Planit jidoka prescribed. |
+| UC11 | **Breaking [contract](TERMS.md#contract).** Additive = quiet. Break stays red until the human accepts the *[requirement](TERMS.md#requirement)*, not the schema. | In force: [ADR](TERMS.md#adr) 0006. |
+| UC12 | **Expand the closed set.** New [primitive](TERMS.md#primitive) or [tag](TERMS.md#tag) is an [ADR](TERMS.md#adr), then a row in [`integrity/primitives.md`](../integrity/primitives.md). Prefer tag/fact before a new [primitive](TERMS.md#primitive). | In force v1: `./nlc maintainer primitive-propose --name <slug>` drafts Proposed ADR before `primitives.md` edit. |
+| UC13 | **Durable [goal](TERMS.md#goal) → engine [tag](TERMS.md#tag).** `goal.durable ∧ engine.runtime ≠ (named runtime) → forbid`. Temporal is a tagged [noun](TERMS.md#noun), not a fourth citizen. | In force v1: durable `goal.json` + `engine.runtime` rule row in `rules/adopted.json` on verify. |
+| [UC14](TERMS.md#uc14) | **[Rule](TERMS.md#rule) conflict at adopt-time.** Same [tag](TERMS.md#tag)+[primitive](TERMS.md#primitive) match with incompatible effects (e.g. `pan ∧ return → forbid` vs `pan ∧ return → must export`). Higher **[ADR](TERMS.md#adr) precedence tier** wins; tie → human records override (ADR 0012). Not “encrypt vs cannot store” (those compose). | In force: `check-rule-adoption.py` on verify; composable cross-primitive policy expands with IR over time. |
+| [UC15](TERMS.md#uc15) | **Adopt in a repo.** [Greenfield](TERMS.md#greenfield): `nlc-init`. [Brownfield](TERMS.md#brownfield): beta manual path. | In force v1: inventory + `./nlc maintainer brownfield-migrate --write-plan` / `--apply`. |
+| [UC16](TERMS.md#uc16) | **[Code packs](TERMS.md#code-pack) / interior swap.** Same contracts; replace one [noun](TERMS.md#noun)’s interior (Python → Rust, file log → Logstash). | In force v1: `./nlc maintainer language-scan` inventory; per-language adapters remain in [`LANGUAGE-SCANNER.md`](LANGUAGE-SCANNER.md) order. |
 | UC17 | **Record / supersede.** New decision = [ADR](TERMS.md#adr). Old [ADR](TERMS.md#adr) marked superseded, not deleted. | In force: R22. |
-| [UC18](TERMS.md#uc18) | **Knowledge facts.** [Interview](TERMS.md#interview) writes facts the rules can bind (invoice receives payments, PAN is in scope). Unbound fact → UC1 continues. | `knowledge/facts.json` + `validate-knowledge-facts.py`. |
+| [UC18](TERMS.md#uc18) | **Knowledge facts.** [Interview](TERMS.md#interview) writes facts the rules can bind (invoice receives payments, PAN is in scope). Unbound fact → UC1 continues. | In force: `before-generate` stamp + maintainer `goal-scaffold` / `rule-emit` refuse stale/missing stamp on compiled repos. |
 | ~~[UC19](TERMS.md#uc19)~~ | *Retired (ADR 0016).* [Hub](TERMS.md#hub) does not [ship](TERMS.md#ship) product requirements. Shape example only: `docs/worked-examples/pan-handling/`. | **[Requirement packs](TERMS.md#requirement-pack)** — v0.2 (`TODO`). |
-| [UC20](TERMS.md#uc20) | **Call-tree inventory.** Verb → interior [primitive](TERMS.md#primitive) functions. Extra/missing [primitive](TERMS.md#primitive) vs bind list fails. | [ADR](TERMS.md#adr) 0009. [Gate](TERMS.md#gate) parked. |
-| [UC21](TERMS.md#uc21) | **[Gate](TERMS.md#gate) after every generate.** Metrics first; default-fail [gate](TERMS.md#gate) on that artifact before the next statement. | [ADR](TERMS.md#adr) 0010 / [PLANIT](TERMS.md#planit) 6.5. Binder parked. |
+| [UC20](TERMS.md#uc20) | **Call-tree inventory.** Verb → interior [primitive](TERMS.md#primitive) functions. Extra/missing [primitive](TERMS.md#primitive) vs bind list fails. | In force v1 Python: `./nlc maintainer call-tree --sync` + verify; multi-language packs expand per ADR 0009. |
+| [UC21](TERMS.md#uc21) | **[Gate](TERMS.md#gate) after every generate.** Metrics first; default-fail [gate](TERMS.md#gate) on that artifact before the next statement. | In force: `gate-scope` auto on `goal-scaffold` / `rule-emit` + `gate-record` blockers on verify. |
 
 
 ---
 
-## Needed (Missing rows are required)
+## Needed (expansion)
 
-These are not a someday list. The spine does not close without them.
+v1 binders above close the teaching spine; these rows still deepen at scale:
 
-| ID | Why it is needed |
-|----|------------------|
-| [UC9](TERMS.md#uc9) (rule-tagged blast radius) | v2: narrow `rule:` changes via [tag](TERMS.md#tag) bindings, not all goals. |
-| [UC14](TERMS.md#uc14) edge cases | Composable obligations and cross-primitive policy need richer IR over time. |
-| [UC15](TERMS.md#uc15) [brownfield](TERMS.md#brownfield) | Automated inventory/migration not shipped. |
-| [UC18](TERMS.md#uc18) harness wire-up | Mandatory `load-knowledge-domain` / `nlc-before-generate` on every generate path. |
-| [Requirement packs](TERMS.md#requirement-pack) (v0.2) | Ingest → ratify → export → consume ADR/rule bundles (ADR 0016). Not [UC19](TERMS.md#uc19). |
+| ID | Why it is still needed |
+|----|------------------------|
+| EXPANSION-ONLY [UC14](TERMS.md#uc14) | Richer composable IR for cross-primitive policy beyond adopt-time conflicts. |
+| EXPANSION-ONLY [UC16](TERMS.md#uc16) | Second-language **adapters** after [`LANGUAGE-SCANNER.md`](LANGUAGE-SCANNER.md) spec step 2. |
+| EXPANSION-ONLY [UC20](TERMS.md#uc20) | Per-stack call-tree packs beyond Python `domain/` scan. |
+| EXPANSION-ONLY [Rule IR](TERMS.md#rule-ir) | Full semantic runners (encrypt/taint/engine) on every emit path per ADR 0007. |
 
-Parked (needed at expansion): [UC16](TERMS.md#uc16) [code packs](TERMS.md#code-pack), [UC20](TERMS.md#uc20) call-tree packs, [Rule IR](TERMS.md#rule-ir) for UC4/UC5.
+**Requirement packs (v0.2):** ingest skill + `./nlc maintainer pack-ingest` → candidates JSON; human ratifies via `/interview` before export (ADR 0016). Not [UC19](TERMS.md#uc19).
 
 ---
 

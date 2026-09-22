@@ -22,6 +22,16 @@ SSOT: [`docs/ai-compiled-systems/PROCESS.md`](../../../docs/ai-compiled-systems/
 | [Knowledge domains](../../../docs/TERMS.md#knowledge-domain) | yes | `knowledge-steward` `load-knowledge-domain` / `flag-gap`; gaps closed or `Assumption:` |
 | Emit forbidden | yes | No [PLANIT](../../../docs/TERMS.md#planit) generate, no durable code writes |
 
+## When you block (ADR 0018)
+
+When you must stop before bind-ready, speak to the human in **plain language**—not `MET` / `NOT_MET` tokens as the only explanation. Use this order:
+
+1. **Problem** — one sentence: what blocked progress.
+2. **What's wrong** — concrete gaps (files, facts, decisions), all known blockers in one pass.
+3. **Ask** — direct questions only they can answer.
+4. **Choices** — valid remediation paths when more than one exists (default suggestion OK).
+5. **Example** — copy-paste `./nlc …` or agent prompts (`/planit`, `/verify`) that shorten the loop.
+
 ## Procedure
 
 0. If `./nlc` shows **YOUR QUEUE** items, ask: continue that work or start something new? Do not make them re-read the menu.
@@ -29,9 +39,10 @@ SSOT: [`docs/ai-compiled-systems/PROCESS.md`](../../../docs/ai-compiled-systems/
 2. Name **goals** and **requirements** (standards/policies are requirements until ADR adoption).
 3. Call **knowledge-steward** [`load-knowledge-domain`](../../../agents/knowledge-steward/AGENT.md) (`tools/load-knowledge-domain.py` or `nlc-before-generate.py` before generate) / `flag-gap`; new facts via `propose-fact` (human accepts).
 4. Record open gaps; loop questions until bind-ready or stop with numbered blockers.
-5. Hand off to **build & compile** (**`/planit`**) with a short resolution table when they are ready to generate; or route to another menu step (e.g. `nlc new`, pack install) without codegen.
+5. Hand off to **build & compile** (**`/planit`**) with a short resolution table when they are ready to generate; or route to another menu step (e.g. `nlc new`, pack install) without codegen. When bind-ready, write `.nlc/interview-packet.json` (`outcome`, `goals`, `requirements`, `bind_ready: true`) — UC1; `./nlc verify` refuses generate without it.
 6. **Queue (CLI, not hand-edited JSON):** Proposed ADRs land in **Requirements** automatically. While requirements are unfinished, do not advance to build. When ratified and bind-ready: `./nlc maintainer guide handoff-build`. After policy edits: `./nlc maintainer guide policy-change --change kind:id` or `./nlc maintainer guide requirements-dirty`.
 7. **Shell (you run this, not the human):** `./nlc maintainer requirements` after ratification; `./nlc` to refresh queue; `./nlc verify-deep` then `./nlc verify`. On [verify](../../../docs/TERMS.md#verify) fail the human uses **`/verify`** (ADR 0020–0021). Judgment gates: [`docs/nlc/HUMAN-JUDGMENT-GATES.md`](../../../docs/nlc/HUMAN-JUDGMENT-GATES.md).
+8. **Version class:** before ratifying material policy or scope changes, confirm patch / minor / major with the human when unclear — [`.agents/instructions/change-version-class.md`](../../../.agents/instructions/change-version-class.md).
 
 ## Done signals
 

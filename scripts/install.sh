@@ -90,9 +90,10 @@ fi
 if [[ -z "${NLC_SKIP_VERIFY:-}" ]] && [[ -f "${INSTALL_ROOT}/hub/tools/nlc-install-verify.py" ]]; then
   echo "  verify: hub file hashes"
   python3 "${INSTALL_ROOT}/hub/tools/nlc-install-verify.py" "${INSTALL_ROOT}/hub" || {
-    echo "Install could not verify the compiler file fingerprints."
-    echo "  Fix: re-run install from a clean checkout, or repair the hub tree."
-    echo "  Optional: NLC_SKIP_VERIFY=1 only if you accept running an unverified hub."
+    echo "Install could not verify the compiler file fingerprints." >&2
+    echo "  What's wrong: hub files do not match published fingerprints" >&2
+    echo "  Fix: re-run install from a clean checkout, or repair the hub tree." >&2
+    echo "  Optional: NLC_SKIP_VERIFY=1 only if you accept running an unverified hub." >&2
     echo "INSTALL:NOT_MET hub verify failed" >&2
     exit 1
   }

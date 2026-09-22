@@ -23,7 +23,9 @@ def append_record(
 ) -> None:
     if outcome not in VALID_OUTCOMES:
         raise ValueError(f"outcome must be one of {VALID_OUTCOMES}")
-    rel = artifact.replace("\\", "/").lstrip("./")
+    rel = artifact.replace("\\", "/").strip()
+    if rel.startswith("./"):
+        rel = rel[2:]
     nlc = root / ".nlc"
     nlc.mkdir(parents=True, exist_ok=True)
     path = nlc / "gate-records.json"
@@ -47,6 +49,9 @@ def append_record(
         json.dumps({"schema": 1, "records": records}, indent=2) + "\n",
         encoding="utf-8",
     )
+    from nlc_gate_scope import add_scope_path
+
+    add_scope_path(root, rel)
 
 
 def main() -> int:

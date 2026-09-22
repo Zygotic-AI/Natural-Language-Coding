@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "outcome": "Landmine UC10 missing generate provenance.",
+  "goals": ["demo"],
+  "requirements": ["waived:landmine"],
+  "knowledge_domains": ["demo"],
+  "bind_ready": true
+}

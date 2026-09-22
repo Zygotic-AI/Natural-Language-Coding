@@ -192,6 +192,41 @@ def cmd_check_rules(args: argparse.Namespace) -> int:
     return run_tool("check-rule-adoption.py", [str(adopted)])
 
 
+def cmd_rule_coverage(args: argparse.Namespace) -> int:
+    root = project_root(args.project)
+    argv = [str(root)]
+    if args.adr:
+        argv.extend(["--adr", args.adr])
+    if args.tag:
+        argv.extend(["--tag", args.tag])
+    if args.check:
+        argv.append("--check")
+    if args.json:
+        argv.append("--json")
+    return run_tool("nlc_rule_coverage.py", argv)
+
+
+def cmd_rule_marker(args: argparse.Namespace) -> int:
+    argv = ["--id", args.rule_id, "--lang", args.lang]
+    return run_tool("nlc_rule_marker.py", argv)
+
+
+def cmd_goal_scaffold(args: argparse.Namespace) -> int:
+    root = project_root(args.project)
+    argv = ["--root", str(root), "--goal", args.goal]
+    if args.force:
+        argv.append("--force")
+    return run_tool("nlc_goal_scaffold.py", argv)
+
+
+def cmd_rule_emit(args: argparse.Namespace) -> int:
+    root = project_root(args.project)
+    argv = ["--root", str(root), "--goal", args.goal]
+    if args.dry_run:
+        argv.append("--dry-run")
+    return run_tool("nlc_rule_emit.py", argv)
+
+
 def cmd_regen_plan(args: argparse.Namespace) -> int:
     if not args.change:
         return help_regen_plan()
@@ -258,10 +293,45 @@ def cmd_gate_record(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_gate_scope(args: argparse.Namespace) -> int:
+    root = project_root(args.project)
+    from nlc_gate_scope import add_scope_path, load_scope_paths
+
+    if args.list_scope:
+        for rel in load_scope_paths(root):
+            print(rel)
+        return 0
+    if not args.artifact:
+        print("gate-scope needs --add <path> or --list", file=sys.stderr)
+        return 2
+    add_scope_path(root, args.artifact)
+    print(f"gate-scope: MET artifact={args.artifact}")
+    return 0
+
+
+def cmd_contract_break_accept(args: argparse.Namespace) -> int:
+    root = project_root(args.project)
+    from nlc_contract_break_accept import append_acceptance
+
+    append_acceptance(
+        root,
+        schema_path=args.schema,
+        adr_id=args.adr,
+        accepted_by=args.accepted_by,
+        requirement_id=args.requirement,
+    )
+    print(f"contract-break-accept: MET schema={args.schema}")
+    return 0
+
+
 def cmd_adopt_existing(args: argparse.Namespace) -> int:
     root = project_root(args.path)
     code = run_tool("nlc-brownfield-inventory.py", [str(root)])
-    print("\nNext: /interview in your agent")
+    print("\nNext:")
+    print("  ./nlc maintainer goal-scaffold --goal <id>   # ADR 0023 rule markers")
+    print("  ./nlc maintainer rule-emit --goal <id>       # ADR 0023 compiler-owned markers")
+    print("  docs/nlc/RULE-TRACE.md")
+    print("  /interview in your agent")
     return code
 
 
@@ -283,6 +353,54 @@ def cmd_pack_install(args: argparse.Namespace) -> int:
     if args.force:
         argv.append("--force")
     return run_tool("nlc-pack-install.py", argv)
+
+
+def cmd_pack_ingest(args: argparse.Namespace) -> int:
+    argv: list[str] = []
+    if args.source is not None:
+        argv.append(str(args.source))
+    return run_tool("nlc-pack-ingest.py", argv)
+
+
+def cmd_brownfield_migrate(args: argparse.Namespace) -> int:
+    root = project_root(args.project)
+    argv = [str(root)]
+    if args.write_plan:
+        argv.append("--write-plan")
+    if getattr(args, "apply", False):
+        argv.append("--apply")
+    return run_tool("nlc-brownfield-migrate.py", argv)
+
+
+def cmd_rule_runner(args: argparse.Namespace) -> int:
+    root = project_root(args.project)
+    argv = ["--root", str(root)]
+    if args.materialize:
+        argv.append("--materialize")
+    if args.check:
+        argv.append("--check")
+    return run_tool("nlc_rule_runner.py", argv)
+
+
+def cmd_call_tree(args: argparse.Namespace) -> int:
+    root = project_root(args.project)
+    argv = ["--root", str(root)]
+    if args.sync:
+        argv.append("--sync")
+    if args.check:
+        argv.append("--check")
+    return run_tool("nlc_call_tree.py", argv)
+
+
+def cmd_primitive_propose(args: argparse.Namespace) -> int:
+    root = project_root(args.project)
+    argv = ["--name", args.name, "--root", str(root)]
+    return run_tool("nlc_primitive_propose.py", argv)
+
+
+def cmd_language_scan(args: argparse.Namespace) -> int:
+    root = project_root(args.project)
+    return run_tool("nlc_language_scan.py", [str(root)])
 
 
 def main() -> int:
@@ -340,6 +458,9 @@ def main() -> int:
     p_in.add_argument("archive", type=Path, nargs="?", default=None)
     p_in.add_argument("--force", action="store_true")
     p_in.set_defaults(func=cmd_pack_install)
+    p_ing = pack_sub.add_parser("ingest", help="Ingest source docs into pack (v0.2 stub)")
+    p_ing.add_argument("source", type=Path, nargs="?", default=None)
+    p_ing.set_defaults(func=cmd_pack_ingest)
 
     maint = sub.add_parser(
         "maintainer",
@@ -353,6 +474,67 @@ def main() -> int:
     msub.add_parser("check-rules", help="Rule adoption conflicts").set_defaults(
         func=cmd_check_rules
     )
+    p_rc = msub.add_parser(
+        "rule-coverage",
+        help="ADR 0023: list nlc:rule=<id> sites; --check fails if adopted rules lack markers",
+    )
+    p_rc.add_argument("--adr", default=None, help="e.g. 0007 or 0012..0018")
+    p_rc.add_argument("--tag", default=None)
+    p_rc.add_argument("--check", action="store_true")
+    p_rc.add_argument("--json", action="store_true")
+    p_rc.set_defaults(func=cmd_rule_coverage)
+    p_rm = msub.add_parser(
+        "rule-marker",
+        help="ADR 0023: print nlc:rule= receipt line for generate",
+    )
+    p_rm.add_argument("--id", dest="rule_id", required=True)
+    p_rm.add_argument("--lang", default="python")
+    p_rm.set_defaults(func=cmd_rule_marker)
+    p_gsf = msub.add_parser(
+        "goal-scaffold",
+        help="ADR 0023: scaffold goals/<id>/implementation.py with rule markers",
+    )
+    p_gsf.add_argument("--goal", required=True)
+    p_gsf.add_argument("--force", action="store_true")
+    p_gsf.set_defaults(func=cmd_goal_scaffold)
+    p_re = msub.add_parser(
+        "rule-emit",
+        help="ADR 0023: apply compiler-owned nlc:rule= markers after generate",
+    )
+    p_re.add_argument("--goal", required=True)
+    p_re.add_argument("--dry-run", action="store_true")
+    p_re.set_defaults(func=cmd_rule_emit)
+    msub.add_parser(
+        "language-scan",
+        help="UC16 v0: list languages under domain/ and goals/",
+    ).set_defaults(func=cmd_language_scan)
+    p_bm = msub.add_parser(
+        "brownfield-migrate",
+        help="UC15: brownfield migrate plan after inventory",
+    )
+    p_bm.add_argument("--write-plan", action="store_true")
+    p_bm.add_argument("--apply", action="store_true")
+    p_bm.set_defaults(func=cmd_brownfield_migrate)
+    p_rr = msub.add_parser(
+        "rule-runner",
+        help="UC4/UC5: materialize/check rule IR snapshot",
+    )
+    p_rr.add_argument("--materialize", action="store_true")
+    p_rr.add_argument("--check", action="store_true")
+    p_rr.set_defaults(func=cmd_rule_runner)
+    p_ct = msub.add_parser(
+        "call-tree",
+        help="UC20: sync/check verb primitive inventory (Python v1)",
+    )
+    p_ct.add_argument("--sync", action="store_true")
+    p_ct.add_argument("--check", action="store_true")
+    p_ct.set_defaults(func=cmd_call_tree)
+    p_pp = msub.add_parser(
+        "primitive-propose",
+        help="UC12: draft ADR before expanding primitives.md",
+    )
+    p_pp.add_argument("--name", required=True)
+    p_pp.set_defaults(func=cmd_primitive_propose)
     p_regen = msub.add_parser("regen-plan", help="Delta regen plan")
     p_regen.add_argument("--change", default=None, help="kind:id e.g. verb:Invoice.pay")
     p_regen.add_argument("--orchestrate", action="store_true")
@@ -390,12 +572,30 @@ def main() -> int:
         help="UC9: advance after one regen goal completes",
     ).set_defaults(func=cmd_regen_advance)
 
+    p_gs = msub.add_parser(
+        "gate-scope",
+        help="ADR 0010: declare a Planit-generated artifact path (skills, docs, code)",
+    )
+    p_gs.add_argument("--add", dest="artifact", default=None)
+    p_gs.add_argument("--list", dest="list_scope", action="store_true")
+    p_gs.set_defaults(func=cmd_gate_scope)
+
     p_gr = msub.add_parser("gate-record", help="ADR 0010: record PLANIT 6.5 PASS for an artifact")
     p_gr.add_argument("--artifact", required=True)
     p_gr.add_argument("--gate-id", required=True)
     p_gr.add_argument("--outcome", default="PASS")
     p_gr.add_argument("--command", default="")
     p_gr.set_defaults(func=cmd_gate_record)
+
+    p_cba = msub.add_parser(
+        "contract-break-accept",
+        help="ADR 0006: record manager acceptance for breaking published contract",
+    )
+    p_cba.add_argument("--schema", required=True)
+    p_cba.add_argument("--adr", required=True)
+    p_cba.add_argument("--requirement", default=None)
+    p_cba.add_argument("--accepted-by", required=True)
+    p_cba.set_defaults(func=cmd_contract_break_accept)
 
     p_pa = msub.add_parser("plan-audit", help="Install bbp-reviewer plan audit JSON")
     p_pa.add_argument("--from", dest="src", type=Path, required=True)

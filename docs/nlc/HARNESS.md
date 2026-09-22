@@ -8,7 +8,12 @@
 | ---- | ---------------- |
 | [Interview](../TERMS.md#interview) | knowledge-steward `load-knowledge-domain` / `flag-gap` ([`/interview`](../../.agents/skills/interview/SKILL.md)) |
 | [Planit](../TERMS.md#planit) step 6 (before emit) | `./nlc maintainer guide before-generate --scope <topic>` (runs `nlc-before-generate.py` + stamp) — [`nlc-before-generate.md`](../../.agents/skills/planit/references/nlc-before-generate.md) |
-| [Planit](../TERMS.md#planit) step 6.5 (after gate PASS) | `./nlc maintainer gate-record --artifact <path> --gate-id <id> --command "<cmd>"` |
+| [Planit](../TERMS.md#planit) step 6 (scope) ([ADR 0010](../../adrs/0010-gate-after-every-generate.md)) | `./nlc maintainer gate-scope --add <path>` |
+| [Planit](../TERMS.md#planit) step 6.5 (after gate PASS) ([ADR 0010](../../adrs/0010-gate-after-every-generate.md)) | `./nlc maintainer gate-record --artifact <path> --gate-id <id> --command "<cmd>"` — [`GATE-RECORD-BINDER.md`](GATE-RECORD-BINDER.md) |
+| Rule instance audit ([ADR 0023](../../adrs/0023-rule-instance-trace-and-instant-audit-scope.md)) | `./nlc maintainer rule-coverage --adr <id> [--tag <t>] [--check]` — [`RULE-TRACE.md`](RULE-TRACE.md) |
+| Rule receipt emit ([ADR 0023](../../adrs/0023-rule-instance-trace-and-instant-audit-scope.md)) | `./nlc maintainer rule-marker --id <rule_id> [--lang python\|js\|ts]` |
+| Goal implementation scaffold ([ADR 0023](../../adrs/0023-rule-instance-trace-and-instant-audit-scope.md)) | `./nlc maintainer goal-scaffold --goal <id>` |
+| Breaking published contract ([ADR 0006](../../adrs/0006-contract-change-notice.md)) | `./nlc maintainer contract-break-accept --schema <path> --adr <id> --accepted-by 'role:…'` |
 | Session start (hub work) | `bash tools/session-preflight.sh` |
 
 ## [Default-closed](../TERMS.md#default-closed)

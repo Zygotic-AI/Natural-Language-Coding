@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "outcome": "Landmine UC3 bind_ready with pending sync.",
+  "goals": ["demo"],
+  "requirements": ["pack:demo"],
+  "knowledge_domains": ["demo"],
+  "bind_ready": true
+}

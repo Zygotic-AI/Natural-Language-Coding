@@ -3,7 +3,7 @@
 **Describe outcomes and rules in plain language. Get a gated, boundary-shaped system, or a failed compile you can trust.**
 
 - The AI [compiler](docs/TERMS.md#compiler) generates and audits your entire app, one increment at a time, from your natural language functionality descriptions, requirements, policies, and standards.
-- Trace every [requirement](docs/TERMS.md#requirement) to where it is enforced. (Compliance audits: minutes, not weeks of reading code.)
+- Trace every [requirement](docs/TERMS.md#requirement) to where it is enforced—**when shipped**; see [jobs to be done](docs/JOBS-TO-BE-DONE.md) for what is available today vs not yet.
 - [Ship](docs/TERMS.md#ship) only what you intended—multiple internal [audit](docs/TERMS.md#audit) points confirm what's intended is what's built, with final audits to certify the entire build.
 - Easily update or add policies, standards, or even major technology—just update and recompile. (Swap AES-256 for AES-512, or GCP for AWS.)
 - Stop silent drift - problems surface at compile time with evidence—or the build stops.
@@ -75,7 +75,7 @@ python3 tools/ci_fitness.py
 
 Windows: `powershell -File tools/ci-fitness.ps1`.
 
-**[Ship](docs/TERMS.md#ship) a [hub](docs/TERMS.md#hub) version:** at repo root run **`./release`** ([release guide](docs/adoption/RELEASE.md)) — [verify-deep](docs/TERMS.md#verify-deep), version bump, prep, commit, [tag](docs/TERMS.md#tag), and push in one guided flow.
+**[Ship](docs/TERMS.md#hub) version:** **`./release`** (one session; or **`./release prepare`** then **`./release finish`**) — [release guide](docs/adoption/RELEASE.md).
 
 Install layout, version pins, and checksums: [`docs/nlc/README.md`](docs/nlc/README.md) (distribution section).
 

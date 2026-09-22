@@ -104,14 +104,43 @@ def _goal_implementations(root: Path) -> list[Path]:
     return sorted(goals.rglob("implementation.py"))
 
 
+def _artifacts_requiring_gate_receipt(root: Path) -> list[Path]:
+    """ADR 0010 goal implementations; ADR 0023 any scanned file with nlc:rule= markers."""
+    seen: set[str] = set()
+    paths: list[Path] = []
+    for path in _goal_implementations(root):
+        rel = str(path.relative_to(root)).replace("\\", "/")
+        if rel not in seen:
+            seen.add(rel)
+            paths.append(path)
+    from nlc_rule_coverage import scan_markers
+
+    for hit in scan_markers(root):
+        rel = str(hit["file"]).replace("\\", "/")
+        if rel in seen:
+            continue
+        candidate = root / rel
+        if candidate.is_file():
+            seen.add(rel)
+            paths.append(candidate)
+    from nlc_gate_scope import scoped_artifact_paths
+
+    for path in scoped_artifact_paths(root):
+        rel = str(path.relative_to(root)).replace("\\", "/")
+        if rel not in seen:
+            seen.add(rel)
+            paths.append(path)
+    return sorted(paths, key=lambda p: str(p).replace("\\", "/"))
+
+
 def gate_record_blockers(root: Path) -> list[str]:
-    impls = _goal_implementations(root)
+    impls = _artifacts_requiring_gate_receipt(root)
     if not impls:
         return []
     records_path = root / ".nlc" / "gate-records.json"
     if not records_path.is_file():
         return [
-            "goal implementation(s) exist without gate records "
+            "generated artifact(s) exist without gate records "
             "(./nlc maintainer gate-record after each PLANIT 6.5 PASS)"
         ]
     try:
@@ -225,10 +254,78 @@ def produce_package_blockers(root: Path) -> list[str]:
     return [f"produce package invalid: {reason}"]
 
 
+def rule_coverage_blockers(root: Path) -> list[str]:
+    adopted = root / "rules" / "adopted.json"
+    if not adopted.is_file():
+        return []
+    if not _goal_implementations(root) and not (root / "domain").is_dir():
+        return []
+    import subprocess
+    import sys
+
+    script = Path(__file__).resolve().parent / "nlc_rule_coverage.py"
+    proc = subprocess.run(
+        [sys.executable, str(script), str(root), "--check"],
+        cwd=str(root),
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode == 0:
+        return []
+    lines = (proc.stdout or "").strip().splitlines()
+    detail = ""
+    for ln in lines:
+        if "missing marker:" in ln:
+            detail = ln.strip()
+            break
+    if not detail and lines:
+        detail = lines[-1]
+    return [
+        "adopted rules missing nlc:rule=<id> markers in code "
+        f"(./nlc maintainer rule-coverage --check). {detail}".strip()
+    ]
+
+
 def verify_fast_blockers(root: Path) -> list[str]:
     reasons: list[str] = []
     reasons.extend(waiver_blockers(root))
     reasons.extend(rule_conflict_blockers(root))
+    from nlc_contract_change import contract_change_blockers
+    from nlc_uc_blockers import (
+        adr_traceability_blockers,
+        call_tree_blockers,
+        closed_set_blockers,
+        durable_engine_blockers,
+        durable_rule_blockers,
+        goal_bindings_narrow_blockers,
+        interview_packet_blockers,
+        interview_requirements_sync_blockers,
+        non_python_adapter_blockers,
+        primitive_inventory_blockers,
+        proposed_adr_blockers,
+        upstream_hand_patch_blockers,
+        rule_apply_blockers,
+        rule_ir_blockers,
+        rule_runner_blockers,
+    )
+
+    reasons.extend(contract_change_blockers(root))
+    reasons.extend(interview_packet_blockers(root))
+    reasons.extend(interview_requirements_sync_blockers(root))
+    reasons.extend(proposed_adr_blockers(root))
+    reasons.extend(adr_traceability_blockers(root))
+    reasons.extend(rule_ir_blockers(root))
+    reasons.extend(rule_runner_blockers(root))
+    reasons.extend(rule_apply_blockers(root))
+    reasons.extend(closed_set_blockers(root))
+    reasons.extend(durable_engine_blockers(root))
+    reasons.extend(durable_rule_blockers(root))
+    reasons.extend(goal_bindings_narrow_blockers(root))
+    reasons.extend(primitive_inventory_blockers(root))
+    reasons.extend(call_tree_blockers(root))
+    reasons.extend(non_python_adapter_blockers(root))
+    reasons.extend(upstream_hand_patch_blockers(root))
+    reasons.extend(rule_coverage_blockers(root))
     reasons.extend(before_generate_stamp_blockers(root))
     reasons.extend(gate_record_blockers(root))
     reasons.extend(plan_audit_blockers(root))

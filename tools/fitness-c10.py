@@ -84,6 +84,27 @@ def previous_schema(path: Path) -> dict | None:
     return data if isinstance(data, dict) else None
 
 
+def breaking_contract_events(scan_root: Path) -> list[tuple[str, str]]:
+    """Published-contract breaks (ADR 0006), regardless of whether an ADR file exists."""
+    events: list[tuple[str, str]] = []
+    for path in schema_files(scan_root):
+        try:
+            data = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(data, dict) or "version" not in data:
+            continue
+        ver = data["version"]
+        prev = previous_schema(path)
+        if prev is not None:
+            dropped = required_from(prev) - required_from(data)
+            if dropped:
+                events.append((rel(path), "breaking:" + ",".join(sorted(dropped))))
+        if not is_one(ver):
+            events.append((rel(path), f"version:{ver}"))
+    return events
+
+
 def scan_one(scan_root: Path) -> list[tuple[str, str]]:
     adr = has_adr(scan_root)
     violations = []

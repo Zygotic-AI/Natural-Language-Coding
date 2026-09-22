@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "outcome": "Landmine UC16 typescript without adapter.",
+  "goals": ["demo"],
+  "requirements": ["waived:landmine"],
+  "knowledge_domains": ["demo"],
+  "bind_ready": true
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema",
+    "outcome",
+    "goals",
+    "requirements",
+    "knowledge_domains",
+    "bind_ready"
+  ],
+  "properties": {
+    "schema": { "const": 1 },
+    "outcome": { "type": "string", "minLength": 1 },
+    "goals": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "requirements": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "knowledge_domains": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "bind_ready": { "const": true },
+    "recorded_at": { "type": "string" }
+  },
+  "additionalProperties": true
+}

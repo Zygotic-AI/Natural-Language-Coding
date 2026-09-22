@@ -41,6 +41,11 @@ def main() -> int:
         "legacy_files": legacy[:500],
         "legacy_count": len(legacy),
         "note": "Manual BOOTSTRAP.md path; introduce one noun+goal before bulk migrate.",
+        "next_nlc": [
+            "./nlc maintainer goal-scaffold --goal <id> (ADR 0023 markers)",
+            "./nlc maintainer rule-marker --id <rule_id>",
+            "docs/nlc/RULE-TRACE.md",
+        ],
     }
     json.dump(payload, sys.stdout, indent=2)
     sys.stdout.write("\n")
@@ -48,6 +53,11 @@ def main() -> int:
         print(f"BROWNFIELD:INVENTORY count={len(legacy)}", file=sys.stderr)
     else:
         print("BROWNFIELD:INVENTORY count=0", file=sys.stderr)
+    print(
+        "BROWNFIELD:NEXT introduce goals with ./nlc maintainer goal-scaffold; "
+        "emit nlc:rule= per docs/nlc/RULE-TRACE.md",
+        file=sys.stderr,
+    )
     return 0
 
 

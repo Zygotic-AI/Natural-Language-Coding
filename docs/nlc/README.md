@@ -6,6 +6,8 @@ This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler
 
 | You want… | Go to |
 | --------- | ----- |
+| **What [NLC](../TERMS.md#nlc) is for (honest status)** | [`JOBS-TO-BE-DONE.md`](../JOBS-TO-BE-DONE.md) |
+| **ADR → code enforcement tracker** | [`ADR-ENFORCEMENT.md`](../ADR-ENFORCEMENT.md) |
 | **Terms dictionary** | [`TERMS.md`](../TERMS.md) |
 | Install [NLC](../TERMS.md#nlc) | [Root `README.md`](../../README.md) → curl / PowerShell install |
 | **Human menu (`nlc`)** | [`MENU.md`](MENU.md) — one entry, jargon-free, agent prompts |
@@ -32,6 +34,20 @@ This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler
 | [Knowledge domains](../TERMS.md#knowledge-domain) | [`tools/load-knowledge-domain.py`](../../tools/load-knowledge-domain.py), [`tools/nlc-before-generate.py`](../../tools/nlc-before-generate.py) |
 | Rule-shape example (not hub requirements) | [`docs/worked-examples/pan-handling/`](../worked-examples/pan-handling/README.md) |
 | Per-generate [gate](../TERMS.md#gate) receipts (ADR 0010 / R27) | [`GATE-RECORD-BINDER.md`](GATE-RECORD-BINDER.md), [`tools/nlc_gate_record.py`](../../tools/nlc_gate_record.py) |
+| UC product SSOT | [`integrity/uc-product-status.json`](../../integrity/uc-product-status.json), [`fitness-todo-use-cases-ssot.py`](../../tools/fitness-todo-use-cases-ssot.py) |
+
+### `./nlc maintainer` (compile-system v1)
+
+| Command | UC | Notes |
+| ------- | -- | ----- |
+| `rule-runner --materialize` / `--check` | UC4 | `.nlc/rule-ir.snapshot.json` |
+| `rule-emit --goal <id>` | UC5 / 0023 | Compiler-owned markers + provenance |
+| `goal-scaffold --goal <id>` | UC5 / 0023 | Scaffold + stamp gate |
+| `call-tree --sync` / `--check` | UC20 | Python `domain/` inventory |
+| `primitive-propose --name <slug>` | UC12 | Proposed ADR before `primitives.md` |
+| `brownfield-migrate --write-plan` / `--apply` | UC15 | After inventory |
+| `pack-ingest <source.md>` | packs v0.2 | → `.nlc/pack-ingest-candidates.json` |
+| `language-scan` | UC16 | Inventory only until LANGUAGE-SCANNER step 2 |
 
 ## Distribution
 

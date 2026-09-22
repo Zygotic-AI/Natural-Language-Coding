@@ -21,8 +21,23 @@ def _qm():
     return mod
 
 
+def validate_role_separation(data: dict[str, Any]) -> tuple[bool, str]:
+    """ADR 0003 / CS5: producer and final adversarial auditor must differ when both set."""
+    producer = str(data.get("producer_role") or "").strip().casefold()
+    auditor = str(data.get("adversarial_auditor_role") or "").strip().casefold()
+    if producer and auditor and producer == auditor:
+        return (
+            False,
+            "ROLE_SEPARATION: producer_role must differ from adversarial_auditor_role",
+        )
+    return True, ""
+
+
 def validate_produce_package(data: dict[str, Any]) -> tuple[bool, str, str]:
     """Returns (ok, kind, reason) where kind is handoff_refused|fail|ok."""
+    ok_sep, sep_reason = validate_role_separation(data)
+    if not ok_sep:
+        return False, "handoff_refused", sep_reason
     qm = _qm()
     ok, reason = qm.validate_q1_cs9_produce_package(data)
     if not ok:

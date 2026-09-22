@@ -32,6 +32,12 @@ jobs:
           VER="$(python3 -c "import json; print(json.load(open('integrity/nlc-version.json'))['version'])")"
           test "$TAG" = "$VER" || { echo "tag $TAG != integrity/nlc-version.json $VER"; exit 1; }
 
+      - name: Assert release notes file
+        run: |
+          NOTES="docs/adoption/RELEASE-${GITHUB_REF_NAME}.md"
+          test -f "$NOTES" || { echo "missing $NOTES"; exit 1; }
+          python3 tools/nlc_release_notes.py --check --version "${GITHUB_REF_NAME#v}"
+
       - name: Build release tarball
         run: python3 tools/nlc-release-build.py
 
@@ -39,4 +45,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/nlc-*.tar.gz
-          generate_release_notes: true
+          body_path: docs/adoption/RELEASE-${{ github.ref_name }}.md
+          generate_release_notes: false

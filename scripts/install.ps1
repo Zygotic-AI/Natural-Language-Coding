@@ -126,7 +126,8 @@ if (-not $env:NLC_SKIP_VERIFY) {
         $Va += $HubDest
         & $Py @Va
         if ($LASTEXITCODE -ne 0) {
-            Write-Host 'Install could not verify the compiler file fingerprints.'
+            Write-Host 'Install could not verify the compiler file fingerprints.' -ForegroundColor Red
+            Write-Host "  What's wrong: hub files do not match published fingerprints"
             Write-Host '  Fix: re-run install from a clean checkout, or repair the hub tree.'
             Write-Host '  Optional: NLC_SKIP_VERIFY=1 only if you accept running an unverified hub.'
             [Console]::Error.WriteLine('INSTALL:NOT_MET hub verify failed')

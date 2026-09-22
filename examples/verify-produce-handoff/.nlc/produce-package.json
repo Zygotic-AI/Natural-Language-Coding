@@ -1,0 +1,11 @@
+{
+  "package_id": "landmine-incomplete",
+  "quality_evidence": [
+    {
+      "gate_id": "fitness-demo",
+      "outcome": "PASS",
+      "timestamp": "2026-09-20T12:00:00Z"
+    }
+  ],
+  "ssot_exit_status": "complete"
+}
