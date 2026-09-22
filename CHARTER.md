@@ -80,6 +80,8 @@ These letters on [requirement](docs/TERMS.md#requirement) ids are not interchang
 
 An **R** can stand without a matching **C**. A **C** usually restates an **R** as something you can tick on *this* change.
 
+Corpus tags for every published **R** / **C** / **P** id live in [`integrity/rule-corpus.json`](integrity/rule-corpus.json) ([ADR 0024](adrs/0024-nlc-factory-spine.md)): `bba` = emit shape, `nlc` = factory process.
+
 ---
 
 ## 4. Core model
