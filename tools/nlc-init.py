@@ -62,9 +62,21 @@ change class: E
 Released-by:
 """
 
+NOUNS_README = """# nouns/
+
+BBA emit home for domain identity, private state, and adjectives.
+Verbs on these nouns are the only legal mutation. Goals do not write fields.
+"""
+
+GOALS_README = """# goals/
+
+BBA emit home for use-case orchestration.
+Goals call noun verbs and other goals. They never assign noun fields.
+"""
+
 
 def has_product_content(target: Path) -> bool:
-    for sub in ("domain", "goals"):
+    for sub in ("domain", "goals", "nouns"):
         p = target / sub
         if not p.is_dir():
             continue
@@ -92,6 +104,7 @@ def main() -> int:
     target.mkdir(parents=True, exist_ok=True)
     (target / "adrs").mkdir(exist_ok=True)
     (target / "domain").mkdir(exist_ok=True)
+    (target / "nouns").mkdir(exist_ok=True)
     (target / "goals").mkdir(exist_ok=True)
     (target / "knowledge").mkdir(exist_ok=True)
     (target / "rules").mkdir(exist_ok=True)
@@ -101,6 +114,8 @@ def main() -> int:
         README.format(name=args.name), encoding="utf-8"
     )
     (target / "CONFIRM.md").write_text(CONFIRM, encoding="utf-8")
+    (target / "nouns" / "README.md").write_text(NOUNS_README, encoding="utf-8")
+    (target / "goals" / "README.md").write_text(GOALS_README, encoding="utf-8")
     (target / "knowledge" / "facts.json").write_text(
         json.dumps({"facts": []}, indent=2) + "\n",
         encoding="utf-8",
