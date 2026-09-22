@@ -8,6 +8,8 @@
 | ---- | ---------------- |
 | [Interview](../TERMS.md#interview) | knowledge-steward `load-knowledge-domain` / `flag-gap` ([`/interview`](../../.agents/skills/interview/SKILL.md)) |
 | [Planit](../TERMS.md#planit) step 6 (before emit) | `./nlc maintainer guide before-generate --scope <topic>` (runs `nlc-before-generate.py` + stamp) — [`nlc-before-generate.md`](../../.agents/skills/planit/references/nlc-before-generate.md) |
+| [Planit](../TERMS.md#planit) pipeline wire (ADR 0024/0026) — **before emit** | `python3 tools/nlc-pipeline-wire.py --plan <plan.json> --audit <audit.json> --manifest <emit-manifest.json> --action-gates <gates.json>` — runs X1 (action↔plan) + X2 (reverse audit). **FAIL → do not emit.** See [`PIPELINE-WIRING.md`](PIPELINE-WIRING.md). |
+| [Planit](../TERMS.md#planit) pipeline wire (ADR 0024/0026) — **after emit** | same command; now runs X5 (emit audit) + X3 (manifest schema, `unused=na`) + X6 (bound ADR gates, default-closed). **FAIL → stop.** |
 | [Planit](../TERMS.md#planit) step 6 (scope) ([ADR 0010](../../adrs/0010-gate-after-every-generate.md)) | `./nlc maintainer gate-scope --add <path>` |
 | [Planit](../TERMS.md#planit) step 6.5 (after gate PASS) ([ADR 0010](../../adrs/0010-gate-after-every-generate.md)) | `./nlc maintainer gate-record --artifact <path> --gate-id <id> --command "<cmd>"` — [`GATE-RECORD-BINDER.md`](GATE-RECORD-BINDER.md) |
 | Rule instance audit ([ADR 0023](../../adrs/0023-rule-instance-trace-and-instant-audit-scope.md)) | `./nlc maintainer rule-coverage --adr <id> [--tag <t>] [--check]` — [`RULE-TRACE.md`](RULE-TRACE.md) |
@@ -19,6 +21,7 @@
 ## [Default-closed](../TERMS.md#default-closed)
 
 If `nlc-before-generate.py` exits non-zero, **do not generate**. Fix facts, waive with explicit `Assumption:`, or continue [interview](../TERMS.md#interview).
+If `nlc-pipeline-wire.py` exits non-zero at any stage, **do not emit** (before) or **do not proceed** (after). No stage is skippable.
 
 ## CI (app repo)
 
