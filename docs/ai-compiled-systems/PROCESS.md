@@ -28,10 +28,11 @@ Work items only, not an essay. Each item is one of:
 
 If the plan cannot say which, it is not a plan. A standard that never becomes a [rule](../TERMS.md#rule) is not done.
 
+Decompose the plan into **atomic actions** (ADR 0024): each action has `id`, `plan_step_id`, `description`. Before any emit, **X1** validates every action maps to a plan step and every step has an action; **X2** confirms every applicable ADR is bound to an action. Both run through `tools/nlc-pipeline-wire.py`.
 
 ## 3. Product statements
 
-Split the plan into single-step statements one [boundary](../TERMS.md#boundary) can finish.
+Split the plan into single-step statements one **[boundary](../TERMS.md#boundary)** can finish.
 
 Good: `Invoice` verbs `issue`, `applyPayment`, `void`.
 Good: [Goal](../TERMS.md#goal) `RecordBankPayment` calls `applyPayment` only.
@@ -62,6 +63,8 @@ AI emits **one** statement / one artifact (one boundary, or one skill file). BBP
 [Primitive](../TERMS.md#primitive) work inside a verb is calls to [`integrity/primitives.md`](../../integrity/primitives.md) functions, not raw I/O ([ADR 0009](../../adrs/0009-primitive-interior-functions.md)).
 
 Humans do not edit the output to help.
+
+**After emit:** write `emit-manifest.json` beside the artifact (schema [`docs/nlc/emit-manifest.schema.json`](../nlc/emit-manifest.schema.json)). Re-run the pipeline wire: **X5** (every emit has an audit), **X3** (manifest schema, `unused=na`, gate closed), **X6** (gates of ADRs bound to this action). FAIL → stop.
 
 ## 6.5 [Gate](../TERMS.md#gate) that artifact (mandatory)
 
