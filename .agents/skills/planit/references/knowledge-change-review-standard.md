@@ -12,7 +12,7 @@ Normative rules for **maintainer acceptance** before any **add**, **update**, or
 | ----- | ----- | -------- |
 | **Standards** | `*.md` | New policy, extended checklist, deprecation |
 | **Domain knowledge** | `vault metaprompt manifests (authoring only)/**`, `vault metaprompts (authoring only)/profiles/*.md` | Manifest fragments, profile overlays |
-| **Goals / intent** | `vault metaprompts (authoring only)/vault-intents/*.json` | Mission, produces, audit conditions |
+| **Goals / intent** | `vault metaprompts (authoring only)/vault-intents/*.json` | Mission, produces, [audit](../../../../docs/TERMS.md#audit) conditions |
 
 **Does not require KCR** (normal PR review): regenerable views — `prompts/` bounded regions (after intent accepted), `skills/` from materialize, `vault MSG packs (authoring only)/` from manifest.
 
@@ -42,26 +42,26 @@ Normative rules for **maintainer acceptance** before any **add**, **update**, or
 ## 4. Anti-patterns
 
 - Writing `vault standards (authoring only)`, manifest fragments, or `vault-intents/` without an accepted KCR.
-- Treating interview JSON alone as acceptance (KCR is the human-readable acceptance surface).
+- Treating [interview](../../../../docs/TERMS.md#interview) JSON alone as acceptance (KCR is the human-readable acceptance surface).
 - Auto-applying constituent expansion to committed intent without KCR listing proposed paths.
 
 ---
 
 ## 5. Registry linkage
 
-After acceptance, reference the KCR path in the branch (vault authoring only — not applicable in installed skills) entry `## Changes` section for audit traceability.
+After acceptance, reference the KCR path in the branch (vault authoring only — not applicable in installed skills) entry `## Changes` section for [audit](../../../../docs/TERMS.md#audit) traceability.
 
 ---
 
 ## 6. Pull request merge
 
-KCR acceptance is a **Critical** gate before merge when the PR touches durable layers (§1). Reviewers confirm:
+KCR acceptance is a **Critical** [gate](../../../../docs/TERMS.md#gate) before merge when the PR touches durable layers (§1). Reviewers confirm:
 
 1. KCR **Acceptance** block shows explicit approval (not unrelated assent).
 2. Registry entry links the KCR path and lists every impacted durable path.
 3. Registry **assertions** cover normative lines that must not silently drop after merge.
 
-Full merge gate ordering, CI scripts, and AI/determinism expectations: [`vault-pull-request-review-standard.md` (vault-pull-request-review-standard.md — not bundled in this skill). Domain manifests: (vault authoring only — not applicable in installed skills). Runnable evaluation: **`/local-review-pr`** ((vault authoring only — not applicable in installed skills)).
+Full merge [gate](../../../../docs/TERMS.md#gate) ordering, CI scripts, and AI/determinism expectations: [`vault-pull-request-review-standard.md` (vault-pull-request-review-standard.md — not bundled in this skill). Domain manifests: (vault authoring only — not applicable in installed skills). Runnable evaluation: **`/local-review-pr`** ((vault authoring only — not applicable in installed skills)).
 
 ---
 

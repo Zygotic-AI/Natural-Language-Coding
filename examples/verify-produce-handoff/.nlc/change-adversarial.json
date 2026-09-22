@@ -1,0 +1,10 @@
+{
+  "artifact_id": "landmine-demo",
+  "ssot_leaf_ids": ["leaf-demo"],
+  "quality_snapshot": {
+    "opportunities": 1,
+    "ops": 1,
+    "defects": 0,
+    "quality": 1.0
+  }
+}

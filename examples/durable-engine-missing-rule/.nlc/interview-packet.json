@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "outcome": "Landmine UC13 durable without engine rule.",
+  "goals": ["workflow"],
+  "requirements": ["adr:0007"],
+  "knowledge_domains": ["demo"],
+  "bind_ready": true
+}

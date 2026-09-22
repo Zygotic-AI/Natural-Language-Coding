@@ -1,14 +1,14 @@
 # Bounded Context
 
-SSOT for the Bounded Context noun in Boundary-Based Architecture. A Bounded Context is living system-as-is knowledge inside a Boundary — the retrieval key for "how does X work?"
+SSOT for the Bounded Context [noun](../docs/TERMS.md#noun) in [Boundary-Based Architecture](../docs/TERMS.md#bba). A Bounded Context is living system-as-is knowledge inside a [Boundary](../docs/TERMS.md#boundary) — the retrieval key for "how does X work?"
 
-Rationale: charter §4 (nouns own identity, private state, adjectives), §16 (systems model). Related: [`BOUNDARY.md`](BOUNDARY.md), [`GATE.md`](GATE.md).
+Rationale: [charter](../docs/TERMS.md#charter) §4 (nouns own identity, private state, adjectives), §16 (systems model). Related: [`BOUNDARY.md`](BOUNDARY.md), [`GATE.md`](GATE.md).
 
 ---
 
 ## Definition
 
-A **Bounded Context** is a documented body of living knowledge about the current state of a system (or subsystem) inside a Boundary. It answers the question: *how does this actually work right now?*
+A **Bounded Context** is a documented body of living knowledge about the current state of a system (or subsystem) inside a [Boundary](../docs/TERMS.md#boundary). It answers the question: *how does this actually work right now?*
 
 A Bounded Context contains:
 
@@ -20,7 +20,7 @@ A Bounded Context is:
 
 - **Living** — updated when the system changes; reflects as-is, not as-designed or as-decided
 - **Queryable** — structured so agents and humans can retrieve specific knowledge ("what keys correlate an Invoice to its Payments?")
-- **Boundary-scoped** — lives inside one Boundary; cross-boundary knowledge belongs to a higher-level context or an integration document
+- **Boundary-scoped** — lives inside one [Boundary](../docs/TERMS.md#boundary); cross-boundary knowledge belongs to a higher-level context or an integration document
 
 ### Bounded Context ≠ Documentation
 
@@ -34,22 +34,22 @@ A Bounded Context is not prose documentation. It is structured knowledge with de
 
 ---
 
-## Bounded Context ≠ ADR
+## Bounded Context ≠ [ADR](../docs/TERMS.md#adr)
 
-A Bounded Context describes **what is**. An ADR records **what was decided**.
+A Bounded Context describes **what is**. An [ADR](../docs/TERMS.md#adr) records **what was decided**.
 
 | Artifact | Tense | Content | Updates |
 |----------|-------|---------|---------|
 | **Bounded Context** | Present | Mechanisms, keys, adjectives — current as-is state | On every system change that affects the described knowledge |
-| **ADR** | Past | Decision, context, consequences — why X was chosen over Y | Superseded by new ADR if decision reverses; original preserved |
+| **[ADR](../docs/TERMS.md#adr)** | Past | Decision, context, consequences — why X was chosen over Y | Superseded by new [ADR](../docs/TERMS.md#adr) if decision reverses; original preserved |
 
-**Example:** An ADR records "we chose eventual consistency for Invoice→Payment sync" and why. The Bounded Context documents *how* the sync mechanism works today, what keys correlate Invoice to Payment, and what adjectives the sync must preserve.
+**Example:** An [ADR](../docs/TERMS.md#adr) records "we chose eventual consistency for Invoice→Payment sync" and why. The Bounded Context documents *how* the sync mechanism works today, what keys correlate Invoice to Payment, and what adjectives the sync must preserve.
 
 An agent changing the sync mechanism:
 1. Reads the Bounded Context to understand current state
-2. Reads the ADR to understand constraints and rejected alternatives
+2. Reads the [ADR](../docs/TERMS.md#adr) to understand constraints and rejected alternatives
 3. Updates the Bounded Context after the change lands
-4. Writes a new ADR only if the *decision* changes (not just the implementation)
+4. Writes a new [ADR](../docs/TERMS.md#adr) only if the *decision* changes (not just the implementation)
 
 ### ADRs are not obsoleted by Bounded Context
 
@@ -59,19 +59,19 @@ ADRs remain valuable: they explain *why* and record rejected alternatives. Bound
 
 ## Bounded Context ≠ DDD Evans "Bounded Context"
 
-Domain-Driven Design (Evans, 2003) uses "Bounded Context" to mean a **semantic boundary** around a domain model where terms have consistent meaning. The BBA use of the term is related but distinct.
+Domain-Driven Design (Evans, 2003) uses "Bounded Context" to mean a **semantic [boundary](../docs/TERMS.md#boundary)** around a domain model where terms have consistent meaning. The [BBA](../docs/TERMS.md#bba) use of the term is related but distinct.
 
-| Aspect | DDD Evans | BBA |
+| Aspect | DDD Evans | [BBA](../docs/TERMS.md#bba) |
 |--------|-----------|-----|
 | **Primary concern** | Ubiquitous language consistency | Living system-as-is knowledge |
-| **What it bounds** | A domain model and its vocabulary | Mechanisms, identity keys, adjectives inside a Boundary |
+| **What it bounds** | A domain model and its vocabulary | Mechanisms, identity keys, adjectives inside a [Boundary](../docs/TERMS.md#boundary) |
 | **Purpose** | Prevent semantic drift across models | Enable retrieval of "how does X work?" |
-| **Lives in** | Conceptual modeling; may span code and team boundaries | Inside a declared BBA Boundary |
-| **Relationship to Boundary** | Not the same concept | Always inside a Boundary |
+| **Lives in** | Conceptual modeling; may span code and team boundaries | Inside a declared [BBA](../docs/TERMS.md#bba) [Boundary](../docs/TERMS.md#boundary) |
+| **Relationship to [Boundary](../docs/TERMS.md#boundary)** | Not the same concept | Always inside a [Boundary](../docs/TERMS.md#boundary) |
 
-**Why "Bounded Context" in BBA?** The term signals that the knowledge is *scoped* — it belongs to a specific Boundary and does not claim authority outside it. A Bounded Context does not define the One True Model; it documents how *this* Boundary's system works right now.
+**Why "Bounded Context" in [BBA](../docs/TERMS.md#bba)?** The term signals that the knowledge is *scoped* — it belongs to a specific [Boundary](../docs/TERMS.md#boundary) and does not claim authority outside it. A Bounded Context does not define the One True Model; it documents how *this* [Boundary](../docs/TERMS.md#boundary)'s system works right now.
 
-BBA practitioners may also use DDD Bounded Contexts at the modeling layer. The two concepts coexist: a DDD Bounded Context defines semantic scope for a domain model; a BBA Bounded Context documents living as-is knowledge inside a BBA Boundary.
+[BBA](../docs/TERMS.md#bba) practitioners may also use DDD Bounded Contexts at the modeling layer. The two concepts coexist: a DDD Bounded Context defines semantic scope for a domain model; a [BBA](../docs/TERMS.md#bba) Bounded Context documents living as-is knowledge inside a [BBA](../docs/TERMS.md#bba) [Boundary](../docs/TERMS.md#boundary).
 
 ---
 
@@ -81,7 +81,7 @@ A Bounded Context document declares:
 
 | Section | Contents | Required? |
 |---------|----------|-----------|
-| **Identity** | Name of the context, the Boundary it belongs to, one-line purpose | Yes |
+| **Identity** | Name of the context, the [Boundary](../docs/TERMS.md#boundary) it belongs to, one-line purpose | Yes |
 | **Mechanisms** | How the system works: data flows, components, interactions, algorithms | Yes |
 | **Identity Keys** | How entities are identified: primary keys, external references, correlation IDs | Yes |
 | **Correlation Keys** | How work items / events trace through the system: trace IDs, request IDs, saga keys | When applicable |
@@ -125,7 +125,7 @@ Adjectives are expressed as predicates:
 - "Payment.amount + Payment.refunds ≤ Payment.authorized"
 - "Every OrderLine references exactly one Product that exists"
 
-Adjectives are not aspirational. They describe what the system currently enforces. If an adjective is not enforced, it is not an adjective — it is a wish.
+Adjectives are not aspirational. They describe what the system currently enforces. If an [adjective](../docs/TERMS.md#adjective) is not enforced, it is not an [adjective](../docs/TERMS.md#adjective) — it is a wish.
 
 ---
 
@@ -151,18 +151,18 @@ A Bounded Context is **living** — it must reflect the current system.
 
 ### Update triggers
 
-| Event | Action |
+| Event | [Action](../docs/TERMS.md#action) |
 |-------|--------|
 | Mechanism changes (new component, altered flow) | Update Mechanisms section |
 | New or changed identifier | Update Identity/Correlation Keys |
-| Adjective added, removed, or relaxed | Update Adjectives section |
-| System change lands | Verify and update "Last verified" date |
+| [Adjective](../docs/TERMS.md#adjective) added, removed, or relaxed | Update Adjectives section |
+| System change lands | [Verify](../docs/TERMS.md#verify) and update "Last verified" date |
 
-### Staleness is a defect
+### Staleness is a [defect](../docs/TERMS.md#defect)
 
-A Bounded Context that does not match the running system is incorrect. Staleness is not "technical debt to address later" — it is a defect that degrades the retrieval key.
+A Bounded Context that does not match the running system is incorrect. Staleness is not "technical debt to address later" — it is a [defect](../docs/TERMS.md#defect) that degrades the retrieval key.
 
-**Remediation:** When a system change lands without updating the Bounded Context, the change is incomplete. The produce package for a system change should include Bounded Context updates when the change affects mechanisms, keys, or adjectives.
+**Remediation:** When a system change lands without updating the Bounded Context, the change is incomplete. The [produce package](../docs/TERMS.md#produce-package) for a system change should include Bounded Context updates when the change affects mechanisms, keys, or adjectives.
 
 ---
 
@@ -186,11 +186,11 @@ For changes that add or modify Bounded Contexts:
 
 ## Cross-references
 
-- Charter §4: Core model — nouns own identity, private state, adjectives
-- Charter §4.1: Noun structure — the retrieval key for "how does X work?"
-- Charter §16: Systems model — agent nouns, boundary artifacts
-- [`BOUNDARY.md`](BOUNDARY.md): Boundary noun — stages that own adjectives
-- [`GATE.md`](GATE.md): Gate noun — binary enforcement checkpoints
-- [`PRINCIPLES.md`](PRINCIPLES.md): P4 — hard boundary I/O declarations
+- [Charter](../docs/TERMS.md#charter) §4: Core model — nouns own identity, private state, adjectives
+- [Charter](../docs/TERMS.md#charter) §4.1: [Noun](../docs/TERMS.md#noun) structure — the retrieval key for "how does X work?"
+- [Charter](../docs/TERMS.md#charter) §16: Systems model — [agent nouns](../docs/TERMS.md#agent-noun), [boundary](../docs/TERMS.md#boundary) artifacts
+- [`BOUNDARY.md`](BOUNDARY.md): [Boundary](../docs/TERMS.md#boundary) [noun](../docs/TERMS.md#noun) — stages that own adjectives
+- [`GATE.md`](GATE.md): [Gate](../docs/TERMS.md#gate) [noun](../docs/TERMS.md#noun) — binary enforcement checkpoints
+- [`PRINCIPLES.md`](PRINCIPLES.md): P4 — hard [boundary](../docs/TERMS.md#boundary) I/O declarations
 - [`../DESCRIBE.md`](../DESCRIBE.md): Project memory file — durable facts for agents
 - [`../adrs/`](../adrs/): Decision records — why X was chosen over Y

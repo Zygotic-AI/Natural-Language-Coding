@@ -1,12 +1,12 @@
 # A-R6
 
-- Requirement: `R6`
-- Outcome: **met** | **not met** only
-- Gate: `tools/fitness-verb-path.py`
+- [Requirement](../../docs/TERMS.md#requirement): `R6`
+- Outcome: **[met](../../docs/TERMS.md#met)** | **not [met](../../docs/TERMS.md#met)** only
+- [Gate](../../docs/TERMS.md#gate): `tools/fitness-verb-path.py`
 
 ## Statement
 
-The only legal mutation of a noun is a public verb on that noun.
+The only legal mutation of a [noun](../../docs/TERMS.md#noun) is a public verb on that [noun](../../docs/TERMS.md#noun).
 
 ## V1 bind
 

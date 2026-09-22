@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "items": [
+    {
+      "id": "verify-waiting",
+      "stage": "verify",
+      "label": "Verify before prod",
+      "next": "./nlc verify  (if fail: /verify in your agent)",
+      "priority": 30
+    },
+    {
+      "id": "ship-unsigned",
+      "stage": "maintain",
+      "label": "Release sign-off not recorded",
+      "next": "./nlc ship-check when CONFIRM.md is signed",
+      "priority": 50
+    }
+  ]
+}

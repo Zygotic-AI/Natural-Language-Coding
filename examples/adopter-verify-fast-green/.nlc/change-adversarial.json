@@ -1,0 +1,10 @@
+{
+  "artifact_id": "adopter-verify-fast-green",
+  "ssot_leaf_ids": ["demo-goal"],
+  "quality_snapshot": {
+    "opportunities": 1,
+    "ops": 1,
+    "defects": 0,
+    "quality": 1.0
+  }
+}

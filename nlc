@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Natural Language Coding — run from this repo root: ./nlc
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+exec python3 "${ROOT}/tools/nlc.py" --project "${ROOT}" "$@"

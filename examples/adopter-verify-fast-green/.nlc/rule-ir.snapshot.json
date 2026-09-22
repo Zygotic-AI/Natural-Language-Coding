@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "rules": [
+    {
+      "rule_id": "demo-verb-only",
+      "adr_id": "0023",
+      "effect": "forbid",
+      "obligation": null,
+      "match": {
+        "tags_all": ["demo"],
+        "primitive": "write"
+      },
+      "precedence_tier": "project",
+      "precedence_rank": 1
+    }
+  ]
+}

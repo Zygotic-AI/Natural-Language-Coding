@@ -1,14 +1,14 @@
-# Quality Architect — Verbs
+# [Quality](../../docs/TERMS.md#quality) Architect — Verbs
 
-Contracted verbs for the quality-architect agent noun. Each verb has input contract, output contract, and failure mode.
+Contracted verbs for the quality-architect [agent noun](../../docs/TERMS.md#agent-noun). Each verb has input [contract](../../docs/TERMS.md#contract), output [contract](../../docs/TERMS.md#contract), and failure mode.
 
 ---
 
 ## preflight-fitness-handoff
 
-Check whether a produce handoff is ready for fitness scoring.
+Check whether a produce [handoff](../../docs/TERMS.md#handoff) is ready for fitness scoring.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -46,7 +46,7 @@ input:
                   type: string
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -100,7 +100,7 @@ error:
 
 Score a change artifact against fitness criteria. Precondition: preflight status is `ready`.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -133,7 +133,7 @@ input:
         description: Exit status from preflight (required for MET)
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -210,7 +210,7 @@ error:
       type: string
 ```
 
-**Note:** `PREFLIGHT_NOT_READY` error is returned if `preflight_status` is not `ready`. This enforces the default-closed handoff: no scoring without preflight pass. `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; scoring refuses MET without SSOT exit evidence (S8, P-020). `QUALITY_EVIDENCE_MISSING` error is returned if quality evidence (gate receipts) is absent; scoring refuses MET without quality evidence (Q1).
+**Note:** `PREFLIGHT_NOT_READY` error is returned if `preflight_status` is not `ready`. This enforces the [default-closed](../../docs/TERMS.md#default-closed) [handoff](../../docs/TERMS.md#handoff): no scoring without preflight pass. `SSOT_EVIDENCE_MISSING` error is returned if `ssot_leaf_ids` or `ssot_exit_status` are absent; scoring refuses [MET](../../docs/TERMS.md#met) without [SSOT exit evidence](../../docs/TERMS.md#ssot-exit-evidence) (S8, P-020). `QUALITY_EVIDENCE_MISSING` error is returned if [quality evidence](../../docs/TERMS.md#quality-evidence) (gate receipts) is absent; scoring refuses [MET](../../docs/TERMS.md#met) without [quality evidence](../../docs/TERMS.md#quality-evidence) (Q1).
 
 ---
 
@@ -224,4 +224,4 @@ The following verbs are **explicitly excluded** from quality-architect:
 - `approve` — grant final approval
 - `implement` — write the artifact being assessed
 
-Quality Architect performs fitness checks and gates. Ship decisions and production belong to other roles.
+[Quality](../../docs/TERMS.md#quality) Architect performs fitness checks and gates. [Ship](../../docs/TERMS.md#ship) decisions and production belong to other roles.

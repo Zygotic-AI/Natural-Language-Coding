@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "algorithm": "sha256",
+  "recorded_at": "2026-09-21T01:07:13Z",
+  "hub": "0.1.0",
+  "files": {
+    "rules/adopted.json": "489eb9cb8fda62f84e411c075029236637cd935eb3f432d2533608873ba3aa9c",
+    "goals/demo/implementation.py": "2e9424ab5dec6cf77ed0dd603caaeb31f32468d1310af306d47fc739ecb30fa7"
+  }
+}

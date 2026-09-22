@@ -1,14 +1,14 @@
-# Audit A-Q3 — Quality snapshot recorded at boundary exit
+# [Audit](../../docs/TERMS.md#audit) A-Q3 — [Quality snapshot](../../docs/TERMS.md#quality-snapshot) recorded at [boundary](../../docs/TERMS.md#boundary) exit
 
-Requirement: Q3
+[Requirement](../../docs/TERMS.md#requirement): Q3
 
 ## Criterion
 
-Every boundary exit that advances work must record a quality snapshot.
+Every [boundary](../../docs/TERMS.md#boundary) exit that advances work must record a [quality snapshot](../../docs/TERMS.md#quality-snapshot).
 
-## Met when
+## [Met](../../docs/TERMS.md#met) when
 
-Boundary completion artifact includes `quality_snapshot` with all four required fields:
+[Boundary](../../docs/TERMS.md#boundary) completion artifact includes `quality_snapshot` with all four required fields:
 
 - `opportunities` (integer ≥ 0)
 - `ops` (integer ≥ 0)
@@ -17,7 +17,7 @@ Boundary completion artifact includes `quality_snapshot` with all four required 
 
 AND `ops + defects = opportunities` (consistency check).
 
-## Not met when
+## Not [met](../../docs/TERMS.md#met) when
 
 - `quality_snapshot` missing from completion artifact
 - Any of the four required fields missing
@@ -33,9 +33,9 @@ AND `ops + defects = opportunities` (consistency check).
 
 ## Failure mode
 
-Boundary exit blocked; completion artifact rejected as incomplete.
+[Boundary](../../docs/TERMS.md#boundary) exit blocked; completion artifact rejected as incomplete.
 
 ## Cross-references
 
-- [`../QUALITY_METRIC.md`](../QUALITY_METRIC.md) — Quality Metric SSOT
-- [`../GATE.md`](../GATE.md) — Gate definition
+- [`../QUALITY_METRIC.md`](../QUALITY_METRIC.md) — [Quality](../../docs/TERMS.md#quality) Metric SSOT
+- [`../GATE.md`](../GATE.md) — [Gate](../../docs/TERMS.md#gate) definition

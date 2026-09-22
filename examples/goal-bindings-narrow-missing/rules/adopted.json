@@ -1,0 +1,13 @@
+{
+  "adoptions": [
+    {
+      "rule_id": "r1",
+      "adr_id": "0023",
+      "precedence_tier": "project",
+      "precedence_rank": 1,
+      "match": { "tags_all": ["a"], "primitive": "write" },
+      "effect": "forbid",
+      "obligation": null
+    }
+  ]
+}

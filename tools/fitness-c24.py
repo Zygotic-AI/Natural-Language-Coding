@@ -17,6 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import markdown_plain  # noqa: E402
 import product_tree  # noqa: E402
 
 NOTES = ("PROPOSAL.md", "CONFIRM.md")
@@ -43,7 +44,7 @@ def scan_one(scan_root: Path) -> list[tuple[str, str]]:
         return []
     missing = []
     for path in notes:
-        text = path.read_text(errors="replace")
+        text = markdown_plain.strip_links(path.read_text(errors="replace"))
         if CLASS.search(text) is None:
             continue
         m = RATIFIED.search(text)

@@ -1,0 +1,5 @@
+{
+  "version": "1",
+  "type": "object",
+  "required": ["id", "legacy_field"]
+}

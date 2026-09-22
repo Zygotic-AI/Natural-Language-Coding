@@ -1,3 +1,3 @@
 # Findings
 
-- [ ] Goal writes invoice.status directly
+- [ ] [Goal](../../docs/TERMS.md#goal) writes invoice.status directly

@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "artifacts": {
+    "goals/demo/implementation.py": {
+      "tool": "rule-emit",
+      "at": "2026-09-20T20:15:00Z",
+      "prescribed_path": true
+    }
+  }
+}

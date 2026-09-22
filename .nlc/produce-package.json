@@ -1,0 +1,19 @@
+{
+  "package_id": "hub-compile",
+  "quality_evidence": [
+    {
+      "gate_id": "ci_fitness",
+      "outcome": "PASS",
+      "timestamp": "2026-09-20T20:00:00Z",
+      "evidence_path": "tools/ci_fitness.py"
+    }
+  ],
+  "ssot_leaf_ids": ["hub-compile"],
+  "ssot_exit_status": "verify-deep",
+  "quality_snapshot": {
+    "opportunities": 1,
+    "ops": 1,
+    "defects": 0,
+    "quality": 1.0
+  }
+}

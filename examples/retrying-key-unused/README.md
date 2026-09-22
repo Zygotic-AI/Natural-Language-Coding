@@ -1,1 +1,1 @@
-Specimen. Designed red on C15 (call passes the key; the verb never uses it). Not a product.
+[Specimen](../../docs/TERMS.md#specimen). Designed red on C15 (call passes the key; the verb never uses it). Not a product.

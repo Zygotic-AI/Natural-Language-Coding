@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NLC work queue (human dashboard)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "items"],
+  "properties": {
+    "schema": { "type": "integer", "const": 1 },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "next"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "next": { "type": "string" },
+          "stage": {
+            "type": "string",
+            "enum": ["requirements", "build", "verify", "maintain"]
+          },
+          "section": { "type": "integer", "minimum": 1 }
+        }
+      }
+    }
+  }
+}

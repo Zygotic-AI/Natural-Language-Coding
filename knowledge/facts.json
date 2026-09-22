@@ -1,0 +1,18 @@
+{
+  "facts": [
+    {
+      "id": "KF-invoice-payments",
+      "scope": "invoice",
+      "statement": "An invoice receives payments against its balance.",
+      "status": "confirmed",
+      "sources": ["examples/invoice-correct"]
+    },
+    {
+      "id": "KF-pan-scope",
+      "scope": "pii",
+      "statement": "Primary account number (PAN) is in scope for card-not-present flows in this practice hub.",
+      "status": "confirmed",
+      "sources": ["adrs/0007-tags-primitives-reduced-adrs.md"]
+    }
+  ]
+}

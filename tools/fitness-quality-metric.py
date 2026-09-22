@@ -234,16 +234,22 @@ def run_fixture_tests() -> list[tuple[str, str, bool, str]]:
         data = load_fixture(fixture_path)
         
         if "produce-package" in fixture_name:
-            passed, reason = validate_q1_cs9_produce_package(data)
+            sys.path.insert(0, str(ROOT / "tools"))
+            from nlc_produce_package import validate_produce_package
+
+            passed_pkg, _kind, reason = validate_produce_package(data)
+            passed = passed_pkg
             if is_valid_fixture:
                 results.append(("Q1", fixture_name, passed, reason))
                 results.append(("CS9", fixture_name, passed, reason))
             else:
                 expected_fail = not passed
-                results.append(("Q1", fixture_name, expected_fail, 
+                results.append(("Q1", fixture_name, expected_fail,
                                f"expected fail: {reason}" if expected_fail else f"should have failed: {reason}"))
                 results.append(("CS9", fixture_name, expected_fail,
                                f"expected fail: {reason}" if expected_fail else f"should have failed: {reason}"))
+            if "self-audit" in fixture_name and not is_valid_fixture:
+                results.append(("CS5", fixture_name, not passed, reason))
         
         if "adversarial" in fixture_name:
             passed, reason = validate_q2_adversarial(data)

@@ -15,8 +15,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import product_tree  # noqa: E402
 import changeset  # noqa: E402
+import markdown_plain  # noqa: E402
+import product_tree  # noqa: E402
 
 NOTES = ("PROPOSAL.md", "CONFIRM.md")
 CLASS = re.compile(r"change\s*class\s*[:*\s]*([A-F])\b", re.I)
@@ -44,7 +45,7 @@ def scan_one(scan_root: Path) -> list[tuple[str, str]]:
     changed = changeset.changed_paths(scan_root, ROOT)
     charter_touch = bool(changed) and any(changeset.is_charter_path(c) for c in changed)
     for path in notes:
-        text = path.read_text(errors="replace")
+        text = markdown_plain.strip_links(path.read_text(errors="replace"))
         m = CLASS.search(text)
         if m is None:
             missing.append((rel(path), "missing-change-class"))

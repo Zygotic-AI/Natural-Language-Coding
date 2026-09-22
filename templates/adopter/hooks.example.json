@@ -1,0 +1,15 @@
+{
+  "schema": 2,
+  "note": "Harness hooks v2 — example only. Copy into your harness when supported; hub does not ship active Cursor wiring.",
+  "menu_actions": {
+    "interview": "/interview",
+    "planit": "/planit",
+    "verify": "/verify"
+  },
+  "uc18_before_generate": {
+    "documented_in": "docs/nlc/HARNESS.md",
+    "agent_command": "./nlc maintainer guide before-generate --scope <topic>",
+    "optional_cursor_preToolUse": "Deny writes under goals/ until .nlc/before-generate-stamp.json is fresh (see hub HARNESS.md)."
+  },
+  "human_judgment": "docs/nlc/HUMAN-JUDGMENT-GATES.md"
+}

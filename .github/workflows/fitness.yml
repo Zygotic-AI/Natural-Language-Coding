@@ -14,3 +14,6 @@ jobs:
           python-version: "3.12"
       - name: Hub fitness suite
         run: bash tools/ci-fitness.sh
+
+      - name: NLC verify (policy + fingerprints)
+        run: python3 tools/nlc.py --project . verify

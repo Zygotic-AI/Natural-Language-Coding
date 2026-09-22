@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Zygotic-AI/Natural-Language-Coding/integrity/schemas/nlc-pack-manifest.schema.json",
+  "title": "NLC requirement pack manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "name", "version", "description"],
+  "properties": {
+    "schema": { "type": "integer", "const": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "description": { "type": "string" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "includes": {
+      "type": "object",
+      "properties": {
+        "adrs": { "type": "array", "items": { "type": "string" } },
+        "rules": { "type": "string" },
+        "knowledge_facts": { "type": "string" }
+      }
+    }
+  }
+}

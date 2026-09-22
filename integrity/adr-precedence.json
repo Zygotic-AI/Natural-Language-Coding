@@ -1,0 +1,4 @@
+{
+  "tiers": ["charter", "regulatory", "org", "project", "local"],
+  "default_tier": "project"
+}

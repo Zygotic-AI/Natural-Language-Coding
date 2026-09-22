@@ -1,0 +1,2 @@
+def workflow() -> None:
+    pass

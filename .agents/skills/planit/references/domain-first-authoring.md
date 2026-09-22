@@ -27,7 +27,7 @@ When a maintainer needs a prompt or skill for use in **another repository**:
 1. **Discover** — Search `vault standards (authoring only)`, `vault metaprompt manifests (authoring only)/`, `vault metaprompts (authoring only)/vault-intents/`, and existing `prompts/` (`uses_standards`, `rebuild_from`, grep). Reuse before authoring.
 2. **Extend knowledge** — Put net-new facts in the correct durable layer:
    - Org-wide convention → `<topic>-standard.md` (or extend an existing standard).
-   - Domain/product workflow → MSG: **`/local-msg-domain-pipeline`** ((vault authoring only — not applicable in installed skills)), not a one-off paragraph in a prompt.
+   - Domain/product [workflow](../../../../docs/TERMS.md#workflow) → MSG: **`/local-msg-domain-pipeline`** ((vault authoring only — not applicable in installed skills)), not a one-off paragraph in a prompt.
    - Background only → `reference/` when not yet normative.
 3. **Compose** — Author a **thin** prompt under `prompts/<category>/` that cites constituents in `rebuild_from` and `uses_standards`; inline only **minimum operative** excerpts in bounded paste regions (vault-published-prompt-contract (not bundled in this skill) §11).
 4. **Validate** — Run once in the target application repo (bounded paste or skilletted `/<id>`). This is a **test**, not where knowledge should live.
@@ -41,7 +41,7 @@ When a maintainer needs a prompt or skill for use in **another repository**:
 | Learning type | Update first | Then |
 | ------------- | ------------ | ---- |
 | Org-wide policy or repo convention | `*.md` | **standard-ripple** ((vault authoring only — not applicable in installed skills)) |
-| Product/domain workflow, actors, artifacts | Domain manifest (`/local-msg-domain-pipeline` refresh) | `finish-pack.sh` or `rebuild-all-packs.sh` |
+| Product/domain [workflow](../../../../docs/TERMS.md#workflow), actors, artifacts | Domain manifest (`/local-msg-domain-pipeline` refresh) | `finish-pack.sh` or `rebuild-all-packs.sh` |
 | Prompt wording or pacing only | `prompts/` file | Bump `updated` / `version` |
 | New multi-stage flow | Stage bodies under `prompts/<category>/` + map in `prompts/pipelines/` | Skillet to one outcome skill if org-wide |
 
@@ -52,7 +52,7 @@ When a maintainer needs a prompt or skill for use in **another repository**:
 - **Prompt-first authoring** — Drafting long runnable prose under `prompts/` before checking whether the fact belongs in `vault standards (authoring only)` or a domain manifest.
 - **Knowledge trapped in prompts** — Embedding durable domain or policy facts only inside bounded paste regions with no `rebuild_from` path to a standard or manifest.
 - **Paste-copy-tweak loops** — Iterating only on prompt text without back-propagating learnings to durable layers.
-- **Consumer-repo shortcuts for vault work** — Suggesting ad-hoc `.cursor/prompts/` or `/make-a-prompt` in an application repo when the maintainer goal is **org-wide, reviewed** knowledge in this vault (repo-local authoring is for **team-only** outcomes per [`repository-agent-local-artifacts.md` (repository-agent-local-artifacts.md — not bundled in this skill) §6).
+- **Consumer-repo shortcuts for vault work** — Suggesting ad-hoc `.cursor/prompts/` or `/make-a-prompt` in an application repo when the maintainer [goal](../../../../docs/TERMS.md#goal) is **org-wide, reviewed** knowledge in this vault (repo-local authoring is for **team-only** outcomes per [`repository-agent-local-artifacts.md` (repository-agent-local-artifacts.md — not bundled in this skill) §6).
 - **Skipping ripple** — Changing a standard without running **standard-ripple** or checking dependents via `uses_standards` / `rebuild_from`.
 
 ---
@@ -66,9 +66,9 @@ When a maintainer needs a prompt or skill for use in **another repository**:
 | **Unified durable authoring (preferred)** | **`/local-author-or-extend-knowledge`** | KCR + vault-intent + prompt + parity |
 | Add or refresh domain knowledge | **`/local-msg-domain-pipeline`** | KCR before manifest promotion |
 | Induct external prompt or skill | **`/local-induct-skill-or-prompt`** (sub-procedure; prefer **`/local-author-or-extend-knowledge`**) | Full KCR + intent when invoked directly |
-| Post-change hygiene | **`/local-vault-maintainer-pipeline`** | Ripple, normalize, audit — **not** net-new authoring |
+| Post-change hygiene | **`/local-vault-maintainer-pipeline`** | Ripple, normalize, [audit](../../../../docs/TERMS.md#audit) — **not** net-new authoring |
 | Standard changed → update dependents | **vault-maintainer-pipeline** _standard-ripple_ | KCR first if **editing** the standard file |
-| Catalog / contract audit | **vault-maintainer-pipeline** _full-audit_ | Regenerable views; no KCR for prompt-only fixes |
+| Catalog / [contract](../../../../docs/TERMS.md#contract) [audit](../../../../docs/TERMS.md#audit) | **vault-maintainer-pipeline** _full-audit_ | Regenerable views; no KCR for prompt-only fixes |
 
 **Sub-procedures** (do not use as front door for net-new consumer outcomes):
 
@@ -109,7 +109,7 @@ The maintainer skills append to it automatically; the loop is:
 1. **Resolve** this branch's entry — `node vault metaprompt scripts (authoring only)/registry-active.mjs` (0 → create from (vault authoring only — not applicable in installed skills); 1 → reuse; >1 → pick).
 2. **Append** the change (what + why) under `## Changes`, and any **assertions** — machine-checkable claims (`contains` / `regex` / `absent`) about canonical files that must not silently disappear.
 3. **Attribute** — set `domains` and `reviewers` from [`../domain-owners.yml` (vault path — not bundled in installed skills); reviewers are auto-assigned on the PR.
-4. **Verify** — CI runs `node vault metaprompt scripts (authoring only)/verify-registry-assertions.mjs`; a broken assertion fails the build, pinpointing when/where a regression entered.
+4. **[Verify](../../../../docs/TERMS.md#verify)** — CI runs `node vault metaprompt scripts (authoring only)/verify-registry-assertions.mjs`; a broken assertion fails the build, pinpointing when/where a regression entered.
 
 Pull request merge gates (CI, KCR, consumer smoke, reviewer routing): [`vault-pull-request-review-standard.md` (vault-pull-request-review-standard.md — not bundled in this skill). Domain manifests: (vault authoring only — not applicable in installed skills). Before open PR: **`/local-review-pr`** ((vault authoring only — not applicable in installed skills)).
 
@@ -124,4 +124,4 @@ its assertions retire automatically). Schema and rules: (vault authoring only �
 - [`vault-pull-request-review-standard.md` (vault-pull-request-review-standard.md — not bundled in this skill) — Merge gates for PRs to `main`
 - (vault authoring only — not applicable in installed skills) — Domain-first authoring (agent policy)
 - (vault authoring only — not applicable in installed skills) — Authoritative vs composed surfaces
-- [`prompts/README.md`](information-completion-contract.md) — Frontmatter and paste contract
+- [`prompts/README.md`](information-completion-contract.md) — Frontmatter and paste [contract](../../../../docs/TERMS.md#contract)

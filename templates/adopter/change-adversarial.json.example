@@ -1,0 +1,11 @@
+{
+  "artifact_id": "change-id",
+  "ssot_leaf_ids": ["goal-or-board-leaf-id"],
+  "quality_snapshot": {
+    "opportunities": 1,
+    "ops": 1,
+    "defects": 0,
+    "quality": 1.0
+  },
+  "note": "Install after bbp-reviewer execution audit; refresh when compile artifacts change."
+}

@@ -10,19 +10,19 @@ Normative rules for finding **one preventive change** after a failure — in **t
 
 ---
 
-## 1. When to run RCA
+## 1. When to run [RCA](../../../../docs/TERMS.md#rca)
 
-Run RCA **before** declaring a failure handled, **before** passing work downstream, and **before** treating a workaround as done.
+Run [RCA](../../../../docs/TERMS.md#rca) **before** declaring a failure handled, **before** passing work downstream, and **before** treating a workaround as done.
 
 | Trigger | Examples |
 | ------- | -------- |
-| **Failed gate** | CI red, validator non-zero exit, link check failure, pre-commit hook failure |
-| **Recurring defect** | Same class of failure twice in a sprint or branch |
-| **Incident** | Production or customer-impacting error, security event, data integrity issue |
+| **Failed [gate](../../../../docs/TERMS.md#gate)** | CI red, validator non-zero exit, link check failure, pre-commit hook failure |
+| **Recurring [defect](../../../../docs/TERMS.md#defect)** | Same class of failure twice in a sprint or branch |
+| **Incident** | Production or customer-impacting error, security event, data [integrity](../../../../docs/TERMS.md#integrity) issue |
 | **Regression** | Behavior that worked on a prior commit or release |
 | **Agent/session stall** | Repeated fix attempts without passing verification |
 
-**Skip RCA** only when the failure is **trivial and fully understood** (typo in an uncommitted local edit you just fixed) — still state the one preventive change in chat in one sentence.
+**Skip [RCA](../../../../docs/TERMS.md#rca)** only when the failure is **trivial and fully understood** (typo in an uncommitted local edit you just fixed) — still state the one preventive change in chat in one sentence.
 
 ---
 
@@ -34,21 +34,21 @@ Run RCA **before** declaring a failure handled, **before** passing work downstre
 | **Symptom** | What you noticed first (red CI, exception, user report). May differ from the earliest preventable point. |
 | **Contributing factor** | Something that made the failure more likely or worse; **not** sufficient alone to answer the core question. |
 | **Root (the one thing)** | The **single** change that would have made this **exact error condition** impossible under the same inputs and environment, per §3. |
-| **Output defect** | The failing artifact you see first: code, YAML, config, test result, deployed state. A **symptom** until upstream process is ruled out. |
-| **Process defect** | A flaw in **how** work is produced: standard, prompt, skill, validator, playbook, template, gate, or handoff. Often the true root when agents or pipelines generated the output. |
-| **Upstream chain** | Ordered producers from symptom to origin — e.g. defective code ← skill B ← skill A ← prompt. RCA walks this chain **away from the symptom**. |
+| **Output [defect](../../../../docs/TERMS.md#defect)** | The failing artifact you see first: code, YAML, config, test result, deployed state. A **symptom** until upstream process is ruled out. |
+| **Process [defect](../../../../docs/TERMS.md#defect)** | A flaw in **how** work is produced: standard, prompt, skill, validator, playbook, template, [gate](../../../../docs/TERMS.md#gate), or [handoff](../../../../docs/TERMS.md#handoff). Often the true root when agents or pipelines generated the output. |
+| **Upstream chain** | Ordered producers from symptom to origin — e.g. defective code ← skill B ← skill A ← prompt. [RCA](../../../../docs/TERMS.md#rca) walks this chain **away from the symptom**. |
 
 ---
 
 ## 2.1 Process before output (normative)
 
-**The root cause of a defect is not found in the output. It is found in the process that produced it.**
+**The root cause of a [defect](../../../../docs/TERMS.md#defect) is not found in the output. It is found in the process that produced it.**
 
 When work was generated, scaffolded, or guided by prompts, skills, standards, validators, or playbooks:
 
-1. **Bound the output defect** with evidence (file, command, log).
+1. **Bound the output [defect](../../../../docs/TERMS.md#defect)** with evidence (file, command, log).
 2. **Identify the producing chain** — what skill, prompt, standard, validator, or script produced or approved this output?
-3. **Walk upstream** to the **furthest controllable** step where one preventive change would have blocked the defect.
+3. **Walk upstream** to the **furthest controllable** step where one preventive change would have blocked the [defect](../../../../docs/TERMS.md#defect).
 4. **Select the one thing** at that upstream layer — not the nearest convenient patch to the symptom.
 
 ### Example (skill chain)
@@ -58,9 +58,9 @@ When work was generated, scaffolded, or guided by prompts, skills, standards, va
 | 1 | Prompt | Creates skill A |
 | 2 | Skill A | Creates skill B |
 | 3 | Skill B | Creates code |
-| 4 | Code | Defect observed |
+| 4 | Code | [Defect](../../../../docs/TERMS.md#defect) observed |
 
-The defective **code** is evidence. The likely **root** is in **skill A** (or the prompt), because that is where B was shaped to produce defective code. Fixing only the code without fixing A recreates the defect on the next run.
+The defective **code** is evidence. The likely **root** is in **skill A** (or the prompt), because that is where B was shaped to produce defective code. Fixing only the code without fixing A recreates the [defect](../../../../docs/TERMS.md#defect) on the next run.
 
 ### Reject output-only roots when process is controllable
 
@@ -78,11 +78,11 @@ A valid answer must satisfy **all** of:
 | **Deterministic** | Under the same preconditions, this change makes the error condition **impossible**, not merely less likely. |
 | **Actionable** | A specific artifact or behavior someone can implement: add a check, fix a script, change a standard, add a test, correct a config key, update a validator. |
 | **Preventive** | Stops the condition **before** it arises — not only faster detection, logging, or cleanup after the fact. |
-| **In scope** | Within team control — not "if the user had not asked for X" or "if the vendor had not shipped a bug" unless the preventive action is a **documented guard** (pin, contract test, feature flag). |
+| **In scope** | Within team control — not "if the user had not asked for X" or "if the vendor had not shipped a bug" unless the preventive [action](../../../../docs/TERMS.md#action) is a **documented guard** (pin, contract test, feature flag). |
 
 ### 3.1 Reject these as final answers
 
-Do **not** stop RCA on vague or non-preventive labels unless rewritten to a concrete change:
+Do **not** stop [RCA](../../../../docs/TERMS.md#rca) on vague or non-preventive labels unless rewritten to a concrete change:
 
 - "Human error" / "miscommunication" / "lack of attention"
 - "Need more testing" (without naming **which** test or gate)
@@ -94,7 +94,7 @@ Do **not** stop RCA on vague or non-preventive labels unless rewritten to a conc
 - "Grandfather the violation" / "add an allowlist exception" for a fixable gap at standard-creation time (encodes debt as policy)
 - Nil-check, optional unwrap, or comment-justified guard that **silences a crash or empty case** without removing the condition that made the guard necessary (symptom patch)
 
-Detection-only mitigations (alert, retry, manual checklist) are **contributing follow-ups**, not the root, unless prevention is genuinely impossible — then state why and name the **earliest** detectable gate instead.
+Detection-only mitigations (alert, retry, manual checklist) are **contributing follow-ups**, not the root, unless prevention is genuinely impossible — then state why and name the **earliest** detectable [gate](../../../../docs/TERMS.md#gate) instead.
 
 ### 3.2 Prevention test (mandatory)
 
@@ -117,8 +117,8 @@ Execute in order. Do not skip to fixes before step 6 (the one thing).
 5. **Confirm the surviving mechanism on the reproduction** — Observed evidence, not inference. Do **not** select the one thing until this holds, or document why the failure is unreproducible. The prevention test (§3.2) names that mechanism.
 6. **Select the one thing** — Earliest controllable preventive change that passes the prevention test (§3.2).
 7. **Place the fix** — See §6 (vault) or §7 (consumer repo).
-8. **Record** — Write the RCA artifact (§8).
-9. **Track one action** — Single owner-visible item; re-run the failing gate or reproduction to verify prevention.
+8. **Record** — Write the [RCA](../../../../docs/TERMS.md#rca) artifact (§8).
+9. **Track one [action](../../../../docs/TERMS.md#action)** — Single owner-visible item; re-run the failing [gate](../../../../docs/TERMS.md#gate) or reproduction to [verify](../../../../docs/TERMS.md#verify) prevention.
 
 ---
 
@@ -126,25 +126,25 @@ Execute in order. Do not skip to fixes before step 6 (the one thing).
 
 When several changes seem required:
 
-1. Prefer the **earliest** point where a **single gate** would have blocked the chain.
+1. Prefer the **earliest** point where a **single [gate](../../../../docs/TERMS.md#gate)** would have blocked the chain.
 2. If failures are **independent** (two unrelated defects surfaced at once), run **two RCAs** — do not blend into one vague root.
-3. If prevention truly requires a **compound** change (e.g. code + CI), the "one thing" is the **highest-leverage gate** that would have caught it before impact — usually an automated check over manual process.
+3. If prevention truly requires a **compound** change (e.g. code + CI), the "one thing" is the **highest-leverage [gate](../../../../docs/TERMS.md#gate)** that would have caught it before impact — usually an automated check over manual process.
 
 ---
 
 ## 6. Vault maintainer placement (this repository)
 
-After RCA, place preventive work in the **durable** layer first ([`domain-first-authoring.md`](domain-first-authoring.md)):
+After [RCA](../../../../docs/TERMS.md#rca), place preventive work in the **durable** layer first ([`domain-first-authoring.md`](domain-first-authoring.md)):
 
 | If the one thing is… | Update first |
 | -------------------- | ------------ |
-| Org-wide rule or convention | `standards/*.md` → **standard-ripple** |
+| Org-wide [rule](../../../../docs/TERMS.md#rule) or convention | `standards/*.md` → **standard-ripple** |
 | Validator/compiler gap | `metaprompts/scripts/` or relevant tooling → re-run validators |
 | Domain/product fact | MSG manifest (`/local-msg-domain-pipeline`) |
 | Prompt wording only (standard already correct) | `prompts/` bounded region |
 | Maintainer procedure | `.cursor/prompts/` or `.cursor/skills/` |
 
-**Durable writes** to `standards/`, manifests, or `vault-intents/` require an accepted **KCR** per [`knowledge-change-review-standard.md`](knowledge-change-review-standard.md). Reference the RCA path in the KCR **rationale**.
+**Durable writes** to `standards/`, manifests, or `vault-intents/` require an accepted **KCR** per [`knowledge-change-review-standard.md`](knowledge-change-review-standard.md). Reference the [RCA](../../../../docs/TERMS.md#rca) path in the KCR **rationale**.
 
 **Artifact location:** `draft/rca/YYYY-MM-DD-<slug>.md` (use [`metaprompts/templates/rca-record-TEMPLATE.md`](../metaprompts/templates/rca-record-TEMPLATE.md)).
 
@@ -154,17 +154,17 @@ After RCA, place preventive work in the **durable** layer first ([`domain-first-
 
 | If the one thing is… | Typical placement |
 | -------------------- | ----------------- |
-| Missing or wrong test/CI gate | Test file + pipeline job |
-| Config/secrets contract | Env docs, sample config, validation script |
+| Missing or wrong test/CI [gate](../../../../docs/TERMS.md#gate) | Test file + pipeline job |
+| Config/secrets [contract](../../../../docs/TERMS.md#contract) | Env docs, sample config, validation script |
 | Operational gap | `docs/runbooks/` or `RUNBOOK.md` |
-| Code defect | Fix + regression test |
+| Code [defect](../../../../docs/TERMS.md#defect) | Fix + regression test |
 | Architecture fork | `docs/adr/` |
 
 **Artifact location:** `docs/rca/YYYY-MM-DD-<slug>.md` (create directory if needed). For severe incidents, also link from `CHANGELOG.md` or the team's incident system — do not duplicate full postmortems unless the user requests.
 
 ---
 
-## 8. RCA record (required sections)
+## 8. [RCA](../../../../docs/TERMS.md#rca) record (required sections)
 
 Use the template at [`metaprompts/templates/rca-record-TEMPLATE.md`](../metaprompts/templates/rca-record-TEMPLATE.md). Minimum sections:
 
@@ -176,7 +176,7 @@ Use the template at [`metaprompts/templates/rca-record-TEMPLATE.md`](../metaprom
 6. **The one thing** (single sentence)
 7. **Prevention test** (§3.2 sentence completed)
 8. **Contributing factors** (optional, non-actionable list)
-9. **Preventive action** (one tracked item: owner, path, verification command)
+9. **Preventive [action](../../../../docs/TERMS.md#action)** (one tracked item: owner, path, verification command)
 10. **Follow-up** (detection improvements only if prevention is insufficient)
 
 ---
@@ -185,7 +185,7 @@ Use the template at [`metaprompts/templates/rca-record-TEMPLATE.md`](../metaprom
 
 1. On **non-zero verification** or **repeated fix failure**, run §4 through **confirm mechanism** (step 5) before claiming the one thing.
 2. Present the **one thing** and **prevention test** in chat even when not writing a file.
-3. Do **not** substitute RCA with symptom patches (retries, broader try/catch, weakened assertions, nil-guards that silence crashes) without naming why prevention was infeasible.
+3. Do **not** substitute [RCA](../../../../docs/TERMS.md#rca) with symptom patches (retries, broader try/catch, weakened assertions, nil-guards that silence crashes) without naming why prevention was infeasible.
 4. After preventive change, **re-run the original failing command** or reproduction.
 
 **Building block** (for prompts and skills):
@@ -209,7 +209,7 @@ Reject vague roots (see root-cause-analysis-standard §3.1).
 
 ## 10. See also
 
-- [`lean-operating-principles.md`](lean-operating-principles.md) — Jidoka
+- [`lean-operating-principles.md`](lean-operating-principles.md) — [Jidoka](../../../../docs/TERMS.md#jidoka)
 - [`repository-governance-standard.md`](repository-governance-standard.md) §10 — Incident readiness
 - [`prompts/review/conduct-root-cause-analysis.md`](../prompts/review/conduct-root-cause-analysis.md) — Consumer runnable prompt
 - [`.cursor/prompts/local-conduct-root-cause-analysis.md`](../.cursor/prompts/local-conduct-root-cause-analysis.md) — Vault maintainer runnable prompt

@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "source": "tools/fixtures/pack-ingest-sample.md",
+  "candidate_adrs": [
+    {
+      "title": "Sample policy",
+      "status": "Proposed",
+      "requirements": ["Do not store PAN in logs"]
+    }
+  ],
+  "candidate_rules": [],
+  "ratify": "Ratify via /interview before export"
+}

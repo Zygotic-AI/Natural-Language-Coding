@@ -1,0 +1,2 @@
+def two() -> None:
+    pass

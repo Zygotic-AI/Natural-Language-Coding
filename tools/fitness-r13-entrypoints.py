@@ -46,7 +46,7 @@ def goal_dirs(root: Path) -> list[Path]:
 
 def scan_one(scan_root: Path) -> list[tuple[str, list[str]]]:
     violations = []
-    changed = changeset.changed_paths(scan_root, ROOT)
+    changed = changeset.effective_changed(scan_root, ROOT)
     for goal in goal_dirs(scan_root):
         if changed is not None and not changeset.unit_touched(goal, changed, scan_root, ROOT):
             continue

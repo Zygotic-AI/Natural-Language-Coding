@@ -10,18 +10,18 @@ Normative **org-wide** process for work that produces output in the metaprompt s
 
 Deliver **high-quality, already audited** outputs — plans, standards, prompts, skills, code, consumer artifacts — by executing **seven distinct phases**. Each phase has a stop predicate; do not start the next phase until the prior phase passes.
 
-**Self-reflexive:** Authoring or amending this standard, and all **future** metaprompt artifacts, must follow AWL. Phase 6 **meta-audit** confirms Phases 0–7 were followed.
+**Self-reflexive:** Authoring or amending this standard, and all **future** metaprompt artifacts, must follow [AWL](../../../../docs/TERMS.md#awl). Phase 6 **meta-audit** confirms Phases 0–7 were followed.
 
 ---
 
 ## 2. Enforcement policy
 
-| Scope | Rule |
+| Scope | [Rule](../../../../docs/TERMS.md#rule) |
 | ----- | ---- |
-| **Future create** | New prompts under `prompts/`, new `metaprompts/vault-intents/`, new materialized skills, and new `.cursor/skills/` / `.cursor/prompts/` maintainer packs **must** embed AWL in Gate/Procedure (phase map + stop predicates). **Non-compliant artifacts do not belong in the metaprompt system.** |
-| **Existing catalog** | **Grandfathered** until a maintainer **edits** the artifact. From the first edit forward, AWL applies; no mass rewrite required in the same PR unless scope demands it. |
+| **Future create** | New prompts under `prompts/`, new `metaprompts/vault-intents/`, new materialized skills, and new `.cursor/skills/` / `.cursor/prompts/` maintainer packs **must** embed [AWL](../../../../docs/TERMS.md#awl) in Gate/Procedure (phase map + stop predicates). **Non-compliant artifacts do not belong in the metaprompt system.** |
+| **Existing catalog** | **Grandfathered** until a maintainer **edits** the artifact. From the first edit forward, [AWL](../../../../docs/TERMS.md#awl) applies; no mass rewrite required in the same PR unless scope demands it. |
 | **DSI** | [`local-dsi-converge-audit-template.md`](local-dsi-converge-audit-template.md) is a **Phase 6 execution-audit instance** for converge — not a separate process. |
-| **Export** | When AWL is extracted to **fiqit/metaprompts**, this file remains the normative source until sync rules say otherwise (tracked on export branch). |
+| **Export** | When [AWL](../../../../docs/TERMS.md#awl) is extracted to **fiqit/metaprompts**, this file remains the normative source until sync rules say otherwise (tracked on export branch). |
 
 ---
 
@@ -30,30 +30,30 @@ Deliver **high-quality, already audited** outputs — plans, standards, prompts,
 | Phase | Name | Primary output | Stop predicate |
 | ----- | ---- | -------------- | -------------- |
 | **0** | Authorize and bound | One-line outcome; in/out scope | User order or skill invocation satisfies authorization ([`lean-operating-principles.md`](lean-operating-principles.md) §2 — no re-confirm) |
-| **1** | Intake | Resolution table | Blocking inputs resolved, waived, or `Assumption:` ([`information-completion-contract.md`](information-completion-contract.md)); **tier** proposed or confirmed for T2+ (Appendix C) |
+| **1** | Intake | Resolution table | Blocking inputs resolved, [waived](../../../../docs/TERMS.md#waived), or `Assumption:` ([`information-completion-contract.md`](information-completion-contract.md)); **tier** proposed or confirmed for T2+ (Appendix C) |
 | **2** | Applicability register | Register table (Appendix A) | Every norm that could apply is listed or excluded with reason |
 | **3** | Plan | Plan: steps, touch list, stop predicates, risks, rollback | Plan reviewable without reading implementation |
-| **4** | Adversarial plan audit | Audit memo: **PASS/FAIL** apex + per-register rows | **Fail-closed** — see §4 |
+| **4** | Adversarial [plan audit](../../../../docs/TERMS.md#plan-audit) | [Audit](../../../../docs/TERMS.md#audit) memo: **PASS/FAIL** apex + per-register rows | **[Fail-closed](../../../../docs/TERMS.md#default-closed)** — see §4 |
 | **5** | Execute | Delivered artifacts | Only approved plan steps; scope creep → Phase 3 |
-| **6** | Adversarial execution audit | Audit memo + cited evidence | **Fail-closed** — same register as Phase 4, checked on **delivered** artifacts |
+| **6** | Adversarial execution [audit](../../../../docs/TERMS.md#audit) | [Audit](../../../../docs/TERMS.md#audit) memo + cited evidence | **[Fail-closed](../../../../docs/TERMS.md#default-closed)** — same register as Phase 4, checked on **delivered** artifacts |
 | **7** | Record and propagate | KCR/registry/handoff/RCA as applicable | [`domain-first-authoring.md`](domain-first-authoring.md) §2 step 6; no "done" with failing gates |
 
 Phases **4** and **6** are **separate executions** from Phases **3** and **5** (different section, turn, or agent pass — not the same prose block as "and then I checked").
 
 ---
 
-## 4. Adversarial audit (definition)
+## 4. Adversarial [audit](../../../../docs/TERMS.md#audit) (definition)
 
-**Adversarial audit** — independent verification with a **fail-closed** posture:
+**Adversarial [audit](../../../../docs/TERMS.md#audit)** — independent verification with a **[fail-closed](../../../../docs/TERMS.md#default-closed)** posture:
 
 1. **Assume the artifact will cheat** — no "I verified" without evidence (command + exit code, file path, validator name, grep/spot check).
-2. **Closed world over the applicability register** — every Phase 2 row is **PASS**, **FAIL**, or **waived** (human acceptance recorded).
-3. **Fail-closed** — FAIL blocks Phase 5 (after plan audit) or completion (after execution audit); fix and re-audit — do not hand off downstream ([`lean-operating-principles.md`](lean-operating-principles.md) §1 jidoka).
-4. **Report pyramid** — audit memos lead with verdict ([`report-pyramid-structure.md`](report-pyramid-structure.md)).
-5. **Operation verdict** — each phase and machine gate ends with an explicit **PASS | FAIL | BLOCKED** and objective evidence ([`operation-verdict-standard.md`](operation-verdict-standard.md)).
-6. **Meta-audit** — for vault/metaprompt work, Phase 6 includes: "Did this work follow Phases 0–7?" including plan audit before durable writes.
+2. **Closed world over the applicability register** — every Phase 2 row is **PASS**, **FAIL**, or **[waived](../../../../docs/TERMS.md#waived)** (human acceptance recorded).
+3. **[Fail-closed](../../../../docs/TERMS.md#default-closed)** — FAIL blocks Phase 5 (after plan audit) or completion (after execution audit); fix and re-audit — do not hand off downstream ([`lean-operating-principles.md`](lean-operating-principles.md) §1 [jidoka](../../../../docs/TERMS.md#jidoka)).
+4. **Report pyramid** — [audit](../../../../docs/TERMS.md#audit) memos lead with verdict ([`report-pyramid-structure.md`](report-pyramid-structure.md)).
+5. **Operation verdict** — each phase and machine [gate](../../../../docs/TERMS.md#gate) ends with an explicit **PASS | FAIL | BLOCKED** and objective evidence ([`operation-verdict-standard.md`](operation-verdict-standard.md)).
+6. **Meta-audit** — for vault/metaprompt work, Phase 6 includes: "Did this work follow Phases 0–7?" including [plan audit](../../../../docs/TERMS.md#plan-audit) before durable writes.
 
-**Subtypes:** **Plan audit** (Phase 4) and **execution audit** (Phase 6). Same rules; different evidence (plan text vs delivered files and machine gates).
+**Subtypes:** **[Plan audit](../../../../docs/TERMS.md#plan-audit)** (Phase 4) and **execution [audit](../../../../docs/TERMS.md#audit)** (Phase 6). Same rules; different evidence (plan text vs delivered files and machine gates).
 
 **Not adversarial:** self-attestation only, advisory notes without PASS/FAIL, or re-running the same generative pass that produced the artifact with no independent checks.
 
@@ -65,26 +65,26 @@ Phases **4** and **6** are **separate executions** from Phases **3** and **5** (
 | ---- | ---- | ---------- | ------- |
 | **T0** | Trivial fix (typo, one-line) | Compressed plan in chat + mental checklist | Minimal spot check |
 | **T1** | Single-file vault edit | Short plan + register subset | Validator/link check cited |
-| **T2** | New standard, skill, intent, or pack | Full plan + full register | Full adversarial audit + evidence |
-| **T3** | Cross-cutting org policy | KCR + registry + ripple plan | VPR author_preflight + audit memo |
+| **T2** | New standard, skill, intent, or pack | Full plan + full register | Full adversarial [audit](../../../../docs/TERMS.md#audit) + evidence |
+| **T3** | Cross-cutting org policy | KCR + registry + ripple plan | VPR author_preflight + [audit](../../../../docs/TERMS.md#audit) memo |
 
 Authoring or amending **this standard** is **T2 minimum**.
 
-**Authorized skill runs:** Phase 0 may be satisfied by invocation (`/planit` — PLANIT / AWL orchestrator), `/local-author-or-extend-knowledge` (vault durable authoring), `/local-dsi-converge`, etc.). Do **not** re-confirm authorized work ([`lean-operating-principles.md`](lean-operating-principles.md) §2). Phase 3 may compress; Phases 4 and 6 still run (may be lightweight for T0/T1).
+**Authorized skill runs:** Phase 0 may be satisfied by invocation (`/planit` — [PLANIT](../../../../docs/TERMS.md#planit) / [AWL](../../../../docs/TERMS.md#awl) orchestrator), `/local-author-or-extend-knowledge` (vault durable authoring), `/local-dsi-converge`, etc.). Do **not** re-confirm authorized work ([`lean-operating-principles.md`](lean-operating-principles.md) §2). Phase 3 may compress; Phases 4 and 6 still run (may be lightweight for T0/T1).
 
 
-**General orchestrator:** For arbitrary multi-step work (vault or consumer), invoke **`skills/planit/SKILL.md`** (`/planit`). It runs the full loop, routes steps to leaf skills, and keeps plan/execution audits distinct. Vault-only durable-knowledge authoring may use `/local-author-or-extend-knowledge` directly or as a routed step inside Planit.
+**General orchestrator:** For arbitrary multi-step work (vault or consumer), invoke **`skills/planit/SKILL.md`** (`/planit`). It runs the full loop, routes steps to leaf skills, and keeps plan/execution audits distinct. Vault-only durable-knowledge authoring may use `/local-author-or-extend-knowledge` directly or as a routed step inside [Planit](../../../../docs/TERMS.md#planit).
 
 ---
 
 ## 6. Sub-gates (orchestrated, not replaced)
 
-| Gate | AWL phase | Standard |
+| [Gate](../../../../docs/TERMS.md#gate) | [AWL](../../../../docs/TERMS.md#awl) phase | Standard |
 | ---- | --------- | -------- |
 | Resolution table before deliverable writes | 1 | [`information-completion-contract.md`](information-completion-contract.md) |
 | KCR before durable standards/manifests/intents | 5 (before write) | [`knowledge-change-review-standard.md`](knowledge-change-review-standard.md) |
-| RCA before workaround | 5–6 on failure | [`root-cause-analysis-standard.md`](root-cause-analysis-standard.md) |
-| DSI machine stop + converge audit template | 6 instance | [`local-dsi-converge-audit-template.md`](local-dsi-converge-audit-template.md) |
+| [RCA](../../../../docs/TERMS.md#rca) before workaround | 5–6 on failure | [`root-cause-analysis-standard.md`](root-cause-analysis-standard.md) |
+| DSI machine stop + converge [audit](../../../../docs/TERMS.md#audit) template | 6 instance | [`local-dsi-converge-audit-template.md`](local-dsi-converge-audit-template.md) |
 
 ---
 
@@ -93,19 +93,19 @@ Authoring or amending **this standard** is **T2 minimum**.
 Every **new** or **first edited** prompt/skill/intent **must** include:
 
 1. **`uses_standards`** listing `standards/audited-work-loop-standard.md` (plus others).
-2. **Gate** — maps to Phases 0–1 (inputs, resolution table); **default-closed** with **testable true/false** blocking criteria per [`operation-verdict-standard.md`](operation-verdict-standard.md) §2.
+2. **[Gate](../../../../docs/TERMS.md#gate)** — maps to Phases 0–1 (inputs, resolution table); **[default-closed](../../../../docs/TERMS.md#default-closed)** with **testable true/false** blocking criteria per [`operation-verdict-standard.md`](operation-verdict-standard.md) §2.
 3. **Procedure** — maps steps to Phases 2–7 or cites a pipeline that does.
-4. **Stop predicates** — explicit PASS/FAIL for plan audit and execution audit where the skill produces durable output.
+4. **Stop predicates** — explicit PASS/FAIL for [plan audit](../../../../docs/TERMS.md#plan-audit) and execution [audit](../../../../docs/TERMS.md#audit) where the skill produces durable output.
 
-Prompts that only compose existing stages must reference AWL in the orchestration map or parent skill.
+Prompts that only compose existing stages must reference [AWL](../../../../docs/TERMS.md#awl) in the orchestration map or parent skill.
 
 ---
 
 ## 8. Compliance review (v1)
 
-- **Author:** Run Phase 4/6 checklists (Appendix E); cite evidence in handoff (Appendix F).
+- **Author:** Run Phase 4/6 checklists (Appendix E); cite evidence in [handoff](../../../../docs/TERMS.md#handoff) (Appendix F).
 - **Reviewer:** [`vault-pull-request-review-standard.md`](vault-pull-request-review-standard.md) + **`/local-review-pr`** author_preflight for new/touched consumer prompts.
-- **Automated gate:** deferred (human checklist v1); optional scripted VPR gate in a follow-on change.
+- **Automated [gate](../../../../docs/TERMS.md#gate):** deferred (human checklist v1); optional scripted VPR [gate](../../../../docs/TERMS.md#gate) in a follow-on change.
 
 ---
 
@@ -113,15 +113,15 @@ Prompts that only compose existing stages must reference AWL in the orchestratio
 
 Copy this table for each work item; add rows until closed world is satisfied.
 
-| Id | Source path | Applies because | Gates phase(s) | Audit evidence |
+| Id | Source path | Applies because | Gates phase(s) | [Audit](../../../../docs/TERMS.md#audit) evidence |
 | -- | ----------- | --------------- | -------------- | -------------- |
 | AWL-1 | `standards/audited-work-loop-standard.md` | All metaprompt output | 4, 6 | Phase checklist PASS; meta-audit |
 | ICC-1 | `standards/information-completion-contract.md` | Produces deliverables | 1, 5 | Resolution table present |
 | KCR-1 | `standards/knowledge-change-review-standard.md` | Touches durable layers | 5 | Accepted KCR path |
-| RCA-1 | `standards/root-cause-analysis-standard.md` | Failure or workaround risk | 5–6 | RCA path if triggered |
+| RCA-1 | `standards/root-cause-analysis-standard.md` | Failure or workaround risk | 5–6 | [RCA](../../../../docs/TERMS.md#rca) path if triggered |
 | DFA-1 | `standards/domain-first-authoring.md` | Net-new policy/domain facts | 3, 5, 7 | Standards before prompts |
 | VPR-1 | `standards/vault-pull-request-review-standard.md` | Vault PR planned | 6–7 | author_preflight report |
-| GATE-STD | `standards/operation-verdict-standard.md` §2 | Produces runnable or durable artifacts | 3–7 | Per-path gate compliance PASS/FAIL |
+| GATE-STD | `standards/operation-verdict-standard.md` §2 | Produces runnable or durable artifacts | 3–7 | Per-path [gate](../../../../docs/TERMS.md#gate) compliance PASS/FAIL |
 
 Add domain-specific rows until closed world is satisfied. **Excluded row (required when skipping a norm):** path · reason not applicable.
 
@@ -132,8 +132,8 @@ Add domain-specific rows until closed world is satisfied. **Excluded row (requir
 - [ ] Phase 0 authorization recorded (user order or skill)
 - [ ] Phase 1 resolution table emitted before durable writes
 - [ ] Phase 2 applicability register complete
-- [ ] Phase 4 plan audit **PASS** (or waived with acceptance) **before** Phase 5 durable writes
-- [ ] Phase 6 execution audit **PASS** with cited evidence
+- [ ] Phase 4 [plan audit](../../../../docs/TERMS.md#plan-audit) **PASS** (or waived with acceptance) **before** Phase 5 durable writes
+- [ ] Phase 6 execution [audit](../../../../docs/TERMS.md#audit) **PASS** with cited evidence
 - [ ] Phase 7 registry/KCR/handoff updated as applicable
 
 ---
@@ -164,7 +164,7 @@ Emit a **resolution table** before plan or durable writes ([`information-complet
 
 ---
 
-## Appendix D — Plan artifact (Phase 3) and step handoff (Phase 5)
+## Appendix D — Plan artifact (Phase 3) and step [handoff](../../../../docs/TERMS.md#handoff) (Phase 5)
 
 Produce a plan **reviewable without reading implementation**:
 
@@ -188,10 +188,10 @@ Produce a plan **reviewable without reading implementation**:
 **Tier rules:**
 
 - **T0/T1:** compressed plan (≤5 steps) allowed.
-- **T2/T3:** full touch list, risks, rollback, and per-step audit hooks.
+- **T2/T3:** full touch list, risks, rollback, and per-step [audit](../../../../docs/TERMS.md#audit) hooks.
 - **Scope creep** during Phase 5 → return to Phase 3, re-run Phase 4.
 
-**Multi-step handoff** (internal, between Phase 5 steps):
+**Multi-step [handoff](../../../../docs/TERMS.md#handoff)** (internal, between Phase 5 steps):
 
 ```markdown
 ### Step N handoff
@@ -207,11 +207,11 @@ Produce a plan **reviewable without reading implementation**:
 
 ---
 
-## Appendix E — Audit memos and checklists (Phases 4 and 6)
+## Appendix E — [Audit](../../../../docs/TERMS.md#audit) memos and checklists (Phases 4 and 6)
 
 Phases **4** and **6** are **separate executions** from Phases **3** and **5** — use a fresh section, turn, or subagent pass.
 
-### Phase 4 — Plan audit memo
+### Phase 4 — [Plan audit](../../../../docs/TERMS.md#plan-audit) memo
 
 Shape per [`report-pyramid-structure.md`](report-pyramid-structure.md):
 
@@ -226,17 +226,17 @@ Shape per [`report-pyramid-structure.md`](report-pyramid-structure.md):
 | AWL-1 | PASS/FAIL/waived | … |
 ```
 
-**Fail-closed:** **FAIL** blocks Phase 5 (no durable writes, no destructive commands) until plan fixed and Phase 4 re-run **PASS**.
+**[Fail-closed](../../../../docs/TERMS.md#default-closed):** **FAIL** blocks Phase 5 (no durable writes, no destructive commands) until plan fixed and Phase 4 re-run **PASS**.
 
 **Checks:**
 
 - Plan covers every register row or justified exclusion.
-- Steps have stop predicates and audit hooks appropriate to tier.
+- Steps have stop predicates and [audit](../../../../docs/TERMS.md#audit) hooks appropriate to tier.
 - Every named step has disposition PASS, FAIL, or `skip: <reason>` — no silent omission.
 - KCR listed before any durable vault write step.
-- Multi-step order is coherent; no missing handoff between stages.
+- Multi-step order is coherent; no missing [handoff](../../../../docs/TERMS.md#handoff) between stages.
 
-### Phase 6 — Execution audit memo
+### Phase 6 — Execution [audit](../../../../docs/TERMS.md#audit) memo
 
 ```markdown
 ## Execution audit — PASS | FAIL
@@ -250,23 +250,23 @@ Shape per [`report-pyramid-structure.md`](report-pyramid-structure.md):
 
 Include **meta-audit** (Appendix B): Phase 4 **PASS** before durable writes; Phases 0–7 followed.
 
-**FAIL** → remediate and re-audit; no “done” handoff.
+**FAIL** → remediate and re-audit; no “done” [handoff](../../../../docs/TERMS.md#handoff).
 
 Domain-specific execution-audit instances (for example DSI converge, vault PR author_preflight) are **orchestration hooks** — cite the applicable standard or skill; do not duplicate their full checklists here.
 
 ---
 
-## Appendix F — Record and user handoff (Phase 7)
+## Appendix F — Record and user [handoff](../../../../docs/TERMS.md#handoff) (Phase 7)
 
 As applicable ([`domain-first-authoring.md`](domain-first-authoring.md)):
 
 - KCR path + status
 - `registry/` entry for durable vault changes
-- RCA under `draft/rca/` if failure occurred
+- [RCA](../../../../docs/TERMS.md#rca) under `draft/rca/` if failure occurred
 - Consumer smoke record if behavior changed
 - Materialize/parity when vault skills touched
 
-**User-facing handoff** (optional; recommended for T2+ multi-step work):
+**User-facing [handoff](../../../../docs/TERMS.md#handoff)** (optional; recommended for T2+ multi-step work):
 
 ```markdown
 ## Handoff

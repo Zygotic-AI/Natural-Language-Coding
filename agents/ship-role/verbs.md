@@ -1,6 +1,6 @@
-# Ship Role — Verbs
+# [Ship](../../docs/TERMS.md#ship) Role — Verbs
 
-Contracted verbs for the ship-role agent noun. Each verb has input contract, output contract, and failure mode.
+Contracted verbs for the ship-role [agent noun](../../docs/TERMS.md#agent-noun). Each verb has input [contract](../../docs/TERMS.md#contract), output [contract](../../docs/TERMS.md#contract), and failure mode.
 
 ---
 
@@ -8,7 +8,7 @@ Contracted verbs for the ship-role agent noun. Each verb has input contract, out
 
 Accept a proposal as final. This completes the ratification step (charter §6 step 5).
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -46,7 +46,7 @@ input:
               description: How the finding was addressed
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -90,7 +90,7 @@ error:
 
 Merge a change to the target branch.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -137,7 +137,7 @@ input:
               type: string
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -179,7 +179,7 @@ error:
 
 Publish or deploy an artifact.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -221,7 +221,7 @@ input:
             description: Required sign-offs received
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -261,9 +261,9 @@ error:
 
 ## waive-finding
 
-Accept an audit finding without requiring a fix. Records the waiver with risk acknowledgment.
+Accept an [audit](../../docs/TERMS.md#audit) finding without requiring a fix. Records the waiver with risk acknowledgment.
 
-### Input contract
+### Input [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 input:
@@ -297,7 +297,7 @@ input:
             type: string
 ```
 
-### Output contract
+### Output [contract](../../docs/TERMS.md#contract)
 
 ```yaml
 output:
@@ -338,10 +338,10 @@ error:
 
 ## Preconditions (all verbs)
 
-Every ship verb checks before execution:
+Every [ship](../../docs/TERMS.md#ship) verb checks before execution:
 
-1. **Mandate exists** — Charter ADR or delegation record cited
-2. **Audit complete** — Audit report path valid and status is `findings_found` or `clean`
+1. **Mandate exists** — [Charter](../../docs/TERMS.md#charter) [ADR](../../docs/TERMS.md#adr) or delegation record cited
+2. **[Audit](../../docs/TERMS.md#audit) complete** — [Audit](../../docs/TERMS.md#audit) report path valid and status is `findings_found` or `clean`
 3. **No self-ship** — Agent calling the verb did not solely produce the artifact
 4. **Findings addressed** — Each finding in report has disposition (fixed, waived, or escalated)
 

@@ -1,0 +1,31 @@
+{
+  "adoptions": [
+    {
+      "rule_id": "pan-no-return",
+      "adr_id": "0007",
+      "precedence_tier": "regulatory",
+      "precedence_rank": 100,
+      "match": { "tags_all": ["pan"], "primitive": "return" },
+      "effect": "forbid",
+      "obligation": null
+    },
+    {
+      "rule_id": "pan-no-log",
+      "adr_id": "0007",
+      "precedence_tier": "regulatory",
+      "precedence_rank": 100,
+      "match": { "tags_all": ["pan"], "primitive": "log" },
+      "effect": "forbid",
+      "obligation": null
+    },
+    {
+      "rule_id": "pan-write-encrypt",
+      "adr_id": "0007",
+      "precedence_tier": "regulatory",
+      "precedence_rank": 100,
+      "match": { "tags_all": ["pan"], "primitive": "write" },
+      "effect": "must",
+      "obligation": "encrypt"
+    }
+  ]
+}

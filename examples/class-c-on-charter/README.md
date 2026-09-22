@@ -1,1 +1,1 @@
-Specimen. Designed red on C1 (change set includes CHARTER.md but class is C). Not a product.
+[Specimen](../../docs/TERMS.md#specimen). Designed red on C1 (change set includes CHARTER.md but class is C). Not a product.

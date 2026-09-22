@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Zygotic-AI/Natural-Language-Coding/integrity/schemas/nlc-lock.schema.json",
+  "title": "NLC project lock",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "hub", "store"],
+  "properties": {
+    "schema": {
+      "type": "integer",
+      "const": 1
+    },
+    "hub": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "store": {
+      "type": "string",
+      "enum": ["user", "workspace", "project"]
+    },
+    "store_path": {
+      "type": "string",
+      "description": "Optional absolute path when store is workspace or project"
+    }
+  }
+}

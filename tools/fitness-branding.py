@@ -32,6 +32,29 @@ INTEGRITY_DIR = ROOT / "integrity"
 AGENTS_DIR = ROOT / "agents"
 TOOLS_DIR = ROOT / "tools"
 
+def _retired_steward_word() -> str:
+    """Retired metaphor; NLC term is knowledge domain (load-knowledge-domain)."""
+    return "".join(map(chr, (0x73, 0x68, 0x65, 0x6C, 0x66)))
+
+
+def _retired_nlc_patterns() -> list[re.Pattern[str]]:
+    w = _retired_steward_word()
+    return [
+        re.compile("load-" + w, re.IGNORECASE),
+        re.compile(r"knowledge[\s-]" + w, re.IGNORECASE),
+        re.compile(r"\b" + w + r"\b", re.IGNORECASE),
+    ]
+
+
+RETIRED_NLC_SCAN_ROOTS = [
+    ROOT / "agents",
+    ROOT / ".agents" / "skills",
+    ROOT / "docs" / "ai-compiled-systems",
+    ROOT / "integrity" / "KNOWLEDGE-FACTS.md",
+    ROOT / "tools" / "session-preflight.sh",
+    ROOT / "templates" / "adopter",
+]
+
 FOREIGN_BRAND_PATTERNS = [
     re.compile(r"@?archunit", re.IGNORECASE),
     re.compile(r"@?nx[/-]", re.IGNORECASE),
@@ -186,9 +209,44 @@ def check_tools_deps() -> list[tuple[str, bool, str]]:
     return results
 
 
+def check_retired_nlc_terms() -> list[tuple[str, bool, str]]:
+    """Retired NLC lexicon: knowledge domain + load-knowledge-domain verb only."""
+    patterns = _retired_nlc_patterns()
+    violations: list[str] = []
+    for base in RETIRED_NLC_SCAN_ROOTS:
+        paths: list[Path]
+        if base.is_file():
+            paths = [base]
+        elif base.is_dir():
+            paths = [p for p in base.rglob("*") if p.is_file() and p.suffix in {".md", ".json", ".sh", ".py", ".mdc"}]
+        else:
+            continue
+        for path in paths:
+            try:
+                text = path.read_text(errors="replace")
+            except OSError:
+                continue
+            for i, line in enumerate(text.splitlines(), start=1):
+                for pattern in patterns:
+                    if pattern.search(line):
+                        rel = path.relative_to(ROOT)
+                        violations.append(f"{rel}:{i}:{line.strip()[:80]}")
+                        break
+    if violations:
+        return [
+            (
+                "retired-nlc-lexicon",
+                False,
+                "; ".join(violations[:5]) + (" …" if len(violations) > 5 else ""),
+            )
+        ]
+    return [("retired-nlc-lexicon", True, "knowledge-domain lexicon ok")]
+
+
 def main() -> int:
     results: list[tuple[str, bool, str]] = []
     
+    results.extend(check_retired_nlc_terms())
     results.extend(check_binding_matrix())
     results.extend(check_integrity_imports())
     results.extend(check_tools_deps())

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "outcome": "Landmine UC4 rule-runner snapshot missing.",
+  "goals": ["demo"],
+  "requirements": ["adr:0023"],
+  "knowledge_domains": ["demo"],
+  "bind_ready": true
+}
