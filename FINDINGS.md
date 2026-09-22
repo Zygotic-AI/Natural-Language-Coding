@@ -46,8 +46,8 @@ Hub ship remains a **human** last step (`./release`).
 
 | Item | [ADR](docs/TERMS.md#adr) / doc | Missing [gate](docs/TERMS.md#gate) |
 |------|-----------|--------------|
-| Hub BBA interiors (X4) | ADR 0024 corpus `bba` | expansion |
-| Machine emit-audit (X5) | ADR 0024 + “every emit has an audit” | expansion |
+| Hub BBA interiors (X4) | ADR 0024 corpus `bba` | rewrite `tools/*.py` as noun/verb packages |
+| Machine emit-audit (X5) | ADR 0024 + “every emit has an audit” | full emit-audit runner beyond manifest schema field |
 | [Code packs](docs/TERMS.md#code-pack) (UC16) | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Per-stack scanner adapter |
 | Call-tree packs (UC20) | ADR 0009 | Per-stack packs beyond Python `domain/` |
 | [Rule IR](docs/TERMS.md#rule-ir) | ADR 0007 | Full semantic runners |
