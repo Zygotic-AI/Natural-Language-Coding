@@ -39,45 +39,44 @@ def main() -> int:
         if not path.is_file():
             violations.append(f"missing {label}")
 
-    if ADR.is_file():
-        adr_text = ADR.read_text(encoding="utf-8", errors="replace")
+    adr_text = ADR.read_text(encoding="utf-8", errors="replace") if ADR.is_file() else ""
+    charter = CHARTER.read_text(encoding="utf-8", errors="replace") if CHARTER.is_file() else ""
+    if adr_text:
         if not re.search(r"Status:\s*Accepted", adr_text):
             violations.append("ADR 0024 must be Accepted")
         if "Corpus: nlc" not in adr_text:
             violations.append("ADR 0024 must declare Corpus: nlc")
+    if "rule-corpus.json" not in adr_text and "rule-corpus.json" not in charter:
+        violations.append("ADR 0024 or CHARTER must point at integrity/rule-corpus.json")
 
     if README.is_file() and "0024-nlc-factory-spine.md" not in README.read_text(
         encoding="utf-8", errors="replace"
     ):
         violations.append("adrs/README.md must index 0024")
 
-    if ENFORCEMENT.is_file():
-        enf = ENFORCEMENT.read_text(encoding="utf-8", errors="replace")
-        if "| 0024 |" not in enf:
-            violations.append("ADR-ENFORCEMENT must list 0024")
+    if ENFORCEMENT.is_file() and "| 0024 |" not in ENFORCEMENT.read_text(
+        encoding="utf-8", errors="replace"
+    ):
+        violations.append("ADR-ENFORCEMENT must list 0024")
 
-    if CHARTER.is_file():
-        charter = CHARTER.read_text(encoding="utf-8", errors="replace")
-        if "rule-corpus.json" not in charter:
-            violations.append("CHARTER must point at integrity/rule-corpus.json")
-        expected = {f"R{n}" for n in range(1, 34)} | {f"C{n}" for n in range(1, 27)}
-        expected |= {f"P{n}" for n in range(1, 8)}
-        if CORPUS.is_file():
-            try:
-                data = json.loads(CORPUS.read_text(encoding="utf-8"))
-            except json.JSONDecodeError as exc:
-                violations.append(f"rule-corpus.json invalid: {exc}")
-                data = {}
-            ids = data.get("ids") if isinstance(data, dict) else None
-            if not isinstance(ids, dict):
-                violations.append("rule-corpus.json missing ids map")
-            else:
-                for key, val in ids.items():
-                    if val not in ("nlc", "bba"):
-                        violations.append(f"{key} corpus must be nlc|bba, got {val!r}")
-                missing = sorted(expected - set(ids), key=lambda x: (x[0], int(x[1:])))
-                if missing:
-                    violations.append("corpus map missing " + ",".join(missing))
+    expected = {f"R{n}" for n in range(1, 34)} | {f"C{n}" for n in range(1, 27)}
+    expected |= {f"P{n}" for n in range(1, 8)}
+    if CORPUS.is_file():
+        try:
+            data = json.loads(CORPUS.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            violations.append(f"rule-corpus.json invalid: {exc}")
+            data = {}
+        ids = data.get("ids") if isinstance(data, dict) else None
+        if not isinstance(ids, dict):
+            violations.append("rule-corpus.json missing ids map")
+        else:
+            for key, val in ids.items():
+                if val not in ("nlc", "bba"):
+                    violations.append(f"{key} corpus must be nlc|bba, got {val!r}")
+            missing = sorted(expected - set(ids), key=lambda x: (x[0], int(x[1:])))
+            if missing:
+                violations.append("corpus map missing " + ",".join(missing))
 
     if RULES.is_file():
         try:
@@ -85,7 +84,9 @@ def main() -> int:
         except json.JSONDecodeError as exc:
             violations.append(f"nlc-0024.json invalid: {exc}")
             rules_doc = {}
-        found = {row.get("id") for row in rules_doc.get("rules", []) if isinstance(row, dict)}
+        found = {
+            row.get("id") for row in rules_doc.get("rules", []) if isinstance(row, dict)
+        }
         for rid in REQUIRED_RULES:
             if rid not in found:
                 violations.append(f"missing rule {rid}")
