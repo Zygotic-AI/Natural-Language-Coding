@@ -1,0 +1,13 @@
+{
+  "adr": "0024",
+  "corpus": "nlc",
+  "rules": [
+    {"id": "NLC-0024-01", "condition": "a rule or ADR is published", "obligation": "it has testable gates or is removed", "gate": "fitness-adr-0024-binder.py"},
+    {"id": "NLC-0024-02", "condition": "an emit occurs", "obligation": "a JSON manifest is produced alongside the artifact", "gate": "nlc-emit-manifest-enforce.py"},
+    {"id": "NLC-0024-03", "condition": "a manifest field is optional", "obligation": "unused fields are present as na", "gate": "nlc-emit-manifest-enforce.py"},
+    {"id": "NLC-0024-04", "condition": "actions are planned", "obligation": "each action is gated and validated against the plan", "gate": "nlc-action-plan-gate.py"},
+    {"id": "NLC-0024-05", "condition": "ADRs apply to actions", "obligation": "every applicable ADR is bound to an action (reverse audit)", "gate": "nlc-reverse-audit.py"},
+    {"id": "NLC-0024-04", "condition": "an emit occurs", "obligation": "the emit is audited immediately; gates of bound ADRs run default-closed", "gate": "nlc-emit-audit.py"}
+  ],
+  "consequences": "X1-X3 promoted by ADR 0026. Prose->gated-emit path by ADR 0027 (tools/nlc-emit-from-prose.py). X4 hub BBA interiors and semantic X6 remain expansion."
+}
