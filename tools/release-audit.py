@@ -23,7 +23,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import markdown_plain  # noqa: E402
 import product_tree  # noqa: E402
+from nlc_requirements import hub_tool  # noqa: E402
 
 NOTES = ("CONFIRM.md", "PROPOSAL.md")
 CLASS = re.compile(r"change\s*class\s*[:*\s]*([A-F])\b", re.I)
@@ -38,7 +40,7 @@ def note_text(tree: Path) -> tuple[Path | None, str]:
     for name in NOTES:
         path = tree / name
         if path.is_file():
-            return path, path.read_text(errors="replace")
+            return path, markdown_plain.strip_links(path.read_text(errors="replace"))
     return None, ""
 
 
@@ -85,6 +87,7 @@ def print_unmet(n: int, gate: str, steps: list[str]) -> None:
 
 
 def main() -> int:
+    hub_tool()
     tree = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.cwd().resolve()
     rel_tree = str(tree.relative_to(ROOT) if tree.is_relative_to(ROOT) else tree)
     unmet: list[tuple[str, list[str]]] = []

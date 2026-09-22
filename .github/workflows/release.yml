@@ -1,0 +1,49 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Hub fitness suite
+        run: python3 tools/ci_fitness.py
+
+      - name: NLC verify (policy + fingerprints)
+        run: python3 tools/nlc.py --project . verify
+
+      - name: Release smoke (install store + lock)
+        run: bash scripts/nlc-release-smoke.sh
+
+      - name: Assert tag matches nlc-version.json
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          VER="$(python3 -c "import json; print(json.load(open('integrity/nlc-version.json'))['version'])")"
+          test "$TAG" = "$VER" || { echo "tag $TAG != integrity/nlc-version.json $VER"; exit 1; }
+
+      - name: Assert release notes file
+        run: |
+          NOTES="docs/adoption/RELEASE-${GITHUB_REF_NAME}.md"
+          test -f "$NOTES" || { echo "missing $NOTES"; exit 1; }
+          python3 tools/nlc_release_notes.py --check --version "${GITHUB_REF_NAME#v}"
+
+      - name: Build release tarball
+        run: python3 tools/nlc-release-build.py
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/nlc-*.tar.gz
+          body_path: docs/adoption/RELEASE-${{ github.ref_name }}.md
+          generate_release_notes: false

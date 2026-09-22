@@ -2,8 +2,8 @@
 
 Known-fail fixture for R24 **v1**.
 
-The goal calls `apply_payment`. It does not assign noun fields. Fitness check 1
-must stay MET. The goal *reimplements* the void-invoice adjective by comparing
+The [goal](../../docs/TERMS.md#goal) calls `apply_payment`. It does not assign [noun](../../docs/TERMS.md#noun) fields. Fitness check 1
+must stay [MET](../../docs/TERMS.md#met). The [goal](../../docs/TERMS.md#goal) *reimplements* the void-invoice [adjective](../../docs/TERMS.md#adjective) by comparing
 `status == "void"` and doing money math on `balance` before calling the verb.
 
 ```bash

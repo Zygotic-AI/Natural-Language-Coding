@@ -2,8 +2,8 @@
 
 Known-fail fixture for R6/C5 **v1**.
 
-The goal does not assign `invoice.status`. Fitness check 1 (field writes) must
-stay MET on this tree. The goal persists through a repository `.save()` and a
+The [goal](../../docs/TERMS.md#goal) does not assign `invoice.status`. Fitness check 1 (field writes) must
+stay [MET](../../docs/TERMS.md#met) on this tree. The [goal](../../docs/TERMS.md#goal) persists through a repository `.save()` and a
 raw `UPDATE` instead of calling `apply_payment`.
 
 ```bash

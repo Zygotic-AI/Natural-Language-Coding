@@ -1,1 +1,1 @@
-# Stub charter
+# Stub [charter](../../docs/TERMS.md#charter)

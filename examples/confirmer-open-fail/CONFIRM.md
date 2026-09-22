@@ -1,5 +1,5 @@
 # CONFIRM — confirmer-open-fail
 
-**Change class:** C
+**[Change class](../../docs/TERMS.md#change-class):** C
 
 - C17 — FAIL — Success paths only; precondition cases never written

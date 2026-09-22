@@ -1,19 +1,19 @@
 # A-C1
 
-- Requirement: `C1`
-- Outcome: **met** | **not met** only
-- Gate: `tools/fitness-c1.py`
+- [Requirement](../../docs/TERMS.md#requirement): `C1`
+- Outcome: **[met](../../docs/TERMS.md#met)** | **not [met](../../docs/TERMS.md#met)** only
+- [Gate](../../docs/TERMS.md#gate): `tools/fitness-c1.py`
 
 ## Statement
 
-Change class (A–F) is stated.
+[Change class](../../docs/TERMS.md#change-class) (A–F) is stated.
 
 ## Bind
 
 Product trees need CONFIRM.md/PROPOSAL.md with `change class` + A–F.
-If the change set includes CHARTER.md/adrs/, class **C** is wrong-class.
+If the change set includes [CHARTER](../../docs/TERMS.md#charter).md/adrs/, class **C** is wrong-class.
 
-Specimens skip if they have no note. Does not prove A vs B vs D.
+Specimens skip if they have no note. Does not [prove](../../docs/TERMS.md#prove) A vs B vs D.
 
 Designed fail: `examples/missing-change-class/`, `examples/product-no-confirm/`,
 `examples/class-c-on-charter/`.

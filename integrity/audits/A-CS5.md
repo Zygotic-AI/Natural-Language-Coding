@@ -1,16 +1,16 @@
 # A-CS5
 
-- Requirement: `CS5`
-- Outcome: **met** | **not met** only
+- [Requirement](../../docs/TERMS.md#requirement): `CS5`
+- Outcome: **[met](../../docs/TERMS.md#met)** | **not [met](../../docs/TERMS.md#met)** only
 
 ## Statement
 
-Produce ≠ Audit ≠ Ship separation is honored.
+[Produce ≠ Audit ≠ Ship](../../docs/TERMS.md#produce-audit-ship) separation is honored.
 
 ## Binary criteria
 
-Met iff the changed agent noun does not both produce and self-audit as final gate. Audit roles must not have ship authority. Not met if separation is violated.
+[Met](../../docs/TERMS.md#met) iff the changed [agent noun](../../docs/TERMS.md#agent-noun) does not both produce and self-audit as final [gate](../../docs/TERMS.md#gate). [Audit](../../docs/TERMS.md#audit) roles must not have [ship](../../docs/TERMS.md#ship) authority. Not [met](../../docs/TERMS.md#met) if separation is violated.
 
 ## Evidence
 
-On met or not met, cite `agents/<name>/AGENT.md` shipping authority section and trace produce → audit → ship path.
+On [met](../../docs/TERMS.md#met) or not [met](../../docs/TERMS.md#met), cite `agents/<name>/AGENT.md` shipping authority section and trace produce → [audit](../../docs/TERMS.md#audit) → [ship](../../docs/TERMS.md#ship) path.

@@ -10,6 +10,8 @@ import re
 import subprocess
 from pathlib import Path
 
+from markdown_plain import strip_links
+
 NOTES = ("CONFIRM.md", "PROPOSAL.md")
 CHANGED_HEAD = re.compile(r"^CHANGED:\s*$", re.I | re.M)
 BULLET = re.compile(r"^\s*[-*]\s+(\S+)\s*$")
@@ -29,7 +31,8 @@ def parse_changed_list(text: str) -> list[str]:
         b = BULLET.match(line)
         if b is None:
             break
-        paths.append(b.group(1).replace("\\", "/").lstrip("./"))
+        raw = strip_links(b.group(1)).replace("\\", "/").lstrip("./")
+        paths.append(raw)
     return paths
 
 
@@ -79,6 +82,14 @@ def _scope(names: list[str], scan_root: Path, repo_root: Path) -> list[str]:
     return scoped
 
 
+def effective_changed(scan_root: Path, repo_root: Path) -> set[str] | None:
+    """Like changed_paths, but README-only dirty under scan_root → tree-wide code check."""
+    changed = changed_paths(scan_root, repo_root)
+    if changed is not None and not any(is_code_path(c) for c in changed):
+        return None
+    return changed
+
+
 def changed_paths(scan_root: Path, repo_root: Path) -> set[str] | None:
     listed: list[str] = []
     for name in NOTES:
@@ -87,6 +98,11 @@ def changed_paths(scan_root: Path, repo_root: Path) -> set[str] | None:
             listed.extend(parse_changed_list(path.read_text(errors="replace")))
     if listed:
         return set(listed)
+    try:
+        scan_root.resolve().relative_to(repo_root.resolve())
+    except ValueError:
+        # Temp/adopter tree outside hub repo — do not inherit hub git dirty state (C1).
+        return None
     scoped = _scope(git_changed(repo_root), scan_root, repo_root)
     if scoped:
         return set(scoped)

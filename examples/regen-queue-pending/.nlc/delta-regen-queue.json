@@ -1,0 +1,13 @@
+{
+  "uc": "UC9",
+  "version": 1,
+  "change": { "kind": "rule", "id": "specimen" },
+  "goals_to_regen": ["record-bank-payment"],
+  "steps": [
+    {
+      "goal_id": "record-bank-payment",
+      "path": "goals/record-bank-payment",
+      "reason": "specimen — queue must block verify until cleared"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+# Superseded — use github-workflows-nlc-verify.yml → .github/workflows/nlc-verify.yml
+# (nlc-init copies the verify workflow automatically.)

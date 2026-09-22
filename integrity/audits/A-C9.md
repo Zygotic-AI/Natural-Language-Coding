@@ -1,8 +1,8 @@
 # A-C9
 
-- Requirement: `C9`
-- Outcome: **met** | **not met** only
-- Gate: `tools/fitness-schema-identity.py`
+- [Requirement](../../docs/TERMS.md#requirement): `C9`
+- Outcome: **[met](../../docs/TERMS.md#met)** | **not [met](../../docs/TERMS.md#met)** only
+- [Gate](../../docs/TERMS.md#gate): `tools/fitness-schema-identity.py`
 
 ## Statement
 

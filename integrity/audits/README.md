@@ -1,6 +1,6 @@
 # Audits
 
-Each file defines binary **met** / **not met** criteria for one audit id.
+Each file defines binary **[met](../../docs/TERMS.md#met)** / **not [met](../../docs/TERMS.md#met)** criteria for one [audit](../../docs/TERMS.md#audit) id.
 
 Matrix-level audits (`A-BINDING-*`) are defined in [`../binding-matrix.md`](../binding-matrix.md) and executed by [`../../tools/audit-binding-matrix.py`](../../tools/audit-binding-matrix.py).
 

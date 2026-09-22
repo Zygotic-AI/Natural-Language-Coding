@@ -1,6 +1,6 @@
 # invoice-correct
 
-Tiny fixture, not a product. Goal calls `Invoice.apply_payment`; it does **not** assign `invoice.status` or `invoice.balance`.
+Tiny fixture, not a product. [Goal](../../docs/TERMS.md#goal) calls `Invoice.apply_payment`; it does **not** assign `invoice.status` or `invoice.balance`.
 
 This tree must pass:
 

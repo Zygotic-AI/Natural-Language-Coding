@@ -1,0 +1,5 @@
+{
+  "reason": "requirement pack install",
+  "pack": "demo@1.0.0",
+  "uc9_hint": "./nlc maintainer regen-plan --change rule:demo --write-queue"
+}

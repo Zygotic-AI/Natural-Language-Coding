@@ -4,21 +4,21 @@
 
 **Allowed:** Draft the change proposal (spec, not code first). After ratification, implement to the ratified spec.
 
-**Not allowed:** Grade its own proposal as final. Ship implementation in the same pass as the first proposal.
+**Not allowed:** Grade its own proposal as final. [Ship](../docs/TERMS.md#ship) implementation in the same pass as the first proposal.
 
-**Gate id:** `G-PROPOSE`
+**[Gate](../docs/TERMS.md#gate) id:** `G-PROPOSE`
 
 ## Complete / Incomplete evidence
 
 **Complete:** A proposal note exists that lists:
 
-- Change class A–F
+- [Change class](../docs/TERMS.md#change-class) A–F
 - Nouns / verbs / goals / workflows touched
 - Adjectives that must still hold
 - Non-goals
-- Test names that will prove it
+- Test names that will [prove](../docs/TERMS.md#prove) it
 - Impact list
 
-**Incomplete:** Implementation landed in the same pass as the first proposal, or the change class is missing.
+**Incomplete:** Implementation landed in the same pass as the first proposal, or the [change class](../docs/TERMS.md#change-class) is missing.
 
-Charter: §§6–7 (Steps 1–2, 6). Short-form: [`.agents/bbp-short-form.md`](../.agents/bbp-short-form.md).
+[Charter](../docs/TERMS.md#charter): §§6–7 (Steps 1–2, 6). Short-form: [`.agents/bbp-short-form.md`](../.agents/bbp-short-form.md).

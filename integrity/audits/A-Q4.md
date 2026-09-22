@@ -1,18 +1,18 @@
-# Audit A-Q4 — Defect classification is binary
+# [Audit](../../docs/TERMS.md#audit) A-Q4 — [Defect](../../docs/TERMS.md#defect) classification is binary
 
-Requirement: Q4
+[Requirement](../../docs/TERMS.md#requirement): Q4
 
 ## Criterion
 
-Every opportunity outcome is classified as exactly one of: op or defect. No partial, provisional, or weighted outcomes.
+Every [opportunity](../../docs/TERMS.md#opportunity) outcome is classified as exactly one of: [op](../../docs/TERMS.md#op) or [defect](../../docs/TERMS.md#defect). No partial, provisional, or weighted outcomes.
 
-## Met when
+## [Met](../../docs/TERMS.md#met) when
 
 - Every recorded outcome in scope maps to exactly `op` or `defect`
 - No outcome is classified as partial, weighted, provisional, or pending
 - No outcome has multiple classifications
 
-## Not met when
+## Not [met](../../docs/TERMS.md#met) when
 
 - Any outcome is classified as partial, provisional, or weighted
 - Any outcome has no classification
@@ -22,13 +22,13 @@ Every opportunity outcome is classified as exactly one of: op or defect. No part
 ## Evidence
 
 - List of outcomes in scope with their classifications
-- Confirmation that each outcome is exactly one of {op, defect}
+- Confirmation that each outcome is exactly one of {[op](../../docs/TERMS.md#op), [defect](../../docs/TERMS.md#defect)}
 
 ## Failure mode
 
-Quality metric computation refuses; evidence rejected as non-binary.
+[Quality](../../docs/TERMS.md#quality) metric computation refuses; evidence rejected as non-binary.
 
 ## Cross-references
 
-- [`../QUALITY_METRIC.md`](../QUALITY_METRIC.md) — Quality Metric SSOT (defect classification table)
-- [`../GATE.md`](../GATE.md) — Gate outcomes (PASS/FAIL/REFUSE)
+- [`../QUALITY_METRIC.md`](../QUALITY_METRIC.md) — [Quality](../../docs/TERMS.md#quality) Metric SSOT (defect classification table)
+- [`../GATE.md`](../GATE.md) — [Gate](../../docs/TERMS.md#gate) outcomes (PASS/FAIL/REFUSE)

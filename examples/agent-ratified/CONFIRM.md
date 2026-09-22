@@ -1,5 +1,5 @@
 # CONFIRM — agent-ratified
 
-**Change class:** A
+**[Change class](../../docs/TERMS.md#change-class):** A
 
-Ratified-by: bbp-confirmer
+[Ratified-by:](../../docs/TERMS.md#ratified-by) [bbp-confirmer](../../docs/TERMS.md#bbp-confirmer)

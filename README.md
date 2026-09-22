@@ -1,34 +1,94 @@
-# Boundary-Based Architecture
+# [Natural Language Coding](docs/TERMS.md#nlc)
 
-**Locally green, globally wrong — stopped.**
+**Describe outcomes and rules in plain language. Get a gated, boundary-shaped system, or a failed compile you can trust.**
 
-Agents write code that is correct in one file and false across the system. This repo is the compile gate for that failure: small boundaries, adjectives on the noun, verbs as the only mutation path, requirements bound before generate.
+- The AI [compiler](docs/TERMS.md#compiler) generates and audits your entire app, one increment at a time, from your natural language functionality descriptions, requirements, policies, and standards.
+- Trace every [requirement](docs/TERMS.md#requirement) to where it is enforced—**when shipped**; see [jobs to be done](docs/JOBS-TO-BE-DONE.md) for what is available today vs not yet.
+- [Ship](docs/TERMS.md#ship) only what you intended—multiple internal [audit](docs/TERMS.md#audit) points confirm what's intended is what's built, with final audits to certify the entire build.
+- Easily update or add policies, standards, or even major technology—just update and recompile. (Swap AES-256 for AES-512, or GCP for AWS.)
+- Stop silent drift - problems surface at compile time with evidence—or the build stops.
+- The AI [compiler](docs/TERMS.md#compiler) eliminates costly models and hallucinations by producing tightly-scoped code.
+- Code is interchangeable. Build Dev/QA rapidly in Python; deploy UAT and Prod in Rust.
 
-## Three names
+## Quick start (app repo)
 
-| Name | What it is | What it is not |
-|------|------------|----------------|
-| **ACS** — AI-Compiled Systems | The whole thing. Goals and requirements in; BBP-shaped system out, or the build fails. | Not “AI manages my cluster.” |
-| **BBP** — Boundary-Based Programming | The *shape* the compiler must emit. Nouns, verbs, adjectives, goals. | Not an invoice app. `examples/` are specimens for the gates. |
-| **PLANIT** | The *process*: load, interview, plan, bind, close gaps, generate, prove. | Not a second charter. |
+1. **Install** (macOS, Linux, WSL):
 
-Charter SSOT: [`CHARTER.md`](CHARTER.md). Process pages: [`docs/ai-compiled-systems/`](docs/ai-compiled-systems/). Name card: [`docs/ai-compiled-systems/NAMES.md`](docs/ai-compiled-systems/NAMES.md).
+   ```bash
+   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
+   ```
 
-**P / R / C** on rule ids: **P**rinciple (hub honesty), **R**equirement (charter shape), **C**onfirmation (this change). Hyphenated `P-020` is a different series.
+   Windows (PowerShell): [Getting started](docs/ai-compiled-systems/GETTING-STARTED.md) (install block).
 
-## Start here
+   Then check the install: `nlc doctor` (or `./nlc doctor` if you only use a repo-local launcher).
 
-| Artifact | Role |
-|----------|------|
-| [`CHARTER.md`](CHARTER.md) | Rules |
-| [`docs/ai-compiled-systems/`](docs/ai-compiled-systems/) | ACS + PLANIT |
-| [`examples/`](examples/) | Specimens the gates scan |
-| [`tools/`](tools/) | Gates and the impact-graph generator |
-| [`TODO`](TODO) | Open work |
-| [`DESCRIBE.md`](DESCRIBE.md) | Repo memory for agents |
+2. **Create or open your [app repo](docs/TERMS.md#adopter)**
 
-This repo is a practice hub. Adopting application repos follow charter §8 (`domain/`, `goals/`, …). They do not copy `examples/invoice-*` as a product.
+   - **New app:** `nlc new ~/projects/my-app --name MyApp` — scaffolds `./nlc`, [lock file](docs/TERMS.md#lock-file), and CI template.
+   - **Existing code:** [Brownfield (beta)](docs/adoption/BROWNFIELD.md).
+   - Open the repo in [Cursor](https://cursor.com) (Agent chat).
+
+3. **Run `./nlc`** at the repo root. Read **YOUR QUEUE** and the short command map ([menu](docs/nlc/MENU.md)).
+
+4. **`/interview`** — say what you are building; ratify goals, requirements, and knowledge. No product codegen in this step.
+
+5. **`/planit`** — plan, bind, generate one piece at a time, [gate](docs/TERMS.md#gate), then **`./nlc verify-deep`** and **`./nlc verify`**.
+
+6. **[Ship](docs/TERMS.md#ship)** is separate: human `Released-by:` on `CONFIRM.md`, then **`./nlc ship-check`**. Compile green is not release ([verify vs ship](docs/nlc/VERIFY-AND-SHIP.md)).
+
+Stuck on [verify](docs/TERMS.md#verify)? Use **`/verify`** in the agent—not hand-edits to generated files.
+
+## Human vs agent (one screen)
+
+| You run | Agent runs |
+| ------- | ---------- |
+| `./nlc`, `./nlc verify`, `./nlc verify-deep`, `./nlc new`, `./nlc doctor`, `./nlc ship-check` | `/interview`, `/planit`, `/verify` |
+
+Agents also run `./nlc maintainer …` (requirements sync, regen queue, before-generate). You do not need to memorize those—see [HARNESS.md](docs/nlc/HARNESS.md).
+
+## Three layers
+
+| Layer | You say | What it is |
+| ----- | ------- | ---------- |
+| **[NLC](docs/TERMS.md#nlc)** | [Natural Language Coding](docs/TERMS.md#nlc) | Intent in, compile or [refuse](docs/TERMS.md#refuse). |
+| **[ASC](docs/TERMS.md#asc)** | [AI System Compiler](docs/TERMS.md#compiler) | `/interview` + `/planit` + gates in [`tools/`](tools/). |
+| **[Compiled system](docs/TERMS.md#compiled-system)** | Your app tree | BBP-shaped code in *your* repo—not [`examples/`](examples/) (gate specimens only). |
+
+Design SSOT: [`CHARTER.md`](CHARTER.md). Words: [`GLOSSARY.md`](docs/ai-compiled-systems/GLOSSARY.md).
+
+## Go deeper
+
+| If you want… | Read |
+| ------------ | ---- |
+| Five-minute walkthrough | [`GETTING-STARTED.md`](docs/ai-compiled-systems/GETTING-STARTED.md) |
+| Why intent is the product | [`MANIFESTO.md`](docs/ai-compiled-systems/MANIFESTO.md) |
+| Adopt step-by-step | [`BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) |
+| Full doc map | [`docs/nlc/README.md`](docs/nlc/README.md) |
+
+## Working on this [hub](docs/TERMS.md#hub) repo
+
+Clone and `bash scripts/install.sh` (or `install.ps1`). [Hub](docs/TERMS.md#hub) compile [gate](docs/TERMS.md#gate):
+
+```bash
+python3 tools/ci_fitness.py
+```
+
+Windows: `powershell -File tools/ci-fitness.ps1`.
+
+**[Ship](docs/TERMS.md#hub) version:** **`./release`** (one session; or **`./release prepare`** then **`./release finish`**) — [release guide](docs/adoption/RELEASE.md).
+
+Install layout, version pins, and checksums: [`docs/nlc/README.md`](docs/nlc/README.md) (distribution section).
+
+## Not for you if
+
+- You want to hand-edit generated [noun](docs/TERMS.md#noun) code to stay green without changing intent.
+- You need a finished low-code UI today—open gaps are in [`FINDINGS.md`](FINDINGS.md).
+- You only want CI lint rules without goals, requirements, and verify/ship separation.
 
 ## Status
 
-Working charter. Not a ratified organizational standard. Adoption “done” is charter §14.
+Working [charter](docs/TERMS.md#charter) and [hub](docs/TERMS.md#hub) gates. Not a ratified organizational standard. Adoption “done” is [charter](docs/TERMS.md#charter) §14.
+
+**v0.1.0** — install, lock, [greenfield](docs/TERMS.md#greenfield) adopt, `/interview` + `/planit`, [verify](docs/TERMS.md#verify) path, impact graph + [delta-regen](docs/TERMS.md#delta-regen-queue). [Hub](docs/TERMS.md#hub) ships **no** product requirements (ADR 0016). **v0.2** — [requirement packs](docs/TERMS.md#requirement-pack). Gaps: [`FINDINGS.md`](FINDINGS.md).
+
+**P / R / C** on [rule](docs/TERMS.md#rule) ids: **P**rinciple, **R**equirement, **C**onfirmation. Hyphenated `P-020` is operating policy in the companion bindings repo.

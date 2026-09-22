@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NLC verified fingerprints (fast ./nlc verify)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "algorithm", "recorded_at", "hub", "files"],
+  "properties": {
+    "schema": { "type": "integer", "const": 1 },
+    "algorithm": { "type": "string", "const": "sha256" },
+    "recorded_at": { "type": "string" },
+    "hub": { "type": "string" },
+    "files": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+    }
+  }
+}
