@@ -163,7 +163,14 @@ Run approved plan steps **in order**. Bind [gate](../../../docs/TERMS.md#gate) m
 2. **Leaf skill step** — read **`.agents/skills/<name>/SKILL.md`** (or `.cursor/skills/`); run [Gate](../../../docs/TERMS.md#gate) → Procedure; [verify](../../../docs/TERMS.md#verify) leaf output meets §2. Inspect files, diffs, and machine exit codes — do not accept a subagent summary as PASS.
 3. **Before [PLANIT](../../../docs/TERMS.md#planit) step 6 — [Knowledge domain](../../../docs/TERMS.md#knowledge-domain) (UC18):** run `./nlc maintainer guide before-generate --scope <topic>` (repeat scopes as needed). **FAIL** → [PLANIT](../../../docs/TERMS.md#planit) 1 or 5. See [`references/nlc-before-generate.md`](references/nlc-before-generate.md). Harness doc: [`docs/nlc/HARNESS.md`](../../../docs/nlc/HARNESS.md) (documented; optional hooks in `.nlc/hooks.example.json` only).
 4. **[Requirement](../../../docs/TERMS.md#requirement) / [contract](../../../docs/TERMS.md#contract) change (UC9):** if this step is regen after an ADR/rule/verb change, run `python3 tools/nlc-delta-regen.py` first and execute its `steps` in order.
-5. **[PLANIT](../../../docs/TERMS.md#planit) step 6 — Generate:** [hub](../../../docs/TERMS.md#hub) implementation only after [charter](../../../docs/TERMS.md#charter) **ratification** (§6 steps 4–5) unless ADR-exempt. Route **`bbp-proposer`**. **One artifact.** Metrics for that artifact must already be in the plan ([ADR 0010](../../../adrs/0010-gate-after-every-generate.md)). Before writing a new path (skill, doc, code), run `./nlc maintainer gate-scope --add <repo-relative-path>` (or rely on `gate-record`, which appends scope). New goal code may start from `./nlc maintainer goal-scaffold --goal <id>` (ADR 0023 markers). [Primitive](../../../docs/TERMS.md#primitive) I/O only via [`integrity/primitives.md`](../../../integrity/primitives.md) names ([ADR 0009](../../../adrs/0009-primitive-interior-functions.md)). At each adopted [rule](../../../docs/TERMS.md#rule) enforcement site emit a machine line `# nlc:rule=<rule_id>` ([ADR 0023](../../../adrs/0023-rule-instance-trace-and-instant-audit-scope.md)) — use `./nlc maintainer rule-marker --id <rule_id>` for the canonical line; after goal `implementation.py` edits run `./nlc maintainer rule-emit --goal <id>` so the [compiler](../../../docs/TERMS.md#compiler) owns receipts (do not hand-paste markers to pass audits). Humans do not edit output to help audits pass. After `domain/` edits run `python3 tools/fitness-no-noun-inheritance.py <adopter-root>` ([ADR 0008](../../../adrs/0008-no-noun-inheritance.md)). **Version class:** when the change is material, confirm patch / minor / major per [`.agents/instructions/change-version-class.md`](../../../.agents/instructions/change-version-class.md).
+5. **[PLANIT](../../../docs/TERMS.md#planit) steps 2–3 — Plan + atomic actions (ADR 0024):** decompose the plan into atomic actions. Each action carries `id`, `plan_step_id`, and `description`. **Before any emit**, run the pipeline wire:
+   ```bash
+   python3 tools/nlc-pipeline-wire.py --plan <plan.json> --audit <audit.json> \
+       --manifest <emit-manifest.json> --action-gates <gates.json>
+   ```
+   This runs **X1** (action↔plan) then **X2** (reverse audit: every applicable ADR bound to an action). **FAIL → do not emit.** See [`docs/nlc/PIPELINE-WIRING.md`](../../../docs/nlc/PIPELINE-WIRING.md).
+5b. **[PLANIT](../../../docs/TERMS.md#planit) step 6 — Generate:** [hub](../../../docs/TERMS.md#hub) implementation only after [charter](../../../docs/TERMS.md#charter) **ratification** (§6 steps 4–5) unless ADR-exempt. Route **`bbp-proposer`**. **One artifact.** Metrics for that artifact must already be in the plan ([ADR 0010](../../../adrs/0010-gate-after-every-generate.md)). Before writing a new path (skill, doc, code), run `./nlc maintainer gate-scope --add <repo-relative-path>` (or rely on `gate-record`, which appends scope). New goal code may start from `./nlc maintainer goal-scaffold --goal <id>` (ADR 0023 markers). [Primitive](../../../docs/TERMS.md#primitive) I/O only via [`integrity/primitives.md`](../../../integrity/primitives.md) names ([ADR 0009](../../../adrs/0009-primitive-interior-functions.md)). At each adopted [rule](../../../docs/TERMS.md#rule) enforcement site emit a machine line `# nlc:rule=<rule_id>` ([ADR 0023](../../../adrs/0023-rule-instance-trace-and-instant-audit-scope.md)) — use `./nlc maintainer rule-marker --id <rule_id>` for the canonical line; after goal `implementation.py` edits run `./nlc maintainer rule-emit --goal <id>` so the [compiler](../../../docs/TERMS.md#compiler) owns receipts (do not hand-paste markers to pass audits). Humans do not edit output to help audits pass. After `domain/` edits run `python3 tools/fitness-no-noun-inheritance.py <adopter-root>` ([ADR 0008](../../../adrs/0008-no-noun-inheritance.md)). **Version class:** when the change is material, confirm patch / minor / major per [`.agents/instructions/change-version-class.md`](../../../.agents/instructions/change-version-class.md).
+5c. **After emit — audit + manifest + bound gates (ADR 0024):** the emit must also write `emit-manifest.json` beside the artifact (schema: [`docs/nlc/emit-manifest.schema.json`](../../../docs/nlc/emit-manifest.schema.json)). Re-run the same wire; it now executes **X5** (every emit has an audit), **X3** (manifest schema, `unused=na`, gate closed), and **X6** (gates of ADRs bound to this action, default-closed). **FAIL → stop; do not start the next row.** PASS → `./nlc maintainer gate-record --artifact <path> --gate-id <id> --command "<fitness cmd>"` then next statement only.
 6. **[PLANIT](../../../docs/TERMS.md#planit) step 6.5 — [Gate](../../../docs/TERMS.md#gate) that artifact:** run the named metrics immediately. Default fail. FAIL → stop; do not start the next row. PASS → `./nlc maintainer gate-record --artifact <path> --gate-id <id> --command "<fitness cmd>"` then next statement only.
 
 7. **Inline step** — cite commands and exit codes of the **artifact under test**. INCONCLUSIVE is BLOCKED.
@@ -179,103 +186,7 @@ Run approved plan steps **in order**. Bind [gate](../../../docs/TERMS.md#gate) m
 
 **Both** required:
 
-1. **Machine [gate](../../../docs/TERMS.md#gate)** — [hub](../../../docs/TERMS.md#hub): **`bbp-confirmer`** (`python3 tools/ci_fitness.py` + [charter](../../../docs/TERMS.md#charter) §11 with evidence). [Adopter](../../../docs/TERMS.md#adopter): the fitness suite that tree bound. Exit non-zero = fail.
-2. **Adversarial [audit](../../../docs/TERMS.md#audit)** — separate from the generator: statements done, bindings held, no second copy of an [adjective](../../../docs/TERMS.md#adjective) inside a [goal](../../../docs/TERMS.md#goal).
+1. **Machine [gate](../../../docs/TERMS.md#gate)** — [hub](../../../docs/TERMS.md#hub): **`bbp-confirmer`** (`python3 tools/ci_fitness.py` + [charter](../../../docs/TERMS.md#charter) §11 with evidence). [Adopter](../../../docs/TERMS.md#adopter): the fitness suite that t[+7363 bytes at .content[1].resource.text)](../../../docs/TERMS.md#verify) / [verify-deep](../../../docs/TERMS.md#verify-deep) per app config.
+2. **Adversarial [audit](../../../docs/TERMS.md#audit)** — separate pass from the generator: statements done, bound reqs/ADRs/rules held, no second copy of an [adjective](../../../docs/TERMS.md#adjective) inside a [goal](../../../docs/TERMS.md#goal). Human judgment gates: [`HUMAN-JUDGMENT-GATES.md`](../../../docs/nlc/HUMAN-JUDGMENT-GATES.md).
 
-Compile-green is not released. **[Ship](../../../docs/TERMS.md#ship)** is later: `python3 tools/release-audit.py <tree>` after a human writes `Released-by:` (and `Ratified-by:` when class A/B/D/E/F). Do not treat [prove](../../../docs/TERMS.md#prove) PASS as [ship](../../../docs/TERMS.md#ship). Do not write those lines as the [confirmer](../../../docs/TERMS.md#confirmer).
-
-Emit **`## Verdict — Planit prove`** per §4 when step 7 completes.
-
-
----
-
-### [AWL](../../../docs/TERMS.md#awl) Phase 6 — Adversarial execution [audit](../../../docs/TERMS.md#audit) (separate execution)
-
-Separate from Phase 5 prose — **fresh section or subagent pass**. Use [AWL](../../../docs/TERMS.md#awl) **Appendix E** execution [audit](../../../docs/TERMS.md#audit) memo and **Appendix B** meta-audit checklist (T2+). **[Fail-closed](../../../docs/TERMS.md#default-closed)** per [AWL](../../../docs/TERMS.md#awl) §4.
-
-Re-check bindings vs diff; [prove](../../../docs/TERMS.md#prove) evidence is the **artifact under test**. **[Hub](../../../docs/TERMS.md#hub):** [charter](../../../docs/TERMS.md#charter) §11 rows and fitness output present.
-
-**Domain instances** (orchestration hooks — use global Planit when primary):
-
-- **DSI converge** — [`references/local-dsi-converge-audit-template.md`](references/local-dsi-converge-audit-template.md)
-- **Vault PR (ai vault)** — `/local-review-pr` via **`~/.agents/skills/planit`**
-
-**Required:** `GATE-STD` row **PASS** for every produced artifact path, or **FAIL** with fix list.
-
-**Hub compile-system SSOT:** when the diff touches **`TODO` → Build a compiled system** or **`docs/USE-CASES.md`** spine, Phase 6 must cite `python3 tools/fitness-todo-use-cases-ssot.py` → `RESULT:MET` and any updates to [`integrity/uc-product-status.json`](../../../integrity/uc-product-status.json).
-
-Emit **`## Verdict — Planit execution audit`** per §4 before Phase 7.
-
-**Machine receipt:** app repos with compiled `goals/**/implementation*` need `.nlc/change-adversarial.json` (Q2) and `.nlc/produce-package.json` (Q1 + SSOT + Q2) on **`./nlc verify-deep`**. Set `producer_role` and `adversarial_auditor_role` to different loop roles (e.g. `bbp-proposer` vs `bbp-reviewer`) — same value fails verify ([ADR 0003](../../../adrs/0003-systems-extension-agent-nouns.md)). [Hub](../../../docs/TERMS.md#hub) material changes refresh `.nlc/produce-package.json` after **[bbp-reviewer](../../../docs/TERMS.md#bbp-reviewer)**.
-
----
-
-### [AWL](../../../docs/TERMS.md#awl) Phase 7 — Record and propagate (+ hub §6 step 8)
-
-Follow [AWL](../../../docs/TERMS.md#awl) **Appendix F** ([`references/domain-first-authoring.md`](references/domain-first-authoring.md) for back-propagation). **[Hub](../../../docs/TERMS.md#hub):** **`bbp-recorder`** (ADR or “no ADR, reason”).
-
-Emit user-facing **[Handoff](../../../docs/TERMS.md#handoff)** for T2+ multi-step work. [Handoff](../../../docs/TERMS.md#handoff) must include:
-
-- Produced artifact paths
-- **Gate-standard compliance:** per-path **PASS** / **FAIL** / **N/A** for §2
-- Open fix list when any path is **FAIL**
-
-Emit **`## Verdict — Planit process`** (process-level §5 rollup). **PASS** only when intake, [plan audit](../../../docs/TERMS.md#plan-audit), bind [gate](../../../docs/TERMS.md#gate), [prove](../../../docs/TERMS.md#prove), and execution [audit](../../../docs/TERMS.md#audit) verdicts are **PASS**.
-
----
-
-## Routing quick reference
-
-| Outcome slice | Leaf skill / route |
-| ------------- | ------------------ |
-| Proposal / implement (hub) | `bbp-proposer` |
-| Adversarial review | `bbp-reviewer` |
-| [Prove](../../../docs/TERMS.md#prove) + [hub](../../../docs/TERMS.md#hub) fitness | `bbp-confirmer` |
-| [ADR](../../../docs/TERMS.md#adr) / record | `bbp-recorder` |
-| [Knowledge domain](../../../docs/TERMS.md#knowledge-domain) facts / gaps | `agents/knowledge-steward` |
-| Root cause | `/conduct-root-cause-analysis` or `references/root-cause-analysis-standard.md` |
-| DSI, [greenfield](../../../docs/TERMS.md#greenfield) WO, make-a-skill, ai vault `local-*` | **`~/.agents/skills/planit`** |
-
-When no leaf skill fits, execute inline under this procedure with full [AWL](../../../docs/TERMS.md#awl) audits and §2 on all outputs.
-
----
-
-## Reference files
-
-| File | Use |
-| ---- | --- |
-| [`references/README.md`](references/README.md) | Vendored [AWL](../../../docs/TERMS.md#awl) norms + sync policy |
-| [`references/planit-process.md`](references/planit-process.md) | [PLANIT](../../../docs/TERMS.md#planit) steps summary |
-| [`references/hub-charter-loop.md`](references/hub-charter-loop.md) | [Charter](../../../docs/TERMS.md#charter) §6 [hub](../../../docs/TERMS.md#hub) mapping |
-| [`docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md`](../../../docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md) | Combined spine |
-| [`.agents/bbp-short-form.md`](../../bbp-short-form.md) | [Charter](../../../docs/TERMS.md#charter) §15 |
-
----
-
-## [NLC](../../../docs/TERMS.md#nlc) shell (agent-invoked — ADR 0020)
-
-From the [adopter](../../../docs/TERMS.md#adopter) [app repo](../../../docs/TERMS.md#adopter) root, **you** run machine steps; do not ask the human to run these between chat turns:
-
-- `./nlc` — refresh queue after durable writes
-- `./nlc maintainer requirements` after requirements ratified
-- `./nlc verify-deep` then `./nlc verify` at [PLANIT](../../../docs/TERMS.md#planit) step 7
-- `./nlc maintainer guide planit-start --label "…"` while a build session is open; `./nlc maintainer guide planit-end` when done
-- **[UC9](../../../docs/TERMS.md#uc9) regen queue:** `./nlc maintainer regen-continue` → one [goal](../../../docs/TERMS.md#goal) via [PLANIT](../../../docs/TERMS.md#planit) → `./nlc maintainer regen-advance`
-
----
-
-## Done signals
-
-- Intake **[Gate](../../../docs/TERMS.md#gate)** **PASS** with §4 verdict emitted
-- Applicability register closed (AWL Phase 2)
-- [Plan audit](../../../docs/TERMS.md#plan-audit) **PASS** with `GATE-STD` planned — every named step PASS, FAIL, or `skip: <reason>` — §4 verdict before execute
-- Bind [gate](../../../docs/TERMS.md#gate) **PASS** before generate
-- Each generate has metrics in the plan; each artifact is gated **before** the next statement (ADR 0010)
-- [Prove](../../../docs/TERMS.md#prove) **PASS** (machine + adversarial); [hub](../../../docs/TERMS.md#hub) [confirmer](../../../docs/TERMS.md#confirmer) output when [hub](../../../docs/TERMS.md#hub) touched. [Prove](../../../docs/TERMS.md#prove) is compile, not [ship](../../../docs/TERMS.md#ship).
-
-- [Ship](../../../docs/TERMS.md#ship) is optional in this skill: `python3 tools/release-audit.py <tree>` after a human `Released-by:` — not part of process PASS
-
-- Execution [audit](../../../docs/TERMS.md#audit) **PASS** with `GATE-STD` on delivered artifacts; evidence is the artifact under test, not a delegate summary — §4 verdict before record
-- Appendix B meta-audit **PASS** when T2+
-- Phase 7 [handoff](../../../docs/TERMS.md#handoff) includes per-artifact gate-standard compliance
-- **Process result: PASS** only when every required phase verdict is **PASS**
+Fail → step 1 or 5, then 6 again. **[Ship](../../../docs/TERMS.md#ship)** is after [verify](../../../docs/TERMS.md#verify) and a human `Released-by:`: `./nlc ship-check` / `release-audit.py`. Compile-green is not released.
