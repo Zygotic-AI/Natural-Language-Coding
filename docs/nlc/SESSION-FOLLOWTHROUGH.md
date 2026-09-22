@@ -1,16 +1,18 @@
-# Session follow-through (2026-09-22)
+# Session followthrough queue
 
-Live gap narrative: [`FINDINGS.md`](../../FINDINGS.md).
+| ID | Item | Status |
+|---|---|---|
+| E1 | CHARTER §3 corpus pointer | **landed** — `tools/apply-charter-corpus-pointer.py` + `fitness-charter-corpus-pointer.py` |
+| E2 | TERMS obligation/corpus | landed (prior) |
+| E3 | explicit ci_fitness 0024 run | landed (glob) |
+| E4 | MANIFESTO.md | landed (prior) |
+| E5 | ADR 0025 + rules | landed (prior) |
+| E6 | nlc-hub-audit skill | landed (prior) |
+| E7 | tracker SSOT | landed (prior) |
+| X1 | action↔plan gate runner | named, not real |
+| X2 | reverse-audit runner | named, not real |
+| X3 | full emit-manifest enforcement | named, not real |
+| X4 | hub BBA dogfood | **partial** — scaffold + gate landed; tools rewrite not started |
+| X5 | full emit-audit runner | v1 landed (prior) |
 
-## In reach
-
-- E1 CHARTER.md §3 two-line insert — still open; pointer + `fitness-charter-corpus-pointer.py` accept CHARTER-CORPUS.md
-- E2 TERMS — done
-- E3 ci_fitness glob — done
-- E4–E7 — done
-
-## Expansion
-
-- X1–X3 named-not-MET — done
-- X4 nlc-init + template nouns/goals + fitness — **v1 done**; hub tool interiors still open
-- X5 emit-audit validator — v1 done
+Sequencing: PR 24 retargeted to main (independent). PR 22 (Copilot CHARTER insert) is obsolete — E1 landed directly.
