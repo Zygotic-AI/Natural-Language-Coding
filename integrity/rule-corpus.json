@@ -1,0 +1,17 @@
+{
+  "schema": "nlc-rule-corpus/v1",
+  "adr": "0024",
+  "note": "Tags published Charter/PRINCIPLES ids. bba = emit shape. nlc = factory process.",
+  "ids": {
+    "P1": "nlc", "P2": "nlc", "P3": "nlc", "P4": "nlc", "P5": "nlc", "P6": "nlc", "P7": "nlc",
+    "R1": "bba", "R2": "bba", "R3": "bba", "R4": "bba", "R5": "bba", "R6": "bba", "R7": "bba", "R8": "bba",
+    "R9": "bba", "R10": "bba", "R11": "bba", "R12": "bba", "R13": "bba", "R14": "bba", "R15": "bba", "R16": "bba",
+    "R17": "bba", "R18": "bba", "R19": "bba", "R20": "nlc", "R21": "nlc", "R22": "nlc",
+    "R23": "bba", "R24": "bba", "R25": "bba", "R26": "nlc", "R27": "nlc", "R28": "nlc", "R29": "nlc",
+    "R30": "nlc", "R31": "nlc", "R32": "bba", "R33": "bba",
+    "C1": "nlc", "C2": "bba", "C3": "bba", "C4": "bba", "C5": "bba", "C6": "bba", "C7": "bba", "C8": "bba",
+    "C9": "bba", "C10": "nlc", "C11": "bba", "C12": "bba", "C13": "bba", "C14": "bba", "C15": "bba",
+    "C16": "bba", "C17": "bba", "C18": "bba", "C19": "bba", "C20": "nlc", "C21": "nlc", "C22": "nlc",
+    "C23": "nlc", "C24": "nlc", "C25": "bba", "C26": "bba"
+  }
+}
