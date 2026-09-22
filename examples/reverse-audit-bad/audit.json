@@ -1,0 +1,6 @@
+{
+  "applicable_adrs": ["0024", "0025"],
+  "bindings": [
+    {"adr_id": "0024", "action_id": "a1"}
+  ]
+}

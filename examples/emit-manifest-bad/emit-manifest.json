@@ -1,0 +1,12 @@
+{
+  "schema": "nlc-emit-manifest/v0",
+  "emit_id": "e2",
+  "action_id": "a2",
+  "artifact_path": "domain/x.py",
+  "bound_adr_ids": ["0024"],
+  "audit": {"status": "pending", "path": ""},
+  "gate": {"status": "closed", "default": "closed"},
+  "decision_trace": [],
+  "thought_anchors": [],
+  "unused": "na"
+}

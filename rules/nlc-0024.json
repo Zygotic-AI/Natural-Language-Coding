@@ -24,19 +24,19 @@
       "id": "NLC-0024-04",
       "condition": "Work is planned",
       "obligation": "Plan decomposes to atomic actions; each action is gated and validated against the plan",
-      "gate": "expansion: action-plan-gate"
+      "gate": "tools/nlc-action-plan-gate.py"
     },
     {
       "id": "NLC-0024-05",
       "condition": "Actions exist",
       "obligation": "ADRs bind to actions; reverse audit fails if an applicable ADR is unbound",
-      "gate": "expansion: reverse-audit"
+      "gate": "tools/nlc-reverse-audit.py"
     },
     {
       "id": "NLC-0024-06",
       "condition": "An action emits",
       "obligation": "Emit produces artifact + JSON manifest; schema is predefined; unused fields are na; trace and thought anchors present; emit is audited; bound-ADR gates run immediately and default-closed",
-      "gate": "partial: ADR 0010 gate-record; expansion: full manifest schema"
+      "gate": "tools/nlc-emit-manifest-enforce.py"
     }
   ]
 }
