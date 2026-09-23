@@ -10,11 +10,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nlc_adr_active import parse_active_rows, parse_index_rows  # noqa: E402
+from nlc_requirements import hub_tool  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> int:
+    hub_tool()
     _ = sys.argv[1:]
     index = parse_index_rows((ROOT / "adrs" / "INDEX.md").read_text(encoding="utf-8"))
     active_list = parse_active_rows((ROOT / "adrs" / "ACTIVE.md").read_text(encoding="utf-8"))
