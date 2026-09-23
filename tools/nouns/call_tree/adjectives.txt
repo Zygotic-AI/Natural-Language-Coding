@@ -1,0 +1,2 @@
+# adjectives for call_tree
+emit-owned

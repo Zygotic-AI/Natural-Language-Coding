@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOL = ROOT / "tools" / "nlc-brownfield-inventory.py"
+NOUN = ROOT / "tools" / "nouns" / "brownfield_inventory" / "brownfield_inventory.py"
 HARNESS = ROOT / "docs" / "nlc" / "HARNESS.md"
 
 
@@ -18,7 +19,10 @@ def main() -> int:
     if not TOOL.is_file():
         violations.append("missing nlc-brownfield-inventory.py")
     else:
-        text = TOOL.read_text(encoding="utf-8", errors="replace")
+        parts = [TOOL.read_text(encoding="utf-8", errors="replace")]
+        if NOUN.is_file():
+            parts.append(NOUN.read_text(encoding="utf-8", errors="replace"))
+        text = "\n".join(parts)
         if "goal-scaffold" not in text or "RULE-TRACE" not in text:
             violations.append("brownfield inventory must cite goal-scaffold and RULE-TRACE")
     proc = subprocess.run(
