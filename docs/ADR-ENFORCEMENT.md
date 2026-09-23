@@ -31,6 +31,7 @@ Every **Accepted** [ADR](../adrs/README.md) must map to **runnable** binders (to
 | 0024 | `fitness-adr-0024-binder.py` + `nlc-action-plan-gate.py` + `nlc-reverse-audit.py` + `nlc-emit-manifest-enforce.py` (ADR 0026) | bound |
 | 0025 | `rules/nlc-0025.json` + binder (v1: existence + fields) | bound |
 | 0026 | `nlc-action-plan-gate.py` + `nlc-reverse-audit.py` + `nlc-emit-manifest-enforce.py` + specimens + fitness wrappers | bound |
+| 0027 | `nlc-emit-from-prose.py` + `fitness-nlc-emit-from-prose.py` | bound |
 | 0030 | `nlc-pipeline-wire.py` + `nlc-action-gates.py` + `nlc_emit_audit.py` + `fitness-nlc-pipeline-wire.py` | bound |
 
 **0007/0009 gap:** full semantic rule runners and per-language call-tree packs are not MET; v1 binders are `rule-runner`, `rule-emit`, and `call-tree`. ADR 0023 marker emit is bound via `rule-emit` / `goal-scaffold` / verify audit.

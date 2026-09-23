@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "algorithm": "sha256",
-  "recorded_at": "2026-09-23T01:42:40Z",
+  "recorded_at": "2026-09-23T01:45:25Z",
   "hub": "0.2.0",
   "files": {
     "adrs/0001-zero-variance-integrity.md": "3c5979c1832bab283044d51e7c9f9c30db418e0bbaa725258e76dc73ad52c767",
@@ -30,8 +30,9 @@
     "adrs/0024-nlc-factory-spine.md": "c6c935429a1f33c9347a3e392cd9dfe11625f501a0f9feed227c49050c1a48ff",
     "adrs/0025-belief-no-blame-climb.md": "3a4efbf5e6422e6f6c49a94bee6590b1e94534700786370457d26d892b042c71",
     "adrs/0026-promote-x1-x3-runners.md": "3688664a4d924e65a3b569d25545adb8d587709f841839d90c6efc01c48e1f71",
+    "adrs/0027-emit-from-prose.md": "e5e85f8b1f12a3b1eb505c0bed1f23d47ca144748c1b6c6c7c238381675f14ad",
     "adrs/0030-pipeline-wiring.md": "8a5e5038dbd4031669250cb2b29ed96889194839720819c7ee21b58c10417fba",
-    "adrs/README.md": "6473c8cb541d2673e1a44764c0ac09a937f7f7ccc43563ba14a72aa766a17082",
+    "adrs/README.md": "684f7139c0226cbd8e0bb15b0913e0b7ac96f5c67fa7a4a0cfcf6d5999728484",
     "rules/goal-bindings.json": "9956a3632532a8878e57aed3cd6ba26aa607d1b06ddffb882d10e50872255ba8",
     "rules/nlc-0024.json": "fa09d9c492dfd99fa52595f29b1bd774980e9faddacbd630bb54af8c1f8ba4ad",
     "rules/nlc-0025.json": "7dc6cd53afc87d890a2250c1da120da9ce1671cf8e77cdaf90370a3211bbe607",
