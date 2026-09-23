@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ADR 0023: compiler-owned nlc:rule= receipts on goal generate/regen."""
+"""ADR 0023: compiler-owned nlc:rule= receipts on goal generate/regen (CLI adapter)."""
 
 from __future__ import annotations
 
@@ -10,73 +10,22 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nlc_requirements import hub_tool
-from nlc_rule_coverage import MARKER_RE, load_adopted
-from nlc_rule_marker import marker_line
 from nlc_uc9_bindings import load_goal_bindings
+from nouns.rule_receipt.rule_receipt import (
+    MARKER_RE,
+    apply_markers_to_source,
+    load_adopted,
+    materialize_ir,
+    write_snapshot,
+)
 
 GOAL_ID_RE = re.compile(r"^[a-z][a-z0-9_-]*$")
 
 
 def existing_rule_ids(text: str) -> set[str]:
     return {m.group(1) for m in MARKER_RE.finditer(text)}
-
-
-def _first_def_body_insert(lines: list[str]) -> tuple[int, str]:
-    def_idx = -1
-    for i, line in enumerate(lines):
-        stripped = line.lstrip()
-        if stripped.startswith("def ") and stripped.endswith(":"):
-            def_idx = i
-            break
-    if def_idx < 0:
-        return len(lines), "    "
-    j = def_idx + 1
-    while j < len(lines) and not lines[j].strip():
-        j += 1
-    indent = "    "
-    if j < len(lines):
-        m = re.match(r"^(\s*)", lines[j])
-        if m and m.group(1):
-            indent = m.group(1)
-        s = lines[j].lstrip()
-        if s.startswith('"""') or s.startswith("'''"):
-            quote = s[:3]
-            if s.count(quote) >= 2 and len(s) > 3:
-                j += 1
-            else:
-                j += 1
-                while j < len(lines) and quote not in lines[j]:
-                    j += 1
-                j += 1
-            while j < len(lines) and not lines[j].strip():
-                j += 1
-            if j < len(lines):
-                m2 = re.match(r"^(\s*)", lines[j])
-                if m2 and m2.group(1):
-                    indent = m2.group(1)
-    return j, indent
-
-
-def apply_markers_to_source(text: str, rule_ids: list[str]) -> tuple[str, list[str]]:
-    """Insert missing compiler markers; return new text and ids added."""
-    have = existing_rule_ids(text)
-    missing = [rid for rid in rule_ids if rid not in have]
-    if not missing:
-        return text, []
-    lines = text.splitlines()
-    insert_at, indent = _first_def_body_insert(lines)
-    new_lines: list[str] = []
-    if insert_at == len(lines) or not any(l.strip() for l in lines):
-        if lines and lines[-1].strip():
-            lines.append("")
-    if insert_at > 0 and insert_at <= len(lines):
-        prev = lines[insert_at - 1] if insert_at else ""
-        if prev.strip() and not prev.rstrip().endswith(":"):
-            pass
-    block = [f"{indent}{marker_line(rid, 'python')}" for rid in missing]
-    out = lines[:insert_at] + block + lines[insert_at:]
-    return "\n".join(out) + ("\n" if text.endswith("\n") else ""), missing
 
 
 def rule_ids_for_goal(root: Path, goal_id: str) -> list[str]:
@@ -90,7 +39,9 @@ def rule_ids_for_goal(root: Path, goal_id: str) -> list[str]:
     return sorted({str(r["rule_id"]) for r in load_adopted(rules_path)})
 
 
-def sync_goal_implementation(root: Path, goal_id: str, *, dry_run: bool = False) -> tuple[Path, list[str]]:
+def sync_goal_implementation(
+    root: Path, goal_id: str, *, dry_run: bool = False
+) -> tuple[Path, list[str]]:
     if not GOAL_ID_RE.match(goal_id):
         raise ValueError("goal id must be lowercase slug (a-z0-9_-)")
     impl = root / "goals" / goal_id / "implementation.py"
@@ -122,7 +73,9 @@ def main() -> int:
             print(stamp[0], file=sys.stderr)
             return 2
     try:
-        path, added = sync_goal_implementation(root, args.goal.strip(), dry_run=args.dry_run)
+        path, added = sync_goal_implementation(
+            root, args.goal.strip(), dry_run=args.dry_run
+        )
     except (ValueError, FileNotFoundError) as exc:
         print(str(exc), file=sys.stderr)
         return 2
@@ -132,7 +85,6 @@ def main() -> int:
     def _post_emit() -> None:
         from nlc_gate_scope import add_scope_path
         from nlc_generate_provenance import record_generate
-        from nlc_rule_runner import materialize_ir, write_snapshot
 
         add_scope_path(root, rel_s)
         record_generate(root, rel_s, "rule-emit")

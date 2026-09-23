@@ -1,0 +1,40 @@
+{
+  "version": "1",
+  "verbs": {
+    "format_marker": {
+      "input": { "type": "object", "required": ["rule_id"] },
+      "output": { "type": "object", "required": ["line"] },
+      "error": { "type": "object" }
+    },
+    "apply_markers_to_source": {
+      "input": { "type": "object", "required": ["text", "rule_ids"] },
+      "output": { "type": "object", "required": ["text", "added"] },
+      "error": { "type": "object" }
+    },
+    "load_adopted": {
+      "input": { "type": "object", "required": ["path"] },
+      "output": { "type": "object", "required": ["rows"] },
+      "error": { "type": "object" }
+    },
+    "scan_markers": {
+      "input": { "type": "object", "required": ["root"] },
+      "output": { "type": "object", "required": ["hits"] },
+      "error": { "type": "object" }
+    },
+    "materialize_ir": {
+      "input": { "type": "object", "required": ["root"] },
+      "output": { "type": "object", "required": ["rows"] },
+      "error": { "type": "object" }
+    },
+    "write_snapshot": {
+      "input": { "type": "object", "required": ["root", "rows"] },
+      "output": { "type": "object", "required": ["path"] },
+      "error": { "type": "object" }
+    },
+    "check_ir": {
+      "input": { "type": "object", "required": ["root"] },
+      "output": { "type": "object", "required": ["errors"] },
+      "error": { "type": "object" }
+    }
+  }
+}
