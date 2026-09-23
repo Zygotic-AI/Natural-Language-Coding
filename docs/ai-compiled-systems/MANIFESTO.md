@@ -6,6 +6,30 @@ Software failures are usually not missing `if` statements. They are two truths a
 
 The [compiler](../TERMS.md#compiler) is AI. That does not mean autocomplete in a file. It means: humans keep intent; the [compiler](../TERMS.md#compiler) emits a boundary-shaped system; a [gate](../TERMS.md#gate) fails a quiet fork.
 
+## Belief
+
+Agents can write perfect code. Perfect is not a talent claim. It is what happens when the process is suitable and the environment makes the unsuitable path refuse.
+
+The product of this repository is that process. Compiled systems are the factory output. They are inevitable when the factory is honest.
+
+### No blame
+
+A defect is not an agent mistake. It is not a human mistake. It is evidence that a process was not suitable for the agents or humans who ran it.
+
+[RCA](../TERMS.md#rca) does not ask who. RCA asks which process, if it had been different, would have made the original defect impossible. Then it asks what process produced *that* process. Climb until the disconnect is visible.
+
+### Climb upstream
+
+A local environment fix that would have changed this one incident is not root. Root is the condition that produced the environment.
+
+If a later process (an interview skill, a rule pack, a compiler step) ships incomplete, the first finding is that process. The next question is what in *this* factory allowed that process to ship incomplete. Keep climbing.
+
+### Buck stops here
+
+This repo is the end of the climb. When the factory makes defects, they are disconnects between the belief on this page and an implementation that does not carry it.
+
+[NLC](../TERMS.md#nlc) is how the factory runs. [BBA](../TERMS.md#bba) is the shape of what it may emit. Do not confuse them.
+
 ## Value stream
 
 Work flows from stated intent to the user. Defects cost far more the later they are found—design cheap, production expensive. [NLC](../TERMS.md#nlc) does not ask you to memorize the curve; it asks you to **believe the direction** and act on it.
