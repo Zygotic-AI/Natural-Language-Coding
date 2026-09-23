@@ -1,0 +1,2 @@
+# adjectives for migration_catalog
+emit-owned

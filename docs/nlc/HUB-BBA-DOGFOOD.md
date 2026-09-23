@@ -62,3 +62,9 @@ Full rewrite of remaining `tools/*.py` stays open — see [`integrity/hub-x4-rem
 - Thin CLI adapters: `nlc_gate_scope.py`, `nlc_gate_record.py`
 - Same gate: `tools/fitness-hub-x4-noun-pilot.py` (multi-pilot)
 
+## v4 — emit-path noun completion
+
+All former `emit_path_open` hub `nlc*` writers are noun packages under `tools/nouns/` with thin CLI adapters. Enforced by `tools/fitness-hub-x4-noun-pilot.py` + `integrity/hub-x4-remainder.json` (`emit_path_complete`).
+
+Still residual (not claimed closed): mass rewrite of assert/fitness-only `tools/*.py` into nouns.
+

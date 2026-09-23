@@ -25,7 +25,13 @@ def main() -> int:
     for needle in ("refresh_work_queue", 'add_parser("guide"'):
         if needle not in nlc:
             violations.append(f"tools/nlc.py must wire ADR 0019: {needle}")
-    dash = (ROOT / "tools" / "nlc_dashboard.py").read_text(encoding="utf-8", errors="replace")
+    dash_paths = [
+        ROOT / "tools" / "nlc_dashboard.py",
+        ROOT / "tools" / "nouns" / "dashboard" / "dashboard.py",
+    ]
+    dash = "\n".join(
+        p.read_text(encoding="utf-8", errors="replace") for p in dash_paths if p.is_file()
+    )
     if "YOUR QUEUE" not in dash or "Requirements" not in dash:
         violations.append("dashboard must show kanban YOUR QUEUE stages")
     if "work-queue.json" not in dash:

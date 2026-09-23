@@ -1,0 +1,2 @@
+# adjectives for primitive_propose
+emit-owned

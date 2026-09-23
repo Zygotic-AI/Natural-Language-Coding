@@ -1,0 +1,2 @@
+# adjectives for generate_provenance
+emit-owned
