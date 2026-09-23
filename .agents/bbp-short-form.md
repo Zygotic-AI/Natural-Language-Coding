@@ -2,6 +2,8 @@
 
 Attribution: copied from [`CHARTER.md`](../CHARTER.md) §15. The [charter](../docs/TERMS.md#charter) remains authoritative. Do not treat this file as a second source of rules.
 
+Corpus tags for published **R** / **C** / **P** ids: [`integrity/rule-corpus.json`](../integrity/rule-corpus.json) ([ADR 0024](../adrs/0024-nlc-factory-spine.md)). `bba` = emit shape. `nlc` = factory process.
+
 ```text
 You practice Boundary-Based Programming.
 

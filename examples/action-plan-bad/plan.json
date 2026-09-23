@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {"id": "s1", "description": "interview"},
+    {"id": "s2", "description": "orphan step"}
+  ],
+  "actions": [
+    {"id": "a1", "plan_step_id": "s1", "description": "run interview"},
+    {"id": "a2", "plan_step_id": "missing", "description": "bad ref"}
+  ]
+}

@@ -64,7 +64,7 @@ Agent workflow layering referenced inside the **planit** skill (phases, tier rul
 
 ### BBA
 
-**Boundary-Based Architecture**—hub charter and **integrity** roof (`CHARTER.md`, `integrity/`).
+**Boundary-Based Architecture**—emit shape of compiled systems (noun / verb / adjective / goal). Not NLC process law (ADR 0024).
 
 ### BBA-Bindings
 
@@ -154,6 +154,10 @@ Runnable **BBP**-shaped tree in an **adopter** repo—not `examples/` **specimen
 
 **Action** composed of other actions, each gated, plus an outer **gate**.
 
+### Condition
+
+The `if` of a **rule** — when the rule applies (ADR 0024).
+
 ### Confirmer
 
 Path that runs **fitness** + charter §11 evidence (often **bbp-confirmer**).
@@ -169,6 +173,10 @@ Refuse-wired gate for **add-X** contributions. See [CONTRIBUTION.md](../integrit
 ### Contract
 
 **Noun-verb** payload contract vs **goal** envelope (charter §4.5). **Published verb contract** is the edge others depend on (**ADR 0006**).
+
+### Corpus
+
+`nlc` = factory process. `bba` = emit shape. SSOT map: [`../integrity/rule-corpus.json`](../integrity/rule-corpus.json) (ADR 0024). Not a second ADR list.
 
 ---
 
@@ -322,6 +330,10 @@ Rejected pattern—reuse via **verbs** / composition, not subclassing nouns.
 
 ## O
 
+### Obligation
+
+The `then` of a **rule** — what must be true when the **condition** holds.
+
 ### Op
 
 Quality metric: opportunity completed as specified (PASS, **MET**, ready).
@@ -428,7 +440,7 @@ Versioned ADR/rule bundle export/install (hub v0.2). See [REQUIREMENT-PACKS.md](
 
 ### Rule
 
-Adopted if/then over **tags**, **primitives**, and **facts** (ADR 0007).
+Adopted if/then: **condition** (`if`) + **obligation** (`then`) + **gate**. May close over **tags**, **primitives**, and **facts** (ADR 0007). Each rule belongs to one **corpus** (`nlc` | `bba`) (ADR 0024).
 
 ### Rule IR
 

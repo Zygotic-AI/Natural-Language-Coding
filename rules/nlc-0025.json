@@ -1,0 +1,24 @@
+{
+  "adr": "0025",
+  "corpus": "nlc",
+  "rules": [
+    {
+      "id": "NLC-0025-01",
+      "condition": "A defect is recorded",
+      "obligation": "The finding names an unsuitable process, not an agent or human as cause",
+      "gate": "expansion: rca-packet-schema"
+    },
+    {
+      "id": "NLC-0025-02",
+      "condition": "RCA is performed",
+      "obligation": "Climb to the process that produced the process; stop only at this repo",
+      "gate": "expansion: rca-packet-schema"
+    },
+    {
+      "id": "NLC-0025-03",
+      "condition": "Generated code is wrong",
+      "obligation": "Do not treat a hand patch to emit as the corrective action",
+      "gate": "partial: assert-upstream-hand-patch-fails.py"
+    }
+  ]
+}
