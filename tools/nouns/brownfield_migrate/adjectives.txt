@@ -1,0 +1,2 @@
+# adjectives for brownfield_migrate
+emit-owned

@@ -9,6 +9,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 COMPLIANCE = ROOT / "tools" / "nlc_compliance.py"
 VERIFY = ROOT / "tools" / "nlc_verify.py"
+VERIFY_NOUN = ROOT / "tools" / "nouns" / "verify" / "verify.py"
+
+
+def _joined(*paths: Path) -> str:
+    parts: list[str] = []
+    for p in paths:
+        if p.is_file():
+            parts.append(p.read_text(encoding="utf-8", errors="replace"))
+    return "\n".join(parts)
 
 
 def main() -> int:
@@ -32,7 +41,7 @@ def main() -> int:
     if not VERIFY.is_file():
         violations.append("missing nlc_verify.py")
     else:
-        v = VERIFY.read_text(encoding="utf-8", errors="replace")
+        v = _joined(VERIFY, VERIFY_NOUN)
         if "verify_fast_blockers(root)" not in v:
             violations.append("nlc_verify pipeline must call verify_fast_blockers")
     for v in violations:

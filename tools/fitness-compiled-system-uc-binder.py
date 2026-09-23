@@ -57,7 +57,13 @@ def main() -> int:
     )
     if "interview-packet" not in interview:
         violations.append("interview SKILL must mention interview-packet.json handoff")
-    delta = (ROOT / "tools" / "nlc-delta-regen.py").read_text(encoding="utf-8", errors="replace")
+    delta_paths = [
+        ROOT / "tools" / "nlc-delta-regen.py",
+        ROOT / "tools" / "nouns" / "delta_regen" / "delta_regen.py",
+    ]
+    delta = "\n".join(
+        p.read_text(encoding="utf-8", errors="replace") for p in delta_paths if p.is_file()
+    )
     if "goals_for_rule_change" not in delta:
         violations.append("nlc-delta-regen must use goals_for_rule_change (UC9)")
     packs = (ROOT / "tools" / "nlc-pack-install.py").read_text(encoding="utf-8", errors="replace")
