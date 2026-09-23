@@ -15,7 +15,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: `d83c64a` + door-honesty branch `fix/eval-nlc-p0-door-honesty` (NLC-first CHARTER/DESCRIBE; README Python-first; root MANIFESTO.md).
+Last pass: `3dbe1f8` (fix/eval-nlc-p0-door-honesty — NLC-first door wave-1).
 
 ---
 
