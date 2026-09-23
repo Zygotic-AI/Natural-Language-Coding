@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+BOUNDARY = "bba-emit"
+
 import argparse
 import re
 import sys

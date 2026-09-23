@@ -29,6 +29,8 @@ Unparseable input -> exit 1 with a clear error (default-closed).
 
 from __future__ import annotations
 
+BOUNDARY = "bba-emit"
+
 import argparse
 import json
 import re

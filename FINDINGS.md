@@ -140,7 +140,7 @@ Hub ship remains a **human** last step (`./release`).
 |------|-----|
 | ACS path rename | **Done** — `docs/nlc/compiler/`; stub at old path |
 | RCA packet schema binder | ADR 0025 expansion gate |
-| Hub tools noun/verb rewrite | X4 remainder |
+| Hub tools noun/verb rewrite | X4 remainder (`hub-x4-remainder.json`); emit-path BOUNDARY tranche landed |
 | A1 per-rule ADRs | **Tranche-1 done** (ADR 0031–0035 + backlog); non-R prose soft-green residual |
 
 ---
@@ -155,7 +155,7 @@ Hub ship remains a **human** last step (`./release`).
 | `nlc-hub-audit` skill | Replaced with Notion draft + Gate section (`.agents/skills/nlc-hub-audit/`) |
 | P2.6 `gate missing` badges | USE-CASES expansion + FINDINGS Parked + JTBD pointer |
 | Notion Status sync | Evaluate-NLC leaf + children (this PR) |
-| Still parked | X4 rewrite; packs registry (out-of-band); A1 non-R prose residual |
+| Still parked | X4 full noun/verb rewrite; packs registry (out-of-band); A1 non-R prose residual |
 
 ---
 
@@ -166,7 +166,7 @@ One produce leaf / PR per row. Do not soft-green as done without evidence.
 | Todo id | Work | Primary home |
 |---------|------|--------------|
 | **park-a1** | **Tranche-done** — ADR 0031 program + 0032–0035 ratify R1–R25/R32–R33; backlog SSOT; non-R residual soft-green | [`integrity/charter-ratify-backlog.json`](integrity/charter-ratify-backlog.json) |
-| **park-x4** | X4 rewrite — hub `tools/*.py` interiors → noun/verb packages (beyond emit-path `BOUNDARY` slice) | [`docs/nlc/HUB-BBA-DOGFOOD.md`](docs/nlc/HUB-BBA-DOGFOOD.md) |
+| **park-x4** | **Tranche-done** — emit-path BOUNDARY batch + remainder inventory; full noun/verb rewrite soft-green residual | [`integrity/hub-x4-remainder.json`](integrity/hub-x4-remainder.json) |
 | **park-0029** | **Done** — lineage-check + bind-snapshot + freshness | ADR 0029 tools |
 | **park-acs** | **Done** — content under `docs/nlc/compiler/`; `docs/ai-compiled-systems/` stub redirects only | [`docs/nlc/compiler/README.md`](docs/nlc/compiler/README.md) |
 | **park-packs** | Consume **closed**; `pack_registry` remains **open** (out-of-band expansion) | FINDINGS Needed / hub_v02 |
