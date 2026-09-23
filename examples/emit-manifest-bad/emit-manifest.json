@@ -1,0 +1,12 @@
+{
+  "schema": "nlc-emit-manifest/v0",
+  "emit_id": "e-bad",
+  "action_id": "a-bad",
+  "artifact_path": "domain/bad.py",
+  "bound_adr_ids": ["0024"],
+  "audit": {"status": "pending", "path": ""},
+  "gate": {"default": "open"},
+  "decision_trace": [],
+  "thought_anchors": [],
+  "unused": "should-be-na"
+}
