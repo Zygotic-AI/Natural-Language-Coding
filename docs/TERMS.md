@@ -18,9 +18,13 @@ Optional acronym for a **compiled system** artifact only—not the whole product
 
 Named unit of work with contracted I/O and a completion **gate**. See [ACTIONS.md](../integrity/ACTIONS.md).
 
+### Active set
+
+The **tip** of every **lineage** — the only ADRs gates, overlay, audit, and RCA consult. Superseded links stay in history, not in the active set (ADR 0028).
+
 ### ADR
 
-Architecture Decision Record—dated **why** for a choice; may reduce to **rules** when adopted.
+Architecture Decision Record—dated **why** for a choice; may reduce to **rules** when adopted. Policies compile into ADRs; ADRs form immutable **lineages** (ADR 0028).
 
 ### Adopter
 
@@ -45,6 +49,10 @@ Optional acronym for the **compiler** (integrator docs only).
 ### Atomic action
 
 **Action** that cannot split further without losing a binary **gate**.
+
+### Atomic verb
+
+Member of the closed verb set — `create`, `read`, `write`, `update`, `delete`, `validate`, `emit`, `bind`. Compound verbs are sequences of these, never new primitives (ADR 0028). See [VERB-SET.md](bba/VERB-SET.md).
 
 ### Audit
 
@@ -153,6 +161,10 @@ Runnable **BBP**-shaped tree in an **adopter** repo—not `examples/` **specimen
 ### Compound action
 
 **Action** composed of other actions, each gated, plus an outer **gate**.
+
+### Compound verb
+
+Named **sequence** of **atomic verbs**, each gated, plus an outer gate. Not a primitive — composition, not a new verb (ADR 0028).
 
 ### Condition
 
@@ -289,6 +301,10 @@ Row in `knowledge/facts.json` rules can bind; unbound → interview continues.
 ---
 
 ## L
+
+### Lineage
+
+Immutable chain of ADRs about one decision topic. Only the **tip** is in the **active set**; the chain is retained for audit (ADR 0028). See [POLICY-ADR-LINEAGE.md](bba/POLICY-ADR-LINEAGE.md).
 
 ### Lock file
 
@@ -544,7 +560,7 @@ Orchestration across **agent nouns** (§16)—distinct from **goal** in product 
 
 ### Verb (on noun)
 
-Only legal **noun** mutation; contracted I/O and **primitives**.
+Only legal **noun** mutation; contracted I/O and **primitives**. In BBA emit, verbs are **atomic** (ADR 0028).
 
 ### Verb (on agent noun)
 
