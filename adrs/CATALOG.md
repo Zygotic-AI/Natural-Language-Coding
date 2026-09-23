@@ -36,3 +36,8 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0028 | Verb set baseline + policy lineage to ADRs | active | L-0028 |
 | 0029 | ADR lineage, three-document split, bind snapshot | active | L-0029 |
 | 0030 | Pipeline wire: sequence X1/X2/X3/X5/X6 around every emit | active | L-0030 |
+| 0031 | Charter ratification program + backlog SSOT | active | L-0031 |
+| 0032 | Charter ownership and mutation (R1–R8) | active | L-0032 |
+| 0033 | Charter contracts (R9–R12) | active | L-0033 |
+| 0034 | Charter goal shape and composition (R13–R19) | active | L-0034 |
+| 0035 | Charter knowledge and enforcement (R20–R25, R32–R33) | active | L-0035 |

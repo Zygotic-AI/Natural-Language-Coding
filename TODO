@@ -284,7 +284,7 @@ Use `☐` open, `✔ … @done(YY-MM-DD HH:MM)` when done.
 
 ## Planit parked residuals (open produce leaves)
 
-- ☐ **park-a1** A1 ratify — per-rule ADR program for charter rules lacking decision trail
+- ✔ **park-a1** A1 ratify tranche-done — ADR 0031–0035 + backlog; non-R residual soft-green @done(26-09-22 22:40)
 - ☐ **park-x4** X4 rewrite — hub `tools/*.py` interiors as noun/verb packages
 - ✔ **park-0029** ADR 0029 tools — lineage-check + bind-snapshot + freshness @done(26-09-22 22:10)
 - ✔ **park-acs** ACS rename — content under `docs/nlc/compiler/`; stub at `docs/ai-compiled-systems/` @done(26-09-22 22:20)
