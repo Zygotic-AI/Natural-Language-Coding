@@ -1,105 +1,26 @@
 #!/usr/bin/env python3
-"""ADR 0023: scan nlc:rule=<id> markers; map ADR/tag → enforcement sites."""
+"""ADR 0023: scan nlc:rule=<id> markers; map ADR/tag → enforcement sites (CLI adapter)."""
 
 from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 from nlc_requirements import hub_tool  # noqa: E402
-MARKER_RE = re.compile(
-    r"(?:#|//)\s*nlc:rule=([A-Za-z0-9][A-Za-z0-9._-]*)",
+from nouns.rule_receipt.rule_receipt import (  # noqa: E402
+    MARKER_RE,
+    filter_rules,
+    load_adopted,
+    parse_adr_arg,
+    scan_markers,
 )
-SKIP_DIRS = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv"}
-SCAN_DIRS = ("goals", "domain", "adapters", "workflows")
 
-
-def load_adopted(path: Path) -> list[dict]:
-    data = json.loads(path.read_text(encoding="utf-8"))
-    rows = data.get("adoptions") or []
-    return [r for r in rows if isinstance(r, dict) and r.get("rule_id")]
-
-
-def parse_adr_arg(value: str) -> tuple[int, int] | int | None:
-    value = value.strip().lstrip("adr:").lstrip("ADR")
-    if ".." in value:
-        a, b = value.split("..", 1)
-        return (int(a), int(b))
-    if value.isdigit():
-        return int(value)
-    return None
-
-
-def adr_in_range(adr_id: str, spec: tuple[int, int] | int | None) -> bool:
-    if spec is None:
-        return True
-    try:
-        n = int(str(adr_id).strip())
-    except ValueError:
-        return False
-    if isinstance(spec, tuple):
-        return spec[0] <= n <= spec[1]
-    return n == spec
-
-
-def rule_tags(rule: dict) -> set[str]:
-    match = rule.get("match") or {}
-    out: set[str] = set()
-    for key in ("tags_all", "tags_any"):
-        for t in match.get(key) or []:
-            out.add(str(t))
-    return out
-
-
-def filter_rules(
-    rules: list[dict],
-    adr_spec: tuple[int, int] | int | None,
-    tag: str | None,
-) -> list[dict]:
-    out: list[dict] = []
-    for r in rules:
-        if not adr_in_range(str(r.get("adr_id", "")), adr_spec):
-            continue
-        if tag and tag not in rule_tags(r):
-            continue
-        out.append(r)
-    return out
-
-
-def scan_markers(root: Path) -> list[dict]:
-    hits: list[dict] = []
-    for dirname in SCAN_DIRS:
-        base = root / dirname
-        if not base.is_dir():
-            continue
-        for path in base.rglob("*"):
-            if not path.is_file():
-                continue
-            if any(p in SKIP_DIRS for p in path.parts):
-                continue
-            if path.suffix not in {".py", ".ts", ".js", ".tsx", ".jsx", ".mjs", ".cjs"}:
-                continue
-            text = path.read_text(encoding="utf-8", errors="replace")
-            rel = str(path.relative_to(root)).replace("\\", "/")
-            goal_id = ""
-            if "/goals/" in rel:
-                goal_id = rel.split("/goals/", 1)[1].split("/", 1)[0]
-            for line_no, line in enumerate(text.splitlines(), start=1):
-                for m in MARKER_RE.finditer(line):
-                    hits.append(
-                        {
-                            "rule_id": m.group(1),
-                            "file": rel,
-                            "line": line_no,
-                            "goal_id": goal_id or None,
-                        }
-                    )
-    return hits
+# Re-export for importers that used nlc_rule_coverage.MARKER_RE / load_adopted
+__all__ = ["MARKER_RE", "load_adopted", "scan_markers", "filter_rules", "parse_adr_arg"]
 
 
 def main() -> int:

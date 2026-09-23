@@ -140,7 +140,7 @@ Hub ship remains a **human** last step (`./release`).
 |------|-----|
 | ACS path rename | **Done** — `docs/nlc/compiler/`; stub at old path |
 | RCA packet schema binder | ADR 0025 expansion gate |
-| Hub tools noun/verb rewrite | X4 remainder (`hub-x4-remainder.json`); emit-path BOUNDARY tranche landed |
+| Hub tools noun/verb rewrite | X4 BOUNDARY tranche + **RuleReceipt noun pilot**; remainder open |
 | A1 per-rule ADRs | **Tranche-1 done** (ADR 0031–0035 + backlog); non-R prose soft-green residual |
 
 ---
@@ -191,7 +191,7 @@ One produce leaf / PR per row. Do not soft-green as done without evidence.
 |----------|--------|
 | `hub_v02.pack_registry` public product | open / out-of-band |
 | A1 non-R charter prose (§6 process, §16 ship roles) | soft-green in backlog `non_r_residuals` |
-| X4 full `tools/*.py` noun/verb rewrite | parked; remainder inventory published |
+| X4 full `tools/*.py` noun/verb rewrite | **pilot landed** (`RuleReceipt`); remainder still open |
 | ADR 0025 RCA packet schema binder | expansion |
 | Full charter rule ADR coverage beyond R-ids (“~89”) | not claimed |
 
