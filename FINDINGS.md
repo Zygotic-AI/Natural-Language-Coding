@@ -119,7 +119,7 @@ Hub ship remains a **human** last step (`./release`).
 | A11 door | **Done** #38 + permanence gate `fitness-charter-nlc-door.py` |
 | A12 hub self-verify | **Soft-green closed for “exists”** — hub is subject of `./nlc verify`; see [`docs/nlc/HUB-BBA-DOGFOOD.md`](docs/nlc/HUB-BBA-DOGFOOD.md). Full tools noun/verb rewrite still open. |
 | A7 dogfood (door + principles) | PRINCIPLES NLC-first preface; X4 dogfood docs; interior rewrite still parked |
-| P1.1 ACS path | Stub banner on [`docs/ai-compiled-systems/README.md`](docs/ai-compiled-systems/README.md) + GETTING-STARTED; **rename parked** |
+| P1.1 ACS path | Stub banner on [`docs/nlc/compiler/README.md`](docs/nlc/compiler/README.md) + GETTING-STARTED; **rename parked** |
 | P1.2 hero audit | Table below |
 | Soft-green multi-lang | Unchanged — adapters parked |
 
@@ -130,7 +130,7 @@ Hub ship remains a **human** last step (`./release`).
 | `CHARTER.md` | Was BBP-only H1 | NLC door (#38) + door fitness |
 | `DESCRIBE.md` | BBP title | NLC hub title (#38) |
 | `integrity/PRINCIPLES.md` | “(BBP)” title as product | NLC-roof preface; P1 clarified under-covers |
-| `docs/ai-compiled-systems/*` | ACS folder name | Residue banner; rename parked |
+| `docs/nlc/compiler/*` | ACS folder name | Residue banner; rename parked |
 | `README.md` / `docs/nlc/*` | NLC-first already | No change |
 | `bbp-*` tool/skill ids | Under-covers nouns | Leave (ADR 0011) |
 
@@ -138,7 +138,7 @@ Hub ship remains a **human** last step (`./release`).
 
 | Item | Why |
 |------|-----|
-| ACS path rename | Migration cost; stub is enough for soft-green |
+| ACS path rename | **Done** — `docs/nlc/compiler/`; stub at old path |
 | RCA packet schema binder | ADR 0025 expansion gate |
 | Hub tools noun/verb rewrite | X4 remainder |
 | A1 per-rule ADRs for all charter sentences | Separate ratify program |
@@ -155,7 +155,7 @@ Hub ship remains a **human** last step (`./release`).
 | `nlc-hub-audit` skill | Replaced with Notion draft + Gate section (`.agents/skills/nlc-hub-audit/`) |
 | P2.6 `gate missing` badges | USE-CASES expansion + FINDINGS Parked + JTBD pointer |
 | Notion Status sync | Evaluate-NLC leaf + children (this PR) |
-| Still parked | A1 ratify; X4 rewrite; ADR 0029 tools; ACS rename; packs Needed |
+| Still parked | A1 ratify; X4 rewrite; packs registry (out-of-band) |
 
 ---
 
@@ -168,6 +168,6 @@ One produce leaf / PR per row. Do not soft-green as done without evidence.
 | **park-a1** | A1 ratify — per-rule ADR program for charter rules lacking decision trail (ADR 0007 decision-first) | CHARTER document control + `adrs/` |
 | **park-x4** | X4 rewrite — hub `tools/*.py` interiors → noun/verb packages (beyond emit-path `BOUNDARY` slice) | [`docs/nlc/HUB-BBA-DOGFOOD.md`](docs/nlc/HUB-BBA-DOGFOOD.md) |
 | **park-0029** | **Done** — lineage-check + bind-snapshot + freshness | ADR 0029 tools |
-| **park-acs** | ACS rename — migrate `docs/ai-compiled-systems/` → NLC/ASC-aligned path (or keep stub forever) | [`docs/ai-compiled-systems/README.md`](docs/ai-compiled-systems/README.md) banner |
+| **park-acs** | **Done** — content under `docs/nlc/compiler/`; `docs/ai-compiled-systems/` stub redirects only | [`docs/nlc/compiler/README.md`](docs/nlc/compiler/README.md) |
 | **park-packs** | Consume **closed**; `pack_registry` remains **open** (out-of-band expansion) | FINDINGS Needed / hub_v02 |
 

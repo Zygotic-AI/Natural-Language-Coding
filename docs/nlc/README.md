@@ -11,7 +11,7 @@ This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler
 | **Terms dictionary** | [`TERMS.md`](../TERMS.md) |
 | Install [NLC](../TERMS.md#nlc) | [Root `README.md`](../../README.md) → curl / PowerShell install |
 | **Human menu (`nlc`)** | [`MENU.md`](MENU.md) — one entry, jargon-free, agent prompts |
-| Five-minute flow | [`docs/ai-compiled-systems/GETTING-STARTED.md`](../ai-compiled-systems/GETTING-STARTED.md) |
+| Five-minute flow | [`docs/nlc/compiler/GETTING-STARTED.md`](./compiler/GETTING-STARTED.md) |
 | Adopt a new [app repo](../TERMS.md#adopter) | [`docs/adoption/BOOTSTRAP.md`](../adoption/BOOTSTRAP.md) |
 | [Verify](../TERMS.md#verify) vs [ship](../TERMS.md#ship) (QA vs release) | [`VERIFY-AND-SHIP.md`](VERIFY-AND-SHIP.md), [`APP-VERIFY.md`](APP-VERIFY.md) |
 | Human judgment (C24, adversarial, nouns) | [`HUMAN-JUDGMENT-GATES.md`](HUMAN-JUDGMENT-GATES.md) |
@@ -21,8 +21,8 @@ This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler
 
 | Layer | Docs |
 | ----- | ---- |
-| **[NLC](../TERMS.md#nlc) (product)** | [`GLOSSARY.md`](../ai-compiled-systems/GLOSSARY.md), [`MANIFESTO.md`](../ai-compiled-systems/MANIFESTO.md), [`NAMES.md`](../ai-compiled-systems/NAMES.md) |
-| **[Compiler](../TERMS.md#compiler)** | [`PROCESS.md`](../ai-compiled-systems/PROCESS.md), [`PLANIT-ORCHESTRATION.md`](../ai-compiled-systems/PLANIT-ORCHESTRATION.md), [`.agents/skills/planit/SKILL.md`](../../.agents/skills/planit/SKILL.md) |
+| **[NLC](../TERMS.md#nlc) (product)** | [`GLOSSARY.md`](./compiler/GLOSSARY.md), [`MANIFESTO.md`](./compiler/MANIFESTO.md), [`NAMES.md`](./compiler/NAMES.md) |
+| **[Compiler](../TERMS.md#compiler)** | [`PROCESS.md`](./compiler/PROCESS.md), [`PLANIT-ORCHESTRATION.md`](./compiler/PLANIT-ORCHESTRATION.md), [`.agents/skills/planit/SKILL.md`](../../.agents/skills/planit/SKILL.md) |
 | **[Compiled system](../TERMS.md#compiled-system) (your app)** | [`CHARTER.md`](../../CHARTER.md), [`docs/adoption/BROWNFIELD.md`](../adoption/BROWNFIELD.md) |
 
 ## Compile spine (tools)

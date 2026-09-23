@@ -2,7 +2,7 @@
 
 ## What this repo is
 
-**[Natural Language Coding](docs/TERMS.md#nlc) (NLC)** [hub](docs/TERMS.md#hub): goals and requirements in; [compiler](docs/TERMS.md#compiler) out a BBP-shaped **[compiled system](docs/TERMS.md#compiled-system)** or [refuse](docs/TERMS.md#refuse). BBP/BBA remain the design SSOT under the covers (`CHARTER.md`, `integrity/`). Tagline (consumer): stopping agents from shipping slop by compiling intent, not patching emit. Stand-alone branding: no foreign brand packages in [integrity](docs/TERMS.md#integrity); copy and re/unbrand if a shape is useful. Naming: [ADR](docs/TERMS.md#adr) 0011, [`docs/ai-compiled-systems/GLOSSARY.md`](docs/ai-compiled-systems/GLOSSARY.md).
+**[Natural Language Coding](docs/TERMS.md#nlc) (NLC)** [hub](docs/TERMS.md#hub): goals and requirements in; [compiler](docs/TERMS.md#compiler) out a BBP-shaped **[compiled system](docs/TERMS.md#compiled-system)** or [refuse](docs/TERMS.md#refuse). BBP/BBA remain the design SSOT under the covers (`CHARTER.md`, `integrity/`). Tagline (consumer): stopping agents from shipping slop by compiling intent, not patching emit. Stand-alone branding: no foreign brand packages in [integrity](docs/TERMS.md#integrity); copy and re/unbrand if a shape is useful. Naming: [ADR](docs/TERMS.md#adr) 0011, [`docs/nlc/compiler/GLOSSARY.md`](docs/nlc/compiler/GLOSSARY.md).
 
 ## Core model (short)
 

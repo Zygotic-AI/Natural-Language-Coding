@@ -12,7 +12,7 @@ After adding terms here, re-run `python3 tools/link-terms-dictionary.py` to refr
 
 ### ACS
 
-Optional acronym for a **compiled system** artifact only—not the whole product. See [NAMES.md](ai-compiled-systems/NAMES.md).
+Optional acronym for a **compiled system** artifact only—not the whole product. See [NAMES.md](nlc/compiler/NAMES.md).
 
 ### Action
 
@@ -128,7 +128,7 @@ Hub skill: adversarial review citing **R** / **C** / **P**.
 
 ### C (confirmation id)
 
-Checklist line on one change (e.g. C24 release). See [NAMES.md](ai-compiled-systems/NAMES.md).
+Checklist line on one change (e.g. C24 release). See [NAMES.md](nlc/compiler/NAMES.md).
 
 ### Call-tree pack
 
@@ -268,7 +268,7 @@ Principles, matrix, audits, zero-variance practice (`integrity/`).
 
 ### Intent surface
 
-What humans touch vs what the **compiler** emits—[INTENT-SURFACE.md](ai-compiled-systems/INTENT-SURFACE.md).
+What humans touch vs what the **compiler** emits—[INTENT-SURFACE.md](nlc/compiler/INTENT-SURFACE.md).
 
 ### Interview
 

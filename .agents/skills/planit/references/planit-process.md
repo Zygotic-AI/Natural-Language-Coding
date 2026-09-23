@@ -1,10 +1,10 @@
 # [PLANIT](../../../../docs/TERMS.md#planit) process (SSOT)
 
-Normative source: [`docs/ai-compiled-systems/PROCESS.md`](../../../../docs/ai-compiled-systems/PROCESS.md).
+Normative source: [`docs/nlc/compiler/PROCESS.md`](../../../../docs/nlc/compiler/PROCESS.md).
 
-Vocabulary and roles: [`docs/ai-compiled-systems/MERGE.md`](../../../../docs/ai-compiled-systems/MERGE.md).
+Vocabulary and roles: [`docs/nlc/compiler/MERGE.md`](../../../../docs/nlc/compiler/MERGE.md).
 
-[AWL](../../../../docs/TERMS.md#awl) overlay (intake, applicability, `GATE-STD`, tiers): [`docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md`](../../../../docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md) and [`audited-work-loop-standard.md`](audited-work-loop-standard.md).
+[AWL](../../../../docs/TERMS.md#awl) overlay (intake, applicability, `GATE-STD`, tiers): [`docs/nlc/compiler/PLANIT-ORCHESTRATION.md`](../../../../docs/nlc/compiler/PLANIT-ORCHESTRATION.md) and [`audited-work-loop-standard.md`](audited-work-loop-standard.md).
 
 ## Loop
 

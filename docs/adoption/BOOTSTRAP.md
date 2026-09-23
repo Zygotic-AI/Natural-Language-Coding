@@ -52,7 +52,7 @@ Refuses non-empty `domain/` or `goals/` (brownfield: [BROWNFIELD.md](BROWNFIELD.
 
 5. **[Interview](../TERMS.md#interview)** in Cursor on the [app repo](../TERMS.md#adopter): goals, requirements, [knowledge domains](../TERMS.md#knowledge-domain) bound before emit.
 
-6. **[Planit](../TERMS.md#planit)** first [boundary](../TERMS.md#boundary): one [noun](../TERMS.md#noun) + verbs, or one [goal](../TERMS.md#goal) calling existing verbs—[prove](../TERMS.md#prove) before the next statement ([`PROCESS.md`](../ai-compiled-systems/PROCESS.md), [ADR](../TERMS.md#adr) 0010).
+6. **[Planit](../TERMS.md#planit)** first [boundary](../TERMS.md#boundary): one [noun](../TERMS.md#noun) + verbs, or one [goal](../TERMS.md#goal) calling existing verbs—[prove](../TERMS.md#prove) before the next statement ([`PROCESS.md`](./compiler/PROCESS.md), [ADR](../TERMS.md#adr) 0010).
 
 7. **Adoption done** when [charter](../TERMS.md#charter) §14 is true (real noun, real goal, deliberate gate red in CI, written agent loop).
 
