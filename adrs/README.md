@@ -38,3 +38,8 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0028-closed-atomic-verb-set-and-policy-adr-lineage.md`](0028-closed-atomic-verb-set-and-policy-adr-lineage.md) | Closed atomic verb set + policy→ADR lineage (active tip only) | Accepted |
 | [`0029-adr-lineage-active-set-and-bind-snapshot.md`](0029-adr-lineage-active-set-and-bind-snapshot.md) | ADR lineage; ACTIVE/CATALOG/INDEX split; bind snapshot | Accepted |
 | [`0030-pipeline-wiring.md`](0030-pipeline-wiring.md) | Sequence X1/X2/X3/X5/X6 around every emit via `nlc-pipeline-wire.py` | Accepted |
+| [`0031-charter-ratification-program.md`](0031-charter-ratification-program.md) | Charter ratification program; backlog SSOT | Accepted |
+| [`0032-charter-ownership-and-mutation.md`](0032-charter-ownership-and-mutation.md) | Ratify R1–R8 ownership and mutation | Accepted |
+| [`0033-charter-contracts.md`](0033-charter-contracts.md) | Ratify R9–R12 contracts | Accepted |
+| [`0034-charter-goal-shape-and-composition.md`](0034-charter-goal-shape-and-composition.md) | Ratify R13–R19 goal shape and composition | Accepted |
+| [`0035-charter-knowledge-and-enforcement.md`](0035-charter-knowledge-and-enforcement.md) | Ratify R20–R25, R32–R33 knowledge and enforcement | Accepted |

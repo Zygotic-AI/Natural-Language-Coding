@@ -3,7 +3,7 @@
   "files": {
     "scripts/install.sh": "5ef38031dbaf607f3d523205e35dd8b70224cc3c4d1d935155a9c9c29ac56834",
     "scripts/install.ps1": "5f4eaeab15f77863079af017bc4316e7a7f2836b5af73baea8a6c9bfc36254ea",
-    "CHARTER.md": "56185b21915890263a20c766c3d72d2122bb87593054581b044595618d877a7c",
+    "CHARTER.md": "a34491b1f63ac951841d15111cd4f1f777bf08970e5415fae2ca1d8f1dc45a70",
     "tools/ci_fitness.py": "036d0c64f0fced7ad97f5a6e91834dc940c10d80da0716a7a9fb40e4cc762270",
     "tools/ci-fitness.ps1": "a852e9fe423329fc83f068f7ffc70b1898f6a0f3ffd3426e1e73c03f410bd47d",
     "tools/nlc_requirements.py": "a9b0c4b0169fbe28ee0882dbe504c941e022d28960d7e3ce59d6553ea65bfe1f",
