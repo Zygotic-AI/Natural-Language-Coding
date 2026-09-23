@@ -297,7 +297,7 @@ Use `☐` open, `✔ … @done(YY-MM-DD HH:MM)` when done.
 From [`FINDINGS.md`](FINDINGS.md) Last pass soft-green + Parked `gate missing` rows.
 
 - ☐ **pack-registry** — public `hub_v02.pack_registry` product (out-of-band; optional)
-- ☐ **x4-full-rewrite** — hub `tools/*.py` interiors → noun/verb packages (beyond BOUNDARY slice; see `integrity/hub-x4-remainder.json`); **RuleReceipt pilot landed** — remainder open
+- ☐ **x4-full-rewrite** — hub `tools/*.py` interiors → noun/verb packages (beyond BOUNDARY slice; see `integrity/hub-x4-remainder.json`); **RuleReceipt + GateLedger pilots landed** — remainder open
 - ☐ **a1-non-r-prose** — charter §6 process / §16 ship-role (and other non-R) ratification ADRs
 - ☐ **adr-0025-rca-packet** — RCA packet schema binder (`expansion: rca-packet-schema`)
 - ☐ **uc16-code-packs** — per-stack language-scanner / code-pack adapters (beyond Python gate)
