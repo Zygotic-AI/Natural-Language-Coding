@@ -1,0 +1,1224 @@
+{
+  "version": 1,
+  "title": "Hub X4 remainder inventory",
+  "note": "Full noun/verb rewrite of tools/*.py remains parked. This file tracks BOUNDARY/emit-path progress after tranche-1.",
+  "boundary_marker": "BOUNDARY = \"bba-emit\"",
+  "covered_emit_path": [
+    "nlc-before-generate.py",
+    "nlc-emit-from-prose.py",
+    "nlc-init.py",
+    "nlc-pack-export.py",
+    "nlc-pack-ingest.py",
+    "nlc-pack-install.py",
+    "nlc-pipeline-wire.py",
+    "nlc_distribution.py",
+    "nlc_goal_scaffold.py",
+    "nlc_requirements.py",
+    "nlc_rule_emit.py"
+  ],
+  "covered_count": 11,
+  "without_boundary_count": 278,
+  "counts": {
+    "assert_only": 209,
+    "emit_path_open": 26,
+    "other_or_lib": 43
+  },
+  "emit_path_open": [
+    "nlc-action-gates.py",
+    "nlc-adr-bind-snapshot.py",
+    "nlc-brownfield-inventory.py",
+    "nlc-brownfield-migrate.py",
+    "nlc-delta-regen.py",
+    "nlc-impact-graph.py",
+    "nlc-install-hash-update.py",
+    "nlc-release-build.py",
+    "nlc_call_tree.py",
+    "nlc_contract_break_accept.py",
+    "nlc_dashboard.py",
+    "nlc_gate_record.py",
+    "nlc_gate_scope.py",
+    "nlc_generate_provenance.py",
+    "nlc_guide_state.py",
+    "nlc_migration_catalog.py",
+    "nlc_pipeline.py",
+    "nlc_plan_audit.py",
+    "nlc_primitive_propose.py",
+    "nlc_regen_continue.py",
+    "nlc_release_bump.py",
+    "nlc_release_notes.py",
+    "nlc_rule_coverage.py",
+    "nlc_rule_marker.py",
+    "nlc_rule_runner.py",
+    "nlc_verify.py"
+  ],
+  "assert_only_sample": [
+    "assert-adjective-locality-violation-fails.py",
+    "assert-adopter-verify-fast-green-passes.py",
+    "assert-agent-noun-structure-passes.py",
+    "assert-batch-generate-policy-fails.py",
+    "assert-binding-matrix-met.py",
+    "assert-boundary-io-fails.py",
+    "assert-brownfield-inventory-passes.py",
+    "assert-c1-fails.py",
+    "assert-c1-no-note-fails.py",
+    "assert-c1-wrong-class-fails.py",
+    "assert-c10-breaking-fails.py",
+    "assert-c10-changed-scoped-passes.py",
+    "assert-c10-fails.py",
+    "assert-c13-fails.py",
+    "assert-c15-fails.py",
+    "assert-c15-key-fails.py",
+    "assert-c15-nested-fails.py",
+    "assert-c15-unused-fails.py",
+    "assert-c16-fails.py",
+    "assert-c17-fails.py"
+  ],
+  "assert_only_count": 209,
+  "other_or_lib_sample": [
+    "apply-charter-corpus-pointer.py",
+    "changeset.py",
+    "check-rule-adoption.py",
+    "ci_fitness.py",
+    "generate-impact-graph.py",
+    "link-terms-dictionary.py",
+    "load-knowledge-domain.py",
+    "markdown_plain.py",
+    "nlc-action-plan-gate.py",
+    "nlc-adr-active-freshness.py",
+    "nlc-adr-lineage-check.py",
+    "nlc-emit-manifest-enforce.py",
+    "nlc-fetch-hub.py",
+    "nlc-install-verify.py",
+    "nlc-reverse-audit.py",
+    "nlc-update.py",
+    "nlc.py",
+    "nlc_adr_active.py",
+    "nlc_adr_scan.py",
+    "nlc_cli_help.py",
+    "nlc_compliance.py",
+    "nlc_contract_change.py",
+    "nlc_emit_audit.py",
+    "nlc_guide_cmd.py",
+    "nlc_human_gap.py",
+    "nlc_language_scan.py",
+    "nlc_lock_validate.py",
+    "nlc_menu_data.py",
+    "nlc_preflight.py",
+    "nlc_produce_package.py"
+  ],
+  "other_or_lib_count": 43,
+  "entries": [
+    {
+      "file": "apply-charter-corpus-pointer.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "assert-adjective-locality-violation-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-adopter-verify-fast-green-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-agent-noun-structure-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-batch-generate-policy-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-binding-matrix-met.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-boundary-io-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-brownfield-inventory-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c1-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c1-no-note-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c1-wrong-class-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c10-breaking-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c10-changed-scoped-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c10-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c13-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c15-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c15-key-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c15-nested-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c15-unused-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c16-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c17-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c17-no-failure-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c17-no-preserve-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c18-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c18-missing-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c18-no-call-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c2-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c21-changed-scoped-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c21-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c22-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c22-na-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c23-confirm-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c23-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c24-agent-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c24-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-c3-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-changed-missing-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-contract-change-detects-c21-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-contract-presence-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-dashboard-interview-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-delta-regen-narrow-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-duplicated-adjective-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-durable-engine-rule-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-emit-audit-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-escape-hatch-violation-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-gate-record-describe-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-goal-bindings-narrow-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-goal-scaffold-emits-markers.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-guide-orchestration-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-hub-no-product-requirements-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-hub-rule-coverage-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-human-surface-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-impact-graph-generated.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-install-verify-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-interview-gap-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-interview-packet-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-invoice-correct-contract-blockers-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-invoice-correct-noun-inheritance-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-invoice-violation-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-migration-catalog-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-migration-step-noop-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-nlc-naming-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-nlc-update-hermetic-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-non-python-adapter-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-noun-inheritance-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-p2-hub-scope-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-pack-ingest-candidates-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-produce-handoff-refused.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-produce-role-separation-refused.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-project-lock-schema-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-quality-metric-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r12-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r13-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r15-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r15-import-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r17-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r18-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r20-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r20-type-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r20-unannotated-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r25-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r4-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-r4-mention-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-release-preflight-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-release-signed-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-release-smoke-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-release-unsigned-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-requirements-hub-entrypoints-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-requirements-sync-pending-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-rule-adoption-conflicts-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-rule-adoption-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-rule-coverage-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-rule-coverage-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-rule-emit-sync-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-rule-marker-emit.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-rule-runner-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-schema-identity-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-sql-escape-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-taint-alias-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-taint-crossfile-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-taint-helper-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-taint-violation-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-todo-use-cases-ssot-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-upstream-hand-patch-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-validate-agent-nouns-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verb-path-violation-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-before-generate-stamp-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-breaking-accept-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-contract-change-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-deep-produce-refused.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-deep-role-separation-refused.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-gate-record-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-regen-queue-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-rule-coverage-blockers-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-rule-coverage-blockers-passes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-rule-marker-gate-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-skill-gate-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "assert-verify-stale-stamp-fails.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "audit-binding-matrix.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "changeset.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "check-rule-adoption.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "ci_fitness.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "fitness-adjective-locality.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-adopter-verify-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-adr-0001-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-adr-0004-0005-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-adr-0006-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-adr-0008-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-adr-0010-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-adr-0023-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-adr-0024-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-adr-0029-tools.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-adr-gap-parked.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-adr-superseded.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-agent-noun-structure.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-boundary-io.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-branding.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-brownfield-rule-trace.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c1.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c10-changed.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c10.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c13.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c15-idempotent.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c16.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c17.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c18.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c2.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c20.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c21-changed.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c21.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c22.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c23.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c24.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-c3.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-charter-corpus-pointer.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-charter-nlc-door.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-compiled-system-uc-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-compiled-system-uc-product.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-contract-presence.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-dashboard-interview-sync.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-distribution-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-duplicated-adjective.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-escape-hatch.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-goal-imports.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-guide-orchestration.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-harness-gate-binder-sync.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-hub-bba-dogfood.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-hub-bba-interior-slice.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-hub-no-product-requirements.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-human-surface-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-interview-gap-shape.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-interview-prompt-shape.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-jobs-todo-sync.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-menu-harness-sync.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-nlc-action-gates.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-nlc-action-plan-gate.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-nlc-adopt-existing-hints.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-nlc-emit-audit.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-nlc-emit-from-prose.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-nlc-emit-manifest-enforce.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-nlc-naming.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-nlc-pipeline-wire.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-nlc-reverse-audit.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-nlc-rule-emit-wired.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-no-hand-authored-graphs.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-no-noun-field-writes.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-no-noun-inheritance.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-noun-imports.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-p2-hub-scope.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-p4-r31.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-pack-consume-regen.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-planit-generate-markers.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-planit-noun-shape.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-produce-ssot-binder.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-quality-metric.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-r12-version.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-r13-entrypoints.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-r15-copied-helpers.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-r17-workflow-citizen.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-r18-noun-retries.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-r20.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-r25-noun-tests.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-r4.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-requirements-hub-entrypoints.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-schema-identity.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-specimen-contract-policy.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-taint-lifetime.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-todo-use-cases-ssot-matrix.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-todo-use-cases-ssot.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-verb-path.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-verify-pipeline-wired.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-verify-rule-coverage-wired.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "fitness-verify-skill-binders.py",
+      "class": "assert-only"
+    },
+    {
+      "file": "generate-impact-graph.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "link-terms-dictionary.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "load-knowledge-domain.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "markdown_plain.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc-action-gates.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc-action-plan-gate.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc-adr-active-freshness.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc-adr-bind-snapshot.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc-adr-lineage-check.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc-brownfield-inventory.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc-brownfield-migrate.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc-delta-regen.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc-emit-manifest-enforce.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc-fetch-hub.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc-impact-graph.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc-install-hash-update.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc-install-verify.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc-release-build.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc-reverse-audit.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc-update.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_adr_active.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_adr_scan.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_call_tree.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_cli_help.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_compliance.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_contract_break_accept.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_contract_change.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_dashboard.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_emit_audit.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_gate_record.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_gate_scope.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_generate_provenance.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_guide_cmd.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_guide_state.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_human_gap.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_language_scan.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_lock_validate.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_menu_data.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_migration_catalog.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_pipeline.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_plan_audit.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_preflight.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_primitive_propose.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_produce_package.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_regen_continue.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_release_bump.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_release_notes.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_release_preflight.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_release_tags.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_release_target_preflight.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_requirements_cmd.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_rule_coverage.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_rule_marker.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_rule_runner.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "nlc_todo_ssot.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_uc9_bindings.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_uc_blockers.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "nlc_verify.py",
+      "class": "emit-path-open"
+    },
+    {
+      "file": "product_tree.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "release-audit.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "validate-agent-noun-packages.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "validate-interview-packet.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "validate-knowledge-facts.py",
+      "class": "other-or-lib"
+    },
+    {
+      "file": "validate-pack-ingest-candidates.py",
+      "class": "other-or-lib"
+    }
+  ]
+}

@@ -22,6 +22,8 @@ Missing inputs are refused (default-closed), never skipped.
 
 from __future__ import annotations
 
+BOUNDARY = "bba-emit"
+
 import argparse
 import subprocess
 import sys

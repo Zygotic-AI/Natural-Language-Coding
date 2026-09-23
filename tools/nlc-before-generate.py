@@ -11,6 +11,8 @@ Output: BEFORE_GENERATE:MET or BEFORE_GENERATE:NOT_MET. Exit 0 / 1.
 
 from __future__ import annotations
 
+BOUNDARY = "bba-emit"
+
 import argparse
 import json
 import subprocess
