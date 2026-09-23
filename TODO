@@ -286,6 +286,6 @@ Use `☐` open, `✔ … @done(YY-MM-DD HH:MM)` when done.
 
 - ☐ **park-a1** A1 ratify — per-rule ADR program for charter rules lacking decision trail
 - ☐ **park-x4** X4 rewrite — hub `tools/*.py` interiors as noun/verb packages
-- ☐ **park-0029** ADR 0029 tools — lineage resolver + ACTIVE freshness + bind snapshot
+- ✔ **park-0029** ADR 0029 tools — lineage-check + bind-snapshot + freshness @done(26-09-22 22:10)
 - ☐ **park-acs** ACS rename — `docs/ai-compiled-systems/` path migration (or permanent stub)
 - ✔ **park-packs** consume/regen closed (`pack_consume_regen`); registry still open/out-of-band @done(26-09-22 22:05)
