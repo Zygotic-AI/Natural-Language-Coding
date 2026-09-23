@@ -1,57 +1,17 @@
-"""Record PLANIT 6.5 gate PASS for an artifact (ADR 0010)."""
+#!/usr/bin/env python3
+"""Record PLANIT 6.5 gate PASS for an artifact (ADR 0010) — CLI adapter."""
 
 from __future__ import annotations
 
 import argparse
-import json
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
-from nlc_requirements import hub_tool
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nlc_requirements import hub_tool  # noqa: E402
+from nouns.gate_ledger.gate_ledger import append_record  # noqa: E402
 
-VALID_OUTCOMES = {"PASS", "FAIL", "WAIVED"}
-
-
-def append_record(
-    root: Path,
-    *,
-    artifact: str,
-    gate_id: str,
-    outcome: str,
-    command: str | None = None,
-) -> None:
-    if outcome not in VALID_OUTCOMES:
-        raise ValueError(f"outcome must be one of {VALID_OUTCOMES}")
-    rel = artifact.replace("\\", "/").strip()
-    if rel.startswith("./"):
-        rel = rel[2:]
-    nlc = root / ".nlc"
-    nlc.mkdir(parents=True, exist_ok=True)
-    path = nlc / "gate-records.json"
-    records: list[dict] = []
-    if path.is_file():
-        try:
-            data = json.loads(path.read_text(encoding="utf-8"))
-            records = list(data.get("records") or [])
-        except json.JSONDecodeError:
-            records = []
-    records.append(
-        {
-            "artifact": rel,
-            "gate_id": gate_id,
-            "outcome": outcome,
-            "command": command or "",
-            "at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        }
-    )
-    path.write_text(
-        json.dumps({"schema": 1, "records": records}, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    from nlc_gate_scope import add_scope_path
-
-    add_scope_path(root, rel)
+__all__ = ["append_record"]
 
 
 def main() -> int:

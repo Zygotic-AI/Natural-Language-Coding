@@ -1,0 +1,2 @@
+scoped — artifacts listed in gate-scope.json
+receipted — PASS outcomes appended to gate-records.json
