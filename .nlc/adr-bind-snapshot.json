@@ -1,0 +1,218 @@
+{
+  "schema": 1,
+  "source": "adrs/ACTIVE.md",
+  "active_sha256": "585801191f808e7be220236ee4de149451b088ab73b2a2db4fd4579e8d355788",
+  "adrs": [
+    {
+      "adr": "0001",
+      "lineage": "L-0001",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0002",
+      "lineage": "L-0002",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0003",
+      "lineage": "L-0003",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0004",
+      "lineage": "L-0004",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0005",
+      "lineage": "L-0005",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0006",
+      "lineage": "L-0006",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0007",
+      "lineage": "L-0007",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0008",
+      "lineage": "L-0008",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0009",
+      "lineage": "L-0009",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0010",
+      "lineage": "L-0010",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0011",
+      "lineage": "L-0011",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0012",
+      "lineage": "L-0012",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0013",
+      "lineage": "L-0013",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0014",
+      "lineage": "L-0014",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0015",
+      "lineage": "L-0015",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0016",
+      "lineage": "L-0016",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0017",
+      "lineage": "L-0017",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0018",
+      "lineage": "L-0018",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0019",
+      "lineage": "L-0019",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0020",
+      "lineage": "L-0020",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0021",
+      "lineage": "L-0021",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0022",
+      "lineage": "L-0022",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0023",
+      "lineage": "L-0023",
+      "origin": "charter",
+      "effective": "2026-01-01"
+    },
+    {
+      "adr": "0024",
+      "lineage": "L-0024",
+      "origin": "session",
+      "effective": "2026-09-22"
+    },
+    {
+      "adr": "0025",
+      "lineage": "L-0025",
+      "origin": "session",
+      "effective": "2026-09-22"
+    },
+    {
+      "adr": "0026",
+      "lineage": "L-0026",
+      "origin": "session",
+      "effective": "2026-09-22"
+    },
+    {
+      "adr": "0027",
+      "lineage": "L-0027",
+      "origin": "session",
+      "effective": "2026-09-22"
+    },
+    {
+      "adr": "0028",
+      "lineage": "L-0028",
+      "origin": "session",
+      "effective": "2026-09-22"
+    },
+    {
+      "adr": "0029",
+      "lineage": "L-0029",
+      "origin": "session",
+      "effective": "2026-09-22"
+    },
+    {
+      "adr": "0030",
+      "lineage": "L-0030",
+      "origin": "session",
+      "effective": "2026-09-22"
+    },
+    {
+      "adr": "0031",
+      "lineage": "L-0031",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0032",
+      "lineage": "L-0032",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0033",
+      "lineage": "L-0033",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0034",
+      "lineage": "L-0034",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0035",
+      "lineage": "L-0035",
+      "origin": "session",
+      "effective": "2026-09-23"
+    }
+  ],
+  "written_at": "2026-09-23T03:19:18Z"
+}

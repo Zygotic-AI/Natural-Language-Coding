@@ -1,0 +1,219 @@
+{
+  "version": 1,
+  "title": "Charter ratification backlog (A1)",
+  "program_adr": "0031",
+  "ssot": "integrity/charter-ratify-backlog.json",
+  "rules": [
+    {
+      "id": "R1",
+      "status": "ratified",
+      "ratifying_adr": "0032",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R2",
+      "status": "ratified",
+      "ratifying_adr": "0032",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R3",
+      "status": "ratified",
+      "ratifying_adr": "0032",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R4",
+      "status": "ratified",
+      "ratifying_adr": "0032",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R5",
+      "status": "ratified",
+      "ratifying_adr": "0032",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R6",
+      "status": "ratified",
+      "ratifying_adr": "0032",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R7",
+      "status": "ratified",
+      "ratifying_adr": "0032",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R8",
+      "status": "ratified",
+      "ratifying_adr": "0032",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R9",
+      "status": "ratified",
+      "ratifying_adr": "0033",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R10",
+      "status": "ratified",
+      "ratifying_adr": "0033",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R11",
+      "status": "ratified",
+      "ratifying_adr": "0033",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R12",
+      "status": "ratified",
+      "ratifying_adr": "0033",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R13",
+      "status": "ratified",
+      "ratifying_adr": "0034",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R14",
+      "status": "ratified",
+      "ratifying_adr": "0034",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R15",
+      "status": "ratified",
+      "ratifying_adr": "0034",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R16",
+      "status": "ratified",
+      "ratifying_adr": "0034",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R17",
+      "status": "ratified",
+      "ratifying_adr": "0034",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R18",
+      "status": "ratified",
+      "ratifying_adr": "0034",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R19",
+      "status": "ratified",
+      "ratifying_adr": "0034",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R20",
+      "status": "ratified",
+      "ratifying_adr": "0035",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R21",
+      "status": "ratified",
+      "ratifying_adr": "0035",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R22",
+      "status": "ratified",
+      "ratifying_adr": "0035",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R23",
+      "status": "ratified",
+      "ratifying_adr": "0035",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R24",
+      "status": "ratified",
+      "ratifying_adr": "0035",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R25",
+      "status": "ratified",
+      "ratifying_adr": "0035",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R26",
+      "status": "ratified",
+      "ratifying_adr": "0001",
+      "notes": "ADR 0001 integrity"
+    },
+    {
+      "id": "R27",
+      "status": "ratified",
+      "ratifying_adr": "0001",
+      "notes": "ADR 0001 integrity"
+    },
+    {
+      "id": "R28",
+      "status": "ratified",
+      "ratifying_adr": "0001",
+      "notes": "ADR 0001 integrity"
+    },
+    {
+      "id": "R29",
+      "status": "ratified",
+      "ratifying_adr": "0001",
+      "notes": "ADR 0001 integrity"
+    },
+    {
+      "id": "R30",
+      "status": "ratified",
+      "ratifying_adr": "0001",
+      "notes": "ADR 0001 integrity"
+    },
+    {
+      "id": "R31",
+      "status": "ratified",
+      "ratifying_adr": "0001",
+      "notes": "ADR 0001 integrity"
+    },
+    {
+      "id": "R32",
+      "status": "ratified",
+      "ratifying_adr": "0035",
+      "notes": "tranche-1"
+    },
+    {
+      "id": "R33",
+      "status": "ratified",
+      "ratifying_adr": "0035",
+      "notes": "tranche-1"
+    }
+  ],
+  "open_count": 0,
+  "non_r_residuals": [
+    {
+      "id": "process-section-6-order",
+      "status": "soft-green",
+      "notes": "Order of agent execution partly covered by ADR 0024/0010; dedicated thin ADR optional"
+    },
+    {
+      "id": "systems-section-16-ship-roles",
+      "status": "soft-green",
+      "notes": "Agent nouns ADR 0003; produce handoff ADR 0004"
+    }
+  ]
+}
