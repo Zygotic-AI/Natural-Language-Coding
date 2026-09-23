@@ -72,7 +72,7 @@ Agent workflow layering referenced inside the **planit** skill (phases, tier rul
 
 ### BBA
 
-**Boundary-Based Architecture**—emit shape of compiled systems (noun / verb / adjective / goal). Not NLC process law (ADR 0024).
+**Boundary-Based Architecture**—integrity and emit *architecture* under **NLC** (boundaries, contracts, hub integrity). Not the public product name. Distinct from **BBP** (the emit *practice*). Not NLC process law (ADR 0024).
 
 ### BBA-Bindings
 
@@ -80,7 +80,7 @@ Companion repo for **P-0xx** operating policies; index in [OPERATING_BINDINGS.md
 
 ### BBP
 
-**Boundary-Based Programming**—emit shape: **noun**, **verb**, **adjective**, **goal**.
+**Boundary-Based Programming**—emit *practice* under **NLC**: **noun**, **verb**, **adjective**, **goal**. The compiler must emit this shape. Not the public product name.
 
 ### Binding
 

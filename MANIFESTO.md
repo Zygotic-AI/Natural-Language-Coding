@@ -6,7 +6,20 @@ Software failures are usually not missing `if` statements. They are two truths a
 
 **Code is not the product.** The product humans steward is **intent**: goals, requirements, and [knowledge domains](docs/TERMS.md#knowledge-domain). Code is what the [compiler](docs/TERMS.md#compiler) emits—an object file. Tests, PRs, and user-visible behavior are **symptoms** of whether the process was sound.
 
-The [compiler](docs/TERMS.md#compiler) is AI. That does not mean autocomplete in a file. It means: humans keep intent; the [compiler](docs/TERMS.md#compiler) emits a boundary-shaped system; a [gate](docs/TERMS.md#gate) fails a quiet fork.
+The [compiler](docs/TERMS.md#compiler) is AI. That does not mean autocomplete in a file. It means: humans keep intent; the compiler emits a boundary-shaped system; a [gate](docs/TERMS.md#gate) fails a quiet fork.
+
+**[NLC](docs/TERMS.md#nlc) — Natural Language Coding — is the product and the factory.** Everything else in this repo exists so that factory can compile or refuse. [BBA](docs/TERMS.md#bba) and [BBP](docs/TERMS.md#bbp) are subcomponents: the architecture and the emit practice the factory is allowed to produce. They are not peer products and not the public name.
+
+## Thesis
+
+1. Agents can write locally perfect code that is system-false. Perfect-looking files are the failure mode, not the goal.
+2. The only honest product is the process that makes a false fork *refuse* — at emit, not at PR, QA, or production.
+3. Humans own three surfaces: goals, requirements (until adopted as ADRs/rules), and knowledge domains. They approve adoption, ratification, release, certified RCA, and accepted audit findings.
+4. The compiler owns emit: nouns, verbs, adjective implementations, goal bodies, tests, and tag markings required by adopted rules.
+5. A red gate is a success. A green file that no longer matches intent is the defect.
+6. When something is wrong, climb the value stream. Patching generated code without changing intent hides the process defect. The symptom returns later, more expensive.
+
+That is the whole claim. The rest of this page is how we refuse to forget it.
 
 ## Belief
 
@@ -30,7 +43,7 @@ If a later process (an interview skill, a rule pack, a compiler step) ships inco
 
 This repo is the end of the climb. When the factory makes defects, they are disconnects between the belief on this page and an implementation that does not carry it.
 
-[NLC](docs/TERMS.md#nlc) is how the factory runs. [BBA](docs/TERMS.md#bba) is the shape of what it may emit. Do not confuse them.
+This page is the belief. NLC is the factory that has to carry it.
 
 ## Principles (six)
 
@@ -42,19 +55,22 @@ This repo is the end of the climb. When the factory makes defects, they are disc
 
 4. **Process is the product.** We are building a factory; the code is the inevitable output when the factory runs correctly. Even when the customer touches an application, the focus is the process that makes that product inevitable.
 
-5. **Dogfood or don't preach.** The hub must pass its own gates — BBA at its foundation — or the claim is unproven. Bootstrap is the only honest exception, and it must be explicit, time-boxed, and sunset.
+5. **Dogfood or don't preach.** The hub must pass its own gates — BBA/BBP at the foundation of *emit*, under the NLC roof — or the claim is unproven. Bootstrap is the only honest exception, and it must be explicit, time-boxed, and sunset.
 
 6. **Audit immediately.** Catch the fork at emit, not at PR time. Every downstream patch costs more than fixing the process.
 
 ---
 
-## The layer stack
+## The stack (NLC owns the name)
 
-- **[BBA](docs/TERMS.md#bba)** — Boundary-Based Architecture — the foundation. Declared boundaries, contracts on every cross-boundary call.
-- **[NLC](docs/TERMS.md#nlc)** — Natural Language Coding — the consumer roof. Describe intent, compile or refuse.
-- **[BBP](docs/TERMS.md#bbp)** — Boundary-Based Programming — the emit practice under the roof.
+- **[NLC](docs/TERMS.md#nlc)** — Natural Language Coding. The product. Describe intent. Compile or [refuse](docs/TERMS.md#refuse).
+- **[Compiler](docs/TERMS.md#compiler)** — `/interview` + `/planit` + gates. Turns bound intent into a [compiled system](docs/TERMS.md#compiled-system).
+- **[BBP](docs/TERMS.md#bbp)** — Boundary-Based Programming. The emit *practice*: [nouns](docs/TERMS.md#noun) own [adjectives](docs/TERMS.md#adjective); verbs are the only mutation path; [goals](docs/TERMS.md#goal) orchestrate.
+- **[BBA](docs/TERMS.md#bba)** — Boundary-Based Architecture. The emit *architecture* and hub [integrity](docs/TERMS.md#integrity) doctrine under NLC. Not the consumer name.
 
-NLC compliance without BBA underneath is surface compliance only. The hub must be built from declared boundaries, and the hub's own source is the first thing `./nlc verify` runs against.
+NLC without BBA/BBP underneath is surface compliance: a slogan with no refuse. BBA/BBP without NLC as the roof is a shape looking for a factory. The hub's own source is the first thing `./nlc verify` runs against.
+
+Retired as product names: ACS-as-the-whole, AIMS, “governance.” Optional integrator acronyms only: ASC = compiler, ACS = compiled-system artifact.
 
 ---
 
@@ -96,7 +112,7 @@ Intent (goals, requirements, knowledge domains, ADRs, adopted rules)
   → boundary-shaped code, tests, ops
 ```
 
-The source is intent. The code is the object file. Who touches what: [intent surface](INTENT-SURFACE.md). How emit works: [how it codes](HOW-IT-CODES.md).
+The source is intent. The code is the object file. Who touches what: [intent surface](docs/nlc/compiler/INTENT-SURFACE.md). How emit works: [how it codes](docs/nlc/compiler/HOW-IT-CODES.md).
 
 ## Why shape still matters (without making you learn it first)
 
@@ -114,7 +130,7 @@ Humans do not maintain [noun](docs/TERMS.md#noun) files. They hire the [compiler
 
 **[Compiler](docs/TERMS.md#compiler) creates:** nouns, verbs, [adjective](docs/TERMS.md#adjective) implementations, [goal](docs/TERMS.md#goal) bodies, tests, and [tag](docs/TERMS.md#tag) markings **as required by adopted rules**—not ad hoc labels at emit time.
 
-Full table: [intent surface](INTENT-SURFACE.md).
+Full table: [intent surface](docs/nlc/compiler/INTENT-SURFACE.md).
 
 ## Process is the product
 
@@ -126,4 +142,6 @@ We pursue ever-better process through a non-negotiable commitment to industrial 
 
 ## Measure
 
-A healthy system is not “more generated files.” It is: one home per [adjective](docs/TERMS.md#adjective), every [goal](docs/TERMS.md#goal) talking to that home through a [contract](docs/TERMS.md#contract), machine checks that fail when that is not true, and [RCA](docs/TERMS.md#rca) that moves upstream—not patch downstream.
+A healthy system is not “more generated files.” It is: one home per [adjective](docs/TERMS.md#adjective), every [goal](docs/TERMS.md#goal) talking to that home through a [contract](docs/TERMS.md#contract), machine checks that fail when that is not true, and [RCA](docs/TERMS.md#rca) that moves upstream — not patch downstream.
+
+A healthy *factory* is not a larger manifesto. It is: interview that refuses unbound claims, planit that emits one gated artifact at a time, verify that is not ship, and a hub that fails its own gates when the belief on this page is not in the code.

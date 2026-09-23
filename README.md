@@ -1,74 +1,166 @@
-# [Natural Language Coding](docs/TERMS.md#nlc)
+# Natural Language Coding (NLC)
 
-**Describe outcomes and rules in plain language. Get a gated, boundary-shaped system, or a failed compile you can trust.**
+**NLC is the product.** You describe what the system must do and what it must never do, in plain language. The compiler either emits a gated system that traces back to that intent, or it refuses. A red compile is a success: the fork was caught before it shipped.
 
-- The AI [compiler](docs/TERMS.md#compiler) generates and audits your entire app, one increment at a time, from your natural language functionality descriptions, requirements, policies, and standards.
-- Trace every [requirement](docs/TERMS.md#requirement) to where it is enforced—**when shipped**; see [jobs to be done](docs/JOBS-TO-BE-DONE.md) for what is available today vs not yet.
-- [Ship](docs/TERMS.md#ship) only what you intended—multiple internal [audit](docs/TERMS.md#audit) points confirm what's intended is what's built, with final audits to certify the entire build.
-- Easily update or add policies, standards, or even major technology—just update and recompile. (Swap AES-256 for AES-512, or GCP for AWS.)
-- Stop silent drift - problems surface at compile time with evidence—or the build stops.
-- The AI [compiler](docs/TERMS.md#compiler) eliminates costly models and hallucinations by producing tightly-scoped code.
-- Code is interchangeable. Build Dev/QA rapidly in Python; deploy UAT and Prod in Rust.
-- **Soft-green:** hub fitness / source-level gates are **Python-first** today; other languages are adapter-parked (`docs/LANGUAGE-SCANNER.md`), not complete.
+Code is the object file. Goals, requirements, and knowledge are the source.
 
-## Quick start (app repo)
+**BBA** (Boundary-Based Architecture) and **BBP** (Boundary-Based Programming) are *inside* NLC — the shape and integrity rules the compiler must emit. They are not the product name.
 
-1. **Install** (macOS, Linux, WSL):
+## If you want the specifics later
 
-   ```bash
-   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
-   ```
+| You want… | Read |
+| --------- | ---- |
+| The thesis | [`MANIFESTO.md`](MANIFESTO.md) |
+| Confirmable rules | [`CHARTER.md`](CHARTER.md) |
+| Word meanings | [`docs/TERMS.md`](docs/TERMS.md) |
+| Honest “works today / not yet” | [`docs/JOBS-TO-BE-DONE.md`](docs/JOBS-TO-BE-DONE.md) |
+| Numbered compiler stories | [`docs/USE-CASES.md`](docs/USE-CASES.md) |
+| Human command menu | [`docs/nlc/MENU.md`](docs/nlc/MENU.md) |
+| Full doc map | [`docs/nlc/README.md`](docs/nlc/README.md) |
+| Adopt an existing repo | [`docs/adoption/BROWNFIELD.md`](docs/adoption/BROWNFIELD.md) |
+| Verify vs ship | [`docs/nlc/VERIFY-AND-SHIP.md`](docs/nlc/VERIFY-AND-SHIP.md) |
+| Open gaps | [`FINDINGS.md`](FINDINGS.md) |
 
-   Windows (PowerShell): [Getting started](docs/nlc/compiler/GETTING-STARTED.md) (install block).
+You do not need those pages to start.
 
-   Then check the install: `nlc doctor` (or `./nlc doctor` if you only use a repo-local launcher).
+---
 
-2. **Create or open your [app repo](docs/TERMS.md#adopter)**
+## Use it
 
-   - **New app:** `nlc new ~/projects/my-app --name MyApp` — scaffolds `./nlc`, [lock file](docs/TERMS.md#lock-file), and CI template.
-   - **Existing code:** [Brownfield (beta)](docs/adoption/BROWNFIELD.md).
-   - Open the repo in [Cursor](https://cursor.com) (Agent chat).
+### 1. Install
 
-3. **Run `./nlc`** at the repo root. Read **YOUR QUEUE** and the short command map ([menu](docs/nlc/MENU.md)).
+macOS / Linux / WSL:
 
-4. **`/interview`** — say what you are building; ratify goals, requirements, and knowledge. No product codegen in this step.
+```bash
+curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
+nlc doctor
+```
 
-5. **`/planit`** — plan, bind, generate one piece at a time, [gate](docs/TERMS.md#gate), then **`./nlc verify-deep`** and **`./nlc verify`**.
+Windows (PowerShell):
 
-6. **[Ship](docs/TERMS.md#ship)** is separate: human `Released-by:` on `CONFIRM.md`, then **`./nlc ship-check`**. Compile green is not release ([verify vs ship](docs/nlc/VERIFY-AND-SHIP.md)).
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass -Force
+irm https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.ps1 | iex
+nlc doctor
+```
 
-Stuck on [verify](docs/TERMS.md#verify)? Use **`/verify`** in the agent—not hand-edits to generated files.
+If you only have a repo-local launcher, use `./nlc doctor`.
 
-## Human vs agent (one screen)
+### 2. Open an app repo
+
+- **New:** `nlc new ~/projects/my-app --name MyApp` — lock file, `./nlc`, CI template.
+- **Existing code:** [Brownfield (beta)](docs/adoption/BROWNFIELD.md).
+- Open the repo in Cursor (Agent chat). Full adopt walkthrough: [BOOTSTRAP.md](docs/adoption/BOOTSTRAP.md).
+
+### 3. See your queue
+
+From the app repo root:
+
+```bash
+./nlc
+```
+
+Read **YOUR QUEUE** and the command map.
+
+### 4. Bind intent — `/interview`
+
+In the agent: **`/interview`**.
+
+Say the outcome. Ratify goals, requirements, and knowledge. Do not generate product code in this step. Stop when gaps are closed or explicitly waived.
+
+### 5. Compile one piece — `/planit`
+
+In the agent: **`/planit`**.
+
+Plan → bind → generate **one** artifact → gate. Then:
+
+```bash
+./nlc verify-deep
+./nlc verify
+```
+
+If verify fails, use **`/verify`** in the agent. Do not hand-edit generated files to go green.
+
+### 6. Ship (separate from compile)
+
+Compile green is not release.
+
+1. Human `Released-by:` on `CONFIRM.md`.
+2. `./nlc ship-check`.
+
+Details: [verify vs ship](docs/nlc/VERIFY-AND-SHIP.md).
+
+---
+
+## What you run vs what the agent runs
 
 | You run | Agent runs |
 | ------- | ---------- |
-| `./nlc`, `./nlc verify`, `./nlc verify-deep`, `./nlc new`, `./nlc doctor`, `./nlc ship-check` | `/interview`, `/planit`, `/verify` |
+| `./nlc`, `nlc new`, `nlc doctor` | `/interview` |
+| `./nlc verify`, `./nlc verify-deep` | `/planit` |
+| `./nlc ship-check` | `/verify` |
 
-Agents also run `./nlc maintainer …` (requirements sync, regen queue, before-generate). You do not need to memorize those—see [HARNESS.md](docs/nlc/HARNESS.md).
+Agents also run `./nlc maintainer …` (requirements sync, regen queue, before-generate). You do not need those commands. See [HARNESS.md](docs/nlc/HARNESS.md).
 
-## Three layers
+---
 
-| Layer | You say | What it is |
-| ----- | ------- | ---------- |
-| **[NLC](docs/TERMS.md#nlc)** | [Natural Language Coding](docs/TERMS.md#nlc) | Intent in, compile or [refuse](docs/TERMS.md#refuse). |
-| **[ASC](docs/TERMS.md#asc)** | [AI System Compiler](docs/TERMS.md#compiler) | `/interview` + `/planit` + gates in [`tools/`](tools/). |
-| **[Compiled system](docs/TERMS.md#compiled-system)** | Your app tree | BBP-shaped code in *your* repo—not [`examples/`](examples/) (gate specimens only). |
+## What you use it for
 
-Design SSOT: [`CHARTER.md`](CHARTER.md). Words: [`GLOSSARY.md`](docs/nlc/compiler/GLOSSARY.md).
+These are the jobs NLC is built to do. Status is honest: **available** means you can run it on an adopter repo today.
 
-## Go deeper
+| Job | You get | Status |
+| --- | ------- | ------ |
+| Policy into code | Standards → ADRs → rules → markers → gates | Available (v1) |
+| Outcome in, spec out | Interview until goals and facts are bound; no silent scope | Available |
+| Named goal you can audit | Behavior traces to a goal and a plan | Available |
+| Change one rule, not the world | Delta-regen of the affected blast radius | Available (v1) |
+| Catch rule fights before code | Conflicting adopted rules fail at adopt-time | Available |
+| Prove before ship | `verify` green, then a human release step | Available |
+| Fix upstream, not the object file | Red gate → interview / ADR / rule / regen | Available |
+| Greenfield app quickly | Install, lock, scaffold, menu | Available |
+| Upgrade the hub | Lock + migration chain | Available |
+| Bring your own requirements | Requirement packs (install + ratify in *your* repo) | Available (v1) |
+| Size a tech change | Who is hit before you swap a runtime or interior | Blocked (adapters still expanding) |
 
-| If you want… | Read |
-| ------------ | ---- |
-| Five-minute walkthrough | [`GETTING-STARTED.md`](docs/nlc/compiler/GETTING-STARTED.md) |
-| Why intent is the product | [`MANIFESTO.md`](MANIFESTO.md) → SSOT [`docs/nlc/compiler/MANIFESTO.md`](docs/nlc/compiler/MANIFESTO.md) |
-| Adopt step-by-step | [`BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) |
-| Full doc map | [`docs/nlc/README.md`](docs/nlc/README.md) |
+Full narrative + mechanism map: [JOBS-TO-BE-DONE.md](docs/JOBS-TO-BE-DONE.md). Compiler IDs (UC1–UC21): [USE-CASES.md](docs/USE-CASES.md).
 
-## Working on this [hub](docs/TERMS.md#hub) repo
+---
 
-Clone and `bash scripts/install.sh` (or `install.ps1`). [Hub](docs/TERMS.md#hub) compile [gate](docs/TERMS.md#gate):
+## How the pieces fit (one screen)
+
+| Name | Role |
+| ---- | ---- |
+| **NLC** | The product. Intent in; compile or refuse. |
+| **Compiler** (`/interview` + `/planit` + `tools/`) | Turns bound intent into a compiled system. |
+| **Compiled system** | Your app repo. Not `examples/` (those are gate specimens). |
+| **BBP** | Emit *practice*: nouns own adjectives; verbs mutate; goals orchestrate. |
+| **BBA** | Emit *architecture* + hub integrity under NLC. Not the public name. |
+
+Design rules: [`CHARTER.md`](CHARTER.md). Short word list: [`GLOSSARY.md`](docs/nlc/compiler/GLOSSARY.md).
+
+Soft-green today: hub fitness is **Python-first**. Other languages are inventoried, not fully adapted ([LANGUAGE-SCANNER.md](docs/LANGUAGE-SCANNER.md)).
+
+---
+
+## Not for you if
+
+- You want to hand-edit generated noun code to stay green without changing intent.
+- You need a finished low-code UI today — gaps live in [`FINDINGS.md`](FINDINGS.md).
+- You only want CI lint, with no goals, requirements, or verify/ship split.
+
+## Status
+
+Working charter and hub gates. Not a ratified organizational standard. Adoption “done” is charter §14.
+
+**v0.1.0** — install, lock, greenfield adopt, `/interview` + `/planit`, verify path, impact graph + delta-regen. This hub ships **no** product requirements (no PCI/HIPAA built-in; ADR 0016). **v0.2** — requirement packs. Gaps: [`FINDINGS.md`](FINDINGS.md).
+
+**P / R / C** on rule ids: **P**rinciple, **R**equirement, **C**onfirmation. Hyphenated `P-020` is operating policy in the companion bindings repo.
+
+---
+
+## Working on this hub
+
+Clone, then `bash scripts/install.sh` (or `install.ps1`). Hub compile gate:
 
 ```bash
 python3 tools/ci_fitness.py
@@ -76,20 +168,4 @@ python3 tools/ci_fitness.py
 
 Windows: `powershell -File tools/ci-fitness.ps1`.
 
-**[Ship](docs/TERMS.md#hub) version:** **`./release`** (one session; or **`./release prepare`** then **`./release finish`**) — [release guide](docs/adoption/RELEASE.md).
-
-Install layout, version pins, and checksums: [`docs/nlc/README.md`](docs/nlc/README.md) (distribution section).
-
-## Not for you if
-
-- You want to hand-edit generated [noun](docs/TERMS.md#noun) code to stay green without changing intent.
-- You need a finished low-code UI today—open gaps are in [`FINDINGS.md`](FINDINGS.md).
-- You only want CI lint rules without goals, requirements, and verify/ship separation.
-
-## Status
-
-Working [charter](docs/TERMS.md#charter) and [hub](docs/TERMS.md#hub) gates. Not a ratified organizational standard. Adoption “done” is [charter](docs/TERMS.md#charter) §14.
-
-**v0.1.0** — install, lock, [greenfield](docs/TERMS.md#greenfield) adopt, `/interview` + `/planit`, [verify](docs/TERMS.md#verify) path, impact graph + [delta-regen](docs/TERMS.md#delta-regen-queue). [Hub](docs/TERMS.md#hub) ships **no** product requirements (ADR 0016). **v0.2** — [requirement packs](docs/TERMS.md#requirement-pack). Gaps: [`FINDINGS.md`](FINDINGS.md).
-
-**P / R / C** on [rule](docs/TERMS.md#rule) ids: **P**rinciple, **R**equirement, **C**onfirmation. Hyphenated `P-020` is operating policy in the companion bindings repo.
+Ship a hub version with **`./release`** ([release guide](docs/adoption/RELEASE.md)). Install layout and pins: [docs/nlc/README.md](docs/nlc/README.md).

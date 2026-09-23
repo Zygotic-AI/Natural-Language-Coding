@@ -26,7 +26,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 
 ### [Integrity](docs/TERMS.md#integrity) note: [BBA](docs/TERMS.md#bba) vs Bindings
 
-**[BBA](docs/TERMS.md#bba)** (Boundary-Based Architecture) is the roof doctrine — confirmable rules in this repo that define how boundaries, handoffs, and [integrity](docs/TERMS.md#integrity) work (`CHARTER.md`, `integrity/`). **Bindings** is the operating policy map consumed by agent processes — P-series policies (P-016…P-031 class) that wire [refuse](docs/TERMS.md#refuse) criteria and evidence requirements to executable gates. Bindings live in the companion repo (`richardpickett/BBA-Bindings`). See [`docs/OPERATING_BINDINGS.md`](docs/OPERATING_BINDINGS.md) for the policy index.
+**[NLC](docs/TERMS.md#nlc)** is the product roof. **[BBA](docs/TERMS.md#bba)** (Boundary-Based Architecture) is the under-covers integrity architecture — confirmable rules in this repo that define how boundaries, handoffs, and [integrity](docs/TERMS.md#integrity) work (`CHARTER.md`, `integrity/`). **Bindings** is the operating policy map consumed by agent processes — P-series policies (P-016…P-031 class) that wire [refuse](docs/TERMS.md#refuse) criteria and evidence requirements to executable gates. Bindings live in the companion repo (`richardpickett/BBA-Bindings`). See [`docs/OPERATING_BINDINGS.md`](docs/OPERATING_BINDINGS.md) for the policy index.
 
 ## Key paths
 

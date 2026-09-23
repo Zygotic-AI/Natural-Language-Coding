@@ -4,7 +4,7 @@ Index of operating policies from the companion [BBA-Bindings](TERMS.md#bba-bindi
 
 ## Architecture note
 
-**[BBA](TERMS.md#bba)** (Boundary-Based Architecture) is the roof doctrine — confirmable rules that define how boundaries, handoffs, and [integrity](TERMS.md#integrity) work. [BBA](TERMS.md#bba) lives in this repo (`CHARTER.md`, `integrity/`, `agents/`).
+**[NLC](TERMS.md#nlc)** is the product roof. **[BBA](TERMS.md#bba)** (Boundary-Based Architecture) is the under-covers integrity architecture — confirmable rules that define how boundaries, handoffs, and [integrity](TERMS.md#integrity) work. BBA lives in this repo (`CHARTER.md`, `integrity/`, `agents/`).
 
 **Bindings** is the operating policy map consumed by agent processes — concrete P-series policies that wire [refuse](TERMS.md#refuse) criteria, evidence requirements, and [handoff](TERMS.md#handoff) contracts to executable gates. Bindings live in the companion repo.
 
@@ -71,7 +71,7 @@ Policies in this class govern [handoff](TERMS.md#handoff) gates, evidence requir
 
 ## Cross-references
 
-- [`CHARTER.md`](../CHARTER.md) — roof doctrine; confirmable rules
+- [`CHARTER.md`](../CHARTER.md) — NLC-roof charter; BBP/BBA confirmable rules
 - [`integrity/binding-matrix.json`](../integrity/binding-matrix.json) — local [requirement](TERMS.md#requirement) → [audit](TERMS.md#audit) → binder matrix
 - [`integrity/BOUNDARY.md`](../integrity/BOUNDARY.md) — Boundary/Handoff nouns; P-030 fixture
 - [`adrs/0004-produce-fitness-handoff.md`](../adrs/0004-produce-fitness-handoff.md) — P-016 decision
