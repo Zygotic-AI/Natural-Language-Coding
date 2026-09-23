@@ -19,6 +19,7 @@
     "tools/nlc-brownfield-inventory.py": "68d58d435a3dc4b5fbac123d9a416d9b0dbe7aef639cb52885a82c44eb7fd089",
     "tools/nlc-brownfield-migrate.py": "f79492b590f5b52e67b499cc177f7357f8a1e3806d39bfe8fc259fbd52579b00",
     "tools/nlc-delta-regen.py": "c9bd9b456300e86d11de968ed662da98dcdc21ccb56bee86fd55d7372ab58843",
+    "tools/nlc-emit-from-prose.py": "abe7cc7fccba302f50fb90dc7529b0937f1df34f585d9d7989327f59abec4416",
     "tools/nlc-emit-manifest-enforce.py": "2bace2d1bb51f795471f4ad09e431018996b7f7e83e853d7895b2bb4a414c80b",
     "tools/nlc-fetch-hub.py": "e8ed52cd9b133021ebc03297638b3c508a161cbadaf704d198130da473e5fea1",
     "tools/nlc-impact-graph.py": "2516b52444591b78eca91f0e03525e52a0f93cd16d60a415580dad62111b05f0",
