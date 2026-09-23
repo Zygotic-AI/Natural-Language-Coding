@@ -20,6 +20,9 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nlc_requirements import hub_tool  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "docs" / "nlc" / "emit-manifest.schema.json"
 
@@ -71,6 +74,7 @@ def iter_manifests(root: Path) -> list[Path]:
 
 
 def main() -> int:
+    hub_tool()
     root = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.cwd()
     schema = load_schema()
     paths = iter_manifests(root)
