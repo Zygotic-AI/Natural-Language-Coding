@@ -1,0 +1,42 @@
+{
+  "adr": "0024",
+  "corpus": "nlc",
+  "rules": [
+    {
+      "id": "NLC-0024-01",
+      "condition": "A rule or ADR is published on an in-force surface",
+      "obligation": "It has a testable default-closed gate, or it is removed",
+      "gate": "fitness-adr-0024-binder.py"
+    },
+    {
+      "id": "NLC-0024-02",
+      "condition": "A repo records decisions",
+      "obligation": "One ADR list; rules carry corpus nlc or bba",
+      "gate": "fitness-adr-0024-binder.py"
+    },
+    {
+      "id": "NLC-0024-03",
+      "condition": "A rule is adopted",
+      "obligation": "It is if/then: condition + obligation + gate",
+      "gate": "fitness-adr-0024-binder.py"
+    },
+    {
+      "id": "NLC-0024-04",
+      "condition": "Work is planned",
+      "obligation": "Plan decomposes to atomic actions; each action is gated and validated against the plan",
+      "gate": "tools/nlc-action-plan-gate.py"
+    },
+    {
+      "id": "NLC-0024-05",
+      "condition": "Actions exist",
+      "obligation": "ADRs bind to actions; reverse audit fails if an applicable ADR is unbound",
+      "gate": "tools/nlc-reverse-audit.py"
+    },
+    {
+      "id": "NLC-0024-06",
+      "condition": "An action emits",
+      "obligation": "Emit produces artifact + JSON manifest; schema is predefined; unused fields are na; trace and thought anchors present; emit is audited; bound-ADR gates run immediately and default-closed",
+      "gate": "tools/nlc-emit-manifest-enforce.py"
+    }
+  ]
+}
