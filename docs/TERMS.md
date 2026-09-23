@@ -144,7 +144,7 @@ Charter classes A–F for what kind of change is proposed (**UC6**).
 
 ### Charter
 
-Living BBP spec—[`CHARTER.md`](../CHARTER.md).
+BBP emit + integrity doctrine under the [NLC](#nlc) roof—[`CHARTER.md`](../CHARTER.md) ([ADR 0011](../adrs/0011-natural-language-coding-naming.md)).
 
 ### Code pack
 

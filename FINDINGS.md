@@ -15,7 +15,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: `feat/nlc-pipeline-wiring-clean` (ADR 0030 wires X1/X2/X3/X5/X6 via `nlc-pipeline-wire.py`).
+Last pass: `d83c64a` + door-honesty branch `fix/eval-nlc-p0-door-honesty` (NLC-first CHARTER/DESCRIBE; README Python-first; root MANIFESTO.md).
 
 ---
 
@@ -57,10 +57,10 @@ Hub ship remains a **human** last step (`./release`).
 
 | Item | Note |
 |------|------|
-| E1 CHARTER corpus sentence | Two-line insert still open if not on `CHARTER.md` |
-| E2 TERMS obligation/corpus | Drafted; land with TERMS edit |
+| E1 CHARTER corpus sentence | **Done** — corpus pointer on `CHARTER.md` (§3) |
+| E2 TERMS obligation/corpus | **Done** — Corpus/Condition/Obligation in TERMS |
 | E3 explicit ci_fitness 0024 | Glob already runs `fitness-*.py`; explicit run optional |
-| CHARTER / DESCRIBE door | Still opens as BBP |
+| CHARTER / DESCRIBE door | **In this PR** — NLC-first door (BBP body retained) |
 
 ---
 
@@ -74,3 +74,30 @@ Hub ship remains a **human** last step (`./release`).
 - `nlc-hub-audit` skill
 - FINDINGS as sole live gap queue
 - PLANIT skill + HARNESS + PROCESS + ORCHESTRATION wired to the pipeline
+
+
+---
+
+## Planit Evaluate-NLC wave-1 (audit → door)
+
+**Audit SHA:** `d83c64a` (`origin/main`). **A1–A4:** PASS (plan audit constrained R6/R7 to wave-2).
+
+### Landed before this wave (not re-opened)
+
+| Notion / FINDINGS id | Status |
+|----------------------|--------|
+| P2.1 ADR 0024 corpus | Landed #31 |
+| P2.2 X1–X6 runners | Landed #32–#35 |
+| P2.3 wire ADR 0030 | Landed #36 |
+| P2.4 ADR 0027–0029 | Landed #1 |
+| A2 binding matrix | **89/89** (stale “51%” claim retired) |
+| E1/E2 housekeeping | Closed in this wave |
+
+### Still open after door wave (wave-2)
+
+| Id | Note |
+|----|------|
+| A7–A12 | Charter/RCA/dogfood rules need ADR + CI — separate PR |
+| P1 ACS / heroes | Path residue + consumer BBA/BBP hero table |
+| Soft-green | Python-first honesty noted in README; adapters remain parked |
+
