@@ -52,7 +52,7 @@ Hub ship remains a **human** last step (`./release`).
 | [Code packs](docs/TERMS.md#code-pack) (UC16) | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Per-stack scanner adapter | `gate missing` |
 | Call-tree packs (UC20) | ADR 0009 | Per-stack packs beyond Python `domain/` | `gate missing` |
 | [Rule IR](docs/TERMS.md#rule-ir) | ADR 0007 | Full semantic runners | `gate missing` |
-| ADR 0029 lineage tools | ADR 0029 | ACTIVE freshness + bind snapshot runners | `gate missing` |
+| ADR 0029 lineage tools | ADR 0029 | **Closed** — lineage-check + bind-snapshot + freshness + fitness | done |
 | RCA packet schema | ADR 0025 | `expansion: rca-packet-schema` | `gate missing` |
 
 ---
@@ -167,7 +167,7 @@ One produce leaf / PR per row. Do not soft-green as done without evidence.
 |---------|------|--------------|
 | **park-a1** | A1 ratify — per-rule ADR program for charter rules lacking decision trail (ADR 0007 decision-first) | CHARTER document control + `adrs/` |
 | **park-x4** | X4 rewrite — hub `tools/*.py` interiors → noun/verb packages (beyond emit-path `BOUNDARY` slice) | [`docs/nlc/HUB-BBA-DOGFOOD.md`](docs/nlc/HUB-BBA-DOGFOOD.md) |
-| **park-0029** | ADR 0029 tools — lineage resolver + ACTIVE freshness gate + bind snapshot runners | [`adrs/0029-adr-lineage-active-set-and-bind-snapshot.md`](adrs/0029-adr-lineage-active-set-and-bind-snapshot.md); FINDINGS Parked `gate missing` |
+| **park-0029** | **Done** — lineage-check + bind-snapshot + freshness | ADR 0029 tools |
 | **park-acs** | ACS rename — migrate `docs/ai-compiled-systems/` → NLC/ASC-aligned path (or keep stub forever) | [`docs/ai-compiled-systems/README.md`](docs/ai-compiled-systems/README.md) banner |
 | **park-packs** | Consume **closed**; `pack_registry` remains **open** (out-of-band expansion) | FINDINGS Needed / hub_v02 |
 

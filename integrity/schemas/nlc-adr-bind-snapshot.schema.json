@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Zygotic-AI/Natural-Language-Coding/integrity/schemas/nlc-adr-bind-snapshot.schema.json",
+  "title": "NLC ADR bind snapshot",
+  "type": "object",
+  "required": ["schema", "source", "active_sha256", "adrs", "written_at"],
+  "properties": {
+    "schema": { "type": "integer", "const": 1 },
+    "source": { "type": "string" },
+    "active_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "adrs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["adr", "lineage"],
+        "properties": {
+          "adr": { "type": "string" },
+          "lineage": { "type": "string" },
+          "origin": { "type": "string" },
+          "effective": { "type": "string" }
+        }
+      }
+    },
+    "written_at": { "type": "string" }
+  }
+}
