@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+BOUNDARY = "bba-emit"
+
 import json
 import re
 import shutil
