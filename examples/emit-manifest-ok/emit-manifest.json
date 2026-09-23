@@ -1,0 +1,12 @@
+{
+  "schema": "nlc-emit-manifest/v0",
+  "emit_id": "e1",
+  "action_id": "a1",
+  "artifact_path": "domain/invoice.py",
+  "bound_adr_ids": ["0024"],
+  "audit": {"status": "pass", "path": ".nlc/audits/e1.json"},
+  "gate": {"status": "pass", "default": "closed"},
+  "decision_trace": ["chose noun over goal for state"],
+  "thought_anchors": ["state ownership"],
+  "unused": "na"
+}

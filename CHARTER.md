@@ -64,6 +64,8 @@ Useful substitutes if a slot in an older diagram said “Governance Architecture
 
 **Boundary-Enforced Programming** is a true claim about the pipeline. It is a poor name for the practice. Put enforcement in the rules and the CI [gate](docs/TERMS.md#gate), not in the title.
 
+Corpus tags for every published **R** / **C** / **P** id live in `integrity/rule-corpus.json` (ADR 0024): `bba` = emit shape, `nlc` = factory process.
+
 ### Id prefixes
 
 These letters on [requirement](docs/TERMS.md#requirement) ids are not interchangeable.

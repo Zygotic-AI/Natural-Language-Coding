@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "nlc-emit-manifest/v0",
+  "description": "Hard schema for every emit-manifest.json. Optional fields must be present and set to 'na' (never omitted) so absence is distinguishable from intentional non-applicability.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "emit_id",
+    "action_id",
+    "artifact_path",
+    "bound_adr_ids",
+    "audit",
+    "gate",
+    "decision_trace",
+    "thought_anchors",
+    "unused"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "nlc-emit-manifest/v0"
+    },
+    "emit_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "action_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "bound_adr_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "audit": {
+      "type": "object",
+      "required": ["status", "path"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["pass", "fail", "na", "pending"]
+        },
+        "path": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "gate": {
+      "type": "object",
+      "required": ["default"],
+      "properties": {
+        "default": { "type": "string", "const": "closed" },
+        "status": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "decision_trace": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "thought_anchors": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "unused": {
+      "description": "Always present. 'na' when no optional fields apply; never omitted.",
+      "type": "string",
+      "const": "na"
+    }
+  }
+}
