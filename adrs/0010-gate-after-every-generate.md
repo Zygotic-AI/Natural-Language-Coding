@@ -31,7 +31,7 @@ This applies to:
 
 ## Consequences
 
-- [`docs/ai-compiled-systems/PROCESS.md`](../docs/ai-compiled-systems/PROCESS.md) step 6.5.
+- [`docs/nlc/compiler/PROCESS.md`](../docs/nlc/compiler/PROCESS.md) step 6.5.
 - [PLANIT](../docs/TERMS.md#planit) skill: after each generate step, that artifact’s [gate](../docs/TERMS.md#gate) before the next row.
 - No new **R** id until a binder can see “metrics existed + [gate](../docs/TERMS.md#gate) ran” in the record (R27).
 

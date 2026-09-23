@@ -20,13 +20,13 @@ Running prose used **[ACS](../docs/TERMS.md#acs)** (AI-Compiled Systems) for bot
 | **[BBA](../docs/TERMS.md#bba)** | Roof architecture and [integrity](../docs/TERMS.md#integrity) rules in this [hub](../docs/TERMS.md#hub) (`CHARTER.md`, `integrity/`). Consumer docs mention [BBA](../docs/TERMS.md#bba) only as “under the covers.” |
 | **[PLANIT](../docs/TERMS.md#planit)** | Orchestrated compile loop; invoke as `/planit` in Cursor. |
 
-Retired in **consumer** prose: **[ACS](../docs/TERMS.md#acs) = whole product**. [Hub](../docs/TERMS.md#hub) technical docs may still say “[ACS](../docs/TERMS.md#acs) folder” as shorthand for `docs/ai-compiled-systems/` until paths are renamed.
+Retired in **consumer** prose: **[ACS](../docs/TERMS.md#acs) = whole product**. [Hub](../docs/TERMS.md#hub) technical docs may still say “[ACS](../docs/TERMS.md#acs) folder” as shorthand for `docs/nlc/compiler/` until paths are renamed.
 
 **[NLC](../docs/TERMS.md#nlc)** is the default acronym for the whole project. **[ASC](../docs/TERMS.md#asc)** vs **[ACS](../docs/TERMS.md#acs)** appear only in glossary or integrator docs, never both unexplained in the same hero paragraph.
 
 ## Consequences
 
-- Root `README.md` and [`docs/ai-compiled-systems/NAMES.md`](../docs/ai-compiled-systems/NAMES.md) follow this table.
+- Root `README.md` and [`docs/nlc/compiler/NAMES.md`](../docs/nlc/compiler/NAMES.md) follow this table.
 - GitHub repo name **Natural-Language-Coding** matches the product name; legacy “Boundary-Based-Architecture” references are historical only.
 
 ## Supersedes

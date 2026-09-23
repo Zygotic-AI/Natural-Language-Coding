@@ -49,7 +49,7 @@ def _retired_nlc_patterns() -> list[re.Pattern[str]]:
 RETIRED_NLC_SCAN_ROOTS = [
     ROOT / "agents",
     ROOT / ".agents" / "skills",
-    ROOT / "docs" / "ai-compiled-systems",
+    ROOT / "docs" / "nlc" / "compiler",
     ROOT / "integrity" / "KNOWLEDGE-FACTS.md",
     ROOT / "tools" / "session-preflight.sh",
     ROOT / "templates" / "adopter",
