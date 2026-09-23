@@ -35,7 +35,7 @@ v1 binders for UC9 / UC14 / UC15 / UC18 are **product-closed** in [`integrity/uc
 
 | ID | Gap |
 |----|-----|
-| **Packs v0.2 consume** | `hub_v02.pack_consume_regen` is **open**: scope data/tags + auto UC9 regen hook after pack install. Ingest is closed. |
+| **Packs v0.2 consume** | **Closed** — `nlc-pack-install` writes `.nlc/pack-consume-status.json` (scope + UC9 hint). |
 | **Packs registry** | `hub_v02.pack_registry` is **open** (optional / out of band). |
 
 Hub ship remains a **human** last step (`./release`).
@@ -169,5 +169,5 @@ One produce leaf / PR per row. Do not soft-green as done without evidence.
 | **park-x4** | X4 rewrite — hub `tools/*.py` interiors → noun/verb packages (beyond emit-path `BOUNDARY` slice) | [`docs/nlc/HUB-BBA-DOGFOOD.md`](docs/nlc/HUB-BBA-DOGFOOD.md) |
 | **park-0029** | ADR 0029 tools — lineage resolver + ACTIVE freshness gate + bind snapshot runners | [`adrs/0029-adr-lineage-active-set-and-bind-snapshot.md`](adrs/0029-adr-lineage-active-set-and-bind-snapshot.md); FINDINGS Parked `gate missing` |
 | **park-acs** | ACS rename — migrate `docs/ai-compiled-systems/` → NLC/ASC-aligned path (or keep stub forever) | [`docs/ai-compiled-systems/README.md`](docs/ai-compiled-systems/README.md) banner |
-| **park-packs** | Packs Needed — close `hub_v02.pack_consume_regen` + optional `hub_v02.pack_registry` | FINDINGS Needed rows |
+| **park-packs** | Consume **closed**; `pack_registry` remains **open** (out-of-band expansion) | FINDINGS Needed / hub_v02 |
 

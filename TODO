@@ -152,7 +152,7 @@ Policy lives in ADRs + PROCESS + planit; this section is **machine wiring** so c
 
 - ✔ Pack schema + export/install CLIs v0.2 foundation — [`REQUIREMENT-PACKS.md`](docs/nlc/REQUIREMENT-PACKS.md) @done(26-09-20 11:30)
 - ✔ Ingest prompt/skill: source docs → candidate ADRs + if/then (human ratifies). @done(26-09-20 21:45)
-- ☐ Consume: scope data/tags + auto UC9 regen hook after pack install.
+- ✔ Consume: scope data/tags + UC9 hint via `.nlc/pack-consume-status.json` after pack install @done(26-09-22 22:05)
 - ☐ Optional public registry repo (out of band).
 
 - ✔ ADR 0013 requirements preflight + [`nlc_requirements.py`](tools/nlc_requirements.py) on hub CLIs/installers @done(26-09-20 08:30)
@@ -288,4 +288,4 @@ Use `☐` open, `✔ … @done(YY-MM-DD HH:MM)` when done.
 - ☐ **park-x4** X4 rewrite — hub `tools/*.py` interiors as noun/verb packages
 - ☐ **park-0029** ADR 0029 tools — lineage resolver + ACTIVE freshness + bind snapshot
 - ☐ **park-acs** ACS rename — `docs/ai-compiled-systems/` path migration (or permanent stub)
-- ☐ **park-packs** Packs Needed — `hub_v02.pack_consume_regen` + optional `hub_v02.pack_registry`
+- ✔ **park-packs** consume/regen closed (`pack_consume_regen`); registry still open/out-of-band @done(26-09-22 22:05)

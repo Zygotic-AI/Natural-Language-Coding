@@ -3,7 +3,7 @@
   "ssot": "Machine product/binder status for compile-system UCs. TODO @done (product) must match product_closed here.",
   "hub_v02": {
     "pack_ingest": "closed",
-    "pack_consume_regen": "open",
+    "pack_consume_regen": "closed",
     "pack_registry": "open"
   },
   "ucs": {
@@ -11,10 +11,20 @@
       "binder": "closed",
       "product": "closed",
       "expansion_only": [],
-      "blockers": ["interview_packet_blockers"],
-      "proof_commands": ["python3 tools/assert-interview-packet-fails.py"]
+      "blockers": [
+        "interview_packet_blockers"
+      ],
+      "proof_commands": [
+        "python3 tools/assert-interview-packet-fails.py"
+      ]
     },
-    "UC2": { "binder": "closed", "product": "closed", "expansion_only": [], "blockers": [], "proof_commands": [] },
+    "UC2": {
+      "binder": "closed",
+      "product": "closed",
+      "expansion_only": [],
+      "blockers": [],
+      "proof_commands": []
+    },
     "UC3": {
       "binder": "closed",
       "product": "closed",
@@ -24,30 +34,66 @@
         "adr_traceability_blockers",
         "interview_requirements_sync_blockers"
       ],
-      "proof_commands": ["python3 tools/assert-requirements-sync-pending-fails.py"]
+      "proof_commands": [
+        "python3 tools/assert-requirements-sync-pending-fails.py"
+      ]
     },
     "UC4": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": ["semantic_rule_runner_adr_0007"],
-      "blockers": ["rule_ir_blockers", "rule_runner_blockers"],
-      "proof_commands": ["python3 tools/assert-rule-runner-fails.py"]
+      "expansion_only": [
+        "semantic_rule_runner_adr_0007"
+      ],
+      "blockers": [
+        "rule_ir_blockers",
+        "rule_runner_blockers"
+      ],
+      "proof_commands": [
+        "python3 tools/assert-rule-runner-fails.py"
+      ]
     },
     "UC5": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": ["semantic_apply_adr_0007"],
-      "blockers": ["rule_apply_blockers", "rule_coverage_blockers"],
+      "expansion_only": [
+        "semantic_apply_adr_0007"
+      ],
+      "blockers": [
+        "rule_apply_blockers",
+        "rule_coverage_blockers"
+      ],
       "proof_commands": []
     },
-    "UC6": { "binder": "closed", "product": "closed", "expansion_only": [], "blockers": [], "proof_commands": [] },
-    "UC7": { "binder": "closed", "product": "closed", "expansion_only": [], "blockers": [], "proof_commands": [] },
-    "UC8": { "binder": "closed", "product": "closed", "expansion_only": [], "blockers": [], "proof_commands": [] },
+    "UC6": {
+      "binder": "closed",
+      "product": "closed",
+      "expansion_only": [],
+      "blockers": [],
+      "proof_commands": []
+    },
+    "UC7": {
+      "binder": "closed",
+      "product": "closed",
+      "expansion_only": [],
+      "blockers": [],
+      "proof_commands": []
+    },
+    "UC8": {
+      "binder": "closed",
+      "product": "closed",
+      "expansion_only": [],
+      "blockers": [],
+      "proof_commands": []
+    },
     "UC9": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": ["rule_tagged_blast_radius_v2"],
-      "blockers": ["goal_bindings_narrow_blockers"],
+      "expansion_only": [
+        "rule_tagged_blast_radius_v2"
+      ],
+      "blockers": [
+        "goal_bindings_narrow_blockers"
+      ],
       "proof_commands": [
         "python3 tools/assert-goal-bindings-narrow-fails.py",
         "python3 tools/assert-delta-regen-narrow-passes.py"
@@ -57,74 +103,126 @@
       "binder": "closed",
       "product": "closed",
       "expansion_only": [],
-      "blockers": ["upstream_hand_patch_blockers"],
+      "blockers": [
+        "upstream_hand_patch_blockers"
+      ],
       "proof_commands": [
         "python3 tools/assert-upstream-hand-patch-fails.py"
       ]
     },
-    "UC11": { "binder": "closed", "product": "closed", "expansion_only": [], "blockers": [], "proof_commands": [] },
+    "UC11": {
+      "binder": "closed",
+      "product": "closed",
+      "expansion_only": [],
+      "blockers": [],
+      "proof_commands": []
+    },
     "UC12": {
       "binder": "closed",
       "product": "closed",
       "expansion_only": [],
-      "blockers": ["closed_set_blockers"],
+      "blockers": [
+        "closed_set_blockers"
+      ],
       "proof_commands": []
     },
     "UC13": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": ["engine_runtime_tag_strict"],
-      "blockers": ["durable_engine_blockers", "durable_rule_blockers"],
-      "proof_commands": ["python3 tools/assert-durable-engine-rule-fails.py"]
+      "expansion_only": [
+        "engine_runtime_tag_strict"
+      ],
+      "blockers": [
+        "durable_engine_blockers",
+        "durable_rule_blockers"
+      ],
+      "proof_commands": [
+        "python3 tools/assert-durable-engine-rule-fails.py"
+      ]
     },
     "UC14": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": ["composable_ir_cross_primitive"],
-      "blockers": ["rule_conflict_blockers"],
+      "expansion_only": [
+        "composable_ir_cross_primitive"
+      ],
+      "blockers": [
+        "rule_conflict_blockers"
+      ],
       "proof_commands": []
     },
     "UC15": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": ["brownfield_full_automation"],
+      "expansion_only": [
+        "brownfield_full_automation"
+      ],
       "blockers": [],
       "proof_commands": []
     },
     "UC16": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": ["language_scanner_adapter_step2"],
-      "blockers": ["non_python_adapter_blockers"],
-      "proof_commands": ["python3 tools/assert-non-python-adapter-fails.py"]
+      "expansion_only": [
+        "language_scanner_adapter_step2"
+      ],
+      "blockers": [
+        "non_python_adapter_blockers"
+      ],
+      "proof_commands": [
+        "python3 tools/assert-non-python-adapter-fails.py"
+      ]
     },
-    "UC17": { "binder": "closed", "product": "closed", "expansion_only": [], "blockers": [], "proof_commands": [] },
+    "UC17": {
+      "binder": "closed",
+      "product": "closed",
+      "expansion_only": [],
+      "blockers": [],
+      "proof_commands": []
+    },
     "UC18": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": ["every_agent_generate_hook"],
-      "blockers": ["before_generate_stamp_blockers"],
+      "expansion_only": [
+        "every_agent_generate_hook"
+      ],
+      "blockers": [
+        "before_generate_stamp_blockers"
+      ],
       "proof_commands": []
     },
     "UC20": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": ["per_stack_call_tree_packs"],
-      "blockers": ["call_tree_blockers", "primitive_inventory_blockers"],
+      "expansion_only": [
+        "per_stack_call_tree_packs"
+      ],
+      "blockers": [
+        "call_tree_blockers",
+        "primitive_inventory_blockers"
+      ],
       "proof_commands": []
     },
     "UC21": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": ["adhoc_agents_writes_gate_scope"],
-      "blockers": ["gate_record_blockers"],
+      "expansion_only": [
+        "adhoc_agents_writes_gate_scope"
+      ],
+      "blockers": [
+        "gate_record_blockers"
+      ],
       "proof_commands": []
     }
   },
   "packs_v02": {
     "binder": "closed",
     "product": "closed",
-    "expansion_only": ["public_registry"],
-    "proof_commands": ["python3 tools/assert-pack-ingest-candidates-passes.py"]
+    "expansion_only": [
+      "public_registry"
+    ],
+    "proof_commands": [
+      "python3 tools/assert-pack-ingest-candidates-passes.py"
+    ]
   }
 }
