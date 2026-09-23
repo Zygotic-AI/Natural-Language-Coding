@@ -19,7 +19,7 @@
    curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
    ```
 
-   Windows (PowerShell): [Getting started](docs/ai-compiled-systems/GETTING-STARTED.md) (install block).
+   Windows (PowerShell): [Getting started](docs/nlc/compiler/GETTING-STARTED.md) (install block).
 
    Then check the install: `nlc doctor` (or `./nlc doctor` if you only use a repo-local launcher).
 
@@ -55,14 +55,14 @@ Agents also run `./nlc maintainer …` (requirements sync, regen queue, before-g
 | **[ASC](docs/TERMS.md#asc)** | [AI System Compiler](docs/TERMS.md#compiler) | `/interview` + `/planit` + gates in [`tools/`](tools/). |
 | **[Compiled system](docs/TERMS.md#compiled-system)** | Your app tree | BBP-shaped code in *your* repo—not [`examples/`](examples/) (gate specimens only). |
 
-Design SSOT: [`CHARTER.md`](CHARTER.md). Words: [`GLOSSARY.md`](docs/ai-compiled-systems/GLOSSARY.md).
+Design SSOT: [`CHARTER.md`](CHARTER.md). Words: [`GLOSSARY.md`](docs/nlc/compiler/GLOSSARY.md).
 
 ## Go deeper
 
 | If you want… | Read |
 | ------------ | ---- |
-| Five-minute walkthrough | [`GETTING-STARTED.md`](docs/ai-compiled-systems/GETTING-STARTED.md) |
-| Why intent is the product | [`MANIFESTO.md`](MANIFESTO.md) → SSOT [`docs/ai-compiled-systems/MANIFESTO.md`](docs/ai-compiled-systems/MANIFESTO.md) |
+| Five-minute walkthrough | [`GETTING-STARTED.md`](docs/nlc/compiler/GETTING-STARTED.md) |
+| Why intent is the product | [`MANIFESTO.md`](MANIFESTO.md) → SSOT [`docs/nlc/compiler/MANIFESTO.md`](docs/nlc/compiler/MANIFESTO.md) |
 | Adopt step-by-step | [`BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) |
 | Full doc map | [`docs/nlc/README.md`](docs/nlc/README.md) |
 

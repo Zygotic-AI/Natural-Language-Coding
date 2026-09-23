@@ -33,7 +33,7 @@ Do **not** emit a findings report until every **blocking** row is true. Audit on
 ## Phase 0 — Recon
 
 1. Record exact commit SHA audited.
-2. Map the tree: `CHARTER.md`, `DESCRIBE.md`, `FINDINGS.md`, `HOLES.md`, `TODO`, `USE-CASES.md`, `docs/TERMS.md`, `docs/nlc/*`, `adrs/`, `.agents/skills/`, `agents/`, `tools/`, `MANIFESTO.md`, `docs/ai-compiled-systems/MANIFESTO.md`, `integrity/binding-matrix.json`, `integrity/rule-corpus.json`.
+2. Map the tree: `CHARTER.md`, `DESCRIBE.md`, `FINDINGS.md`, `HOLES.md`, `TODO`, `USE-CASES.md`, `docs/TERMS.md`, `docs/nlc/*`, `adrs/`, `.agents/skills/`, `agents/`, `tools/`, `MANIFESTO.md`, `docs/nlc/compiler/MANIFESTO.md`, `integrity/binding-matrix.json`, `integrity/rule-corpus.json`.
 3. Count ADRs (numbered files in `adrs/`). Note which are Accepted vs Parked.
 4. Locate the binding matrix (`integrity/binding-matrix.json` + `tools/audit-binding-matrix.py`). Record total rules, bound count, unbound count, and the percentage.
 
@@ -45,7 +45,7 @@ Check that the consumer-facing door matches the ratified roof (ADR 0011: product
 - [ ] `DESCRIBE.md` title/opening — NLC-first?
 - [ ] `docs/TERMS.md` — does it call CHARTER a "living BBP spec"?
 - [ ] README / GETTING-STARTED — NLC hero, no BBA/BBP roof leakage?
-- [ ] Path residue: `docs/ai-compiled-systems/` still present? `bbp-*` nouns exposed in consumer docs?
+- [ ] Path residue: `docs/nlc/compiler/` still present? `bbp-*` nouns exposed in consumer docs?
 - [ ] `MANIFESTO.md` / docs manifesto — six principles + layer stack present?
 
 Record each mismatch as a finding: severity, file, evidence, remediation.
@@ -114,6 +114,6 @@ Produce a report with these sections, in order:
 - Findings SSOT: `FINDINGS.md`
 - Binding matrix: `integrity/binding-matrix.json`
 - ADRs: `adrs/`
-- Manifesto: `MANIFESTO.md`, `docs/ai-compiled-systems/MANIFESTO.md`
+- Manifesto: `MANIFESTO.md`, `docs/nlc/compiler/MANIFESTO.md`
 - Harness: `docs/nlc/HARNESS.md`
 - Human judgment gates: `docs/nlc/HUMAN-JUDGMENT-GATES.md`

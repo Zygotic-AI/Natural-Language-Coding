@@ -8,13 +8,13 @@ disable-model-invocation: true
 
 Read **`references/operation-verdict-standard.md`** (gate design §2, verdicts §4), **`references/audited-work-loop-standard.md`**, **`references/information-completion-contract.md`**, **`references/planit-process.md`**, and **`references/hub-charter-loop.md`** when this [hub](../../../docs/TERMS.md#hub) is in scope — before execution.
 
-Map: [`docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md`](../../../docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md). [PLANIT](../../../docs/TERMS.md#planit) SSOT: [`docs/ai-compiled-systems/PROCESS.md`](../../../docs/ai-compiled-systems/PROCESS.md).
+Map: [`docs/nlc/compiler/PLANIT-ORCHESTRATION.md`](../../../docs/nlc/compiler/PLANIT-ORCHESTRATION.md). [PLANIT](../../../docs/TERMS.md#planit) SSOT: [`docs/nlc/compiler/PROCESS.md`](../../../docs/nlc/compiler/PROCESS.md).
 
 ## Outcome
 
 Orchestrate **[AWL](../../../docs/TERMS.md#awl) Phases 0–7** and **[PLANIT](../../../docs/TERMS.md#planit) steps 0–7** together: adversarial plan and execution audits; route to leaf skills; **enforce** [`operation-verdict-standard.md`](references/operation-verdict-standard.md) §2 on **every artifact [Planit](../../../docs/TERMS.md#planit) produces or approves**.
 
-[PLANIT](../../../docs/TERMS.md#planit) is the compile process; [BBP](../../../docs/TERMS.md#bbp) is the shape ([`docs/ai-compiled-systems/MERGE.md`](../../../docs/ai-compiled-systems/MERGE.md)). This skill orchestrates — it does not replace knowledge-steward, [RCA](../../../docs/TERMS.md#rca), or leaf [gate](../../../docs/TERMS.md#gate) skills.
+[PLANIT](../../../docs/TERMS.md#planit) is the compile process; [BBP](../../../docs/TERMS.md#bbp) is the shape ([`docs/nlc/compiler/MERGE.md`](../../../docs/nlc/compiler/MERGE.md)). This skill orchestrates — it does not replace knowledge-steward, [RCA](../../../docs/TERMS.md#rca), or leaf [gate](../../../docs/TERMS.md#gate) skills.
 
 **Not the ai vault maintainer loop:** for durable ai-vault layers only (normative docs, manifests, intents, published prompts), route to **`~/.agents/skills/planit`** and its `local-*` leaf skills. Stay here for [ACS](../../../docs/TERMS.md#acs) + [BBP](../../../docs/TERMS.md#bbp) hub/adopter work.
 
@@ -47,7 +47,7 @@ After all **blocking** rows are **true**, emit **`## Verdict — Planit intake g
 
 ## Procedure
 
-**[PLANIT](../../../docs/TERMS.md#planit)** runs [AWL](../../../docs/TERMS.md#awl) **0–7** with [PLANIT](../../../docs/TERMS.md#planit) **0–7** embedded per [`PLANIT-ORCHESTRATION.md`](../../../docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md). The name is [PLANIT](../../../docs/TERMS.md#planit) (`/planit`). Use [AWL](../../../docs/TERMS.md#awl) **Appendices A–F** for intake, plan, [audit](../../../docs/TERMS.md#audit) memos, handoffs, and Phase 7 record — do not duplicate those templates here.
+**[PLANIT](../../../docs/TERMS.md#planit)** runs [AWL](../../../docs/TERMS.md#awl) **0–7** with [PLANIT](../../../docs/TERMS.md#planit) **0–7** embedded per [`PLANIT-ORCHESTRATION.md`](../../../docs/nlc/compiler/PLANIT-ORCHESTRATION.md). The name is [PLANIT](../../../docs/TERMS.md#planit) (`/planit`). Use [AWL](../../../docs/TERMS.md#awl) **Appendices A–F** for intake, plan, [audit](../../../docs/TERMS.md#audit) memos, handoffs, and Phase 7 record — do not duplicate those templates here.
 
 
 This skill **orchestrates** existing norms and leaf skills — it does not replace KCR (ai vault), [RCA](../../../docs/TERMS.md#rca), DSI stop checks, or VPR gates.
@@ -101,7 +101,7 @@ Follow [AWL](../../../docs/TERMS.md#awl) **Appendix C** and [`references/informa
 
 ### [AWL](../../../docs/TERMS.md#awl) Phase 2 — Applicability register
 
-Copy and complete [AWL](../../../docs/TERMS.md#awl) **Appendix A** minimum rows when applicable. Add domain-specific rows: `CHARTER.md`, [`PROCESS.md`](../../../docs/ai-compiled-systems/PROCESS.md), in-scope ADRs and **R***, [hub](../../../docs/TERMS.md#hub) `tools/ci-fitness.sh` when [hub](../../../docs/TERMS.md#hub) touched, produce-package / [SSOT exit evidence](../../../docs/TERMS.md#ssot-exit-evidence) when [hub](../../../docs/TERMS.md#hub) [handoff](../../../docs/TERMS.md#handoff) applies ([`AGENTS.md`](../../../AGENTS.md)), **`operation-verdict-standard.md` §2** for produced artifacts.
+Copy and complete [AWL](../../../docs/TERMS.md#awl) **Appendix A** minimum rows when applicable. Add domain-specific rows: `CHARTER.md`, [`PROCESS.md`](../../../docs/nlc/compiler/PROCESS.md), in-scope ADRs and **R***, [hub](../../../docs/TERMS.md#hub) `tools/ci-fitness.sh` when [hub](../../../docs/TERMS.md#hub) touched, produce-package / [SSOT exit evidence](../../../docs/TERMS.md#ssot-exit-evidence) when [hub](../../../docs/TERMS.md#hub) [handoff](../../../docs/TERMS.md#handoff) applies ([`AGENTS.md`](../../../AGENTS.md)), **`operation-verdict-standard.md` §2** for produced artifacts.
 
 **Stop predicate:** Every plausible norm is listed or excluded — closed world.
 
@@ -117,7 +117,7 @@ Use [AWL](../../../docs/TERMS.md#awl) **Appendix D** plan template. Add **Leaf s
 **[PLANIT](../../../docs/TERMS.md#planit) step 2 — Plan:** work items only — each item is new/changed **[goal](../../../docs/TERMS.md#goal)**, **[boundary](../../../docs/TERMS.md#boundary)** (noun + verbs), **[requirement](../../../docs/TERMS.md#requirement)**, **[ADR](../../../docs/TERMS.md#adr)**, or **[rule](../../../docs/TERMS.md#rule)** (tags / primitives / if-then; ADR 0007). A standard that never becomes a [rule](../../../docs/TERMS.md#rule) is not done. If the plan cannot say which, it is not a plan. **[Hub](../../../docs/TERMS.md#hub):** classify change **A–F** (charter §6 step 1) in the plan header.
 
 
-**[PLANIT](../../../docs/TERMS.md#planit) step 3 — Product statements:** single-step statements one [boundary](../../../docs/TERMS.md#boundary) can finish (see [`PROCESS.md`](../../../docs/ai-compiled-systems/PROCESS.md)).
+**[PLANIT](../../../docs/TERMS.md#planit) step 3 — Product statements:** single-step statements one [boundary](../../../docs/TERMS.md#boundary) can finish (see [`PROCESS.md`](../../../docs/nlc/compiler/PROCESS.md)).
 
 **Orchestration rules:**
 
@@ -254,7 +254,7 @@ When no leaf skill fits, execute inline under this procedure with full [AWL](../
 | [`references/README.md`](references/README.md) | Vendored [AWL](../../../docs/TERMS.md#awl) norms + sync policy |
 | [`references/planit-process.md`](references/planit-process.md) | [PLANIT](../../../docs/TERMS.md#planit) steps summary |
 | [`references/hub-charter-loop.md`](references/hub-charter-loop.md) | [Charter](../../../docs/TERMS.md#charter) §6 [hub](../../../docs/TERMS.md#hub) mapping |
-| [`docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md`](../../../docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md) | Combined spine |
+| [`docs/nlc/compiler/PLANIT-ORCHESTRATION.md`](../../../docs/nlc/compiler/PLANIT-ORCHESTRATION.md) | Combined spine |
 | [`.agents/bbp-short-form.md`](../../bbp-short-form.md) | [Charter](../../../docs/TERMS.md#charter) §15 |
 
 ---

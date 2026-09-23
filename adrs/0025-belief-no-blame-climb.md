@@ -8,7 +8,7 @@
 
 ## Context
 
-[`docs/ai-compiled-systems/MANIFESTO.md`](../docs/ai-compiled-systems/MANIFESTO.md) now states the belief layer. Unbound manifesto text is not a [rule](../docs/TERMS.md#rule). [ADR](../docs/TERMS.md#adr) 0024 is the factory spine. This [ADR](../docs/TERMS.md#adr) reduces the belief to if/then so RCA cannot stop at “the agent” or at a local environment tweak.
+[`docs/nlc/compiler/MANIFESTO.md`](../docs/nlc/compiler/MANIFESTO.md) now states the belief layer. Unbound manifesto text is not a [rule](../docs/TERMS.md#rule). [ADR](../docs/TERMS.md#adr) 0024 is the factory spine. This [ADR](../docs/TERMS.md#adr) reduces the belief to if/then so RCA cannot stop at “the agent” or at a local environment tweak.
 
 No new **R** id (R27). Rules live in [`rules/nlc-0025.json`](../rules/nlc-0025.json).
 

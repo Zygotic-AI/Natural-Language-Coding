@@ -126,22 +126,22 @@ Explicitly not in v0.2.0
  docs/adoption/BROWNFIELD.md                        |  18 +-
  docs/adoption/RELEASE-v0.1.0.md                    |  29 +-
  docs/adoption/RELEASE.md                           |  43 ++
- docs/ai-compiled-systems/AIMS-FILE-MAP.md          |  32 +-
- docs/ai-compiled-systems/ARCHITECTURE.md           |  38 +-
- docs/ai-compiled-systems/COMPILER.md               |  28 +-
- docs/ai-compiled-systems/GETTING-STARTED.md        |  15 +-
- docs/ai-compiled-systems/GLOSSARY.md               |  30 +-
- docs/ai-compiled-systems/HOW-IT-CODES.md           |  36 +-
- docs/ai-compiled-systems/INTENT-SURFACE.md         |  68 +--
- docs/ai-compiled-systems/INTERVIEW-PATTERNS.md     |  58 +--
- docs/ai-compiled-systems/MANIFESTO.md              |  34 +-
- docs/ai-compiled-systems/MERGE.md                  |  70 +--
- docs/ai-compiled-systems/MIGRATION.md              |  76 +--
- docs/ai-compiled-systems/NAMES.md                  |  18 +-
- docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md   |  62 +--
- docs/ai-compiled-systems/PROCESS.md                |  68 +--
- docs/ai-compiled-systems/QUALITY-PROCESSES.md      |  42 +-
- docs/ai-compiled-systems/README.md                 |  22 +-
+ docs/nlc/compiler/AIMS-FILE-MAP.md          |  32 +-
+ docs/nlc/compiler/ARCHITECTURE.md           |  38 +-
+ docs/nlc/compiler/COMPILER.md               |  28 +-
+ docs/nlc/compiler/GETTING-STARTED.md        |  15 +-
+ docs/nlc/compiler/GLOSSARY.md               |  30 +-
+ docs/nlc/compiler/HOW-IT-CODES.md           |  36 +-
+ docs/nlc/compiler/INTENT-SURFACE.md         |  68 +--
+ docs/nlc/compiler/INTERVIEW-PATTERNS.md     |  58 +--
+ docs/nlc/compiler/MANIFESTO.md              |  34 +-
+ docs/nlc/compiler/MERGE.md                  |  70 +--
+ docs/nlc/compiler/MIGRATION.md              |  76 +--
+ docs/nlc/compiler/NAMES.md                  |  18 +-
+ docs/nlc/compiler/PLANIT-ORCHESTRATION.md   |  62 +--
+ docs/nlc/compiler/PROCESS.md                |  68 +--
+ docs/nlc/compiler/QUALITY-PROCESSES.md      |  42 +-
+ docs/nlc/compiler/README.md                 |  22 +-
  docs/nlc/APP-VERIFY.md                             |  30 ++
  docs/nlc/GATE-RECORD-BINDER.md                     |  33 ++
  docs/nlc/HARNESS.md                                |  21 +-

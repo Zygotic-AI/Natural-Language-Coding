@@ -2,7 +2,7 @@
 
 Normative source: [`CHARTER.md`](../../../../CHARTER.md) **§6** (steps 0–8).
 
-[AWL](../../../../docs/TERMS.md#awl) overlay: [`docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md`](../../../../docs/ai-compiled-systems/PLANIT-ORCHESTRATION.md).
+[AWL](../../../../docs/TERMS.md#awl) overlay: [`docs/nlc/compiler/PLANIT-ORCHESTRATION.md`](../../../../docs/nlc/compiler/PLANIT-ORCHESTRATION.md).
 
 Use **in addition to** [PLANIT](../../../../docs/TERMS.md#planit) when the outcome changes the practice [hub](../../../../docs/TERMS.md#hub) (charter, integrity, agents, tools, ADRs, examples).
 

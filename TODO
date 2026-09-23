@@ -15,14 +15,14 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 | Layer | Consumer name | Technical / doc name | Role |
 | ----- | ------------- | -------------------- | ---- |
 | 1 | **Natural Language Coding (NLC)** | This repo / product | You describe **what** (goals) and **how** (requirements, ADRs, policy) in natural language; gates and compile produce software or refuse. |
-| 2 | **AI system compiler** | Today: PLANIT + agent harness + `tools/` gates; doc cluster `docs/ai-compiled-systems/` | The worker that interviews, plans, binds, generates, and proves. Prefer “the compiler” in README; introduce **ASC** only in glossary if we keep it. |
+| 2 | **AI system compiler** | Today: PLANIT + agent harness + `tools/` gates; doc cluster `docs/nlc/compiler/` | The worker that interviews, plans, binds, generates, and proves. Prefer “the compiler” in README; introduce **ASC** only in glossary if we keep it. |
 | 3 | **Compiled system** | BBP-shaped tree the compiler emits; **BBA** = roof architecture (`CHARTER.md`, `integrity/`) | Runnable artifact in *your* app repo—not the teaching specimens in `examples/`. |
 
 **Naming reconciliation (blocks consistent consumer docs):**
 
 - ✔ ADR 0011 + `NAMES.md` + `README.md` / `DESCRIBE.md` / `FINDINGS.md` @done(26-09-20 08:15)
 - ✔ Tagline in root `README.md` @done(26-09-20 08:15)
-- ✔ [`GLOSSARY.md`](docs/ai-compiled-systems/GLOSSARY.md) @done(26-09-20 08:15)
+- ✔ [`GLOSSARY.md`](docs/nlc/compiler/GLOSSARY.md) @done(26-09-20 08:15)
 
 **README + first-run (consumer front door):**
 
@@ -34,13 +34,13 @@ How to read red vs green (hub CI): designed red on its specimen → NOT_MET; ass
 - ✔ v0.1.0 **pre-release** — scope in README, [`RELEASE-v0.1.0.md`](docs/adoption/RELEASE-v0.1.0.md), `nlc-release-smoke.sh`, CI on tag @done(26-09-20 09:45)
 - ☐ **Last:** `./release` at repo root (or `./release --bump keep --yes` to ship `0.1.0` without bump) — see [`docs/adoption/RELEASE.md`](docs/adoption/RELEASE.md).
 - ✔ Install hub **checksum verify** — [`integrity/nlc-install-hashes.json`](integrity/nlc-install-hashes.json), [`nlc-install-verify.py`](tools/nlc-install-verify.py); `NLC_SKIP_VERIFY=1` to skip @done(26-09-20 09:00)
-- ✔ [`GETTING-STARTED.md`](docs/ai-compiled-systems/GETTING-STARTED.md) @done(26-09-20 08:15)
+- ✔ [`GETTING-STARTED.md`](docs/nlc/compiler/GETTING-STARTED.md) @done(26-09-20 08:15)
 - ✔ Manifesto + intent/quality/how-it-codes pages @done(26-09-17 10:15)
 
 **Slash commands / skills (UC1 + UC2 consumer UX):**
 
 - ✔ **`/interview` skill** v1 @done(26-09-20 08:15)
-- ✔ UC1 **interview pattern catalog** v1 — [`INTERVIEW-PATTERNS.md`](docs/ai-compiled-systems/INTERVIEW-PATTERNS.md); grow miss log from RCA @done(26-09-20 09:10)
+- ✔ UC1 **interview pattern catalog** v1 — [`INTERVIEW-PATTERNS.md`](docs/nlc/compiler/INTERVIEW-PATTERNS.md); grow miss log from RCA @done(26-09-20 09:10)
 - ✔ **`/planit` consumer path** via GETTING-STARTED + PROCESS @done(26-09-20 08:15)
 - ✔ `.cursor/skills` → `.agents/skills` symlink @done(26-09-20 08:15)
 
@@ -287,5 +287,5 @@ Use `☐` open, `✔ … @done(YY-MM-DD HH:MM)` when done.
 - ☐ **park-a1** A1 ratify — per-rule ADR program for charter rules lacking decision trail
 - ☐ **park-x4** X4 rewrite — hub `tools/*.py` interiors as noun/verb packages
 - ✔ **park-0029** ADR 0029 tools — lineage-check + bind-snapshot + freshness @done(26-09-22 22:10)
-- ☐ **park-acs** ACS rename — `docs/ai-compiled-systems/` path migration (or permanent stub)
+- ✔ **park-acs** ACS rename — content under `docs/nlc/compiler/`; stub at `docs/ai-compiled-systems/` @done(26-09-22 22:20)
 - ✔ **park-packs** consume/regen closed (`pack_consume_regen`); registry still open/out-of-band @done(26-09-22 22:05)

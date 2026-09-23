@@ -43,9 +43,9 @@ def main() -> int:
     all_v: list[str] = []
     for path in SCAN:
         all_v.extend(scan_file(path))
-    names = ROOT / "docs" / "ai-compiled-systems" / "NAMES.md"
+    names = ROOT / "docs" / "nlc" / "compiler" / "NAMES.md"
     if names.is_file() and "Natural Language Coding" not in names.read_text(encoding="utf-8")[:500]:
-        all_v.append("docs/ai-compiled-systems/NAMES.md: missing NLC product name")
+        all_v.append("docs/nlc/compiler/NAMES.md: missing NLC product name")
     for v in all_v:
         print(f"VIOLATION {v}")
     if all_v:
