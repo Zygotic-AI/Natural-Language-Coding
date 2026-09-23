@@ -15,7 +15,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: **parked residuals tranche complete** (`ssot_exit_status=program-complete-tranche`) — merges #42 packs, #43/#44 ADR 0029, #45 ACS→`docs/nlc/compiler/`, #46 A1 ratify, #47 X4 BOUNDARY. Soft-green residuals listed below.
+Last pass: **X4 RuleReceipt noun pilot** (#49, minor) + prior parked residuals tranche complete (`ssot_exit_status=program-complete-tranche`) — merges #42 packs, #43/#44 ADR 0029, #45 ACS→`docs/nlc/compiler/`, #46 A1 ratify, #47 X4 BOUNDARY. Soft-green residuals listed below.
 
 ---
 
