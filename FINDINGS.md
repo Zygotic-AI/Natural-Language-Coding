@@ -15,7 +15,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: `fix/eval-nlc-wave2-residuals` tip (post-#38) — A11 door gate + P1 ACS stub + PRINCIPLES NLC preface.
+Last pass: `fix/eval-nlc-coverage-close` tip — manifesto attachment merge + nlc-hub-audit Notion draft + P2.6 badges.
 
 ---
 
@@ -44,12 +44,16 @@ Hub ship remains a **human** last step (`./release`).
 
 ## Parked (decided, not executable)
 
-| Item | [ADR](docs/TERMS.md#adr) / doc | Missing [gate](docs/TERMS.md#gate) |
-|------|-----------|--------------|
-| Hub BBA interiors (X4) | ADR 0024 corpus `bba` | rewrite `tools/*.py` as noun/verb packages |
-| [Code packs](docs/TERMS.md#code-pack) (UC16) | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Per-stack scanner adapter |
-| Call-tree packs (UC20) | ADR 0009 | Per-stack packs beyond Python `domain/` |
-| [Rule IR](docs/TERMS.md#rule-ir) | ADR 0007 | Full semantic runners |
+**Badge:** every row below is `gate missing` — Accepted ADR / decided expansion ≠ wired deep gate.
+
+| Item | [ADR](docs/TERMS.md#adr) / doc | Missing [gate](docs/TERMS.md#gate) | Badge |
+|------|-----------|--------------|-------|
+| Hub BBA interiors (X4) | ADR 0024 corpus `bba` | rewrite `tools/*.py` as noun/verb packages | `gate missing` |
+| [Code packs](docs/TERMS.md#code-pack) (UC16) | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Per-stack scanner adapter | `gate missing` |
+| Call-tree packs (UC20) | ADR 0009 | Per-stack packs beyond Python `domain/` | `gate missing` |
+| [Rule IR](docs/TERMS.md#rule-ir) | ADR 0007 | Full semantic runners | `gate missing` |
+| ADR 0029 lineage tools | ADR 0029 | ACTIVE freshness + bind snapshot runners | `gate missing` |
+| RCA packet schema | ADR 0025 | `expansion: rca-packet-schema` | `gate missing` |
 
 ---
 
@@ -138,4 +142,18 @@ Hub ship remains a **human** last step (`./release`).
 | RCA packet schema binder | ADR 0025 expansion gate |
 | Hub tools noun/verb rewrite | X4 remainder |
 | A1 per-rule ADRs for all charter sentences | Separate ratify program |
+
+---
+
+## Planit Evaluate-NLC wave-3 (coverage close)
+
+**Branch:** `fix/eval-nlc-coverage-close`. Closes download/child gaps from the coverage audit.
+
+| Item | Status |
+|------|--------|
+| Notion `manifesto.md` attachment | Merged Principles 5–6 + layer stack into docs SSOT; **full body at root** `MANIFESTO.md` |
+| `nlc-hub-audit` skill | Replaced with Notion draft + Gate section (`.agents/skills/nlc-hub-audit/`) |
+| P2.6 `gate missing` badges | USE-CASES expansion + FINDINGS Parked + JTBD pointer |
+| Notion Status sync | Evaluate-NLC leaf + children (this PR) |
+| Still parked | A1 ratify; X4 rewrite; ADR 0029 tools; ACS rename; packs Needed |
 
