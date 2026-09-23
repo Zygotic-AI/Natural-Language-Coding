@@ -1,7 +1,7 @@
 {
   "version": 1,
   "title": "Hub X4 remainder inventory",
-  "note": "Full noun/verb rewrite of tools/*.py remains open. Pilots: RuleReceipt (ADR 0023), GateLedger (ADR 0010).",
+  "note": "X4 emit-path noun completion: all former emit_path_open nlc* tools are noun-backed adapters. assert-only / lib residual remains for full tools/*.py noun rewrite beyond emit path.",
   "boundary_marker": "BOUNDARY = \"bba-emit\"",
   "covered_emit_path": [
     "nlc-before-generate.py",
@@ -20,32 +20,11 @@
   "without_boundary_count": 278,
   "counts": {
     "assert_only": 209,
-    "emit_path_open": 21,
-    "other_or_lib": 43
+    "emit_path_open": 0,
+    "other_or_lib": 43,
+    "covered_emit_path": 26
   },
-  "emit_path_open": [
-    "nlc-action-gates.py",
-    "nlc-adr-bind-snapshot.py",
-    "nlc-brownfield-inventory.py",
-    "nlc-brownfield-migrate.py",
-    "nlc-delta-regen.py",
-    "nlc-impact-graph.py",
-    "nlc-install-hash-update.py",
-    "nlc-release-build.py",
-    "nlc_call_tree.py",
-    "nlc_contract_break_accept.py",
-    "nlc_dashboard.py",
-    "nlc_generate_provenance.py",
-    "nlc_guide_state.py",
-    "nlc_migration_catalog.py",
-    "nlc_pipeline.py",
-    "nlc_plan_audit.py",
-    "nlc_primitive_propose.py",
-    "nlc_regen_continue.py",
-    "nlc_release_bump.py",
-    "nlc_release_notes.py",
-    "nlc_verify.py"
-  ],
+  "emit_path_open": [],
   "assert_only_sample": [
     "assert-adjective-locality-violation-fails.py",
     "assert-adopter-verify-fast-green-passes.py",
@@ -973,7 +952,7 @@
     },
     {
       "file": "nlc-action-gates.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc-action-plan-gate.py",
@@ -985,7 +964,7 @@
     },
     {
       "file": "nlc-adr-bind-snapshot.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc-adr-lineage-check.py",
@@ -993,15 +972,15 @@
     },
     {
       "file": "nlc-brownfield-inventory.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc-brownfield-migrate.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc-delta-regen.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc-emit-manifest-enforce.py",
@@ -1013,11 +992,11 @@
     },
     {
       "file": "nlc-impact-graph.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc-install-hash-update.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc-install-verify.py",
@@ -1025,7 +1004,7 @@
     },
     {
       "file": "nlc-release-build.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc-reverse-audit.py",
@@ -1049,7 +1028,7 @@
     },
     {
       "file": "nlc_call_tree.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_cli_help.py",
@@ -1061,7 +1040,7 @@
     },
     {
       "file": "nlc_contract_break_accept.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_contract_change.py",
@@ -1069,7 +1048,7 @@
     },
     {
       "file": "nlc_dashboard.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_emit_audit.py",
@@ -1077,15 +1056,15 @@
     },
     {
       "file": "nlc_gate_record.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_gate_scope.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_generate_provenance.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_guide_cmd.py",
@@ -1093,7 +1072,7 @@
     },
     {
       "file": "nlc_guide_state.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_human_gap.py",
@@ -1113,15 +1092,15 @@
     },
     {
       "file": "nlc_migration_catalog.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_pipeline.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_plan_audit.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_preflight.py",
@@ -1129,7 +1108,7 @@
     },
     {
       "file": "nlc_primitive_propose.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_produce_package.py",
@@ -1137,15 +1116,15 @@
     },
     {
       "file": "nlc_regen_continue.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_release_bump.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_release_notes.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_release_preflight.py",
@@ -1165,15 +1144,15 @@
     },
     {
       "file": "nlc_rule_coverage.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_rule_marker.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_rule_runner.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "nlc_todo_ssot.py",
@@ -1189,7 +1168,7 @@
     },
     {
       "file": "nlc_verify.py",
-      "class": "emit-path-open"
+      "class": "covered-emit-path"
     },
     {
       "file": "product_tree.py",
@@ -1236,6 +1215,175 @@
         "nlc_gate_scope.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "action_gates",
+      "path": "tools/nouns/action_gates/",
+      "adapters": [
+        "nlc-action-gates.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "adr_bind_snapshot",
+      "path": "tools/nouns/adr_bind_snapshot/",
+      "adapters": [
+        "nlc-adr-bind-snapshot.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "brownfield_inventory",
+      "path": "tools/nouns/brownfield_inventory/",
+      "adapters": [
+        "nlc-brownfield-inventory.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "brownfield_migrate",
+      "path": "tools/nouns/brownfield_migrate/",
+      "adapters": [
+        "nlc-brownfield-migrate.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "delta_regen",
+      "path": "tools/nouns/delta_regen/",
+      "adapters": [
+        "nlc-delta-regen.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "impact_graph",
+      "path": "tools/nouns/impact_graph/",
+      "adapters": [
+        "nlc-impact-graph.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "install_hash_update",
+      "path": "tools/nouns/install_hash_update/",
+      "adapters": [
+        "nlc-install-hash-update.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "release_build",
+      "path": "tools/nouns/release_build/",
+      "adapters": [
+        "nlc-release-build.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "call_tree",
+      "path": "tools/nouns/call_tree/",
+      "adapters": [
+        "nlc_call_tree.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "contract_break_accept",
+      "path": "tools/nouns/contract_break_accept/",
+      "adapters": [
+        "nlc_contract_break_accept.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "dashboard",
+      "path": "tools/nouns/dashboard/",
+      "adapters": [
+        "nlc_dashboard.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "generate_provenance",
+      "path": "tools/nouns/generate_provenance/",
+      "adapters": [
+        "nlc_generate_provenance.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "guide_state",
+      "path": "tools/nouns/guide_state/",
+      "adapters": [
+        "nlc_guide_state.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "migration_catalog",
+      "path": "tools/nouns/migration_catalog/",
+      "adapters": [
+        "nlc_migration_catalog.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "pipeline",
+      "path": "tools/nouns/pipeline/",
+      "adapters": [
+        "nlc_pipeline.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "plan_audit",
+      "path": "tools/nouns/plan_audit/",
+      "adapters": [
+        "nlc_plan_audit.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "primitive_propose",
+      "path": "tools/nouns/primitive_propose/",
+      "adapters": [
+        "nlc_primitive_propose.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "regen_continue",
+      "path": "tools/nouns/regen_continue/",
+      "adapters": [
+        "nlc_regen_continue.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "release_bump",
+      "path": "tools/nouns/release_bump/",
+      "adapters": [
+        "nlc_release_bump.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "release_notes",
+      "path": "tools/nouns/release_notes/",
+      "adapters": [
+        "nlc_release_notes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "verify",
+      "path": "tools/nouns/verify/",
+      "adapters": [
+        "nlc_verify.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     }
-  ]
+  ],
+  "emit_path_complete": true
 }

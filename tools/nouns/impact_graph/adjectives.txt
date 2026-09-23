@@ -1,0 +1,2 @@
+# adjectives for impact_graph
+emit-owned

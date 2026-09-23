@@ -61,7 +61,7 @@ FOREIGN_BRAND_PATTERNS = [
     re.compile(r"@?eslint-plugin-boundaries", re.IGNORECASE),
     re.compile(r"@?import-linter", re.IGNORECASE),
     re.compile(r"@?modulith", re.IGNORECASE),
-    re.compile(r"@?pact", re.IGNORECASE),
+    re.compile(r"@?pact\b", re.IGNORECASE),  # word-boundary: avoid matching impact_*
     re.compile(r"@?schemathesis", re.IGNORECASE),
 ]
 

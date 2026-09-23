@@ -15,7 +15,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: **X4 noun pilots** RuleReceipt (#49) + GateLedger (this PR), minor + prior parked residuals tranche complete (`ssot_exit_status=program-complete-tranche`) — merges #42 packs, #43/#44 ADR 0029, #45 ACS→`docs/nlc/compiler/`, #46 A1 ratify, #47 X4 BOUNDARY. Soft-green residuals listed below.
+Last pass: **X4 emit-path noun completion** +  **X4 noun pilots** RuleReceipt (#49) + GateLedger (this PR), minor + prior parked residuals tranche complete (`ssot_exit_status=program-complete-tranche`) — merges #42 packs, #43/#44 ADR 0029, #45 ACS→`docs/nlc/compiler/`, #46 A1 ratify, #47 X4 BOUNDARY. Soft-green residuals listed below.
 
 ---
 
@@ -48,7 +48,7 @@ Hub ship remains a **human** last step (`./release`).
 
 | Item | [ADR](docs/TERMS.md#adr) / doc | Missing [gate](docs/TERMS.md#gate) | Badge |
 |------|-----------|--------------|-------|
-| Hub BBA interiors (X4) | ADR 0024 corpus `bba` | rewrite `tools/*.py` as noun/verb packages | `gate missing` |
+| Hub BBA interiors (X4) | ADR 0024 corpus `bba` | emit-path nouns **done**; assert-only residual | soft-green |
 | [Code packs](docs/TERMS.md#code-pack) (UC16) | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Per-stack scanner adapter | `gate missing` |
 | Call-tree packs (UC20) | ADR 0009 | Per-stack packs beyond Python `domain/` | `gate missing` |
 | [Rule IR](docs/TERMS.md#rule-ir) | ADR 0007 | Full semantic runners | `gate missing` |
@@ -191,7 +191,7 @@ One produce leaf / PR per row. Do not soft-green as done without evidence.
 |----------|--------|
 | `hub_v02.pack_registry` public product | open / out-of-band |
 | A1 non-R charter prose (§6 process, §16 ship roles) | soft-green in backlog `non_r_residuals` |
-| X4 full `tools/*.py` noun/verb rewrite | **pilots** RuleReceipt + GateLedger; remainder still open |
+| X4 emit-path noun rewrite | **Complete** (`emit_path_complete`); assert/fitness-only tools residual |
 | ADR 0025 RCA packet schema binder | expansion |
 | Full charter rule ADR coverage beyond R-ids (“~89”) | not claimed |
 

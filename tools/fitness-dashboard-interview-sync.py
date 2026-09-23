@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DASH = ROOT / "tools" / "nlc_dashboard.py"
+DASH_NOUN = ROOT / "tools" / "nouns" / "dashboard" / "dashboard.py"
 SPECIMEN = ROOT / "examples" / "invoice-correct"
 
 
@@ -17,7 +18,10 @@ def main() -> int:
     if not DASH.is_file():
         violations.append("missing tools/nlc_dashboard.py")
     else:
-        text = DASH.read_text(encoding="utf-8", errors="replace")
+        parts = [DASH.read_text(encoding="utf-8", errors="replace")]
+        if DASH_NOUN.is_file():
+            parts.append(DASH_NOUN.read_text(encoding="utf-8", errors="replace"))
+        text = "\n".join(parts)
         if "/interview" not in text:
             violations.append("nlc_dashboard.py must reference /interview agent bridge")
         if "YOUR QUEUE" not in text:
