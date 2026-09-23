@@ -18,6 +18,9 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nlc_requirements import hub_tool  # noqa: E402
+
 
 def resolve_input(path: Path) -> Path | None:
     if path.is_file():
@@ -59,6 +62,7 @@ def validate(plan: dict) -> list[str]:
 
 
 def main() -> int:
+    hub_tool()
     path = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else None
     target = resolve_input(path) if path is not None else None
     if target is None:
