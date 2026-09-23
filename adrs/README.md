@@ -35,4 +35,5 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0025-belief-no-blame-climb.md`](0025-belief-no-blame-climb.md) | Belief: no blame, climb upstream, buck stops here | Accepted |
 | [`0026-promote-x1-x3-runners.md`](0026-promote-x1-x3-runners.md) | Promote X1–X3 expansion runners to law | Accepted |
 | [`0027-emit-from-prose.md`](0027-emit-from-prose.md) | Emit-from-prose compiler: constrained plan → plan/audit/manifest JSON | Accepted |
+| [`0028-closed-atomic-verb-set-and-policy-adr-lineage.md`](0028-closed-atomic-verb-set-and-policy-adr-lineage.md) | Closed atomic verb set + policy→ADR lineage (active tip only) | Accepted |
 | [`0030-pipeline-wiring.md`](0030-pipeline-wiring.md) | Sequence X1/X2/X3/X5/X6 around every emit via `nlc-pipeline-wire.py` | Accepted |
