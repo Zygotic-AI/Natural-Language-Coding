@@ -1,0 +1,2 @@
+# adjectives for guide_state
+emit-owned

@@ -1,0 +1,2 @@
+# adjectives for action_gates
+emit-owned

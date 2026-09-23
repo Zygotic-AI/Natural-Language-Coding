@@ -1,0 +1,2 @@
+# adjectives for adr_bind_snapshot
+emit-owned
