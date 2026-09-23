@@ -1,0 +1,25 @@
+{
+  "version": "1",
+  "verbs": {
+    "add_scope_path": {
+      "input": { "type": "object", "required": ["root", "artifact"] },
+      "output": { "type": "object" },
+      "error": { "type": "object" }
+    },
+    "load_scope_paths": {
+      "input": { "type": "object", "required": ["root"] },
+      "output": { "type": "object", "required": ["paths"] },
+      "error": { "type": "object" }
+    },
+    "append_record": {
+      "input": { "type": "object", "required": ["root", "artifact", "gate_id", "outcome"] },
+      "output": { "type": "object" },
+      "error": { "type": "object" }
+    },
+    "scoped_artifact_paths": {
+      "input": { "type": "object", "required": ["root"] },
+      "output": { "type": "object", "required": ["paths"] },
+      "error": { "type": "object" }
+    }
+  }
+}
