@@ -1,7 +1,7 @@
 {
   "version": 1,
   "title": "Hub X4 remainder inventory",
-  "note": "Full noun/verb rewrite of tools/*.py remains parked. This file tracks BOUNDARY/emit-path progress after tranche-1.",
+  "note": "Full noun/verb rewrite of tools/*.py remains open. Pilot: tools/nouns/rule_receipt (RuleReceipt) + four CLI adapters.",
   "boundary_marker": "BOUNDARY = \"bba-emit\"",
   "covered_emit_path": [
     "nlc-before-generate.py",
@@ -1219,6 +1219,19 @@
     {
       "file": "validate-pack-ingest-candidates.py",
       "class": "other-or-lib"
+    }
+  ],
+  "noun_pilots": [
+    {
+      "noun": "RuleReceipt",
+      "path": "tools/nouns/rule_receipt/",
+      "adapters": [
+        "nlc_rule_marker.py",
+        "nlc_rule_coverage.py",
+        "nlc_rule_runner.py",
+        "nlc_rule_emit.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     }
   ]
 }

@@ -1,0 +1,3 @@
+# Adjectives this noun protects
+receipt-shaped — markers match canonical lang prefixes
+ir-consistent — adopted.json matches .nlc/rule-ir.snapshot.json after materialize

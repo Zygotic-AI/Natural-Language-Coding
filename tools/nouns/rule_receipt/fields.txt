@@ -1,0 +1,6 @@
+# Fields owned by RuleReceipt (documentation; Python uses methods)
+marker_prefix_by_lang
+marker_re
+scan_dirs
+skip_dirs
+snapshot_name
