@@ -21,9 +21,9 @@ def main() -> int:
         if not path.is_file():
             violations.append(f"missing {path.relative_to(ROOT)}")
     init = (ROOT / "tools" / "nlc-init.py").read_text(encoding="utf-8", errors="replace")
-    if 'target / "nouns"' not in init:
+    if '(target / "nouns")' not in init:
         violations.append("nlc-init.py does not create nouns/")
-    if 'target / "goals"' not in init:
+    if '(target / "goals")' not in init:
         violations.append("nlc-init.py does not create goals/")
     for row in violations:
         print(f"VIOLATION {row}")
