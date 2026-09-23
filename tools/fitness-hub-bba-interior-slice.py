@@ -2,7 +2,7 @@
 """X4 v2: hub tools/ emit-path modules carry BBA boundary markers.
 
 This is a constrained slice, not a full interior rewrite. It asserts that
-the hub's own emit-path modules (nlc-init, nlc_distribution, nlc_requirements)
+the hub's own emit-path modules (see EMIT_PATH_MODULES allowlist)
 declare their BBA role via a module-level BOUNDARY marker, so the hub's
 emit surface is itself boundary-shaped.
 
@@ -20,6 +20,14 @@ EMIT_PATH_MODULES = (
     ROOT / "tools" / "nlc-init.py",
     ROOT / "tools" / "nlc_distribution.py",
     ROOT / "tools" / "nlc_requirements.py",
+    ROOT / "tools" / "nlc-pack-install.py",
+    ROOT / "tools" / "nlc-pack-export.py",
+    ROOT / "tools" / "nlc-pack-ingest.py",
+    ROOT / "tools" / "nlc-pipeline-wire.py",
+    ROOT / "tools" / "nlc-before-generate.py",
+    ROOT / "tools" / "nlc-emit-from-prose.py",
+    ROOT / "tools" / "nlc_goal_scaffold.py",
+    ROOT / "tools" / "nlc_rule_emit.py",
 )
 MARKER = 'BOUNDARY = "bba-emit"'
 

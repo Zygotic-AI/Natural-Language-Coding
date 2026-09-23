@@ -18,15 +18,23 @@ The hub's own emit-path modules declare their BBA role at module scope (after `f
 BOUNDARY = "bba-emit"
 ```
 
-Covered modules:
+Covered modules (tranche-1 emit-path):
 
 - `tools/nlc-init.py`
 - `tools/nlc_distribution.py`
 - `tools/nlc_requirements.py`
+- `tools/nlc-pack-install.py`
+- `tools/nlc-pack-export.py`
+- `tools/nlc-pack-ingest.py`
+- `tools/nlc-pipeline-wire.py`
+- `tools/nlc-before-generate.py`
+- `tools/nlc-emit-from-prose.py`
+- `tools/nlc_goal_scaffold.py`
+- `tools/nlc_rule_emit.py`
 
 Enforced by `tools/fitness-hub-bba-interior-slice.py`. A missing or renamed marker fails the gate (default-closed).
 
-Full noun/verb package rewrite of `tools/*.py` interiors remains future work.
+Remainder inventory: [`integrity/hub-x4-remainder.json`](../integrity/hub-x4-remainder.json) (emit-path-open + assert-only counts). Full noun/verb package rewrite of `tools/*.py` interiors remains parked.
 
 ## Hub self-verify (A12 soft-green)
 
