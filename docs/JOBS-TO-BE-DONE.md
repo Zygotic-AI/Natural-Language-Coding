@@ -116,6 +116,7 @@ Retries and verbs honor idempotency keys—checked in fitness.
 | J21 | Idempotency under retry | **Available** | [`fitness-c15-idempotent.py`](../tools/fitness-c15-idempotent.py). | — |
 
 **Blocked** = job is real; Accepted ADRs call for tooling we have not finished. Track in [`TODO`](../TODO) (ADR enforcement).
+**`gate missing` badge:** see [`USE-CASES.md`](USE-CASES.md) Needed (expansion) and [`FINDINGS.md`](../FINDINGS.md) Parked — Accepted ADR ≠ wired deep gate.
 
 ---
 

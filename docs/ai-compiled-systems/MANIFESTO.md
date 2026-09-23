@@ -30,6 +30,32 @@ This repo is the end of the climb. When the factory makes defects, they are disc
 
 [NLC](../TERMS.md#nlc) is how the factory runs. [BBA](../TERMS.md#bba) is the shape of what it may emit. Do not confuse them.
 
+## Principles (six)
+
+1. **No blame.** Defects are process unsuitability, never agent or human failure. We never say the agent made a mistake or the human made a mistake — we say the process was not suitable for them.
+
+2. **Root cause upstream.** Climb past the environment condition to the process that produced it, all the way to the belief. The one thing is always the furthest upstream process change that would have made the defect impossible.
+
+3. **The buck stops here.** This repo is where the RCA chain terminates — at the belief-to-implementation disconnect. That is the deepest cause that exists, by design.
+
+4. **Process is the product.** We are building a factory; the code is the inevitable output when the factory runs correctly. Even when the customer touches an application, the focus is the process that makes that product inevitable.
+
+5. **Dogfood or don't preach.** The hub must pass its own gates — BBA at its foundation — or the claim is unproven. Bootstrap is the only honest exception, and it must be explicit, time-boxed, and sunset.
+
+6. **Audit immediately.** Catch the fork at emit, not at PR time. Every downstream patch costs more than fixing the process.
+
+---
+
+## The layer stack
+
+- **[BBA](../TERMS.md#bba)** — Boundary-Based Architecture — the foundation. Declared boundaries, contracts on every cross-boundary call.
+- **[NLC](../TERMS.md#nlc)** — Natural Language Coding — the consumer roof. Describe intent, compile or refuse.
+- **[BBP](../TERMS.md#bbp)** — Boundary-Based Programming — the emit practice under the roof.
+
+NLC compliance without BBA underneath is surface compliance only. The hub must be built from declared boundaries, and the hub's own source is the first thing `./nlc verify` runs against.
+
+---
+
 ## Value stream
 
 Work flows from stated intent to the user. Defects cost far more the later they are found—design cheap, production expensive. [NLC](../TERMS.md#nlc) does not ask you to memorize the curve; it asks you to **believe the direction** and act on it.
