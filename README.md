@@ -9,6 +9,7 @@
 - Stop silent drift - problems surface at compile time with evidence—or the build stops.
 - The AI [compiler](docs/TERMS.md#compiler) eliminates costly models and hallucinations by producing tightly-scoped code.
 - Code is interchangeable. Build Dev/QA rapidly in Python; deploy UAT and Prod in Rust.
+- **Soft-green:** hub fitness / source-level gates are **Python-first** today; other languages are adapter-parked (`docs/LANGUAGE-SCANNER.md`), not complete.
 
 ## Quick start (app repo)
 
@@ -61,7 +62,7 @@ Design SSOT: [`CHARTER.md`](CHARTER.md). Words: [`GLOSSARY.md`](docs/ai-compiled
 | If you want… | Read |
 | ------------ | ---- |
 | Five-minute walkthrough | [`GETTING-STARTED.md`](docs/ai-compiled-systems/GETTING-STARTED.md) |
-| Why intent is the product | [`MANIFESTO.md`](docs/ai-compiled-systems/MANIFESTO.md) |
+| Why intent is the product | [`MANIFESTO.md`](MANIFESTO.md) → SSOT [`docs/ai-compiled-systems/MANIFESTO.md`](docs/ai-compiled-systems/MANIFESTO.md) |
 | Adopt step-by-step | [`BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) |
 | Full doc map | [`docs/nlc/README.md`](docs/nlc/README.md) |
 
