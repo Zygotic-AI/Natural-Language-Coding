@@ -4,7 +4,7 @@ Standing instructions for any coding harness working in this repository.
 
 ## Practice
 
-This repo is the central home for **[Boundary-Based Programming](docs/TERMS.md#bbp)**. Read [`CHARTER.md`](CHARTER.md) before changing theory, agent materials, or tools. Confirmable rules live in the [charter](docs/TERMS.md#charter); wishes are not rules.
+This repo is the **[Natural Language Coding](docs/TERMS.md#nlc) (NLC)** hub. [BBP](docs/TERMS.md#bbp) / [BBA](docs/TERMS.md#bba) are emit practice and architecture under that roof. Read [`CHARTER.md`](CHARTER.md) before changing theory, agent materials, or tools. Confirmable rules live in the [charter](docs/TERMS.md#charter); wishes are not rules.
 
 Id prefixes: **P** = principle (hub honesty), **R** = [requirement](docs/TERMS.md#requirement) (charter shape), **C** = confirmation (this change). `P-0xx` (hyphen) is an operating policy in the companion bindings repo, not P1–P7.
 
