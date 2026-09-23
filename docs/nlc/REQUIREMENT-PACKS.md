@@ -7,7 +7,7 @@
 1. **Ingest** — source standard/docs → candidate ADRs + rules (human review; not automated ratification).
 2. **Ratify** — [ADR](../TERMS.md#adr) status + `rules/adopted.json` in the authoring repo.
 3. **Export** — `python3 tools/nlc-pack-export.py --name my-pack --version 1.0.0`
-4. **Consume** — `python3 tools/nlc-pack-install.py pack-my-pack-1.0.0.tar.gz` in an [app repo](../TERMS.md#adopter); scope tags/data; [UC9](../TERMS.md#uc9) regen as needed.
+4. **Consume** — `python3 tools/nlc-pack-install.py pack-my-pack-1.0.0.tar.gz` in an [app repo](../TERMS.md#adopter). Install writes `.nlc/pack-consume-status.json` (scope tags/data from the manifest, or `na`) plus `uc9_queue_hint` for [UC9](../TERMS.md#uc9) regen. When `rules/adopted.json` exists, also writes `.nlc/requirements-sync-pending.json`.
 
 ## Manifest
 
