@@ -47,3 +47,9 @@ ADR-0041 (AES-256)  →  ADR-0098 (AES-512)  →  ADR-0142 (quantum-safe)
 - Lineage data structure (file-per-link vs. index with parent pointers).
 - Retirement semantics and retention windows.
 - Cross-lineage conflict resolution (covered in principle by ADR 0012; mechanics deferred).
+
+## Hub documents (ADR 0029)
+
+- Binder input: [`adrs/ACTIVE.md`](../../adrs/ACTIVE.md)
+- Human catalog: [`adrs/CATALOG.md`](../../adrs/CATALOG.md)
+- Full history: [`adrs/INDEX.md`](../../adrs/INDEX.md)
