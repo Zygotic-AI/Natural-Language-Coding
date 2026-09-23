@@ -15,7 +15,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: `feat/adr-0026-x1-x3-runners` (ADR 0026 promoted X1–X3).
+Last pass: `feat/nlc-pipeline-wiring-clean` (ADR 0030 wires X1/X2/X3/X5/X6 via `nlc-pipeline-wire.py`).
 
 ---
 
@@ -47,7 +47,6 @@ Hub ship remains a **human** last step (`./release`).
 | Item | [ADR](docs/TERMS.md#adr) / doc | Missing [gate](docs/TERMS.md#gate) |
 |------|-----------|--------------|
 | Hub BBA interiors (X4) | ADR 0024 corpus `bba` | rewrite `tools/*.py` as noun/verb packages |
-| Machine emit-audit (X5) | ADR 0024 + “every emit has an audit” | full emit-audit runner beyond manifest schema field |
 | [Code packs](docs/TERMS.md#code-pack) (UC16) | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Per-stack scanner adapter |
 | Call-tree packs (UC20) | ADR 0009 | Per-stack packs beyond Python `domain/` |
 | [Rule IR](docs/TERMS.md#rule-ir) | ADR 0007 | Full semantic runners |
@@ -69,7 +68,9 @@ Hub ship remains a **human** last step (`./release`).
 
 - ADR 0024 factory spine + corpus map + v1 binder
 - ADR 0025 no-blame / climb / buck-stops rules file
-- ADR 0026: X1 action-plan gate, X2 reverse-audit, X3 full emit-manifest enforcement
+- ADR 0026: X1 action-plan, X2 reverse-audit, X3 emit-manifest
+- ADR 0030: X1/X2/X3/X5/X6 sequenced by `nlc-pipeline-wire.py`
 - Manifesto Belief section
 - `nlc-hub-audit` skill
 - FINDINGS as sole live gap queue
+- PLANIT skill + HARNESS + PROCESS + ORCHESTRATION wired to the pipeline

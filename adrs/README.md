@@ -34,3 +34,4 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0024-nlc-factory-spine.md`](0024-nlc-factory-spine.md) | [NLC](../docs/TERMS.md#nlc) factory spine: corpora, bind-or-remove, action bind, emit audit | Accepted |
 | [`0025-belief-no-blame-climb.md`](0025-belief-no-blame-climb.md) | Belief: no blame, climb upstream, buck stops here | Accepted |
 | [`0026-promote-x1-x3-runners.md`](0026-promote-x1-x3-runners.md) | Promote X1–X3 expansion runners to law | Accepted |
+| [`0030-pipeline-wiring.md`](0030-pipeline-wiring.md) | Sequence X1/X2/X3/X5/X6 around every emit via `nlc-pipeline-wire.py` | Accepted |

@@ -1,0 +1,25 @@
+{
+  "plan": {
+    "steps": [{"id": "s1", "description": "create invoice"}],
+    "actions": [{"id": "a1", "plan_step_id": "s1", "description": "emit Invoice.issue"}]
+  },
+  "audit": {
+    "applicable_adrs": ["0001"],
+    "bindings": [{"adr_id": "0001", "action_id": "a1"}]
+  },
+  "manifest": {
+    "schema": "nlc-emit-manifest/v0",
+    "emit_id": "e1",
+    "action_id": "a1",
+    "artifact_path": "domain/invoice.py",
+    "bound_adr_ids": ["0001"],
+    "audit": {"status": "pass", "path": "audits/e1.md"},
+    "gate": {"status": "pass", "default": "closed"},
+    "decision_trace": ["chose noun Invoice per ADR 0003"],
+    "thought_anchors": ["noun vs goal"],
+    "unused": "na"
+  },
+  "action_gates": [
+    {"adr_id": "0001", "gate_cmd": "python3", "args": ["-c", "print('RESULT:MET')"]}
+  ]
+}
