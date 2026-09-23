@@ -56,3 +56,9 @@ First true interior rewrite (not BOUNDARY-only): ADR 0023 rule family lives as a
 
 Full rewrite of remaining `tools/*.py` stays open — see [`integrity/hub-x4-remainder.json`](../integrity/hub-x4-remainder.json).
 
+### GateLedger (second pilot)
+
+- Noun: `tools/nouns/gate_ledger/` (`GateLedger`: scope paths + gate receipts)
+- Thin CLI adapters: `nlc_gate_scope.py`, `nlc_gate_record.py`
+- Same gate: `tools/fitness-hub-x4-noun-pilot.py` (multi-pilot)
+

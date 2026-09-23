@@ -1,7 +1,7 @@
 {
   "version": 1,
   "title": "Hub X4 remainder inventory",
-  "note": "Full noun/verb rewrite of tools/*.py remains open. Pilot: tools/nouns/rule_receipt (RuleReceipt) + four CLI adapters.",
+  "note": "Full noun/verb rewrite of tools/*.py remains open. Pilots: RuleReceipt (ADR 0023), GateLedger (ADR 0010).",
   "boundary_marker": "BOUNDARY = \"bba-emit\"",
   "covered_emit_path": [
     "nlc-before-generate.py",
@@ -20,7 +20,7 @@
   "without_boundary_count": 278,
   "counts": {
     "assert_only": 209,
-    "emit_path_open": 26,
+    "emit_path_open": 21,
     "other_or_lib": 43
   },
   "emit_path_open": [
@@ -35,8 +35,6 @@
     "nlc_call_tree.py",
     "nlc_contract_break_accept.py",
     "nlc_dashboard.py",
-    "nlc_gate_record.py",
-    "nlc_gate_scope.py",
     "nlc_generate_provenance.py",
     "nlc_guide_state.py",
     "nlc_migration_catalog.py",
@@ -46,9 +44,6 @@
     "nlc_regen_continue.py",
     "nlc_release_bump.py",
     "nlc_release_notes.py",
-    "nlc_rule_coverage.py",
-    "nlc_rule_marker.py",
-    "nlc_rule_runner.py",
     "nlc_verify.py"
   ],
   "assert_only_sample": [
@@ -1230,6 +1225,15 @@
         "nlc_rule_coverage.py",
         "nlc_rule_runner.py",
         "nlc_rule_emit.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "GateLedger",
+      "path": "tools/nouns/gate_ledger/",
+      "adapters": [
+        "nlc_gate_record.py",
+        "nlc_gate_scope.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     }
