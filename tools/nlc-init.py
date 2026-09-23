@@ -93,6 +93,7 @@ def main() -> int:
     (target / "adrs").mkdir(exist_ok=True)
     (target / "domain").mkdir(exist_ok=True)
     (target / "goals").mkdir(exist_ok=True)
+    (target / "nouns").mkdir(exist_ok=True)
     (target / "knowledge").mkdir(exist_ok=True)
     (target / "rules").mkdir(exist_ok=True)
 
