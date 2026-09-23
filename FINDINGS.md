@@ -157,3 +157,17 @@ Hub ship remains a **human** last step (`./release`).
 | Notion Status sync | Evaluate-NLC leaf + children (this PR) |
 | Still parked | A1 ratify; X4 rewrite; ADR 0029 tools; ACS rename; packs Needed |
 
+---
+
+## Planit parked residual queue (post wave-3)
+
+One produce leaf / PR per row. Do not soft-green as done without evidence.
+
+| Todo id | Work | Primary home |
+|---------|------|--------------|
+| **park-a1** | A1 ratify — per-rule ADR program for charter rules lacking decision trail (ADR 0007 decision-first) | CHARTER document control + `adrs/` |
+| **park-x4** | X4 rewrite — hub `tools/*.py` interiors → noun/verb packages (beyond emit-path `BOUNDARY` slice) | [`docs/nlc/HUB-BBA-DOGFOOD.md`](docs/nlc/HUB-BBA-DOGFOOD.md) |
+| **park-0029** | ADR 0029 tools — lineage resolver + ACTIVE freshness gate + bind snapshot runners | [`adrs/0029-adr-lineage-active-set-and-bind-snapshot.md`](adrs/0029-adr-lineage-active-set-and-bind-snapshot.md); FINDINGS Parked `gate missing` |
+| **park-acs** | ACS rename — migrate `docs/ai-compiled-systems/` → NLC/ASC-aligned path (or keep stub forever) | [`docs/ai-compiled-systems/README.md`](docs/ai-compiled-systems/README.md) banner |
+| **park-packs** | Packs Needed — close `hub_v02.pack_consume_regen` + optional `hub_v02.pack_registry` | FINDINGS Needed rows |
+
