@@ -1,37 +1,15 @@
 #!/usr/bin/env python3
-"""ADR 0023: canonical compiler-style nlc:rule= receipt lines."""
+"""ADR 0023: canonical compiler-style nlc:rule= receipt lines (CLI adapter)."""
 
 from __future__ import annotations
 
 import argparse
-import re
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nlc_requirements import hub_tool  # noqa: E402
-
-RULE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
-
-PREFIX = {
-    "python": "# nlc:rule={id}",
-    "py": "# nlc:rule={id}",
-    "javascript": "// nlc:rule={id}",
-    "js": "// nlc:rule={id}",
-    "typescript": "// nlc:rule={id}",
-    "ts": "// nlc:rule={id}",
-}
-
-
-def marker_line(rule_id: str, lang: str = "python") -> str:
-    rid = rule_id.strip()
-    if not RULE_ID_RE.match(rid):
-        raise ValueError(f"invalid rule_id: {rule_id}")
-    key = lang.strip().lower()
-    template = PREFIX.get(key)
-    if template is None:
-        raise ValueError(f"unsupported lang: {lang} (use: {', '.join(sorted(set(PREFIX)))})")
-    return template.format(id=rid)
+from nouns.rule_receipt.rule_receipt import marker_line  # noqa: E402
 
 
 def main() -> int:

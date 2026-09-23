@@ -291,3 +291,15 @@ Use `☐` open, `✔ … @done(YY-MM-DD HH:MM)` when done.
 - ✔ **park-0029** ADR 0029 tools — lineage-check + bind-snapshot + freshness @done(26-09-22 22:10)
 - ✔ **park-acs** ACS rename — content under `docs/nlc/compiler/`; stub at `docs/ai-compiled-systems/` @done(26-09-22 22:20)
 - ✔ **park-packs** consume/regen closed (`pack_consume_regen`); registry still open/out-of-band @done(26-09-22 22:05)
+
+## Soft-green / expansion residuals (post tranche)
+
+From [`FINDINGS.md`](FINDINGS.md) Last pass soft-green + Parked `gate missing` rows.
+
+- ☐ **pack-registry** — public `hub_v02.pack_registry` product (out-of-band; optional)
+- ☐ **x4-full-rewrite** — hub `tools/*.py` interiors → noun/verb packages (beyond BOUNDARY slice; see `integrity/hub-x4-remainder.json`); **RuleReceipt pilot landed** — remainder open
+- ☐ **a1-non-r-prose** — charter §6 process / §16 ship-role (and other non-R) ratification ADRs
+- ☐ **adr-0025-rca-packet** — RCA packet schema binder (`expansion: rca-packet-schema`)
+- ☐ **uc16-code-packs** — per-stack language-scanner / code-pack adapters (beyond Python gate)
+- ☐ **uc20-call-tree-packs** — call-tree packs beyond Python `domain/` (ADR 0009 expansion)
+- ☐ **rule-ir-runners** — full Rule IR semantic runners (ADR 0007 expansion)

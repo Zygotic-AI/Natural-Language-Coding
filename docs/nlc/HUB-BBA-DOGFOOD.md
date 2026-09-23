@@ -46,3 +46,13 @@ This hub **is** the first subject of `./nlc verify` / CI `fitness-*` (not an aft
 
 Still expansion (not claimed closed): full hub `tools/*.py` noun/verb rewrite; RCA packet schema binder for ADR 0025.
 
+## v3 — noun/verb pilot (`RuleReceipt`)
+
+First true interior rewrite (not BOUNDARY-only): ADR 0023 rule family lives as a BBA noun under `tools/nouns/rule_receipt/`.
+
+- Noun: `RuleReceipt` (`format_marker`, `apply_markers_to_source`, `load_adopted`, `scan_markers`, `materialize_ir`, `write_snapshot`, `check_ir`)
+- Thin CLI adapters: `nlc_rule_marker.py`, `nlc_rule_coverage.py`, `nlc_rule_runner.py`, `nlc_rule_emit.py`
+- Gate: `tools/fitness-hub-x4-noun-pilot.py`
+
+Full rewrite of remaining `tools/*.py` stays open — see [`integrity/hub-x4-remainder.json`](../integrity/hub-x4-remainder.json).
+
