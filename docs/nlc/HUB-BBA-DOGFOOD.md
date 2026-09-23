@@ -28,3 +28,13 @@ Enforced by `tools/fitness-hub-bba-interior-slice.py`. A missing or renamed mark
 
 Full noun/verb package rewrite of `tools/*.py` interiors remains future work.
 
+## Hub self-verify (A12 soft-green)
+
+This hub **is** the first subject of `./nlc verify` / CI `fitness-*` (not an afterthought adopter-only suite). Concrete door permanence:
+
+- `tools/fitness-charter-nlc-door.py` — CHARTER first H1 must name the NLC roof
+- `tools/fitness-hub-bba-dogfood.py` / `fitness-hub-bba-interior-slice.py` — emit-path dogfood
+- Binding matrix + install hashes run on this checkout
+
+Still expansion (not claimed closed): full hub `tools/*.py` noun/verb rewrite; RCA packet schema binder for ADR 0025.
+
