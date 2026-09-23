@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+BOUNDARY = "bba-emit"
+
 import shutil
 import sys
 from typing import Callable
