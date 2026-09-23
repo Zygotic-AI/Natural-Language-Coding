@@ -35,6 +35,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nlc_requirements import hub_tool  # noqa: E402
+
 STEP_RE = re.compile(r"^##\s+Step\s+(\S+):\s*(.+?)\s*$")
 ACTION_RE = re.compile(r"^-\s+Action\s+(\S+):\s*(.+?)\s*(?:\[adr:([^\]]+)\])?\s*$")
 EMIT_RE = re.compile(r"^##\s+Emit\s+(\S+):\s*(.+?)\s*$")
@@ -158,6 +161,7 @@ def build_action_gates(actions: list[dict]) -> list[dict]:
 
 
 def main() -> int:
+    hub_tool()
     p = argparse.ArgumentParser(description="NLC emit-from-prose compiler (ADR 0027)")
     p.add_argument("--prose", type=Path, required=True, help="prose plan file")
     p.add_argument("--out", type=Path, required=True, help="output directory")
