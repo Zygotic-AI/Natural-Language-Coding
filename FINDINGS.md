@@ -15,7 +15,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: `fix/eval-nlc-coverage-close` tip — manifesto attachment merge + nlc-hub-audit Notion draft + P2.6 badges.
+Last pass: **parked residuals tranche complete** (`ssot_exit_status=program-complete-tranche`) — merges #42 packs, #43/#44 ADR 0029, #45 ACS→`docs/nlc/compiler/`, #46 A1 ratify, #47 X4 BOUNDARY. Soft-green residuals listed below.
 
 ---
 
@@ -170,4 +170,30 @@ One produce leaf / PR per row. Do not soft-green as done without evidence.
 | **park-0029** | **Done** — lineage-check + bind-snapshot + freshness | ADR 0029 tools |
 | **park-acs** | **Done** — content under `docs/nlc/compiler/`; `docs/ai-compiled-systems/` stub redirects only | [`docs/nlc/compiler/README.md`](docs/nlc/compiler/README.md) |
 | **park-packs** | Consume **closed**; `pack_registry` remains **open** (out-of-band expansion) | FINDINGS Needed / hub_v02 |
+
+---
+
+## Parked residuals tranche — Phase 6 execution audit
+
+**Verdict: PASS** (serial packs → 0029 → ACS → A1 → X4; each PR CI green before merge).
+
+| Leaf | PR | Evidence |
+|------|----|----------|
+| park-packs | #42 | `pack_consume_regen` closed; registry out-of-band |
+| park-0029 | #43 + #44 | lineage-check, bind-snapshot, freshness; hub_tool fix |
+| park-acs | #45 | `docs/nlc/compiler/`; stub redirects |
+| park-a1 | #46 | ADR 0031–0035 + `charter-ratify-backlog.json` |
+| park-x4 | #47 | emit-path BOUNDARY batch + `hub-x4-remainder.json` |
+
+### Soft-green residuals (explicitly out of this conclusion)
+
+| Residual | Status |
+|----------|--------|
+| `hub_v02.pack_registry` public product | open / out-of-band |
+| A1 non-R charter prose (§6 process, §16 ship roles) | soft-green in backlog `non_r_residuals` |
+| X4 full `tools/*.py` noun/verb rewrite | parked; remainder inventory published |
+| ADR 0025 RCA packet schema binder | expansion |
+| Full charter rule ADR coverage beyond R-ids (“~89”) | not claimed |
+
+**Handoff:** Notion Evaluate-NLC + this Last pass. `ssot_leaf_ids`: park-packs, park-0029, park-acs, park-a1, park-x4. `ssot_exit_status`: `program-complete-tranche`.
 

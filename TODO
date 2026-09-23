@@ -284,6 +284,8 @@ Use `☐` open, `✔ … @done(YY-MM-DD HH:MM)` when done.
 
 ## Planit parked residuals (open produce leaves)
 
+- ✔ **Parked residuals tranche** serial packs→0029→ACS→A1→X4 — Phase 6 PASS; `ssot_exit_status=program-complete-tranche` @done(26-09-22 23:05)
+
 - ✔ **park-a1** A1 ratify tranche-done — ADR 0031–0035 + backlog; non-R residual soft-green @done(26-09-22 22:40)
 - ✔ **park-x4** X4 BOUNDARY tranche-done — emit-path batch + remainder inventory; full rewrite residual @done(26-09-22 22:55)
 - ✔ **park-0029** ADR 0029 tools — lineage-check + bind-snapshot + freshness @done(26-09-22 22:10)
