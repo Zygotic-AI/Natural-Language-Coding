@@ -1,4 +1,12 @@
-# [Boundary-Based Programming](docs/TERMS.md#bbp)
+# [Natural Language Coding](docs/TERMS.md#nlc) — charter (BBP emit + integrity under the roof)
+
+**Product / consumer roof = [Natural Language Coding (NLC)](docs/TERMS.md#nlc)** ([ADR 0011](adrs/0011-natural-language-coding-naming.md)).
+This document is the **[Boundary-Based Programming](docs/TERMS.md#bbp) (BBP)** emit + integrity doctrine **under that roof**.
+**[BBA](docs/TERMS.md#bba)** is under-covers integrity architecture, not the public product name.
+
+---
+
+# [Boundary-Based Programming](docs/TERMS.md#bbp) — emit + integrity practice
 
 A working spec for software that humans and agents can change without scattering adjectives or widening [blast radius](docs/TERMS.md#blast-radius).
 
@@ -48,7 +56,7 @@ That is the whole model. Everything else is how we keep it honest.
 
 ## 3. Naming
 
-**Practice name:** [Boundary-Based Programming](docs/TERMS.md#bbp).
+**Practice name (under NLC roof):** [Boundary-Based Programming](docs/TERMS.md#bbp) — emit + integrity. **Product roof:** [Natural Language Coding](docs/TERMS.md#nlc) ([ADR 0011](adrs/0011-natural-language-coding-naming.md)).
 
 **Mechanism:** boundaries are enforced (contracts, privacy of fields, gates, review).
 
@@ -852,7 +860,7 @@ For changes that touch [agent nouns](docs/TERMS.md#agent-noun):
 
 - Status: working [charter](docs/TERMS.md#charter) (living). Descended from the [interview](docs/TERMS.md#interview) draft in [`theory/history/og-interview-draft.md`](theory/history/og-interview-draft.md). Not yet a ratified organizational standard.
 - Home: this file (`CHARTER.md`) is authoritative for the practice. Do not edit the OG history copy.
-- Subject: [Boundary-Based Architecture](docs/TERMS.md#bba) (BBA) — [Boundary-Based Programming](docs/TERMS.md#bbp) (BBP) is the programming practice (§§4–14); systems model (§16) extends to agent fleets
+- Subject: Product roof = [NLC](docs/TERMS.md#nlc) ([ADR 0011](adrs/0011-natural-language-coding-naming.md)). This file is [BBP](docs/TERMS.md#bbp) emit + integrity under that roof; [BBA](docs/TERMS.md#bba) is under-covers integrity. Systems model (§16) extends to agent fleets.
 - Systems extension: [agent nouns](docs/TERMS.md#agent-noun) (§16), ratified by [ADR](docs/TERMS.md#adr) 0003
 - Reduced ADRs: tags + primitives + if-thens, ratified by [ADR](docs/TERMS.md#adr) 0007
 - No [noun inheritance](docs/TERMS.md#noun-inheritance), ratified by [ADR](docs/TERMS.md#adr) 0008

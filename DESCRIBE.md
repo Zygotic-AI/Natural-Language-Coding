@@ -1,4 +1,4 @@
-# DESCRIBE.md — [Boundary-Based Programming](docs/TERMS.md#bbp) (central repo)
+# DESCRIBE.md — [Natural Language Coding](docs/TERMS.md#nlc) hub (BBP/BBA under the covers)
 
 ## What this repo is
 
