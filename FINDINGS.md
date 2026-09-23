@@ -15,7 +15,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-Last pass: `fix/eval-nlc-p0-door-honesty` tip (PR #38) — NLC-first door wave-1.
+Last pass: `fix/eval-nlc-wave2-residuals` tip (post-#38) — A11 door gate + P1 ACS stub + PRINCIPLES NLC preface.
 
 ---
 
@@ -60,7 +60,7 @@ Hub ship remains a **human** last step (`./release`).
 | E1 CHARTER corpus sentence | **Done** — corpus pointer on `CHARTER.md` (§3) |
 | E2 TERMS obligation/corpus | **Done** — Corpus/Condition/Obligation in TERMS |
 | E3 explicit ci_fitness 0024 | Glob already runs `fitness-*.py`; explicit run optional |
-| CHARTER / DESCRIBE door | **In this PR** — NLC-first door (BBP body retained) |
+| CHARTER / DESCRIBE door | **Done** — #38 NLC-first door (BBP body retained) |
 
 ---
 
@@ -100,4 +100,42 @@ Hub ship remains a **human** last step (`./release`).
 | A7–A12 | Charter/RCA/dogfood rules need ADR + CI — separate PR |
 | P1 ACS / heroes | Path residue + consumer BBA/BBP hero table |
 | Soft-green | Python-first honesty noted in README; adapters remain parked |
+
+---
+
+## Planit Evaluate-NLC wave-2 (residuals)
+
+**Base:** `main` after #38 (`a5287e2`). **Branch:** `fix/eval-nlc-wave2-residuals`.
+
+### Closed / soft-green this wave
+
+| Id | Status |
+|----|--------|
+| A8–A10 RCA climb / buck-stops | **Bound** by [ADR 0025](adrs/0025-belief-no-blame-climb.md) + `rules/nlc-0025.json`; cited from CHARTER document control. RCA packet schema binder still **expansion**. |
+| A11 door | **Done** #38 + permanence gate `fitness-charter-nlc-door.py` |
+| A12 hub self-verify | **Soft-green closed for “exists”** — hub is subject of `./nlc verify`; see [`docs/nlc/HUB-BBA-DOGFOOD.md`](docs/nlc/HUB-BBA-DOGFOOD.md). Full tools noun/verb rewrite still open. |
+| A7 dogfood (door + principles) | PRINCIPLES NLC-first preface; X4 dogfood docs; interior rewrite still parked |
+| P1.1 ACS path | Stub banner on [`docs/ai-compiled-systems/README.md`](docs/ai-compiled-systems/README.md) + GETTING-STARTED; **rename parked** |
+| P1.2 hero audit | Table below |
+| Soft-green multi-lang | Unchanged — adapters parked |
+
+### P1.2 Consumer BBA/BBP hero audit (wave-2)
+
+| Path | Issue | Fix |
+|------|-------|-----|
+| `CHARTER.md` | Was BBP-only H1 | NLC door (#38) + door fitness |
+| `DESCRIBE.md` | BBP title | NLC hub title (#38) |
+| `integrity/PRINCIPLES.md` | “(BBP)” title as product | NLC-roof preface; P1 clarified under-covers |
+| `docs/ai-compiled-systems/*` | ACS folder name | Residue banner; rename parked |
+| `README.md` / `docs/nlc/*` | NLC-first already | No change |
+| `bbp-*` tool/skill ids | Under-covers nouns | Leave (ADR 0011) |
+
+### Still parked after wave-2
+
+| Item | Why |
+|------|-----|
+| ACS path rename | Migration cost; stub is enough for soft-green |
+| RCA packet schema binder | ADR 0025 expansion gate |
+| Hub tools noun/verb rewrite | X4 remainder |
+| A1 per-rule ADRs for all charter sentences | Separate ratify program |
 

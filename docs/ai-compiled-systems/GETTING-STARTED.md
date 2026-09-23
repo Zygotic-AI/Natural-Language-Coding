@@ -1,5 +1,7 @@
 # Getting started (about five minutes)
 
+**Product = [Natural Language Coding (NLC)](../TERMS.md#nlc).** This page is under the historical `docs/ai-compiled-systems/` path (compiler docs); it is not a second public roof.
+
 1. **Install**
 
    macOS / Linux / WSL:

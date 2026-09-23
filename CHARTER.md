@@ -866,7 +866,7 @@ For changes that touch [agent nouns](docs/TERMS.md#agent-noun):
 - No [noun inheritance](docs/TERMS.md#noun-inheritance), ratified by [ADR](docs/TERMS.md#adr) 0008
 - [Primitive](docs/TERMS.md#primitive) interior functions, ratified by [ADR](docs/TERMS.md#adr) 0009
 - [Gate](docs/TERMS.md#gate) after every generate, ratified by [ADR](docs/TERMS.md#adr) 0010
-
-
-- Companion rejected name: Boundary-Enforced Programming (keep as a description of CI, not the practice title)
+- Belief / [RCA](docs/TERMS.md#rca) climb / buck-stops-here: [ADR](docs/TERMS.md#adr) 0025 (`rules/nlc-0025.json`); RCA packet schema binder is expansion
+- Factory spine + corpora: [ADR](docs/TERMS.md#adr) 0024
+- Door fitness: `tools/fitness-charter-nlc-door.py` refuses a BBP-only first H1 (NLC roof required)
 - Companion rejected frame: “governance / governed” as the name of the [integrity](docs/TERMS.md#integrity) loop

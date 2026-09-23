@@ -1,5 +1,7 @@
 # AI-Compiled Systems (compiler docs)
 
+> **Path residue (P1.1):** folder name `ai-compiled-systems` keeps historical **ACS** pathing. **Public product roof = [NLC](../TERMS.md#nlc)** ([ADR 0011](../../adrs/0011-natural-language-coding-naming.md)). ACS is not a competing consumer product name. Full path rename is parked (migration cost); this banner is the soft-green stub until then.
+
 Technical home for the **[NLC](../TERMS.md#nlc) [compiler](../TERMS.md#compiler)** story. Product entry: [root `README.md`](../../README.md). Naming: [ADR 0011](../../adrs/0011-natural-language-coding-naming.md).
 
 Give goals and requirements; the [compiler](../TERMS.md#compiler) emits a BBP-shaped **[compiled system](../TERMS.md#compiled-system)** or fails closed.

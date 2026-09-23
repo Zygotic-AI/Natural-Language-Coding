@@ -1,10 +1,13 @@
-# Practice [integrity](../docs/TERMS.md#integrity) principles (BBP)
+# Practice [integrity](../docs/TERMS.md#integrity) principles ([NLC](../docs/TERMS.md#nlc) roof)
+
+**Product roof = [Natural Language Coding (NLC)](../docs/TERMS.md#nlc)** ([ADR 0011](../adrs/0011-natural-language-coding-naming.md)).
+This file is the [BBP](../docs/TERMS.md#bbp) / [BBA](../docs/TERMS.md#bba) integrity principle set **under that roof** — not a competing public product name.
 
 SSOT for how this repo keeps itself honest. Ratified by [`../adrs/0001-zero-variance-integrity.md`](../adrs/0001-zero-variance-integrity.md). [Charter](../docs/TERMS.md#charter) rules: [`../CHARTER.md`](../CHARTER.md) §5.8.
 
 ## P1 — Stand-alone branding
 
-[BBP](../docs/TERMS.md#bbp) artifacts use [BBP](../docs/TERMS.md#bbp) names only. Useful shapes from elsewhere are copied and re/unbranded here. Foreign brand packages are not imported into this [integrity](../docs/TERMS.md#integrity) system.
+Integrity / emit-shape packages under the [NLC](../docs/TERMS.md#nlc) roof use [BBP](../docs/TERMS.md#bbp) / [BBA](../docs/TERMS.md#bba) names for those packages only. Useful shapes from elsewhere are copied and re/unbranded here. Foreign brand packages are not imported into this [integrity](../docs/TERMS.md#integrity) system. Consumer-facing doors stay [NLC](../docs/TERMS.md#nlc)-first ([ADR 0011](../adrs/0011-natural-language-coding-naming.md)).
 
 **[Audit](../docs/TERMS.md#audit) `A-P1`:** [Met](../docs/TERMS.md#met) iff no [BBP](../docs/TERMS.md#bbp) integrity/charter/agent/tool path depends on a foreign-branded package name or path as a required binder. Not [met](../docs/TERMS.md#met) otherwise.
 
