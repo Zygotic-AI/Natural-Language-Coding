@@ -1,10 +1,25 @@
 # Manifesto
 
+> Hub belief SSOT. Same body as [`MANIFESTO.md`](../../../MANIFESTO.md) at repo root. Do not fork prose — only relative links differ.
+
 Software failures are usually not missing `if` statements. They are two truths about the same thing, each locally green.
 
 **Code is not the product.** The product humans steward is **intent**: goals, requirements, and [knowledge domains](../../TERMS.md#knowledge-domain). Code is what the [compiler](../../TERMS.md#compiler) emits—an object file. Tests, PRs, and user-visible behavior are **symptoms** of whether the process was sound.
 
-The [compiler](../../TERMS.md#compiler) is AI. That does not mean autocomplete in a file. It means: humans keep intent; the [compiler](../../TERMS.md#compiler) emits a boundary-shaped system; a [gate](../../TERMS.md#gate) fails a quiet fork.
+The [compiler](../../TERMS.md#compiler) is AI. That does not mean autocomplete in a file. It means: humans keep intent; the compiler emits a boundary-shaped system; a [gate](../../TERMS.md#gate) fails a quiet fork.
+
+**[NLC](../../TERMS.md#nlc) — Natural Language Coding — is the product and the factory.** Everything else in this repo exists so that factory can compile or refuse. [BBA](../../TERMS.md#bba) and [BBP](../../TERMS.md#bbp) are subcomponents: the architecture and the emit practice the factory is allowed to produce. They are not peer products and not the public name.
+
+## Thesis
+
+1. Agents can write locally perfect code that is system-false. Perfect-looking files are the failure mode, not the goal.
+2. The only honest product is the process that makes a false fork *refuse* — at emit, not at PR, QA, or production.
+3. Humans own three surfaces: goals, requirements (until adopted as ADRs/rules), and knowledge domains. They approve adoption, ratification, release, certified RCA, and accepted audit findings.
+4. The compiler owns emit: nouns, verbs, adjective implementations, goal bodies, tests, and tag markings required by adopted rules.
+5. A red gate is a success. A green file that no longer matches intent is the defect.
+6. When something is wrong, climb the value stream. Patching generated code without changing intent hides the process defect. The symptom returns later, more expensive.
+
+That is the whole claim. The rest of this page is how we refuse to forget it.
 
 ## Belief
 
@@ -28,7 +43,7 @@ If a later process (an interview skill, a rule pack, a compiler step) ships inco
 
 This repo is the end of the climb. When the factory makes defects, they are disconnects between the belief on this page and an implementation that does not carry it.
 
-[NLC](../../TERMS.md#nlc) is how the factory runs. [BBA](../../TERMS.md#bba) is the shape of what it may emit. Do not confuse them.
+This page is the belief. NLC is the factory that has to carry it.
 
 ## Principles (six)
 
@@ -40,19 +55,22 @@ This repo is the end of the climb. When the factory makes defects, they are disc
 
 4. **Process is the product.** We are building a factory; the code is the inevitable output when the factory runs correctly. Even when the customer touches an application, the focus is the process that makes that product inevitable.
 
-5. **Dogfood or don't preach.** The hub must pass its own gates — BBA at its foundation — or the claim is unproven. Bootstrap is the only honest exception, and it must be explicit, time-boxed, and sunset.
+5. **Dogfood or don't preach.** The hub must pass its own gates — BBA/BBP at the foundation of *emit*, under the NLC roof — or the claim is unproven. Bootstrap is the only honest exception, and it must be explicit, time-boxed, and sunset.
 
 6. **Audit immediately.** Catch the fork at emit, not at PR time. Every downstream patch costs more than fixing the process.
 
 ---
 
-## The layer stack
+## The stack (NLC owns the name)
 
-- **[BBA](../../TERMS.md#bba)** — Boundary-Based Architecture — the foundation. Declared boundaries, contracts on every cross-boundary call.
-- **[NLC](../../TERMS.md#nlc)** — Natural Language Coding — the consumer roof. Describe intent, compile or refuse.
-- **[BBP](../../TERMS.md#bbp)** — Boundary-Based Programming — the emit practice under the roof.
+- **[NLC](../../TERMS.md#nlc)** — Natural Language Coding. The product. Describe intent. Compile or [refuse](../../TERMS.md#refuse).
+- **[Compiler](../../TERMS.md#compiler)** — `/interview` + `/planit` + gates. Turns bound intent into a [compiled system](../../TERMS.md#compiled-system).
+- **[BBP](../../TERMS.md#bbp)** — Boundary-Based Programming. The emit *practice*: [nouns](../../TERMS.md#noun) own [adjectives](../../TERMS.md#adjective); verbs are the only mutation path; [goals](../../TERMS.md#goal) orchestrate.
+- **[BBA](../../TERMS.md#bba)** — Boundary-Based Architecture. The emit *architecture* and hub [integrity](../../TERMS.md#integrity) doctrine under NLC. Not the consumer name.
 
-NLC compliance without BBA underneath is surface compliance only. The hub must be built from declared boundaries, and the hub's own source is the first thing `./nlc verify` runs against.
+NLC without BBA/BBP underneath is surface compliance: a slogan with no refuse. BBA/BBP without NLC as the roof is a shape looking for a factory. The hub's own source is the first thing `./nlc verify` runs against.
+
+Retired as product names: ACS-as-the-whole, AIMS, “governance.” Optional integrator acronyms only: ASC = compiler, ACS = compiled-system artifact.
 
 ---
 
@@ -124,4 +142,6 @@ We pursue ever-better process through a non-negotiable commitment to industrial 
 
 ## Measure
 
-A healthy system is not “more generated files.” It is: one home per [adjective](../../TERMS.md#adjective), every [goal](../../TERMS.md#goal) talking to that home through a [contract](../../TERMS.md#contract), machine checks that fail when that is not true, and [RCA](../../TERMS.md#rca) that moves upstream—not patch downstream.
+A healthy system is not “more generated files.” It is: one home per [adjective](../../TERMS.md#adjective), every [goal](../../TERMS.md#goal) talking to that home through a [contract](../../TERMS.md#contract), machine checks that fail when that is not true, and [RCA](../../TERMS.md#rca) that moves upstream — not patch downstream.
+
+A healthy *factory* is not a larger manifesto. It is: interview that refuses unbound claims, planit that emits one gated artifact at a time, verify that is not ship, and a hub that fails its own gates when the belief on this page is not in the code.

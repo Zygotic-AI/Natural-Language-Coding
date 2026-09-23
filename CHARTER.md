@@ -6,7 +6,7 @@ This document is the **[Boundary-Based Programming](docs/TERMS.md#bbp) (BBP)** e
 
 ---
 
-# [Boundary-Based Programming](docs/TERMS.md#bbp) — emit + integrity practice
+## [Boundary-Based Programming](docs/TERMS.md#bbp) — emit + integrity practice (under NLC)
 
 A working spec for software that humans and agents can change without scattering adjectives or widening [blast radius](docs/TERMS.md#blast-radius).
 
@@ -81,7 +81,7 @@ These letters on [requirement](docs/TERMS.md#requirement) ids are not interchang
 | Prefix | Stands for | What it is |
 |--------|------------|------------|
 | **P** | Principle | How *this practice [hub](docs/TERMS.md#hub)* stays honest (P1–P7 in `integrity/PRINCIPLES.md`). |
-| **R** | [Requirement](docs/TERMS.md#requirement) | A [charter](docs/TERMS.md#charter) design [rule](docs/TERMS.md#rule) the emit must obey (R1–R31). |
+| **R** | [Requirement](docs/TERMS.md#requirement) | A [charter](docs/TERMS.md#charter) design [rule](docs/TERMS.md#rule) the emit must obey (R1–R33). |
 | **C** | Confirmation | A per-change checklist item the [confirmer](docs/TERMS.md#confirmer) scores PASS/FAIL/N/A (C1–C24). |
 | **S** / **CS** | Systems / confirmation-systems | Agent-noun package structure (identity, verbs, handoff). |
 | **Q** | [Quality](docs/TERMS.md#quality) | Ops/opportunities metric at a [boundary](docs/TERMS.md#boundary). |
@@ -281,10 +281,6 @@ Rules are written so an implementing agent can confirm or fail them. “Should�
 
 **R25.** Tests for a [noun](docs/TERMS.md#noun)’s adjectives live next to the [noun](docs/TERMS.md#noun) and run on every verb. [Goal](docs/TERMS.md#goal) tests do not replace them.
 
-**R32.** A sensitive [adjective](docs/TERMS.md#adjective) listed in `taint.txt` may cross one [boundary](docs/TERMS.md#boundary): the consuming verb. It is not returned, stored on another object, or passed to another [boundary](docs/TERMS.md#boundary).
-
-**R33.** [Noun](docs/TERMS.md#noun) state is not mutated through non-OO escape hatches (`__dict__`, `vars()`, `exec()`, `eval()`, or equivalent reflection) from outside a published verb.
-
 ### 5.8 Practice [integrity](docs/TERMS.md#integrity) (zero variance)
 
 
@@ -301,6 +297,11 @@ Ratified by [`adrs/0001-zero-variance-integrity.md`](adrs/0001-zero-variance-int
 **R30.** Every prescribed step or [action](docs/TERMS.md#action) has a hard [gate](docs/TERMS.md#gate) whose only outcomes are complete or incomplete, with evidence.
 
 **R31.** Every public [boundary](docs/TERMS.md#boundary) declares hard input, hard output, and failure mode (returned error, thrown exception, or process exit when the boundary is code).
+
+**R32.** A sensitive [adjective](docs/TERMS.md#adjective) listed in `taint.txt` may cross one [boundary](docs/TERMS.md#boundary): the consuming verb. It is not returned, stored on another object, or passed to another [boundary](docs/TERMS.md#boundary).
+
+**R33.** [Noun](docs/TERMS.md#noun) state is not mutated through non-OO escape hatches (`__dict__`, `vars()`, `exec()`, `eval()`, or equivalent reflection) from outside a published verb.
+
 
 ---
 
@@ -594,8 +595,6 @@ An implementing agent must print this list with `PASS`, `FAIL`, or `N/A` and a p
 - [ ] C17. Every new verb has tests for success, precondition failure, and [adjective](docs/TERMS.md#adjective) preservation.
 - [ ] C18. [Goal](docs/TERMS.md#goal) tests cover the use-case, not a copy of the [noun](docs/TERMS.md#noun)’s [adjective](docs/TERMS.md#adjective) suite.
 - [ ] C19. No second implementation of the same [adjective](docs/TERMS.md#adjective) exists in the diff (search for duplicated predicates).
-- [ ] C25. Sensitive adjectives fetched in a unit are not returned, stored, or passed across another [boundary](docs/TERMS.md#boundary).
-- [ ] C26. No `__dict__` / `vars()` / `exec()` / `eval()` (or equivalent) mutates [noun](docs/TERMS.md#noun) state from outside a published verb.
 
 ### [Integrity](docs/TERMS.md#integrity) of the change
 
@@ -605,6 +604,8 @@ An implementing agent must print this list with `PASS`, `FAIL`, or `N/A` and a p
 - [ ] C22. Charter/ADR/code/contracts were updated in the same change if they were affected.
 - [ ] C23. Adversarial review findings are all fixed or explicitly rebutted.
 - [ ] C24. Ratification is recorded for classes that require it.
+- [ ] C25. Sensitive adjectives fetched in a unit are not returned, stored, or passed across another [boundary](docs/TERMS.md#boundary).
+- [ ] C26. No `__dict__` / `vars()` / `exec()` / `eval()` (or equivalent) mutates [noun](docs/TERMS.md#noun) state from outside a published verb.
 
 If C4, C5, C9, C16, C19, C20, C25, or C26 fail, the change is not complete.
 
@@ -668,7 +669,7 @@ Until item 4 is true, treat the rest as a style guide.
 You may paste this block into an agent. The rest of this file remains authoritative.
 
 ```text
-You practice Boundary-Based Programming.
+You practice Natural Language Coding. Emit shape is Boundary-Based Programming.
 
 Nouns own identity, private state, and adjectives.
 The only legal mutation of a noun is a public verb with an input/output contract.
@@ -817,7 +818,7 @@ Each verb has input [contract](docs/TERMS.md#contract), output [contract](docs/T
 
 **S8.** Produce packages require task/board [SSOT exit evidence](docs/TERMS.md#ssot-exit-evidence). Packages must include `ssot_leaf_ids` (one or more opaque leaf ids from the task/board SSOT) and `ssot_exit_status` (non-empty exit state string). Missing [SSOT exit evidence](docs/TERMS.md#ssot-exit-evidence) triggers `handoff_refused` (same refuse class as S7); fitness scoring refuses [MET](docs/TERMS.md#met); adversarial [audit](docs/TERMS.md#audit) refuses PASS (P-020).
 
-### 16.8 [Quality](docs/TERMS.md#quality) metric (ops vs defects)
+### 16.7 [Quality](docs/TERMS.md#quality) metric (ops vs defects)
 
 SSOT: [`integrity/QUALITY_METRIC.md`](integrity/QUALITY_METRIC.md).
 
@@ -839,7 +840,7 @@ Where **Opportunities** are gate/verb executions with binary outcomes, **Ops** a
 
 **Q5.** [Quality](docs/TERMS.md#quality) formula is ops/opportunities. No alternative formulas for the canonical [quality](docs/TERMS.md#quality) metric.
 
-### 16.9 Confirmation checklist (systems)
+### 16.8 Confirmation checklist (systems)
 
 For changes that touch [agent nouns](docs/TERMS.md#agent-noun):
 
