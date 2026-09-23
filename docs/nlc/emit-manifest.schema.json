@@ -1,7 +1,7 @@
 {
-  "$id": "nlc-emit-manifest/v0",
-  "title": "NLC emit manifest (v0)",
-  "description": "v0 schema. Unused fields must be present as na. Enforced by tools/nlc-emit-manifest-enforce.py (ADR 0026).",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "nlc-emit-manifest/v0",
+  "description": "Hard schema for every emit-manifest.json. Optional fields must be present and set to 'na' (never omitted) so absence is distinguishable from intentional non-applicability.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -17,29 +17,59 @@
     "unused"
   ],
   "properties": {
-    "schema": { "const": "nlc-emit-manifest/v0" },
-    "emit_id": { "type": "string" },
-    "action_id": { "type": "string" },
-    "artifact_path": { "type": "string" },
-    "bound_adr_ids": { "type": "array", "items": { "type": "string" } },
+    "schema": {
+      "type": "string",
+      "const": "nlc-emit-manifest/v0"
+    },
+    "emit_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "action_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "bound_adr_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
     "audit": {
       "type": "object",
       "required": ["status", "path"],
       "properties": {
-        "status": { "enum": ["pending", "pass", "fail", "na"] },
+        "status": {
+          "type": "string",
+          "enum": ["pass", "fail", "na", "pending"]
+        },
         "path": { "type": "string" }
-      }
+      },
+      "additionalProperties": false
     },
     "gate": {
       "type": "object",
-      "required": ["status", "default"],
+      "required": ["default"],
       "properties": {
-        "status": { "enum": ["closed", "pass", "fail"] },
-        "default": { "const": "closed" }
-      }
+        "default": { "type": "string", "const": "closed" },
+        "status": { "type": "string" }
+      },
+      "additionalProperties": false
     },
-    "decision_trace": { "type": "array", "items": { "type": "string" } },
-    "thought_anchors": { "type": "array", "items": { "type": "string" } },
-    "unused": { "const": "na" }
+    "decision_trace": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "thought_anchors": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "unused": {
+      "description": "Always present. 'na' when no optional fields apply; never omitted.",
+      "type": "string",
+      "const": "na"
+    }
   }
 }
