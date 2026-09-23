@@ -868,5 +868,7 @@ For changes that touch [agent nouns](docs/TERMS.md#agent-noun):
 - [Gate](docs/TERMS.md#gate) after every generate, ratified by [ADR](docs/TERMS.md#adr) 0010
 - Belief / [RCA](docs/TERMS.md#rca) climb / buck-stops-here: [ADR](docs/TERMS.md#adr) 0025 (`rules/nlc-0025.json`); RCA packet schema binder is expansion
 - Factory spine + corpora: [ADR](docs/TERMS.md#adr) 0024
+- Charter ratification program: [ADR](docs/TERMS.md#adr) 0031; backlog [`integrity/charter-ratify-backlog.json`](integrity/charter-ratify-backlog.json)
+- Charter R-rule tranche-1: [ADR](docs/TERMS.md#adr) 0032 (R1–R8), 0033 (R9–R12), 0034 (R13–R19), 0035 (R20–R25, R32–R33); R26–R31 remain [ADR](docs/TERMS.md#adr) 0001
 - Door fitness: `tools/fitness-charter-nlc-door.py` refuses a BBP-only first H1 (NLC roof required)
 - Companion rejected frame: “governance / governed” as the name of the [integrity](docs/TERMS.md#integrity) loop
