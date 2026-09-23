@@ -6,11 +6,11 @@ disable-model-invocation: true
 
 # [Interview](../../../docs/TERMS.md#interview) (UC1)
 
-**Human promise (ADR 0017):** the [adopter](../../../docs/TERMS.md#adopter) says what they are trying to accomplish; **you** pick the right [workflow](../../../docs/TERMS.md#workflow) and ask simple questions. Do **not** send them to read `INTERVIEW-PATTERNS.md` or other long docs—load that catalog yourself from [`INTERVIEW-PATTERNS.md`](../../../docs/ai-compiled-systems/INTERVIEW-PATTERNS.md) and match their [goal](../../../docs/TERMS.md#goal) (greenfield vs brownfield, PCI/compliance packs, requirements, stuck on next step, etc.).
+**Human promise (ADR 0017):** the [adopter](../../../docs/TERMS.md#adopter) says what they are trying to accomplish; **you** pick the right [workflow](../../../docs/TERMS.md#workflow) and ask simple questions. Do **not** send them to read `INTERVIEW-PATTERNS.md` or other long docs—load that catalog yourself from [`INTERVIEW-PATTERNS.md`](../../../docs/nlc/compiler/INTERVIEW-PATTERNS.md) and match their [goal](../../../docs/TERMS.md#goal) (greenfield vs brownfield, PCI/compliance packs, requirements, stuck on next step, etc.).
 
 Outcome-only intake when the work is bind-before-build. This can be **[PLANIT](../../../docs/TERMS.md#planit) step 1** / [AWL](../../../docs/TERMS.md#awl) Phase 0–1 compressed. Do not generate [noun](../../../docs/TERMS.md#noun) or [goal](../../../docs/TERMS.md#goal) code in this skill.
 
-SSOT: [`docs/ai-compiled-systems/PROCESS.md`](../../../docs/ai-compiled-systems/PROCESS.md) § [Interview](../../../docs/TERMS.md#interview); [`INTENT-SURFACE.md`](../../../docs/ai-compiled-systems/INTENT-SURFACE.md).
+SSOT: [`docs/nlc/compiler/PROCESS.md`](../../../docs/nlc/compiler/PROCESS.md) § [Interview](../../../docs/TERMS.md#interview); [`INTENT-SURFACE.md`](../../../docs/nlc/compiler/INTENT-SURFACE.md).
 
 ## [Gate](../../../docs/TERMS.md#gate) (default-closed)
 

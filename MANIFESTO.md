@@ -1,6 +1,6 @@
 # Manifesto
 
-> Hub belief SSOT. Same body as [`docs/ai-compiled-systems/MANIFESTO.md`](docs/ai-compiled-systems/MANIFESTO.md) (path residue under historical ACS folder). Do not fork prose between the two.
+> Hub belief SSOT. Same body as [`docs/nlc/compiler/MANIFESTO.md`](docs/nlc/compiler/MANIFESTO.md) (canonical under `docs/nlc/compiler/`). Do not fork prose between the two.
 
 Software failures are usually not missing `if` statements. They are two truths about the same thing, each locally green.
 
@@ -74,7 +74,7 @@ goals · requirements · knowledge domains
 
 **Principle:** [audit](docs/TERMS.md#audit) every generated artifact **immediately after it is produced**, not only when a PR opens or QA starts. Pull discovery left; shrink what reaches the expensive stages.
 
-Details and method names: [quality processes](docs/ai-compiled-systems/QUALITY-PROCESSES.md).
+Details and method names: [quality processes](docs/nlc/compiler/QUALITY-PROCESSES.md).
 
 ## System vs symptoms
 
@@ -122,7 +122,7 @@ The entire emphasis is on the **value stream** and the **process** that walks it
 
 Defects live in the **system**—unbound statements, wrong adoption, skipped gates—not in “bad lines of code” as the primary diagnosis. The code is where the process failed **last**, not where the truth lives.
 
-We pursue ever-better process through a non-negotiable commitment to industrial **[quality](docs/TERMS.md#quality) processes** (lean + Six Sigma family)—without requiring every reader to learn that vocabulary up front. Early setups will be imperfect; **[quality](docs/TERMS.md#quality) emerges** as [knowledge domains](docs/TERMS.md#knowledge-domain), rules, [gate](docs/TERMS.md#gate) history, and the [interview](docs/TERMS.md#interview) catalog compound. See [quality processes](docs/ai-compiled-systems/QUALITY-PROCESSES.md).
+We pursue ever-better process through a non-negotiable commitment to industrial **[quality](docs/TERMS.md#quality) processes** (lean + Six Sigma family)—without requiring every reader to learn that vocabulary up front. Early setups will be imperfect; **[quality](docs/TERMS.md#quality) emerges** as [knowledge domains](docs/TERMS.md#knowledge-domain), rules, [gate](docs/TERMS.md#gate) history, and the [interview](docs/TERMS.md#interview) catalog compound. See [quality processes](docs/nlc/compiler/QUALITY-PROCESSES.md).
 
 ## Measure
 
