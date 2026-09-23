@@ -24,13 +24,15 @@ AWL 2 (applicability register)
 PLANIT 2–3 (plan, product statements)      + AWL 3 (plan template: leaf, stop predicate)
 AWL 4 (adversarial plan audit)             + GATE-STD on touch list
 PLANIT 4–5 (bind, close gaps)              + bind gate verdict
+  → X1 action-plan gate + X2 reverse audit   (ADR 0024/0030; before any emit)
 AWL 5 (execute)                            + PLANIT 6 (generate) + hub ratify rules
+  → X5 emit audit + X3 manifest + X6 bound gates (ADR 0030; after emit)
 PLANIT 7 (verify)                          + machine gate + adversarial audit
 AWL 6 (execution audit)                    + GATE-STD on delivered paths + meta-audit when T2+
 AWL 7 (record)                             + PLANIT record + charter §6 step 8 (hub)
 ```
 
-Do not start **plan** (PLANIT 2), **applicability** durable writes, or **generate** until **intake** passes. Do not **generate** until **bind [gate](../TERMS.md#gate)** passes. Do not hand off until **[verify](../TERMS.md#verify)** and **execution [audit](../TERMS.md#audit)** pass. [Verify](../TERMS.md#verify) is compile. [Ship](../TERMS.md#ship) is `./nlc ship-check` or `release-audit.py` after a human `Released-by:` — not the same [gate](../TERMS.md#gate).
+Do not start **plan** (PLANIT 2), **applicability** durable writes, or **generate** until **intake** passes. Do not **generate** until **bind [gate](../TERMS.md#gate)** passes. Do not **emit** until **X1 + X2** pass. Do not **proceed** after emit until **X5 + X3 + X6** pass. Do not hand off until **[verify](../TERMS.md#verify)** and **execution [audit](../TERMS.md#audit)** pass. [Verify](../TERMS.md#verify) is compile. [Ship](../TERMS.md#ship) is `./nlc ship-check` or `release-audit.py` after a human `Released-by:` — not the same [gate](../TERMS.md#gate).
 
 **T0/T1:** skip Appendix B, skip multi-step flag, one plan table, still intake + bind + [verify](../TERMS.md#verify). If this is not followed, the run is T3.
 
@@ -46,8 +48,9 @@ Do not start **plan** (PLANIT 2), **applicability** durable writes, or **generat
 | 3 Plan | 2 Plan, 3 Product statements | Work items (goal / boundary / requirement / ADR / **rule**), atomic statements, leaf skill column |
 | 4 [Plan audit](../TERMS.md#plan-audit) | (before bind) | PASS/FAIL + `GATE-STD` on planned artifacts |
 | — Bind | **4–5 Bind / close gaps** | Bound statements; bind [gate](../TERMS.md#gate) PASS. **Not execute.** |
+| — Pipeline pre-emit | **X1 + X2** | action↔plan valid; every applicable ADR bound to an action |
 | 5 Execute | **6 Generate one artifact** then **6.5 [gate](../TERMS.md#gate) it** | Code/skill/doc; immediate [default-closed](../TERMS.md#default-closed) [gate](../TERMS.md#gate). FAIL stops the next row. |
-
+| — Pipeline post-emit | **X5 + X3 + X6** | emit audited; manifest schema-valid (`unused=na`); bound ADR gates run |
 | — [Verify](../TERMS.md#verify) | **7 [Verify](../TERMS.md#verify)** | `./nlc verify-deep` / fitness + adversarial [audit](../TERMS.md#audit). Compile, not [ship](../TERMS.md#ship). |
 | 6 Execution [audit](../TERMS.md#audit) | After [verify](../TERMS.md#verify) | Evidence on artifacts under test; `GATE-STD` on paths |
 | 7 Record | [Hub](../TERMS.md#hub) §6 step 8 | ADR/recorder [handoff](../TERMS.md#handoff), back-propagation when applicable |
@@ -61,6 +64,11 @@ Do not start **plan** (PLANIT 2), **applicability** durable writes, or **generat
 |------|------|----------|
 | Intake | Before [PLANIT](../TERMS.md#planit) 2 / [AWL](../TERMS.md#awl) 2 | ICC + skill intake table; verdict per operation-verdict §4 |
 | Bind | Before [PLANIT](../TERMS.md#planit) 6 | All statements bound (incl. rules when 0007 applies) |
+| X1 action-plan | Before emit | Every action maps to a plan step; every step has an action |
+| X2 reverse audit | Before emit | Every applicable ADR bound to ≥1 action |
+| X5 emit audit | After emit | Every emit has an audit (non-pending) |
+| X3 emit manifest | After emit | Manifest matches schema; `unused=na`; gate closed |
+| X6 bound ADR gates | After emit | Gates of ADRs bound to this action, default-closed |
 | [Verify](../TERMS.md#verify) | [PLANIT](../TERMS.md#planit) 7 | [Hub](../TERMS.md#hub): `ci_fitness.py` + §11. [Adopter](../TERMS.md#adopter): `./nlc verify` / `verify-deep` ([`APP-VERIFY.md`](../nlc/APP-VERIFY.md)). Adversarial [audit](../TERMS.md#audit) separate from generate. |
 | [Ship](../TERMS.md#ship) | After [verify](../TERMS.md#verify), human signed | `./nlc ship-check`. Compile-green is not released. |
 | Produced artifact | Before each durable write | operation-verdict §2 (skills, prompts, plans, handoffs) |
