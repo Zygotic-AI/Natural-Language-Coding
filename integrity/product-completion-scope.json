@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "ssot": "integrity/product-completion-scope.json",
+  "ratifying_adr": "0041",
+  "title": "Hub product completion scope (FINDINGS + uc-product-status)",
+  "dispositions": {
+    "in_reach_v2": "Implement per TODO Product completion plan wave; close FINDINGS + uc-product-status in same PR.",
+    "remain_expansion": "Accepted expansion; v1 product closed; deep gate tracked in wave until acceptance test MET.",
+    "waive": "Explicitly out of hub v0.2.x product; FINDINGS row struck or marked waived with reason."
+  },
+  "findings": [
+    {
+      "id": "needed_pack_registry",
+      "findings_ref": "FINDINGS Needed — Packs registry",
+      "disposition": "in_reach_v2",
+      "wave": "P1",
+      "acceptance": "hub_v02.pack_registry closed; integrity/hub-pack-registry.json + validate tool MET"
+    },
+    {
+      "id": "parked_x4_interiors",
+      "findings_ref": "FINDINGS Parked — Hub BBA interiors (X4)",
+      "disposition": "in_reach_v2",
+      "wave": "P5",
+      "acceptance": "fitness_only 0; fitness-hub-x4-tranche-t4.py MET (P5.8)"
+    },
+    {
+      "id": "parked_uc16",
+      "findings_ref": "FINDINGS Parked — Code packs (UC16)",
+      "disposition": "in_reach_v2",
+      "wave": "P3",
+      "acceptance": "examples/non-python-with-adapter + assert-non-python-adapter-passes @done(26-09-23)"
+    },
+    {
+      "id": "parked_uc20",
+      "findings_ref": "FINDINGS Parked — Call-tree packs (UC20)",
+      "disposition": "in_reach_v2",
+      "wave": "P4",
+      "acceptance": "examples/call-tree-pack-reference + call-tree-packs.json @done(26-09-23)"
+    },
+    {
+      "id": "parked_rule_ir",
+      "findings_ref": "FINDINGS Parked — Rule IR (ADR 0007)",
+      "disposition": "in_reach_v2",
+      "wave": "P2",
+      "acceptance": "ADR 0042 + rule-ir-product-boundary.json; semantic keys remain in remain_expansion"
+    },
+    {
+      "id": "soft_green_charter_coverage",
+      "findings_ref": "FINDINGS soft-green — charter rule ADR coverage (~89)",
+      "disposition": "waive",
+      "wave": "P7",
+      "acceptance": "FINDINGS states binding matrix is SSOT; no numeric ADR coverage claim"
+    }
+  ],
+  "hub_v02": {
+    "pack_registry": {
+      "disposition": "in_reach_v2",
+      "wave": "P1",
+      "acceptance": "integrity/hub-pack-registry.json v1 + fitness-hub-pack-registry.py MET"
+    }
+  },
+  "expansion_only": {
+    "UC4.semantic_rule_runner_adr_0007": {
+      "disposition": "in_reach_v2",
+      "wave": "P2",
+      "acceptance": "uc4-product-boundary.json + fitness-uc4-semantic-rule-runner-v2.py MET"
+    },
+    "UC5.semantic_apply_adr_0007": {
+      "disposition": "in_reach_v2",
+      "wave": "P2",
+      "acceptance": "uc5-product-boundary.json + fitness-uc5-semantic-apply-v2.py MET"
+    },
+    "UC9.rule_tagged_blast_radius_v2": { "disposition": "in_reach_v2", "wave": "P6", "acceptance": "P6.1 uc9-product-boundary.json + fitness-uc9-blast-radius-v2.py MET" },
+    "UC13.engine_runtime_tag_strict": { "disposition": "in_reach_v2", "wave": "P6", "acceptance": "P6.2 uc13-product-boundary.json + fitness-uc13-engine-runtime-strict.py MET" },
+    "UC14.composable_ir_cross_primitive": { "disposition": "in_reach_v2", "wave": "P2", "acceptance": "ADR 0043 adopt-time v1; composable_ir_cross_primitive_v2 in uc14-product-boundary remain_expansion" },
+    "UC15.brownfield_full_automation": { "disposition": "waive", "wave": "P6", "acceptance": "product-expansion-waives.json P6.3" },
+    "UC16.language_scanner_adapter_step2": { "disposition": "remain_expansion", "wave": "P3", "acceptance": "P3.1" },
+    "UC18.every_agent_generate_hook": { "disposition": "in_reach_v2", "wave": "P6", "acceptance": "HARNESS.md + hooks.example P6.4" },
+    "UC20.per_stack_call_tree_packs": { "disposition": "remain_expansion", "wave": "P4", "acceptance": "P4.1" },
+    "UC21.adhoc_agents_writes_gate_scope": { "disposition": "in_reach_v2", "wave": "P6", "acceptance": "GATE-RECORD-BINDER + gate-record landmines P6.5" },
+    "packs_v02.public_registry": { "disposition": "in_reach_v2", "wave": "P1", "acceptance": "same as hub_v02.pack_registry v1 hub-local curated registry" }
+  },
+  "eval_wave2": {
+    "A7_dogfood_interiors": { "disposition": "remain_expansion", "wave": "P5", "acceptance": "P5.3" },
+    "A12_hub_self_verify_rewrite": { "disposition": "remain_expansion", "wave": "P5", "acceptance": "P5.2–P5.4" },
+    "P1_2_hero_bbp_ids": { "disposition": "waive", "wave": "P7", "acceptance": "ADR 0011 leave bbp-* under-covers; FINDINGS P1.2 row Waived" },
+    "soft_green_multi_lang": { "disposition": "remain_expansion", "wave": "P7", "acceptance": "P7.2 README honesty" }
+  }
+}

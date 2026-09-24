@@ -20,8 +20,8 @@ Status: **in force** = charter/tool exists. **Parked** = decided, not executable
 | UC1 | **[Interview](TERMS.md#interview).** Human states an outcome. [Compiler](TERMS.md#compiler) interviews until goals, ADRs/standards, knowledge facts, and dependencies are bound. Unbound statement → keep interviewing, do not emit. | In force: `/interview` + `.nlc/interview-packet.json` (`requirements`, `knowledge_domains`, `bind_ready`); `./nlc verify` refuses compiled surface without it. |
 | UC2 | **Execute a [goal](TERMS.md#goal) (PLANIT).** From a bound [goal](TERMS.md#goal): classify → plan → atomic statements → bind → emit → adversarial [audit](TERMS.md#audit). | In force: [charter](TERMS.md#charter) §6; orchestrator [`planit`](../.agents/skills/planit/SKILL.md) + leaf `bbp-*` skills; see [`PLANIT-ORCHESTRATION.md`](nlc/compiler/PLANIT-ORCHESTRATION.md). |
 | UC3 | **Standard / req / business [rule](TERMS.md#rule) → [ADR](TERMS.md#adr).** PCI, Temporal, “do not store PAN,” etc. become a decision: why, rejected, consequences. | In force v1: Proposed ADRs block `./nlc verify` on compiled surface; ratify before generate. |
-| UC4 | **[ADR](TERMS.md#adr) → if/then.** Reduce to tags, primitives, facts, rules. If the closed set cannot speak, add a tag/fact/primitive first (itself an ADR). | In force v1: `rules/adopted.json` IR + `./nlc maintainer rule-runner --materialize` / verify snapshot check. |
-| UC5 | **Rules → emit.** Verb declares [primitive](TERMS.md#primitive) + tagged target. [Compiler](TERMS.md#compiler) applies the [rule](TERMS.md#rule) (encrypt, forbid return, Temporal engine) or the [gate](TERMS.md#gate) fails. Prompt memory is not the bind. | In force v1: `rule-emit` / `goal-scaffold` + `rule-coverage --check` on verify (semantic runners still expand per ADR 0007). |
+| UC4 | **[ADR](TERMS.md#adr) → if/then.** Reduce to tags, primitives, facts, rules. If the closed set cannot speak, add a tag/fact/primitive first (itself an ADR). | In force v2: `rules/adopted.json` IR + `./nlc maintainer rule-runner --materialize` / `--check` (structural + semantic forbid on tagged goals). |
+| UC5 | **Rules → emit.** Verb declares [primitive](TERMS.md#primitive) + tagged target. [Compiler](TERMS.md#compiler) applies the [rule](TERMS.md#rule) (encrypt, forbid return, Temporal engine) or the [gate](TERMS.md#gate) fails. Prompt memory is not the bind. | In force v2: `rule-emit` / `goal-scaffold` emit `nlc:rule=` + `nlc:obligation=` for **must** rules; `rule_apply_blockers` → `check_semantic_apply`. |
 
 Same conversation may produce UC1–UC4. Three artifacts, three gates: **[goal](TERMS.md#goal)**, **[ADR](TERMS.md#adr)**, **[rule](TERMS.md#rule)**.
 
@@ -61,7 +61,6 @@ v1 binders above close the teaching spine; these rows still deepen at scale.
 | EXPANSION-ONLY [UC14](TERMS.md#uc14) | Richer composable IR for cross-primitive policy beyond adopt-time conflicts. | `gate missing` |
 | EXPANSION-ONLY [UC16](TERMS.md#uc16) | Second-language **adapters** after [`LANGUAGE-SCANNER.md`](LANGUAGE-SCANNER.md) spec step 2. | `gate missing` |
 | EXPANSION-ONLY [UC20](TERMS.md#uc20) | Per-stack call-tree packs beyond Python `domain/` scan. | `gate missing` |
-| EXPANSION-ONLY [Rule IR](TERMS.md#rule-ir) | Full semantic runners (encrypt/taint/engine) on every emit path per ADR 0007. | `gate missing` |
 
 **Requirement packs (v0.2):** ingest skill + `./nlc maintainer pack-ingest` → candidates JSON; human ratifies via `/interview` before export (ADR 0016). Not [UC19](TERMS.md#uc19). Consume/regen + registry remain FINDINGS Needed (`gate missing` until closed).
 

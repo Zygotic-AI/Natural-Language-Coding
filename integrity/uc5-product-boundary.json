@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "ssot": "integrity/uc5-product-boundary.json",
+  "title": "UC5 v2 semantic rule apply (ADR 0007)",
+  "product_closed": {
+    "description": "rule-emit / goal-scaffold emit nlc:rule= plus nlc:obligation= for must rules; verify uses check_semantic_apply",
+    "proof_commands": [
+      "python3 tools/assert-rule-semantic-apply-passes.py",
+      "python3 tools/assert-rule-semantic-apply-fails.py",
+      "python3 tools/assert-rule-emit-sync-passes.py",
+      "python3 tools/assert-rule-coverage-passes.py"
+    ]
+  },
+  "remain_expansion": []
+}

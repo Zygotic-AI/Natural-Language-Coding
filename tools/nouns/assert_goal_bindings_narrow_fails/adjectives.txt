@@ -1,0 +1,1 @@
+# adjectives for assert_goal_bindings_narrow_fails

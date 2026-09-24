@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "defect_summary": "Verify green while interview packet omitted goals.",
+  "unsuitable_process": "The adopter verify path did not run UC1 interview-packet blockers before merge.",
+  "climb_steps": [
+    "Session skipped bind-ready interview export.",
+    "CI landmine for missing packet was not in the default verify-fast path.",
+    "Hub binder for UC1 existed but was not wired into the adopter template workflow."
+  ],
+  "repo_touch": {
+    "belief": "ADR 0025 — defects name unsuitable process, not agents",
+    "adr_ids": ["0021"],
+    "rule_ids": ["NLC-0025-01"],
+    "gate_ids": ["assert-interview-packet-fails"]
+  },
+  "certified_by": "role:human-manager",
+  "recorded_at": "2026-09-23"
+}

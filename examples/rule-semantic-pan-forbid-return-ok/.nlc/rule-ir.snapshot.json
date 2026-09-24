@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "rules": [
+    {
+      "rule_id": "pan-no-return",
+      "adr_id": "0007",
+      "effect": "forbid",
+      "obligation": null,
+      "match": {
+        "tags_all": [
+          "pan"
+        ],
+        "primitive": "return"
+      },
+      "precedence_tier": "project",
+      "precedence_rank": 1
+    }
+  ]
+}

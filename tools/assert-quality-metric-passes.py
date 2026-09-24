@@ -1,29 +1,12 @@
 #!/usr/bin/env python3
 """Landmine ADR 0004/0005: quality-metric fixtures MET."""
-
 from __future__ import annotations
 
-import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-TOOL = ROOT / "tools" / "fitness-quality-metric.py"
-
-
-def main() -> int:
-    proc = subprocess.run(
-        [sys.executable, str(TOOL)],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
-    )
-    if proc.returncode != 0:
-        print("ASSERT:FAIL fitness-quality-metric should MET")
-        print(proc.stdout[-2000:])
-        return 1
-    print("ASSERT:PASS quality-metric fixtures MET (ADR 0004/0005)")
-    return 0
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nouns.assert_quality_metric_passes import *  # noqa: F403
 
 
 if __name__ == "__main__":

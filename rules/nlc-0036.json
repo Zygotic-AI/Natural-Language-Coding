@@ -1,0 +1,12 @@
+{
+  "adr": "0036",
+  "corpus": "nlc",
+  "rules": [
+    {
+      "id": "NLC-0036-01",
+      "condition": "A human-facing doc or interview skill describes the happy path",
+      "obligation": "Humans contribute goal and policy only; derived artifacts are inferred or the compile refuses",
+      "gate": "tools/fitness-nlc-0036-inference-only.py"
+    }
+  ]
+}

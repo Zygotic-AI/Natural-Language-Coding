@@ -1,0 +1,13 @@
+{
+  "adoptions": [
+    {
+      "rule_id": "pan-no-return",
+      "adr_id": "0007",
+      "precedence_tier": "project",
+      "precedence_rank": 1,
+      "match": { "tags_all": ["pan"], "primitive": "return" },
+      "effect": "forbid",
+      "obligation": null
+    }
+  ]
+}

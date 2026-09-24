@@ -29,12 +29,21 @@ Every **Accepted** [ADR](../adrs/README.md) must map to **runnable** binders (to
 | 0022 | `./release`, release workflow, preflight | bound |
 | 0023 | `rule_coverage_blockers` + `nlc_rule_emit.py` + binder fitness + landmines | bound |
 | 0024 | `fitness-adr-0024-binder.py` + `nlc-action-plan-gate.py` + `nlc-reverse-audit.py` + `nlc-emit-manifest-enforce.py` (ADR 0026) | bound |
-| 0025 | `rules/nlc-0025.json` + binder (v1: existence + fields) | bound |
+| 0025 | `rules/nlc-0025.json` + `validate-rca-packet.py` + `fitness-adr-0025-rca-packet.py` + landmine | bound |
 | 0026 | `nlc-action-plan-gate.py` + `nlc-reverse-audit.py` + `nlc-emit-manifest-enforce.py` + specimens + fitness wrappers | bound |
 | 0027 | `nlc-emit-from-prose.py` + `fitness-nlc-emit-from-prose.py` | bound |
 | 0028 | docs only (VERB-SET + POLICY-ADR-LINEAGE); tools deferred | gap |
-| 0029 | docs: ACTIVE/CATALOG/INDEX; binder tools deferred | gap |
+| 0029 | lineage-check + bind-snapshot + freshness + fitness | bound (v1) |
 | 0030 | `nlc-pipeline-wire.py` + `nlc-action-gates.py` + `nlc_emit_audit.py` + `fitness-nlc-pipeline-wire.py` | bound |
+| 0031–0035 | charter ratification program + backlog SSOT | docs/backlog (binder expansion) |
+| 0036 | `fitness-nlc-0036-inference-only.py` + `rules/nlc-0036.json` | bound |
+| 0037 | `integrity/charter-ratify-backlog.json` non_r_residuals + ADR text | bound (docs/backlog) |
+| 0038 | `fitness-adr-0038-no-memory.py` + `rules/nlc-0038.json` | bound (v1) |
+| 0039 | `nlc_release_tag_gate.py` + `nlc_release_resume.py` + `fitness-adr-0039-release-binder.py` + landmine | bound (v1) |
+| 0040 | `nlc_release_context.py` + `nlc_release_shipped_tag_audit.py` + landmine + RELEASE.md | bound (v1) |
+| 0041 | `product-completion-scope.json` + `hub-pack-registry.json` + `fitness-product-completion-scope.py` + `fitness-hub-pack-registry.py` | bound (v1) |
+| 0042 | `rule-ir-product-boundary.json` + `fitness-adr-0007-product-boundary.py` + rule-runner landmines | bound (v1) |
+| 0043 | `uc14-product-boundary.json` + `fitness-uc14-product-boundary.py` + rule-adoption landmines | bound (v1) |
 
 **0007/0009 gap:** full semantic rule runners and per-language call-tree packs are not MET; v1 binders are `rule-runner`, `rule-emit`, and `call-tree`. ADR 0023 marker emit is bound via `rule-emit` / `goal-scaffold` / verify audit.
 

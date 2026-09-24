@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "ssot": "integrity/uc14-product-boundary.json",
+  "ratifying_adr": "0043",
+  "product_closed": {
+    "description": "UC14 v1 adopt-time rule conflict + precedence (ADR 0012)",
+    "proof_commands": [
+      "python3 tools/assert-rule-adoption-conflicts-fails.py",
+      "python3 tools/assert-rule-adoption-passes.py"
+    ]
+  },
+  "remain_expansion": ["composable_ir_cross_primitive_v2"]
+}

@@ -1,0 +1,13 @@
+{
+  "adoptions": [
+    {
+      "rule_id": "demo-must-audit",
+      "adr_id": "0007",
+      "precedence_tier": "project",
+      "precedence_rank": 1,
+      "match": { "tags_all": ["demo"], "primitive": "log" },
+      "effect": "must",
+      "obligation": "record audit trail"
+    }
+  ]
+}

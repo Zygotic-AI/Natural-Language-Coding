@@ -1,0 +1,1 @@
+# fields for assert_adopter_verify_fast_green_passes

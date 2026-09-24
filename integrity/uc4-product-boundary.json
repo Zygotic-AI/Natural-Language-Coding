@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "ssot": "integrity/uc4-product-boundary.json",
+  "title": "UC4 v2 semantic rule runner (ADR 0007)",
+  "product_closed": {
+    "description": "Adopted forbid rules with tag+primitive matches are evaluated on goal implementations (taint.txt → pan; tags.txt explicit)",
+    "proof_commands": [
+      "python3 tools/nlc_rule_runner.py --check --root examples/rule-semantic-pan-forbid-return-ok",
+      "python3 tools/assert-rule-semantic-pan-passes.py",
+      "python3 tools/assert-rule-semantic-pan-fails.py"
+    ]
+  },
+  "remain_expansion": []
+}

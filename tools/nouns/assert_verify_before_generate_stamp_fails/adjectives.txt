@@ -1,0 +1,1 @@
+# adjectives for assert_verify_before_generate_stamp_fails

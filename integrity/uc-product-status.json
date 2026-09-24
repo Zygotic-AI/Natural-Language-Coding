@@ -4,7 +4,7 @@
   "hub_v02": {
     "pack_ingest": "closed",
     "pack_consume_regen": "closed",
-    "pack_registry": "open"
+    "pack_registry": "closed"
   },
   "ucs": {
     "UC1": {
@@ -41,28 +41,29 @@
     "UC4": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [
-        "semantic_rule_runner_adr_0007"
-      ],
+      "expansion_only": [],
       "blockers": [
         "rule_ir_blockers",
         "rule_runner_blockers"
       ],
       "proof_commands": [
-        "python3 tools/assert-rule-runner-fails.py"
+        "python3 tools/assert-rule-runner-fails.py",
+        "python3 tools/assert-rule-semantic-pan-fails.py",
+        "python3 tools/assert-rule-semantic-pan-passes.py"
       ]
     },
     "UC5": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [
-        "semantic_apply_adr_0007"
-      ],
+      "expansion_only": [],
       "blockers": [
         "rule_apply_blockers",
         "rule_coverage_blockers"
       ],
-      "proof_commands": []
+      "proof_commands": [
+        "python3 tools/assert-rule-semantic-apply-fails.py",
+        "python3 tools/assert-rule-semantic-apply-passes.py"
+      ]
     },
     "UC6": {
       "binder": "closed",
@@ -88,15 +89,15 @@
     "UC9": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [
-        "rule_tagged_blast_radius_v2"
-      ],
+      "expansion_only": [],
       "blockers": [
         "goal_bindings_narrow_blockers"
       ],
       "proof_commands": [
         "python3 tools/assert-goal-bindings-narrow-fails.py",
-        "python3 tools/assert-delta-regen-narrow-passes.py"
+        "python3 tools/assert-delta-regen-narrow-passes.py",
+        "python3 tools/assert-delta-regen-orchestrate-passes.py",
+        "python3 tools/assert-verify-regen-queue-fails.py"
       ]
     },
     "UC10": {
@@ -129,43 +130,41 @@
     "UC13": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [
-        "engine_runtime_tag_strict"
-      ],
+      "expansion_only": [],
       "blockers": [
         "durable_engine_blockers",
-        "durable_rule_blockers"
+        "durable_rule_blockers",
+        "engine_runtime_tag_strict_blockers"
       ],
       "proof_commands": [
-        "python3 tools/assert-durable-engine-rule-fails.py"
+        "python3 tools/assert-durable-engine-rule-fails.py",
+        "python3 tools/assert-durable-engine-tag-strict-fails.py",
+        "python3 tools/assert-durable-engine-tag-strict-passes.py"
       ]
     },
     "UC14": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [
-        "composable_ir_cross_primitive"
-      ],
+      "expansion_only": [],
       "blockers": [
         "rule_conflict_blockers"
       ],
-      "proof_commands": []
+      "proof_commands": [
+        "python3 tools/assert-rule-adoption-conflicts-fails.py",
+        "python3 tools/assert-rule-adoption-passes.py"
+      ]
     },
     "UC15": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [
-        "brownfield_full_automation"
-      ],
+      "expansion_only": [],
       "blockers": [],
       "proof_commands": []
     },
     "UC16": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [
-        "language_scanner_adapter_step2"
-      ],
+      "expansion_only": [],
       "blockers": [
         "non_python_adapter_blockers"
       ],
@@ -183,9 +182,7 @@
     "UC18": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [
-        "every_agent_generate_hook"
-      ],
+      "expansion_only": [],
       "blockers": [
         "before_generate_stamp_blockers"
       ],
@@ -194,9 +191,7 @@
     "UC20": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [
-        "per_stack_call_tree_packs"
-      ],
+      "expansion_only": [],
       "blockers": [
         "call_tree_blockers",
         "primitive_inventory_blockers"
@@ -206,9 +201,7 @@
     "UC21": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [
-        "adhoc_agents_writes_gate_scope"
-      ],
+      "expansion_only": [],
       "blockers": [
         "gate_record_blockers"
       ],
@@ -218,9 +211,7 @@
   "packs_v02": {
     "binder": "closed",
     "product": "closed",
-    "expansion_only": [
-      "public_registry"
-    ],
+    "expansion_only": [],
     "proof_commands": [
       "python3 tools/assert-pack-ingest-candidates-passes.py"
     ]

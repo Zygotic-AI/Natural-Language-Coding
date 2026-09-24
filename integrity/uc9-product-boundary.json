@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "ssot": "integrity/uc9-product-boundary.json",
+  "title": "UC9 v2 rule-tagged blast radius (orchestrated delta-regen)",
+  "product_closed": {
+    "description": "Multi-goal repos require goal-bindings.json; rule: changes narrow via goals_for_rule_change; orchestrate + queue per IMPACT-GRAPH.md",
+    "proof_commands": [
+      "python3 tools/assert-goal-bindings-narrow-fails.py",
+      "python3 tools/assert-delta-regen-narrow-passes.py",
+      "python3 tools/assert-delta-regen-orchestrate-passes.py",
+      "python3 tools/assert-verify-regen-queue-fails.py"
+    ]
+  },
+  "remain_expansion": []
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "ssot": "integrity/rule-ir-product-boundary.json",
+  "ratifying_adr": "0042",
+  "product_closed": {
+    "description": "Rule IR snapshot materialize + structural check (UC4 v1)",
+    "proof_commands": [
+      "python3 tools/nlc_rule_runner.py --check --root examples/adopter-verify-fast-green",
+      "python3 tools/assert-rule-runner-fails.py",
+      "python3 tools/assert-rule-runner-passes.py"
+    ]
+  },
+  "remain_expansion": [
+    "UC14.composable_ir_cross_primitive"
+  ]
+}

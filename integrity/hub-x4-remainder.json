@@ -1,7 +1,7 @@
 {
   "version": 1,
   "title": "Hub X4 remainder inventory",
-  "note": "X4 emit-path noun completion: all former emit_path_open nlc* tools are noun-backed adapters. assert-only / lib residual remains for full tools/*.py noun rewrite beyond emit path.",
+  "note": "X4: emit-path + lib + assert + fitness hub tools noun-backed via thin adapters.",
   "boundary_marker": "BOUNDARY = \"bba-emit\"",
   "covered_emit_path": [
     "nlc-before-generate.py",
@@ -17,38 +17,23 @@
     "nlc_rule_emit.py"
   ],
   "covered_count": 11,
-  "without_boundary_count": 278,
+  "without_boundary_count": 235,
   "counts": {
-    "assert_only": 209,
+    "assert_only": 0,
     "emit_path_open": 0,
-    "other_or_lib": 43,
+    "other_or_lib": 0,
+    "noun_backed_lib": 64,
+    "noun_backed_assert": 133,
+    "noun_backed_fitness": 127,
+    "fitness_only": 0,
     "covered_emit_path": 26
   },
   "emit_path_open": [],
-  "assert_only_sample": [
-    "assert-adjective-locality-violation-fails.py",
-    "assert-adopter-verify-fast-green-passes.py",
-    "assert-agent-noun-structure-passes.py",
-    "assert-batch-generate-policy-fails.py",
-    "assert-binding-matrix-met.py",
-    "assert-boundary-io-fails.py",
-    "assert-brownfield-inventory-passes.py",
-    "assert-c1-fails.py",
-    "assert-c1-no-note-fails.py",
-    "assert-c1-wrong-class-fails.py",
-    "assert-c10-breaking-fails.py",
-    "assert-c10-changed-scoped-passes.py",
-    "assert-c10-fails.py",
-    "assert-c13-fails.py",
-    "assert-c15-fails.py",
-    "assert-c15-key-fails.py",
-    "assert-c15-nested-fails.py",
-    "assert-c15-unused-fails.py",
-    "assert-c16-fails.py",
-    "assert-c17-fails.py"
-  ],
-  "assert_only_count": 209,
-  "other_or_lib_sample": [
+  "assert_only_sample": [],
+  "assert_only_count": 0,
+  "other_or_lib_sample": [],
+  "other_or_lib_count": 0,
+  "noun_backed_lib_sample": [
     "apply-charter-corpus-pointer.py",
     "changeset.py",
     "check-rule-adoption.py",
@@ -68,991 +53,1189 @@
     "nlc.py",
     "nlc_adr_active.py",
     "nlc_adr_scan.py",
-    "nlc_cli_help.py",
-    "nlc_compliance.py",
-    "nlc_contract_change.py",
-    "nlc_emit_audit.py",
-    "nlc_guide_cmd.py",
-    "nlc_human_gap.py",
-    "nlc_language_scan.py",
-    "nlc_lock_validate.py",
-    "nlc_menu_data.py",
-    "nlc_preflight.py",
-    "nlc_produce_package.py"
+    "nlc_cli_help.py"
   ],
-  "other_or_lib_count": 43,
+  "noun_backed_lib_count": 43,
   "entries": [
     {
       "file": "apply-charter-corpus-pointer.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "assert-adjective-locality-violation-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-adopter-verify-fast-green-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-agent-noun-structure-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-batch-generate-policy-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-binding-matrix-met.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-boundary-io-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-brownfield-inventory-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c1-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c1-no-note-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c1-wrong-class-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c10-breaking-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c10-changed-scoped-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c10-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c13-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c15-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c15-key-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c15-nested-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c15-unused-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c16-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c17-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c17-no-failure-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c17-no-preserve-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c18-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c18-missing-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c18-no-call-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c2-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c21-changed-scoped-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c21-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c22-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c22-na-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c23-confirm-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c23-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c24-agent-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c24-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-c3-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-call-tree-pack-reference-passes.py",
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-changed-missing-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-contract-change-detects-c21-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-contract-presence-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-dashboard-interview-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-delta-regen-narrow-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-delta-regen-orchestrate-passes.py",
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-duplicated-adjective-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-durable-engine-rule-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-durable-engine-tag-strict-fails.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-durable-engine-tag-strict-passes.py",
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-emit-audit-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-escape-hatch-violation-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-full-nlc-audit-emit-checklist-passes.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-full-nlc-audit-quick-passes.py",
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-gate-record-describe-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-goal-bindings-narrow-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-goal-scaffold-emits-markers.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-guide-orchestration-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-hub-no-product-requirements-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-hub-rule-coverage-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-human-surface-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-impact-graph-generated.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-install-verify-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-interview-gap-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-interview-packet-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-invoice-correct-contract-blockers-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-invoice-correct-noun-inheritance-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-invoice-violation-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-migration-catalog-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-migration-step-noop-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-nlc-naming-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-nlc-update-hermetic-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-non-python-adapter-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-non-python-adapter-passes.py",
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-noun-inheritance-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-p2-hub-scope-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-pack-ingest-candidates-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-produce-handoff-refused.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-produce-role-separation-refused.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-project-lock-schema-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-quality-metric-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r12-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r13-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r15-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r15-import-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r17-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r18-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r20-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r20-type-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r20-unannotated-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r25-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r4-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-r4-mention-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-rca-packet-blame-fails.py",
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-release-preflight-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-release-resume-invariant-passes.py",
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-release-signed-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-release-smoke-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-release-tag-gate-fails.py",
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-release-unsigned-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-requirements-hub-entrypoints-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-requirements-sync-pending-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-rule-adoption-conflicts-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-rule-adoption-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-rule-coverage-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-rule-coverage-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-rule-emit-sync-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-rule-marker-emit.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-rule-runner-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-rule-runner-passes.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-rule-semantic-apply-fails.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-rule-semantic-apply-passes.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-rule-semantic-pan-fails.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-rule-semantic-pan-passes.py",
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-schema-identity-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-shipped-tag-audit-fails.py",
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-sql-escape-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-taint-alias-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-taint-crossfile-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-taint-helper-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-taint-violation-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-todo-use-cases-ssot-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-upstream-hand-patch-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-validate-agent-nouns-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verb-path-violation-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-before-generate-stamp-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-breaking-accept-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-contract-change-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-deep-produce-refused.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-deep-role-separation-refused.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-gate-record-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-regen-queue-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-rule-coverage-blockers-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-rule-coverage-blockers-passes.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-rule-marker-gate-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-skill-gate-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "assert-verify-stale-stamp-fails.py",
-      "class": "assert-only"
+      "class": "noun-backed-assert"
     },
     {
       "file": "audit-binding-matrix.py",
-      "class": "assert-only"
+      "class": "tool-only"
     },
     {
       "file": "changeset.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "check-rule-adoption.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "ci_fitness.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "fitness-adjective-locality.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-adopter-verify-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-adr-0001-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-adr-0004-0005-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-adr-0006-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-adr-0007-product-boundary.py",
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-adr-0008-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-adr-0010-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-adr-0023-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-adr-0024-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-adr-0025-rca-packet.py",
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-adr-0029-tools.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-adr-0038-no-memory.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-adr-0039-release-binder.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-adr-enforcement-table-sync.py",
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-adr-gap-parked.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-adr-superseded.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-agent-noun-structure.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-boundary-io.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-branding.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-brownfield-rule-trace.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c1.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c10-changed.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c10.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c13.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c15-idempotent.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c16.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c17.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c18.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c2.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c20.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c21-changed.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c21.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c22.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c23.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c24.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-c3.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-charter-corpus-pointer.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-charter-nlc-door.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-compiled-system-uc-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-compiled-system-uc-product.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-contract-presence.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-dashboard-interview-sync.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-distribution-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-duplicated-adjective.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-escape-hatch.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-findings-last-pass-fresh.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-findings-shipped-tag-sync.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-findings-ssot-sync.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-full-nlc-audit-binder.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-full-nlc-audit-manifest-drift.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-full-nlc-audit-manifest.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-full-nlc-audit-skill-leaves-section.py",
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-goal-imports.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-guide-orchestration.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-harness-gate-binder-sync.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-hub-bba-dogfood.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-hub-bba-interior-slice.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-hub-no-product-requirements.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-hub-pack-registry.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-hub-x4-noun-pilot.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-hub-x4-tranche-t1.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-hub-x4-tranche-t2.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-hub-x4-tranche-t3.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-hub-x4-tranche-t4.py",
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-human-surface-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-integration-leaves-hygiene.py",
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-interview-gap-shape.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-interview-prompt-shape.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-jobs-todo-sync.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-menu-harness-sync.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-nlc-0036-inference-only.py",
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-nlc-action-gates.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-nlc-action-plan-gate.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-nlc-adopt-existing-hints.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-nlc-emit-audit.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-nlc-emit-from-prose.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-nlc-emit-manifest-enforce.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-nlc-naming.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-nlc-pipeline-wire.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-nlc-reverse-audit.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-nlc-rule-emit-wired.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-no-hand-authored-graphs.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-no-noun-field-writes.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-no-noun-inheritance.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-noun-imports.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-p2-hub-scope.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-p4-r31.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-pack-consume-regen.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-planit-generate-markers.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-planit-noun-shape.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-produce-ssot-binder.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-product-completion-p5-dogfood.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-product-completion-p8-closeout.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-product-completion-p8-inference.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-product-completion-scope.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-product-expansion-waives.py",
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-quality-metric.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-r12-version.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-r13-entrypoints.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-r15-copied-helpers.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-r17-workflow-citizen.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-r18-noun-retries.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-r20.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-r25-noun-tests.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-r4.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-requirements-hub-entrypoints.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-schema-identity.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-specimen-contract-policy.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-taint-lifetime.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-todo-use-cases-ssot-matrix.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-todo-use-cases-ssot.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-uc13-engine-runtime-strict.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-uc14-product-boundary.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-uc16-reference-adapter.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-uc18-harness-boundary.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-uc20-call-tree-pack-reference.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-uc21-gate-record-boundary.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-uc4-semantic-rule-runner-v2.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-uc5-product-boundary.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-uc5-semantic-apply-v2.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-uc9-blast-radius-v2.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-use-cases-expansion-sync.py",
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-verb-path.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-verify-pipeline-wired.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-verify-rule-coverage-wired.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "fitness-verify-skill-binders.py",
-      "class": "assert-only"
+      "class": "noun-backed-fitness"
     },
     {
       "file": "generate-impact-graph.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "link-terms-dictionary.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "load-knowledge-domain.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "markdown_plain.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-action-gates.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-action-plan-gate.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-adr-active-freshness.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-adr-bind-snapshot.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-adr-lineage-check.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-brownfield-inventory.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-brownfield-migrate.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-delta-regen.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-emit-manifest-enforce.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-fetch-hub.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-impact-graph.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-install-hash-update.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-install-verify.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-release-build.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-reverse-audit.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc-update.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_adr_active.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_adr_scan.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_call_tree.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_cli_help.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_compliance.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_contract_break_accept.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_contract_change.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_dashboard.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_emit_audit.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_gate_record.py",
@@ -1064,83 +1247,83 @@
     },
     {
       "file": "nlc_generate_provenance.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_guide_cmd.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_guide_state.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_human_gap.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_language_scan.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_lock_validate.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_menu_data.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_migration_catalog.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_pipeline.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_plan_audit.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_preflight.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_primitive_propose.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_produce_package.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_regen_continue.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_release_bump.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_release_notes.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_release_preflight.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_release_tags.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_release_target_preflight.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_requirements_cmd.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_rule_coverage.py",
@@ -1156,66 +1339,46 @@
     },
     {
       "file": "nlc_todo_ssot.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_uc9_bindings.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_uc_blockers.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "nlc_verify.py",
-      "class": "covered-emit-path"
+      "class": "noun-backed-lib"
     },
     {
       "file": "product_tree.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "release-audit.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "validate-agent-noun-packages.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "validate-interview-packet.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "validate-knowledge-facts.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     },
     {
       "file": "validate-pack-ingest-candidates.py",
-      "class": "other-or-lib"
+      "class": "noun-backed-lib"
     }
   ],
   "noun_pilots": [
-    {
-      "noun": "RuleReceipt",
-      "path": "tools/nouns/rule_receipt/",
-      "adapters": [
-        "nlc_rule_marker.py",
-        "nlc_rule_coverage.py",
-        "nlc_rule_runner.py",
-        "nlc_rule_emit.py"
-      ],
-      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
-    },
-    {
-      "noun": "GateLedger",
-      "path": "tools/nouns/gate_ledger/",
-      "adapters": [
-        "nlc_gate_record.py",
-        "nlc_gate_scope.py"
-      ],
-      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
-    },
     {
       "noun": "action_gates",
       "path": "tools/nouns/action_gates/",
@@ -1225,10 +1388,1114 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
+      "noun": "action_plan_gate",
+      "path": "tools/nouns/action_plan_gate/",
+      "adapters": [
+        "nlc-action-plan-gate.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "adr_active",
+      "path": "tools/nouns/adr_active/",
+      "adapters": [
+        "nlc_adr_active.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "adr_active_freshness",
+      "path": "tools/nouns/adr_active_freshness/",
+      "adapters": [
+        "nlc-adr-active-freshness.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
       "noun": "adr_bind_snapshot",
       "path": "tools/nouns/adr_bind_snapshot/",
       "adapters": [
         "nlc-adr-bind-snapshot.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "adr_lineage_check",
+      "path": "tools/nouns/adr_lineage_check/",
+      "adapters": [
+        "nlc-adr-lineage-check.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "adr_scan",
+      "path": "tools/nouns/adr_scan/",
+      "adapters": [
+        "nlc_adr_scan.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_adjective_locality_violation_fails",
+      "path": "tools/nouns/assert_adjective_locality_violation_fails/",
+      "adapters": [
+        "assert-adjective-locality-violation-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_adopter_verify_fast_green_passes",
+      "path": "tools/nouns/assert_adopter_verify_fast_green_passes/",
+      "adapters": [
+        "assert-adopter-verify-fast-green-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_agent_noun_structure_passes",
+      "path": "tools/nouns/assert_agent_noun_structure_passes/",
+      "adapters": [
+        "assert-agent-noun-structure-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_batch_generate_policy_fails",
+      "path": "tools/nouns/assert_batch_generate_policy_fails/",
+      "adapters": [
+        "assert-batch-generate-policy-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_binding_matrix_met",
+      "path": "tools/nouns/assert_binding_matrix_met/",
+      "adapters": [
+        "assert-binding-matrix-met.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_boundary_io_fails",
+      "path": "tools/nouns/assert_boundary_io_fails/",
+      "adapters": [
+        "assert-boundary-io-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_brownfield_inventory_passes",
+      "path": "tools/nouns/assert_brownfield_inventory_passes/",
+      "adapters": [
+        "assert-brownfield-inventory-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c10_breaking_fails",
+      "path": "tools/nouns/assert_c10_breaking_fails/",
+      "adapters": [
+        "assert-c10-breaking-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c10_changed_scoped_passes",
+      "path": "tools/nouns/assert_c10_changed_scoped_passes/",
+      "adapters": [
+        "assert-c10-changed-scoped-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c10_fails",
+      "path": "tools/nouns/assert_c10_fails/",
+      "adapters": [
+        "assert-c10-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c13_fails",
+      "path": "tools/nouns/assert_c13_fails/",
+      "adapters": [
+        "assert-c13-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c15_fails",
+      "path": "tools/nouns/assert_c15_fails/",
+      "adapters": [
+        "assert-c15-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c15_key_fails",
+      "path": "tools/nouns/assert_c15_key_fails/",
+      "adapters": [
+        "assert-c15-key-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c15_nested_fails",
+      "path": "tools/nouns/assert_c15_nested_fails/",
+      "adapters": [
+        "assert-c15-nested-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c15_unused_fails",
+      "path": "tools/nouns/assert_c15_unused_fails/",
+      "adapters": [
+        "assert-c15-unused-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c16_fails",
+      "path": "tools/nouns/assert_c16_fails/",
+      "adapters": [
+        "assert-c16-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c17_fails",
+      "path": "tools/nouns/assert_c17_fails/",
+      "adapters": [
+        "assert-c17-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c17_no_failure_fails",
+      "path": "tools/nouns/assert_c17_no_failure_fails/",
+      "adapters": [
+        "assert-c17-no-failure-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c17_no_preserve_fails",
+      "path": "tools/nouns/assert_c17_no_preserve_fails/",
+      "adapters": [
+        "assert-c17-no-preserve-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c18_fails",
+      "path": "tools/nouns/assert_c18_fails/",
+      "adapters": [
+        "assert-c18-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c18_missing_fails",
+      "path": "tools/nouns/assert_c18_missing_fails/",
+      "adapters": [
+        "assert-c18-missing-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c18_no_call_fails",
+      "path": "tools/nouns/assert_c18_no_call_fails/",
+      "adapters": [
+        "assert-c18-no-call-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c1_fails",
+      "path": "tools/nouns/assert_c1_fails/",
+      "adapters": [
+        "assert-c1-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c1_no_note_fails",
+      "path": "tools/nouns/assert_c1_no_note_fails/",
+      "adapters": [
+        "assert-c1-no-note-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c1_wrong_class_fails",
+      "path": "tools/nouns/assert_c1_wrong_class_fails/",
+      "adapters": [
+        "assert-c1-wrong-class-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c21_changed_scoped_passes",
+      "path": "tools/nouns/assert_c21_changed_scoped_passes/",
+      "adapters": [
+        "assert-c21-changed-scoped-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c21_fails",
+      "path": "tools/nouns/assert_c21_fails/",
+      "adapters": [
+        "assert-c21-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c22_fails",
+      "path": "tools/nouns/assert_c22_fails/",
+      "adapters": [
+        "assert-c22-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c22_na_fails",
+      "path": "tools/nouns/assert_c22_na_fails/",
+      "adapters": [
+        "assert-c22-na-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c23_confirm_fails",
+      "path": "tools/nouns/assert_c23_confirm_fails/",
+      "adapters": [
+        "assert-c23-confirm-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c23_fails",
+      "path": "tools/nouns/assert_c23_fails/",
+      "adapters": [
+        "assert-c23-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c24_agent_fails",
+      "path": "tools/nouns/assert_c24_agent_fails/",
+      "adapters": [
+        "assert-c24-agent-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c24_fails",
+      "path": "tools/nouns/assert_c24_fails/",
+      "adapters": [
+        "assert-c24-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c2_fails",
+      "path": "tools/nouns/assert_c2_fails/",
+      "adapters": [
+        "assert-c2-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_c3_fails",
+      "path": "tools/nouns/assert_c3_fails/",
+      "adapters": [
+        "assert-c3-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_call_tree_pack_reference_passes",
+      "path": "tools/nouns/assert_call_tree_pack_reference_passes/",
+      "adapters": [
+        "assert-call-tree-pack-reference-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_changed_missing_fails",
+      "path": "tools/nouns/assert_changed_missing_fails/",
+      "adapters": [
+        "assert-changed-missing-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_contract_change_detects_c21_fails",
+      "path": "tools/nouns/assert_contract_change_detects_c21_fails/",
+      "adapters": [
+        "assert-contract-change-detects-c21-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_contract_presence_fails",
+      "path": "tools/nouns/assert_contract_presence_fails/",
+      "adapters": [
+        "assert-contract-presence-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_dashboard_interview_passes",
+      "path": "tools/nouns/assert_dashboard_interview_passes/",
+      "adapters": [
+        "assert-dashboard-interview-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_delta_regen_narrow_passes",
+      "path": "tools/nouns/assert_delta_regen_narrow_passes/",
+      "adapters": [
+        "assert-delta-regen-narrow-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_delta_regen_orchestrate_passes",
+      "path": "tools/nouns/assert_delta_regen_orchestrate_passes/",
+      "adapters": [
+        "assert-delta-regen-orchestrate-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_duplicated_adjective_fails",
+      "path": "tools/nouns/assert_duplicated_adjective_fails/",
+      "adapters": [
+        "assert-duplicated-adjective-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_durable_engine_rule_fails",
+      "path": "tools/nouns/assert_durable_engine_rule_fails/",
+      "adapters": [
+        "assert-durable-engine-rule-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_durable_engine_tag_strict_fails",
+      "path": "tools/nouns/assert_durable_engine_tag_strict_fails/",
+      "adapters": [
+        "assert-durable-engine-tag-strict-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_durable_engine_tag_strict_passes",
+      "path": "tools/nouns/assert_durable_engine_tag_strict_passes/",
+      "adapters": [
+        "assert-durable-engine-tag-strict-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_emit_audit_fails",
+      "path": "tools/nouns/assert_emit_audit_fails/",
+      "adapters": [
+        "assert-emit-audit-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_escape_hatch_violation_fails",
+      "path": "tools/nouns/assert_escape_hatch_violation_fails/",
+      "adapters": [
+        "assert-escape-hatch-violation-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_full_nlc_audit_emit_checklist_passes",
+      "path": "tools/nouns/assert_full_nlc_audit_emit_checklist_passes/",
+      "adapters": [
+        "assert-full-nlc-audit-emit-checklist-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_full_nlc_audit_quick_passes",
+      "path": "tools/nouns/assert_full_nlc_audit_quick_passes/",
+      "adapters": [
+        "assert-full-nlc-audit-quick-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_gate_record_describe_passes",
+      "path": "tools/nouns/assert_gate_record_describe_passes/",
+      "adapters": [
+        "assert-gate-record-describe-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_goal_bindings_narrow_fails",
+      "path": "tools/nouns/assert_goal_bindings_narrow_fails/",
+      "adapters": [
+        "assert-goal-bindings-narrow-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_goal_scaffold_emits_markers",
+      "path": "tools/nouns/assert_goal_scaffold_emits_markers/",
+      "adapters": [
+        "assert-goal-scaffold-emits-markers.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_guide_orchestration_passes",
+      "path": "tools/nouns/assert_guide_orchestration_passes/",
+      "adapters": [
+        "assert-guide-orchestration-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_hub_no_product_requirements_passes",
+      "path": "tools/nouns/assert_hub_no_product_requirements_passes/",
+      "adapters": [
+        "assert-hub-no-product-requirements-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_hub_rule_coverage_passes",
+      "path": "tools/nouns/assert_hub_rule_coverage_passes/",
+      "adapters": [
+        "assert-hub-rule-coverage-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_human_surface_passes",
+      "path": "tools/nouns/assert_human_surface_passes/",
+      "adapters": [
+        "assert-human-surface-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_impact_graph_generated",
+      "path": "tools/nouns/assert_impact_graph_generated/",
+      "adapters": [
+        "assert-impact-graph-generated.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_install_verify_passes",
+      "path": "tools/nouns/assert_install_verify_passes/",
+      "adapters": [
+        "assert-install-verify-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_interview_gap_passes",
+      "path": "tools/nouns/assert_interview_gap_passes/",
+      "adapters": [
+        "assert-interview-gap-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_interview_packet_fails",
+      "path": "tools/nouns/assert_interview_packet_fails/",
+      "adapters": [
+        "assert-interview-packet-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_invoice_correct_contract_blockers_passes",
+      "path": "tools/nouns/assert_invoice_correct_contract_blockers_passes/",
+      "adapters": [
+        "assert-invoice-correct-contract-blockers-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_invoice_correct_noun_inheritance_passes",
+      "path": "tools/nouns/assert_invoice_correct_noun_inheritance_passes/",
+      "adapters": [
+        "assert-invoice-correct-noun-inheritance-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_invoice_violation_fails",
+      "path": "tools/nouns/assert_invoice_violation_fails/",
+      "adapters": [
+        "assert-invoice-violation-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_migration_catalog_passes",
+      "path": "tools/nouns/assert_migration_catalog_passes/",
+      "adapters": [
+        "assert-migration-catalog-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_migration_step_noop_passes",
+      "path": "tools/nouns/assert_migration_step_noop_passes/",
+      "adapters": [
+        "assert-migration-step-noop-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_nlc_naming_passes",
+      "path": "tools/nouns/assert_nlc_naming_passes/",
+      "adapters": [
+        "assert-nlc-naming-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_nlc_update_hermetic_passes",
+      "path": "tools/nouns/assert_nlc_update_hermetic_passes/",
+      "adapters": [
+        "assert-nlc-update-hermetic-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_non_python_adapter_fails",
+      "path": "tools/nouns/assert_non_python_adapter_fails/",
+      "adapters": [
+        "assert-non-python-adapter-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_non_python_adapter_passes",
+      "path": "tools/nouns/assert_non_python_adapter_passes/",
+      "adapters": [
+        "assert-non-python-adapter-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_noun_inheritance_fails",
+      "path": "tools/nouns/assert_noun_inheritance_fails/",
+      "adapters": [
+        "assert-noun-inheritance-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_p2_hub_scope_passes",
+      "path": "tools/nouns/assert_p2_hub_scope_passes/",
+      "adapters": [
+        "assert-p2-hub-scope-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_pack_ingest_candidates_passes",
+      "path": "tools/nouns/assert_pack_ingest_candidates_passes/",
+      "adapters": [
+        "assert-pack-ingest-candidates-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_produce_handoff_refused",
+      "path": "tools/nouns/assert_produce_handoff_refused/",
+      "adapters": [
+        "assert-produce-handoff-refused.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_produce_role_separation_refused",
+      "path": "tools/nouns/assert_produce_role_separation_refused/",
+      "adapters": [
+        "assert-produce-role-separation-refused.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_project_lock_schema_passes",
+      "path": "tools/nouns/assert_project_lock_schema_passes/",
+      "adapters": [
+        "assert-project-lock-schema-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_quality_metric_passes",
+      "path": "tools/nouns/assert_quality_metric_passes/",
+      "adapters": [
+        "assert-quality-metric-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r12_fails",
+      "path": "tools/nouns/assert_r12_fails/",
+      "adapters": [
+        "assert-r12-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r13_fails",
+      "path": "tools/nouns/assert_r13_fails/",
+      "adapters": [
+        "assert-r13-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r15_fails",
+      "path": "tools/nouns/assert_r15_fails/",
+      "adapters": [
+        "assert-r15-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r15_import_fails",
+      "path": "tools/nouns/assert_r15_import_fails/",
+      "adapters": [
+        "assert-r15-import-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r17_fails",
+      "path": "tools/nouns/assert_r17_fails/",
+      "adapters": [
+        "assert-r17-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r18_fails",
+      "path": "tools/nouns/assert_r18_fails/",
+      "adapters": [
+        "assert-r18-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r20_fails",
+      "path": "tools/nouns/assert_r20_fails/",
+      "adapters": [
+        "assert-r20-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r20_type_fails",
+      "path": "tools/nouns/assert_r20_type_fails/",
+      "adapters": [
+        "assert-r20-type-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r20_unannotated_fails",
+      "path": "tools/nouns/assert_r20_unannotated_fails/",
+      "adapters": [
+        "assert-r20-unannotated-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r25_fails",
+      "path": "tools/nouns/assert_r25_fails/",
+      "adapters": [
+        "assert-r25-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r4_fails",
+      "path": "tools/nouns/assert_r4_fails/",
+      "adapters": [
+        "assert-r4-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_r4_mention_fails",
+      "path": "tools/nouns/assert_r4_mention_fails/",
+      "adapters": [
+        "assert-r4-mention-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rca_packet_blame_fails",
+      "path": "tools/nouns/assert_rca_packet_blame_fails/",
+      "adapters": [
+        "assert-rca-packet-blame-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_release_preflight_passes",
+      "path": "tools/nouns/assert_release_preflight_passes/",
+      "adapters": [
+        "assert-release-preflight-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_release_resume_invariant_passes",
+      "path": "tools/nouns/assert_release_resume_invariant_passes/",
+      "adapters": [
+        "assert-release-resume-invariant-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_release_signed_passes",
+      "path": "tools/nouns/assert_release_signed_passes/",
+      "adapters": [
+        "assert-release-signed-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_release_smoke_passes",
+      "path": "tools/nouns/assert_release_smoke_passes/",
+      "adapters": [
+        "assert-release-smoke-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_release_tag_gate_fails",
+      "path": "tools/nouns/assert_release_tag_gate_fails/",
+      "adapters": [
+        "assert-release-tag-gate-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_release_unsigned_fails",
+      "path": "tools/nouns/assert_release_unsigned_fails/",
+      "adapters": [
+        "assert-release-unsigned-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_requirements_hub_entrypoints_passes",
+      "path": "tools/nouns/assert_requirements_hub_entrypoints_passes/",
+      "adapters": [
+        "assert-requirements-hub-entrypoints-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_requirements_sync_pending_fails",
+      "path": "tools/nouns/assert_requirements_sync_pending_fails/",
+      "adapters": [
+        "assert-requirements-sync-pending-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_adoption_conflicts_fails",
+      "path": "tools/nouns/assert_rule_adoption_conflicts_fails/",
+      "adapters": [
+        "assert-rule-adoption-conflicts-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_adoption_passes",
+      "path": "tools/nouns/assert_rule_adoption_passes/",
+      "adapters": [
+        "assert-rule-adoption-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_coverage_fails",
+      "path": "tools/nouns/assert_rule_coverage_fails/",
+      "adapters": [
+        "assert-rule-coverage-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_coverage_passes",
+      "path": "tools/nouns/assert_rule_coverage_passes/",
+      "adapters": [
+        "assert-rule-coverage-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_emit_sync_passes",
+      "path": "tools/nouns/assert_rule_emit_sync_passes/",
+      "adapters": [
+        "assert-rule-emit-sync-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_marker_emit",
+      "path": "tools/nouns/assert_rule_marker_emit/",
+      "adapters": [
+        "assert-rule-marker-emit.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_runner_fails",
+      "path": "tools/nouns/assert_rule_runner_fails/",
+      "adapters": [
+        "assert-rule-runner-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_runner_passes",
+      "path": "tools/nouns/assert_rule_runner_passes/",
+      "adapters": [
+        "assert-rule-runner-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_semantic_apply_fails",
+      "path": "tools/nouns/assert_rule_semantic_apply_fails/",
+      "adapters": [
+        "assert-rule-semantic-apply-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_semantic_apply_passes",
+      "path": "tools/nouns/assert_rule_semantic_apply_passes/",
+      "adapters": [
+        "assert-rule-semantic-apply-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_semantic_pan_fails",
+      "path": "tools/nouns/assert_rule_semantic_pan_fails/",
+      "adapters": [
+        "assert-rule-semantic-pan-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_rule_semantic_pan_passes",
+      "path": "tools/nouns/assert_rule_semantic_pan_passes/",
+      "adapters": [
+        "assert-rule-semantic-pan-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_schema_identity_fails",
+      "path": "tools/nouns/assert_schema_identity_fails/",
+      "adapters": [
+        "assert-schema-identity-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_shipped_tag_audit_fails",
+      "path": "tools/nouns/assert_shipped_tag_audit_fails/",
+      "adapters": [
+        "assert-shipped-tag-audit-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_sql_escape_fails",
+      "path": "tools/nouns/assert_sql_escape_fails/",
+      "adapters": [
+        "assert-sql-escape-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_taint_alias_fails",
+      "path": "tools/nouns/assert_taint_alias_fails/",
+      "adapters": [
+        "assert-taint-alias-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_taint_crossfile_fails",
+      "path": "tools/nouns/assert_taint_crossfile_fails/",
+      "adapters": [
+        "assert-taint-crossfile-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_taint_helper_fails",
+      "path": "tools/nouns/assert_taint_helper_fails/",
+      "adapters": [
+        "assert-taint-helper-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_taint_violation_fails",
+      "path": "tools/nouns/assert_taint_violation_fails/",
+      "adapters": [
+        "assert-taint-violation-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_todo_use_cases_ssot_fails",
+      "path": "tools/nouns/assert_todo_use_cases_ssot_fails/",
+      "adapters": [
+        "assert-todo-use-cases-ssot-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_upstream_hand_patch_fails",
+      "path": "tools/nouns/assert_upstream_hand_patch_fails/",
+      "adapters": [
+        "assert-upstream-hand-patch-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_validate_agent_nouns_passes",
+      "path": "tools/nouns/assert_validate_agent_nouns_passes/",
+      "adapters": [
+        "assert-validate-agent-nouns-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verb_path_violation_fails",
+      "path": "tools/nouns/assert_verb_path_violation_fails/",
+      "adapters": [
+        "assert-verb-path-violation-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_before_generate_stamp_fails",
+      "path": "tools/nouns/assert_verify_before_generate_stamp_fails/",
+      "adapters": [
+        "assert-verify-before-generate-stamp-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_breaking_accept_fails",
+      "path": "tools/nouns/assert_verify_breaking_accept_fails/",
+      "adapters": [
+        "assert-verify-breaking-accept-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_contract_change_fails",
+      "path": "tools/nouns/assert_verify_contract_change_fails/",
+      "adapters": [
+        "assert-verify-contract-change-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_deep_produce_refused",
+      "path": "tools/nouns/assert_verify_deep_produce_refused/",
+      "adapters": [
+        "assert-verify-deep-produce-refused.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_deep_role_separation_refused",
+      "path": "tools/nouns/assert_verify_deep_role_separation_refused/",
+      "adapters": [
+        "assert-verify-deep-role-separation-refused.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_gate_record_fails",
+      "path": "tools/nouns/assert_verify_gate_record_fails/",
+      "adapters": [
+        "assert-verify-gate-record-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_regen_queue_fails",
+      "path": "tools/nouns/assert_verify_regen_queue_fails/",
+      "adapters": [
+        "assert-verify-regen-queue-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_rule_coverage_blockers_fails",
+      "path": "tools/nouns/assert_verify_rule_coverage_blockers_fails/",
+      "adapters": [
+        "assert-verify-rule-coverage-blockers-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_rule_coverage_blockers_passes",
+      "path": "tools/nouns/assert_verify_rule_coverage_blockers_passes/",
+      "adapters": [
+        "assert-verify-rule-coverage-blockers-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_rule_marker_gate_fails",
+      "path": "tools/nouns/assert_verify_rule_marker_gate_fails/",
+      "adapters": [
+        "assert-verify-rule-marker-gate-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_skill_gate_fails",
+      "path": "tools/nouns/assert_verify_skill_gate_fails/",
+      "adapters": [
+        "assert-verify-skill-gate-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_verify_stale_stamp_fails",
+      "path": "tools/nouns/assert_verify_stale_stamp_fails/",
+      "adapters": [
+        "assert-verify-stale-stamp-fails.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
@@ -1249,10 +2516,1178 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
+      "noun": "call_tree",
+      "path": "tools/nouns/call_tree/",
+      "adapters": [
+        "nlc_call_tree.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "changeset",
+      "path": "tools/nouns/changeset/",
+      "adapters": [
+        "changeset.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "charter_corpus_pointer",
+      "path": "tools/nouns/charter_corpus_pointer/",
+      "adapters": [
+        "apply-charter-corpus-pointer.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "check_rule_adoption",
+      "path": "tools/nouns/check_rule_adoption/",
+      "adapters": [
+        "check-rule-adoption.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "ci_fitness",
+      "path": "tools/nouns/ci_fitness/",
+      "adapters": [
+        "ci_fitness.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "cli_help",
+      "path": "tools/nouns/cli_help/",
+      "adapters": [
+        "nlc_cli_help.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "compliance",
+      "path": "tools/nouns/compliance/",
+      "adapters": [
+        "nlc_compliance.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "contract_break_accept",
+      "path": "tools/nouns/contract_break_accept/",
+      "adapters": [
+        "nlc_contract_break_accept.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "contract_change",
+      "path": "tools/nouns/contract_change/",
+      "adapters": [
+        "nlc_contract_change.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "dashboard",
+      "path": "tools/nouns/dashboard/",
+      "adapters": [
+        "nlc_dashboard.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
       "noun": "delta_regen",
       "path": "tools/nouns/delta_regen/",
       "adapters": [
         "nlc-delta-regen.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "emit_audit",
+      "path": "tools/nouns/emit_audit/",
+      "adapters": [
+        "nlc_emit_audit.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "emit_manifest_enforce",
+      "path": "tools/nouns/emit_manifest_enforce/",
+      "adapters": [
+        "nlc-emit-manifest-enforce.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fetch_hub",
+      "path": "tools/nouns/fetch_hub/",
+      "adapters": [
+        "nlc-fetch-hub.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adjective_locality",
+      "path": "tools/nouns/fitness_adjective_locality/",
+      "adapters": [
+        "fitness-adjective-locality.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adopter_verify_binder",
+      "path": "tools/nouns/fitness_adopter_verify_binder/",
+      "adapters": [
+        "fitness-adopter-verify-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0001_binder",
+      "path": "tools/nouns/fitness_adr_0001_binder/",
+      "adapters": [
+        "fitness-adr-0001-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0004_0005_binder",
+      "path": "tools/nouns/fitness_adr_0004_0005_binder/",
+      "adapters": [
+        "fitness-adr-0004-0005-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0006_binder",
+      "path": "tools/nouns/fitness_adr_0006_binder/",
+      "adapters": [
+        "fitness-adr-0006-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0007_product_boundary",
+      "path": "tools/nouns/fitness_adr_0007_product_boundary/",
+      "adapters": [
+        "fitness-adr-0007-product-boundary.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0008_binder",
+      "path": "tools/nouns/fitness_adr_0008_binder/",
+      "adapters": [
+        "fitness-adr-0008-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0010_binder",
+      "path": "tools/nouns/fitness_adr_0010_binder/",
+      "adapters": [
+        "fitness-adr-0010-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0023_binder",
+      "path": "tools/nouns/fitness_adr_0023_binder/",
+      "adapters": [
+        "fitness-adr-0023-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0024_binder",
+      "path": "tools/nouns/fitness_adr_0024_binder/",
+      "adapters": [
+        "fitness-adr-0024-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0025_rca_packet",
+      "path": "tools/nouns/fitness_adr_0025_rca_packet/",
+      "adapters": [
+        "fitness-adr-0025-rca-packet.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0029_tools",
+      "path": "tools/nouns/fitness_adr_0029_tools/",
+      "adapters": [
+        "fitness-adr-0029-tools.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0038_no_memory",
+      "path": "tools/nouns/fitness_adr_0038_no_memory/",
+      "adapters": [
+        "fitness-adr-0038-no-memory.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_0039_release_binder",
+      "path": "tools/nouns/fitness_adr_0039_release_binder/",
+      "adapters": [
+        "fitness-adr-0039-release-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_enforcement_table_sync",
+      "path": "tools/nouns/fitness_adr_enforcement_table_sync/",
+      "adapters": [
+        "fitness-adr-enforcement-table-sync.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_gap_parked",
+      "path": "tools/nouns/fitness_adr_gap_parked/",
+      "adapters": [
+        "fitness-adr-gap-parked.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_adr_superseded",
+      "path": "tools/nouns/fitness_adr_superseded/",
+      "adapters": [
+        "fitness-adr-superseded.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_agent_noun_structure",
+      "path": "tools/nouns/fitness_agent_noun_structure/",
+      "adapters": [
+        "fitness-agent-noun-structure.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_boundary_io",
+      "path": "tools/nouns/fitness_boundary_io/",
+      "adapters": [
+        "fitness-boundary-io.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_branding",
+      "path": "tools/nouns/fitness_branding/",
+      "adapters": [
+        "fitness-branding.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_brownfield_rule_trace",
+      "path": "tools/nouns/fitness_brownfield_rule_trace/",
+      "adapters": [
+        "fitness-brownfield-rule-trace.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c1",
+      "path": "tools/nouns/fitness_c1/",
+      "adapters": [
+        "fitness-c1.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c10",
+      "path": "tools/nouns/fitness_c10/",
+      "adapters": [
+        "fitness-c10.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c10_changed",
+      "path": "tools/nouns/fitness_c10_changed/",
+      "adapters": [
+        "fitness-c10-changed.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c13",
+      "path": "tools/nouns/fitness_c13/",
+      "adapters": [
+        "fitness-c13.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c15_idempotent",
+      "path": "tools/nouns/fitness_c15_idempotent/",
+      "adapters": [
+        "fitness-c15-idempotent.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c16",
+      "path": "tools/nouns/fitness_c16/",
+      "adapters": [
+        "fitness-c16.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c17",
+      "path": "tools/nouns/fitness_c17/",
+      "adapters": [
+        "fitness-c17.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c18",
+      "path": "tools/nouns/fitness_c18/",
+      "adapters": [
+        "fitness-c18.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c2",
+      "path": "tools/nouns/fitness_c2/",
+      "adapters": [
+        "fitness-c2.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c20",
+      "path": "tools/nouns/fitness_c20/",
+      "adapters": [
+        "fitness-c20.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c21",
+      "path": "tools/nouns/fitness_c21/",
+      "adapters": [
+        "fitness-c21.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c21_changed",
+      "path": "tools/nouns/fitness_c21_changed/",
+      "adapters": [
+        "fitness-c21-changed.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c22",
+      "path": "tools/nouns/fitness_c22/",
+      "adapters": [
+        "fitness-c22.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c23",
+      "path": "tools/nouns/fitness_c23/",
+      "adapters": [
+        "fitness-c23.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c24",
+      "path": "tools/nouns/fitness_c24/",
+      "adapters": [
+        "fitness-c24.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_c3",
+      "path": "tools/nouns/fitness_c3/",
+      "adapters": [
+        "fitness-c3.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_charter_corpus_pointer",
+      "path": "tools/nouns/fitness_charter_corpus_pointer/",
+      "adapters": [
+        "fitness-charter-corpus-pointer.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_charter_nlc_door",
+      "path": "tools/nouns/fitness_charter_nlc_door/",
+      "adapters": [
+        "fitness-charter-nlc-door.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_compiled_system_uc_binder",
+      "path": "tools/nouns/fitness_compiled_system_uc_binder/",
+      "adapters": [
+        "fitness-compiled-system-uc-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_compiled_system_uc_product",
+      "path": "tools/nouns/fitness_compiled_system_uc_product/",
+      "adapters": [
+        "fitness-compiled-system-uc-product.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_contract_presence",
+      "path": "tools/nouns/fitness_contract_presence/",
+      "adapters": [
+        "fitness-contract-presence.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_dashboard_interview_sync",
+      "path": "tools/nouns/fitness_dashboard_interview_sync/",
+      "adapters": [
+        "fitness-dashboard-interview-sync.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_distribution_binder",
+      "path": "tools/nouns/fitness_distribution_binder/",
+      "adapters": [
+        "fitness-distribution-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_duplicated_adjective",
+      "path": "tools/nouns/fitness_duplicated_adjective/",
+      "adapters": [
+        "fitness-duplicated-adjective.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_escape_hatch",
+      "path": "tools/nouns/fitness_escape_hatch/",
+      "adapters": [
+        "fitness-escape-hatch.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_findings_last_pass_fresh",
+      "path": "tools/nouns/fitness_findings_last_pass_fresh/",
+      "adapters": [
+        "fitness-findings-last-pass-fresh.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_findings_shipped_tag_sync",
+      "path": "tools/nouns/fitness_findings_shipped_tag_sync/",
+      "adapters": [
+        "fitness-findings-shipped-tag-sync.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_findings_ssot_sync",
+      "path": "tools/nouns/fitness_findings_ssot_sync/",
+      "adapters": [
+        "fitness-findings-ssot-sync.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_full_nlc_audit_binder",
+      "path": "tools/nouns/fitness_full_nlc_audit_binder/",
+      "adapters": [
+        "fitness-full-nlc-audit-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_full_nlc_audit_manifest",
+      "path": "tools/nouns/fitness_full_nlc_audit_manifest/",
+      "adapters": [
+        "fitness-full-nlc-audit-manifest.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_full_nlc_audit_manifest_drift",
+      "path": "tools/nouns/fitness_full_nlc_audit_manifest_drift/",
+      "adapters": [
+        "fitness-full-nlc-audit-manifest-drift.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_full_nlc_audit_skill_leaves_section",
+      "path": "tools/nouns/fitness_full_nlc_audit_skill_leaves_section/",
+      "adapters": [
+        "fitness-full-nlc-audit-skill-leaves-section.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_goal_imports",
+      "path": "tools/nouns/fitness_goal_imports/",
+      "adapters": [
+        "fitness-goal-imports.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_guide_orchestration",
+      "path": "tools/nouns/fitness_guide_orchestration/",
+      "adapters": [
+        "fitness-guide-orchestration.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_harness_gate_binder_sync",
+      "path": "tools/nouns/fitness_harness_gate_binder_sync/",
+      "adapters": [
+        "fitness-harness-gate-binder-sync.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_hub_bba_dogfood",
+      "path": "tools/nouns/fitness_hub_bba_dogfood/",
+      "adapters": [
+        "fitness-hub-bba-dogfood.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_hub_bba_interior_slice",
+      "path": "tools/nouns/fitness_hub_bba_interior_slice/",
+      "adapters": [
+        "fitness-hub-bba-interior-slice.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_hub_no_product_requirements",
+      "path": "tools/nouns/fitness_hub_no_product_requirements/",
+      "adapters": [
+        "fitness-hub-no-product-requirements.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_hub_pack_registry",
+      "path": "tools/nouns/fitness_hub_pack_registry/",
+      "adapters": [
+        "fitness-hub-pack-registry.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_hub_x4_noun_pilot",
+      "path": "tools/nouns/fitness_hub_x4_noun_pilot/",
+      "adapters": [
+        "fitness-hub-x4-noun-pilot.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_hub_x4_tranche_t1",
+      "path": "tools/nouns/fitness_hub_x4_tranche_t1/",
+      "adapters": [
+        "fitness-hub-x4-tranche-t1.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_hub_x4_tranche_t2",
+      "path": "tools/nouns/fitness_hub_x4_tranche_t2/",
+      "adapters": [
+        "fitness-hub-x4-tranche-t2.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_hub_x4_tranche_t3",
+      "path": "tools/nouns/fitness_hub_x4_tranche_t3/",
+      "adapters": [
+        "fitness-hub-x4-tranche-t3.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_hub_x4_tranche_t4",
+      "path": "tools/nouns/fitness_hub_x4_tranche_t4/",
+      "adapters": [
+        "fitness-hub-x4-tranche-t4.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_human_surface_binder",
+      "path": "tools/nouns/fitness_human_surface_binder/",
+      "adapters": [
+        "fitness-human-surface-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_integration_leaves_hygiene",
+      "path": "tools/nouns/fitness_integration_leaves_hygiene/",
+      "adapters": [
+        "fitness-integration-leaves-hygiene.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_interview_gap_shape",
+      "path": "tools/nouns/fitness_interview_gap_shape/",
+      "adapters": [
+        "fitness-interview-gap-shape.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_interview_prompt_shape",
+      "path": "tools/nouns/fitness_interview_prompt_shape/",
+      "adapters": [
+        "fitness-interview-prompt-shape.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_jobs_todo_sync",
+      "path": "tools/nouns/fitness_jobs_todo_sync/",
+      "adapters": [
+        "fitness-jobs-todo-sync.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_menu_harness_sync",
+      "path": "tools/nouns/fitness_menu_harness_sync/",
+      "adapters": [
+        "fitness-menu-harness-sync.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_nlc_0036_inference_only",
+      "path": "tools/nouns/fitness_nlc_0036_inference_only/",
+      "adapters": [
+        "fitness-nlc-0036-inference-only.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_nlc_action_gates",
+      "path": "tools/nouns/fitness_nlc_action_gates/",
+      "adapters": [
+        "fitness-nlc-action-gates.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_nlc_action_plan_gate",
+      "path": "tools/nouns/fitness_nlc_action_plan_gate/",
+      "adapters": [
+        "fitness-nlc-action-plan-gate.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_nlc_adopt_existing_hints",
+      "path": "tools/nouns/fitness_nlc_adopt_existing_hints/",
+      "adapters": [
+        "fitness-nlc-adopt-existing-hints.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_nlc_emit_audit",
+      "path": "tools/nouns/fitness_nlc_emit_audit/",
+      "adapters": [
+        "fitness-nlc-emit-audit.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_nlc_emit_from_prose",
+      "path": "tools/nouns/fitness_nlc_emit_from_prose/",
+      "adapters": [
+        "fitness-nlc-emit-from-prose.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_nlc_emit_manifest_enforce",
+      "path": "tools/nouns/fitness_nlc_emit_manifest_enforce/",
+      "adapters": [
+        "fitness-nlc-emit-manifest-enforce.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_nlc_naming",
+      "path": "tools/nouns/fitness_nlc_naming/",
+      "adapters": [
+        "fitness-nlc-naming.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_nlc_pipeline_wire",
+      "path": "tools/nouns/fitness_nlc_pipeline_wire/",
+      "adapters": [
+        "fitness-nlc-pipeline-wire.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_nlc_reverse_audit",
+      "path": "tools/nouns/fitness_nlc_reverse_audit/",
+      "adapters": [
+        "fitness-nlc-reverse-audit.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_nlc_rule_emit_wired",
+      "path": "tools/nouns/fitness_nlc_rule_emit_wired/",
+      "adapters": [
+        "fitness-nlc-rule-emit-wired.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_no_hand_authored_graphs",
+      "path": "tools/nouns/fitness_no_hand_authored_graphs/",
+      "adapters": [
+        "fitness-no-hand-authored-graphs.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_no_noun_field_writes",
+      "path": "tools/nouns/fitness_no_noun_field_writes/",
+      "adapters": [
+        "fitness-no-noun-field-writes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_no_noun_inheritance",
+      "path": "tools/nouns/fitness_no_noun_inheritance/",
+      "adapters": [
+        "fitness-no-noun-inheritance.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_noun_imports",
+      "path": "tools/nouns/fitness_noun_imports/",
+      "adapters": [
+        "fitness-noun-imports.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_p2_hub_scope",
+      "path": "tools/nouns/fitness_p2_hub_scope/",
+      "adapters": [
+        "fitness-p2-hub-scope.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_p4_r31",
+      "path": "tools/nouns/fitness_p4_r31/",
+      "adapters": [
+        "fitness-p4-r31.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_pack_consume_regen",
+      "path": "tools/nouns/fitness_pack_consume_regen/",
+      "adapters": [
+        "fitness-pack-consume-regen.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_planit_generate_markers",
+      "path": "tools/nouns/fitness_planit_generate_markers/",
+      "adapters": [
+        "fitness-planit-generate-markers.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_planit_noun_shape",
+      "path": "tools/nouns/fitness_planit_noun_shape/",
+      "adapters": [
+        "fitness-planit-noun-shape.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_produce_ssot_binder",
+      "path": "tools/nouns/fitness_produce_ssot_binder/",
+      "adapters": [
+        "fitness-produce-ssot-binder.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_product_completion_p5_dogfood",
+      "path": "tools/nouns/fitness_product_completion_p5_dogfood/",
+      "adapters": [
+        "fitness-product-completion-p5-dogfood.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_product_completion_p8_closeout",
+      "path": "tools/nouns/fitness_product_completion_p8_closeout/",
+      "adapters": [
+        "fitness-product-completion-p8-closeout.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_product_completion_p8_inference",
+      "path": "tools/nouns/fitness_product_completion_p8_inference/",
+      "adapters": [
+        "fitness-product-completion-p8-inference.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_product_completion_scope",
+      "path": "tools/nouns/fitness_product_completion_scope/",
+      "adapters": [
+        "fitness-product-completion-scope.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_product_expansion_waives",
+      "path": "tools/nouns/fitness_product_expansion_waives/",
+      "adapters": [
+        "fitness-product-expansion-waives.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_quality_metric",
+      "path": "tools/nouns/fitness_quality_metric/",
+      "adapters": [
+        "fitness-quality-metric.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_r12_version",
+      "path": "tools/nouns/fitness_r12_version/",
+      "adapters": [
+        "fitness-r12-version.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_r13_entrypoints",
+      "path": "tools/nouns/fitness_r13_entrypoints/",
+      "adapters": [
+        "fitness-r13-entrypoints.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_r15_copied_helpers",
+      "path": "tools/nouns/fitness_r15_copied_helpers/",
+      "adapters": [
+        "fitness-r15-copied-helpers.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_r17_workflow_citizen",
+      "path": "tools/nouns/fitness_r17_workflow_citizen/",
+      "adapters": [
+        "fitness-r17-workflow-citizen.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_r18_noun_retries",
+      "path": "tools/nouns/fitness_r18_noun_retries/",
+      "adapters": [
+        "fitness-r18-noun-retries.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_r20",
+      "path": "tools/nouns/fitness_r20/",
+      "adapters": [
+        "fitness-r20.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_r25_noun_tests",
+      "path": "tools/nouns/fitness_r25_noun_tests/",
+      "adapters": [
+        "fitness-r25-noun-tests.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_r4",
+      "path": "tools/nouns/fitness_r4/",
+      "adapters": [
+        "fitness-r4.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_requirements_hub_entrypoints",
+      "path": "tools/nouns/fitness_requirements_hub_entrypoints/",
+      "adapters": [
+        "fitness-requirements-hub-entrypoints.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_schema_identity",
+      "path": "tools/nouns/fitness_schema_identity/",
+      "adapters": [
+        "fitness-schema-identity.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_specimen_contract_policy",
+      "path": "tools/nouns/fitness_specimen_contract_policy/",
+      "adapters": [
+        "fitness-specimen-contract-policy.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_taint_lifetime",
+      "path": "tools/nouns/fitness_taint_lifetime/",
+      "adapters": [
+        "fitness-taint-lifetime.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_todo_use_cases_ssot",
+      "path": "tools/nouns/fitness_todo_use_cases_ssot/",
+      "adapters": [
+        "fitness-todo-use-cases-ssot.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_todo_use_cases_ssot_matrix",
+      "path": "tools/nouns/fitness_todo_use_cases_ssot_matrix/",
+      "adapters": [
+        "fitness-todo-use-cases-ssot-matrix.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_uc13_engine_runtime_strict",
+      "path": "tools/nouns/fitness_uc13_engine_runtime_strict/",
+      "adapters": [
+        "fitness-uc13-engine-runtime-strict.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_uc14_product_boundary",
+      "path": "tools/nouns/fitness_uc14_product_boundary/",
+      "adapters": [
+        "fitness-uc14-product-boundary.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_uc16_reference_adapter",
+      "path": "tools/nouns/fitness_uc16_reference_adapter/",
+      "adapters": [
+        "fitness-uc16-reference-adapter.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_uc18_harness_boundary",
+      "path": "tools/nouns/fitness_uc18_harness_boundary/",
+      "adapters": [
+        "fitness-uc18-harness-boundary.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_uc20_call_tree_pack_reference",
+      "path": "tools/nouns/fitness_uc20_call_tree_pack_reference/",
+      "adapters": [
+        "fitness-uc20-call-tree-pack-reference.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_uc21_gate_record_boundary",
+      "path": "tools/nouns/fitness_uc21_gate_record_boundary/",
+      "adapters": [
+        "fitness-uc21-gate-record-boundary.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_uc4_semantic_rule_runner_v2",
+      "path": "tools/nouns/fitness_uc4_semantic_rule_runner_v2/",
+      "adapters": [
+        "fitness-uc4-semantic-rule-runner-v2.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_uc5_product_boundary",
+      "path": "tools/nouns/fitness_uc5_product_boundary/",
+      "adapters": [
+        "fitness-uc5-product-boundary.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_uc5_semantic_apply_v2",
+      "path": "tools/nouns/fitness_uc5_semantic_apply_v2/",
+      "adapters": [
+        "fitness-uc5-semantic-apply-v2.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_uc9_blast_radius_v2",
+      "path": "tools/nouns/fitness_uc9_blast_radius_v2/",
+      "adapters": [
+        "fitness-uc9-blast-radius-v2.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_use_cases_expansion_sync",
+      "path": "tools/nouns/fitness_use_cases_expansion_sync/",
+      "adapters": [
+        "fitness-use-cases-expansion-sync.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_verb_path",
+      "path": "tools/nouns/fitness_verb_path/",
+      "adapters": [
+        "fitness-verb-path.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_verify_pipeline_wired",
+      "path": "tools/nouns/fitness_verify_pipeline_wired/",
+      "adapters": [
+        "fitness-verify-pipeline-wired.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_verify_rule_coverage_wired",
+      "path": "tools/nouns/fitness_verify_rule_coverage_wired/",
+      "adapters": [
+        "fitness-verify-rule-coverage-wired.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_verify_skill_binders",
+      "path": "tools/nouns/fitness_verify_skill_binders/",
+      "adapters": [
+        "fitness-verify-skill-binders.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "generate_impact_graph",
+      "path": "tools/nouns/generate_impact_graph/",
+      "adapters": [
+        "generate-impact-graph.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "generate_provenance",
+      "path": "tools/nouns/generate_provenance/",
+      "adapters": [
+        "nlc_generate_provenance.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "guide_cmd",
+      "path": "tools/nouns/guide_cmd/",
+      "adapters": [
+        "nlc_guide_cmd.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "guide_state",
+      "path": "tools/nouns/guide_state/",
+      "adapters": [
+        "nlc_guide_state.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "hub_update",
+      "path": "tools/nouns/hub_update/",
+      "adapters": [
+        "nlc-update.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "human_gap",
+      "path": "tools/nouns/human_gap/",
+      "adapters": [
+        "nlc_human_gap.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
@@ -1273,50 +3708,74 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
-      "noun": "release_build",
-      "path": "tools/nouns/release_build/",
+      "noun": "install_verify",
+      "path": "tools/nouns/install_verify/",
       "adapters": [
-        "nlc-release-build.py"
+        "nlc-install-verify.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
-      "noun": "call_tree",
-      "path": "tools/nouns/call_tree/",
+      "noun": "interview_packet",
+      "path": "tools/nouns/interview_packet/",
       "adapters": [
-        "nlc_call_tree.py"
+        "validate-interview-packet.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
-      "noun": "contract_break_accept",
-      "path": "tools/nouns/contract_break_accept/",
+      "noun": "knowledge_facts",
+      "path": "tools/nouns/knowledge_facts/",
       "adapters": [
-        "nlc_contract_break_accept.py"
+        "validate-knowledge-facts.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
-      "noun": "dashboard",
-      "path": "tools/nouns/dashboard/",
+      "noun": "language_scan",
+      "path": "tools/nouns/language_scan/",
       "adapters": [
-        "nlc_dashboard.py"
+        "nlc_language_scan.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
-      "noun": "generate_provenance",
-      "path": "tools/nouns/generate_provenance/",
+      "noun": "link_terms_dictionary",
+      "path": "tools/nouns/link_terms_dictionary/",
       "adapters": [
-        "nlc_generate_provenance.py"
+        "link-terms-dictionary.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
-      "noun": "guide_state",
-      "path": "tools/nouns/guide_state/",
+      "noun": "load_knowledge_domain",
+      "path": "tools/nouns/load_knowledge_domain/",
       "adapters": [
-        "nlc_guide_state.py"
+        "load-knowledge-domain.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "lock_validate",
+      "path": "tools/nouns/lock_validate/",
+      "adapters": [
+        "nlc_lock_validate.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "markdown_plain",
+      "path": "tools/nouns/markdown_plain/",
+      "adapters": [
+        "markdown_plain.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "menu_data",
+      "path": "tools/nouns/menu_data/",
+      "adapters": [
+        "nlc_menu_data.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
@@ -1325,6 +3784,22 @@
       "path": "tools/nouns/migration_catalog/",
       "adapters": [
         "nlc_migration_catalog.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "nlc_hub_cli",
+      "path": "tools/nouns/nlc_hub_cli/",
+      "adapters": [
+        "nlc.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "pack_ingest_candidates",
+      "path": "tools/nouns/pack_ingest_candidates/",
+      "adapters": [
+        "validate-pack-ingest-candidates.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
@@ -1345,6 +3820,14 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
+      "noun": "preflight",
+      "path": "tools/nouns/preflight/",
+      "adapters": [
+        "nlc_preflight.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
       "noun": "primitive_propose",
       "path": "tools/nouns/primitive_propose/",
       "adapters": [
@@ -1353,10 +3836,42 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
+      "noun": "produce_package",
+      "path": "tools/nouns/produce_package/",
+      "adapters": [
+        "nlc_produce_package.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "product_tree",
+      "path": "tools/nouns/product_tree/",
+      "adapters": [
+        "product_tree.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
       "noun": "regen_continue",
       "path": "tools/nouns/regen_continue/",
       "adapters": [
         "nlc_regen_continue.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "release_audit",
+      "path": "tools/nouns/release_audit/",
+      "adapters": [
+        "release-audit.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "release_build",
+      "path": "tools/nouns/release_build/",
+      "adapters": [
+        "nlc-release-build.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
@@ -1377,6 +3892,78 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
+      "noun": "release_preflight",
+      "path": "tools/nouns/release_preflight/",
+      "adapters": [
+        "nlc_release_preflight.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "release_tags",
+      "path": "tools/nouns/release_tags/",
+      "adapters": [
+        "nlc_release_tags.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "release_target_preflight",
+      "path": "tools/nouns/release_target_preflight/",
+      "adapters": [
+        "nlc_release_target_preflight.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "requirements_cmd",
+      "path": "tools/nouns/requirements_cmd/",
+      "adapters": [
+        "nlc_requirements_cmd.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "reverse_audit",
+      "path": "tools/nouns/reverse_audit/",
+      "adapters": [
+        "nlc-reverse-audit.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "todo_ssot",
+      "path": "tools/nouns/todo_ssot/",
+      "adapters": [
+        "nlc_todo_ssot.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "uc9_bindings",
+      "path": "tools/nouns/uc9_bindings/",
+      "adapters": [
+        "nlc_uc9_bindings.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "uc_blockers",
+      "path": "tools/nouns/uc_blockers/",
+      "adapters": [
+        "nlc_uc_blockers.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "validate_agent_noun_packages",
+      "path": "tools/nouns/validate_agent_noun_packages/",
+      "adapters": [
+        "validate-agent-noun-packages.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
       "noun": "verify",
       "path": "tools/nouns/verify/",
       "adapters": [
@@ -1385,5 +3972,10 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     }
   ],
-  "emit_path_complete": true
+  "emit_path_complete": true,
+  "noun_backed_assert_count": 128,
+  "assert_tranche_complete": true,
+  "fitness_only_count": 0,
+  "fitness_tranche_complete": true,
+  "schema": 1
 }

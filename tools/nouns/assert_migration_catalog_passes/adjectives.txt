@@ -1,0 +1,1 @@
+# adjectives for assert_migration_catalog_passes

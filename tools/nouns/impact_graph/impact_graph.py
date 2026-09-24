@@ -9,22 +9,14 @@ import json
 import sys
 from pathlib import Path
 
-import importlib.util
-
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools"))
 from nlc_requirements import hub_tool  # noqa: E402
-
-_GEN = ROOT / "tools" / "generate-impact-graph.py"
+from nouns.generate_impact_graph import build  # noqa: E402
 
 
 def _build(root: Path) -> dict:
-    spec = importlib.util.spec_from_file_location("generate_impact_graph", _GEN)
-    if spec is None or spec.loader is None:
-        raise RuntimeError("cannot load generate-impact-graph.py")
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod.build(root)
+    return build(root)
 
 
 def main() -> int:

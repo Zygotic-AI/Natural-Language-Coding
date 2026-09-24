@@ -56,6 +56,39 @@ class TestRuleReceipt(unittest.TestCase):
             self.n.write_snapshot(root, rows)
             self.assertEqual(self.n.check_ir(root), [])
 
+    def test_check_semantic_pan_return(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root / "domain" / "card").mkdir(parents=True)
+            (root / "domain" / "card" / "taint.txt").write_text("card_number\n", encoding="utf-8")
+            (root / "goals" / "g" / "implementation.py").parent.mkdir(parents=True)
+            (root / "goals" / "g" / "implementation.py").write_text(
+                "def run():\n    card_number = 1\n    return card_number\n",
+                encoding="utf-8",
+            )
+            (root / "rules").mkdir()
+            (root / "rules" / "adopted.json").write_text(
+                json.dumps(
+                    {
+                        "adoptions": [
+                            {
+                                "rule_id": "pan-no-return",
+                                "adr_id": "0007",
+                                "effect": "forbid",
+                                "obligation": None,
+                                "match": {"tags_all": ["pan"], "primitive": "return"},
+                            }
+                        ]
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            rows = self.n.materialize_ir(root)
+            self.n.write_snapshot(root, rows)
+            sem = self.n.check_semantic_ir(root)
+            self.assertTrue(sem and "forbid return" in sem[0])
+
 
 if __name__ == "__main__":
     unittest.main()

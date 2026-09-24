@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "defect_summary": "Bad merge.",
+  "unsuitable_process": "The agent caused the failure.",
+  "climb_steps": ["Blame the agent."],
+  "repo_touch": {
+    "belief": "",
+    "adr_ids": [],
+    "rule_ids": [],
+    "gate_ids": []
+  }
+}

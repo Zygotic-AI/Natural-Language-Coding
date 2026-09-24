@@ -1,0 +1,1 @@
+# adjectives for assert_contract_change_detects_c21_fails

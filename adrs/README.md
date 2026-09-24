@@ -43,3 +43,11 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0033-charter-contracts.md`](0033-charter-contracts.md) | Ratify R9–R12 contracts | Accepted |
 | [`0034-charter-goal-shape-and-composition.md`](0034-charter-goal-shape-and-composition.md) | Ratify R13–R19 goal shape and composition | Accepted |
 | [`0035-charter-knowledge-and-enforcement.md`](0035-charter-knowledge-and-enforcement.md) | Ratify R20–R25, R32–R33 knowledge and enforcement | Accepted |
+| [`0036-inference-only-human-surface.md`](0036-inference-only-human-surface.md) | Human surface: goal + policy only; derived artifacts are inference | Accepted |
+| [`0037-charter-non-r-surfaces.md`](0037-charter-non-r-surfaces.md) | Ratify charter §6 / §16 via existing ADR cluster (A1 non-R close) | Accepted |
+| [`0038-no-memory-in-process.md`](0038-no-memory-in-process.md) | Memory is not a process step; encode gates or TODO | Accepted |
+| [`0039-single-command-human-surfaces.md`](0039-single-command-human-surfaces.md) | One resumable human command per process (e.g. `./release`) | Accepted |
+| [`0040-process-preflight-remediation.md`](0040-process-preflight-remediation.md) | Preflight all known errors; exit early with remediation | Accepted |
+| [`0041-product-completion-scope.md`](0041-product-completion-scope.md) | Product completion scope SSOT; hub pack registry v1 | Accepted |
+| [`0042-rule-ir-hub-product-boundary.md`](0042-rule-ir-hub-product-boundary.md) | Rule IR v1 product vs semantic expansion | Accepted |
+| [`0043-uc14-composable-adopt-boundary.md`](0043-uc14-composable-adopt-boundary.md) | UC14 adopt-time composable v1 | Accepted |

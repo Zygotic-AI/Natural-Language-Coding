@@ -1,32 +1,12 @@
 #!/usr/bin/env python3
 """Landmine: verify-deep extra blockers refuse incomplete produce package."""
-
 from __future__ import annotations
 
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-SPECIMEN = ROOT / "examples" / "verify-produce-handoff"
-
-
-def main() -> int:
-    sys.path.insert(0, str(ROOT / "tools"))
-    from nlc_compliance import verify_deep_extra_blockers
-
-    if not SPECIMEN.is_dir():
-        print(f"ASSERT:FAIL missing {SPECIMEN.relative_to(ROOT)}")
-        return 1
-    reasons = verify_deep_extra_blockers(SPECIMEN.resolve())
-    if not reasons:
-        print("ASSERT:FAIL verify-deep extra should block incomplete produce package")
-        return 1
-    combined = " ".join(reasons).lower()
-    if "produce" not in combined and "ssot" not in combined:
-        print(f"ASSERT:FAIL unexpected blockers: {reasons}")
-        return 1
-    print("ASSERT:PASS verify-deep extra refuses verify-produce-handoff")
-    return 0
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nouns.assert_verify_deep_produce_refused import *  # noqa: F403
 
 
 if __name__ == "__main__":

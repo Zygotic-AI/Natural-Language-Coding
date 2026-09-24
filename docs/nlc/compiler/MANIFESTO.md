@@ -124,9 +124,9 @@ Humans do not maintain [noun](../../TERMS.md#noun) files. They hire the [compile
 
 ## Division of labor (summary)
 
-**Humans focus on three things:** goals, requirements (standards and policies live here until adopted as ADRs/rules), and [knowledge domains](../../TERMS.md#knowledge-domain).
+**Humans contribute goal and policy only** ([ADR 0036](../../../adrs/0036-inference-only-human-surface.md)): the outcome they want, and the constraints that govern the build. Requirements, [knowledge domains](../../TERMS.md#knowledge-domain), ADRs, and rules are **inferred** from policy or the compile refuses.
 
-**Humans approve:** adopted ADRs, adopted if/then rules (and tag/primitive extensions when the closed set must grow), ratification and release when class requires it, certified [RCA](../../TERMS.md#rca), accepted [audit](../../TERMS.md#audit) findings.
+**Humans approve:** adopted ADRs, adopted if/then rules (and tag/primitive extensions when the closed set must grow), ratification and release when class requires it, certified [RCA](../../TERMS.md#rca), accepted [audit](../../TERMS.md#audit) findings — judgment over derived artifacts, not authorship of them.
 
 **[Compiler](../../TERMS.md#compiler) creates:** nouns, verbs, [adjective](../../TERMS.md#adjective) implementations, [goal](../../TERMS.md#goal) bodies, tests, and [tag](../../TERMS.md#tag) markings **as required by adopted rules**—not ad hoc labels at emit time.
 

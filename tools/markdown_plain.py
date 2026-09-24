@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-import re
+BOUNDARY = "bba-emit"
 
-_LINK = re.compile(r"\[([^\]]+)\]\([^)]+\)")
+import sys
+from pathlib import Path
 
-
-def strip_links(text: str) -> str:
-    return _LINK.sub(r"\1", text)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nouns.markdown_plain import *  # noqa: F403

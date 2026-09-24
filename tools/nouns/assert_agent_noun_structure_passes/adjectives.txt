@@ -1,0 +1,1 @@
+# adjectives for assert_agent_noun_structure_passes

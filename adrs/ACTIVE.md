@@ -47,5 +47,13 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0033 | L-0033 | session | 2026-09-23 |
 | 0034 | L-0034 | session | 2026-09-23 |
 | 0035 | L-0035 | session | 2026-09-23 |
+| 0036 | L-0036 | session | 2026-09-23 |
+| 0037 | L-0037 | session | 2026-09-23 |
+| 0038 | L-0038 | session | 2026-09-23 |
+| 0039 | L-0039 | session | 2026-09-23 |
+| 0040 | L-0040 | session | 2026-09-23 |
+| 0041 | L-0041 | session | 2026-09-23 |
+| 0042 | L-0042 | session | 2026-09-23 |
+| 0043 | L-0043 | session | 2026-09-23 |
 
 When an ADR is superseded, remove it from this table and add its successor. Update INDEX status in the same change.

@@ -11,25 +11,23 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nlc_requirements import hub_tool
 
 GOAL_ID_RE = re.compile(r"^[a-z][a-z0-9_-]*$")
 
 
-def load_rule_ids(rules_path: Path) -> list[str]:
+def load_adopted_rows(rules_path: Path) -> list[dict]:
     if not rules_path.is_file():
         return []
     data = json.loads(rules_path.read_text(encoding="utf-8"))
-    out: list[str] = []
-    for row in data.get("adoptions") or []:
-        if isinstance(row, dict) and row.get("rule_id"):
-            out.append(str(row["rule_id"]))
-    return sorted(set(out))
+    return [r for r in (data.get("adoptions") or []) if isinstance(r, dict) and r.get("rule_id")]
 
 
-def render_implementation(goal_id: str, rule_ids: list[str]) -> str:
-    from nlc_rule_marker import marker_line
+def render_implementation(goal_id: str, adopted_rows: list[dict]) -> str:
+    from nouns.rule_receipt.rule_receipt import RuleReceipt
 
+    n = RuleReceipt()
     fn = goal_id.replace("-", "_")
     lines = [
         f'"""Goal {goal_id} — regenerate via /planit step 6; do not hand-edit to pass audits."""',
@@ -37,10 +35,11 @@ def render_implementation(goal_id: str, rule_ids: list[str]) -> str:
         f"def {fn}() -> None:",
         '    """Public goal entrypoint."""',
     ]
-    if rule_ids:
+    if adopted_rows:
         lines.append("    # Adopted rules — emit marker at each enforcement site (ADR 0023):")
-        for rid in rule_ids:
-            lines.append(f"    {marker_line(rid, 'python')}")
+        for row in sorted(adopted_rows, key=lambda r: str(r.get("rule_id") or "")):
+            rid = str(row["rule_id"])
+            lines.append(f"    {n._marker_line_for_rule(rid, row)}")
     else:
         lines.append("    # nlc:rule=<rule_id>  # at each enforcement site (ADR 0023)")
     lines.append("    pass")
@@ -57,7 +56,7 @@ def write_scaffold(root: Path, goal_id: str, *, force: bool) -> Path:
     if path.is_file() and not force:
         raise FileExistsError(f"exists: {path.relative_to(root)} (use --force)")
     rules = root / "rules" / "adopted.json"
-    text = render_implementation(goal_id, load_rule_ids(rules))
+    text = render_implementation(goal_id, load_adopted_rows(rules))
     path.write_text(text, encoding="utf-8")
     return path
 

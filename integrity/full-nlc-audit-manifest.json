@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "ssot": "integrity/full-nlc-audit-manifest.json",
+  "description": "Machine stages for tools/full-nlc-audit.py. Append stages here; wire blocking in CI via fitness-full-nlc-audit-binder.py.",
+  "profiles": {
+    "quick": [
+      "binding-matrix",
+      "todo-uc-ssot",
+      "jobs-todo-sync",
+      "adr-0038-no-memory",
+      "adr-enforcement-continuity",
+      "rules-gate-orphan",
+      "integration-leaves",
+      "findings-ssot-sync",
+      "findings-last-pass-fresh",
+      "release-preflight",
+      "shipped-tag"
+    ],
+    "release-prep": [
+      "binding-matrix",
+      "todo-uc-ssot",
+      "jobs-todo-sync",
+      "adr-0038-no-memory",
+      "adr-enforcement-continuity",
+      "rules-gate-orphan",
+      "integration-leaves",
+      "findings-ssot-sync",
+      "findings-last-pass-fresh",
+      "release-preflight",
+      "shipped-tag"
+    ],
+    "full": [
+      "git-worktree-clean",
+      "binding-matrix",
+      "todo-uc-ssot",
+      "jobs-todo-sync",
+      "adr-0038-no-memory",
+      "adr-enforcement-continuity",
+      "rules-gate-orphan",
+      "integration-leaves",
+      "findings-ssot-sync",
+      "findings-last-pass-fresh",
+      "release-preflight",
+      "shipped-tag",
+      "verify-deep",
+      "verify"
+    ]
+  },
+  "stages": {
+    "binding-matrix": {
+      "blocking": true,
+      "label": "Charter binding matrix (R27–R28)",
+      "command": ["python3", "tools/audit-binding-matrix.py"],
+      "pass_substrings": ["RESULT:MET"]
+    },
+    "todo-uc-ssot": {
+      "blocking": true,
+      "label": "TODO vs uc-product-status",
+      "command": ["python3", "tools/fitness-todo-use-cases-ssot.py"],
+      "pass_substrings": ["RESULT:MET"]
+    },
+    "jobs-todo-sync": {
+      "blocking": true,
+      "label": "JOBS vs TODO sync",
+      "command": ["python3", "tools/fitness-jobs-todo-sync.py"],
+      "pass_substrings": ["RESULT:MET"]
+    },
+    "adr-0038-no-memory": {
+      "blocking": true,
+      "label": "ADR 0038 operator prose",
+      "command": ["python3", "tools/fitness-adr-0038-no-memory.py"],
+      "pass_substrings": ["RESULT:MET"]
+    },
+    "adr-enforcement-continuity": {
+      "blocking": true,
+      "label": "ADR enforcement gaps vs FINDINGS (built-in)",
+      "builtin": "adr_enforcement_continuity"
+    },
+    "rules-gate-orphan": {
+      "blocking": true,
+      "label": "rules/nlc-*.json gate paths exist",
+      "builtin": "rules_gate_orphan"
+    },
+    "integration-leaves": {
+      "blocking": true,
+      "label": "integration-leaves.json dispositions",
+      "builtin": "integration_leaves"
+    },
+    "findings-ssot-sync": {
+      "blocking": true,
+      "label": "FINDINGS vs tags + ADR-ENFORCEMENT (F1/F3)",
+      "command": ["python3", "tools/fitness-findings-ssot-sync.py"],
+      "pass_substrings": ["RESULT:MET"]
+    },
+    "findings-last-pass-fresh": {
+      "blocking": true,
+      "label": "FINDINGS last_pass_sha matches HEAD (F2)",
+      "command": ["python3", "tools/fitness-findings-last-pass-fresh.py"],
+      "pass_substrings": ["RESULT:MET"]
+    },
+    "git-worktree-clean": {
+      "blocking": true,
+      "label": "Git working tree clean (full profile)",
+      "builtin": "git_worktree_clean"
+    },
+    "release-preflight": {
+      "blocking": true,
+      "label": "Release preflight (ADR 0022)",
+      "command": ["python3", "tools/nlc_release_preflight.py", "--check"],
+      "pass_substrings": ["RELEASE_PREFLIGHT:MET"]
+    },
+    "shipped-tag": {
+      "blocking": true,
+      "label": "Shipped tag audit (ADR 0040)",
+      "command": ["python3", "tools/nlc_release_shipped_tag_audit.py", "--check"],
+      "pass_substrings": ["RELEASE_SHIPPED_TAG:MET"]
+    },
+    "verify-deep": {
+      "blocking": true,
+      "label": "Hub verify-deep (ci_fitness + blockers)",
+      "command": ["./nlc", "verify-deep"],
+      "pass_substrings": ["Verify-deep passed", "CI:MET"]
+    },
+    "verify": {
+      "blocking": true,
+      "label": "Hub verify (fingerprints)",
+      "command": ["./nlc", "verify"],
+      "pass_substrings": ["Verify passed"]
+    }
+  }
+}

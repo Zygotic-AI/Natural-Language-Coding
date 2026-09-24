@@ -1,0 +1,12 @@
+{
+  "adr": "0038",
+  "corpus": "nlc",
+  "rules": [
+    {
+      "id": "NLC-0038-01",
+      "condition": "Operator-facing markdown in skills or adoption docs is added or changed",
+      "obligation": "Do not require volatile memory; encode rules in gates or track encoding in TODO",
+      "gate": "tools/fitness-adr-0038-no-memory.py"
+    }
+  ]
+}

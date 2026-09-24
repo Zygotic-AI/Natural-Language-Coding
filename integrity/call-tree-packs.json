@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "ssot": "integrity/call-tree-packs.json",
+  "reference_packs": [
+    {
+      "stack": "typescript",
+      "path": "examples/call-tree-pack-reference",
+      "proof": "python3 tools/assert-call-tree-pack-reference-passes.py"
+    }
+  ]
+}

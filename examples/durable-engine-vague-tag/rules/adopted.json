@@ -1,0 +1,13 @@
+{
+  "adoptions": [
+    {
+      "rule_id": "engine-runtime-vague",
+      "adr_id": "0007",
+      "precedence_tier": "project",
+      "precedence_rank": 1,
+      "match": { "tags_all": ["engine.runtime"], "primitive": "write" },
+      "effect": "forbid",
+      "obligation": null
+    }
+  ]
+}
