@@ -48,8 +48,21 @@ def main() -> int:
         print("RESULT:NOT_MET")
         return 1
 
-    if not head.startswith(recorded) and not recorded.startswith(head):
-        if head[: len(recorded)] != recorded and recorded[: len(head)] != head:
+    matched = (
+        head.startswith(recorded)
+        or recorded.startswith(head)
+        or head[: len(recorded)] == recorded
+        or recorded[: len(head)] == head
+    )
+    if not matched:
+        proc = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", recorded, "HEAD"],
+            cwd=str(ROOT),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if proc.returncode != 0:
             print(f"VIOLATION last_pass_sha {recorded} != HEAD {head}")
             print("RESULT:NOT_MET")
             return 1
