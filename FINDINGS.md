@@ -15,9 +15,9 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-`last_pass_sha: 5eedc34`
+`last_pass_sha: 042e7d6`
 
-Last pass (26-09-23): release/audit hardening on `main` — full-nlc-audit entrypoint, ADR 0038 handoff pack, mistaken `v0.2.0` tag removed; `integrity/nlc-version.json` at 0.2.0 with **no** reachable ship tag until `./release`. Prior tranche: X4 emit-path nouns, ADR 0029 lineage tools, A1 ratify (`ssot_exit_status=program-complete-tranche`). Product-completion inference record: [`integrity/full-nlc-audit-inference-record.json`](integrity/full-nlc-audit-inference-record.json) (`PASS_WITH_RESIDUALS` on P2/P3 expansions). Soft-green residuals below.
+Last pass (26-09-24): product completion batch on `main` — X4 `fitness_only` 0, UC4/UC5 semantic v2, P8 SSOT; `/release` skill agent closeout; resume `git_tag_on_merge` + stale `release/v*` skip. Shipped git tag still **`v0.1.0` only**; `integrity/nlc-version.json` **0.2.0** until `./release`. Inference: [`integrity/full-nlc-audit-inference-record.json`](integrity/full-nlc-audit-inference-record.json). UC14/16/20 expansion remains parked.
 
 ---
 

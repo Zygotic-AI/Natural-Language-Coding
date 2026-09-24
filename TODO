@@ -383,10 +383,10 @@ Machine: `FULL_NLC_AUDIT:MET`. Inference: **PASS with residuals**. RCA: [`docs/r
 
 | Layer | Status | What’s left |
 | ----- | ------ | ----------- |
-| **Continuity — machine** | ✔ gates landed @done(26-09-23 18:05) | ☐ Re-run on **merged** `main`: `python3 tools/full-nlc-audit.py --check --profile release-prep` → `FULL_NLC_AUDIT:MET` ( `./release` step 0c). |
-| **Continuity — clean snapshot** | ☐ open | ☐ **Commit + merge** audit-remediation batch (dirty tree @ `5eedc34` blocks `--profile full` `git-worktree-clean`). After merge: `python3 tools/full-nlc-audit.py --check --profile full` on clean tree → MET (optional pre-ship; release path uses `release-prep` + script `verify-deep`). |
-| **Continuity — FINDINGS header** | ☐ open | ☐ After merge: set `last_pass_sha:` + Last pass line to new `git rev-parse --short HEAD` (`fitness-findings-last-pass-fresh.py`). |
-| **Continuity — inference** | ☐ open | ☐ [`/release`](.agents/skills/release/SKILL.md) Step 4 → apex **Continuity: PASS** or **PASS with residuals** (P0/P1 = stop; P2/P3 product parked = OK for ship if human agrees). |
+| **Continuity — machine** | ✔ @done(26-09-24 18:00) | `release-prep` MET @ `042e7d6` via [`/release`](.agents/skills/release/SKILL.md). |
+| **Continuity — clean snapshot** | ✔ commit @done(26-09-24 18:00) | Batch on `main` `042e7d6`; optional `--profile full` still available. |
+| **Continuity — FINDINGS header** | ✔ @done(26-09-24 18:00) | `last_pass_sha: 042e7d6`. |
+| **Continuity — inference** | ✔ PASS_WITH_RESIDUALS @done(26-09-24 18:00) | P2/P3 UC14/16/20 parked; [`/release`](.agents/skills/release/SKILL.md) owns closeout. |
 | **Continuity — tag baseline** | ✔ @done(26-09-23 18:10) | `origin` has **no** `v0.2.0` tag (`git ls-remote` empty); `RELEASE_SHIPPED_TAG:MET` (no reachable `v*` until next ship). Prior mistaken tag @ `397b1a0` is **not** a valid ship. |
 | **Product — Needed** | ✔ registry v1 closed @done(26-09-23 18:20) | FINDINGS **Needed** only ship narrative: version **0.2.0**, no tag until `./release`. |
 | **Product — Parked `gate missing`** | expansion_only | UC16 per-stack scanners, UC20 multi-stack call-tree packs, ADR 0007 full semantic rule IR — decided expansion, v1 binders MET per wave 4 @done(26-09-23 16:00). |
@@ -409,7 +409,7 @@ Honest queue for active work. Do **not** `@done` until the stop predicate is MET
 
 ### Continuity (pre-ship)
 
-- ☐ Commit + merge audit/product batch; then run [`/release`](.agents/skills/release/SKILL.md) (closes `last_pass_sha`, release-prep, inference).
+- ✔ Commit product batch @ `042e7d6` @done(26-09-24 18:00); next: [`/release`](.agents/skills/release/SKILL.md) → `./release` (human prompts only).
 
 ### X4 — hub tools mass noun/verb rewrite (emit-path + noun pilots ✔)
 
