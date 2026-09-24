@@ -1,0 +1,1 @@
+# adjectives for assert_adjective_locality_violation_fails

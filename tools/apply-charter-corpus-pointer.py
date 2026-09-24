@@ -3,37 +3,15 @@
 
 from __future__ import annotations
 
+BOUNDARY = "bba-emit"
+
+import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-CHARTER = ROOT / "CHARTER.md"
-NEEDLE = "integrity/rule-corpus.json"
-OLD = (
-    "An **R** can stand without a matching **C**. "
-    "A **C** usually restates an **R** as something you can tick on *this* change.\n\n---"
-)
-NEW = (
-    "An **R** can stand without a matching **C**. "
-    "A **C** usually restates an **R** as something you can tick on *this* change.\n\n"
-    "Corpus tags for every published **R** / **C** / **P** id live in "
-    "[`integrity/rule-corpus.json`](integrity/rule-corpus.json) "
-    "([ADR 0024](adrs/0024-nlc-factory-spine.md)): "
-    "`bba` = emit shape, `nlc` = factory process.\n\n---"
-)
-
-
-def main() -> int:
-    text = CHARTER.read_text(encoding="utf-8")
-    if NEEDLE in text:
-        print("CHARTER.md already cites integrity/rule-corpus.json")
-        return 0
-    if OLD not in text:
-        print("NEEDLE paragraph not found; refuse")
-        return 2
-    CHARTER.write_text(text.replace(OLD, NEW, 1), encoding="utf-8")
-    print("CHARTER.md updated")
-    return 0
-
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nlc_requirements import hub_tool  # noqa: E402
+from nouns.charter_corpus_pointer import main  # noqa: E402
 
 if __name__ == "__main__":
+    hub_tool()
     raise SystemExit(main())

@@ -20,7 +20,7 @@ CALL_RE = re.compile(
 )
 
 
-def _scan_py_file(path: Path, verb: str, found: dict[str, set[str]]) -> None:
+def _scan_source_file(path: Path, verb: str, found: dict[str, set[str]]) -> None:
     if "/tests/" in str(path) or path.name.startswith("test_"):
         return
     text = path.read_text(encoding="utf-8", errors="replace")
@@ -29,12 +29,19 @@ def _scan_py_file(path: Path, verb: str, found: dict[str, set[str]]) -> None:
         found.setdefault(verb, set()).update(prims)
 
 
+def _scan_py_file(path: Path, verb: str, found: dict[str, set[str]]) -> None:
+    _scan_source_file(path, verb, found)
+
+
 def scan_domain_verbs(root: Path) -> dict[str, list[str]]:
     found: dict[str, set[str]] = {}
     domain = root / "domain"
     if domain.is_dir():
         for path in domain.rglob("*.py"):
             _scan_py_file(path, path.stem, found)
+        for ext in ("*.ts", "*.js", "*.tsx", "*.jsx"):
+            for path in domain.rglob(ext):
+                _scan_source_file(path, path.stem, found)
     goals = root / "goals"
     if goals.is_dir():
         for impl in goals.glob("*/implementation.py"):

@@ -1,14 +1,25 @@
 ---
 name: nlc-hub-audit
-description: Run a formal, model-independent audit of the Natural Language Coding hub (or any NLC-shaped repo). Use when asked to evaluate, audit, review, or assess the NLC repository for thoroughness, inconsistencies, gate coverage, ratification gaps, or remediation items. Produces a structured findings report that any agent following this skill will generate the same way.
+description: Legacy alias — use full-nlc-audit instead. Redirects to the single hub continuity entrypoint (machine manifest + inference phases).
 disable-model-invocation: true
 ---
 
-# NLC Hub Audit
+# NLC Hub Audit (alias)
+
+**Use [`full-nlc-audit`](full-nlc-audit/SKILL.md)** — single entrypoint:
+
+1. `python3 tools/full-nlc-audit.py --check --profile quick|full`
+2. Inference phases in [`full-nlc-audit/references/inference-phases.md`](../full-nlc-audit/references/inference-phases.md)
+
+This file remains for slash-command discovery only. Do not diverge checklists — edit `full-nlc-audit` SSOT.
+
+---
+
+# NLC Hub Audit (historical checklist)
 
 You are auditing an NLC-shaped repository. Follow every phase in order. Do not skip phases. Do not invent findings outside the checklist. Record every finding with evidence (file path + line or section). The goal is that any agent running this skill produces the same findings for the same commit.
 
-SSOT for this skill: `.agents/skills/nlc-hub-audit/SKILL.md` (mirrored under `.cursor/skills` via symlink). Notion draft under Evaluate NLC must not diverge — edit here first.
+SSOT for this skill: `.agents/skills/full-nlc-audit/SKILL.md` (mirrored under `.cursor/skills` via symlink).
 
 ## Gate (default-closed)
 

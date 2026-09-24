@@ -207,13 +207,15 @@
   "non_r_residuals": [
     {
       "id": "process-section-6-order",
-      "status": "soft-green",
-      "notes": "Order of agent execution partly covered by ADR 0024/0010; dedicated thin ADR optional"
+      "status": "ratified",
+      "ratifying_adr": "0037",
+      "notes": "§6 → ADR 0010/0019/0024/0030 + Planit"
     },
     {
       "id": "systems-section-16-ship-roles",
-      "status": "soft-green",
-      "notes": "Agent nouns ADR 0003; produce handoff ADR 0004"
+      "status": "ratified",
+      "ratifying_adr": "0037",
+      "notes": "§16 → ADR 0003/0004/0005/0020/0021 + VERIFY-AND-SHIP"
     }
   ]
 }

@@ -48,8 +48,10 @@ def sync_goal_implementation(
     if not impl.is_file():
         raise FileNotFoundError(f"missing {impl.relative_to(root)}")
     rule_ids = rule_ids_for_goal(root, goal_id)
+    rules_path = root / "rules" / "adopted.json"
+    adopted_rows = load_adopted(rules_path) if rules_path.is_file() else []
     text = impl.read_text(encoding="utf-8")
-    new_text, added = apply_markers_to_source(text, rule_ids)
+    new_text, added = apply_markers_to_source(text, rule_ids, adopted_rows)
     if added and not dry_run:
         impl.write_text(new_text, encoding="utf-8")
     return impl, added

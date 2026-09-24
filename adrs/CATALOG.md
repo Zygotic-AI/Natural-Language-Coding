@@ -41,3 +41,11 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0033 | Charter contracts (R9–R12) | active | L-0033 |
 | 0034 | Charter goal shape and composition (R13–R19) | active | L-0034 |
 | 0035 | Charter knowledge and enforcement (R20–R25, R32–R33) | active | L-0035 |
+| 0036 | Inference-only human surface: goal + policy only | active | L-0036 |
+| 0037 | Charter non-R surfaces §6 / §16 ratification pointers | active | L-0037 |
+| 0038 | No memory in process — gates or TODO, never “remember” | active | L-0038 |
+| 0039 | Single-command human surfaces (resumable `./release`) | active | L-0039 |
+| 0040 | Process preflight + remediation on NOT_MET | active | L-0040 |
+| 0041 | Product completion scope SSOT + hub pack registry v1 | active | L-0041 |
+| 0042 | Rule IR hub product boundary (ADR 0007 v1 vs semantic expansion) | active | L-0042 |
+| 0043 | UC14 adopt-time composable v1 vs cross-primitive IR expansion | active | L-0043 |

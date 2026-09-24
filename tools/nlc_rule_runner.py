@@ -9,7 +9,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nlc_requirements import hub_tool
-from nouns.rule_receipt.rule_receipt import check_ir, materialize_ir, write_snapshot
+from nouns.rule_receipt.rule_receipt import (
+    check_ir,
+    check_semantic_ir,
+    materialize_ir,
+    write_snapshot,
+)
 
 
 def main() -> int:
@@ -17,7 +22,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="UC4/UC5 rule IR runner (v1)")
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--materialize", action="store_true")
-    parser.add_argument("--check", action="store_true")
+    parser.add_argument("--check", action="store_true", help="Structural + semantic IR check")
+    parser.add_argument(
+        "--structural-only",
+        action="store_true",
+        help="Snapshot/shape check only (v1)",
+    )
     args = parser.parse_args()
     root = args.root.resolve()
     if args.materialize:
@@ -26,7 +36,7 @@ def main() -> int:
         print(f"rule-runner: MET materialized {path.relative_to(root)} ({len(rows)} rules)")
         return 0
     if args.check:
-        errs = check_ir(root)
+        errs = check_ir(root) if args.structural_only else check_semantic_ir(root)
         if errs:
             print(errs[0], file=sys.stderr)
             print("RULE_RUNNER:NOT_MET")

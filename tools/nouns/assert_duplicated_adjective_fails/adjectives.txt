@@ -1,0 +1,1 @@
+# adjectives for assert_duplicated_adjective_fails

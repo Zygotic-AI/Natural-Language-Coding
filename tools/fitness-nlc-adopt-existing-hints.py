@@ -1,30 +1,12 @@
 #!/usr/bin/env python3
 """ADR 0023/UC15: ./nlc adopt-existing points at goal-scaffold + RULE-TRACE."""
-
 from __future__ import annotations
 
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-NLC = ROOT / "tools" / "nlc.py"
-
-
-def main() -> int:
-    _ = sys.argv[1:]
-    text = NLC.read_text(encoding="utf-8", errors="replace")
-    violations: list[str] = []
-    if "cmd_adopt_existing" not in text:
-        violations.append("nlc.py missing cmd_adopt_existing")
-    if "goal-scaffold" not in text or "RULE-TRACE" not in text:
-        violations.append("cmd_adopt_existing must print goal-scaffold and RULE-TRACE hints")
-    for v in violations:
-        print(f"VIOLATION {v}")
-    if violations:
-        print("RESULT:NOT_MET")
-        return 1
-    print("RESULT:MET")
-    return 0
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nouns.fitness_nlc_adopt_existing_hints import *  # noqa: F403
 
 
 if __name__ == "__main__":

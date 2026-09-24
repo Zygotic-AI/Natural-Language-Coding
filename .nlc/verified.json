@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "algorithm": "sha256",
-  "recorded_at": "2026-09-23T12:37:22Z",
+  "recorded_at": "2026-09-23T22:49:45Z",
   "hub": "0.2.0",
   "files": {
     "adrs/0001-zero-variance-integrity.md": "3c5979c1832bab283044d51e7c9f9c30db418e0bbaa725258e76dc73ad52c767",
@@ -28,7 +28,7 @@
     "adrs/0022-hub-release-fail-early.md": "080f54978dedebf2c78d47d6ca18505d077fd68a6825d4a726d5510f18fcd464",
     "adrs/0023-rule-instance-trace-and-instant-audit-scope.md": "1dfc2cf9f4c1bd094412c2383c8e06be0b35cad8f4631e8dd336379a94b20fd2",
     "adrs/0024-nlc-factory-spine.md": "c6c935429a1f33c9347a3e392cd9dfe11625f501a0f9feed227c49050c1a48ff",
-    "adrs/0025-belief-no-blame-climb.md": "98a8b8ddad36d0ae92f2f9d8d9f61ee46380f6aa3d1b97b0feec6058b479e745",
+    "adrs/0025-belief-no-blame-climb.md": "4863cad85abe6a28471a2e7d5be459591d9a342363f59bbffb6e432d7d08abbb",
     "adrs/0026-promote-x1-x3-runners.md": "3688664a4d924e65a3b569d25545adb8d587709f841839d90c6efc01c48e1f71",
     "adrs/0027-emit-from-prose.md": "e5e85f8b1f12a3b1eb505c0bed1f23d47ca144748c1b6c6c7c238381675f14ad",
     "adrs/0028-closed-atomic-verb-set-and-policy-adr-lineage.md": "209725d1ef6dd265a2bf0c61a05057797864de84084eb0465075328e0ed48a6b",
@@ -39,13 +39,20 @@
     "adrs/0033-charter-contracts.md": "bdf322962bbb266abf82aa57ecfd1230eb19e9760defd02f0980fb4aae101fe8",
     "adrs/0034-charter-goal-shape-and-composition.md": "bcfdfc21f5aee95c81516f5abd60ae7fedf0e4ed0a5550b99ed04531b43afd1a",
     "adrs/0035-charter-knowledge-and-enforcement.md": "947d1fd5914d9fa7c80924ce16bd89d41612b773edf554f36ea2121ccf93e865",
-    "adrs/ACTIVE.md": "2e6cbe71bef40709a7ab77976281b95d329cbb8f933c2e3e1d194e7e9dc4e7f8",
-    "adrs/CATALOG.md": "1b34108291906b3f4992f1fbcaf1dae455a0da1b8a2b0ce4dbd32fbc358fd545",
-    "adrs/INDEX.md": "767946cb47557b4a5e900e0ccfc0be9362bbb4d229170c3dbdaa2a9702efd100",
-    "adrs/README.md": "92ed525f5386de6d8843aba14caf130de0f331626cadd0fd23a12d079fd8cb6a",
+    "adrs/0036-inference-only-human-surface.md": "c67c8243d939fdc4ec704776cca20b65410a324d130b87a6c9b4a3ac19a293e0",
+    "adrs/0037-charter-non-r-surfaces.md": "a254e5eb64cd09f872bb953570de41278664d15db819df95fbc8bf854aea088a",
+    "adrs/0038-no-memory-in-process.md": "2172ea14dd544a6b453287f95d838f07a84d0e3fc2352987154c5b8397318446",
+    "adrs/0039-single-command-human-surfaces.md": "1934f0778b377dd3642b3c3659b0d76e9b7412f1e2afdd8fc7fcaa1e38e2dac8",
+    "adrs/0040-process-preflight-remediation.md": "4b735525aae85bc6b9d768efaa28f435162c6c0565140cb41206cc4dec6a7255",
+    "adrs/ACTIVE.md": "8589d42bc3d94ffe89afb0ea801f06baf263cd217205b15b9ceb381557849261",
+    "adrs/CATALOG.md": "e24f5a2eee271652514c37dc8dd3009fee3ed7a305ecdffa4ea2c63429c6610b",
+    "adrs/INDEX.md": "5e877ffeeb4dcb96ce60d03cd4d5c3326496e5bae16ee037f7cd30d4945ccb0c",
+    "adrs/README.md": "8a5f595590a47fcfce504806b9ca92c1e297f88b817b7e6952b5d30029dc96b8",
     "rules/goal-bindings.json": "9956a3632532a8878e57aed3cd6ba26aa607d1b06ddffb882d10e50872255ba8",
     "rules/nlc-0024.json": "fa09d9c492dfd99fa52595f29b1bd774980e9faddacbd630bb54af8c1f8ba4ad",
-    "rules/nlc-0025.json": "7dc6cd53afc87d890a2250c1da120da9ce1671cf8e77cdaf90370a3211bbe607",
+    "rules/nlc-0025.json": "8a4440e1497501640bd8043ba9f2299f6623afecdea2f0ee8bf583de84a81064",
+    "rules/nlc-0036.json": "a0fdc30ca149ffca540fdf99afb8e062c0f7f3851b4c117e182c49ea08f40ab4",
+    "rules/nlc-0038.json": "058361f60936e0fe98d0e939571a6a1c6071ac8e442175bc96a2810af420d98f",
     "knowledge/facts.json": "2087fe02479cf0c3489c3f3f46a3f6701e67d8a835742a09f44d0095df49b395"
   }
 }

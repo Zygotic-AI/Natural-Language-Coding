@@ -1,0 +1,1 @@
+# adjectives for assert_impact_graph_generated

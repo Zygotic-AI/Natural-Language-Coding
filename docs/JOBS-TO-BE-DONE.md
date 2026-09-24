@@ -112,7 +112,7 @@ Retries and verbs honor idempotency keys—checked in fitness.
 | J17 | Adversarial before emit | **Available** | C23; [planit](../.agents/skills/planit/SKILL.md); [`bbp-reviewer`](../agents/). | — |
 | J18 | Produce ≠ audit ≠ ship | **Available** | [ADR 0003](../adrs/0003-systems-extension-agent-nouns.md); agent roles. | — |
 | J19 | Change class | **Available** | [`fitness-c1.py`](../tools/fitness-c1.py). | — |
-| J20 | Durable + tagged engine | **Available** (v1) | `durable_engine_blockers` + `durable_rule_blockers` on verify | Stricter engine.runtime tag matching still expansion. |
+| J20 | Durable + tagged engine | **Available** (v2) | `durable_engine_blockers` + `durable_rule_blockers` + `engine_runtime_tag_strict_blockers` | Bare `engine.runtime` tag insufficient when goal declares `engine_runtime`. |
 | J21 | Idempotency under retry | **Available** | [`fitness-c15-idempotent.py`](../tools/fitness-c15-idempotent.py). | — |
 
 **Blocked** = job is real; Accepted ADRs call for tooling we have not finished. Track in [`TODO`](../TODO) (ADR enforcement).

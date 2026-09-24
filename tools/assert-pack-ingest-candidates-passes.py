@@ -1,30 +1,12 @@
 #!/usr/bin/env python3
 """Landmine: pack ingest candidates fixture validates."""
-
 from __future__ import annotations
 
-import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-FIXTURE = ROOT / "tools" / "fixtures" / "pack-ingest-candidates-valid.json"
-TOOL = ROOT / "tools" / "validate-pack-ingest-candidates.py"
-
-
-def main() -> int:
-    proc = subprocess.run(
-        [sys.executable, str(TOOL), str(FIXTURE)],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
-    )
-    if proc.returncode != 0:
-        print(proc.stdout or proc.stderr)
-        print("ASSERT:FAIL pack ingest candidates validation")
-        return 1
-    print("ASSERT:PASS pack-ingest-candidates schema")
-    return 0
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nouns.assert_pack_ingest_candidates_passes import *  # noqa: F403
 
 
 if __name__ == "__main__":

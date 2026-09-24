@@ -22,7 +22,7 @@ No new **R** id (R27). Rules live in [`rules/nlc-0025.json`](../rules/nlc-0025.j
 ## Consequences
 
 - Manifesto Belief section is the prose home.
-- v1 binder is existence of this ADR + `rules/nlc-0025.json` condition/obligation/gate fields (expansion: RCA packet schema).
+- v1 binder: this ADR + `rules/nlc-0025.json` + [`integrity/schemas/rca-packet.schema.json`](../integrity/schemas/rca-packet.schema.json) + [`tools/validate-rca-packet.py`](../tools/validate-rca-packet.py) (`fitness-adr-0025-rca-packet.py`).
 - Related: [ADR 0024](0024-nlc-factory-spine.md).
 
 ## Rejected

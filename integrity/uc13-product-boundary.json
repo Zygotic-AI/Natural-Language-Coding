@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "ssot": "integrity/uc13-product-boundary.json",
+  "title": "UC13 v2 engine.runtime tag strict matching",
+  "product_closed": {
+    "description": "Durable goals with engine_runtime require adopted tag engine.runtime.<name>; bare engine.runtime is insufficient",
+    "proof_commands": [
+      "python3 tools/assert-durable-engine-rule-fails.py",
+      "python3 tools/assert-durable-engine-tag-strict-fails.py",
+      "python3 tools/assert-durable-engine-tag-strict-passes.py"
+    ]
+  },
+  "remain_expansion": []
+}

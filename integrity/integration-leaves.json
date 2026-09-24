@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "ssot": "integrity/integration-leaves.json",
+  "description": "Branch/PR integration units after merge or abandon. Each leaf: claims + disposition (on_main | parked | rejected | absent) + evidence.",
+  "leaves": [
+    {
+      "id": "product-completion-p5-p6-x4",
+      "claims": [
+        "Hub X4 lib + assert noun tranches (P5.5–P5.7)",
+        "UC9 rule-tagged blast radius v2 + UC13 engine.runtime strict (P6.1–P6.2)"
+      ],
+      "disposition": "parked",
+      "evidence": {
+        "notes": "Working tree batch; merge + FINDINGS last_pass_sha update on Continuity row (TODO)",
+        "findings_ref": "Product-completion inference record"
+      }
+    }
+  ]
+}

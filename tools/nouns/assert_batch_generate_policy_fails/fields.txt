@@ -1,0 +1,1 @@
+# fields for assert_batch_generate_policy_fails

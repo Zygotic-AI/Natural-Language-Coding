@@ -1,0 +1,1 @@
+# adjectives for assert_brownfield_inventory_passes

@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "ssot": "integrity/product-expansion-waives.json",
+  "waives": [
+    {
+      "key": "UC15.brownfield_full_automation",
+      "reason": "Full brownfield automation is adopter-specific; hub ships BROWNFIELD.md + inventory gates only (P6.3 waive).",
+      "ratifying_adr": "0041"
+    }
+  ]
+}

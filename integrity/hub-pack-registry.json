@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "ssot": "integrity/hub-pack-registry.json",
+  "policy": {
+    "trust_model": "hub-curated-v1",
+    "scope": "Local registry of requirement packs the hub documents for ingest/install honesty. Not a public internet registry; out-of-band packs remain operator responsibility."
+  },
+  "packs": []
+}

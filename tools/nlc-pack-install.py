@@ -14,7 +14,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nlc_human_gap import emit_gap  # noqa: E402
+from nlc_pack_registry import registry_allows_manifest  # noqa: E402
 from nlc_requirements import hub_tool  # noqa: E402
+
+HUB_ROOT = Path(__file__).resolve().parents[1]
 
 UC9_HINT = "./nlc maintainer regen-plan --change rule:<id> --write-queue"
 
@@ -64,6 +67,17 @@ def main() -> int:
     with tarfile.open(archive, "r:gz") as tf:
         manifest_member = tf.getmember("pack-manifest.json")
         manifest = json.loads(tf.extractfile(manifest_member).read().decode("utf-8"))
+        allowed, reg_detail = registry_allows_manifest(HUB_ROOT, manifest)
+        if not allowed:
+            return emit_gap(
+                "This pack is not listed in the hub curated registry.",
+                missing=[reg_detail],
+                examples=[
+                    "Add the pack to integrity/hub-pack-registry.json (ADR 0041)",
+                    "Or use an empty registry packs list to allow local-only installs",
+                ],
+                machine="PACK_INSTALL:NOT_MET",
+            )
         for member in tf.getmembers():
             if member.name == "pack-manifest.json" or member.isdir():
                 continue

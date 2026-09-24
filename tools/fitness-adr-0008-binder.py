@@ -1,35 +1,12 @@
 #!/usr/bin/env python3
 """ADR 0008: noun-inheritance scan + landmine + planit/reviewer cite."""
-
 from __future__ import annotations
 
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-
-
-def main() -> int:
-    _ = sys.argv[1:]
-    violations: list[str] = []
-    ci = (ROOT / "tools" / "ci_fitness.py").read_text(encoding="utf-8", errors="replace")
-    for name in ("fitness-no-noun-inheritance.py", "assert-noun-inheritance-fails.py", "fitness-planit-noun-shape.py"):
-        if not (ROOT / "tools" / name).is_file():
-            violations.append(f"missing tools/{name}")
-    if "assert-noun-inheritance" not in ci:
-        violations.append("ci_fitness must run assert-noun-inheritance landmine")
-    if not (ROOT / "examples/noun-inheritance-violation").is_dir():
-        violations.append("missing examples/noun-inheritance-violation")
-    reviewer = ROOT / ".agents/skills/bbp-reviewer/SKILL.md"
-    if reviewer.is_file() and "fitness-no-noun-inheritance" not in reviewer.read_text(encoding="utf-8", errors="replace"):
-        violations.append("bbp-reviewer must cite fitness-no-noun-inheritance")
-    for v in violations:
-        print(f"VIOLATION {v}")
-    if violations:
-        print("RESULT:NOT_MET")
-        return 1
-    print("RESULT:MET")
-    return 0
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nouns.fitness_adr_0008_binder import *  # noqa: F403
 
 
 if __name__ == "__main__":

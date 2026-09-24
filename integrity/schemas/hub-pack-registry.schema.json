@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/richardpickett/Natural-Language-Coding/integrity/schemas/hub-pack-registry.schema.json",
+  "title": "Hub curated pack registry (v1)",
+  "type": "object",
+  "required": ["schema", "ssot", "policy", "packs"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": 1 },
+    "ssot": { "type": "string", "minLength": 1 },
+    "policy": {
+      "type": "object",
+      "required": ["trust_model", "scope"],
+      "properties": {
+        "trust_model": { "type": "string", "minLength": 1 },
+        "scope": { "type": "string", "minLength": 1 }
+      }
+    },
+    "packs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "version"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$" },
+          "name": { "type": "string", "minLength": 1 },
+          "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+          "manifest_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

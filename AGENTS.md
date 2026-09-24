@@ -44,9 +44,9 @@ Do not invent empty “governance / compliance / risk” trees. Put real artifac
 
 ## Portable agent content
 
-Skills and portable instructions live under [`.agents/`](.agents/). End-to-end compile work: [`planit`](.agents/skills/planit/SKILL.md) ([`docs/nlc/compiler/PLANIT-ORCHESTRATION.md`](docs/nlc/compiler/PLANIT-ORCHESTRATION.md)). Cursor-only rules stay under `.cursor/`. See project [rule](docs/TERMS.md#rule) `agents-portable-ssot`.
+Skills and portable instructions live under [`.agents/`](.agents/). End-to-end compile work: [`planit`](.agents/skills/planit/SKILL.md) ([`docs/nlc/compiler/PLANIT-ORCHESTRATION.md`](docs/nlc/compiler/PLANIT-ORCHESTRATION.md)). Planit Phase 7 handoffs: [`.agents/instructions/planit-phase7-handoff-adr-0038.md`](.agents/instructions/planit-phase7-handoff-adr-0038.md) (ADR 0038). Hub continuity audit: [`full-nlc-audit`](.agents/skills/full-nlc-audit/SKILL.md) (`python3 tools/full-nlc-audit.py`). Cursor-only rules stay under `.cursor/`. See project [rule](docs/TERMS.md#rule) `agents-portable-ssot`.
 
-**Version class:** Before material [hub](docs/TERMS.md#hub) or [adopter](docs/TERMS.md#adopter) changes, ask patch / minor / major when unclear — see [`.agents/instructions/change-version-class.md`](.agents/instructions/change-version-class.md). [Hub](docs/TERMS.md#hub) [ship](docs/TERMS.md#ship): human runs **`./release`** ([`docs/adoption/RELEASE.md`](docs/adoption/RELEASE.md)), not ad-hoc [tag](docs/TERMS.md#tag) commands.
+**Version class:** Before material [hub](docs/TERMS.md#hub) or [adopter](docs/TERMS.md#adopter) changes, ask patch / minor / major when unclear — see [`.agents/instructions/change-version-class.md`](.agents/instructions/change-version-class.md). [Hub](docs/TERMS.md#hub) [ship](docs/TERMS.md#ship): invoke **[`/release`](.agents/skills/release/SKILL.md)** — agent closeout (commit, SSOT, stale branches), prove, inference, then **`./release`** ([`docs/adoption/RELEASE.md`](docs/adoption/RELEASE.md)); no ad-hoc [tag](docs/TERMS.md#tag) commands.
 
 **Product UC TODO:** Do not mark [`TODO`](TODO) “Build a compiled system” rows `@done` for full USE-CASE closure while [`docs/USE-CASES.md`](docs/USE-CASES.md) still lists Parked/Needed — see [`.agents/instructions/todo-product-uc-completion.md`](.agents/instructions/todo-product-uc-completion.md). CI: `tools/fitness-todo-use-cases-ssot.py`.
 

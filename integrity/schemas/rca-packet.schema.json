@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema",
+    "defect_summary",
+    "unsuitable_process",
+    "climb_steps",
+    "repo_touch"
+  ],
+  "properties": {
+    "schema": { "const": 1 },
+    "defect_summary": { "type": "string", "minLength": 1 },
+    "unsuitable_process": { "type": "string", "minLength": 1 },
+    "climb_steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "repo_touch": {
+      "type": "object",
+      "required": ["belief", "adr_ids", "rule_ids", "gate_ids"],
+      "properties": {
+        "belief": { "type": "string" },
+        "adr_ids": { "type": "array", "items": { "type": "string" } },
+        "rule_ids": { "type": "array", "items": { "type": "string" } },
+        "gate_ids": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "certified_by": { "type": "string" },
+    "recorded_at": { "type": "string" }
+  },
+  "additionalProperties": true
+}

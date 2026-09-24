@@ -1,0 +1,1 @@
+# fields for assert_release_resume_invariant_passes

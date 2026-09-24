@@ -867,7 +867,9 @@ For changes that touch [agent nouns](docs/TERMS.md#agent-noun):
 - No [noun inheritance](docs/TERMS.md#noun-inheritance), ratified by [ADR](docs/TERMS.md#adr) 0008
 - [Primitive](docs/TERMS.md#primitive) interior functions, ratified by [ADR](docs/TERMS.md#adr) 0009
 - [Gate](docs/TERMS.md#gate) after every generate, ratified by [ADR](docs/TERMS.md#adr) 0010
-- Belief / [RCA](docs/TERMS.md#rca) climb / buck-stops-here: [ADR](docs/TERMS.md#adr) 0025 (`rules/nlc-0025.json`); RCA packet schema binder is expansion
+- Belief / [RCA](docs/TERMS.md#rca) climb / buck-stops-here: [ADR](docs/TERMS.md#adr) 0025 (`rules/nlc-0025.json`, [`docs/nlc/RCA-PACKET.md`](docs/nlc/RCA-PACKET.md))
+- Charter §6 / §16 non-R ratification: [ADR](docs/TERMS.md#adr) 0037
+- Process: no memory in process ([ADR 0038](adrs/0038-no-memory-in-process.md)); single-command human surfaces ([ADR 0039](adrs/0039-single-command-human-surfaces.md)); preflight + remediation ([ADR 0040](adrs/0040-process-preflight-remediation.md))
 - Factory spine + corpora: [ADR](docs/TERMS.md#adr) 0024
 - Charter ratification program: [ADR](docs/TERMS.md#adr) 0031; backlog [`integrity/charter-ratify-backlog.json`](integrity/charter-ratify-backlog.json)
 - Charter R-rule tranche-1: [ADR](docs/TERMS.md#adr) 0032 (R1–R8), 0033 (R9–R12), 0034 (R13–R19), 0035 (R20–R25, R32–R33); R26–R31 remain [ADR](docs/TERMS.md#adr) 0001

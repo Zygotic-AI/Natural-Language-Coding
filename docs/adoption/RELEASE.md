@@ -1,67 +1,48 @@
 # Releasing the [NLC](../TERMS.md#nlc) [hub](../TERMS.md#hub)
 
-From repo root:
+**One entrypoint:** in the agent harness invoke **`/release`** ([`.agents/skills/release/SKILL.md`](../../.agents/skills/release/SKILL.md)) — readiness, open-work impact, inference, then **`./release`** from repo root when **Ship: GO**. Policy: [ADR 0039](../../adrs/0039-single-command-human-surfaces.md), [ADR 0040](../../adrs/0040-process-preflight-remediation.md).
+
+Legacy **`./release prepare`** and **`./release finish`** forward into the same orchestrator; you do not need them.
+
+## What `./release` does
+
+Governed by **[ADR 0022](../../adrs/0022-hub-release-fail-early.md)** (gate order) and **ADR 0038–0040**.
+
+1. **Resume** — if a `release/v*` branch is pushed or already merged, `./release` continues at the right phase (wait for merge, or tag).
+2. **Preflight** — on `main`, `integrity/nlc-version.json` must match the last reachable **`v*.*.*` tag** (not ahead of what shipped).
+3. **Shipped tag audit** — the newest reachable tag must pass the **tag gate** (static) on its commit; on failure the tool prints delete-or-retag commands (`tools/nlc_release_shipped_tag_audit.py`).
+4. **Full NLC audit** — `python3 tools/full-nlc-audit.py --check --profile release-prep` (continuity manifest without duplicating `verify-deep`; ADR 0038). Prepare refuses if `FULL_NLC_AUDIT:NOT_MET`. For a local pre-ship sweep including `verify-deep` + `verify`, use `--profile full` (expect several minutes; use `--allow-dirty` only when intentionally auditing with local edits).
+5. **Context** — lists `release/v*` candidates; warns if `main` has commits not in the release branch.
+6. **Release class** — you choose patch / minor / major / keep (no default).
+7. **Target preflight** — migration chain from last tag to target (`tools/nlc_release_target_preflight.py`).
+8. **`verify-deep`** on `main` at the shipped version (before notes or bump).
+9. **Release notes** — `docs/adoption/RELEASE-vX.Y.Z.md` with real **Highlights** (blocks until valid).
+10. **`release/vX.Y.Z` branch** — version bump, second **`verify-deep`**, prep (`ci_fitness`, install hashes, smoke).
+11. **`integrity/hub-release-record.json`** on the release commit (prepare receipt for the tag gate).
+12. Push branch → PR link → **wait for merge** (Enter when merged).
+13. **Tag gate** on the **merge commit** (`tools/nlc_release_tag_gate.py`: record, notes, migrations, `verify-deep`).
+14. Annotated **tag** on that commit (not `main` HEAD if `main` moved on). Push tag → GitHub Actions publishes the tarball.
+
+`--yes` auto-confirms routine prompts; it does **not** skip release notes, the tag gate, or **moving an existing tag** (use `NLC_RELEASE_ALLOW_RETAG=1` only when you intend to retag).
+
+## Refusal output
+
+When a step fails, the tool prints **`NOT_MET`**, what is wrong, and a **fix** (commands or next action). See [ADR 0018](../../adrs/0018-human-cli-interview-on-gap.md).
+
+## Manual checks
 
 ```bash
-./release                 # default: one session (branch → PR → wait → tag)
-./release prepare         # two-step: push branch, stop
-./release finish          # two-step: after merge, on main
+python3 tools/nlc_release_target_preflight.py --check --target 0.2.1
+python3 tools/nlc_release_tag_gate.py --check --commit <merge-sha> --tag v0.2.1
+python3 tools/nlc_release_context.py --list-branches
+python3 tools/nlc_release_shipped_tag_audit.py --check
 ```
 
-## Single session (default)
-
-Governed by **[ADR 0022](../adrs/0022-hub-release-fail-early.md)** (fail-early order).
-
-1. **Preflight** — on `main`, `integrity/nlc-version.json` must match the last **`v*.*.*` [tag](../TERMS.md#tag)** (not ahead of what shipped).
-2. Choose release class (no default) → **target preflight** (`tools/nlc_release_target_preflight.py`: migration chain from last tag to target; optional noop scaffold).
-3. **`verify-deep`** on `main` at the shipped version (fail before notes or bump).
-4. **Release notes** for the target version (draft from **last shipped git tag** → `HEAD`; fill **Highlights** before version write).
-5. Check out **`release/vX.Y.Z`**, write `nlc-version.json` (full migration chain on disk), **`verify-deep`** again, prep; commit (notes file must be on the release commit) and push the release branch.
-6. Prints a **compare/PR link** (and `gh pr create` if installed).
-7. You open/merge the PR; **press Enter** when merged.
-8. Resolves the **PR merge commit** on `main` (via `gh` or git ancestry — **not** `main` HEAD if something else landed after merge), runs **`verify`** on that commit, tags **`vX.Y.Z`** there, pushes the [tag](../TERMS.md#tag).
-
-Manual target check:
+## Release notes helper
 
 ```bash
-python3 tools/nlc_release_target_preflight.py --check --target 0.2.0
-python3 tools/nlc_release_target_preflight.py --ensure-noop --target 0.2.0
+python3 tools/nlc_release_notes.py --write-draft --version X.Y.Z --to HEAD
+python3 tools/nlc_release_notes.py --check --version X.Y.Z
 ```
 
-Use **Ctrl-C** after the push if you cannot merge immediately; resume with **`./release finish`**.
-
-`--yes` auto-confirms prompts; it does **not** skip the Enter wait after the PR (by design).
-
-## Two-step
-
-**`./release prepare`** (or **`./release --two-step`**) — same branch push as above, then exit with PR instructions.
-
-**`./release finish`** — on `main` after merge: `verify`, [tag](../TERMS.md#tag), push [tag](../TERMS.md#tag).
-
-## Release notes (required)
-
-- Path: `docs/adoption/RELEASE-vX.Y.Z.md` (committed on the release branch).
-- `./release` creates a draft if missing (`tools/nlc_release_notes.py`) from the **previous reachable git [tag](../TERMS.md#tag)** (`v*.*.*`, not `integrity/nlc-version.json`) to `HEAD`, lists commits and a diff stat, and **blocks** until **Highlights** is a real summary (`--yes` does not skip this).
-- **Suggested bump** is a heuristic from your working-tree diff (policy paths only for major); it is not a default choice and is often **patch** for tooling/docs work.
-- `./release finish` and the [tag](../TERMS.md#tag) [workflow](../../.github/workflows/release.yml) [refuse](../TERMS.md#refuse) to [ship](../TERMS.md#ship) without that file and Highlights.
-
-Manual draft (e.g. for an agent or second terminal):
-
-```bash
-python3 tools/nlc_release_notes.py --print-draft --version 0.2.0 --to HEAD
-python3 tools/nlc_release_notes.py --write-draft --version 0.2.0 --to HEAD
-# edit docs/adoption/RELEASE-v0.2.0.md — replace Highlights placeholder
-python3 tools/nlc_release_notes.py --check --version 0.2.0
-```
-
-## Options
-
-```bash
-./release --help
-./release --bump minor --yes
-./release prepare --no-push
-```
-
-[Tag](../TERMS.md#tag) push triggers [`.github/workflows/release.yml`](../../.github/workflows/release.yml).
-
-**Squash-merge PRs:** install [`gh`](https://cli.github.com/) so the script can read `mergeCommit` from GitHub; the git-only fallback needs a merge commit that still contains the branch tip in history.
+[Tag](../TERMS.md#tag) push runs [`.github/workflows/release.yml`](../../.github/workflows/release.yml) (fitness, verify, tag gate, smoke, tarball, GitHub Release body from the notes file).

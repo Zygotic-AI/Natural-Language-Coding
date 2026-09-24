@@ -1,34 +1,12 @@
 #!/usr/bin/env python3
 """Landmine: product without before-generate stamp must fail verify (UC18 / ADR 0010)."""
-
 from __future__ import annotations
 
-import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-SPECIMEN = ROOT / "examples" / "verify-no-before-stamp"
-
-
-def main() -> int:
-    nlc = ROOT / "tools" / "nlc.py"
-    proc = subprocess.run(
-        [sys.executable, str(nlc), "--project", str(SPECIMEN), "verify"],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
-    )
-    if proc.returncode == 0:
-        print("ASSERT:FAIL verify should NOT_MET without before-generate stamp")
-        return 1
-    combined = (proc.stdout or "") + (proc.stderr or "")
-    if "before-generate" not in combined.lower():
-        print("ASSERT:FAIL verify should mention before-generate stamp")
-        print(combined[:800])
-        return 1
-    print("ASSERT:PASS verify refuses verify-no-before-stamp")
-    return 0
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nouns.assert_verify_before_generate_stamp_fails import *  # noqa: F403
 
 
 if __name__ == "__main__":

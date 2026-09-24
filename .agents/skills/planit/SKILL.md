@@ -221,9 +221,12 @@ Emit **`## Verdict — Planit execution audit`** per §4 before Phase 7.
 
 Follow [AWL](../../../docs/TERMS.md#awl) **Appendix F** ([`references/domain-first-authoring.md`](references/domain-first-authoring.md) for back-propagation). **[Hub](../../../docs/TERMS.md#hub):** **`bbp-recorder`** (ADR or “no ADR, reason”).
 
-Emit user-facing **[Handoff](../../../docs/TERMS.md#handoff)** for T2+ multi-step work. [Handoff](../../../docs/TERMS.md#handoff) must include:
+Emit user-facing **[Handoff](../../../docs/TERMS.md#handoff)** for T2+ multi-step work. **Before writing the handoff**, read [`.agents/instructions/planit-phase7-handoff-adr-0038.md`](../../../.agents/instructions/planit-phase7-handoff-adr-0038.md) (ADR 0038). When a **leaf skill** ran, handoff **invokes that skill path** — do **not** restate its procedure in chat.
+
+[Handoff](../../../docs/TERMS.md#handoff) must include:
 
 - Produced artifact paths
+- **Machine evidence** (full commands, exit codes, pass tokens) before inference or continuity apex
 - **Gate-standard compliance:** per-path **PASS** / **FAIL** / **N/A** for §2
 - Open fix list when any path is **FAIL**
 
@@ -241,6 +244,7 @@ Emit **`## Verdict — Planit process`** (process-level §5 rollup). **PASS** on
 | [ADR](../../../docs/TERMS.md#adr) / record | `bbp-recorder` |
 | [Knowledge domain](../../../docs/TERMS.md#knowledge-domain) facts / gaps | `agents/knowledge-steward` |
 | Root cause | `/conduct-root-cause-analysis` or `references/root-cause-analysis-standard.md` |
+| Hub continuity / completeness audit | `full-nlc-audit` (`tools/full-nlc-audit.py` + inference phases) |
 | DSI, [greenfield](../../../docs/TERMS.md#greenfield) WO, make-a-skill, ai vault `local-*` | **`~/.agents/skills/planit`** |
 
 When no leaf skill fits, execute inline under this procedure with full [AWL](../../../docs/TERMS.md#awl) audits and §2 on all outputs.

@@ -1,30 +1,12 @@
 #!/usr/bin/env python3
 """Landmine ADR 0017: dashboard fitness MET on hub."""
-
 from __future__ import annotations
 
-import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-TOOL = ROOT / "tools" / "fitness-dashboard-interview-sync.py"
-
-
-def main() -> int:
-    proc = subprocess.run(
-        [sys.executable, str(TOOL)],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
-    )
-    if proc.returncode != 0:
-        print("ASSERT:FAIL fitness-dashboard-interview-sync should MET")
-        print(proc.stdout)
-        print(proc.stderr)
-        return 1
-    print("ASSERT:PASS dashboard interview sync MET")
-    return 0
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nouns.assert_dashboard_interview_passes import *  # noqa: F403
 
 
 if __name__ == "__main__":

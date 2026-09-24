@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Hub release — default: single session (branch → PR → wait → tag). Two-step: prepare + finish.
+# Hub release — one command, resumable (ADR 0039). Tag only after tag gate (ADR 0038–0040).
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -19,20 +19,20 @@ MERGE_COMMIT_SHA=""
 usage() {
   cat <<'EOF'
 Usage:
-  ./release                 Single session: branch, push, PR link, wait for merge, tag
-  ./release prepare         Two-step: branch + push only (resume with ./release finish)
-  ./release finish          Two-step: on main after merge — verify, tag, push tag
+  ./release                 Prepare (if needed) → PR → wait for merge → tag (resumes automatically)
+  ./release prepare         Legacy alias — same prepare leg; prefer ./release
+  ./release finish          Legacy alias — tag leg only if merge already done; prefer ./release
 
 Options:
   --two-step                Same as ./release prepare
   --bump patch|minor|major|keep
   --message "text"
-  --yes                     Auto-yes confirms (single-step still waits for Enter after PR)
+  --yes                     Auto-yes for routine confirms (not tag move; not release notes)
   --no-push
   --dry-run
   -h, --help
 
-See docs/adoption/RELEASE.md
+See docs/adoption/RELEASE.md (ADR 0039)
 EOF
 }
 
@@ -65,6 +65,15 @@ run() {
     return 0
   fi
   "$@"
+}
+
+confirm_tag_move() {
+  local prompt="$1"
+  if [[ -n "${NLC_RELEASE_ALLOW_RETAG:-}" ]]; then
+    return 0
+  fi
+  read -r -p "${prompt} [y/N] (requires explicit yes; --yes does not apply) " ans
+  [[ "${ans}" =~ ^[Yy] ]]
 }
 
 confirm() {
@@ -319,57 +328,77 @@ wait_for_merge_on_main() {
   done
 }
 
+read_version_at_commit() {
+  python3 -c "import sys; sys.path.insert(0,'tools'); from nlc_release_record import read_version_at; v=read_version_at('$1'); print(v or '')"
+}
+
+release_context_wizard() {
+  local branch_now
+  branch_now="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo HEAD)"
+  echo ""
+  echo "Step context — release branches (ADR 0040)"
+  python3 tools/nlc_release_context.py --remote "${REMOTE}" --base "${BASE_BRANCH}" --list-branches || true
+  if [[ "${branch_now}" == "${BASE_BRANCH}" ]]; then
+    echo "  You are on ${BASE_BRANCH}. ./release will create or resume release/v*."
+  fi
+}
+
 cmd_finish() {
-  TARGET="$(python3 tools/nlc_release_bump.py --current)"
-  TAG="v${TARGET}"
-  RELEASE_BRANCH="$(release_branch_name "${TARGET}")"
   local tag_at="${MERGE_COMMIT_SHA}"
+  local release_branch="${RESUME_BRANCH:-}"
   local prev_branch
   prev_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo HEAD)"
 
   echo ""
-  echo "Natural Language Coding — release finish (tag after merge)"
-  echo "  Version: ${TARGET}  Tag: ${TAG}"
-  echo ""
+  echo "Natural Language Coding — release tag leg"
+
+  if [[ -z "${release_branch}" ]]; then
+    local guess
+    guess="$(python3 tools/nlc_release_bump.py --current)"
+    release_branch="$(release_branch_name "${guess}")"
+  fi
 
   if [[ -z "${tag_at}" ]]; then
-    run git fetch "${REMOTE}" "${BASE_BRANCH}" "${RELEASE_BRANCH}" 2>/dev/null || true
+    run git fetch "${REMOTE}" "${BASE_BRANCH}" "${release_branch}" 2>/dev/null || true
     local release_sha
-    release_sha="$(git rev-parse "${REMOTE}/${RELEASE_BRANCH}" 2>/dev/null || true)"
+    release_sha="$(git rev-parse "${REMOTE}/${release_branch}" 2>/dev/null || true)"
     if [[ -z "${release_sha}" ]]; then
-      release_sha="$(git rev-parse "${RELEASE_BRANCH}" 2>/dev/null || true)"
+      release_sha="$(git rev-parse "${release_branch}" 2>/dev/null || true)"
     fi
     if [[ -z "${release_sha}" ]]; then
-      echo "Cannot find ${RELEASE_BRANCH} to resolve merge commit." >&2
-      echo "  Run ./release finish from a repo with the merged PR, or use single-session ./release." >&2
+      echo "Cannot find ${release_branch} to resolve merge commit." >&2
+      echo "  Fix: run ./release (resumes from release/v* state)." >&2
       exit 1
     fi
-    tag_at="$(resolve_merged_commit_sha "${RELEASE_BRANCH}" "${release_sha}")" || tag_at=""
+    tag_at="$(resolve_merged_commit_sha "${release_branch}" "${release_sha}")" || tag_at=""
     if [[ -z "${tag_at}" ]]; then
-      echo "No merged PR found for ${RELEASE_BRANCH} → ${BASE_BRANCH}." >&2
+      echo "No merged PR found for ${release_branch} → ${BASE_BRANCH}." >&2
+      echo "  Fix: merge the release PR, or run ./release to resume." >&2
       exit 1
     fi
   fi
 
+  TARGET="$(read_version_at_commit "${tag_at}")"
+  if [[ -z "${TARGET}" ]]; then
+    echo "RELEASE:NOT_MET cannot read integrity/nlc-version.json at merge commit ${tag_at:0:12}" >&2
+    exit 1
+  fi
+  TAG="v${TARGET}"
+  release_branch="$(release_branch_name "${TARGET}")"
+
   warn_if_main_moved_past_merge "${tag_at}"
   echo "  Tag target (merge commit): ${tag_at:0:12}"
+  echo "  Version from commit: ${TARGET}  Tag: ${TAG}"
 
   echo ""
-  echo "Step 1/4 — verify at merge commit"
-  run git checkout "${tag_at}"
-  run python3 tools/nlc.py --project . verify
-
-  echo ""
-  echo "Step 2/4 — release notes at merge commit"
-  if ! python3 tools/nlc_release_notes.py --check --version "${TARGET}"; then
-    echo "  Notes must be on the merged release branch (Highlights filled)." >&2
-    echo "  Fix on a follow-up PR or re-run ./release prepare with notes, then merge again." >&2
+  echo "Step 1/3 — release tag gate (record, notes, migrations, verify-deep)"
+  if ! python3 tools/nlc_release_tag_gate.py --check --commit "${tag_at}" --tag "${TAG}"; then
     run git checkout "${prev_branch}" 2>/dev/null || true
     exit 1
   fi
 
   echo ""
-  echo "Step 3/4 — annotated tag ${TAG} on ${tag_at:0:12}"
+  echo "Step 2/3 — annotated tag ${TAG} on ${tag_at:0:12}"
   if git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null; then
     local existing
     existing="$(git rev-parse "${TAG}^{commit}")"
@@ -377,7 +406,7 @@ cmd_finish() {
       echo "  Tag ${TAG} already points at merge commit."
     else
       echo "  Tag ${TAG} exists at ${existing:0:12} (not merge commit)."
-      if ! confirm "Move tag ${TAG} to merge commit ${tag_at:0:12}?"; then
+      if ! confirm_tag_move "Move tag ${TAG} to merge commit ${tag_at:0:12}?"; then
         run git checkout "${prev_branch}" 2>/dev/null || true
         exit 1
       fi
@@ -388,7 +417,7 @@ cmd_finish() {
   fi
 
   echo ""
-  echo "Step 4/4 — push tag ${TAG} to ${REMOTE}"
+  echo "Step 3/3 — push tag ${TAG} to ${REMOTE}"
   if [[ "${NO_PUSH}" -eq 1 ]]; then
     run git checkout "${prev_branch}" 2>/dev/null || run git checkout "${BASE_BRANCH}" 2>/dev/null || true
     echo "  --no-push: tag on ${tag_at:0:12}"
@@ -423,6 +452,12 @@ run_prepare_core() {
 
   echo "Step 0/9 — preflight (version/tag + shipped baseline)"
   run python3 tools/nlc_release_preflight.py --check
+  echo "Step 0b/9 — shipped tag audit (ADR 0040)"
+  run python3 tools/nlc_release_shipped_tag_audit.py --check
+  echo "Step 0c/9 — full NLC audit (ADR 0038 / continuity, profile release-prep)"
+  run python3 tools/full-nlc-audit.py --check --profile release-prep
+
+  release_context_wizard
 
   CURRENT="$(python3 tools/nlc_release_bump.py --current)"
   SUGGEST="$(python3 tools/nlc_release_bump.py --suggest 2>/dev/null | head -1)"
@@ -464,6 +499,12 @@ run_prepare_core() {
   echo ""
   echo "  Target version for this run: ${TARGET}"
 
+  python3 tools/nlc_release_context.py --remote "${REMOTE}" --base "${BASE_BRANCH}" --branch "${RELEASE_BRANCH}" || {
+    if ! confirm "Continue anyway (release branch may be missing commits from ${BASE_BRANCH})?" 0; then
+      exit 1
+    fi
+  }
+
   release_target_gate "${TARGET}"
 
   echo ""
@@ -502,7 +543,9 @@ run_prepare_core() {
   fi
 
   echo ""
-  echo "Step 9/9 — commit release artifacts"
+  echo "Step 9/9 — release record + commit"
+
+  run python3 tools/nlc_release_record.py --version "${TARGET}" --branch "${RELEASE_BRANCH}"
 
   local notes_path need_commit
   notes_path="$(release_notes_file "${TARGET}")"
@@ -583,10 +626,52 @@ cmd_single() {
   cmd_finish
 }
 
+load_resume_state() {
+  eval "$(python3 tools/nlc_release_resume.py --remote "${REMOTE}" --base "${BASE_BRANCH}")"
+}
+
+cmd_release() {
+  if [[ "${MODE}" == "finish" ]]; then
+    echo "Note: ./release resumes automatically (ADR 0039). Running tag leg." >&2
+    load_resume_state
+    if [[ -n "${RESUME_MERGE_COMMIT}" ]]; then
+      MERGE_COMMIT_SHA="${RESUME_MERGE_COMMIT}"
+    fi
+    cmd_finish
+    return
+  fi
+  if [[ "${MODE}" == "prepare" ]]; then
+    echo "Note: prefer ./release alone (ADR 0039). Running prepare leg." >&2
+    cmd_prepare
+    return
+  fi
+  load_resume_state
+  case "${RESUME_PHASE}" in
+    tag_ready)
+      echo "Resume: merged ${RESUME_BRANCH}; tagging ${RESUME_TAG}."
+      MERGE_COMMIT_SHA="${RESUME_MERGE_COMMIT}"
+      if confirm "Continue tagging ${RESUME_TAG} at ${RESUME_MERGE_COMMIT:0:12}?" 1; then
+        cmd_finish
+      fi
+      ;;
+    await_merge)
+      echo "Resume: ${RESUME_BRANCH} pushed; waiting for merge to ${BASE_BRANCH}."
+      RELEASE_SHA="$(git rev-parse "${REMOTE}/${RESUME_BRANCH}" 2>/dev/null || git rev-parse "${RESUME_BRANCH}")"
+      wait_for_merge_on_main "${RELEASE_SHA}" "${RESUME_BRANCH}"
+      cmd_finish
+      ;;
+    complete)
+      echo "Release ${RESUME_TAG} already tags merge ${RESUME_MERGE_COMMIT:0:12}."
+      echo "  Start a new version with ./release --bump … on ${BASE_BRANCH}."
+      ;;
+    *)
+      cmd_single
+      ;;
+  esac
+}
+
 case "${MODE}" in
-  finish) cmd_finish ;;
-  prepare) cmd_prepare ;;
-  single) cmd_single ;;
+  finish|prepare|single) cmd_release ;;
   *)
     echo "Unknown mode: ${MODE}" >&2
     exit 2
