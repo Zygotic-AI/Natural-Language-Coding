@@ -1,15 +1,15 @@
 {
   "schema": 1,
   "ssot": "integrity/full-nlc-audit-inference-record.json",
-  "audit_sha": "5eedc34",
+  "audit_sha": "042e7d6",
   "machine_profile": "release-prep",
   "machine_verdict": "FULL_NLC_AUDIT:MET",
   "inference_skill": ".agents/skills/full-nlc-audit/references/inference-phases.md",
   "continuity_verdict": "PASS_WITH_RESIDUALS",
-  "phases_summary": "Phases 0–7 spot-check on product SSOT: UC4/UC5 semantic v2 closed; USE-CASES Needed has 3 EXPANSION-ONLY rows (UC14/16/20); no P0/P1 product drift.",
+  "phases_summary": "Post product-completion commit: UC4/UC5 v2 closed; release resume hardened; agent /release closeout; 3 USE-CASES EXPANSION-ONLY rows (UC14/16/20).",
   "p0_p1_product_blockers": [],
   "p2_p3_parked_accepted": [
-    "UC14 composable_ir_cross_primitive_v2 (uc14-product-boundary remain_expansion)",
+    "UC14 composable_ir_cross_primitive_v2",
     "UC16/UC20 expansion rows in USE-CASES Needed"
   ],
   "recorded": "26-09-24"
