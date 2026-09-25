@@ -69,6 +69,27 @@ def last_shipped_version(to_ref: str = "HEAD", root: Path | None = None) -> str 
     return tag_version(tag) if tag else None
 
 
+def resolve_shipped_baseline(
+    to_ref: str = "HEAD", root: Path | None = None
+) -> tuple[str | None, str | None]:
+    """Newest reachable tag on ref, else highest semver tag name (rewritten main)."""
+    shipped_tag = last_shipped_tag(to_ref, root)
+    if shipped_tag:
+        return shipped_tag, tag_version(shipped_tag)
+    tags = list_version_tags(root)
+    if not tags:
+        return None, None
+    fallback = tags[0]
+    if tag_is_ancestor(fallback, to_ref, root):
+        return fallback, tag_version(fallback)
+    return fallback, tag_version(fallback)
+
+
+def resolve_shipped_version(to_ref: str = "HEAD", root: Path | None = None) -> str | None:
+    _tag, ver = resolve_shipped_baseline(to_ref, root)
+    return ver
+
+
 def previous_shipped_tag(
     before_version: str, to_ref: str = "HEAD", root: Path | None = None
 ) -> str | None:

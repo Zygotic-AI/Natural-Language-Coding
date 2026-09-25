@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from nlc_release_record import git_show_json, read_version_at, validate_record  # noqa: E402
-from nlc_release_tags import last_shipped_version  # noqa: E402
+from nlc_release_tags import resolve_shipped_version  # noqa: E402
 from nlc_requirements import hub_tool  # noqa: E402
 
 RECORD_REL = "integrity/hub-release-record.json"
@@ -81,7 +81,7 @@ def check_static(commit: str, tag: str) -> list[str]:
 
     from nlc_migration_catalog import migration_steps_blockers
 
-    shipped = last_shipped_version(commit) or "0.0.0"
+    shipped = resolve_shipped_version(commit) or "0.0.0"
     if shipped != ver:
         problems.extend(migration_steps_blockers(ROOT, shipped, ver))
 

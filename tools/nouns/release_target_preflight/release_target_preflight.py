@@ -11,37 +11,11 @@ from nlc_migration_catalog import (
     release_target_blockers,
     upgrade_steps_toward,
 )
-from nlc_release_tags import (
-    last_shipped_tag,
-    list_version_tags,
-    tag_is_ancestor,
-    tag_version,
-)
+from nlc_release_tags import resolve_shipped_baseline, tag_is_ancestor, tag_version
 
 BOUNDARY = "bba-emit"
 
 HUB_ROOT = Path(__file__).resolve().parents[3]
-
-
-def resolve_shipped_baseline(
-    to_ref: str, hub: Path
-) -> tuple[str | None, str | None]:
-    """Git tag on ancestry, else highest semver tag name for migration baseline (rewritten main)."""
-    shipped_tag = last_shipped_tag(to_ref, hub)
-    if shipped_tag:
-        return shipped_tag, tag_version(shipped_tag)
-    tags = list_version_tags(hub)
-    if not tags:
-        return None, None
-    fallback = tags[0]
-    if tag_is_ancestor(fallback, to_ref, hub):
-        return fallback, tag_version(fallback)
-    print(
-        f"RELEASE_TARGET: {fallback} is not an ancestor of {to_ref}; "
-        "using tag semver for ADR 0014 migration baseline only",
-        file=sys.stderr,
-    )
-    return fallback, tag_version(fallback)
 
 
 def agent_prompt(target: str, shipped_tag: str | None, blockers: list[str]) -> str:
@@ -87,6 +61,12 @@ def main(argv: list[str] | None = None, hub_root: Path | None = None) -> int:
     args = parser.parse_args(args_list)
 
     shipped_tag, shipped_ver = resolve_shipped_baseline(args.to_ref, hub)
+    if shipped_tag and not tag_is_ancestor(shipped_tag, args.to_ref, hub):
+        print(
+            f"RELEASE_TARGET: {shipped_tag} is not an ancestor of {args.to_ref}; "
+            "using tag semver for ADR 0014 migration baseline only",
+            file=sys.stderr,
+        )
     if shipped_ver is None:
         print("RELEASE_TARGET:NOT_MET", file=sys.stderr)
         print("  no v*.*.* tag in repo — cannot compute shipped baseline", file=sys.stderr)
