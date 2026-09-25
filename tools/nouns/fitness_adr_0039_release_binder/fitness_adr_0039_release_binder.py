@@ -16,6 +16,7 @@ def main() -> int:
     violations: list[str] = []
     script = ROOT / "scripts" / "nlc-release.sh"
     workflow = ROOT / ".github" / "workflows" / "release.yml"
+    fitness_wf = ROOT / ".github" / "workflows" / "fitness.yml"
     for path, label in (
         (ROOT / "tools" / "nlc_release_tag_gate.py", "tag gate"),
         (ROOT / "tools" / "nlc_release_resume.py", "resume"),
@@ -55,6 +56,15 @@ def main() -> int:
     wf = workflow.read_text(encoding="utf-8") if workflow.is_file() else ""
     if "nlc_release_tag_gate.py" not in wf:
         violations.append("release.yml must run tag gate")
+
+    fitness_text = fitness_wf.read_text(encoding="utf-8") if fitness_wf.is_file() else ""
+    landmine = ROOT / "tools" / "nouns" / "assert_release_tag_gate_fails" / "assert_release_tag_gate_fails.py"
+    if landmine.is_file() and "BAD_COMMIT" in landmine.read_text(encoding="utf-8"):
+        if "fetch-depth: 0" not in fitness_text and "fetch-depth:0" not in fitness_text.replace(" ", ""):
+            violations.append(
+                "fitness.yml must use actions/checkout fetch-depth: 0 "
+                "(release landmines pin historic commits; shallow PR CI false-fails)"
+            )
 
     release_md = (ROOT / "docs/adoption/RELEASE.md").read_text(encoding="utf-8", errors="replace")
     if "prepare" in release_md and "./release finish" in release_md:
