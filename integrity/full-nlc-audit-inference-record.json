@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "ssot": "integrity/full-nlc-audit-inference-record.json",
-  "audit_sha": "54fa34c",
+  "audit_sha": "e061d7e",
   "machine_profile": "release-prep",
   "machine_verdict": "FULL_NLC_AUDIT:MET",
   "inference_skill": ".agents/skills/full-nlc-audit/references/inference-phases.md",
