@@ -15,9 +15,9 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
-`last_pass_sha: f45ff3a`
+`last_pass_sha: 54fa34c`
 
-Last pass (26-09-24): product completion batch on `main` — X4 `fitness_only` 0, UC4/UC5 semantic v2, P8 SSOT; `/release` skill agent closeout; resume `git_tag_on_merge` + stale `release/v*` skip. Shipped git tag still **`v0.1.0` only**; `integrity/nlc-version.json` **0.2.0** until `./release`. Inference: [`integrity/full-nlc-audit-inference-record.json`](integrity/full-nlc-audit-inference-record.json). UC14/16/20 expansion remains parked.
+Last pass (26-09-25): `/release` closeout — agent instructions (literal scope, plain-language refs), integration leaf on_main, CI:MET + release-prep ready. Shipped git tag still **`v0.1.0` only**; `integrity/nlc-version.json` **0.2.0** until `./release`. Inference: [`integrity/full-nlc-audit-inference-record.json`](integrity/full-nlc-audit-inference-record.json). UC14/16/20 expansion remains parked.
 
 ---
 
