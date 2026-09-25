@@ -17,7 +17,7 @@ Governed by **[ADR 0022](../../adrs/0022-hub-release-fail-early.md)** (gate orde
 7. **Target preflight** — migration chain from last tag to target (`tools/nlc_release_target_preflight.py`).
 8. **`verify-deep`** on `main` at the shipped version (before notes or bump).
 9. **Release notes** — `docs/adoption/RELEASE-vX.Y.Z.md` with real **Highlights** (blocks until valid).
-10. **`release/vX.Y.Z` branch** — version bump, second **`verify-deep`**, prep (`ci_fitness`, install hashes, smoke).
+10. **`release/vX.Y.Z` branch** — on `main`, the orchestrator **creates and checks out** `release/vX.Y.Z` automatically (no second confirm). Version bump, second **`verify-deep`**, prep (`ci_fitness`, install hashes, smoke).
 11. **`integrity/hub-release-record.json`** on the release commit (prepare receipt for the tag gate).
 12. Push branch → PR link → **wait for merge** (Enter when merged).
 13. **Tag gate** on the **merge commit** (`tools/nlc_release_tag_gate.py`: record, notes, migrations, `verify-deep`).
