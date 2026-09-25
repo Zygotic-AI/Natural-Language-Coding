@@ -1,0 +1,6 @@
+{
+  "schema": 1,
+  "version": "0.2.0",
+  "release_branch": "release/v0.2.0",
+  "prepare_head": "7b1955412d282e3607df552470c63778ec8ec7b4"
+}
