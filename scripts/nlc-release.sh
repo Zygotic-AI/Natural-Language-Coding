@@ -279,26 +279,30 @@ ensure_release_branch() {
     return 0
   fi
 
-  if [[ "${branch_now}" == "${BASE_BRANCH}" ]]; then
-    echo ""
-    echo "You are on ${BASE_BRANCH}. Most teams protect it — release commits belong on a branch."
-    if ! confirm "Create and use ${rel_branch}?" 1; then
-      echo "  Stopped. Checkout a branch or run from a feature branch." >&2
-      exit 1
-    fi
+  if git show-ref --verify --quiet "refs/heads/${rel_branch}"; then
+    echo "  Using existing ${rel_branch}."
+    run git checkout "${rel_branch}"
+    return 0
   fi
 
-  if git show-ref --verify --quiet "refs/heads/${rel_branch}"; then
-    if ! confirm "Check out existing ${rel_branch}?"; then
-      exit 1
-    fi
-    run git checkout "${rel_branch}"
-  else
-    if ! confirm "Create branch ${rel_branch} from ${branch_now}?"; then
-      exit 1
-    fi
+  if [[ "${branch_now}" == "${BASE_BRANCH}" ]]; then
+    echo "  Creating ${rel_branch} from ${BASE_BRANCH} (release commits stay off ${BASE_BRANCH})."
     run git checkout -b "${rel_branch}"
+    return 0
   fi
+
+  echo ""
+  echo "  You are on ${branch_now}, not ${BASE_BRANCH}."
+  if [[ "${YES}" -eq 1 ]]; then
+    echo "  --yes: creating ${rel_branch} from ${branch_now}."
+    run git checkout -b "${rel_branch}"
+    return 0
+  fi
+  if ! confirm "Create ${rel_branch} from ${branch_now}? (Recommended: git checkout ${BASE_BRANCH} first)" 0; then
+    echo "  Stopped. From ${BASE_BRANCH}, ./release creates ${rel_branch} automatically." >&2
+    exit 1
+  fi
+  run git checkout -b "${rel_branch}"
 }
 
 wait_for_merge_on_main() {
