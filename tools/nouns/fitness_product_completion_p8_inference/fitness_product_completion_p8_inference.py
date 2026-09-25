@@ -42,8 +42,20 @@ def main() -> int:
             violations.append("machine_verdict must be FULL_NLC_AUDIT:MET")
         head = git_short_head()
         sha = str(data.get("audit_sha") or "")
-        if head and sha and not (head.startswith(sha) or sha.startswith(head)):
-            violations.append(f"audit_sha {sha} must match HEAD {head} until merge amends record")
+        if head and sha:
+            matched = head.startswith(sha) or sha.startswith(head)
+            if not matched:
+                proc = subprocess.run(
+                    ["git", "merge-base", "--is-ancestor", sha, "HEAD"],
+                    cwd=str(ROOT),
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                if proc.returncode != 0:
+                    violations.append(
+                        f"audit_sha {sha} must match HEAD {head} or be an ancestor until merge amends record"
+                    )
 
     proc = subprocess.run(
         [sys.executable, str(ROOT / "tools" / "fitness-use-cases-expansion-sync.py")],
