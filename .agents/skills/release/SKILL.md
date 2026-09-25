@@ -26,7 +26,8 @@ Do **not** run `./release` until every **blocking** row is true.
 | Machine continuity | yes | **prepare:** `release-prep` MET on ship HEAD. **await_merge / tag_ready:** waived | Command output |
 | Hub compile | yes | `python3 tools/ci_fitness.py` → CI:MET on ship HEAD | Exit 0 |
 | P0/P1 inference | yes | None from Step 4 | Inference apex |
-| Product residuals | yes when P2/P3 | User confirms **once** if open product gaps remain | Chat |
+| Plain-language refs | yes | [Reply references](../../../.agents/instructions/reply-references-plain-language.md) for every id in the verdict | Chat |
+| Product residuals | yes when P2/P3 | User confirms **once** after table | Chat |
 | `./release` started | yes on GO | Orchestrator invoked from repo root | Terminal |
 
 **Done signals:** Closeout done; **Ship** verdict; `./release` running or honest NOT_MET with agent fix loop.
@@ -100,10 +101,12 @@ Compressed phases; apex **Continuity: PASS | FAIL | PASS with residuals**.
 
 ### 5 — Ship verdict
 
+Before **GO with residuals**, cite product gaps per [`.agents/instructions/reply-references-plain-language.md`](../../../.agents/instructions/reply-references-plain-language.md) (table with **Impact** column). **Blocking:** no bare UC/ADR id lists.
+
 | Verdict | When | Agent next |
 | ------- | ---- | ---------- |
 | **Ship: NO-GO** | Unfixable gate / P0/P1 | Keep fixing; no `./release` |
-| **Ship: GO with residuals** | Product gaps only | One-line impact + **yes** → Step 6 |
+| **Ship: GO with residuals** | Product gaps only | Table + one clear question; after **yes** → Step 6 |
 | **Ship: GO** | Closeout + machine + inference | Step 6 |
 
 ### 6 — Run `./release`

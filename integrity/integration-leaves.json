@@ -9,10 +9,10 @@
         "Hub X4 lib + assert noun tranches (P5.5–P5.7)",
         "UC9 rule-tagged blast radius v2 + UC13 engine.runtime strict (P6.1–P6.2)"
       ],
-      "disposition": "parked",
+      "disposition": "on_main",
       "evidence": {
-        "notes": "Working tree batch; merge + FINDINGS last_pass_sha update on Continuity row (TODO)",
-        "findings_ref": "Product-completion inference record"
+        "sha": "042e7d6",
+        "notes": "Product completion batch on main; P8 inference record + FINDINGS last_pass aligned at ship closeout."
       }
     }
   ]
