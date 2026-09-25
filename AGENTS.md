@@ -50,6 +50,10 @@ Skills and portable instructions live under [`.agents/`](.agents/). End-to-end c
 
 **Product UC TODO:** Do not mark [`TODO`](TODO) “Build a compiled system” rows `@done` for full USE-CASE closure while [`docs/USE-CASES.md`](docs/USE-CASES.md) still lists Parked/Needed — see [`.agents/instructions/todo-product-uc-completion.md`](.agents/instructions/todo-product-uc-completion.md). CI: `tools/fitness-todo-use-cases-ssot.py`.
 
+**Take me literally (always):** Quote the user’s scope in your own resolution table; do not narrow or reinterpret their wording; if ambiguous, **one question and stop** — see [`.agents/instructions/take-me-literally.md`](.agents/instructions/take-me-literally.md) (Cursor: [`.cursor/rules/take-me-literally.mdc`](.cursor/rules/take-me-literally.mdc)).
+
+**Reply references (always):** Whenever you mention UC/ADR/P/R ids, paths, or hub jargon in user-facing text, include plain language **in the same message** — see [`.agents/instructions/reply-references-plain-language.md`](.agents/instructions/reply-references-plain-language.md). No bare id lists as explanation; applies to every reply, not only when asking the human to decide.
+
 ## Memory files
 
 - [`DESCRIBE.md`](DESCRIBE.md) — durable project facts for agents

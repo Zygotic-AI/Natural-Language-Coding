@@ -1,16 +1,16 @@
 {
   "schema": 1,
   "ssot": "integrity/full-nlc-audit-inference-record.json",
-  "audit_sha": "16e24e1",
+  "audit_sha": "f45ff3a",
   "machine_profile": "release-prep",
   "machine_verdict": "FULL_NLC_AUDIT:MET",
   "inference_skill": ".agents/skills/full-nlc-audit/references/inference-phases.md",
   "continuity_verdict": "PASS_WITH_RESIDUALS",
-  "phases_summary": "Post product-completion commit: UC4/UC5 v2 closed; release resume hardened; agent /release closeout; 3 USE-CASES EXPANSION-ONLY rows (UC14/16/20).",
+  "phases_summary": "Pre-ship closeout: agent literal-scope instructions + reply plain-language; P8 audit_sha aligned to HEAD; UC14/16/20 expansion residuals for 0.2.0 ship.",
   "p0_p1_product_blockers": [],
   "p2_p3_parked_accepted": [
     "UC14 composable_ir_cross_primitive_v2",
     "UC16/UC20 expansion rows in USE-CASES Needed"
   ],
-  "recorded": "26-09-24"
+  "recorded": "26-09-25"
 }
