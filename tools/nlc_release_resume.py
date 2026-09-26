@@ -26,6 +26,25 @@ def _git(*args: str) -> subprocess.CompletedProcess[str]:
     )
 
 
+def _is_full_sha(value: str) -> bool:
+    value = value.strip().lower()
+    return len(value) == 40 and all(c in "0123456789abcdef" for c in value)
+
+
+def resolve_ref_sha(ref: str) -> str:
+    """Git rev-parse; git may print ref name on stderr path — ignore non-SHA stdout."""
+    proc = _git("rev-parse", ref)
+    if proc.returncode != 0:
+        return ""
+    sha = (proc.stdout or "").strip()
+    return sha if _is_full_sha(sha) else ""
+
+
+def remote_branch_exists(remote: str, branch: str) -> bool:
+    proc = _git("ls-remote", "--heads", remote, f"refs/heads/{branch}")
+    return proc.returncode == 0 and bool((proc.stdout or "").strip())
+
+
 def list_release_branches(remote: str) -> list[str]:
     branches: list[str] = []
     for proc_args in (
@@ -75,14 +94,17 @@ def release_record_on_commit(commit: str) -> bool:
 
 
 def detect(remote: str, base: str) -> dict:
-    _git("fetch", remote, base, "--tags", "--quiet")
+    _git("fetch", remote, base, "--tags", "--prune", "--quiet")
     stale_branches: list[str] = []
+    closed_branches: list[str] = []
+    await_merge_row: dict | None = None
     for rel in list_release_branches(remote):
+        if not remote_branch_exists(remote, rel):
+            # Local-only release lines resume via prepare/infer — not PR wait (RCA 26-09-25).
+            continue
         ver = rel.replace("release/v", "")
         tag = f"v{ver}"
-        tip = _git("rev-parse", f"{remote}/{rel}").stdout.strip()
-        if not tip:
-            tip = _git("rev-parse", rel).stdout.strip()
+        tip = resolve_ref_sha(f"{remote}/{rel}")
         if not tip:
             continue
         merge = merged_commit_for_branch(remote, base, rel, tip)
@@ -90,30 +112,39 @@ def detect(remote: str, base: str) -> dict:
             if not release_record_on_commit(merge):
                 stale_branches.append(rel)
                 continue
-            exists = tag_on_commit(tag, merge)
+            exists_on_merge = tag_on_commit(tag, merge)
+            if exists_on_merge or tag_exists(tag):
+                # Shipped (tag on merge or tag exists) — skip orchestration; not "stale" (RCA 26-09-25)
+                closed_branches.append(rel)
+                continue
             row = {
-                "phase": "complete" if exists else "tag_ready",
+                "phase": "tag_ready",
                 "version": ver,
                 "release_branch": rel,
                 "merge_commit": merge,
                 "planned_tag": tag,
                 "tag": tag,
-                "git_tag_on_merge": exists,
+                "git_tag_on_merge": False,
                 "release_record_on_merge": True,
                 "stale_release_branches": stale_branches,
+                "closed_release_branches": closed_branches,
             }
             return row
-        return {
-            "phase": "await_merge",
-            "version": ver,
-            "release_branch": rel,
-            "merge_commit": "",
-            "planned_tag": tag,
-            "tag": tag,
-            "git_tag_on_merge": False,
-            "release_record_on_merge": False,
-            "stale_release_branches": stale_branches,
-        }
+        if await_merge_row is None:
+            await_merge_row = {
+                "phase": "await_merge",
+                "version": ver,
+                "release_branch": rel,
+                "merge_commit": "",
+                "planned_tag": tag,
+                "tag": tag,
+                "git_tag_on_merge": False,
+                "release_record_on_merge": False,
+            }
+    if await_merge_row is not None:
+        await_merge_row["stale_release_branches"] = stale_branches
+        await_merge_row["closed_release_branches"] = closed_branches
+        return await_merge_row
     return {
         "phase": "prepare",
         "version": "",
@@ -124,6 +155,7 @@ def detect(remote: str, base: str) -> dict:
         "git_tag_on_merge": False,
         "release_record_on_merge": False,
         "stale_release_branches": stale_branches,
+        "closed_release_branches": closed_branches,
     }
 
 
@@ -151,7 +183,9 @@ def main() -> int:
     print(f"RESUME_TAG={state['tag']}")
     print(f"RESUME_GIT_TAG_ON_MERGE={'1' if state.get('git_tag_on_merge') else '0'}")
     stale = state.get("stale_release_branches") or []
+    closed = state.get("closed_release_branches") or []
     print(f"RESUME_STALE_BRANCHES={','.join(stale)}")
+    print(f"RESUME_CLOSED_BRANCHES={','.join(closed)}")
     return 0
 
 

@@ -497,6 +497,22 @@ def main() -> int:
         [sys.executable, str(TOOLS / "assert-release-preflight-passes.py")],
     )
     run(
+        "assert-release-main-purity",
+        [sys.executable, str(TOOLS / "assert-release-main-purity-passes.py")],
+    )
+    run(
+        "assert-release-infer",
+        [sys.executable, str(TOOLS / "assert-release-infer-passes.py")],
+    )
+    run(
+        "assert-jidoka-ssot-agents-link",
+        [sys.executable, str(TOOLS / "assert-jidoka-ssot-agents-link-passes.py")],
+    )
+    run(
+        "assert-release-main-purity-remediation",
+        [sys.executable, str(TOOLS / "assert-release-main-purity-remediation-passes.py")],
+    )
+    run(
         "assert-human-surface",
         [sys.executable, str(TOOLS / "assert-human-surface-passes.py")],
     )

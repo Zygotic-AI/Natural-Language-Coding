@@ -23,7 +23,7 @@
     "emit_path_open": 0,
     "other_or_lib": 0,
     "noun_backed_lib": 64,
-    "noun_backed_assert": 133,
+    "noun_backed_assert": 137,
     "noun_backed_fitness": 127,
     "fitness_only": 0,
     "covered_emit_path": 26
@@ -318,6 +318,10 @@
       "class": "noun-backed-assert"
     },
     {
+      "file": "assert-jidoka-ssot-agents-link-passes.py",
+      "class": "noun-backed-assert"
+    },
+    {
       "file": "assert-migration-catalog-passes.py",
       "class": "noun-backed-assert"
     },
@@ -419,6 +423,18 @@
     },
     {
       "file": "assert-rca-packet-blame-fails.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-release-infer-passes.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-release-main-purity-passes.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-release-main-purity-remediation-passes.py",
       "class": "noun-backed-assert"
     },
     {
@@ -1948,6 +1964,14 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
+      "noun": "assert_jidoka_ssot_agents_link",
+      "path": "tools/nouns/assert_jidoka_ssot_agents_link/",
+      "adapters": [
+        "assert-jidoka-ssot-agents-link-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
       "noun": "assert_migration_catalog_passes",
       "path": "tools/nouns/assert_migration_catalog_passes/",
       "adapters": [
@@ -2152,6 +2176,30 @@
       "path": "tools/nouns/assert_rca_packet_blame_fails/",
       "adapters": [
         "assert-rca-packet-blame-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_release_infer_passes",
+      "path": "tools/nouns/assert_release_infer_passes/",
+      "adapters": [
+        "assert-release-infer-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_release_main_purity_passes",
+      "path": "tools/nouns/assert_release_main_purity_passes/",
+      "adapters": [
+        "assert-release-main-purity-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_release_main_purity_remediation",
+      "path": "tools/nouns/assert_release_main_purity_remediation/",
+      "adapters": [
+        "assert-release-main-purity-remediation-passes.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
@@ -3884,6 +3932,22 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
+      "noun": "release_infer",
+      "path": "tools/nouns/release_infer/",
+      "adapters": [
+        "nlc_release_infer.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "release_main_purity",
+      "path": "tools/nouns/release_main_purity/",
+      "adapters": [
+        "nlc_release_main_purity.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
       "noun": "release_notes",
       "path": "tools/nouns/release_notes/",
       "adapters": [
@@ -3896,6 +3960,14 @@
       "path": "tools/nouns/release_preflight/",
       "adapters": [
         "nlc_release_preflight.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "release_remediate",
+      "path": "tools/nouns/release_remediate/",
+      "adapters": [
+        "nlc_release_remediate.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },

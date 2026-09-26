@@ -53,6 +53,7 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0041 | 2026-09-23 | session | active | — | L-0041 |
 | 0042 | 2026-09-23 | session | active | — | L-0042 |
 | 0043 | 2026-09-23 | session | active | — | L-0043 |
+| 0044 | 2026-09-25 | session | active | — | L-0044 |
 
 ## Lineage format
 

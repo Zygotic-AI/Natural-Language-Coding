@@ -10,6 +10,7 @@ YES=0
 NO_PUSH=0
 BUMP=""
 MSG=""
+FROM_BRANCH=""
 REMOTE="${NLC_RELEASE_REMOTE:-origin}"
 BASE_BRANCH="${NLC_RELEASE_BASE_BRANCH:-main}"
 MODE="single"
@@ -23,11 +24,12 @@ Usage:
   ./release prepare         Legacy alias — same prepare leg; prefer ./release
   ./release finish          Legacy alias — tag leg only if merge already done; prefer ./release
 
-Options:
+Automation overrides (optional):
   --two-step                Same as ./release prepare
   --bump patch|minor|major|keep
+  --from-branch NAME        Use named release line (must match release/v*)
   --message "text"
-  --yes                     Auto-yes for routine confirms (not tag move; not release notes)
+  --yes                     Deprecated: default is non-interactive (retag still requires env)
   --no-push
   --dry-run
   -h, --help
@@ -47,6 +49,7 @@ while [[ $# -gt 0 ]]; do
     --yes) YES=1 ;;
     --no-push) NO_PUSH=1 ;;
     --bump) BUMP="${2:-}"; shift ;;
+    --from-branch) FROM_BRANCH="${2:-}"; shift ;;
     --message) MSG="${2:-}"; shift ;;
     -h|--help) usage; exit 0 ;;
     --*) echo "Unknown option: $1" >&2; usage; exit 2 ;;
@@ -67,27 +70,276 @@ run() {
   "$@"
 }
 
+release_fail() {
+  local problem="$1"
+  shift
+  local -a gaps=()
+  local -a fixes=()
+  while [[ $# -gt 0 ]]; do
+    if [[ "$1" == "--" ]]; then
+      shift
+      fixes=("$@")
+      break
+    fi
+    gaps+=("$1")
+    shift
+  done
+  if [[ ${#fixes[@]} -eq 0 ]]; then
+    fixes=(
+      "git fetch ${REMOTE} ${BASE_BRANCH} --tags"
+      "cd ${ROOT} && ./release"
+    )
+  fi
+  python3 tools/nlc_release_remediate.py "${problem}" "${gaps[@]}" -- "${fixes[@]}"
+}
+
+is_release_line_branch() {
+  [[ "${1}" =~ ^release/v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+}
+
+ensure_on_main() {
+  local branch_now
+  branch_now="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo HEAD)"
+  if [[ "${branch_now}" == "${BASE_BRANCH}" ]]; then
+    run git pull "${REMOTE}" "${BASE_BRANCH}" 2>/dev/null || true
+    return 0
+  fi
+  echo "  Checking out ${BASE_BRANCH} (tag leg / resume)."
+  run git checkout "${BASE_BRANCH}" || release_fail \
+    "Cannot checkout ${BASE_BRANCH}" \
+    "On branch ${branch_now}" \
+    "git stash push -m 'release' --include-untracked" \
+    "git checkout ${BASE_BRANCH}"
+  run git pull "${REMOTE}" "${BASE_BRANCH}" 2>/dev/null || true
+}
+
+load_release_infer() {
+  local as_branch="${1:-}"
+  local infer_args=(--remote "${REMOTE}" --base "${BASE_BRANCH}" --emit shell)
+  if [[ -n "${BUMP}" ]]; then
+    infer_args+=(--bump-override "${BUMP}")
+  fi
+  if [[ -n "${as_branch}" ]]; then
+    infer_args+=(--as-branch "${as_branch}")
+  fi
+  eval "$(python3 tools/nlc_release_infer.py "${infer_args[@]}")"
+}
+
+run_inferred_prepare_actions() {
+  local depth="${1:-0}"
+  local branch_now
+  branch_now="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo HEAD)"
+
+  case "${INFER_ACTION:-stay}" in
+    stay)
+      ;;
+    checkout_release)
+      run git checkout "${INFER_RELEASE_BRANCH}"
+      ;;
+    create_release_from_head)
+      if git show-ref --verify --quiet "refs/heads/${INFER_RELEASE_BRANCH}"; then
+        run git checkout "${INFER_RELEASE_BRANCH}"
+      else
+        echo "  Creating ${INFER_RELEASE_BRANCH} from ${branch_now}."
+        run git checkout -b "${INFER_RELEASE_BRANCH}"
+      fi
+      ;;
+    merge_into_release)
+      if ! git show-ref --verify --quiet "refs/heads/${INFER_RELEASE_BRANCH}"; then
+        release_fail "Release branch missing for merge" \
+          "Expected ${INFER_RELEASE_BRANCH}" \
+          "Re-run ./release from ${INFER_SOURCE_BRANCH}"
+      fi
+      run git checkout "${INFER_RELEASE_BRANCH}"
+      if [[ "${branch_now}" != "${INFER_RELEASE_BRANCH}" ]]; then
+        run git merge "${INFER_SOURCE_BRANCH}" -m "Merge ${INFER_SOURCE_BRANCH} into ${INFER_RELEASE_BRANCH} for release"
+      fi
+      ;;
+    normalize_main_trunk)
+      if [[ "${depth}" -ge 2 ]]; then
+        release_fail "Trunk normalize did not stabilize" \
+          "Infer still wants normalize_main_trunk after one pass" \
+          "Re-run ./release"
+      fi
+      normalize_main_trunk_for_release
+      load_release_infer "${INFER_WORK_BRANCH}"
+      echo "  ${INFER_PHASE:-prepare}: ${INFER_RELEASE_BRANCH:-?}"
+      if [[ -n "${INFER_LINE:-}" ]]; then
+        echo "  ${INFER_LINE}"
+      fi
+      run_inferred_prepare_actions $((depth + 1))
+      return
+      ;;
+    tag_only|await_merge|complete|blocked)
+      ;;
+    *)
+      release_fail "Unknown infer action" "${INFER_ACTION}"
+      ;;
+  esac
+}
+
+normalize_main_trunk_for_release() {
+  local work_branch="${INFER_WORK_BRANCH:-}"
+  local shipped_tag="${INFER_SHIPPED_TAG:-}"
+  local stashed=0
+
+  _normalize_stash_orphan_warn() {
+    if [[ "${stashed}" -ne 1 ]]; then
+      return 0
+    fi
+    echo "  WARNING: trunk normalize stashed your tree and did not pop it (run interrupted)." >&2
+    echo "  fix: git checkout ${work_branch} && git stash pop   # message: nlc-release trunk normalize" >&2
+  }
+
+  if [[ -z "${work_branch}" || -z "${shipped_tag}" ]]; then
+    release_fail "Cannot normalize production trunk" \
+      "Missing infer work branch or shipped tag" \
+      "Re-run ./release"
+  fi
+
+  echo ""
+  echo "Step trunk/9 — production trunk normalize (ADR 0044; zero-parameter ./release)"
+  echo "  Work branch: ${work_branch}  Ship target: ${INFER_RELEASE_BRANCH:-?}  Tag baseline: ${shipped_tag}"
+
+  if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
+    echo "  Orchestrator stash (not manual): dirty tree before branch moves…"
+    trap _normalize_stash_orphan_warn EXIT
+    run git stash push -u -m "nlc-release trunk normalize"
+    stashed=1
+  fi
+
+  if git show-ref --verify --quiet "refs/heads/${work_branch}"; then
+    echo "  Using existing ${work_branch}."
+    run git checkout "${work_branch}"
+  else
+    echo "  Creating ${work_branch} from current ${BASE_BRANCH} (preserve unreleased commits)."
+    run git checkout -b "${work_branch}"
+  fi
+
+  run git fetch "${REMOTE}" "${BASE_BRANCH}" --tags
+  run git checkout "${BASE_BRANCH}"
+  local shipped_commit="${INFER_SHIPPED_COMMIT:-}"
+  if [[ -z "${shipped_commit}" ]]; then
+    shipped_commit="$(python3 -c "import sys; sys.path.insert(0,'tools'); from nlc_release_tags import canonical_tag_commit; print(canonical_tag_commit('${shipped_tag}', '${REMOTE}') or '')")"
+  fi
+  if [[ -z "${shipped_commit}" ]]; then
+    shipped_commit="${shipped_tag}^{commit}"
+  fi
+  run git reset --hard "${shipped_commit}"
+  echo "  ${BASE_BRANCH} now at ${shipped_tag} (${shipped_commit:0:12}; local only; no push)."
+
+  run git checkout "${work_branch}"
+  if [[ "${stashed}" -eq 1 ]]; then
+    run git stash pop || release_fail \
+      "Stash pop failed after trunk normalize" \
+      "Resolve conflicts on ${work_branch}" \
+      "git status"
+    stashed=0
+    trap - EXIT
+  fi
+}
+
+apply_release_infer() {
+  local branch_now
+  run git fetch "${REMOTE}" "${BASE_BRANCH}" --tags 2>/dev/null || true
+  branch_now="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo HEAD)"
+
+  if [[ -n "${FROM_BRANCH}" ]]; then
+    if ! is_release_line_branch "${FROM_BRANCH}"; then
+      release_fail "Invalid --from-branch" \
+        "${FROM_BRANCH} must match release/vX.Y.Z" \
+        "./release --from-branch release/v0.0.0"
+    fi
+    run git checkout "${FROM_BRANCH}"
+    branch_now="${FROM_BRANCH}"
+  fi
+
+  load_release_infer
+
+  if [[ "${INFER_BLOCK:-0}" == "1" ]]; then
+    local -a _infer_gaps=()
+    local -a _purity_fixes=()
+    if [[ -n "${INFER_BLOCK_GAPS:-}" ]]; then
+      IFS='|' read -r -a _infer_gaps <<< "${INFER_BLOCK_GAPS}"
+    fi
+    if [[ "${INFER_BLOCK_PROBLEM:-}" == *"production-trunk"* ]]; then
+      mapfile -t _purity_fixes < <(
+        python3 tools/nlc_release_remediate.py --print-main-purity-fixes \
+          --remote "${REMOTE}" --base "${BASE_BRANCH}" \
+          --next-release-branch "${INFER_RELEASE_BRANCH:-}"
+      )
+      release_fail "${INFER_BLOCK_PROBLEM:-Release infer blocked}" "${_infer_gaps[@]}" -- "${_purity_fixes[@]}"
+    else
+      release_fail "${INFER_BLOCK_PROBLEM:-Release infer blocked}" "${_infer_gaps[@]}"
+    fi
+  fi
+
+  echo "  ${INFER_PHASE:-prepare}: ${INFER_RELEASE_BRANCH:-?}"
+  if [[ -n "${INFER_LINE:-}" ]]; then
+    echo "  ${INFER_LINE}"
+  fi
+
+  run_inferred_prepare_actions 0
+
+  export NLC_RELEASE_SOURCE_BRANCH="${INFER_RELEASE_BRANCH}"
+  if [[ -z "${BUMP}" ]]; then
+    BUMP="${INFER_BUMP}"
+  fi
+  TARGET="${INFER_TARGET}"
+  RELEASE_BRANCH="${INFER_RELEASE_BRANCH}"
+}
+
+verify_deep_at_shipped_baseline() {
+  local shipped_tag shipped_commit restore_ref detached=0
+  read -r shipped_tag shipped_commit < <(
+    python3 -c "import sys; sys.path.insert(0,'tools'); from nlc_release_tags import last_shipped_tag, canonical_tag_commit; t=last_shipped_tag('HEAD') or ''; c=canonical_tag_commit(t, '${REMOTE}') if t else ''; print(t, c)"
+  )
+  restore_ref="$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true)"
+  if [[ -z "${restore_ref}" ]]; then
+    restore_ref="${RELEASE_BRANCH:-}"
+  fi
+  if [[ -z "${restore_ref}" ]]; then
+    restore_ref="${BASE_BRANCH}"
+  fi
+
+  _restore_after_shipped_verify() {
+    if [[ "${detached}" -ne 1 ]]; then
+      return 0
+    fi
+    echo "  Restoring ${restore_ref} after shipped-baseline verify-deep…"
+    git checkout "${restore_ref}" 2>/dev/null || git checkout "${BASE_BRANCH}" 2>/dev/null || true
+    detached=0
+  }
+
+  if [[ -z "${shipped_tag}" ]]; then
+    echo "  No shipped tag reachable — verify-deep on release line HEAD."
+    run python3 tools/nlc.py --project . verify-deep
+    return 0
+  fi
+  if [[ -z "${shipped_commit}" ]]; then
+    shipped_commit="${shipped_tag}^{commit}"
+  fi
+  echo "  verify-deep at shipped baseline ${shipped_tag} (${shipped_commit:0:12}; ADR 0022 / 0044)."
+  trap _restore_after_shipped_verify EXIT
+  run git checkout --detach "${shipped_commit}"
+  detached=1
+  set +e
+  python3 tools/nlc.py --project . verify-deep
+  local verify_rc=$?
+  set -e
+  _restore_after_shipped_verify
+  trap - EXIT
+  if [[ "${verify_rc}" -ne 0 ]]; then
+    exit "${verify_rc}"
+  fi
+}
+
 confirm_tag_move() {
   local prompt="$1"
   if [[ -n "${NLC_RELEASE_ALLOW_RETAG:-}" ]]; then
     return 0
   fi
   read -r -p "${prompt} [y/N] (requires explicit yes; --yes does not apply) " ans
-  [[ "${ans}" =~ ^[Yy] ]]
-}
-
-confirm() {
-  local prompt="$1"
-  local default_y="${2:-0}"
-  if [[ "${YES}" -eq 1 ]]; then
-    return 0
-  fi
-  if [[ "${default_y}" -eq 1 ]]; then
-    read -r -p "${prompt} [Y/n] " ans
-    [[ -z "${ans}" || "${ans}" =~ ^[Yy] ]]
-    return
-  fi
-  read -r -p "${prompt} [y/N] " ans
   [[ "${ans}" =~ ^[Yy] ]]
 }
 
@@ -177,34 +429,20 @@ ensure_release_notes() {
       echo "DRY_RUN: missing ${path} — release blocked." >&2
       exit 1
     fi
+    echo "  Auto-drafting ${path}…"
     run python3 tools/nlc_release_notes.py --write-draft --version "${ver}" --to "${ref}"
-    echo "  Created draft — you must fill Highlights before continuing."
-  elif confirm "Refresh the auto-generated Changes section in ${path}?" 0; then
+  else
+    echo "  Refreshing Changes section in ${path}…"
     run python3 tools/nlc_release_notes.py --refresh-changes --version "${ver}" --to "${ref}"
   fi
 
-  if [[ "${YES}" -eq 1 ]]; then
-    if ! python3 tools/nlc_release_notes.py --check --version "${ver}"; then
-      echo "  --yes does not skip release notes. Fill Highlights in ${path} and re-run." >&2
-      exit 1
-    fi
-    echo "  RELEASE_NOTES:MET"
-    return 0
+  if ! python3 tools/nlc_release_notes.py --check --version "${ver}"; then
+    release_fail \
+      "Release notes not valid for v${ver}" \
+      "Highlights required in ${path}" \
+      "python3 tools/nlc_release_notes.py --check --version ${ver}" \
+      "\${EDITOR:-nano} ${path}"
   fi
-
-  while ! python3 tools/nlc_release_notes.py --check --version "${ver}"; do
-    echo "" >&2
-    echo "  RELEASE_NOTES:NOT_MET — Highlights required in ${path}" >&2
-    if [[ "${DRY_RUN}" -eq 1 ]]; then
-      exit 1
-    fi
-    read -r -p "Edit ${path} now in \${EDITOR:-nano}? [Y/n] " ans
-    if [[ -n "${ans}" && ! "${ans}" =~ ^[Yy] ]]; then
-      echo "  Stopped: release notes required." >&2
-      exit 1
-    fi
-    "${EDITOR:-nano}" "${path}"
-  done
   echo "  RELEASE_NOTES:MET"
 }
 
@@ -215,17 +453,18 @@ release_target_gate() {
   if python3 tools/nlc_release_target_preflight.py --check --target "${target}"; then
     return 0
   fi
-  echo ""
-  if confirm "Scaffold missing noop migration units for v${target}?" 1; then
-    if python3 tools/nlc_release_target_preflight.py --ensure-noop --target "${target}" \
-      && python3 tools/nlc_release_target_preflight.py --check --target "${target}"; then
-      return 0
-    fi
+  echo "  Auto-scaffolding noop migration units for v${target}…"
+  run python3 tools/nlc_release_target_preflight.py --ensure-noop --target "${target}" || true
+  if python3 tools/nlc_release_target_preflight.py --check --target "${target}"; then
+    return 0
   fi
   python3 tools/nlc_release_target_preflight.py --check --print-agent-prompt --target "${target}" \
     >/dev/null 2>&1 || true
-  echo "  Stopped before notes, branch, or version bump." >&2
-  exit 1
+  release_fail \
+    "Release target preflight NOT_MET for v${target}" \
+    "Migration chain from shipped baseline to target is incomplete" \
+    "python3 tools/nlc_release_target_preflight.py --check --target ${target}" \
+    "python3 tools/nlc_release_target_preflight.py --print-agent-prompt --target ${target}"
 }
 
 block_until_release_notes_met() {
@@ -291,45 +530,49 @@ ensure_release_branch() {
     return 0
   fi
 
-  echo ""
-  echo "  You are on ${branch_now}, not ${BASE_BRANCH}."
-  if [[ "${YES}" -eq 1 ]]; then
-    echo "  --yes: creating ${rel_branch} from ${branch_now}."
-    run git checkout -b "${rel_branch}"
-    return 0
-  fi
-  if ! confirm "Create ${rel_branch} from ${branch_now}? (Recommended: git checkout ${BASE_BRANCH} first)" 0; then
-    echo "  Stopped. From ${BASE_BRANCH}, ./release creates ${rel_branch} automatically." >&2
-    exit 1
-  fi
-  run git checkout -b "${rel_branch}"
+  release_fail \
+    "Release branch must be created from ${BASE_BRANCH}" \
+    "Currently on ${branch_now}" \
+    "git checkout ${BASE_BRANCH}" \
+    "git pull ${REMOTE} ${BASE_BRANCH}" \
+    "./release"
 }
 
 wait_for_merge_on_main() {
   local sha="$1"
   local rel_branch="$2"
 
-  echo ""
-  print_pr_help "${rel_branch}" "${MSG}"
-  echo ""
-  echo "Merge the PR when CI is green, then return here."
   if [[ "${DRY_RUN}" -eq 1 ]]; then
-    echo "DRY_RUN: would wait for Enter, then verify merge and tag."
+    echo "DRY_RUN: would poll for merge, then verify merge and tag."
     return 0
   fi
 
-  while true; do
-    read -r -p "Press Enter when merged to ${BASE_BRANCH} (Ctrl-C to stop — use ./release finish later)... " _
-    local merged
-    merged="$(resolve_merged_commit_sha "${rel_branch}" "${sha}" || true)"
-    if [[ -n "${merged}" ]]; then
-      MERGE_COMMIT_SHA="${merged}"
-      echo "  Merge commit to tag: ${MERGE_COMMIT_SHA:0:12}"
-      warn_if_main_moved_past_merge "${MERGE_COMMIT_SHA}"
-      return 0
-    fi
-    echo "  PR not merged yet (or could not resolve merge commit). Check the PR and try again." >&2
-  done
+  local merged poll_interval poll_max i
+  poll_interval="${NLC_RELEASE_MERGE_POLL_SECONDS:-15}"
+  poll_max="${NLC_RELEASE_MERGE_POLL_MAX:-120}"
+
+  if command -v gh >/dev/null 2>&1; then
+    echo ""
+    echo "Waiting for merged PR: ${rel_branch} → ${BASE_BRANCH} (poll every ${poll_interval}s)…"
+    for ((i = 0; i < poll_max; i++)); do
+      merged="$(resolve_merged_commit_sha "${rel_branch}" "${sha}" || true)"
+      if [[ -n "${merged}" ]]; then
+        MERGE_COMMIT_SHA="${merged}"
+        echo "  Merge commit to tag: ${MERGE_COMMIT_SHA:0:12}"
+        warn_if_main_moved_past_merge "${MERGE_COMMIT_SHA}"
+        return 0
+      fi
+      sleep "${poll_interval}"
+    done
+  fi
+
+  echo ""
+  print_pr_help "${rel_branch}" "${MSG:-Release}"
+  release_fail \
+    "Release PR not merged to ${BASE_BRANCH} yet" \
+    "No merge commit found for ${rel_branch}" \
+    "Merge the PR in GitHub when CI is green" \
+    "Re-run ./release after merge (same repo root)"
 }
 
 read_version_at_commit() {
@@ -429,13 +672,7 @@ cmd_finish() {
     exit 0
   fi
 
-  if confirm "Push tag ${TAG}?" 1; then
-    run git push "${REMOTE}" "${TAG}"
-  else
-    echo "  Skipped. When ready: git push ${REMOTE} ${TAG}"
-    run git checkout "${prev_branch}" 2>/dev/null || true
-    exit 0
-  fi
+  run git push "${REMOTE}" "${TAG}"
 
   run git checkout "${prev_branch}" 2>/dev/null || run git checkout "${BASE_BRANCH}" 2>/dev/null || true
 
@@ -445,6 +682,8 @@ cmd_finish() {
 }
 
 run_prepare_core() {
+  apply_release_infer
+
   echo ""
   if [[ "${MODE}" == "single" ]]; then
     echo "Natural Language Coding — release (single session)"
@@ -457,69 +696,43 @@ run_prepare_core() {
   echo "Step 0/9 — preflight (version/tag + shipped baseline)"
   run python3 tools/nlc_release_preflight.py --check
   echo "Step 0b/9 — shipped tag audit (ADR 0040)"
-  run python3 tools/nlc_release_shipped_tag_audit.py --check
+  run python3 tools/nlc_release_shipped_tag_audit.py --check --align-local --remote "${REMOTE}"
   echo "Step 0c/9 — full NLC audit (ADR 0038 / continuity, profile release-prep)"
   run python3 tools/full-nlc-audit.py --check --profile release-prep
 
   release_context_wizard
 
   CURRENT="$(python3 tools/nlc_release_bump.py --current)"
-  SUGGEST="$(python3 tools/nlc_release_bump.py --suggest 2>/dev/null | head -1)"
 
-  if [[ -z "${BUMP}" ]]; then
-    echo ""
-    echo "Step 1/9 — release type (ADR 0022):"
-    echo "  Current integrity/nlc-version.json: ${CURRENT}"
-    echo "  Suggested bump from your changes: ${SUGGEST} (hint only — not a default choice)"
-    python3 tools/nlc_release_bump.py --suggest >/dev/null
-    echo ""
-    PATCH_NEXT="$(python3 -c "m,mi,p='${CURRENT}'.split('.'); print(f'{m}.{mi}.{int(p)+1}')")"
-    MINOR_NEXT="$(python3 -c "m,mi,p='${CURRENT}'.split('.'); print(f'{m}.{int(mi)+1}.0')")"
-    MAJOR_NEXT="$(python3 -c "m,mi,p='${CURRENT}'.split('.'); print(f'{int(m)+1}.0.0')")"
-    echo "  p = patch  → ${PATCH_NEXT}"
-    echo "  m = minor  → ${MINOR_NEXT}"
-    echo "  M = major  → ${MAJOR_NEXT}"
-    echo "  k = keep   → ship ${CURRENT} as-is (no version file change)"
-    echo ""
-    while [[ -z "${BUMP}" ]]; do
-      read -r -p "Choice [p/m/M/k] (no default — suggested: ${SUGGEST}): " choice
-      case "${choice}" in
-        p|patch) BUMP="patch" ;;
-        m|minor) BUMP="minor" ;;
-        M|major) BUMP="major" ;;
-        k|keep) BUMP="keep" ;;
-        "")
-          echo "  Pick p, m, M, or k." >&2
-          ;;
-        *)
-          echo "  Invalid choice." >&2
-          ;;
-      esac
-    done
-  fi
-
-  TARGET="$(python3 tools/nlc_release_bump.py --peek "${BUMP}")"
-  RELEASE_BRANCH="$(release_branch_name "${TARGET}")"
   echo ""
-  echo "  Target version for this run: ${TARGET}"
+  echo "Step 1/9 — target version (inferred; automation may pass --bump)"
+  echo "  Current integrity/nlc-version.json: ${CURRENT}"
+  if [[ -z "${TARGET}" ]]; then
+    TARGET="$(python3 tools/nlc_release_bump.py --peek "${BUMP:-keep}")"
+  fi
+  if [[ -z "${RELEASE_BRANCH}" ]]; then
+    RELEASE_BRANCH="$(release_branch_name "${TARGET}")"
+  fi
+  echo "  Target version for this run: ${TARGET} (${RELEASE_BRANCH}, bump=${BUMP:-keep})"
 
-  python3 tools/nlc_release_context.py --remote "${REMOTE}" --base "${BASE_BRANCH}" --branch "${RELEASE_BRANCH}" || {
-    if ! confirm "Continue anyway (release branch may be missing commits from ${BASE_BRANCH})?" 0; then
-      exit 1
-    fi
-  }
+  if ! python3 tools/nlc_release_context.py --remote "${REMOTE}" --base "${BASE_BRANCH}" --branch "${RELEASE_BRANCH}"; then
+    release_fail \
+      "Release branch context NOT_MET" \
+      "${RELEASE_BRANCH} may be missing commits from ${BASE_BRANCH}" \
+      "python3 tools/nlc_release_context.py --remote ${REMOTE} --base ${BASE_BRANCH} --branch ${RELEASE_BRANCH}"
+  fi
 
   release_target_gate "${TARGET}"
 
   echo ""
-  echo "Step 3/9 — verify-deep (on main at shipped version; fail before notes or bump)"
-  run python3 tools/nlc.py --project . verify-deep
+  echo "Step 3/9 — verify-deep (shipped baseline; fail before notes or bump)"
+  verify_deep_at_shipped_baseline
 
   ensure_release_notes "${TARGET}" "HEAD"
   block_until_release_notes_met "${TARGET}"
 
   echo ""
-  echo "Step 5/9 — branch ${RELEASE_BRANCH} (version bump stays off main until here)"
+  echo "Step 5/9 — release line ${RELEASE_BRANCH}"
   ensure_release_branch "${RELEASE_BRANCH}"
 
   echo ""
@@ -570,14 +783,10 @@ run_prepare_core() {
       exit 1
     fi
     git status -sb
-    if confirm "Commit all changes with message: \"${MSG}\"?" 1; then
-      run git add -A
-      run git commit -m "${MSG}"
-      assert_release_notes_on_commit "${TARGET}"
-    else
-      echo "  Stopped: commit declined." >&2
-      exit 1
-    fi
+    echo "  Committing release record and notes: \"${MSG}\""
+    run git add -A
+    run git commit -m "${MSG}"
+    assert_release_notes_on_commit "${TARGET}"
   fi
 
   RELEASE_SHA="$(git rev-parse HEAD)"
@@ -589,16 +798,12 @@ run_prepare_core() {
     return 0
   fi
 
-  if confirm "Push ${RELEASE_BRANCH} to ${REMOTE}?" 1; then
-    run git push -u "${REMOTE}" "${RELEASE_BRANCH}"
-  else
-    echo "  Skipped push. When ready:"
-    echo "    git push -u ${REMOTE} ${RELEASE_BRANCH}"
-    exit 0
-  fi
+  run git push -u "${REMOTE}" "${RELEASE_BRANCH}"
 
   echo ""
   echo "RELEASE:BRANCH_PUSHED ${RELEASE_BRANCH} @ ${RELEASE_SHA}"
+  echo ""
+  echo "Next: merge the release PR in GitHub when CI is green, then re-run ./release."
 }
 
 cmd_prepare() {
@@ -613,7 +818,7 @@ cmd_prepare() {
   RELEASE_BRANCH="$(release_branch_name "${TARGET}")"
   print_pr_help "${RELEASE_BRANCH}" "${MSG:-Release v${TARGET}}"
   echo ""
-  echo "  After merge: git checkout ${BASE_BRANCH} && git pull && ./release finish"
+  echo "  After merge: ./release"
 }
 
 cmd_single() {
@@ -638,6 +843,7 @@ cmd_release() {
   if [[ "${MODE}" == "finish" ]]; then
     echo "Note: ./release resumes automatically (ADR 0039). Running tag leg." >&2
     load_resume_state
+    ensure_on_main
     if [[ -n "${RESUME_MERGE_COMMIT}" ]]; then
       MERGE_COMMIT_SHA="${RESUME_MERGE_COMMIT}"
     fi
@@ -652,21 +858,28 @@ cmd_release() {
   load_resume_state
   case "${RESUME_PHASE}" in
     tag_ready)
+      ensure_on_main
       echo "Resume: merged ${RESUME_BRANCH}; tagging ${RESUME_TAG}."
       MERGE_COMMIT_SHA="${RESUME_MERGE_COMMIT}"
-      if confirm "Continue tagging ${RESUME_TAG} at ${RESUME_MERGE_COMMIT:0:12}?" 1; then
-        cmd_finish
-      fi
+      cmd_finish
       ;;
     await_merge)
-      echo "Resume: ${RESUME_BRANCH} pushed; waiting for merge to ${BASE_BRANCH}."
-      RELEASE_SHA="$(git rev-parse "${REMOTE}/${RESUME_BRANCH}" 2>/dev/null || git rev-parse "${RESUME_BRANCH}")"
+      if ! git rev-parse --verify "${REMOTE}/${RESUME_BRANCH}^{commit}" >/dev/null 2>&1; then
+        release_fail "Release branch not on ${REMOTE}" \
+          "${RESUME_BRANCH} is not on the remote (resume await_merge requires a pushed PR branch)" \
+          "git fetch ${REMOTE} --prune" \
+          "git push -u ${REMOTE} ${RESUME_BRANCH}" \
+          "cd ${ROOT} && ./release"
+      fi
+      echo "Resume: ${RESUME_BRANCH} on ${REMOTE}; waiting for merge to ${BASE_BRANCH}."
+      RELEASE_SHA="$(git rev-parse "${REMOTE}/${RESUME_BRANCH}^{commit}")"
       wait_for_merge_on_main "${RELEASE_SHA}" "${RESUME_BRANCH}"
+      ensure_on_main
       cmd_finish
       ;;
     complete)
       echo "Release ${RESUME_TAG} already tags merge ${RESUME_MERGE_COMMIT:0:12}."
-      echo "  Start a new version with ./release --bump … on ${BASE_BRANCH}."
+      echo "  Start a new version: branch from main, commit, run ./release."
       ;;
     *)
       cmd_single

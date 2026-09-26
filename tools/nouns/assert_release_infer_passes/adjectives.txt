@@ -1,0 +1,2 @@
+# adjectives for assert_release_infer_passes
+emit-owned

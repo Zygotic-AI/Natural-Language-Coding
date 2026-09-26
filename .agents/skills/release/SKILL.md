@@ -8,9 +8,9 @@ disable-model-invocation: true
 
 **You remember one thing:** invoke **`/release`** in chat.
 
-**Your job:** run the **full pre-ship pipeline** — not a checklist for the human. **`/release` authorizes** the agent to commit the hub continuity/product batch, fix SSOT headers, remove stale `release/v*` branches, prove gates, run inference, then start **`./release`**. The human stays on **interactive** `./release` prompts only (release class, release notes text, “PR merged” wait, tag-move confirm) — not on git hygene the agent can do.
+**Your job:** run the **full pre-ship pipeline** — not a checklist for the human. **`/release` authorizes** the agent to commit the hub continuity/product batch, fix SSOT headers, remove stale `release/v*` branches, prove gates, run inference, then start **`./release`**. The orchestrator is **non-interactive** on deterministic legs; parse **`RELEASE:NOT_MET`** blocks and fix or re-run. **Human-only:** GitHub PR merge click, release notes **Highlights** content when invalid, **retag** confirm (`NLC_RELEASE_ALLOW_RETAG=1`).
 
-**Terminal orchestrator:** [`./release`](../../../docs/adoption/RELEASE.md) — ADR 0039. Start it after **Ship: GO** (or confirmed **GO with residuals**).
+**Terminal orchestrator:** [`./release`](../../../docs/adoption/RELEASE.md) — ADR 0039 + **production trunk** [ADR 0044](../../../adrs/0044-hub-release-production-trunk.md). Start after **Ship: GO** (or **GO with residuals**).
 
 **Do not** instruct the user to “commit and merge”, “update FINDINGS`, “delete stale branch”, or run `full-nlc-audit` by hand — **do it** (or fix failures and retry). **Do not** write `Released-by:`.
 
@@ -21,6 +21,7 @@ Do **not** run `./release` until every **blocking** row is true.
 | Criterion | Blocking? | Pass when | Evidence |
 | --------- | --------- | --------- | -------- |
 | Repo root | yes | NLC hub workspace | Path |
+| Ship branch (prepare) | yes | Ship work on any branch; orchestrator normalizes to **`release/v*`** via infer | `git branch` + ADR 0044 |
 | Agent closeout (Step 1A) | yes | Clean tree at ship HEAD **or** resume leg with no ship-intent dirty edits | `git status --porcelain` |
 | Resume probe | yes | Step 0 complete | `nlc_release_resume.py` |
 | Machine continuity | yes | **prepare:** `release-prep` MET on ship HEAD. **await_merge / tag_ready:** waived | Command output |
@@ -44,19 +45,22 @@ git ls-remote --tags origin 'v*' 2>/dev/null | tail -5
 ```
 
 - **`tag` / `planned_tag` in JSON** = name `./release` would create — **not** an existing ref unless **`git_tag_on_merge`** is true.
-- **`stale_release_branches`:** agent **deletes** those refs in Step 1A (local + `origin` when permitted).
+- **`stale_release_branches`:** merged `release/v*` **without** `hub-release-record.json` on the merge commit ([RCA 26-09-24](../../docs/rca/2026-09-24-release-resume-planned-tag-conflation.md)) — agent **deletes** those refs in Step 1A when fixing resume hygiene.
+- **`closed_release_branches`:** shipped release lines (git tag exists for that version) — **do not delete**; resume skips them for the next `./release`. Keep branch history unless the user asks to prune.
 
 | Phase | Agent path |
 | ----- | ---------- |
 | **prepare** | Steps 1 → 1A → 2–6 |
 | **await_merge** / **tag_ready** | Skip 1A commit burst if tree clean; skip Step 3 `release-prep`; **GO** → `./release` |
-| **complete** | Report shipped; new ship needs fresh prepare on `main` |
+| **complete** | Report shipped; new ship: branch from `main`, commit, **`./release`** |
 
 Never tell the user to run `./release finish` or `prepare` — **`./release`** only.
 
+Never tell the operator to **ignore or reinterpret** resume JSON ([`jidoka-ssot-output.md`](../../.agents/instructions/jidoka-ssot-output.md)); fix `nlc_release_resume.py` / docs when fields contradict SSOT.
+
 ### 1 — Bound ship state
 
-Record branch, short SHA, dirty file count. On **`main`** for **prepare**.
+Record branch, short SHA, dirty file count. **Prepare:** work on **`release/v*`** ([ADR 0044](../../../adrs/0044-hub-release-production-trunk.md)); do **not** commit ship batches to `main`.
 
 ### 1A — Agent continuity closeout (mandatory on **prepare**)
 
@@ -65,8 +69,8 @@ Record branch, short SHA, dirty file count. On **`main`** for **prepare**.
 Execute **in order** (fix and retry on NOT_MET; do not dump steps on the user):
 
 1. **Prove working tree** — `python3 tools/ci_fitness.py` → **CI:MET**. If FAIL, fix until MET (jidoka).
-2. **Stale `release/v*`** — for each name in **`stale_release_branches`**: `git branch -D <branch>`; `git push origin --delete <branch>` when remote exists (no force-push to `main`).
-3. **Stage and commit** all ship-intent changes on `main` (one or two commits: feature batch, then SSOT header if needed). Use repo commit message style; never `--no-verify`.
+2. **Stale `release/v*` only** — for each name in **`stale_release_branches`** (missing record on merge, not **`closed_release_branches`**): `git branch -D <branch>`; `git push origin --delete <branch>` when remote exists (no force-push to `main`).
+3. **Stage and commit** ship-intent changes on the **release line branch** (never `main`). If user is on `main` with work, create/checkout `release/v*` first, then commit. Use repo commit message style; never `--no-verify`.
 4. **FINDINGS header** — set `` `last_pass_sha:` `` and **Last pass** line to `git rev-parse --short HEAD`; run `python3 tools/fitness-findings-last-pass-fresh.py` → MET. Commit if not in step 3.
 5. **Inference record** — update [`integrity/full-nlc-audit-inference-record.json`](../../../integrity/full-nlc-audit-inference-record.json): `audit_sha`, `machine_verdict`, `continuity_verdict`, `phases_summary`, empty `p0_p1_product_blockers` when true. Commit if needed.
 6. **TODO continuity** — mark completed closeout rows `@done` when predicates MET (same commit or follow-up).
@@ -115,9 +119,9 @@ Before **GO with residuals**, cite product gaps per [`.agents/instructions/reply
 ./release
 ```
 
-Use `./release --yes` only if the user asked for routine auto-confirm. Report **NOT_MET** verbatim; agent fixes what is fixable outside interactive prompts, then re-run.
+No flags. Infer sets bump and `release/v*`. Report **`RELEASE:NOT_MET`** verbatim; agent fixes what is fixable, then re-run **`./release`**.
 
-**Human-only at terminal:** release class, release notes content, merge wait, retag confirm.
+**Human-only:** GitHub merge, editing Highlights in release notes when gate fails, retag env + confirm.
 
 ## Routing
 
