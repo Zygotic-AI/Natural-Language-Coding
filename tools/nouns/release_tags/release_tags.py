@@ -32,6 +32,63 @@ def tag_exists(tag: str, root: Path | None = None) -> bool:
     return proc.returncode == 0
 
 
+def tag_commit(tag: str, root: Path | None = None) -> str:
+    proc = _git("rev-parse", f"{tag}^{{commit}}", root=root)
+    return proc.stdout.strip() if proc.returncode == 0 else ""
+
+
+def remote_tag_commit_only(tag: str, remote: str = "origin", root: Path | None = None) -> str:
+    """Peeled commit for refs/tags/{tag} on remote (annotated tag object id is not the commit)."""
+    peeled = _git("ls-remote", remote, f"refs/tags/{tag}^{{}}", root=root)
+    if peeled.returncode == 0 and peeled.stdout.strip():
+        parts = peeled.stdout.strip().splitlines()[0].split()
+        if parts:
+            return parts[0]
+    proc = _git("ls-remote", remote, f"refs/tags/{tag}", root=root)
+    if proc.returncode == 0 and proc.stdout.strip():
+        parts = proc.stdout.strip().splitlines()[0].split()
+        if parts:
+            return parts[0]
+    return ""
+
+
+def remote_tag_commit(tag: str, remote: str = "origin", root: Path | None = None) -> str:
+    """Remote shipped tag commit when resolvable, else local peeled tag."""
+    remote_at = remote_tag_commit_only(tag, remote, root)
+    if remote_at:
+        return remote_at
+    return tag_commit(tag, root)
+
+
+def canonical_tag_commit(tag: str, remote: str = "origin", root: Path | None = None) -> str:
+    """SSOT shipped baseline commit for reset/verify (prefer remote tag object)."""
+    return remote_tag_commit(tag, remote, root)
+
+
+def local_remote_tag_divergence(
+    tag: str, remote: str = "origin", root: Path | None = None
+) -> tuple[str, str] | None:
+    """(local_commit, remote_commit) when both exist and differ."""
+    local = tag_commit(tag, root)
+    remote_at = remote_tag_commit_only(tag, remote, root)
+    if local and remote_at and local != remote_at:
+        return local, remote_at
+    return None
+
+
+def align_local_tag_to_remote(
+    tag: str, remote: str = "origin", root: Path | None = None
+) -> str | None:
+    """Replace local tag with the remote tag ref. Does not push. Returns peeled commit or None."""
+    diverged = local_remote_tag_divergence(tag, remote, root)
+    if not diverged:
+        return None
+    proc = _git("fetch", remote, f"+refs/tags/{tag}:refs/tags/{tag}", root=root)
+    if proc.returncode != 0:
+        return None
+    return tag_commit(tag, root) or None
+
+
 def tag_is_ancestor(tag: str, ref: str, root: Path | None = None) -> bool:
     return _git("merge-base", "--is-ancestor", tag, ref, root=root).returncode == 0
 

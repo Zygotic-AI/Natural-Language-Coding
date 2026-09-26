@@ -11,6 +11,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 
 
+def _has_fetch_depth_zero(yaml_text: str) -> bool:
+    return "fetch-depth: 0" in yaml_text or "fetch-depth:0" in yaml_text.replace(" ", "")
+
+
+def _runs_hub_fitness_suite(yaml_text: str) -> bool:
+    return "ci_fitness.py" in yaml_text or "ci-fitness.sh" in yaml_text
+
+
 def main() -> int:
     _ = sys.argv[1:]
     violations: list[str] = []
@@ -42,31 +50,62 @@ def main() -> int:
         violations.append(
             "nlc-release.sh must run full-nlc-audit.py --profile release-prep on prepare (ADR 0038)"
         )
+    if "release_fail" not in text:
+        violations.append("nlc-release.sh must use release_fail for NOT_MET remediation")
+    if "apply_release_infer" not in text or "nlc_release_infer.py" not in text:
+        violations.append("nlc-release.sh must use nlc_release_infer.py / apply_release_infer (zero-parameter)")
+    if "normalize_main_trunk_for_release" not in text:
+        violations.append("nlc-release.sh must auto-normalize impure main (zero-parameter ADR 0044)")
+    if (ROOT / "tools" / "nlc_release_infer.py").is_file() is False:
+        violations.append("missing nlc_release_infer.py")
+    if (ROOT / "tools" / "nlc_release_main_purity.py").is_file() is False:
+        violations.append("missing nlc_release_main_purity.py (ADR 0044)")
+    remediator = (ROOT / "tools" / "nlc_release_remediate.py").read_text(encoding="utf-8")
+    if "./release --bump" in remediator:
+        violations.append("nlc_release_remediate.py default Re-run must be ./release only (no --bump)")
+    forbidden_quiz = (
+        "Continue tagging",
+        "Choice [p/m/M/k]",
+        "Press Enter when merged",
+    )
+    for phrase in forbidden_quiz:
+        if phrase in text:
+            violations.append(f"nlc-release.sh must not contain interactive quiz: {phrase!r}")
 
     import subprocess
 
-    proc = subprocess.run(
-        [sys.executable, str(ROOT / "tools" / "assert-release-resume-invariant-passes.py")],
-        cwd=str(ROOT),
-        check=False,
-    )
-    if proc.returncode != 0:
-        violations.append("assert-release-resume-invariant-passes.py must MET")
+    for landmine in (
+        "assert-release-resume-invariant-passes.py",
+        "assert-release-infer-passes.py",
+    ):
+        proc = subprocess.run(
+            [sys.executable, str(ROOT / "tools" / landmine)],
+            cwd=str(ROOT),
+            check=False,
+        )
+        if proc.returncode != 0:
+            violations.append(f"{landmine} must MET")
 
     wf = workflow.read_text(encoding="utf-8") if workflow.is_file() else ""
     if "nlc_release_tag_gate.py" not in wf:
         violations.append("release.yml must run tag gate")
 
-    fitness_text = fitness_wf.read_text(encoding="utf-8") if fitness_wf.is_file() else ""
     landmine = ROOT / "tools" / "nouns" / "assert_release_tag_gate_fails" / "assert_release_tag_gate_fails.py"
     if landmine.is_file() and "BAD_COMMIT" in landmine.read_text(encoding="utf-8"):
-        if "fetch-depth: 0" not in fitness_text and "fetch-depth:0" not in fitness_text.replace(" ", ""):
-            violations.append(
-                "fitness.yml must use actions/checkout fetch-depth: 0 "
-                "(release landmines pin historic commits; shallow PR CI false-fails)"
-            )
+        for wf_path, wf_label in ((fitness_wf, "fitness.yml"), (workflow, "release.yml")):
+            wf_text = wf_path.read_text(encoding="utf-8") if wf_path.is_file() else ""
+            if _runs_hub_fitness_suite(wf_text) and not _has_fetch_depth_zero(wf_text):
+                violations.append(
+                    f"{wf_label} must use actions/checkout fetch-depth: 0 "
+                    "(hub fitness landmines pin historic commits; shallow CI false-fails)"
+                )
 
     release_md = (ROOT / "docs/adoption/RELEASE.md").read_text(encoding="utf-8", errors="replace")
+    if "0044" not in release_md and "production trunk" not in release_md.lower():
+        violations.append("RELEASE.md must document production trunk (ADR 0044)")
+    hero = release_md.split("## Your workflow", 1)[-1].split("##", 1)[0] if "## Your workflow" in release_md else ""
+    if hero and "--bump" in hero:
+        violations.append("RELEASE.md seven-step hero must not require --bump flags")
     if "prepare" in release_md and "./release finish" in release_md:
         if "deprecated" not in release_md.lower() and "one command" not in release_md.lower():
             if "/release" not in release_md and "one entrypoint" not in release_md.lower():

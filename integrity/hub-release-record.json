@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.2.0",
-  "release_branch": "release/v0.2.0",
-  "prepare_head": "7b1955412d282e3607df552470c63778ec8ec7b4"
+  "version": "0.3.0",
+  "release_branch": "release/v0.3.0",
+  "prepare_head": "023bad16c1ff969d5c3b760fcaa131bf2828fa3c"
 }

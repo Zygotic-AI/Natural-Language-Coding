@@ -1,0 +1,2 @@
+# adjectives for release_infer
+emit-owned

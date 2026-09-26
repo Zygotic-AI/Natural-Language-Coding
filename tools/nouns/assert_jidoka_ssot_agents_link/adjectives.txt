@@ -1,0 +1,2 @@
+# adjectives for assert_jidoka_ssot_agents_link
+emit-owned
