@@ -51,3 +51,5 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0041-product-completion-scope.md`](0041-product-completion-scope.md) | Product completion scope SSOT; hub pack registry v1 | Accepted |
 | [`0042-rule-ir-hub-product-boundary.md`](0042-rule-ir-hub-product-boundary.md) | Rule IR v1 product vs semantic expansion | Accepted |
 | [`0043-uc14-composable-adopt-boundary.md`](0043-uc14-composable-adopt-boundary.md) | UC14 adopt-time composable v1 | Accepted |
+| [`0044-hub-release-production-trunk.md`](0044-hub-release-production-trunk.md) | Production trunk: unreleased work stays off `main` | Accepted |
+| [`0045-hub-release-identity.md`](0045-hub-release-identity.md) | One release identity, one planner action | Accepted |

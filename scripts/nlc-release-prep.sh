@@ -48,7 +48,7 @@ RELEASE_PREP:READY
   commit:  ${SHA}
 
 After merge to main:
-  ./release finish
+  ./release
 
 See docs/adoption/RELEASE.md
 

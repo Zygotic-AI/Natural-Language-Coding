@@ -23,7 +23,7 @@
     "emit_path_open": 0,
     "other_or_lib": 0,
     "noun_backed_lib": 64,
-    "noun_backed_assert": 137,
+    "noun_backed_assert": 138,
     "noun_backed_fitness": 127,
     "fitness_only": 0,
     "covered_emit_path": 26
@@ -451,6 +451,10 @@
     },
     {
       "file": "assert-release-smoke-passes.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-release-state-passes.py",
       "class": "noun-backed-assert"
     },
     {
@@ -2232,6 +2236,14 @@
       "path": "tools/nouns/assert_release_smoke_passes/",
       "adapters": [
         "assert-release-smoke-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_release_state_passes",
+      "path": "tools/nouns/assert_release_state_passes/",
+      "adapters": [
+        "assert-release-state-passes.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },

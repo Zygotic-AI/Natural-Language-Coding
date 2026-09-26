@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source": "adrs/ACTIVE.md",
-  "active_sha256": "585801191f808e7be220236ee4de149451b088ab73b2a2db4fd4579e8d355788",
+  "active_sha256": "9b9dbe755051ba8372bbddeefb36f022fc2aab35c2233e43d52098feea88cbbd",
   "adrs": [
     {
       "adr": "0001",
@@ -212,7 +212,67 @@
       "lineage": "L-0035",
       "origin": "session",
       "effective": "2026-09-23"
+    },
+    {
+      "adr": "0036",
+      "lineage": "L-0036",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0037",
+      "lineage": "L-0037",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0038",
+      "lineage": "L-0038",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0039",
+      "lineage": "L-0039",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0040",
+      "lineage": "L-0040",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0041",
+      "lineage": "L-0041",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0042",
+      "lineage": "L-0042",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0043",
+      "lineage": "L-0043",
+      "origin": "session",
+      "effective": "2026-09-23"
+    },
+    {
+      "adr": "0044",
+      "lineage": "L-0044",
+      "origin": "session",
+      "effective": "2026-09-25"
+    },
+    {
+      "adr": "0045",
+      "lineage": "L-0045",
+      "origin": "session",
+      "effective": "2026-09-26"
     }
   ],
-  "written_at": "2026-09-23T12:05:11Z"
+  "written_at": "2026-09-26T14:10:24Z"
 }

@@ -54,6 +54,19 @@ def main() -> int:
         violations.append("nlc-release.sh must use release_fail for NOT_MET remediation")
     if "apply_release_infer" not in text or "nlc_release_infer.py" not in text:
         violations.append("nlc-release.sh must use nlc_release_infer.py / apply_release_infer (zero-parameter)")
+    if "nlc_release_state.py" not in text or "dispatch_release_plan" not in text:
+        violations.append("nlc-release.sh must plan through nlc_release_state.py before mutation (ADR 0045)")
+    if "--tag-argv" not in text:
+        violations.append("nlc-release.sh must create annotated tags via --tag-argv (explicit commit)")
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("run git tag -f") or stripped.startswith("git tag -f"):
+            violations.append("nlc-release.sh must not move an existing tag")
+            break
+    if "git worktree add --detach" not in text:
+        violations.append("nlc-release.sh must verify the shipped baseline in a worktree")
+    if "git stash push" in text:
+        violations.append("nlc-release.sh must not stash the working tree")
     if "normalize_main_trunk_for_release" not in text:
         violations.append("nlc-release.sh must auto-normalize impure main (zero-parameter ADR 0044)")
     if (ROOT / "tools" / "nlc_release_infer.py").is_file() is False:
@@ -77,6 +90,7 @@ def main() -> int:
     for landmine in (
         "assert-release-resume-invariant-passes.py",
         "assert-release-infer-passes.py",
+        "assert-release-state-passes.py",
     ):
         proc = subprocess.run(
             [sys.executable, str(ROOT / "tools" / landmine)],
@@ -103,6 +117,8 @@ def main() -> int:
     release_md = (ROOT / "docs/adoption/RELEASE.md").read_text(encoding="utf-8", errors="replace")
     if "0044" not in release_md and "production trunk" not in release_md.lower():
         violations.append("RELEASE.md must document production trunk (ADR 0044)")
+    if "0045" not in release_md:
+        violations.append("RELEASE.md must document release identity (ADR 0045)")
     hero = release_md.split("## Your workflow", 1)[-1].split("##", 1)[0] if "## Your workflow" in release_md else ""
     if hero and "--bump" in hero:
         violations.append("RELEASE.md seven-step hero must not require --bump flags")
