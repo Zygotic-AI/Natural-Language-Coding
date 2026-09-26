@@ -1,0 +1,2 @@
+# adjectives for assert_release_state_passes
+emit-owned

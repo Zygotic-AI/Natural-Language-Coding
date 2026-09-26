@@ -44,6 +44,8 @@ Every **Accepted** [ADR](../adrs/README.md) must map to **runnable** binders (to
 | 0041 | `product-completion-scope.json` + `hub-pack-registry.json` + `fitness-product-completion-scope.py` + `fitness-hub-pack-registry.py` | bound (v1) |
 | 0042 | `rule-ir-product-boundary.json` + `fitness-adr-0007-product-boundary.py` + rule-runner landmines | bound (v1) |
 | 0043 | `uc14-product-boundary.json` + `fitness-uc14-product-boundary.py` + rule-adoption landmines | bound (v1) |
+| 0044 | `nlc_release_main_purity.py` + `fitness-adr-0039-release-binder.py` | bound (v1) |
+| 0045 | `nlc_release_state.py` + `assert-release-state-passes.py` + `fitness-adr-0039-release-binder.py` | bound (v1) |
 
 **0007/0009 gap:** full semantic rule runners and per-language call-tree packs are not MET; v1 binders are `rule-runner`, `rule-emit`, and `call-tree`. ADR 0023 marker emit is bound via `rule-emit` / `goal-scaffold` / verify audit.
 

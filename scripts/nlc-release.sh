@@ -29,7 +29,7 @@ Automation overrides (optional):
   --bump patch|minor|major|keep
   --from-branch NAME        Use named release line (must match release/v*)
   --message "text"
-  --yes                     Deprecated: default is non-interactive (retag still requires env)
+  --yes                     Deprecated: default is non-interactive (existing tags are not moved)
   --no-push
   --dry-run
   -h, --help
@@ -108,8 +108,8 @@ ensure_on_main() {
   run git checkout "${BASE_BRANCH}" || release_fail \
     "Cannot checkout ${BASE_BRANCH}" \
     "On branch ${branch_now}" \
-    "git stash push -m 'release' --include-untracked" \
-    "git checkout ${BASE_BRANCH}"
+    "Commit or clean uncommitted work, then git checkout ${BASE_BRANCH}" \
+    "./release does not stash"
   run git pull "${REMOTE}" "${BASE_BRANCH}" 2>/dev/null || true
 }
 
@@ -122,7 +122,35 @@ load_release_infer() {
   if [[ -n "${as_branch}" ]]; then
     infer_args+=(--as-branch "${as_branch}")
   fi
+  set +e
   eval "$(python3 tools/nlc_release_infer.py "${infer_args[@]}")"
+  local infer_rc=$?
+  set -e
+  if [[ "${infer_rc}" -ne 0 && "${INFER_BLOCK:-0}" != "1" ]]; then
+    exit "${infer_rc}"
+  fi
+}
+
+release_plan_cache() {
+  if [[ -z "${RELEASE_PLAN_CACHE:-}" || ! -f "${RELEASE_PLAN_CACHE}" ]]; then
+    RELEASE_PLAN_CACHE="$(mktemp)"
+    python3 tools/nlc_release_state.py --remote "${REMOTE}" --base "${BASE_BRANCH}" --emit facts >"${RELEASE_PLAN_CACHE}"
+  fi
+  printf '%s\n' "${RELEASE_PLAN_CACHE}"
+}
+
+invalidate_release_plan_cache() {
+  if [[ -n "${RELEASE_PLAN_CACHE:-}" && -f "${RELEASE_PLAN_CACHE}" ]]; then
+    rm -f "${RELEASE_PLAN_CACHE}"
+  fi
+  RELEASE_PLAN_CACHE=""
+}
+
+release_plan_field() {
+  local field="$1"
+  local cache
+  cache="$(release_plan_cache)"
+  python3 tools/nlc_release_state.py --facts "${cache}" --print "${field}"
 }
 
 run_inferred_prepare_actions() {
@@ -181,15 +209,7 @@ run_inferred_prepare_actions() {
 normalize_main_trunk_for_release() {
   local work_branch="${INFER_WORK_BRANCH:-}"
   local shipped_tag="${INFER_SHIPPED_TAG:-}"
-  local stashed=0
-
-  _normalize_stash_orphan_warn() {
-    if [[ "${stashed}" -ne 1 ]]; then
-      return 0
-    fi
-    echo "  WARNING: trunk normalize stashed your tree and did not pop it (run interrupted)." >&2
-    echo "  fix: git checkout ${work_branch} && git stash pop   # message: nlc-release trunk normalize" >&2
-  }
+  local allow_repoint
 
   if [[ -z "${work_branch}" || -z "${shipped_tag}" ]]; then
     release_fail "Cannot normalize production trunk" \
@@ -197,16 +217,27 @@ normalize_main_trunk_for_release() {
       "Re-run ./release"
   fi
 
+  allow_repoint="$(release_plan_field allow_local_main_repoint)"
+  if [[ "${allow_repoint}" != "true" ]]; then
+    release_fail "Refusing to move local ${BASE_BRANCH}" \
+      "origin/${BASE_BRANCH} is not the shipped tag, or a merged candidate failed version identity" \
+      -- \
+      "Do not git reset --hard ${BASE_BRANCH}" \
+      "Do not force-push ${BASE_BRANCH}" \
+      "Repair the release line, then ./release"
+  fi
+
+  if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
+    release_fail "Dirty tree blocks trunk normalize" \
+      "Uncommitted work stays in the working tree; ./release does not stash" \
+      -- \
+      "Commit or remove the uncommitted work on the release line" \
+      "./release"
+  fi
+
   echo ""
   echo "Step trunk/9 — production trunk normalize (ADR 0044; zero-parameter ./release)"
   echo "  Work branch: ${work_branch}  Ship target: ${INFER_RELEASE_BRANCH:-?}  Tag baseline: ${shipped_tag}"
-
-  if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
-    echo "  Orchestrator stash (not manual): dirty tree before branch moves…"
-    trap _normalize_stash_orphan_warn EXIT
-    run git stash push -u -m "nlc-release trunk normalize"
-    stashed=1
-  fi
 
   if git show-ref --verify --quiet "refs/heads/${work_branch}"; then
     echo "  Using existing ${work_branch}."
@@ -229,14 +260,6 @@ normalize_main_trunk_for_release() {
   echo "  ${BASE_BRANCH} now at ${shipped_tag} (${shipped_commit:0:12}; local only; no push)."
 
   run git checkout "${work_branch}"
-  if [[ "${stashed}" -eq 1 ]]; then
-    run git stash pop || release_fail \
-      "Stash pop failed after trunk normalize" \
-      "Resolve conflicts on ${work_branch}" \
-      "git status"
-    stashed=0
-    trap - EXIT
-  fi
 }
 
 apply_release_infer() {
@@ -290,27 +313,10 @@ apply_release_infer() {
 }
 
 verify_deep_at_shipped_baseline() {
-  local shipped_tag shipped_commit restore_ref detached=0
+  local shipped_tag shipped_commit worktree verify_rc
   read -r shipped_tag shipped_commit < <(
     python3 -c "import sys; sys.path.insert(0,'tools'); from nlc_release_tags import last_shipped_tag, canonical_tag_commit; t=last_shipped_tag('HEAD') or ''; c=canonical_tag_commit(t, '${REMOTE}') if t else ''; print(t, c)"
   )
-  restore_ref="$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true)"
-  if [[ -z "${restore_ref}" ]]; then
-    restore_ref="${RELEASE_BRANCH:-}"
-  fi
-  if [[ -z "${restore_ref}" ]]; then
-    restore_ref="${BASE_BRANCH}"
-  fi
-
-  _restore_after_shipped_verify() {
-    if [[ "${detached}" -ne 1 ]]; then
-      return 0
-    fi
-    echo "  Restoring ${restore_ref} after shipped-baseline verify-deep…"
-    git checkout "${restore_ref}" 2>/dev/null || git checkout "${BASE_BRANCH}" 2>/dev/null || true
-    detached=0
-  }
-
   if [[ -z "${shipped_tag}" ]]; then
     echo "  No shipped tag reachable — verify-deep on release line HEAD."
     run python3 tools/nlc.py --project . verify-deep
@@ -319,28 +325,21 @@ verify_deep_at_shipped_baseline() {
   if [[ -z "${shipped_commit}" ]]; then
     shipped_commit="${shipped_tag}^{commit}"
   fi
-  echo "  verify-deep at shipped baseline ${shipped_tag} (${shipped_commit:0:12}; ADR 0022 / 0044)."
-  trap _restore_after_shipped_verify EXIT
-  run git checkout --detach "${shipped_commit}"
-  detached=1
+  echo "  verify-deep at shipped baseline ${shipped_tag} (${shipped_commit:0:12}; isolated worktree)."
+  worktree="$(mktemp -d)"
+  run git worktree add --detach "${worktree}" "${shipped_commit}"
   set +e
-  python3 tools/nlc.py --project . verify-deep
-  local verify_rc=$?
+  (
+    cd "${worktree}" || exit 1
+    python3 tools/nlc.py --project . verify-deep
+  )
+  verify_rc=$?
   set -e
-  _restore_after_shipped_verify
-  trap - EXIT
+  git worktree remove --force "${worktree}" >/dev/null 2>&1 || true
+  rm -rf "${worktree}"
   if [[ "${verify_rc}" -ne 0 ]]; then
     exit "${verify_rc}"
   fi
-}
-
-confirm_tag_move() {
-  local prompt="$1"
-  if [[ -n "${NLC_RELEASE_ALLOW_RETAG:-}" ]]; then
-    return 0
-  fi
-  read -r -p "${prompt} [y/N] (requires explicit yes; --yes does not apply) " ans
-  [[ "${ans}" =~ ^[Yy] ]]
 }
 
 release_branch_name() {
@@ -599,6 +598,18 @@ cmd_finish() {
   echo ""
   echo "Natural Language Coding — release tag leg"
 
+  invalidate_release_plan_cache
+  if [[ "$(python3 tools/nlc_release_state.py --facts "$(release_plan_cache)" --permits create_tag)" != "yes" ]]; then
+    release_fail "Refusing to create a release tag" \
+      "Planner phase $(release_plan_field phase) action $(release_plan_field action)" \
+      -- \
+      "Do not tag a merge whose version file, record, and branch disagree" \
+      "Do not move an existing tag" \
+      "Re-run ./release"
+  fi
+  tag_at="$(release_plan_field merge_sha)"
+  release_branch="$(release_plan_field desired_branch)"
+
   if [[ -z "${release_branch}" ]]; then
     local guess
     guess="$(python3 tools/nlc_release_bump.py --current)"
@@ -630,6 +641,14 @@ cmd_finish() {
     echo "RELEASE:NOT_MET cannot read integrity/nlc-version.json at merge commit ${tag_at:0:12}" >&2
     exit 1
   fi
+  if [[ -n "${release_branch}" ]]; then
+    local line_ver="${release_branch#release/v}"
+    if [[ "${TARGET}" != "${line_ver}" ]]; then
+      echo "RELEASE:NOT_MET ${release_branch} version ${line_ver} != ${TARGET} at ${tag_at:0:12}" >&2
+      echo "  Refusing to tag v${TARGET} while shipping ${release_branch}." >&2
+      exit 1
+    fi
+  fi
   TAG="v${TARGET}"
   release_branch="$(release_branch_name "${TARGET}")"
 
@@ -649,18 +668,28 @@ cmd_finish() {
   if git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null; then
     local existing
     existing="$(git rev-parse "${TAG}^{commit}")"
-    if [[ "${existing}" == "${tag_at}" ]]; then
-      echo "  Tag ${TAG} already points at merge commit."
-    else
-      echo "  Tag ${TAG} exists at ${existing:0:12} (not merge commit)."
-      if ! confirm_tag_move "Move tag ${TAG} to merge commit ${tag_at:0:12}?"; then
-        run git checkout "${prev_branch}" 2>/dev/null || true
-        exit 1
-      fi
-      run git tag -f -a "${TAG}" -m "Natural Language Coding hub ${TARGET}"
+    if [[ "${existing}" != "${tag_at}" ]]; then
+      release_fail "Refusing to move ${TAG}" \
+        "Tag peels to ${existing:0:12}, not merge ${tag_at:0:12}" \
+        -- \
+        "Do not run git tag -f" \
+        "Re-run ./release"
     fi
+    echo "  Tag ${TAG} already points at merge commit."
   else
-    run git tag -a "${TAG}" -m "Natural Language Coding hub ${TARGET}"
+    local -a tag_cmd=()
+    mapfile -t tag_cmd < <(python3 tools/nlc_release_state.py --tag-argv --tag "${TAG}" --commit "${tag_at}")
+    run "${tag_cmd[@]}"
+  fi
+  local peel
+  peel="$(git rev-parse "${TAG}^{commit}")"
+  if [[ "${peel}" != "${tag_at}" ]]; then
+    git tag -d "${TAG}" >/dev/null 2>&1 || true
+    release_fail "Tag ${TAG} did not land on ${tag_at:0:12}" \
+      "Peel is ${peel:0:12}" \
+      -- \
+      "The local tag was deleted because it did not match the merge commit" \
+      "Re-run ./release"
   fi
 
   echo ""
@@ -737,7 +766,11 @@ run_prepare_core() {
 
   echo ""
   echo "Step 6/9 — write version (on release branch only)"
-  if [[ "${BUMP}" == "keep" ]]; then
+  if [[ "${CURRENT}" != "${TARGET}" ]]; then
+    echo "  Aligning integrity/nlc-version.json ${CURRENT} -> ${TARGET} (release line ${RELEASE_BRANCH}; bump=${BUMP:-keep} does not keep the shipped file version)."
+    run python3 tools/nlc_release_bump.py --align-to "${TARGET}"
+    CURRENT="${TARGET}"
+  elif [[ "${BUMP}" == "keep" ]]; then
     echo "  Keeping ${TARGET}"
   else
     run python3 tools/nlc_release_bump.py --apply "${BUMP}"
@@ -811,7 +844,7 @@ cmd_prepare() {
   if [[ "${NO_PUSH}" -eq 1 ]]; then
     echo ""
     echo "RELEASE:READY_LOCAL branch=$(release_branch_name "$(python3 tools/nlc_release_bump.py --current)")"
-    echo "  Next: PR → merge → ./release finish"
+    echo "  Next: PR → merge → ./release"
     exit 0
   fi
   TARGET="$(python3 tools/nlc_release_bump.py --current)"
@@ -821,17 +854,34 @@ cmd_prepare() {
   echo "  After merge: ./release"
 }
 
+assert_version_matches_release_line() {
+  local rel_branch="$1"
+  local at_ref="${2:-HEAD}"
+  local file_ver line_ver
+  file_ver="$(read_version_at_commit "${at_ref}")"
+  line_ver="${rel_branch#release/v}"
+  if [[ -z "${file_ver}" || "${file_ver}" != "${line_ver}" ]]; then
+    release_fail "Release version does not match release branch" \
+      "${rel_branch} @ ${at_ref:0:12} has integrity/nlc-version.json ${file_ver:-missing}; expected ${line_ver}" \
+      "Do not tag or wait on a different release/v* line" \
+      "Set integrity/nlc-version.json to ${line_ver} on ${rel_branch}, commit, push, then ./release"
+  fi
+}
+
 cmd_single() {
   run_prepare_core
   if [[ "${NO_PUSH}" -eq 1 ]]; then
     echo "  --no-push: cannot complete single-session tag without push."
-    echo "  Use ./release finish after you push and merge."
+    echo "  Use ./release after you push and merge."
     exit 0
   fi
-  TARGET="$(python3 tools/nlc_release_bump.py --current)"
-  RELEASE_BRANCH="$(release_branch_name "${TARGET}")"
+  # Identity is the branch just pushed, not a re-read of a stale version file.
+  local pushed_branch="${RELEASE_BRANCH}"
   RELEASE_SHA="$(git rev-parse HEAD)"
-  wait_for_merge_on_main "${RELEASE_SHA}" "${RELEASE_BRANCH}"
+  assert_version_matches_release_line "${pushed_branch}" "${RELEASE_SHA}"
+  TARGET="${pushed_branch#release/v}"
+  RESUME_BRANCH="${pushed_branch}"
+  wait_for_merge_on_main "${RELEASE_SHA}" "${pushed_branch}"
   cmd_finish
 }
 
@@ -839,11 +889,63 @@ load_resume_state() {
   eval "$(python3 tools/nlc_release_resume.py --remote "${REMOTE}" --base "${BASE_BRANCH}")"
 }
 
+dispatch_release_plan() {
+  local phase action
+  release_plan_cache >/dev/null
+  phase="$(release_plan_field phase)"
+  action="$(release_plan_field action)"
+  case "${phase}" in
+    BLOCKED|INVALID_MERGED)
+      python3 tools/nlc_release_state.py --facts "$(release_plan_cache)" --emit remediation || true
+      exit 1
+      ;;
+    TAG_READY)
+      MERGE_COMMIT_SHA="$(release_plan_field merge_sha)"
+      RESUME_BRANCH="$(release_plan_field desired_branch)"
+      cmd_finish
+      exit 0
+      ;;
+    TAG_CREATED_LOCAL)
+      local tag sha peel
+      tag="$(release_plan_field planned_tag)"
+      sha="$(release_plan_field merge_sha)"
+      peel="$(git rev-parse "${tag}^{commit}")"
+      if [[ "${peel}" != "${sha}" ]]; then
+        release_fail "Local ${tag} peel does not match the merge commit" \
+          "peel ${peel:0:12} merge ${sha:0:12}" \
+          -- \
+          "Do not run git tag -f" \
+          "Re-run ./release"
+      fi
+      if [[ "$(python3 tools/nlc_release_state.py --facts "$(release_plan_cache)" --permits push_tag)" != "yes" ]]; then
+        release_fail "Refusing to push ${tag}" "Planner did not allow push_tag" -- "Re-run ./release"
+      fi
+      if [[ "${NO_PUSH}" -eq 1 ]]; then
+        echo "RELEASE:READY_LOCAL tag=${tag} commit=${sha}"
+        exit 0
+      fi
+      run git push "${REMOTE}" "${tag}"
+      echo "RELEASE:TAG_PUSHED ${tag} @ ${sha:0:12}"
+      exit 0
+      ;;
+    TAGGED_PUBLISH_PENDING|PUBLISH_FAILED|SHIPPED_COMPLETE)
+      python3 tools/nlc_release_state.py --facts "$(release_plan_cache)" --emit remediation || true
+      exit 0
+      ;;
+    AWAIT_PR)
+      if [[ "${action}" == "EXIT_AWAIT" ]]; then
+        python3 tools/nlc_release_state.py --facts "$(release_plan_cache)" --emit remediation || true
+        exit 0
+      fi
+      ;;
+  esac
+}
+
 cmd_release() {
+  dispatch_release_plan
   if [[ "${MODE}" == "finish" ]]; then
     echo "Note: ./release resumes automatically (ADR 0039). Running tag leg." >&2
     load_resume_state
-    ensure_on_main
     if [[ -n "${RESUME_MERGE_COMMIT}" ]]; then
       MERGE_COMMIT_SHA="${RESUME_MERGE_COMMIT}"
     fi
@@ -858,7 +960,6 @@ cmd_release() {
   load_resume_state
   case "${RESUME_PHASE}" in
     tag_ready)
-      ensure_on_main
       echo "Resume: merged ${RESUME_BRANCH}; tagging ${RESUME_TAG}."
       MERGE_COMMIT_SHA="${RESUME_MERGE_COMMIT}"
       cmd_finish
@@ -873,8 +974,8 @@ cmd_release() {
       fi
       echo "Resume: ${RESUME_BRANCH} on ${REMOTE}; waiting for merge to ${BASE_BRANCH}."
       RELEASE_SHA="$(git rev-parse "${REMOTE}/${RESUME_BRANCH}^{commit}")"
+      assert_version_matches_release_line "${RESUME_BRANCH}" "${RELEASE_SHA}"
       wait_for_merge_on_main "${RELEASE_SHA}" "${RESUME_BRANCH}"
-      ensure_on_main
       cmd_finish
       ;;
     complete)

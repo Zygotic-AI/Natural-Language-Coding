@@ -505,6 +505,10 @@ def main() -> int:
         [sys.executable, str(TOOLS / "assert-release-infer-passes.py")],
     )
     run(
+        "assert-release-state",
+        [sys.executable, str(TOOLS / "assert-release-state-passes.py")],
+    )
+    run(
         "assert-jidoka-ssot-agents-link",
         [sys.executable, str(TOOLS / "assert-jidoka-ssot-agents-link-passes.py")],
     )

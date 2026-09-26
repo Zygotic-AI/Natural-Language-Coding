@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 **You remember one thing:** invoke **`/release`** in chat.
 
-**Your job:** run the **full pre-ship pipeline** — not a checklist for the human. **`/release` authorizes** the agent to commit the hub continuity/product batch, fix SSOT headers, remove stale `release/v*` branches, prove gates, run inference, then start **`./release`**. The orchestrator is **non-interactive** on deterministic legs; parse **`RELEASE:NOT_MET`** blocks and fix or re-run. **Human-only:** GitHub PR merge click, release notes **Highlights** content when invalid, **retag** confirm (`NLC_RELEASE_ALLOW_RETAG=1`).
+**Your job:** run the **full pre-ship pipeline** — not a checklist for the human. **`/release` authorizes** the agent to commit the hub continuity/product batch, fix SSOT headers, remove stale `release/v*` branches, prove gates, run inference, then start **`./release`**. The orchestrator is **non-interactive** on deterministic legs; parse **`RELEASE:NOT_MET`** blocks and fix or re-run. **Human-only:** GitHub PR merge click, and release notes **Highlights** content when invalid. Do **not** move an existing tag, `reset` `main`, or force-push. Phase comes from `nlc_release_state.py` ([ADR 0045](../../../adrs/0045-hub-release-identity.md)). `INVALID_MERGED` means stop: do not tag that merge.
 
 **Terminal orchestrator:** [`./release`](../../../docs/adoption/RELEASE.md) — ADR 0039 + **production trunk** [ADR 0044](../../../adrs/0044-hub-release-production-trunk.md). Start after **Ship: GO** (or **GO with residuals**).
 
@@ -121,7 +121,7 @@ Before **GO with residuals**, cite product gaps per [`.agents/instructions/reply
 
 No flags. Infer sets bump and `release/v*`. Report **`RELEASE:NOT_MET`** verbatim; agent fixes what is fixable, then re-run **`./release`**.
 
-**Human-only:** GitHub merge, editing Highlights in release notes when gate fails, retag env + confirm.
+**Human-only:** GitHub merge, and editing Highlights in release notes when the notes gate fails. Do not retag.
 
 ## Routing
 

@@ -7,6 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))
 from nlc_release_tags import parse_semver  # noqa: E402
+from nouns.release_bump import versions_match_release_line  # noqa: E402
 from nouns.release_infer import (  # noqa: E402
     plan_next_release_target,
     plan_prepare_action,
@@ -52,6 +53,13 @@ def main() -> int:
     )
     if action3 != "stay":
         print("ASSERT:FAIL stay on release line")
+        return 1
+
+    if versions_match_release_line("release/v0.3.0", "0.2.0"):
+        print("ASSERT:FAIL stale 0.2.0 file must not match release/v0.3.0")
+        return 1
+    if not versions_match_release_line("release/v0.3.0", "0.3.0"):
+        print("ASSERT:FAIL release line version must match file")
         return 1
 
     print("ASSERT:PASS release infer planning (zero-parameter)")
