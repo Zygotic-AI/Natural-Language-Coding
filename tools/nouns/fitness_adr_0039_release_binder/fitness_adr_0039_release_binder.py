@@ -58,6 +58,10 @@ def main() -> int:
         violations.append("nlc-release.sh must plan through nlc_release_state.py before mutation (ADR 0045)")
     if "--tag-argv" not in text:
         violations.append("nlc-release.sh must create annotated tags via --tag-argv (explicit commit)")
+    if ".[0].mergeCommit" in text or "ancestry-path" in text:
+        violations.append("nlc-release.sh must match a merged PR by head SHA, not the first result")
+    if "headRefOid" not in text:
+        violations.append("nlc-release.sh must select the pull request whose head SHA is the candidate")
     for line in text.splitlines():
         stripped = line.strip()
         if stripped.startswith("run git tag -f") or stripped.startswith("git tag -f"):

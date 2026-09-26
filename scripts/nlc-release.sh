@@ -362,20 +362,19 @@ github_compare_url() {
 resolve_merged_commit_sha() {
   local rel_branch="$1"
   local release_sha="$2"
-  local sha="" main_ref="${REMOTE}/${BASE_BRANCH}"
+  local sha=""
 
   if command -v gh >/dev/null 2>&1; then
-    sha="$(gh pr list --head "${rel_branch}" --base "${BASE_BRANCH}" --state merged \
-      --json mergeCommit -q '.[0].mergeCommit.oid' 2>/dev/null || true)"
-    if [[ "${sha}" == "null" || -z "${sha}" ]]; then
-      sha=""
+    local -a matches=()
+    mapfile -t matches < <(gh pr list --head "${rel_branch}" --base "${BASE_BRANCH}" --state merged \
+      --json headRefOid,mergeCommit \
+      --jq --arg head "${release_sha}" '.[] | select(.headRefOid==$head) | .mergeCommit.oid' 2>/dev/null || true)
+    if [[ "${#matches[@]}" -gt 1 ]]; then
+      echo "More than one merged PR matches ${release_sha:0:12}." >&2
+      return 1
     fi
-  fi
-
-  if [[ -z "${sha}" ]]; then
-    run git fetch "${REMOTE}" "${BASE_BRANCH}" "${rel_branch}" 2>/dev/null || true
-    if git merge-base --is-ancestor "${release_sha}" "${main_ref}" 2>/dev/null; then
-      sha="$(git rev-list --ancestry-path "${release_sha}..${main_ref}" 2>/dev/null | tail -n 1 || true)"
+    if [[ "${#matches[@]}" -eq 1 && "${matches[0]}" != "null" && -n "${matches[0]}" ]]; then
+      sha="${matches[0]}"
     fi
   fi
 
