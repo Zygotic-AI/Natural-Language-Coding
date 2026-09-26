@@ -12,7 +12,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from nlc_release_tag_gate import check_static, tag_from_version  # noqa: E402
-from nlc_release_tags import last_shipped_tag, tag_version  # noqa: E402
+from nlc_release_tags import (  # noqa: E402
+    align_local_tag_to_remote,
+    canonical_tag_commit,
+    last_shipped_tag,
+    local_remote_tag_divergence,
+    tag_version,
+)
 from nlc_requirements import hub_tool  # noqa: E402
 
 
@@ -56,6 +62,12 @@ def main() -> int:
     parser.add_argument("--to", dest="to_ref", default="HEAD", help="Git ref for tag ancestry")
     parser.add_argument("--tag", default=None, help="Override tag (landmine / tests)")
     parser.add_argument("--commit", default=None, help="Override commit (with --tag)")
+    parser.add_argument("--remote", default="origin")
+    parser.add_argument(
+        "--align-local",
+        action="store_true",
+        help="Move local shipped tag to origin commit before audit (no push)",
+    )
     args = parser.parse_args()
 
     if not args.check:
@@ -70,7 +82,31 @@ def main() -> int:
         if not tag:
             print("RELEASE_SHIPPED_TAG:MET (no v*.*.* tag on history)")
             return 0
-        commit = _git_rev_parse(f"{tag}^{{commit}}")
+        if args.align_local:
+            moved = align_local_tag_to_remote(tag, args.remote, ROOT)
+            if moved:
+                print(
+                    f"RELEASE_SHIPPED_TAG:ALIGNED {tag} -> {moved[:12]} "
+                    f"(local only; matches {args.remote}; no push)"
+                )
+        diverged = local_remote_tag_divergence(tag, args.remote, ROOT)
+        if diverged:
+            local_at, remote_at = diverged
+            print("RELEASE_SHIPPED_TAG:NOT_MET", file=sys.stderr)
+            print(
+                f"  What's wrong: local {tag} at {local_at[:12]} != "
+                f"{args.remote} tag at {remote_at[:12]}",
+                file=sys.stderr,
+            )
+            print(
+                f"  fix: git fetch {args.remote} --tags && git tag -f {tag} {remote_at} "
+                f"(or delete local tag and re-fetch)",
+                file=sys.stderr,
+            )
+            return 1
+        commit = canonical_tag_commit(tag, args.remote, ROOT)
+        if not commit:
+            commit = _git_rev_parse(f"{tag}^{{commit}}")
         if not commit:
             print("RELEASE_SHIPPED_TAG:NOT_MET", file=sys.stderr)
             print(f"  What's wrong: cannot resolve commit for tag {tag}", file=sys.stderr)

@@ -23,6 +23,8 @@ Async work (PR review, merge, CI) is normal; the human surface must still be **o
 
 3. **Decompose internally, not in the menu.** Verify, notes, bump, prep, PR, merge wait, tag, and push are **steps inside** `./release`, not separate human products—aligned with [ADR 0020](0020-human-vs-agent-commands.md) (humans run `./release`; agents run maintainer tools).
 
+4. **Zero-parameter public surface (2026-09-25).** The documented human path is **`./release` with no required flags**. Version and `release/v*` branch are inferred ([`nlc_release_infer.py`](../tools/nlc_release_infer.py)); CLI flags remain for automation overrides only ([`RELEASE.md`](../docs/adoption/RELEASE.md) appendix).
+
 ## Consequences
 
 - [`docs/adoption/RELEASE.md`](../docs/adoption/RELEASE.md) documents **`./release` only** as the human path; `prepare` / `finish` become implementation details or deprecated aliases that forward into the state machine.

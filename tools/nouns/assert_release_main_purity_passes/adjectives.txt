@@ -1,0 +1,2 @@
+# adjectives for assert_release_main_purity_passes
+emit-owned
