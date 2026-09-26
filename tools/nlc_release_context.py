@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from nlc_release_resume import list_release_branches  # noqa: E402
+from nlc_release_resume import detect, list_release_branches  # noqa: E402
 from nlc_requirements import hub_tool  # noqa: E402
 
 
@@ -55,9 +55,14 @@ def main() -> int:
         if not branches:
             print("RELEASE_CONTEXT: no release/v* branches found")
             return 0
+        state = detect(args.remote, args.base)
+        closed = set(state.get("closed_release_branches") or [])
         print("RELEASE_CONTEXT: candidate release branches:")
         for b in branches:
-            print(f"  - {b}")
+            if b in closed:
+                print(f"  - {b} (shipped — closed; not an active ship target)")
+            else:
+                print(f"  - {b}")
         return 0
 
     if args.branch:

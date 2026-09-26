@@ -52,6 +52,8 @@ Skills and portable instructions live under [`.agents/`](.agents/). End-to-end c
 
 **Take me literally (always):** Quote the user’s scope in your own resolution table; do not narrow or reinterpret their wording; if ambiguous, **one question and stop** — see [`.agents/instructions/take-me-literally.md`](.agents/instructions/take-me-literally.md) (Cursor: [`.cursor/rules/take-me-literally.mdc`](.cursor/rules/take-me-literally.mdc)).
 
+**Jidoka SSOT output (always):** When tooling output contradicts docs or the operator says it is wrong, **fix or RCA** — do **not** tell them to ignore or reinterpret defective fields — see [`.agents/instructions/jidoka-ssot-output.md`](.agents/instructions/jidoka-ssot-output.md).
+
 **Reply references (always):** Whenever you mention UC/ADR/P/R ids, paths, or hub jargon in user-facing text, include plain language **in the same message** — see [`.agents/instructions/reply-references-plain-language.md`](.agents/instructions/reply-references-plain-language.md). No bare id lists as explanation; applies to every reply, not only when asking the human to decide.
 
 ## Memory files
