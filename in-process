@@ -1,0 +1,231 @@
+  how can we enforce:
+
+  1. using this repo's /planit
+  2. the binding of this repo's ADRs (let's make sure they are all approved)
+  3. all code produced in this repo, including this repo's code must be executed by bbp/bba
+
+
+  │ Auto routed to GPT-5.6 Sol
+
+  │ Auto routed to GPT-5.6 Sol
+
+  I’ll separate discovery, policy binding, and code-shape enforcement, then identify the current gaps in
+  each.
+
+    Globbed, read, grepped 6 globs, 10 files, 5 greps
+    … 18 earlier items hidden
+    Read ...itness_adr_superseded/fitness_adr_superseded.py
+    Read ...itness_adr_0029_tools/fitness_adr_0029_tools.py
+    Read ..._hub_x4_noun_pilot/fitness_hub_x4_noun_pilot.py
+
+  These require three independent enforcement layers. “Documentation says so” is insufficient.
+
+  Current state:
+
+  • /planit is not enforced: this chat attached the user-global skill, despite the repo declaring its local
+    skill authoritative.
+  • All 45 active architecture decision records say Status: Accepted.
+  • Only architecture decision records 0044 and 0045 contain explicit Ratified-by: evidence. Therefore
+    “Accepted” is recorded for all, but independently auditable approval is not.
+  • Not every active decision is fully bound: docs/ADR-ENFORCEMENT.md still identifies enforcement gaps.
+  • The whole repo is not yet Boundary-Based Programming / Boundary-Based Architecture shaped. Current
+    dogfood documentation explicitly excludes a complete rewrite, and scripts/nlc-release.sh contains
+    substantial orchestration logic outside a noun/goal package.
+
+  Also, code is not “executed by BBP/BBA.” The precise guarantees should be:
+
+  1. Every change is produced through the repository’s Natural Language Coding / Planit process.
+  2. Every executable behavior conforms to Boundary-Based Programming and Boundary-Based Architecture.
+  3. Every applicable architecture decision record is selected and enforced before execution.
+
+  1. Enforce this repo’s /planit
+
+  Use all four controls:
+
+  1. Remove the name collision.
+    • Repo skill remains planit.
+    • Rename the user-global skill to ai-vault-planit.
+    • There must be no ~/.agents/skills/planit while working in repositories that own /planit.
+
+  2. Make global routing safe.
+    • Any global Planit entrypoint must first look for <repo>/.agents/skills/planit/SKILL.md.
+    • If found, it loads that skill and stops interpreting its own procedure.
+    • Global logic applies only when no repo-local Planit exists.
+
+  3. Add a source-identity gate.
+    • Repo Planit publishes an immutable identity such as:
+      • canonical path;
+      • schema/version;
+      • content hash.
+    • Planit intake fails unless the loaded identity equals the repository registry.
+    • Every Planit handoff records that identity.
+
+  4. Make Cursor discovery deterministic.
+    • Expose a real .cursor/skills/planit/ discovery tree synchronized from .agents/skills/planit/.
+    • CI compares both trees byte-for-byte.
+    • A legacy .cursor/commands/planit.md may explicitly route /planit to the repo skill as a fallback.
+
+  Gate:
+
+  PASS iff:
+  - exactly one skill owns the name planit;
+  - its canonical source is <repo>/.agents/skills/planit/SKILL.md;
+  - its hash equals the registered hash;
+  - any Cursor copy equals the portable source.
+
+  2. Enforce approved and binding architecture decisions
+
+  Approval, applicability, and enforcement must be separate tests.
+
+  Approval gate
+
+  Every active record must have:
+
+  • Status: Accepted;
+  • Ratified-by: <role>;
+  • Ratified-at: <date/time>;
+  • a proposal/version identifier or content hash;
+  • an acceptance receipt that identifies exactly what was approved.
+
+  Existing records 0001–0043 need either:
+
+  • historical ratification evidence added, or
+  • one explicit bulk-ratification receipt listing each record and its hash.
+
+  Do not infer approval merely from Status: Accepted.
+
+  Active-set gate
+
+  Enforce exact set equality:
+
+  ACTIVE.md
+  = accepted current lineage tips
+  = records available to Planit binding
+
+  Fail if:
+
+  • an active record is not accepted;
+  • an accepted current record is absent from the active set;
+  • an active record has no file;
+  • a superseded record remains active;
+  • the active set changes after the plan snapshot.
+
+  Binding gate
+
+  For every active record:
+
+  • identify its condition;
+  • identify its obligation;
+  • identify its runnable binary gate;
+  • register that gate in the architecture-decision enforcement table;
+  • prove the gate runs in CI;
+  • prove at least one negative fixture fails.
+
+  The entire compile fails if any applicable decision is:
+
+  • unbound;
+  • bound only to prose;
+  • bound to a missing gate;
+  • marked as an enforcement gap.
+
+  That means the current gap rows cannot coexist with a claim that all active decisions are binding.
+
+  3. Enforce BBP/BBA across all code
+
+  First define the closed-world file classes. Every executable artifact must be exactly one of:
+
+  1. Noun implementation
+    • owns adjectives;
+    • exposes contracted verbs;
+    • mutates its own state only;
+    • includes verb schemas and noun tests.
+
+  2. Goal
+    • orchestrates noun verbs and external effects;
+    • owns no noun state;
+    • performs no private noun mutation.
+
+  3. Primitive adapter
+    • performs one approved external operation;
+    • contains no domain or process policy.
+
+  4. Thin entrypoint
+    • parses input;
+    • calls one noun verb or goal;
+    • translates output and failure;
+    • contains no state machine or policy.
+
+  This classification must cover Python, shell, workflow files, and generated code. Unclassified executable
+  files fail.
+
+  Consequence for release scripts
+
+  scripts/nlc-release.sh may remain only as a thin entrypoint. Its current state machine, identity selection,
+  remediation policy, tag policy, and transition logic must move into canonical noun/goal packages. The
+  shell may invoke the selected action; it may not select another action.
+
+  Repository-wide gates
+
+  Use a complete executable-file inventory—not an allowlist of selected emit modules.
+
+  For every executable file, require:
+
+  • classification;
+  • canonical package owner;
+  • declared boundary input, output, and failure mode;
+  • applicable architecture-decision bindings;
+  • tests for its adjectives or orchestration;
+  • provenance in an emit manifest;
+  • no uncovered executable statements.
+
+  Add two gates:
+
+  • Change gate: every changed executable line is covered before commit.
+  • Repository gate: every executable file is covered before verification or release.
+
+  The repository gate must report:
+
+  total executable files
+  = noun implementations
+  + goals
+  + primitive adapters
+  + thin entrypoints
+
+  Any remainder greater than zero fails.
+
+  Recommended order
+
+  ┌─────┬────────────────────────────────────────────┬──────────────────────────────────────────────────────┐
+  │ Ste │ Work                                       │ Stop predicate                                       │
+  │ p   │                                            │                                                      │
+  ├─────┼────────────────────────────────────────────┼──────────────────────────────────────────────────────┤
+  │ 1   │ Eliminate the Planit name collision and    │ /planit proves the repo path and registered hash     │
+  │     │ add source identity                        │                                                      │
+  ├─────┼────────────────────────────────────────────┼──────────────────────────────────────────────────────┤
+  │ 2   │ Audit all 45 active decisions for          │ Every active record has an exact approval receipt    │
+  │     │ ratification evidence                      │                                                      │
+  ├─────┼────────────────────────────────────────────┼──────────────────────────────────────────────────────┤
+  │ 3   │ Close every enforcement-table gap          │ Every active applicable record has a runnable        │
+  │     │                                            │ positive and negative gate                           │
+  ├─────┼────────────────────────────────────────────┼──────────────────────────────────────────────────────┤
+  │ 4   │ Inventory every executable file            │ Every file has exactly one BBP/BBA classification    │
+  ├─────┼────────────────────────────────────────────┼──────────────────────────────────────────────────────┤
+  │ 5   │ Move substantial script logic into         │ Shell and workflow files are thin entrypoints only   │
+  │     │ noun/goal packages                         │                                                      │
+  ├─────┼────────────────────────────────────────────┼──────────────────────────────────────────────────────┤
+  │ 6   │ Make coverage repository-wide and          │ Unclassified executable count is zero                │
+  │     │ default-closed                             │                                                      │
+  ├─────┼────────────────────────────────────────────┼──────────────────────────────────────────────────────┤
+  │ 7   │ Bind Planit to those gates                 │ Planit cannot generate or approve code unless all    │
+  │     │                                            │ applicable checks pass                               │
+  └─────┴────────────────────────────────────────────┴──────────────────────────────────────────────────────┘
+
+  Verdict — enforcement design
+
+  Result: PASS
+
+  Evidence: The proposal separates skill identity, decision approval/applicability/enforcement, and
+  executable-code shape into independently testable gates.
+
+  Next: Ratify these three guarantees before implementing them: repo-local Planit identity, explicit approval
+  plus runnable binding for every active decision, and zero unclassified executable files.
