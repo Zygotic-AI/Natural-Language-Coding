@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "algorithm": "sha256",
-  "recorded_at": "2026-09-26T14:19:47Z",
+  "recorded_at": "2026-10-10T06:59:15Z",
   "hub": "0.3.0",
   "files": {
     "adrs/0001-zero-variance-integrity.md": "3c5979c1832bab283044d51e7c9f9c30db418e0bbaa725258e76dc73ad52c767",
@@ -49,15 +49,26 @@
     "adrs/0043-uc14-composable-adopt-boundary.md": "da4fee286ed720ed6264ca8dea4a74a30767b4f4e1b17afa5724dfe2a57e9b14",
     "adrs/0044-hub-release-production-trunk.md": "9133a6d9093dcc545648381e6d6b166f148a3d00c1d758f6c1d6a6a0dbca35f6",
     "adrs/0045-hub-release-identity.md": "476cbb00bb44820ce1a10bef69df56c2b888407c9b16a1179bd366e65d435ed2",
-    "adrs/ACTIVE.md": "c7293521771fa6f5c6f3d31c3180f791b59c85f9f07a151d2c9ee1107d7a74c1",
+    "adrs/0046-repository-planit-identity.md": "2ba94e4078052803f76c9802f4600638e1ebccbcf220c9a7f73cb2231625eb31",
+    "adrs/0047-adr-approval-receipts.md": "aaf17dedee191177b1db3ff928e8cb4c2d03541b8af71280700bbaf5c00ade55",
+    "adrs/0048-executable-shape.md": "caf88d61656529e2be8841d6abe4e7b84ff860127995ae1d13e89fea0ddf7b49",
+    "adrs/0049-release-planner-owns-stops.md": "154153f08dc12ddd0fa0bda3de72f0122813688ce7107b720fbdee6b0adad96c",
+    "adrs/ACTIVE.md": "37da15fea44cf3b177375988ed575871020fc41e8bb069fc7fcbaba2e9bea4bc",
     "adrs/CATALOG.md": "b2322599c7c7cd07bb6c7807e745e03791eeec04f27bf1b699225acea3a6551e",
-    "adrs/INDEX.md": "598adc28465548d38b38dbb68453862341a10aa75072b1c75130bc2d50e6ccaa",
-    "adrs/README.md": "dd710e2ef38f8f6add100afe112b6427cd5fc9a0dfdec13cd30eb0567e7714f1",
+    "adrs/INDEX.md": "b4afe91826cbe7dc39ddc442f4a2cdbcf9437401589cbefca8880df681248967",
+    "adrs/README.md": "96b74b93f90eb95bbfb18643885c711a48897c9d15fcddb1015744a4671c18d8",
     "rules/goal-bindings.json": "9956a3632532a8878e57aed3cd6ba26aa607d1b06ddffb882d10e50872255ba8",
     "rules/nlc-0024.json": "fa09d9c492dfd99fa52595f29b1bd774980e9faddacbd630bb54af8c1f8ba4ad",
     "rules/nlc-0025.json": "8a4440e1497501640bd8043ba9f2299f6623afecdea2f0ee8bf583de84a81064",
     "rules/nlc-0036.json": "a0fdc30ca149ffca540fdf99afb8e062c0f7f3851b4c117e182c49ea08f40ab4",
     "rules/nlc-0038.json": "058361f60936e0fe98d0e939571a6a1c6071ac8e442175bc96a2810af420d98f",
-    "knowledge/facts.json": "2087fe02479cf0c3489c3f3f46a3f6701e67d8a835742a09f44d0095df49b395"
+    "knowledge/facts.json": "2087fe02479cf0c3489c3f3f46a3f6701e67d8a835742a09f44d0095df49b395",
+    "goals/hub_fitness_check1/execute.sh": "e7a09fae8d08234b095b486bac143a58926e93b144e74f49940d45705bd5c503",
+    "goals/hub_install/execute.ps1": "2a38a3bae5698ea7d4da4f39fe938ed78bf1b47437ba7a34feb7a0873c82cfbd",
+    "goals/hub_install/execute.sh": "2abc848b8fe3a5ca59a81dd07b768a69ed35e9ff711628a9144b89d376e31e23",
+    "goals/hub_release/execute.sh": "d7d39a3f11dbc047965bc7c0a64b68909b7a12bcce1bfd3685983c3d0545ad1c",
+    "goals/hub_release_prep/execute.sh": "265ccd5bf4b0d12a0f3f270ac1a1de6f004f2d443d52b224fbddbe660e170cea",
+    "goals/hub_release_smoke/execute.sh": "250f69f04350be07b67361896ff787d2698344700101395f933ef0d50309b887",
+    "goals/hub_session/execute.sh": "5cf487c368aec36bb3ed49070af039c60c4e4f5e484cfd76fb0f30a488ffe962"
   }
 }

@@ -12,9 +12,9 @@ Every **Accepted** [ADR](../adrs/README.md) must map to **runnable** binders (to
 | 0004 | `fitness-adr-0004-0005-binder.py` + produce/verify-deep landmines | bound |
 | 0005 | (with 0004) SSOT + `fitness-produce-ssot-binder.py` + quality fixtures | bound |
 | 0006 | contract_change on non-specimen adopters + diff-scoped C10/C21 + `fitness-verify-pipeline-wired` + landmines | bound |
-| 0007 | compiler applies rule IR on generate (full runner) | **gap** (v1: [`nlc_rule_runner.py`](../tools/nlc_rule_runner.py) + `rule-emit`; landmine `assert-rule-runner-fails.py`; semantic apply = expansion) |
+| 0007 | `nlc_rule_runner.py --check` + `assert-rule-semantic-pan-fails.py` + `assert-rule-semantic-apply-fails.py` | bound |
 | 0008 | `fitness-adr-0008-binder.py` + specimen + invoice-correct MET landmine | bound |
-| 0009 | verb → primitive inventory gate | **gap** (v1: [`nlc_call_tree.py`](../tools/nlc_call_tree.py) + verify; multi-language packs = expansion) |
+| 0009 | `nlc_call_tree.py --check` + `assert-verb-primitive-inventory-fails.py` | bound |
 | 0010 | `fitness-adr-0010-binder.py` + gate landmines | bound |
 | 0011 | `fitness-nlc-naming.py` + landmine | bound |
 | 0012 | `check-rule-adoption.py` + conflict landmine | bound |
@@ -32,10 +32,10 @@ Every **Accepted** [ADR](../adrs/README.md) must map to **runnable** binders (to
 | 0025 | `rules/nlc-0025.json` + `validate-rca-packet.py` + `fitness-adr-0025-rca-packet.py` + landmine | bound |
 | 0026 | `nlc-action-plan-gate.py` + `nlc-reverse-audit.py` + `nlc-emit-manifest-enforce.py` + specimens + fitness wrappers | bound |
 | 0027 | `nlc-emit-from-prose.py` + `fitness-nlc-emit-from-prose.py` | bound |
-| 0028 | docs only (VERB-SET + POLICY-ADR-LINEAGE); tools deferred | gap |
+| 0028 | `fitness-verb-set-lineage.py` + `assert-verb-set-extension-fails.py` | bound |
 | 0029 | lineage-check + bind-snapshot + freshness + fitness | bound (v1) |
 | 0030 | `nlc-pipeline-wire.py` + `nlc-action-gates.py` + `nlc_emit_audit.py` + `fitness-nlc-pipeline-wire.py` | bound |
-| 0031–0035 | charter ratification program + backlog SSOT | docs/backlog (binder expansion) |
+| 0031–0035 | `integrity/charter-ratify-backlog.json` + `fitness-adr-record-gate.py` | bound (v1) |
 | 0036 | `fitness-nlc-0036-inference-only.py` + `rules/nlc-0036.json` | bound |
 | 0037 | `integrity/charter-ratify-backlog.json` non_r_residuals + ADR text | bound (docs/backlog) |
 | 0038 | `fitness-adr-0038-no-memory.py` + `rules/nlc-0038.json` | bound (v1) |
@@ -46,8 +46,12 @@ Every **Accepted** [ADR](../adrs/README.md) must map to **runnable** binders (to
 | 0043 | `uc14-product-boundary.json` + `fitness-uc14-product-boundary.py` + rule-adoption landmines | bound (v1) |
 | 0044 | `nlc_release_main_purity.py` + `fitness-adr-0039-release-binder.py` | bound (v1) |
 | 0045 | `nlc_release_state.py` + `assert-release-state-passes.py` + `fitness-adr-0039-release-binder.py` | bound (v1) |
+| 0046 | `fitness-planit-identity.py` + `assert-planit-other-skill-fails.py` | bound |
+| 0047 | `fitness-adr-approval.py` + `assert-adr-approval-mismatch-fails.py` | bound |
+| 0048 | `fitness-executable-shape.py` + `assert-executable-kernel-exempt-fails.py` | bound |
+| 0049 | `fitness-release-planner-ownership.py` + `assert-release-planner-ownership-fails.py` + `assert-release-context-passes.py` | bound |
 
-**0007/0009 gap:** full semantic rule runners and per-language call-tree packs are not MET; v1 binders are `rule-runner`, `rule-emit`, and `call-tree`. ADR 0023 marker emit is bound via `rule-emit` / `goal-scaffold` / verify audit.
+**0007/0009:** semantic rule application and the verb-to-primitive inventory are bound. The pan-return landmine and the inventory mismatch landmine are the failing fixtures. ADR 0023 marker emit stays bound via `rule-emit` / `goal-scaffold` / verify audit.
 
 **Specimens:** `product_tree.is_specimen` skips `CONFIRM` requirements and **ADR 0006** `contract_change_blockers` unless the README includes `contract-change applies` (see `product_tree.contract_change_applies`).
 

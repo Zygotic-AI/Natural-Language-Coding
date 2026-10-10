@@ -55,6 +55,10 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0043 | 2026-09-23 | session | active | — | L-0043 |
 | 0044 | 2026-09-25 | session | active | — | L-0044 |
 | 0045 | 2026-09-26 | session | active | — | L-0045 |
+| 0046 | 2026-10-08 | session | active | — | L-0046 |
+| 0047 | 2026-10-08 | session | active | — | L-0047 |
+| 0048 | 2026-10-08 | session | active | — | L-0048 |
+| 0049 | 2026-10-09 | RCA 2026-10-09 release stops outside planner | active | — | L-0049 |
 
 ## Lineage format
 

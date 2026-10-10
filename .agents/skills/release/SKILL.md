@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 **You remember one thing:** invoke **`/release`** in chat.
 
-**Your job:** run the **full pre-ship pipeline** — not a checklist for the human. **`/release` authorizes** the agent to commit the hub continuity/product batch, fix SSOT headers, remove stale `release/v*` branches, prove gates, run inference, then start **`./release`**. The orchestrator is **non-interactive** on deterministic legs; parse **`RELEASE:NOT_MET`** blocks and fix or re-run. **Human-only:** GitHub PR merge click, and release notes **Highlights** content when invalid. Do **not** move an existing tag, `reset` `main`, or force-push. Phase comes from `nlc_release_state.py` ([ADR 0045](../../../adrs/0045-hub-release-identity.md)). `INVALID_MERGED` means stop: do not tag that merge.
+**Your job:** run the **full pre-ship pipeline** — not a checklist for the human. **`/release` authorizes** the agent to commit the hub continuity/product batch, fix SSOT headers, remove stale `release/v*` branches, prove gates, run inference, then start **`./release`**. The orchestrator performs deterministic audits and repairs and re-plans in the same invocation ([ADR 0049](../../../adrs/0049-release-planner-owns-stops.md)); `RELEASE:NOT_MET` is reserved for a named human decision. **Human-only:** GitHub PR merge click, release notes **Highlights** content when invalid, and explicitly named unsafe/ambiguous decisions. Do **not** move an existing tag, `reset` `main`, or force-push. Phase comes from `nlc_release_state.py` ([ADR 0045](../../../adrs/0045-hub-release-identity.md)). `INVALID_MERGED` is never tagged; the planner creates a new release-line candidate when safe.
 
 **Terminal orchestrator:** [`./release`](../../../docs/adoption/RELEASE.md) — ADR 0039 + **production trunk** [ADR 0044](../../../adrs/0044-hub-release-production-trunk.md). Start after **Ship: GO** (or **GO with residuals**).
 
@@ -31,7 +31,7 @@ Do **not** run `./release` until every **blocking** row is true.
 | Product residuals | yes when P2/P3 | User confirms **once** after table | Chat |
 | `./release` started | yes on GO | Orchestrator invoked from repo root | Terminal |
 
-**Done signals:** Closeout done; **Ship** verdict; `./release` running or honest NOT_MET with agent fix loop.
+**Done signals:** Closeout done; **Ship** verdict; `./release` running, awaiting the release pull-request merge, complete, or stopped on a named human decision.
 
 ## Procedure
 
@@ -91,7 +91,7 @@ Scan [`TODO`](../../../TODO), [`FINDINGS.md`](../../../FINDINGS.md), [`integrity
 python3 tools/full-nlc-audit.py --check --profile release-prep
 ```
 
-Skip when **await_merge** / **tag_ready** / **complete**. NOT_MET → agent fixes (Step 1A loop), not user homework.
+Skip when **await_merge** / **tag_ready** / **complete**. Deterministic release repairs remain inside `./release`; `NOT_MET` must name a human-only decision, not another command.
 
 **tag_ready:** optional `python3 tools/nlc_release_tag_gate.py --check --commit … --tag …`
 
@@ -119,7 +119,7 @@ Before **GO with residuals**, cite product gaps per [`.agents/instructions/reply
 ./release
 ```
 
-No flags. Infer sets bump and `release/v*`. Report **`RELEASE:NOT_MET`** verbatim; agent fixes what is fixable, then re-run **`./release`**.
+No flags. The planner sets the next action and runs deterministic repairs in the same invocation. Report **`RELEASE:NOT_MET`** verbatim only when it names a human-only decision.
 
 **Human-only:** GitHub merge, and editing Highlights in release notes when the notes gate fails. Do not retag.
 

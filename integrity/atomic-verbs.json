@@ -1,0 +1,4 @@
+{
+  "schema": 1,
+  "verbs": ["create", "read", "write", "update", "delete", "validate", "emit", "bind"]
+}

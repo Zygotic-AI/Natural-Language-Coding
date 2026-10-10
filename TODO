@@ -548,3 +548,73 @@ Planit audit **26-09-23** — **decide before execute**; follow **Execution orde
 ### Stale remotes (after confirm superseded by #29–#36)
 
 - ✔ **Delete superseded `origin/feat/*` branches** — wave 3 cleanup @done(26-09-23 15:40)
+
+## Practice enforcement (Planit, ADR approval, BBP/BBA shape)
+
+The three enforcement programs are in force on this tree. Active architecture decision records are 0001–0048.
+
+### 1. Force this repository’s Planit
+
+- ✔ Define how every harness, including Cursor, proves it loaded `.agents/skills/planit/SKILL.md` before planning. @done(26-10-08 17:50)
+- ✔ Register that skill’s canonical path and content hash. @done(26-10-08 17:50)
+- ✔ Fail intake when the loaded skill does not match the registry. @done(26-10-08 17:50)
+- ✔ Record that identity on every Planit handoff. @done(26-10-08 17:50)
+- ✔ Add a negative fixture that fails when another Planit is loaded. @done(26-10-08 17:50)
+- ✔ Record machine evidence that each code change came through that Planit run. @done(26-10-08 17:50)
+
+### 2. Make every active architecture decision record approved and enforced
+
+- ✔ Choose one approval registry keyed by record number and content hash. @done(26-10-08 17:50)
+- ✔ Add approval receipts for 0001–0043, either one by one or as one bulk receipt that lists each hash. @done(26-10-08 17:50)
+- ✔ Make any edit to an approved record invalidate that approval. @done(26-10-08 17:50)
+- ✔ Close the enforcement gaps still listed in `docs/ADR-ENFORCEMENT.md`: 0007 (full rule application), 0009 (verb-to-primitive inventory), and 0028 (closed verb-set tooling). @done(26-10-08 17:50)
+- ✔ Give every active record a runnable pass/fail gate and a fixture that fails when the record is violated. @done(26-10-08 17:50)
+- ✔ Fail the hub compile when any active record is unapproved, unbound, or marked as a gap. @done(26-10-08 17:50)
+
+### 3. Make every executable file Boundary-Based Programming / Boundary-Based Architecture shaped
+
+Boundary-Based Programming is the noun, verb, adjective, and goal practice. Boundary-Based Architecture is the boundary and contract shape. They are not a runtime that executes the code.
+
+- ✔ List every executable class: Python, shell, workflows, tests, fixtures, generated code, templates, migrations, vendored code, and configuration. @done(26-10-08 17:50)
+- ✔ Give deliberate failure specimens their own fixture class so they are contained and are not required to conform. @done(26-10-08 17:50)
+- ✔ Define a measurable thin entrypoint: it may parse input, call one noun verb or goal, and report the result. It may not own policy or a state machine. @done(26-10-08 17:50)
+- ✔ Inventory every executable file into exactly one class: noun implementation, goal, primitive adapter, thin entrypoint, or contained fixture. @done(26-10-08 17:50)
+- ✔ Move the policy in `scripts/nlc-release.sh` into noun and goal packages, leaving the shell as a thin entrypoint. @done(26-10-08 17:50)
+- ✔ Keep a small kernel that checks itself and cannot exempt its own files. @done(26-10-08 17:50)
+- ✔ Turn on the repository gate only after that inventory is migrated. The gate fails when any executable file has no class. @done(26-10-08 17:50)
+
+### Done when all four are true
+
+- ✔ The loaded Planit matches this repository’s registered skill hash. @done(26-10-08 17:50)
+- ✔ Every active architecture decision record has an approval receipt for its current hash. @done(26-10-08 17:50)
+- ✔ Every active architecture decision record has a runnable gate, and the enforcement table has no gaps. @done(26-10-08 17:50)
+- ✔ The count of unclassified executable files is zero. @done(26-10-08 17:50)
+
+## Practice enforcement residuals
+
+The three programs above are in force. These rows close the two limits and the `./release` split.
+
+### Per-record behavior fixtures
+
+Most older architecture decision records share `tools/assert-adr-approval-mismatch-fails.py`. That fixture fails when the record’s bytes change. It does not fail when the decision’s behavior is violated. Example: record 0013 (hub command preflight) is mapped to that generic fixture, so a missing `hub_tool()` call is not what that fixture detects. The compile still catches that case through `fitness-requirements-hub-entrypoints.py`.
+
+- ✔ Map every active record to its actual behavioral gate and negative fixture. @done(26-10-09 22:31)
+- ✔ Add the missing behavioral fixtures. @done(26-10-09 22:31)
+- ✔ Make the record gate execute each fixture and verify its expected failure, rather than only checking that the fixture path exists. @done(26-10-09 22:31)
+
+### Effective decision after an amendment
+
+Record 0045 (one release identity) still says the executor is `scripts/nlc-release.sh`. Record 0048 (executable shape) amends that location: policy lives in `goals/hub_release/execute.sh`, and the shell only starts that goal. Do not edit record 0045 in place.
+
+- ☐ Add an effective-decision view that shows record 0045 decision 2 as amended by record 0048.
+
+### `./release` planner and resume
+
+The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (confirm the already shipped baseline). The shell does not stop there. It falls through to the resume detector, which can print that it is tagging because an older remote release tip is already merged, then the planner-backed gate refuses the tag.
+
+- ✔ Make the release-state planner the only phase authority. @done(26-10-09 22:31)
+- ✔ Remove the resume detector’s independent phase selection, or make it only a presentation of the planner decision. @done(26-10-09 22:31)
+- ✔ Handle `PREPARE_DRAFT` explicitly instead of falling through. @done(26-10-09 22:31)
+- ✔ Observe real verification facts. Do not hard-code `shipped_verify_met`, `target_verify_met`, and `prep_met` to false. @done(26-10-09 22:31)
+- ✔ Add a regression fixture where the remote release tip is merged but the local release branch has newer commits. Expected result: preparation continues and no tagging message is printed. @done(26-10-09 22:31)
+- ✔ Keep the invalid-merge fixture that proves an identity-mismatched merge is never tagged. @done(26-10-09 22:31)

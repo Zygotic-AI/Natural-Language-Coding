@@ -1,0 +1,2 @@
+# adjectives for assert_release_planner_ownership_fails
+emit-owned

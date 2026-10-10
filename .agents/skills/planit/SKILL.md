@@ -43,6 +43,8 @@ Orchestrate **[AWL](../../../docs/TERMS.md#awl) Phases 0–7** and **[PLANIT](..
 | Blocking gaps | yes | No unresolved blocking ambiguity; numbered questions asked and **stopped** if still open | Chat turn state |
 | Secrets | yes | No real credentials solicited in chat | Procedure compliance |
 
+**Identity (blocking).** Canonical path: `.agents/skills/planit/SKILL.md`. Registry: `integrity/planit-skill-registry.json` (path + content hash). Before planning, run `python3 tools/fitness-planit-identity.py --skill-only --loaded .agents/skills/planit/SKILL.md`. Intake fails when the loaded bytes do not match. Cursor runs `.cursor/hooks/nlc-planit-identity.sh` on `beforeSubmitPrompt` and blocks the prompt on mismatch. Every Planit handoff records `planit_skill_path` and `planit_skill_sha256` from that registry.
+
 After all **blocking** rows are **true**, emit **`## Verdict — Planit intake gate`** per [`operation-verdict-standard.md`](references/operation-verdict-standard.md) §4, then proceed to [AWL](../../../docs/TERMS.md#awl) Phase 2.
 
 ## Procedure

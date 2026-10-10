@@ -9,6 +9,8 @@ import json
 import sys
 from pathlib import Path
 
+from fitness_hub_source import read_tool
+
 ROOT = Path(__file__).resolve().parents[3]
 MANIFEST = ROOT / "integrity" / "full-nlc-audit-manifest.json"
 SCRIPT = ROOT / "tools" / "full-nlc-audit.py"
@@ -25,7 +27,7 @@ def main() -> int:
     data = json.loads(MANIFEST.read_text(encoding="utf-8"))
     stages = data.get("stages") or {}
     profiles = data.get("profiles") or {}
-    script_text = SCRIPT.read_text(encoding="utf-8") if SCRIPT.is_file() else ""
+    script_text = read_tool("tools/full-nlc-audit.py") if SCRIPT.is_file() else ""
 
     for profile, ids in profiles.items():
         if not isinstance(ids, list):

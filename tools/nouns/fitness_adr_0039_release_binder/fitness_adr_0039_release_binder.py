@@ -22,7 +22,8 @@ def _runs_hub_fitness_suite(yaml_text: str) -> bool:
 def main() -> int:
     _ = sys.argv[1:]
     violations: list[str] = []
-    script = ROOT / "scripts" / "nlc-release.sh"
+    executor = ROOT / "goals" / "hub_release" / "execute.sh"
+    entry = ROOT / "scripts" / "nlc-release.sh"
     workflow = ROOT / ".github" / "workflows" / "release.yml"
     fitness_wf = ROOT / ".github" / "workflows" / "fitness.yml"
     for path, label in (
@@ -31,13 +32,19 @@ def main() -> int:
         (ROOT / "tools" / "nlc_release_record.py", "release record"),
         (ROOT / "tools" / "nlc_release_shipped_tag_audit.py", "shipped tag audit"),
         (ROOT / "integrity/schemas/hub-release-record.schema.json", "record schema"),
-        (script, "nlc-release.sh"),
+        (executor, "hub release goal"),
+        (entry, "nlc-release.sh"),
         (workflow, "release.yml"),
     ):
         if not path.is_file():
             violations.append(f"missing {label}")
 
-    text = script.read_text(encoding="utf-8") if script.is_file() else ""
+    text = executor.read_text(encoding="utf-8") if executor.is_file() else ""
+    entry_text = entry.read_text(encoding="utf-8") if entry.is_file() else ""
+    if "exec bash" not in entry_text or "goals/hub_release/execute.sh" not in entry_text:
+        violations.append("scripts/nlc-release.sh must be a thin entrypoint to the release goal")
+    if "dispatch_release_plan" in entry_text or "cmd_finish" in entry_text:
+        violations.append("scripts/nlc-release.sh must not own release policy")
     if "nlc_release_tag_gate.py" not in text:
         violations.append("nlc-release.sh must invoke nlc_release_tag_gate.py")
     if "nlc_release_record.py" not in text:
@@ -71,8 +78,8 @@ def main() -> int:
         violations.append("nlc-release.sh must verify the shipped baseline in a worktree")
     if "git stash push" in text:
         violations.append("nlc-release.sh must not stash the working tree")
-    if "normalize_main_trunk_for_release" not in text:
-        violations.append("nlc-release.sh must auto-normalize impure main (zero-parameter ADR 0044)")
+    if "git reset --hard" in text:
+        violations.append("nlc-release.sh must not hard-reset a branch outside the closed planner action set")
     if (ROOT / "tools" / "nlc_release_infer.py").is_file() is False:
         violations.append("missing nlc_release_infer.py")
     if (ROOT / "tools" / "nlc_release_main_purity.py").is_file() is False:

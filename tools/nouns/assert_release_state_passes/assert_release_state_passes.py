@@ -8,7 +8,15 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))
-from nouns.release_state import annotated_tag_argv, executor_permits, plan_release  # noqa: E402
+from nouns.release_state import (  # noqa: E402
+    ACTION_KINDS,
+    ACTION_PROGRESS_FACTS,
+    action_progress,
+    annotated_tag_argv,
+    executor_permits,
+    plan_release,
+    present_resume_phase,
+)
 
 BOUNDARY = "bba-emit"
 
@@ -30,6 +38,7 @@ def _facts(**overrides: object) -> dict:
         "candidate_record_version": "0.3.0",
         "candidate_record_branch": "release/v0.3.0",
         "remote_relation": "equal",
+        "main_context": "contained",
         "active_release_branches": ["release/v0.3.0"],
         "pull_requests": [],
         "origin_main_sha": SHIPPED,
@@ -88,6 +97,46 @@ def _tag_targets_named_commit() -> bool:
         if annotated_tag_argv("v1.2.3", first, "m")[-1] != first:
             print("ASSERT:FAIL tag argv omits commit")
             return False
+    return True
+
+
+def _merged_tip_with_newer_local_stays_in_prepare() -> bool:
+    """Remote release tip is merged; local release branch has newer commits."""
+    old_tip = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    decision = plan_release(
+        _facts(
+            remote_relation="ahead",
+            shipped_verify_met=False,
+            pull_requests=[
+                {
+                    "number": 55,
+                    "state": "merged",
+                    "head_sha": old_tip,
+                    "merge_sha": MERGE,
+                    "merge_file_version": "0.2.0",
+                    "merge_record_version": "0.2.0",
+                    "merge_record_branch": "release/v0.2.0",
+                }
+            ],
+        )
+    )
+    presented = present_resume_phase(decision)
+    if decision["phase"] != "PREPARE_DRAFT" or decision["action"] != "VERIFY_SHIPPED_BASELINE":
+        print(
+            f"ASSERT:FAIL newer local branch phase={decision['phase']} action={decision['action']}"
+        )
+        return False
+    if presented == "tag_ready":
+        print("ASSERT:FAIL merged older tip selected tagging")
+        return False
+    shell = Path(__file__).resolve().parents[3] / "goals" / "hub_release" / "execute.sh"
+    text = shell.read_text(encoding="utf-8")
+    if "Resume: merged" in text or "tagging ${RESUME_TAG}" in text:
+        print("ASSERT:FAIL executor still prints a tagging resume")
+        return False
+    if "for iteration in $(seq 1 64)" not in text or "dispatch_release_plan" not in text:
+        print("ASSERT:FAIL planner action loop is not handled")
+        return False
     return True
 
 
@@ -162,11 +211,31 @@ def main() -> int:
     if invalid["phase"] != "INVALID_MERGED" or invalid["action"] != "ALIGN_VERSION":
         print(f"ASSERT:FAIL invalid-merged {invalid['phase']} {invalid['action']}")
         ok = False
-    elif invalid["allow_local_main_repoint"] or executor_permits(invalid, "create_tag"):
-        print("ASSERT:FAIL invalid-merged permitted tag or main repoint")
+    elif executor_permits(invalid, "create_tag") or executor_permits(invalid, "force_tag"):
+        print("ASSERT:FAIL invalid-merged permitted tag or retag")
         ok = False
-    elif executor_permits(invalid, "repoint_local_main") or executor_permits(invalid, "force_tag"):
-        print("ASSERT:FAIL invalid-merged permitted reset or retag")
+    invalid_prepared = plan_release(
+        _facts(
+            pull_requests=[
+                {
+                    "number": 55,
+                    "state": "merged",
+                    "head_sha": HEAD,
+                    "merge_sha": MERGE,
+                    "merge_file_version": "0.2.0",
+                    "merge_record_version": "0.2.0",
+                    "merge_record_branch": "release/v0.3.0",
+                }
+            ]
+        )
+    )
+    if (
+        invalid_prepared["phase"] != "INVALID_MERGED"
+        or invalid_prepared["action"] != "CREATE_REPAIR_COMMIT"
+        or invalid_prepared["action_kind"] != "REPAIR"
+        or not executor_permits(invalid_prepared, "prepare")
+    ):
+        print(f"ASSERT:FAIL prepared invalid merge {invalid_prepared}")
         ok = False
     ready = plan_release(
         _facts(
@@ -280,22 +349,44 @@ def main() -> int:
         _expect(
             "remote-ahead",
             _facts(remote_relation="behind"),
-            phase="BLOCKED",
-            action="BLOCKED",
+            phase="PREPARE_DRAFT",
+            action="FAST_FORWARD_LOCAL",
         )
         and ok
     )
     behind = plan_release(_facts(remote_relation="behind"))
-    if "BLOCKED_REMOTE_AHEAD" not in behind["blockers"]:
-        print(f"ASSERT:FAIL remote-ahead code {behind['blockers']}")
+    if behind["action_kind"] != "REPAIR":
+        print(f"ASSERT:FAIL remote-ahead kind {behind['action_kind']}")
         ok = False
     diverged = plan_release(_facts(remote_relation="diverged"))
     if "BLOCKED_DIVERGED" not in diverged["blockers"] or executor_permits(diverged, "prepare"):
         print("ASSERT:FAIL diverged")
         ok = False
     unknown = plan_release(_facts(remote_known=False))
-    if "BLOCKED_REMOTE_UNKNOWN" not in unknown["blockers"]:
+    if unknown["action"] != "FETCH_REMOTE" or unknown["action_kind"] != "REPAIR":
         print("ASSERT:FAIL unknown")
+        ok = False
+    context_unknown = plan_release(_facts(main_context="unknown"))
+    if (
+        context_unknown["action"] != "BLOCKED"
+        or context_unknown["action_kind"] != "HUMAN_DECISION"
+        or "BLOCKED_MAIN_CONTEXT_UNKNOWN" not in context_unknown["blockers"]
+    ):
+        print("ASSERT:FAIL unknown main context")
+        ok = False
+    failed = plan_release(_facts(failed_action="VERIFY_TARGET"))
+    if (
+        failed["action"] != "BLOCKED"
+        or "BLOCKED_VERIFY_TARGET_FAILED" not in failed["blockers"]
+    ):
+        print("ASSERT:FAIL failed repair fact")
+        ok = False
+    stalled = plan_release(_facts(stalled_action="VERIFY_TARGET"))
+    if (
+        stalled["action"] != "BLOCKED"
+        or "BLOCKED_VERIFY_TARGET_STALLED" not in stalled["blockers"]
+    ):
+        print("ASSERT:FAIL stalled repair fact")
         ok = False
     multi = plan_release(
         _facts(active_release_branches=["release/v0.3.0", "release/v0.4.0"])
@@ -342,7 +433,20 @@ def main() -> int:
     if historical["desired_version"] != "0.3.0" or historical["planned_tag"] != "v0.3.0":
         print("ASSERT:FAIL historical identity")
         ok = False
+    repairs = {action for action, kind in ACTION_KINDS.items() if kind == "REPAIR"}
+    if repairs != set(ACTION_PROGRESS_FACTS) or not all(ACTION_PROGRESS_FACTS.values()):
+        print("ASSERT:FAIL repair progress fact coverage")
+        ok = False
+    for action, names in ACTION_PROGRESS_FACTS.items():
+        _, before = action_progress(action, _facts())
+        changed = _facts(**{names[0]: "progress-sentinel"})
+        _, after = action_progress(action, changed)
+        if before == after:
+            print(f"ASSERT:FAIL repair progress token action={action}")
+            ok = False
     if not _tag_targets_named_commit():
+        ok = False
+    if not _merged_tip_with_newer_local_stays_in_prepare():
         ok = False
     try:
         annotated_tag_argv("v1.0.0", "", "m")

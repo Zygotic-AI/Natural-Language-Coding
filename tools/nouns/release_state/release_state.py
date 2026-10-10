@@ -4,7 +4,89 @@ from __future__ import annotations
 
 BOUNDARY = "bba-emit"
 
+import hashlib
+import json
 from typing import Any
+
+
+ACTION_KINDS: dict[str, str] = {
+    "ENSURE_MIGRATIONS": "REPAIR",
+    "VERIFY_SHIPPED_BASELINE": "REPAIR",
+    "WRITE_NOTES": "REPAIR",
+    "ALIGN_VERSION": "REPAIR",
+    "VERIFY_TARGET": "REPAIR",
+    "PREP": "REPAIR",
+    "WRITE_RECORD": "REPAIR",
+    "COMMIT": "REPAIR",
+    "CREATE_RELEASE_LINE": "REPAIR",
+    "CREATE_REPAIR_COMMIT": "REPAIR",
+    "FETCH_REMOTE": "REPAIR",
+    "FAST_FORWARD_LOCAL": "REPAIR",
+    "PUSH_NEW": "REPAIR",
+    "PUSH_FAST_FORWARD": "REPAIR",
+    "CREATE_PR": "REPAIR",
+    "CREATE_LOCAL_TAG": "REPAIR",
+    "PUSH_TAG": "REPAIR",
+    "RETRY_PUBLISH": "REPAIR",
+    "EXIT_AWAIT": "AWAIT",
+    "OBSERVE_PUBLISH": "AWAIT",
+    "BLOCKED": "HUMAN_DECISION",
+    "NONE": "TERMINAL",
+}
+
+ACTION_PROGRESS_FACTS: dict[str, tuple[str, ...]] = {
+    "ENSURE_MIGRATIONS": ("migrations_ready",),
+    "VERIFY_SHIPPED_BASELINE": ("shipped_verify_met", "shipped_tag_sha"),
+    "WRITE_NOTES": ("notes_valid",),
+    "ALIGN_VERSION": ("worktree_file_version",),
+    "VERIFY_TARGET": ("target_verify_met", "effective_tree_sha"),
+    "PREP": ("prep_met", "effective_tree_sha"),
+    "WRITE_RECORD": ("candidate_record_version", "candidate_record_branch"),
+    "COMMIT": ("dirty", "candidate_sha", "head_file_version"),
+    "CREATE_RELEASE_LINE": ("local_branch", "candidate_sha", "active_release_branches"),
+    "CREATE_REPAIR_COMMIT": ("candidate_sha", "pull_requests"),
+    "FETCH_REMOTE": ("remote_known", "origin_main_sha", "main_context"),
+    "FAST_FORWARD_LOCAL": ("candidate_sha", "remote_relation"),
+    "PUSH_NEW": ("candidate_sha", "remote_relation"),
+    "PUSH_FAST_FORWARD": ("candidate_sha", "remote_relation"),
+    "CREATE_PR": ("candidate_sha", "pull_requests", "pr_list_known"),
+    "CREATE_LOCAL_TAG": ("local_tag_peeled_sha",),
+    "PUSH_TAG": ("remote_tag_peeled_sha",),
+    "RETRY_PUBLISH": ("publish_status",),
+}
+
+RUNTIME_BLOCKERS: dict[str, tuple[str, list[str]]] = {
+    "BLOCKED_INVALID_ARGUMENT": (
+        "The release command received an invalid argument.",
+        ["Use ./release with no arguments for the human release path."],
+    ),
+    "BLOCKED_PLANNER_READ": (
+        "The release executor could not read a planner decision.",
+        ["Inspect the planner output and repair the release tooling."],
+    ),
+    "BLOCKED_ACTION_LOOP_LIMIT": (
+        "The release action loop exceeded its closed iteration limit.",
+        ["Inspect the action sequence; an action is not converging."],
+    ),
+}
+
+
+def action_kind(action: str) -> str:
+    """Return the closed ADR 0049 kind for one planner action."""
+    try:
+        return ACTION_KINDS[action]
+    except KeyError as exc:
+        raise ValueError(f"unclassified release action: {action}") from exc
+
+
+def action_progress(action: str, facts: dict[str, Any]) -> tuple[list[str], str]:
+    """Return the declared fact tuple and stable token for one repair action."""
+    if action_kind(action) != "REPAIR":
+        return [], ""
+    names = list(ACTION_PROGRESS_FACTS[action])
+    values = {name: facts.get(name) for name in names}
+    payload = json.dumps(values, sort_keys=True, separators=(",", ":"))
+    return names, hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def annotated_tag_argv(tag: str, merge_sha: str, message: str) -> list[str]:
@@ -28,6 +110,16 @@ def _list(facts: dict[str, Any], key: str) -> list[Any]:
     return list(value)
 
 
+def present_resume_phase(decision: dict[str, Any]) -> str:
+    """Presentation of the planner phase. This does not select a phase."""
+    phase = str(decision.get("phase") or "")
+    return {
+        "TAG_READY": "tag_ready",
+        "AWAIT_PR": "await_merge",
+        "SHIPPED_COMPLETE": "complete",
+    }.get(phase, "prepare")
+
+
 def desired_from_branch(branch: str) -> str:
     prefix = "release/v"
     if branch.startswith(prefix):
@@ -49,12 +141,13 @@ def _decision(
     blockers: list[str] | None = None,
     problem: str = "",
     fixes: list[str] | None = None,
-    allow_local_main_repoint: bool = False,
 ) -> dict[str, Any]:
     codes = blockers or []
+    selected_action = action if not codes else "BLOCKED"
     return {
         "phase": phase,
-        "action": action if not codes else "BLOCKED",
+        "action": selected_action,
+        "action_kind": action_kind(selected_action),
         "desired_version": desired_version,
         "desired_branch": desired_branch,
         "planned_tag": planned_tag,
@@ -62,7 +155,6 @@ def _decision(
         "blockers": codes,
         "problem": problem,
         "fixes": fixes or [],
-        "allow_local_main_repoint": allow_local_main_repoint and not codes,
     }
 
 
@@ -213,10 +305,8 @@ def executor_permits(decision: dict[str, Any], mutation: str) -> bool:
     """Mutations the executor may perform for this decision. Retag is never permitted."""
     if mutation in {"force_tag", "stash", "detach_checkout"}:
         return False
-    if decision.get("action") == "BLOCKED" or decision.get("phase") in {"BLOCKED", "INVALID_MERGED"}:
+    if decision.get("action") == "BLOCKED" or decision.get("phase") == "BLOCKED":
         return False
-    if mutation == "repoint_local_main":
-        return bool(decision.get("allow_local_main_repoint"))
     if mutation == "create_tag":
         return decision.get("action") == "CREATE_LOCAL_TAG" and bool(decision.get("merge_sha"))
     if mutation == "push_tag":
@@ -233,6 +323,9 @@ def executor_permits(decision: dict[str, Any], mutation: str) -> bool:
             "PREP",
             "WRITE_RECORD",
             "COMMIT",
+            "CREATE_REPAIR_COMMIT",
+            "FETCH_REMOTE",
+            "FAST_FORWARD_LOCAL",
             "PUSH_NEW",
             "PUSH_FAST_FORWARD",
             "CREATE_PR",
@@ -241,12 +334,55 @@ def executor_permits(decision: dict[str, Any], mutation: str) -> bool:
     return False
 
 
-def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
-    if not _b(facts, "remote_known"):
+def _plan_release(facts: dict[str, Any]) -> dict[str, Any]:
+    runtime_blocker = _s(facts, "runtime_blocker")
+    if runtime_blocker:
+        policy = RUNTIME_BLOCKERS.get(runtime_blocker)
+        if policy is None:
+            return _blocked(
+                "BLOCKED_UNTYPED_RUNTIME_FACT",
+                f"Executor reported an unclassified runtime fact: {runtime_blocker}.",
+                ["Inspect the release executor; no automatic repair is authorized."],
+            )
+        problem, fixes = policy
+        return _blocked(runtime_blocker, problem, fixes)
+    failed_action = _s(facts, "failed_action")
+    if failed_action:
+        if failed_action not in ACTION_KINDS:
+            return _blocked(
+                "BLOCKED_UNTYPED_ACTION_FAILURE",
+                f"Executor reported an unclassified action failure: {failed_action}.",
+                ["Inspect the release executor; no automatic repair is authorized."],
+            )
         return _blocked(
-            "BLOCKED_REMOTE_UNKNOWN",
-            "Remote release facts are unavailable.",
-            ["git fetch origin --prune --tags", "Re-run ./release"],
+            f"BLOCKED_{failed_action}_FAILED",
+            f"Release repair {failed_action} failed.",
+            ["Inspect the failing action output; the planner will not bypass it."],
+        )
+    stalled_action = _s(facts, "stalled_action")
+    if stalled_action:
+        if stalled_action not in ACTION_KINDS:
+            return _blocked(
+                "BLOCKED_UNTYPED_ACTION_STALL",
+                f"Executor reported an unclassified action stall: {stalled_action}.",
+                ["Inspect the release executor; no automatic repair is authorized."],
+            )
+        return _blocked(
+            f"BLOCKED_{stalled_action}_STALLED",
+            f"Release repair {stalled_action} produced no relevant fact change.",
+            ["Inspect the named repair and its fact tuple before continuing."],
+        )
+    if not _b(facts, "remote_known"):
+        return _decision(
+            phase="PREPARE_DRAFT",
+            action="FETCH_REMOTE",
+            desired_version=_s(facts, "desired_version"),
+            desired_branch=_s(facts, "local_branch"),
+            planned_tag=(
+                f"v{_s(facts, 'desired_version')}"
+                if _s(facts, "desired_version")
+                else ""
+            ),
         )
 
     branch = _s(facts, "local_branch")
@@ -298,6 +434,20 @@ def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
             extra=[f"branch:{name}" for name in active],
         )
 
+    main_context = _s(facts, "main_context") or "unknown"
+    if main_context != "contained":
+        return _blocked(
+            f"BLOCKED_MAIN_CONTEXT_{main_context.upper()}",
+            f"origin/main context is {main_context}; containment is not proven.",
+            [
+                "Review the commits and choose whether the release line or main is authoritative.",
+                "No automatic merge or destructive reset is permitted.",
+            ],
+            desired_version=desired,
+            desired_branch=release_branch,
+            planned_tag=tag,
+        )
+
     relation = _s(facts, "remote_relation") or "absent"
     if relation == "unknown":
         return _blocked(
@@ -309,10 +459,9 @@ def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
             planned_tag=tag,
         )
     if relation == "behind":
-        return _blocked(
-            "BLOCKED_REMOTE_AHEAD",
-            f"origin/{release_branch} has commits the local branch does not.",
-            [f"git fetch origin {release_branch}", f"git merge origin/{release_branch}", "./release"],
+        return _decision(
+            phase="PREPARE_DRAFT",
+            action="FAST_FORWARD_LOCAL",
             desired_version=desired,
             desired_branch=release_branch,
             planned_tag=tag,
@@ -339,27 +488,11 @@ def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
             planned_tag=tag,
         )
 
-    shipped_sha = _s(facts, "shipped_tag_sha")
-    origin_main = _s(facts, "origin_main_sha")
-    rejected = [
-        row
-        for row in _list(facts, "pull_requests")
-        if isinstance(row, dict)
-        and str(row.get("state") or "") == "merged"
-        and not _identity_ok(row, desired, release_branch)
-    ]
-    allow_repoint = (
-        not rejected
-        and bool(shipped_sha)
-        and origin_main == shipped_sha
-        and relation in {"absent", "equal", "ahead"}
-    )
-
     if len(exact) == 1 and str(exact[0].get("state") or "") == "merged":
         row = exact[0]
         merge_sha = str(row.get("merge_sha") or "")
         if not _identity_ok(row, desired, release_branch):
-            action = next_prepare_action(facts, desired) or "COMMIT"
+            action = next_prepare_action(facts, desired) or "CREATE_REPAIR_COMMIT"
             return _decision(
                 phase="INVALID_MERGED",
                 action=action,
@@ -376,7 +509,6 @@ def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
                     f"Repair on {release_branch}: align integrity/nlc-version.json to {desired}, commit, push, open a new PR.",
                     "Re-run ./release",
                 ],
-                allow_local_main_repoint=False,
             )
         if not merge_sha:
             return _blocked(
@@ -394,7 +526,6 @@ def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
             tag=tag,
             merge_sha=merge_sha,
         )
-        decision["allow_local_main_repoint"] = False
         return decision
 
     prepare = next_prepare_action(facts, desired)
@@ -405,7 +536,6 @@ def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
             desired_version=desired,
             desired_branch=release_branch,
             planned_tag=tag,
-            allow_local_main_repoint=allow_repoint,
         )
 
     if relation == "absent":
@@ -415,7 +545,6 @@ def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
             desired_version=desired,
             desired_branch=release_branch,
             planned_tag=tag,
-            allow_local_main_repoint=allow_repoint,
         )
     if relation == "ahead":
         return _decision(
@@ -424,7 +553,6 @@ def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
             desired_version=desired,
             desired_branch=release_branch,
             planned_tag=tag,
-            allow_local_main_repoint=allow_repoint,
         )
 
     if len(exact) == 0:
@@ -434,7 +562,6 @@ def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
             desired_version=desired,
             desired_branch=release_branch,
             planned_tag=tag,
-            allow_local_main_repoint=False,
         )
     row = exact[0]
     if str(row.get("state") or "") == "open":
@@ -450,7 +577,6 @@ def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
                 f"Merge pull request #{number} when CI is green.",
                 "Re-run ./release",
             ],
-            allow_local_main_repoint=False,
         )
     return _blocked(
         "BLOCKED_PR_STATE",
@@ -460,3 +586,12 @@ def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
         desired_branch=release_branch,
         planned_tag=tag,
     )
+
+
+def plan_release(facts: dict[str, Any]) -> dict[str, Any]:
+    """Plan one action and bind repairs to their declared progress tuple."""
+    decision = _plan_release(facts)
+    names, token = action_progress(str(decision["action"]), facts)
+    decision["progress_facts"] = names
+    decision["progress_token"] = token
+    return decision

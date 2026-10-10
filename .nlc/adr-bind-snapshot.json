@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source": "adrs/ACTIVE.md",
-  "active_sha256": "9b9dbe755051ba8372bbddeefb36f022fc2aab35c2233e43d52098feea88cbbd",
+  "active_sha256": "cc4cbc6bc38d495f418a44b8b094eafee73f61866d9faa48878ef7d0d16a5ff9",
   "adrs": [
     {
       "adr": "0001",
@@ -272,7 +272,31 @@
       "lineage": "L-0045",
       "origin": "session",
       "effective": "2026-09-26"
+    },
+    {
+      "adr": "0046",
+      "lineage": "L-0046",
+      "origin": "session",
+      "effective": "2026-10-08"
+    },
+    {
+      "adr": "0047",
+      "lineage": "L-0047",
+      "origin": "session",
+      "effective": "2026-10-08"
+    },
+    {
+      "adr": "0048",
+      "lineage": "L-0048",
+      "origin": "session",
+      "effective": "2026-10-08"
+    },
+    {
+      "adr": "0049",
+      "lineage": "L-0049",
+      "origin": "RCA 2026-10-09 release stops outside planner",
+      "effective": "2026-10-09"
     }
   ],
-  "written_at": "2026-09-26T14:10:24Z"
+  "written_at": "2026-10-10T06:46:48Z"
 }

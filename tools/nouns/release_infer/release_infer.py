@@ -14,7 +14,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from nlc_release_tags import (  # noqa: E402
-    canonical_tag_commit,
     last_shipped_version,
     parse_semver,
 )
@@ -135,16 +134,18 @@ def infer_release(
     bump_override: str | None = None,
     as_branch: str | None = None,
 ) -> InferPlan:
-    from nlc_release_resume import detect
+    from nlc_release_state import observe
+    from nouns.release_state import plan_release, present_resume_phase
 
     hub = hub.resolve()
     branch = (as_branch or "").strip() or current_branch(hub)
-    state = resume if resume is not None else detect(remote, base)
-    phase = state.get("phase") or "prepare"
+    _ = resume
+    decision = plan_release(observe(remote, base))
+    phase = present_resume_phase(decision)
 
     if phase in ("tag_ready", "await_merge", "complete"):
-        ver = state.get("version") or read_version()
-        rb = state.get("release_branch") or release_branch_name(ver)
+        ver = str(decision.get("desired_version") or read_version())
+        rb = str(decision.get("desired_branch") or release_branch_name(ver))
         action = "tag_only" if phase == "tag_ready" else "await_merge"
         if phase == "complete":
             action = "complete"
@@ -155,7 +156,7 @@ def infer_release(
             release_branch=rb,
             action=action,
             source_branch=branch,
-            reasons=[f"resume phase={phase}"],
+            reasons=[f"planner phase={decision.get('phase')}"],
         )
 
     shipped_ver = last_shipped_version(f"{remote}/{base}", root=hub) or last_shipped_version(
@@ -165,25 +166,24 @@ def infer_release(
 
     if branch == base:
         next_target, next_bump, next_reasons = plan_next_release_target(shipped_ver, json_ver)
-        ok, probs, shipped_tag, _head = evaluate_main_purity(hub, remote=remote, base=base)
+        ok, probs, _shipped_tag, _head = evaluate_main_purity(
+            hub, remote=remote, base=base
+        )
         if not ok:
-            work_branch = f"work/{next_target}"
-            shipped_commit = (
-                canonical_tag_commit(shipped_tag, remote, hub) if shipped_tag else ""
-            )
-            reasons = ["main impure; orchestrator normalizes trunk (ADR 0044)"] + next_reasons
             return InferPlan(
                 phase="prepare",
                 bump=next_bump,
                 target_version=next_target,
                 release_branch=release_branch_name(next_target),
-                action="normalize_main_trunk",
+                action="blocked",
                 source_branch=branch,
-                reasons=reasons,
-                block=False,
-                work_branch=work_branch,
-                shipped_tag=shipped_tag or "",
-                shipped_commit=shipped_commit,
+                reasons=["main impure; automatic repoint is forbidden"] + next_reasons,
+                block=True,
+                block_problem="local main is not the shipped baseline",
+                block_gaps=[
+                    *probs,
+                    "Preserve the work on a non-main branch and restore main through an explicit human-approved operation.",
+                ],
             )
         return InferPlan(
             phase="prepare",

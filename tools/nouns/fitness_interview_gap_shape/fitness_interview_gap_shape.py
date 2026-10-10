@@ -71,7 +71,7 @@ def main() -> int:
         if not path.is_file():
             violations.append(f"missing {rel}")
             continue
-        text = path.read_text(encoding="utf-8", errors="replace")
+        text = read_tool(rel)
         if "What's wrong:" not in text:
             violations.append(f"{rel} must list gaps with 'What's wrong:' before machine tokens")
     for v in violations:

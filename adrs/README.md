@@ -53,3 +53,7 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0043-uc14-composable-adopt-boundary.md`](0043-uc14-composable-adopt-boundary.md) | UC14 adopt-time composable v1 | Accepted |
 | [`0044-hub-release-production-trunk.md`](0044-hub-release-production-trunk.md) | Production trunk: unreleased work stays off `main` | Accepted |
 | [`0045-hub-release-identity.md`](0045-hub-release-identity.md) | One release identity, one planner action | Accepted |
+| [`0046-repository-planit-identity.md`](0046-repository-planit-identity.md) | This repository's Planit skill is the one that plans | Accepted |
+| [`0047-adr-approval-receipts.md`](0047-adr-approval-receipts.md) | Active ADR approval is a hash receipt | Accepted |
+| [`0048-executable-shape.md`](0048-executable-shape.md) | Every executable file has one Boundary-Based shape | Accepted |
+| [`0049-release-planner-owns-stops.md`](0049-release-planner-owns-stops.md) | Release planner owns every intentional stop | Accepted |

@@ -8,6 +8,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+from fitness_hub_source import read_tool
+
 ROOT = Path(__file__).resolve().parents[3]
 TOOLS = ROOT / "tools"
 EXEMPT = frozenset({"nlc_requirements.py"})
@@ -19,7 +21,7 @@ def main() -> int:
     for path in sorted(TOOLS.glob("nlc*.py")):
         if path.name in EXEMPT:
             continue
-        text = path.read_text(encoding="utf-8", errors="replace")
+        text = read_tool(f"tools/{path.name}")
         if 'if __name__ == "__main__"' not in text:
             continue
         if "hub_tool()" not in text:

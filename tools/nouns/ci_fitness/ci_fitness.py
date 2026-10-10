@@ -509,6 +509,18 @@ def main() -> int:
         [sys.executable, str(TOOLS / "assert-release-state-passes.py")],
     )
     run(
+        "assert-release-context",
+        [sys.executable, str(TOOLS / "assert-release-context-passes.py")],
+    )
+    run(
+        "fitness-release-planner-ownership",
+        [sys.executable, str(TOOLS / "fitness-release-planner-ownership.py")],
+    )
+    run(
+        "assert-release-planner-ownership",
+        [sys.executable, str(TOOLS / "assert-release-planner-ownership-fails.py")],
+    )
+    run(
         "assert-jidoka-ssot-agents-link",
         [sys.executable, str(TOOLS / "assert-jidoka-ssot-agents-link-passes.py")],
     )
@@ -582,6 +594,46 @@ def main() -> int:
         [sys.executable, str(TOOLS / "assert-noun-inheritance-fails.py")],
     )
 
+    run(
+        "fitness-planit-identity",
+        [sys.executable, str(TOOLS / "fitness-planit-identity.py")],
+    )
+    run(
+        "fitness-adr-approval",
+        [sys.executable, str(TOOLS / "fitness-adr-approval.py")],
+    )
+    run(
+        "fitness-adr-record-gate",
+        [sys.executable, str(TOOLS / "fitness-adr-record-gate.py")],
+    )
+    run(
+        "fitness-verb-set-lineage",
+        [sys.executable, str(TOOLS / "fitness-verb-set-lineage.py")],
+    )
+    run(
+        "fitness-executable-shape",
+        [sys.executable, str(TOOLS / "fitness-executable-shape.py")],
+    )
+    run(
+        "assert-planit-other-skill",
+        [sys.executable, str(TOOLS / "assert-planit-other-skill-fails.py")],
+    )
+    run(
+        "assert-adr-approval-mismatch",
+        [sys.executable, str(TOOLS / "assert-adr-approval-mismatch-fails.py")],
+    )
+    run(
+        "assert-verb-primitive-inventory",
+        [sys.executable, str(TOOLS / "assert-verb-primitive-inventory-fails.py")],
+    )
+    run(
+        "assert-verb-set-extension",
+        [sys.executable, str(TOOLS / "assert-verb-set-extension-fails.py")],
+    )
+    run(
+        "assert-executable-kernel-exempt",
+        [sys.executable, str(TOOLS / "assert-executable-kernel-exempt-fails.py")],
+    )
     print("=== produce handoff preflight ===")
     from nlc_produce_package import preflight_handoff
 

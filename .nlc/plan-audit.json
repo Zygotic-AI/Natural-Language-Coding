@@ -1,0 +1,63 @@
+{
+  "producer_role": "bbp-proposer",
+  "adversarial_auditor_role": "bbp-reviewer",
+  "verdict": "PASS",
+  "ssot_leaf_ids": [
+    "rca-2026-10-09-release-stops-outside-planner"
+  ],
+  "ssot_exit_status": "plan-audit-pass",
+  "quality_snapshot": {
+    "opportunities": 10,
+    "ops": 10,
+    "defects": 0,
+    "quality": 1.0
+  },
+  "findings": [
+    {
+      "id": "exact-rca-prevention",
+      "result": "PASS"
+    },
+    {
+      "id": "hidden-bypasses",
+      "result": "PASS"
+    },
+    {
+      "id": "god-facts",
+      "result": "PASS"
+    },
+    {
+      "id": "action-taxonomy",
+      "result": "PASS"
+    },
+    {
+      "id": "false-context-acceptance",
+      "result": "PASS"
+    },
+    {
+      "id": "unsafe-automatic-git-mutation",
+      "result": "PASS"
+    },
+    {
+      "id": "negative-fixtures",
+      "result": "PASS"
+    },
+    {
+      "id": "gate-standard",
+      "result": "PASS"
+    },
+    {
+      "id": "class-correctness",
+      "result": "PASS"
+    },
+    {
+      "id": "amendment-required",
+      "result": "PASS"
+    }
+  ],
+  "evidence": [
+    "docs/rca/2026-10-09-release-stops-outside-planner.md",
+    "adrs/0039-single-command-human-surfaces.md",
+    "adrs/0040-process-preflight-remediation.md",
+    "adrs/0045-hub-release-identity.md"
+  ]
+}
