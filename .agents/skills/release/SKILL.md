@@ -71,8 +71,8 @@ Execute **in order** (fix and retry on NOT_MET; do not dump steps on the user):
 1. **Prove working tree** — `python3 tools/ci_fitness.py` → **CI:MET**. If FAIL, fix until MET (jidoka).
 2. **Stale `release/v*` only** — for each name in **`stale_release_branches`** (missing record on merge, not **`closed_release_branches`**): `git branch -D <branch>`; `git push origin --delete <branch>` when remote exists (no force-push to `main`).
 3. **Stage and commit** ship-intent changes on the **release line branch** (never `main`). If user is on `main` with work, create/checkout `release/v*` first, then commit. Use repo commit message style; never `--no-verify`.
-4. **FINDINGS header** — set `` `last_pass_sha:` `` and **Last pass** line to `git rev-parse --short HEAD`; run `python3 tools/fitness-findings-last-pass-fresh.py` → MET. Commit if not in step 3.
-5. **Inference record** — update [`integrity/full-nlc-audit-inference-record.json`](../../../integrity/full-nlc-audit-inference-record.json): `audit_sha`, `machine_verdict`, `continuity_verdict`, `phases_summary`, empty `p0_p1_product_blockers` when true. Commit if needed.
+4. **FINDINGS header** — set `` `last_pass_tree_hash:` `` to the worktree tree hash (ADR 0050; same model as release `effective_tree_sha`); run `python3 tools/fitness-findings-last-pass-fresh.py` → MET. Commit if not in step 3.
+5. **Inference record** — update [`integrity/full-nlc-audit-inference-record.json`](../../../integrity/full-nlc-audit-inference-record.json): `audit_tree_hash`, `machine_verdict`, `continuity_verdict`, `phases_summary`, empty `p0_p1_product_blockers` when true. Commit if needed.
 6. **TODO continuity** — mark completed closeout rows `@done` when predicates MET (same commit or follow-up).
 7. **Re-prove** — `python3 tools/ci_fitness.py` → CI:MET on final HEAD.
 8. **Clean tree** — `git status --porcelain` empty.

@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 
-
-
 import json
 import subprocess
 import sys
@@ -13,16 +11,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 RECORD = ROOT / "integrity" / "full-nlc-audit-inference-record.json"
 
-
-def git_short_head() -> str:
-    proc = subprocess.run(
-        ["git", "rev-parse", "--short", "HEAD"],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    return (proc.stdout or "").strip()
+sys.path.insert(0, str(ROOT / "tools"))
+from nouns.evidence_ref.sync_content_tree_hash import verify_content_tree_hash  # noqa: E402
 
 
 def main() -> int:
@@ -40,22 +30,19 @@ def main() -> int:
             violations.append("p0_p1_product_blockers must be empty list")
         if data.get("machine_verdict") != "FULL_NLC_AUDIT:MET":
             violations.append("machine_verdict must be FULL_NLC_AUDIT:MET")
-        head = git_short_head()
-        sha = str(data.get("audit_sha") or "")
-        if head and sha:
-            matched = head.startswith(sha) or sha.startswith(head)
-            if not matched:
-                proc = subprocess.run(
-                    ["git", "merge-base", "--is-ancestor", sha, "HEAD"],
-                    cwd=str(ROOT),
-                    capture_output=True,
-                    text=True,
-                    check=False,
-                )
-                if proc.returncode != 0:
-                    violations.append(
-                        f"audit_sha {sha} must match HEAD {head} or be an ancestor until merge amends record"
-                    )
+        ok, recorded, expected = verify_content_tree_hash(ROOT)
+        if not expected:
+            violations.append("cannot compute content tree hash (REFUSE)")
+        elif not recorded:
+            violations.append("missing integrity/hub-content-tree-hash.txt (ADR 0050)")
+        elif not ok:
+            violations.append(
+                f"hub-content-tree-hash {recorded} must match content tree {expected}"
+            )
+        if data.get("audit_tree_hash"):
+            violations.append("audit_tree_hash field removed; use hub-content-tree-hash.txt")
+        if not data.get("content_tree_hash_ref"):
+            violations.append("content_tree_hash_ref must point at hub-content-tree-hash.txt")
 
     proc = subprocess.run(
         [sys.executable, str(ROOT / "tools" / "fitness-use-cases-expansion-sync.py")],
@@ -68,6 +55,9 @@ def main() -> int:
     for v in violations:
         print(f"VIOLATION {v}")
     if violations:
+        if any("REFUSE" in v for v in violations):
+            print("RESULT:REFUSE")
+            return 2
         print("RESULT:NOT_MET")
         return 1
     print("RESULT:MET")
@@ -78,8 +68,4 @@ if __name__ == "__main__":
     sys.exit(main())
 
 
-
-
-
 BOUNDARY = "bba-emit"
-

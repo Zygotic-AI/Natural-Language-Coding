@@ -115,15 +115,26 @@ def main() -> int:
     if "nlc_release_tag_gate.py" not in wf:
         violations.append("release.yml must run tag gate")
 
+    schema = ROOT / "integrity" / "schemas" / "hub-release-record.schema.json"
+    if schema.is_file() and "content_tree_hash_ref" not in schema.read_text(encoding="utf-8"):
+        violations.append("hub-release-record schema must require content_tree_hash_ref (ADR 0050)")
+
     landmine = ROOT / "tools" / "nouns" / "assert_release_tag_gate_fails" / "assert_release_tag_gate_fails.py"
     if landmine.is_file() and "BAD_COMMIT" in landmine.read_text(encoding="utf-8"):
-        for wf_path, wf_label in ((fitness_wf, "fitness.yml"), (workflow, "release.yml")):
-            wf_text = wf_path.read_text(encoding="utf-8") if wf_path.is_file() else ""
-            if _runs_hub_fitness_suite(wf_text) and not _has_fetch_depth_zero(wf_text):
-                violations.append(
-                    f"{wf_label} must use actions/checkout fetch-depth: 0 "
-                    "(hub fitness landmines pin historic commits; shallow CI false-fails)"
-                )
+        violations.append("assert_release_tag_gate_fails must not pin BAD_COMMIT (ADR 0050)")
+
+    for gate in (
+        "fitness-no-history-ids-in-evidence.py",
+        "fitness-landmine-self-contained.py",
+        "assert-unresolvable-refuses-passes.py",
+    ):
+        proc = subprocess.run(
+            [sys.executable, str(ROOT / "tools" / gate)],
+            cwd=str(ROOT),
+            check=False,
+        )
+        if proc.returncode != 0:
+            violations.append(f"{gate} must MET")
 
     release_md = (ROOT / "docs/adoption/RELEASE.md").read_text(encoding="utf-8", errors="replace")
     if "0044" not in release_md and "production trunk" not in release_md.lower():

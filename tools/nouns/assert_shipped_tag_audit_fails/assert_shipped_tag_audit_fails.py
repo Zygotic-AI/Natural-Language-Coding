@@ -6,28 +6,37 @@ BOUNDARY = "bba-emit"
 
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-BAD_COMMIT = "397b1a0"
+sys.path.insert(0, str(ROOT / "tools"))
+from nouns.evidence_ref.synthetic_release import unprepared_release_commit  # noqa: E402
+
 BAD_TAG = "v0.2.0"
 
 
 def main() -> int:
-    proc = subprocess.run(
-        [
-            sys.executable,
-            str(ROOT / "tools" / "nlc_release_shipped_tag_audit.py"),
-            "--check",
-            "--tag",
-            BAD_TAG,
-            "--commit",
-            BAD_COMMIT,
-        ],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
-    )
+    with tempfile.TemporaryDirectory(prefix="nlc-shipped-audit-lm-") as tmp:
+        repo = Path(tmp) / "repo"
+        repo.mkdir()
+        bad_commit = unprepared_release_commit(repo, "0.2.0")
+        proc = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "tools" / "nlc_release_shipped_tag_audit.py"),
+                "--check",
+                "--tag",
+                BAD_TAG,
+                "--commit",
+                bad_commit,
+                "--repo-root",
+                str(repo),
+            ],
+            cwd=str(ROOT),
+            capture_output=True,
+            text=True,
+        )
     if proc.returncode == 0:
         print("ASSERT:FAIL shipped tag audit should refuse bad v0.2.0 commit")
         print(proc.stdout, proc.stderr)
@@ -46,3 +55,5 @@ def main() -> int:
     return 0
 
 
+if __name__ == "__main__":
+    sys.exit(main())

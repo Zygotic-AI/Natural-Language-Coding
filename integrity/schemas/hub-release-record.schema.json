@@ -1,12 +1,15 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
-  "required": ["schema", "version", "release_branch", "prepare_head"],
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "hub-release-record",
+  "required": ["schema", "version", "release_branch", "content_tree_hash_ref"],
   "properties": {
-    "schema": { "const": 1 },
+    "schema": { "type": "integer", "enum": [2] },
     "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
     "release_branch": { "type": "string", "pattern": "^release/v[0-9]+\\.[0-9]+\\.[0-9]+$" },
-    "prepare_head": { "type": "string", "minLength": 7 }
+    "content_tree_hash_ref": {
+      "type": "string",
+      "enum": ["integrity/hub-content-tree-hash.txt"]
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

@@ -247,8 +247,7 @@ dispatch_release_plan() {
       : action_result_boundary:WRITE_RECORD
       python3 tools/nlc_release_record.py \
         --version "${desired}" \
-        --branch "${branch}" \
-        --prepare-head "$(git rev-parse HEAD)" || rc=$?
+        --branch "${branch}" || rc=$?
       ;;
     COMMIT)
       : action_result_boundary:COMMIT

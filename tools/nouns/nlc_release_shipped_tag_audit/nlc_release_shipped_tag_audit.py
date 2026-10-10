@@ -23,12 +23,13 @@ from nlc_release_tags import (  # noqa: E402
     tag_version,
 )
 from nlc_requirements import hub_tool  # noqa: E402
+from nouns.evidence_ref.evidence_ref import refuse_gate, resolve_commit  # noqa: E402
 
 
-def _git_rev_parse(ref: str) -> str | None:
+def _git_rev_parse(repo_root: Path, ref: str) -> str | None:
     proc = subprocess.run(
         ["git", "rev-parse", ref],
-        cwd=str(ROOT),
+        cwd=str(repo_root),
         capture_output=True,
         text=True,
         check=False,
@@ -48,9 +49,9 @@ def remediation_lines(tag: str) -> list[str]:
     ]
 
 
-def audit_tag_commit(tag: str, commit: str) -> tuple[bool, list[str]]:
+def audit_tag_commit(tag: str, commit: str, *, repo_root: Path) -> tuple[bool, list[str]]:
     ver = tag_version(tag)
-    problems = check_static(commit, tag)
+    problems = check_static(repo_root, commit, tag)
     if problems:
         return False, problems
     if tag_from_version(ver) != tag:
@@ -67,6 +68,11 @@ def main() -> int:
     parser.add_argument("--commit", default=None, help="Override commit (with --tag)")
     parser.add_argument("--remote", default="origin")
     parser.add_argument(
+        "--repo-root",
+        default=None,
+        help="Git root for --tag/--commit landmine overrides (default hub checkout)",
+    )
+    parser.add_argument(
         "--align-local",
         action="store_true",
         help="Move local shipped tag to origin commit before audit (no push)",
@@ -77,9 +83,14 @@ def main() -> int:
         parser.print_help()
         return 2
 
+    repo_root = Path(args.repo_root).resolve() if args.repo_root else ROOT
+
     if args.tag and args.commit:
         tag = args.tag.strip()
         commit = args.commit.strip()
+        _, err = resolve_commit(repo_root, commit)
+        if err:
+            return refuse_gate("RELEASE_SHIPPED_TAG", commit, err)
     else:
         tag = last_shipped_tag(args.to_ref)
         if not tag:
@@ -109,13 +120,14 @@ def main() -> int:
             return 1
         commit = canonical_tag_commit(tag, args.remote, ROOT)
         if not commit:
-            commit = _git_rev_parse(f"{tag}^{{commit}}")
+            commit = _git_rev_parse(ROOT, f"{tag}^{{commit}}")
         if not commit:
             print("RELEASE_SHIPPED_TAG:NOT_MET", file=sys.stderr)
             print(f"  What's wrong: cannot resolve commit for tag {tag}", file=sys.stderr)
             return 1
+        repo_root = ROOT
 
-    ok, problems = audit_tag_commit(tag, commit)
+    ok, problems = audit_tag_commit(tag, commit, repo_root=repo_root)
     if ok:
         print(f"RELEASE_SHIPPED_TAG:MET tag={tag} commit={commit[:12]}")
         return 0

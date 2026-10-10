@@ -6,29 +6,36 @@ BOUNDARY = "bba-emit"
 
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-# PR #19 merge — predates hub-release-record.json requirement.
-BAD_COMMIT = "397b1a0"
+sys.path.insert(0, str(ROOT / "tools"))
+from nouns.evidence_ref.synthetic_release import unprepared_release_commit  # noqa: E402
 
 
 def main() -> int:
-    proc = subprocess.run(
-        [
-            sys.executable,
-            str(ROOT / "tools" / "nlc_release_tag_gate.py"),
-            "--check",
-            "--commit",
-            BAD_COMMIT,
-            "--tag",
-            "v0.2.0",
-            "--skip-verify-deep",
-        ],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
-    )
+    with tempfile.TemporaryDirectory(prefix="nlc-tag-gate-lm-") as tmp:
+        repo = Path(tmp) / "repo"
+        repo.mkdir()
+        bad_commit = unprepared_release_commit(repo, "0.2.0")
+        proc = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "tools" / "nlc_release_tag_gate.py"),
+                "--check",
+                "--commit",
+                bad_commit,
+                "--tag",
+                "v0.2.0",
+                "--skip-verify-deep",
+                "--repo-root",
+                str(repo),
+            ],
+            cwd=str(ROOT),
+            capture_output=True,
+            text=True,
+        )
     if proc.returncode == 0:
         print("ASSERT:FAIL tag gate should refuse commit without release record")
         print(proc.stdout, proc.stderr)
@@ -41,3 +48,5 @@ def main() -> int:
     return 0
 
 
+if __name__ == "__main__":
+    sys.exit(main())
