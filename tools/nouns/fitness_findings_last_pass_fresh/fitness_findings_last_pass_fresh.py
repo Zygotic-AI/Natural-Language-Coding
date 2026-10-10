@@ -41,7 +41,7 @@ def main() -> int:
         print("RESULT:REFUSE")
         return 2
     if not ok:
-        print(f"VIOLATION hub-content-tree-hash {recorded} != content tree {expected}")
+        print(f"VIOLATION hub-content-tree-hash {recorded} != content digest {expected}")
         print("RESULT:NOT_MET")
         return 1
 
