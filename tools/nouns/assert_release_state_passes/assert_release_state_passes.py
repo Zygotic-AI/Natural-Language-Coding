@@ -20,9 +20,9 @@ from nouns.release_state import (  # noqa: E402
 
 BOUNDARY = "bba-emit"
 
-MERGE = "ddd99726c051e377d926ee26b0144ac8a449d91a"
-HEAD = "0ca1bceb0ae434543e10a55b520e5afa15a64944"
-SHIPPED = "023bad16c1ff969d5c3b760fcaa131bf2828fa3c"
+MERGE = "dddddddddddddddddddddddddddddddddddddddd"
+HEAD = "cccccccccccccccccccccccccccccccccccccccc"
+SHIPPED = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 GOOD_MERGE = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
 

@@ -83,6 +83,24 @@ def main() -> int:
 
     charter_check1()
 
+    print("=== ADR 0050 evidence identity ===")
+    run(
+        "fitness-no-history-ids-in-evidence",
+        [sys.executable, str(TOOLS / "fitness-no-history-ids-in-evidence.py")],
+    )
+    run(
+        "fitness-landmine-self-contained",
+        [sys.executable, str(TOOLS / "fitness-landmine-self-contained.py")],
+    )
+    run(
+        "assert-unresolvable-refuses-passes",
+        [sys.executable, str(TOOLS / "assert-unresolvable-refuses-passes.py")],
+    )
+    run(
+        "assert-evidence-unresolved-ref-refuses",
+        [sys.executable, str(TOOLS / "assert-evidence-unresolved-ref-refuses.py")],
+    )
+
     print("=== designed-fail landmines (assert exit 0 = landmine live) ===")
     for path in sorted(TOOLS.glob("assert-*-fails.py")):
         run(str(path.relative_to(ROOT)), [sys.executable, str(path)])

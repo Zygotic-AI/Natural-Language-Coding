@@ -7,7 +7,7 @@
 | Signal | Usually blocks ship? | `./release` behavior |
 | ------ | -------------------- | -------------------- |
 | `full-nlc-audit` release-prep NOT_MET | **Yes** | Prepare refuses |
-| `FINDINGS` `last_pass_sha` ≠ HEAD | **Yes** | Fails `findings-last-pass-fresh` stage |
+| `FINDINGS` `last_pass_tree_hash` ≠ worktree tree | **Yes** | Fails `findings-last-pass-fresh` stage |
 | Open TODO **Continuity** rows (unmerged batch, stale inference SHA) | **Often yes** | Fix or waive explicitly |
 | Open TODO **product** rows (UC16/UC20 expansion, composable IR) | **No** (default) | Ship with residuals |
 | Dirty git (uncommitted ship intent) | **Yes** until agent closeout | **`/release` Step 1A** commits; user does not |

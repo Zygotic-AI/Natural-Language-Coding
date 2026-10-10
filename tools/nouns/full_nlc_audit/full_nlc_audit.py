@@ -162,10 +162,23 @@ def integration_leaves() -> list[str]:
         lid = leaf.get("id") or leaf.get("name") or "?"
         disp = (leaf.get("disposition") or "").strip().lower()
         evidence = leaf.get("evidence") or {}
-        sha = (evidence.get("commit") or evidence.get("sha") or "").strip()
-        if disp == "on_main" and sha:
-            if not _git_is_ancestor(sha):
-                problems.append(f"leaf {lid}: on_main evidence {sha[:12]} not ancestor of HEAD")
+        legacy_sha = (evidence.get("commit") or evidence.get("sha") or "").strip()
+        tree_ref = (evidence.get("tree_hash_ref") or "").strip()
+        if disp == "on_main":
+            if legacy_sha:
+                problems.append(
+                    f"leaf {lid}: on_main evidence must not use commit sha (ADR 0050)"
+                )
+            elif tree_ref != "integrity/hub-content-tree-hash.txt":
+                problems.append(
+                    f"leaf {lid}: on_main evidence must cite integrity/hub-content-tree-hash.txt"
+                )
+            else:
+                from nouns.evidence_ref.sync_content_tree_hash import verify_content_tree_hash
+
+                ok, _, _ = verify_content_tree_hash(ROOT)
+                if not ok:
+                    problems.append(f"leaf {lid}: hub-content-tree-hash stale vs worktree")
         if disp == "parked":
             ref = (evidence.get("findings_ref") or evidence.get("findings") or "").strip()
             if ref and ref not in FINDINGS_PATH.read_text(encoding="utf-8", errors="replace"):

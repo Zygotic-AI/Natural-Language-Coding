@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FINDINGS last_pass_sha must match current HEAD short SHA (F2)."""
+"""FINDINGS last_pass_tree_hash must match worktree tree (F2, ADR 0050)."""
 from __future__ import annotations
 
 import sys

@@ -23,8 +23,8 @@
     "emit_path_open": 0,
     "other_or_lib": 0,
     "noun_backed_lib": 66,
-    "noun_backed_assert": 145,
-    "noun_backed_fitness": 133,
+    "noun_backed_assert": 148,
+    "noun_backed_fitness": 135,
     "fitness_only": 0,
     "covered_emit_path": 26
   },
@@ -258,6 +258,10 @@
       "class": "noun-backed-assert"
     },
     {
+      "file": "assert-evidence-unresolved-ref-refuses.py",
+      "class": "noun-backed-assert"
+    },
+    {
       "file": "assert-executable-kernel-exempt-fails.py",
       "class": "noun-backed-assert"
     },
@@ -283,6 +287,10 @@
     },
     {
       "file": "assert-guide-orchestration-passes.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-history-rewrite-invariant-passes.py",
       "class": "noun-backed-assert"
     },
     {
@@ -571,6 +579,10 @@
     },
     {
       "file": "assert-todo-use-cases-ssot-fails.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-unresolvable-refuses-passes.py",
       "class": "noun-backed-assert"
     },
     {
@@ -950,6 +962,10 @@
       "class": "noun-backed-fitness"
     },
     {
+      "file": "fitness-landmine-self-contained.py",
+      "class": "noun-backed-fitness"
+    },
+    {
       "file": "fitness-menu-harness-sync.py",
       "class": "noun-backed-fitness"
     },
@@ -999,6 +1015,10 @@
     },
     {
       "file": "fitness-no-hand-authored-graphs.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "fitness-no-history-ids-in-evidence.py",
       "class": "noun-backed-fitness"
     },
     {
@@ -1909,6 +1929,14 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
+      "noun": "assert_evidence_unresolved_ref_refuses",
+      "path": "tools/nouns/assert_evidence_unresolved_ref_refuses/",
+      "adapters": [
+        "assert-evidence-unresolved-ref-refuses.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
       "noun": "assert_full_nlc_audit_emit_checklist_passes",
       "path": "tools/nouns/assert_full_nlc_audit_emit_checklist_passes/",
       "adapters": [
@@ -1953,6 +1981,14 @@
       "path": "tools/nouns/assert_guide_orchestration_passes/",
       "adapters": [
         "assert-guide-orchestration-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_history_rewrite_invariant_passes",
+      "path": "tools/nouns/assert_history_rewrite_invariant_passes/",
+      "adapters": [
+        "assert-history-rewrite-invariant-passes.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
@@ -2521,6 +2557,14 @@
       "path": "tools/nouns/assert_todo_use_cases_ssot_fails/",
       "adapters": [
         "assert-todo-use-cases-ssot-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_unresolvable_refuses_passes",
+      "path": "tools/nouns/assert_unresolvable_refuses_passes/",
+      "adapters": [
+        "assert-unresolvable-refuses-passes.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
@@ -3359,6 +3403,14 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
+      "noun": "fitness_landmine_self_contained",
+      "path": "tools/nouns/fitness_landmine_self_contained/",
+      "adapters": [
+        "fitness-landmine-self-contained.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
       "noun": "fitness_menu_harness_sync",
       "path": "tools/nouns/fitness_menu_harness_sync/",
       "adapters": [
@@ -3459,6 +3511,14 @@
       "path": "tools/nouns/fitness_no_hand_authored_graphs/",
       "adapters": [
         "fitness-no-hand-authored-graphs.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "fitness_no_history_ids_in_evidence",
+      "path": "tools/nouns/fitness_no_history_ids_in_evidence/",
+      "adapters": [
+        "fitness-no-history-ids-in-evidence.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },

@@ -1,0 +1,10 @@
+{
+  "version": "1",
+  "verbs": {
+    "run": {
+      "input": { "type": "object" },
+      "output": { "type": "object" },
+      "error": { "type": "object" }
+    }
+  }
+}

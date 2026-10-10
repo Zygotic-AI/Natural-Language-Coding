@@ -57,3 +57,4 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0047-adr-approval-receipts.md`](0047-adr-approval-receipts.md) | Active ADR approval is a hash receipt | Accepted |
 | [`0048-executable-shape.md`](0048-executable-shape.md) | Every executable file has one Boundary-Based shape | Accepted |
 | [`0049-release-planner-owns-stops.md`](0049-release-planner-owns-stops.md) | Release planner owns every intentional stop | Accepted |
+| [`0050-evidence-identity-content-not-history.md`](0050-evidence-identity-content-not-history.md) | Evidence binds to content fingerprints, not commit ids (Proposed) | Proposed |
