@@ -18,6 +18,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools"))
 from nlc_requirements import hub_prove  # noqa: E402
+from nouns.field_write_bypass_fixtures.field_write_bypass_fixtures import (  # noqa: E402
+    O9A_BYPASS_FIXTURE_DIRS,
+)
 TOOLS = ROOT / "tools"
 
 
@@ -70,6 +73,10 @@ def charter_check1() -> None:
                 continue
             if d.name in {"invoice-violation", "internal-link-landmine"}:
                 continue
+            if d.name in O9A_BYPASS_FIXTURE_DIRS:
+                continue
+            if d.name.startswith("invoice-bypass-"):
+                fail(f"unexpected invoice-bypass fixture {d.name} (not in O9A_BYPASS_FIXTURE_DIRS)")
             print(f"scanning {d}/")
             run(
                 f"no-noun-field-writes {d.name}",
@@ -118,6 +125,14 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "assert-hub-in-force-exclusions-passes",
         [sys.executable, str(TOOLS / "assert-hub-in-force-exclusions-passes.py")],
+    )
+    run(
+        "fitness-goal-write-hook",
+        [sys.executable, str(TOOLS / "fitness-goal-write-hook.py")],
+    )
+    run(
+        "assert-field-write-bypass-fails",
+        [sys.executable, str(TOOLS / "assert-field-write-bypass-fails.py")],
     )
     run(
         "assert-unresolvable-refuses-passes",
@@ -365,6 +380,10 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-install-verify-passes.py")],
     )
     run(
+        "assert-piped-install-smoke",
+        [sys.executable, str(TOOLS / "assert-piped-install-smoke-passes.py")],
+    )
+    run(
         "assert-project-lock-schema",
         [sys.executable, str(TOOLS / "assert-project-lock-schema-passes.py")],
     )
@@ -577,6 +596,10 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "assert-jidoka-ssot-agents-link",
         [sys.executable, str(TOOLS / "assert-jidoka-ssot-agents-link-passes.py")],
+    )
+    run(
+        "assert-goal-write-hook-landmine",
+        [sys.executable, str(TOOLS / "assert-goal-write-hook-landmine-passes.py")],
     )
     run(
         "assert-release-main-purity-remediation",
