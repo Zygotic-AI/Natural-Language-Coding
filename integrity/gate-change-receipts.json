@@ -5660,7 +5660,7 @@
       "ratifier_role": "pending"
     },
     "tools/nouns/assert_produce_handoff_refused/__pycache__/assert_produce_handoff_refused.cpython-312.pyc": {
-      "content_sha256": "9693a27a6f4d73c4570ae8a4fe9e96211864b9d7ecd12301d3f47488cbbb8b68",
+      "content_sha256": "b483b9ed695743638a0b5f26d940ad919529f9c6ade487f0e44996f6bedd29ed",
       "note": "baseline at ADR 0051 adoption, ratification pending",
       "ratified_at": null,
       "ratifier_role": "pending"
@@ -5708,7 +5708,7 @@
       "ratifier_role": "pending"
     },
     "tools/nouns/assert_produce_role_separation_refused/__pycache__/assert_produce_role_separation_refused.cpython-312.pyc": {
-      "content_sha256": "7862dc4f72ad5d06d81e49367d497243a86dd7d4d95f4a6171419192f9797263",
+      "content_sha256": "74e3633d5afb06d95e9b86832b2d871bdb808d78e4ac84941913adff23b9bef1",
       "note": "baseline at ADR 0051 adoption, ratification pending",
       "ratified_at": null,
       "ratifier_role": "pending"
@@ -11816,13 +11816,13 @@
       "ratifier_role": "pending"
     },
     "tools/nouns/fitness_hub_own_principle_subgoals/__pycache__/__init__.cpython-312.pyc": {
-      "content_sha256": "c9853075f9cc13d6e2ffb6d982e11b76caf48940296b1285a7d2f8c8494259c6",
+      "content_sha256": "11d51adfaa7706d11e3e1987d343368f36e1f5edbb7fa9cade17b638cee29b47",
       "note": "baseline at ADR 0051 adoption, ratification pending",
       "ratified_at": null,
       "ratifier_role": "pending"
     },
     "tools/nouns/fitness_hub_own_principle_subgoals/__pycache__/fitness_hub_own_principle_subgoals.cpython-312.pyc": {
-      "content_sha256": "84f7b3d324d4b4d77264badb1a4dd31f7f0d2868062cdca9053784b2c14a7813",
+      "content_sha256": "c79de4056b84253d65fb49bb1526f3ce6d93c2f6353da9838bc7779753125094",
       "note": "baseline at ADR 0051 adoption, ratification pending",
       "ratified_at": null,
       "ratifier_role": "pending"
@@ -11840,13 +11840,13 @@
       "ratifier_role": "pending"
     },
     "tools/nouns/fitness_hub_own_property_exit/__pycache__/__init__.cpython-312.pyc": {
-      "content_sha256": "3c9ea23414d000288f9f2e80929c5a28cc5c199f8c057858e8987735f0ab1564",
+      "content_sha256": "8939a3d0fab84f0b71372f686f840599fe4b620ca67701605e9b459a93a69c6e",
       "note": "baseline at ADR 0051 adoption, ratification pending",
       "ratified_at": null,
       "ratifier_role": "pending"
     },
     "tools/nouns/fitness_hub_own_property_exit/__pycache__/fitness_hub_own_property_exit.cpython-312.pyc": {
-      "content_sha256": "321db1513b433f563245eade625a85e5a0569628596ed28023ce2857e91b6de0",
+      "content_sha256": "9931bedf4f6c22c70dc576770da1bcffcf579a7ff4eb029ed32be8f86d644940",
       "note": "baseline at ADR 0051 adoption, ratification pending",
       "ratified_at": null,
       "ratifier_role": "pending"
