@@ -100,6 +100,10 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-landmine-self-contained.py")],
     )
     run(
+        "fitness-root-session-artifacts",
+        [sys.executable, str(TOOLS / "fitness-root-session-artifacts.py")],
+    )
+    run(
         "fitness-goal-write-hook",
         [sys.executable, str(TOOLS / "fitness-goal-write-hook.py")],
     )

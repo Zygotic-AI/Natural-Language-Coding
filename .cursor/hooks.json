@@ -10,7 +10,7 @@
     "preToolUse": [
       {
         "command": ".cursor/hooks/nlc-goal-write-gate.sh",
-        "matcher": "Write",
+        "matcher": "Write|Delete|StrReplace",
         "failClosed": true
       }
     ]
