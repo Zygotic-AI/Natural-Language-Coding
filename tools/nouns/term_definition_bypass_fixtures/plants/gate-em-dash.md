@@ -1,0 +1,1 @@
+Gate — plant definition line.

@@ -127,6 +127,14 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-uc-product-findings-sync.py")],
     )
     run(
+        "fitness-term-definition-ssot",
+        [sys.executable, str(TOOLS / "fitness-term-definition-ssot.py")],
+    )
+    run(
+        "assert-term-definition-fails",
+        [sys.executable, str(TOOLS / "assert-term-definition-fails.py")],
+    )
+    run(
         "fitness-hub-public-self-contained",
         [sys.executable, str(TOOLS / "fitness-hub-public-self-contained.py")],
     )
