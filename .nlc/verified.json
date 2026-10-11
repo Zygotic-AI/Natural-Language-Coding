@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "algorithm": "sha256",
-  "recorded_at": "2026-10-11T04:43:52Z",
+  "recorded_at": "2026-10-11T20:16:36Z",
   "hub": "0.3.0",
   "files": {
     "adrs/0001-zero-variance-integrity.md": "3c5979c1832bab283044d51e7c9f9c30db418e0bbaa725258e76dc73ad52c767",
@@ -54,6 +54,7 @@
     "adrs/0048-executable-shape.md": "caf88d61656529e2be8841d6abe4e7b84ff860127995ae1d13e89fea0ddf7b49",
     "adrs/0049-release-planner-owns-stops.md": "154153f08dc12ddd0fa0bda3de72f0122813688ce7107b720fbdee6b0adad96c",
     "adrs/0050-evidence-identity-content-not-history.md": "33e736902f16756a93ff21593bd5815cd962d7e332ad05929425bbe9134b1598",
+    "adrs/0051-hub-own-produce-principles.md": "b0c1bfc37a9a1e605c58c5237cf0fcdc95b5f21083bb7d57c3c321a8e27aae31",
     "adrs/ACTIVE.md": "89db1403b1323aca4f39db92174849a0226a5cab21753ac5051b2722a09ee39a",
     "adrs/CATALOG.md": "ebaa84dfe4e13db6904ca869f5d8134dc77b8e651b42d7376f1f4cc68fae8987",
     "adrs/INDEX.md": "ac55cbfabf9b10c91bb858724904efb2056108183f3638773c04d1bceddcb8a1",
