@@ -9,7 +9,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 HASH_REL = "integrity/hub-content-tree-hash.txt"
+PLANIT_EVIDENCE_REL = ".nlc/planit-change-evidence.json"
 HASH_PATH = ROOT / HASH_REL
+
+
+def _content_exclude_rel() -> set[str]:
+    """Paths omitted from the hub content digest (self-describing hash + harness stamps)."""
+    return {HASH_REL, PLANIT_EVIDENCE_REL}
 
 
 def content_digest_excluding(root: Path, exclude_rel: set[str]) -> str:
@@ -44,7 +50,7 @@ def sync_content_tree_hash(root: Path | None = None) -> str:
     """Write hub-content-tree-hash.txt to the current content digest (single step)."""
     base = root or ROOT
     path = base / HASH_REL
-    h = content_digest_excluding(base, {HASH_REL})
+    h = content_digest_excluding(base, _content_exclude_rel())
     if not h:
         raise RuntimeError("cannot compute hub content digest")
     path.write_text(h + "\n", encoding="utf-8")
@@ -64,7 +70,7 @@ def verify_content_tree_hash(root: Path | None = None) -> tuple[bool, str, str]:
     """Return (ok, recorded, expected) for the content fingerprint."""
     base = root or ROOT
     recorded = read_content_tree_hash(base)
-    expected = content_digest_excluding(base, {HASH_REL}).lower()
+    expected = content_digest_excluding(base, _content_exclude_rel()).lower()
     if not recorded or not expected:
         return False, recorded, expected
     return recorded == expected, recorded, expected
