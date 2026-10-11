@@ -35,6 +35,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "tools"))
+from nouns.nlc_outside_write_ast.nlc_outside_write_ast import ast_field_write_violations  # noqa: E402
 
 SOURCE_EXTS = {".ts", ".js", ".py", ".mjs", ".cjs", ".tsx", ".jsx"}
 SKIP_DIR_NAMES = {
@@ -173,6 +175,9 @@ def scan_one(scan_root: Path) -> list[tuple[str, int, str]]:
             for field, pattern in patterns:
                 if pattern.search(line):
                     violations.append((rel(path), lineno, field))
+        if path.suffix == ".py" and fields:
+            for lineno, field in ast_field_write_violations(text, fields):
+                violations.append((rel(path), lineno, field))
     return violations
 
 
