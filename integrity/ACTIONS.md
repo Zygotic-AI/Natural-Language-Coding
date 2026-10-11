@@ -79,13 +79,13 @@ This catalog names the gated Actions in the [BBP](../docs/TERMS.md#bbp) pipeline
 | **Plan** | Atomic | Plan → Produce [handoff](../docs/TERMS.md#handoff) | UNWIRED+companion | Plan | Plan exit criteria [met](../docs/TERMS.md#met); acceptance criteria documented |
 | **Bind-ADRs** | Atomic | ADR-binding [gate](../docs/TERMS.md#gate) | UNWIRED+companion | Plan | [ADR](../docs/TERMS.md#adr) exists with decision and binder |
 | **Conduct-RCA** | Atomic | [RCA](../docs/TERMS.md#rca) → Raise-Readiness [handoff](../docs/TERMS.md#handoff) | UNWIRED+companion | Conduct-RCA | Root cause named; investigation complete |
-| **Raise-Readiness** | Compound | Raise → HITL Root-Approve [handoff](../docs/TERMS.md#handoff) (includes P-030 refuse, R3/R4 check) | wired-Bindings ([P-030](https://github.com/richardpickett/BBA-Bindings/pull/9)) | Raise-Readiness | §7 Owner/Path/Verification, R3, R4 present |
-| **Produce** | Compound | Produce → Fitness [handoff](../docs/TERMS.md#handoff) (includes produce-package, SSOT exit evidence) | wired-Bindings ([P-020](https://github.com/richardpickett/BBA-Bindings)) | Produce | [Produce package](../docs/TERMS.md#produce-package) complete; `ssot_leaf_ids` + `ssot_exit_status` |
+| **Raise-Readiness** | Compound | Raise → HITL Root-Approve [handoff](../docs/TERMS.md#handoff) (includes P-030 refuse, R3/R4 check) | wired-local ([P-030](../docs/OPERATING_BINDINGS.md#p-030-raise-readiness-refuse)) | Raise-Readiness | §7 Owner/Path/Verification, R3, R4 present |
+| **Produce** | Compound | Produce → Fitness [handoff](../docs/TERMS.md#handoff) (includes produce-package, SSOT exit evidence) | wired-local ([P-020](../docs/OPERATING_BINDINGS.md#p-020-ssot-exit-evidence)) | Produce | [Produce package](../docs/TERMS.md#produce-package) complete; `ssot_leaf_ids` + `ssot_exit_status` |
 | **Preflight-Fitness** | Atomic | `handoff_refused` [gate](../docs/TERMS.md#gate) (S7) | wired-local (`tools/score-fitness.py`) | Fitness | No `handoff_refused`; package complete |
 | **Score-Fitness** | Atomic | Fitness scoring [gate](../docs/TERMS.md#gate) | wired-local (`tools/score-fitness.py`) | Fitness | `MET` / `FAIL` with criteria verdicts |
 | **Fitness** | Compound | Fitness → [Audit](../docs/TERMS.md#audit) [handoff](../docs/TERMS.md#handoff) (includes preflight + scoring) | wired-local (`tools/score-fitness.py`) | Fitness | `MET` (preflight passed, scoring passed) |
 | **Audit-Charter-Rules** | Atomic | Charter-rule [audit](../docs/TERMS.md#audit) [gate](../docs/TERMS.md#gate) | UNWIRED+companion | Adversarial [Audit](../docs/TERMS.md#audit) | Findings report per [charter](../docs/TERMS.md#charter) [rule](../docs/TERMS.md#rule) |
-| **Incomplete-Packet-Hunt** | Atomic | Incomplete-packet [gate](../docs/TERMS.md#gate) (GATE.md) | wired-Bindings ([P-030](https://github.com/richardpickett/BBA-Bindings/pull/9)) | Adversarial [Audit](../docs/TERMS.md#audit) | No incomplete-packet slips found |
+| **Incomplete-Packet-Hunt** | Atomic | Incomplete-packet [gate](../docs/TERMS.md#gate) (GATE.md) | wired-local ([P-030](../docs/OPERATING_BINDINGS.md#p-030-raise-readiness-refuse)) | Adversarial [Audit](../docs/TERMS.md#audit) | No incomplete-packet slips found |
 | **Adversarial-Audit** | Compound | [Audit](../docs/TERMS.md#audit) → UAT/Promote [handoff](../docs/TERMS.md#handoff) (includes charter audit + incomplete-packet hunt) | UNWIRED+companion | Adversarial [Audit](../docs/TERMS.md#audit) | All [audit](../docs/TERMS.md#audit) sub-gates PASS; no unresolved blocker findings |
 | **UAT-Greenlight** | Atomic | UAT → [Ship](../docs/TERMS.md#ship) [handoff](../docs/TERMS.md#handoff) | UNWIRED+companion | UAT / Promote Evidence | Suite complete; tip marker match; no soft-green |
 | **[Ship](../docs/TERMS.md#ship)** | Atomic | [Ship](../docs/TERMS.md#ship) decision [gate](../docs/TERMS.md#gate) | UNWIRED+companion | [Ship](../docs/TERMS.md#ship) | [Ship](../docs/TERMS.md#ship) record: who, when, artifact version, findings disposition |
@@ -111,7 +111,7 @@ This catalog names the gated Actions in the [BBP](../docs/TERMS.md#bbp) pipeline
 |--------|------|--------------|--------|---------------|----------|
 | **Record-Ship-Decision** | Atomic | [Ship](../docs/TERMS.md#ship) record [gate](../docs/TERMS.md#gate) (§16.5) | UNWIRED+companion | [Ship](../docs/TERMS.md#ship) | [Ship](../docs/TERMS.md#ship) record exists with all required fields |
 | **Waive-Finding** | Atomic | Waiver [gate](../docs/TERMS.md#gate) (finding documented, risk acknowledged) | UNWIRED+companion | [Ship](../docs/TERMS.md#ship) | Waiver record: finding, rationale, risk acknowledgement |
-| **Escalate-to-HITL** | Atomic | HITL escalation [handoff](../docs/TERMS.md#handoff) | wired-Bindings ([P-030](https://github.com/richardpickett/BBA-Bindings/pull/9)) | HITL Root-Approve | Escalation packet with readiness evidence |
+| **Escalate-to-HITL** | Atomic | HITL escalation [handoff](../docs/TERMS.md#handoff) | wired-local ([P-030](../docs/OPERATING_BINDINGS.md#p-030-raise-readiness-refuse)) | HITL Root-Approve | Escalation packet with readiness evidence |
 
 ---
 
@@ -146,12 +146,12 @@ New actions must meet these criteria before catalog entry:
 2. **Gate/Handoff cited** — a named [Gate](../docs/TERMS.md#gate) or [Handoff](../docs/TERMS.md#handoff) exists; paper-only actions (no Gate name) are refused
 3. **Binder status declared** — one of:
    - `wired-local` — binder lives in this repo's `tools/`
-   - `wired-Bindings` — binder lives in [BBA-Bindings](../docs/TERMS.md#bba-bindings) companion repo
+   - `wired-local` — binder and policy prose live in this repo ([OPERATING_BINDINGS.md](../docs/OPERATING_BINDINGS.md), gates under `tools/`)
    - `UNWIRED+companion` — documented UNWIRED residual with companion tip link
 4. **Seated** — the [action](../docs/TERMS.md#action) belongs to a defined [Boundary](../docs/TERMS.md#boundary)
 5. **Evidenced** — execution produces evidence of PASS/FAIL/REFUSE
 
-**Honesty on binder status:** Many pipeline Actions cite Gates/Handoffs whose binders live in [BBA-Bindings](../docs/TERMS.md#bba-bindings) or are UNWIRED residuals. Catalog rows require a named Gate/Handoff; the binder may be local, companion, or documented UNWIRED. Paper-only entries (no Gate name, no binder status) are refused.
+**Honesty on binder status:** Pipeline Actions cite Gates/Handoffs whose binders are **wired-local** in this repo or documented **UNWIRED** residuals. Catalog rows require a named Gate/Handoff. Paper-only entries (no Gate name, no binder status) are refused.
 
 ---
 

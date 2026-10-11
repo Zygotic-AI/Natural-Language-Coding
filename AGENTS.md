@@ -17,7 +17,7 @@ Practice [integrity](docs/TERMS.md#integrity) (charter §5.8, [`integrity/PRINCI
 
 **[SSOT exit evidence](docs/TERMS.md#ssot-exit-evidence) required (P-020, S8).** Every [produce package](docs/TERMS.md#produce-package) must include task/board [SSOT exit evidence](docs/TERMS.md#ssot-exit-evidence): `ssot_leaf_ids` (one or more opaque leaf ids) and `ssot_exit_status` (non-empty exit state string). Fitness refuses [MET](docs/TERMS.md#met) without this evidence; adversarial [audit](docs/TERMS.md#audit) refuses PASS. Missing [SSOT exit evidence](docs/TERMS.md#ssot-exit-evidence) triggers `handoff_refused` with `SSOT_EXIT_EVIDENCE` in the [defect](docs/TERMS.md#defect) log. Do not normalize leaving [SSOT exit evidence](docs/TERMS.md#ssot-exit-evidence) for later.
 
-**Operating bindings.** P-series operating policies (P-016 handoff default-closed, P-020 SSOT exit evidence, P-030 raise-readiness refuse, etc.) live in the companion [`BBA-Bindings`](https://github.com/richardpickett/BBA-Bindings) repo. See [`docs/OPERATING_BINDINGS.md`](docs/OPERATING_BINDINGS.md) for the index and how to locate BINDING-MAP.
+**Operating bindings.** P-series operating policies (P-016 handoff default-closed, P-020 SSOT exit evidence, P-030 raise-readiness refuse, etc.) are indexed in [`docs/OPERATING_BINDINGS.md`](docs/OPERATING_BINDINGS.md) with hub-local refuse criteria (no external companion repo required to read them).
 
 
 ## Layout
@@ -50,7 +50,7 @@ Skills and portable instructions live under [`.agents/`](.agents/). End-to-end c
 
 **Product UC TODO:** Do not mark [`TODO`](TODO) “Build a compiled system” rows `@done` for full USE-CASE closure while [`docs/USE-CASES.md`](docs/USE-CASES.md) still lists Parked/Needed — see [`.agents/instructions/todo-product-uc-completion.md`](.agents/instructions/todo-product-uc-completion.md). CI: `tools/fitness-todo-use-cases-ssot.py`.
 
-**Take me literally (always):** Quote the user’s scope in your own resolution table; do not narrow or reinterpret their wording; if ambiguous, **one question and stop** — see [`.agents/instructions/take-me-literally.md`](.agents/instructions/take-me-literally.md) (Cursor: [`.cursor/rules/take-me-literally.mdc`](.cursor/rules/take-me-literally.mdc)).
+**Take me literally (always):** Quote the user’s scope in your own resolution table; do not narrow or reinterpret their wording; if ambiguous, **one question and stop** — see [`.agents/instructions/take-me-literally.md`](.agents/instructions/take-me-literally.md).
 
 **Jidoka SSOT output (always):** When tooling output contradicts docs or the operator says it is wrong, **fix or RCA** — do **not** tell them to ignore or reinterpret defective fields — see [`.agents/instructions/jidoka-ssot-output.md`](.agents/instructions/jidoka-ssot-output.md).
 
