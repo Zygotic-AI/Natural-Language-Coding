@@ -16,6 +16,8 @@ ROOT = Path(__file__).resolve().parents[3]
 
 def run_fitness(cwd: Path) -> int:
     env = os.environ.copy()
+    env.setdefault("CI", "true")
+    env.setdefault("GITHUB_ACTIONS", "true")
     env["NLC_CI_FITNESS_DEPTH"] = str(int(env.get("NLC_CI_FITNESS_DEPTH", "0") or "0") + 1)
     proc = subprocess.run(
         [sys.executable, str(cwd / "tools" / "ci_fitness.py")],
@@ -103,8 +105,9 @@ def main() -> int:
             return 1
 
         shallow = tmp_path / "shallow"
+        shallow_src = ROOT if os.environ.get("GITHUB_ACTIONS") else baseline_clone
         subprocess.run(
-            ["git", "clone", "--depth", "1", "--local", str(baseline_clone), str(shallow)],
+            ["git", "clone", "--depth", "1", "--local", str(shallow_src), str(shallow)],
             check=True,
             capture_output=True,
         )

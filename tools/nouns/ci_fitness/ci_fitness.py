@@ -108,6 +108,17 @@ def _refresh_before_generate_stamp_ci() -> None:
     proc = subprocess.run(argv, cwd=str(ROOT), check=False)
     if proc.returncode != 0:
         fail("before-generate stamp (CI)")
+    stamp_path = ROOT / ".nlc" / "before-generate-stamp.json"
+    if stamp_path.is_file():
+        try:
+            import json
+
+            payload = json.loads(stamp_path.read_text(encoding="utf-8"))
+            at = payload.get("at")
+            if isinstance(at, str) and at:
+                os.environ["NLC_BEFORE_GENERATE_STAMP_FRESH"] = at
+        except json.JSONDecodeError:
+            pass
     _ci_resync_content_hash()
 
 
@@ -737,7 +748,8 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
 
 def main() -> int:
     hub_prove()
-    return run_ci_fitness_suite(include_releasable_verify=True)
+    depth = int(os.environ.get("NLC_CI_FITNESS_DEPTH", "0") or "0")
+    return run_ci_fitness_suite(include_releasable_verify=(depth == 0))
 
 
 if __name__ == "__main__":

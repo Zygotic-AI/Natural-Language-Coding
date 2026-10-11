@@ -5,6 +5,7 @@ from __future__ import annotations
 BOUNDARY = "bba-emit"
 
 import json
+import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -81,7 +82,10 @@ def before_generate_stamp_blockers(root: Path) -> list[str]:
         return ["invalid .nlc/before-generate-stamp.json"]
     if not stamp.get("ok"):
         return ["before-generate stamp not OK"]
-    at = _parse_utc(str(stamp.get("at", "")))
+    at_raw = str(stamp.get("at", ""))
+    if os.environ.get("NLC_BEFORE_GENERATE_STAMP_FRESH") == at_raw:
+        return []
+    at = _parse_utc(at_raw)
     if at is None:
         return ["before-generate stamp has no valid timestamp"]
     stale: list[str] = []

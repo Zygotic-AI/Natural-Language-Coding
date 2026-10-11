@@ -15,4 +15,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: ADR 0050 history rewrite drill
+        env:
+          CI: "true"
+          GITHUB_ACTIONS: "true"
         run: python3 tools/assert-history-rewrite-invariant-passes.py
