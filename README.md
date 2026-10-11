@@ -2,14 +2,13 @@
 
 **Describe outcomes and rules in plain language. Get a gated, boundary-shaped system, or a failed compile you can trust.**
 
-- The AI [compiler](docs/TERMS.md#compiler) generates and audits your entire app, one increment at a time, from your natural language functionality descriptions, requirements, policies, and standards.
+- The AI [compiler](docs/TERMS.md#compiler) turns ratified intent into gated, boundary-shaped code one increment at a time—from natural-language functionality, requirements, policies, and standards. End-to-end compiled apps are the target; today’s gaps are listed in [`FINDINGS.md`](FINDINGS.md).
 - Trace every [requirement](docs/TERMS.md#requirement) to where it is enforced—**when shipped**; see [jobs to be done](docs/JOBS-TO-BE-DONE.md) for what is available today vs not yet.
 - [Ship](docs/TERMS.md#ship) only what you intended—multiple internal [audit](docs/TERMS.md#audit) points confirm what's intended is what's built, with final audits to certify the entire build.
-- Easily update or add policies, standards, or even major technology—just update and recompile. (Swap AES-256 for AES-512, or GCP for AWS.)
+- Update policies, standards, or major technology in intent and recompile when those requirements change (for example, a new encryption standard or cloud provider)—subject to what your adopted gates and adapters cover today.
 - Stop silent drift - problems surface at compile time with evidence—or the build stops.
-- The AI [compiler](docs/TERMS.md#compiler) eliminates costly models and hallucinations by producing tightly-scoped code.
-- Code is interchangeable. Build Dev/QA rapidly in Python; deploy UAT and Prod in Rust.
-- **Soft-green:** hub fitness / source-level gates are **Python-first** today; other languages are adapter-parked (`docs/LANGUAGE-SCANNER.md`), not complete.
+- The compiler emits **tightly scoped** code per step and **refuses** when gates fail—so defects surface at compile time instead of silently shipping (see [`MANIFESTO.md`](MANIFESTO.md)).
+- **Language reach:** hub fitness and source-level gates are **Python-first** today; other languages are adapter-parked ([`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md)), not parity yet.
 
 ## Quick start (app repo)
 

@@ -1,6 +1,6 @@
 # BBA emit process
 
-**Status:** draft, in review with Richard
+**Status:** draft, in review with product owner role
 **Corpus:** `bba` (shape of what the factory emits) — not NLC process law
 **Depends on:** ADR 0024 spine, ADR 0026 (X1–X3 runners), ADR 0027 (prose→emit)
 
@@ -48,4 +48,4 @@ Catching a missing encryption step at emit time is cheap. Catching it in product
 - How policy rules are versioned relative to the vocabulary they match against.
 
 ---
-_Ara · 2026-09-22_
+_Draft author role · 2026-09-22_

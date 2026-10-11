@@ -102,7 +102,7 @@ Retries and verbs honor idempotency keys—checked in fitness.
 | J7 | Breaking API + callers | **Available** | C10/C21 + [`contract-break-accept`](../tools/nlc_contract_break_accept.py); diff-scoped [`fitness-c10-changed.py`](../tools/fitness-c10-changed.py) / [`fitness-c21-changed.py`](../tools/fitness-c21-changed.py) when CHANGED listed | Full product verify (non-specimen) still evolving. |
 | J8 | Requirement change — delta regen | **Available** (v1) | `nlc-delta-regen.py`, goal-bindings on multi-goal verify | Rule-tagged narrowing v2 still expansion. |
 | J9 | Tag / ADR scope audit | **Available** | `./nlc maintainer rule-coverage`; `./nlc maintainer rule-emit`; `./nlc maintainer call-tree` (Python v1). | Per-stack call-tree packs still expansion (ADR 0009). |
-| J10 | Rule conflicts at adopt | **Available** | [`check-rule-adoption.py`](../tools/check-rule-adoption.py); [ADR 0012](../adrs/0012-adr-precedence-and-rule-conflicts.md). | — |
+| J10 | Rule conflicts at adopt | **Available** | [`check-rule-adoption.py`](../tools/check-rule-adoption.py); [ADR 0012](../adrs/0012-rule-adoption-conflicts.md). | — |
 | J11 | Prove before ship | **Available** | `./nlc verify`; [`VERIFY-AND-SHIP.md`](nlc/VERIFY-AND-SHIP.md); [`release-audit.py`](../tools/release-audit.py). | — |
 | J12 | Defect upstream | **Available** | [UC10](TERMS.md#uc10); planit + regen path; charter defect policy. | — |
 | J13 | Gate after generate | **Available** | [ADR 0010](../adrs/0010-gate-after-every-generate.md); `gate-record`; `nlc verify`. | — |

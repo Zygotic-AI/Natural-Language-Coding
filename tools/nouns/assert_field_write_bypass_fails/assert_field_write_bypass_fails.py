@@ -9,10 +9,14 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "tools"))
+from nouns.field_write_bypass_fixtures.field_write_bypass_fixtures import (  # noqa: E402
+    O9A_BYPASS_FIXTURE_DIRS,
+)
+
 FIELD_FITNESS = ROOT / "tools" / "fitness-no-noun-field-writes.py"
 ESCAPE_FITNESS = ROOT / "tools" / "fitness-escape-hatch.py"
 
-# Gate 1 = fitness-no-noun-field-writes; R33 = fitness-escape-hatch (reflection bypasses).
 EXPECTATIONS: dict[str, tuple[bool, bool]] = {
     "invoice-bypass-object-setattr-violation": (True, True),
     "invoice-bypass-setattr-violation": (True, True),
@@ -32,6 +36,19 @@ def load(path: Path, name: str):
 
 
 def main() -> int:
+    if set(EXPECTATIONS.keys()) != set(O9A_BYPASS_FIXTURE_DIRS):
+        print("ASSERT:FAIL EXPECTATIONS must match O9A_BYPASS_FIXTURE_DIRS exactly")
+        return 1
+
+    examples = ROOT / "examples"
+    if examples.is_dir():
+        for d in examples.iterdir():
+            if not d.is_dir():
+                continue
+            if d.name.startswith("invoice-bypass-") and d.name not in O9A_BYPASS_FIXTURE_DIRS:
+                print(f"ASSERT:FAIL unlisted invoice-bypass fixture {d.name}")
+                return 1
+
     field_mod = load(FIELD_FITNESS, "field_fitness")
     escape_mod = load(ESCAPE_FITNESS, "escape_fitness")
     for name, (want_field, want_escape) in EXPECTATIONS.items():
@@ -53,6 +70,23 @@ def main() -> int:
         if not want_escape and escape_hits:
             print(f"ASSERT:FAIL {name}: R33 must pass (non-reflection bypass)")
             return 1
+
+    slip = ROOT / "examples" / "invoice-bypass-landmine-unlisted-slip"
+    slip.mkdir(exist_ok=True)
+    try:
+        extra = [
+            d.name
+            for d in examples.iterdir()
+            if d.is_dir()
+            and d.name.startswith("invoice-bypass-")
+            and d.name not in O9A_BYPASS_FIXTURE_DIRS
+        ]
+        if not extra:
+            print("ASSERT:FAIL landmine: unlisted invoice-bypass folder was not detected")
+            return 1
+    finally:
+        slip.rmdir()
+
     print("ASSERT:PASS field-write bypass fixtures gate mapping")
     return 0
 
