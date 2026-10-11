@@ -30,6 +30,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "tools"))
+from nouns.nlc_outside_write_ast.nlc_outside_write_ast import ast_escape_hatch_violations  # noqa: E402
 SOURCE_EXTS = {".ts", ".js", ".py", ".mjs", ".cjs", ".tsx", ".jsx"}
 SKIP_DIR_NAMES = {".git", "node_modules", "dist", "__pycache__", ".venv", "venv"}
 OUTSIDE_DIR_NAMES = ("goals", "workflows", "adapters")
@@ -92,12 +94,16 @@ def is_comment(line: str) -> bool:
 def scan_one(scan_root: Path) -> list[tuple[str, int, str]]:
     violations: list[tuple[str, int, str]] = []
     for path in outside_files(scan_root):
-        for lineno, line in enumerate(path.read_text(errors="replace").splitlines(), start=1):
+        text = path.read_text(errors="replace")
+        for lineno, line in enumerate(text.splitlines(), start=1):
             if is_comment(line):
                 continue
             for kind, pat in PATTERNS:
                 if pat.search(line):
                     violations.append((rel(path), lineno, kind))
+        if path.suffix == ".py":
+            for lineno, kind in ast_escape_hatch_violations(text):
+                violations.append((rel(path), lineno, kind))
     return violations
 
 

@@ -68,7 +68,7 @@ def charter_check1() -> None:
         for d in sorted(examples.iterdir()):
             if not d.is_dir():
                 continue
-            if d.name == "invoice-violation":
+            if d.name == "invoice-violation" or d.name.startswith("invoice-bypass-"):
                 continue
             print(f"scanning {d}/")
             run(
