@@ -19,3 +19,15 @@ jobs:
 
       - name: NLC verify (policy + fingerprints)
         run: python3 tools/nlc.py --project . verify
+
+  piped-install-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Piped install.sh smoke (file-backed raw bootstrap)
+        env:
+          NLC_RAW_BASE: file://${{ github.workspace }}
+          NLC_SKIP_VERIFY: "1"
+          NLC_INSTALL_ROOT: ${{ runner.temp }}/nlc-piped-install
+        run: |
+          curl -fsSL "file://${{ github.workspace }}/scripts/install.sh" | bash
