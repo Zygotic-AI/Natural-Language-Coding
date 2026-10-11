@@ -108,11 +108,7 @@ def _refresh_before_generate_stamp_ci() -> None:
     proc = subprocess.run(argv, cwd=str(ROOT), check=False)
     if proc.returncode != 0:
         fail("before-generate stamp (CI)")
-    subprocess.run(
-        [sys.executable, str(ROOT / "tools" / "sync-hub-content-tree-hash.py")],
-        cwd=str(ROOT),
-        check=False,
-    )
+    _ci_resync_content_hash()
 
 
 def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
@@ -160,6 +156,7 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "release signed",
         [sys.executable, str(TOOLS / "assert-release-signed-passes.py")],
     )
+    _ci_resync_content_hash()
     run(
         "full-nlc-audit quick",
         [sys.executable, str(TOOLS / "assert-full-nlc-audit-quick-passes.py")],
