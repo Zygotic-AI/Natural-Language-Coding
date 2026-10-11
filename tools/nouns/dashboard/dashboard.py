@@ -206,7 +206,7 @@ def scan_verify_pending(root: Path) -> list[dict]:
             "id": "verify-waiting",
             "stage": "verify",
             "label": "Verify before prod",
-            "next": "./nlc verify  (if fail: /verify in your agent)",
+            "next": "./nlc verify  (if fail: run the printed Reproduce command)",
             "priority": 30,
         }
     ]

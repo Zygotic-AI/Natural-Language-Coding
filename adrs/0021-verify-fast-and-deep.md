@@ -13,11 +13,11 @@
 
 1. **Human and CI command:** `./nlc verify` (replaces `./nlc prove` for adopters). Exit **0** = pass, **non-zero** = fail. No inference required on pass.
 
-2. **Fast path (`verify`):** Compare current sha256 fingerprints of intent + compiled paths (`adrs/`, `rules/`, `knowledge/`, `goals/`, `domain/`) to **`.nlc/verified.json`**, plus cheap pipeline blockers (unfinished requirements, open regen queue). Does not run full fitness.
+2. **Fast path (`verify`):** Compare current sha256 fingerprints of intent + compiled paths (`adrs/`, `rules/`, `knowledge/`, `goals/`, `domain/`) to **`.nlc/verified.json`**, plus cheap pipeline blockers (unfinished requirements, open regen queue), plus the hub **`verify`** profile from [`integrity/releasable-gates.json`](../integrity/releasable-gates.json) (strict subset of **`release`**).
 
-3. **Deep path (`verify-deep`):** Run full compile/fitness gates (hub `ci_fitness.py` or adopter-bound suite when wired), then **rewrite** `.nlc/verified.json`. Use after material changes or when fast [verify](../docs/TERMS.md#verify) reports stale/missing fingerprints.
+3. **Deep path (`verify-deep`):** Run the hub **`release`** profile from the same manifest (includes full compile fitness), then **rewrite** `.nlc/verified.json`. Use after material changes or when fast [verify](../docs/TERMS.md#verify) reports stale/missing fingerprints.
 
-4. **On failure:** Print plain reasons; instruct **`/verify` in your agent** for fixes. Exit non-zero so CI stops.
+4. **On failure:** Print plain reasons and a **Reproduce** command (`./nlc verify`, `./nlc gate …`, or `./nlc verify-deep`). Exit non-zero so CI stops.
 
 5. **`prove`:** Removed from the human CLI. [PLANIT](../docs/TERMS.md#planit) step 7 still means “[verify](../docs/TERMS.md#verify)” internally. `nlc prove` prints removal guidance (hidden from help).
 

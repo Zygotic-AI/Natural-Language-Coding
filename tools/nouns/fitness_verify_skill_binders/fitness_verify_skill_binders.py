@@ -20,7 +20,7 @@ def main() -> int:
         return 1
     text = VERIFY.read_text(encoding="utf-8", errors="replace")
     violations: list[str] = []
-    for needle in ("verify-deep", "gate-record", "rule-coverage"):
+    for needle in ("verify-deep", "gate-record", "rule-coverage", "Reproduce:", "releasable-gates.json"):
         if needle not in text:
             violations.append(f"verify SKILL must mention remediation: {needle}")
     for v in violations:

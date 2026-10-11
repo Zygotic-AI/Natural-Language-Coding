@@ -140,9 +140,21 @@ def main() -> int:
                 ],
             ))
 
+    hub_only: set[str] = set()
+    manifest = ROOT / "integrity" / "releasable-gates.json"
+    if manifest.is_file():
+        data = json.loads(manifest.read_text(encoding="utf-8"))
+        hub_only = set(data.get("hub_only_fitness") or [])
+    sys.path.insert(0, str(ROOT / "tools"))
+    from nlc_pipeline import is_hub_repo
+
+    on_hub = is_hub_repo(tree)
     rows = binders()
     fitness_dir = ROOT / "tools"
     for script in sorted(fitness_dir.glob("fitness-*.py")):
+        if script.name in hub_only and not on_hub:
+            print(f"GATE MET {script.name} skip (hub-only, not hub tree)")
+            continue
         code, out = run_fitness(script, tree)
         if code == 0:
             print(f"GATE MET {script.name}")

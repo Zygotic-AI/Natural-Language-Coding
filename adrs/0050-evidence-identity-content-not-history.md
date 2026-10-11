@@ -1,8 +1,9 @@
 # ADR 0050 — Evidence identity: content, not history
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-10
 - Deciders: Human manager
+- Ratified-by: Human manager (evidence identity content-not-history ADR, 2026-10-10)
 - Class: F (integrity / gates), A (release and audit evidence)
 - Corpus: nlc
 - RCA: [`docs/rca/2026-10-10-sha-pinned-evidence-history-rewrite.md`](../docs/rca/2026-10-10-sha-pinned-evidence-history-rewrite.md) (instance record; analysis in operator packet)
