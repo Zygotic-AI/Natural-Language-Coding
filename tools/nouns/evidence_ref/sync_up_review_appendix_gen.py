@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -121,6 +122,32 @@ def assign_theme(rel: str) -> str:
     return "R5"
 
 
+_BASE_RE = re.compile(r"^\*\*Baseline ref:\*\* `([^`]+)`")
+_HEAD_RE = re.compile(r"^\*\*Anchor ref:\*\* `([^`]+)`")
+_COUNT_RE = re.compile(
+    r"^\*\*Path count:\*\* (\d+) \((\d+) added, (\d+) modified"
+)
+_PATH_RE = re.compile(r"^- `([^`]+)`")
+
+
+def parse_appendix(text: str) -> tuple[str, str, int, int, int, list[str]]:
+    base = head = ""
+    total = added = modified = 0
+    paths: list[str] = []
+    for line in text.splitlines():
+        if m := _BASE_RE.match(line.strip()):
+            base = m.group(1)
+        elif m := _HEAD_RE.match(line.strip()):
+            head = m.group(1)
+        elif m := _COUNT_RE.match(line.strip()):
+            total, added, modified = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        elif m := _PATH_RE.match(line.strip()):
+            paths.append(m.group(1))
+    if not base or not head or not paths:
+        raise ValueError("appendix missing baseline, anchor, or path list")
+    return base, head, total, added, modified, paths
+
+
 def render(paths: list[str], base: str, head: str, added: int, modified: int) -> str:
     by_theme: dict[str, list[str]] = {t: [] for t in THEMES}
     for p in paths:
@@ -189,21 +216,45 @@ def main() -> int:
         help="Verify committed appendix matches generator output; do not write",
     )
     args = parser.parse_args()
-    count, added, modified = diff_stats(args.base, args.head)
-    paths = changed_paths(args.base, args.head)
-    if args.check_count is not None and len(paths) != args.check_count:
-        print(f"COUNT_MISMATCH expected {args.check_count} got {len(paths)}", file=sys.stderr)
-        return 1
-    body = render(paths, args.base, args.head, added, modified)
     if args.check_only:
         if not OUT.is_file():
             print(f"MISSING {OUT.relative_to(ROOT)}", file=sys.stderr)
             return 1
-        if OUT.read_text(encoding="utf-8") != body:
+        committed = OUT.read_text(encoding="utf-8")
+        try:
+            base, head, total, added, modified, paths = parse_appendix(committed)
+        except ValueError as exc:
+            print(f"PARSE_FAIL {exc}", file=sys.stderr)
+            return 1
+        if base != DEFAULT_BASE or head != DEFAULT_HEAD:
+            print(
+                f"REF_MISMATCH expected {DEFAULT_BASE}..{DEFAULT_HEAD} got {base}..{head}",
+                file=sys.stderr,
+            )
+            return 1
+        if args.check_count is not None and len(paths) != args.check_count:
+            print(f"COUNT_MISMATCH expected {args.check_count} got {len(paths)}", file=sys.stderr)
+            return 1
+        if total != len(paths):
+            print(f"HEADER_COUNT_MISMATCH header {total} list {len(paths)}", file=sys.stderr)
+            return 1
+        body = render(sorted(paths), base, head, added, modified)
+        if committed != body:
             print(f"DRIFT {OUT.relative_to(ROOT)} (re-run generator)", file=sys.stderr)
             return 1
         print(f"CHECK:MET {OUT.relative_to(ROOT)} ({len(paths)} paths)")
         return 0
+
+    try:
+        count, added, modified = diff_stats(args.base, args.head)
+        paths = changed_paths(args.base, args.head)
+    except RuntimeError as exc:
+        print(f"GIT_FAIL {exc}", file=sys.stderr)
+        return 1
+    if args.check_count is not None and len(paths) != args.check_count:
+        print(f"COUNT_MISMATCH expected {args.check_count} got {len(paths)}", file=sys.stderr)
+        return 1
+    body = render(paths, args.base, args.head, added, modified)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(body, encoding="utf-8")
     print(f"WROTE {OUT.relative_to(ROOT)} ({len(paths)} paths)")
