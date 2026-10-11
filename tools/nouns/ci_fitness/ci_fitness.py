@@ -68,7 +68,7 @@ def charter_check1() -> None:
         for d in sorted(examples.iterdir()):
             if not d.is_dir():
                 continue
-            if d.name == "invoice-violation" or d.name.startswith("invoice-bypass-"):
+            if d.name == "invoice-violation":
                 continue
             print(f"scanning {d}/")
             run(
@@ -98,6 +98,14 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "fitness-landmine-self-contained",
         [sys.executable, str(TOOLS / "fitness-landmine-self-contained.py")],
+    )
+    run(
+        "fitness-root-session-artifacts",
+        [sys.executable, str(TOOLS / "fitness-root-session-artifacts.py")],
+    )
+    run(
+        "assert-field-write-bypass-fails",
+        [sys.executable, str(TOOLS / "assert-field-write-bypass-fails.py")],
     )
     run(
         "assert-unresolvable-refuses-passes",
