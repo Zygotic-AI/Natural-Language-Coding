@@ -119,6 +119,10 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-internal-links.py")],
     )
     run(
+        "fitness-sync-up-review-appendix",
+        [sys.executable, str(TOOLS / "fitness-sync-up-review-appendix.py")],
+    )
+    run(
         "assert-internal-link-gate-fails",
         [sys.executable, str(TOOLS / "assert-internal-link-gate-fails.py")],
     )
