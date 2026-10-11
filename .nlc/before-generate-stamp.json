@@ -1,7 +1,12 @@
 {
   "ok": true,
   "scopes": [
+    "hub_release",
+    "hub_install",
+    "hub_release_smoke",
+    "hub_fitness_check1",
+    "hub_release_prep",
     "hub_session"
   ],
-  "at": "2026-10-11T00:07:21Z"
+  "at": "2026-10-11T00:10:45Z"
 }

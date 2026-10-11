@@ -78,9 +78,32 @@ def charter_check1() -> None:
             )
 
 
+_CI_STAMP_SCOPES = [
+    "hub_release",
+    "hub_install",
+    "hub_release_smoke",
+    "hub_fitness_check1",
+    "hub_release_prep",
+    "hub_session",
+]
+
+
+def _refresh_before_generate_stamp_ci() -> None:
+    """Git checkout sets mtimes after stamp time; refresh on CI (RCA-1 verify profile)."""
+    if not os.environ.get("CI"):
+        return
+    argv = [sys.executable, str(ROOT / "tools" / "nlc.py"), "maintainer", "guide", "before-generate"]
+    for scope in _CI_STAMP_SCOPES:
+        argv.extend(["--scope", scope])
+    proc = subprocess.run(argv, cwd=str(ROOT), check=False)
+    if proc.returncode != 0:
+        fail("before-generate stamp (CI)")
+
+
 def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     """Hub compile fitness. Releasable verify profile runs only when requested (not from hub-ci-fitness gate)."""
     if include_releasable_verify:
+        _refresh_before_generate_stamp_ci()
         from nouns.releasable_gates.releasable_gates import run_profile
 
         print("=== releasable verify profile (SSOT) ===")
