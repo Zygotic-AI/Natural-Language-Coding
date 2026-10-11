@@ -68,8 +68,8 @@ def charter_check1() -> None:
         for d in sorted(examples.iterdir()):
             if not d.is_dir():
                 continue
-            if d.name == "invoice-violation":
-                continue
+            if d.name == "invoice-violation" or d.name.startswith("invoice-bypass-"):
+                continue  # red fixtures: assert-field-write-bypass-fails (O9a)
             print(f"scanning {d}/")
             run(
                 f"no-noun-field-writes {d.name}",
