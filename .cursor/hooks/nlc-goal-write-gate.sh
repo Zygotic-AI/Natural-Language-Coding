@@ -5,6 +5,34 @@ input="$(cat)"
 path=""
 if command -v jq >/dev/null 2>&1; then
   path="$(echo "$input" | jq -r '.tool_input.path // .tool_input.file_path // .path // empty' 2>/dev/null || true)"
+else
+  if ! command -v python3 >/dev/null 2>&1; then
+    echo '{
+      "permission": "deny",
+      "user_message": "Goal-write gate cannot run (missing jq and python3).",
+      "agent_message": "Install jq or python3 so the goal-write hook can fail closed."
+    }'
+    exit 0
+  fi
+  path="$(python3 -c "
+import json, sys
+try:
+    data = json.load(sys.stdin)
+except json.JSONDecodeError:
+    sys.exit(0)
+for key in ('path', 'file_path'):
+    v = data.get(key)
+    if isinstance(v, str) and v.strip():
+        print(v.strip())
+        sys.exit(0)
+ti = data.get('tool_input')
+if isinstance(ti, dict):
+    for key in ('path', 'file_path'):
+        v = ti.get(key)
+        if isinstance(v, str) and v.strip():
+            print(v.strip())
+            sys.exit(0)
+" <<<"$input" 2>/dev/null || true)"
 fi
 if [[ -z "$path" ]]; then
   echo '{"permission":"allow"}'
