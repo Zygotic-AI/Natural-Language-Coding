@@ -5,19 +5,20 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 
 | File | Role |
 |------|------|
-| **This file** | Live undone-work SSOT |
-| [`docs/USE-CASES.md`](docs/USE-CASES.md) | Narrative UC map (what the practice *does*) |
-| [`integrity/uc-product-status.json`](integrity/uc-product-status.json) | Machine product/binder status; CI gates TODO `@done` |
-| [`TODO`](TODO) | Historical work log + CI evidence rows — **not** a second queue |
-| [`HOLES.md`](HOLES.md) | Historical closed-gate ledger — **not** live SSOT |
-| [`docs/nlc/SESSION-FOLLOWTHROUGH.md`](docs/nlc/SESSION-FOLLOWTHROUGH.md) | Eval-session execution queue (E/X ids) |
+| **This file** | Live undone-work SSOT (Human / Needed / Parked / Housekeeping only) |
+| [`docs/USE-CASES.md`](docs/USE-CASES.md) | UC narrative — **status gaps:** see this file |
+| [`docs/JOBS-TO-BE-DONE.md`](docs/JOBS-TO-BE-DONE.md) | Adopter jobs — **blocking gaps:** see this file |
+| [`integrity/uc-product-status.json`](integrity/uc-product-status.json) | Machine binder/product closure; **narrative gaps:** see this file |
+| [`TODO`](TODO) | Stub → [`docs/history/TODO-work-log.md`](docs/history/TODO-work-log.md) |
+| [`HOLES.md`](HOLES.md) | Stub → [`docs/history/HOLES.md`](docs/history/HOLES.md) |
+| [`docs/nlc/SESSION-FOLLOWTHROUGH.md`](docs/nlc/SESSION-FOLLOWTHROUGH.md) | Stub → [`docs/history/SESSION-FOLLOWTHROUGH.md`](docs/history/SESSION-FOLLOWTHROUGH.md) |
 
 [Charter](docs/TERMS.md#charter) SSOT remains `CHARTER.md`. In-reach v1 Python gates are closed.
 **Do not mint an R id until a binder exists (R27).**
 
 `last_pass_tree_hash:` see [`integrity/hub-content-tree-hash.txt`](integrity/hub-content-tree-hash.txt) (ADR 0050 content fingerprint; not a commit id).
 
-Last pass (26-09-25): `/release` closeout — agent instructions (literal scope, plain-language refs), integration leaf on_main, CI:MET + release-prep ready. Shipped git tag still **`v0.1.0` only**; `integrity/nlc-version.json` **0.2.0** until `./release`. Inference: [`integrity/full-nlc-audit-inference-record.json`](integrity/full-nlc-audit-inference-record.json). UC14/16/20 expansion remains parked.
+Last pass (26-09-25): `/release` closeout — agent instructions (literal scope, plain-language refs), integration leaf on_main, CI:MET + release-prep ready. **Shipped tag prose:** generate from git only (`python3 tools/nlc_release_tags.py` / `fitness-findings-shipped-tag-sync.py` on HEAD — do not hand-write origin tag claims). `integrity/nlc-version.json` **0.2.0** until `./release`. Inference: [`integrity/full-nlc-audit-inference-record.json`](integrity/full-nlc-audit-inference-record.json).
 
 ---
 
@@ -40,8 +41,10 @@ v1 binders for UC9 / UC14 / UC15 / UC18 are **product-closed** in [`integrity/uc
 | **Packs v0.2 consume** | **Closed** — `nlc-pack-install` writes `.nlc/pack-consume-status.json` (scope + UC9 hint). |
 | **Packs registry** | **Closed (v1)** — hub-local curated registry [`integrity/hub-pack-registry.json`](integrity/hub-pack-registry.json) ([ADR 0041](adrs/0041-product-completion-scope.md), [`docs/nlc/PACK-REGISTRY.md`](docs/nlc/PACK-REGISTRY.md)). Not a public internet registry. |
 | **UC18 goal-write hook coverage** | **Partial (v0.3.0)** — Cursor `preToolUse` on `Write\|Delete` only (see [Cursor hooks](https://cursor.com/docs/hooks)). **Not covered:** `Shell` redirects into `goals/`, MCP tool writes, subagent `Task` writes. |
+| **0045 ⊕ 0048 effective-decision view** | **Open** — Record [0045](adrs/0045-hub-release-identity.md) decision 2 still names `scripts/nlc-release.sh` as executor; [0048](adrs/0048-executable-shape.md) amends: policy in `goals/hub_release/execute.sh`, shell is thin entrypoint only. Need a read-only **effective-decision** view (do not edit 0045 receipts in place). |
+| **Per-record behavior fixtures (D9)** | **Closed (26-10-09)** — per-record behavioral gates and fixtures wired; record gate runs fixtures ([`docs/history/TODO-work-log.md`](docs/history/TODO-work-log.md) Practice enforcement). Remaining gap: **effective-decision view** for 0045⊕0048 (row above). |
 
-Hub **no shipped tag** on current `main` history (mistaken `v0.2.0` removed); `integrity/nlc-version.json` is **0.2.0** until the next `./release`. Promotion remains human (`ship-check`, not compile-green alone).
+`integrity/nlc-version.json` is **0.2.0** until the next `./release`. Promotion remains human (`ship-check`, not compile-green alone).
 
 ---
 
@@ -53,12 +56,48 @@ Hub **no shipped tag** on current `main` history (mistaken `v0.2.0` removed); `i
 
 | Item | [ADR](docs/TERMS.md#adr) / doc | Missing [gate](docs/TERMS.md#gate) | Badge |
 |------|-----------|--------------|-------|
-| Hub BBA interiors (X4) | ADR 0024 / [`HUB-BBA-DOGFOOD.md`](docs/nlc/HUB-BBA-DOGFOOD.md) | emit-path + lib + assert + **all** `fitness-*` noun-backed (`fitness-hub-x4-tranche-t4.py`) | **done** (v2 hub dogfood) |
+| Hub BBA interiors (X4) | ADR 0024 / [`HUB-BBA-DOGFOOD.md`](docs/nlc/HUB-BBA-DOGFOOD.md) | **Not done** — emit-path tranche MET; **368 of 370** hub `tools/nouns/*/` packages have **empty** `fields.txt` (two non-empty); **15** packages lack `fields.txt` entirely among **396** dirs. Full noun/verb interior + populated `fields.txt` still open ([`integrity/hub-x4-remainder.json`](integrity/hub-x4-remainder.json)). | **gate missing** |
 | [Code packs](docs/TERMS.md#code-pack) (UC16) | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Reference **typescript** adapter path (`examples/non-python-with-adapter`) | **done** (v1 reference; full scanner spec = expansion) |
 | Call-tree packs (UC20) | ADR 0009 | Reference TS pack [`examples/call-tree-pack-reference`](examples/call-tree-pack-reference) | **done** (v1 reference; additional stacks = expansion) |
-| [Rule IR](docs/TERMS.md#rule-ir) | ADR 0007 / [0042](adrs/0042-rule-ir-hub-product-boundary.md) | Snapshot + UC4 semantic runner + UC5 semantic apply (`check_semantic_apply`, `nlc:obligation=` receipts) | **done** (v2 hub; UC14 composable IR remains expansion) |
+| [Rule IR](docs/TERMS.md#rule-ir) | ADR 0007 / [0042](adrs/0042-rule-ir-hub-product-boundary.md) | **v1 closed** — IR snapshot materialize + structural check on hub. **Expansion (ADR 0042 authority):** UC4/UC5 **semantic** runner/apply on every emit path; UC14 **composable IR** — not product-closed | **gate missing** (semantic + composable) |
 | ADR 0029 lineage tools | ADR 0029 | **Closed** — lineage-check + bind-snapshot + freshness + fitness | done |
 | RCA packet schema | ADR 0025 | `validate-rca-packet.py` + schema | done |
+
+---
+
+## Parked — JTBD blocking gaps (from jobs map)
+
+Live narrative for adopters; mechanisms stay in [`docs/JOBS-TO-BE-DONE.md`](docs/JOBS-TO-BE-DONE.md).
+
+| Job | Blocking gap |
+|-----|----------------|
+| **J1 — semantic apply** | Full ADR 0007 **semantic** apply on every emit path (not only hub specimens) — [`docs/ADR-ENFORCEMENT.md`](docs/ADR-ENFORCEMENT.md). |
+| **J2 — tag blast radius** | UC16 adapters + full tag blast radius — [`docs/spine/IMPACT-GRAPH.md`](docs/spine/IMPACT-GRAPH.md). |
+| **J7 — full product verify** | Full product `./nlc verify` (non-specimen) still evolving. |
+| **J8 — rule-tagged narrowing** | Rule-tagged narrowing v2 (delta regen) expansion. |
+| **J20 — bare `engine.runtime`** | Bare `engine.runtime` tag insufficient when goal declares `engine_runtime` (strict pairing). |
+
+---
+
+## Parked — session / holes leftovers
+
+| Source | Gap |
+|--------|-----|
+| SESSION-FOLLOWTHROUGH | **hub tool interiors still open** — X4 v1 dogfood done; hub tool noun/verb interiors not rewritten. |
+| SESSION-FOLLOWTHROUGH | **full noun/verb rewrite open** — remainder in [`integrity/hub-x4-remainder.json`](integrity/hub-x4-remainder.json). |
+| HOLES (out of reach) | **R4 — verb belongs on this noun** — static gates cannot enforce “verb belongs on *this* noun” (judgment / design). |
+| HOLES (out of reach) | **Python-only language limit** — source-level gates are Python-only; other languages need [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) spec + adapter (UC16 expansion). |
+
+---
+
+## Roadmap §2.4 reconciliations (live)
+
+| Topic | True status (this tree) |
+|-------|-------------------------|
+| **Shipped tag prose** | **Machine SSOT** — `fitness-findings-shipped-tag-sync.py` + reachable tags on HEAD; do not hand-write “vX on origin” in FINDINGS. |
+| **Rule IR vs ADR 0042** | **Not reconciled to “all semantic closed.”** Accepted [0042](adrs/0042-rule-ir-hub-product-boundary.md): v1 snapshot path closed; **UC4/UC5 semantic runner/apply remain expansion**; UC14 composable IR **expansion** — see Parked Rule IR row. |
+| **`uc-product-status` vs FINDINGS UC14/16/20** | `integrity/uc-product-status.json` **`expansion_only`** keys must match Parked expansion rows (UC14 composable; UC16 language scanner step 2; UC20 per-stack packs). |
+| **X4 “done” claim** | **Rejected** — empty `fields.txt` majority (368/370 review spot-check; 169/381 empty files in inventory) means interiors **not** done. |
 
 ---
 
@@ -85,120 +124,7 @@ Hub **no shipped tag** on current `main` history (mistaken `v0.2.0` removed); `i
 - PLANIT skill + HARNESS + PROCESS + ORCHESTRATION wired to the pipeline
 
 
----
-
-## Planit Evaluate-NLC wave-1 (audit → door)
-
-**Audit SHA:** `d83c64a` (`origin/main`). **A1–A4:** PASS (plan audit constrained R6/R7 to wave-2).
-
-### Landed before this wave (not re-opened)
-
-| Notion / FINDINGS id | Status |
-|----------------------|--------|
-| P2.1 ADR 0024 corpus | Landed #31 |
-| P2.2 X1–X6 runners | Landed #32–#35 |
-| P2.3 wire ADR 0030 | Landed #36 |
-| P2.4 ADR 0027–0029 | Landed #1 |
-| A2 binding matrix | **89/89** (stale “51%” claim retired) |
-| E1/E2 housekeeping | Closed in this wave |
-
-### Still open after door wave (wave-2)
-
-| Id | Note |
-|----|------|
-| A7 / A12 interiors | **Remain expansion** — wave P5; dogfood exists; full tools rewrite open ([`product-completion-scope.json`](integrity/product-completion-scope.json)) |
-| P1.2 heroes | **Waived** — `bbp-*` ids under ADR 0011; NLC door done |
-| Soft-green multi-lang | **Remain expansion** — wave P7.2; adapters parked until UC16/UC20 waves |
 
 ---
 
-## Planit Evaluate-NLC wave-2 (residuals)
-
-**Base:** `main` after #38 (`a5287e2`). **Branch:** `fix/eval-nlc-wave2-residuals`.
-
-### Closed / soft-green this wave
-
-| Id | Status |
-|----|--------|
-| A8–A10 RCA climb / buck-stops | **Bound** by [ADR 0025](adrs/0025-belief-no-blame-climb.md) + `rules/nlc-0025.json`; cited from CHARTER document control. RCA packet schema **done** (validate + fitness). |
-| A11 door | **Done** #38 + permanence gate `fitness-charter-nlc-door.py` |
-| A12 hub self-verify | **Soft-green closed for “exists”** — hub is subject of `./nlc verify`; see [`docs/nlc/HUB-BBA-DOGFOOD.md`](docs/nlc/HUB-BBA-DOGFOOD.md). Full tools noun/verb rewrite still open. |
-| A7 dogfood (door + principles) | PRINCIPLES NLC-first preface; X4 dogfood docs; interior rewrite still parked |
-| P1.1 ACS path | **Done** — content under `docs/nlc/compiler/`; stub at `docs/ai-compiled-systems/` |
-| P1.2 hero audit | Table below |
-| Soft-green multi-lang | Unchanged — adapters parked |
-
-### P1.2 Consumer BBA/BBP hero audit (wave-2)
-
-| Path | Issue | Fix |
-|------|-------|-----|
-| `CHARTER.md` | Was BBP-only H1 | NLC door (#38) + door fitness |
-| `DESCRIBE.md` | BBP title | NLC hub title (#38) |
-| `integrity/PRINCIPLES.md` | “(BBP)” title as product | NLC-roof preface; P1 clarified under-covers |
-| `docs/nlc/compiler/*` | ACS folder name | Residue banner; rename parked |
-| `README.md` / `docs/nlc/*` | NLC-first already | No change |
-| `bbp-*` tool/skill ids | Under-covers nouns | Leave (ADR 0011) |
-
-### Still parked after wave-2
-
-| Item | Why |
-|------|-----|
-| ACS path rename | **Done** — `docs/nlc/compiler/`; stub at old path |
-| RCA packet schema binder | ADR 0025 expansion gate |
-| Hub tools noun/verb rewrite | X4 BOUNDARY tranche + **RuleReceipt noun pilot**; remainder open |
-| A1 per-rule ADRs | **Done** — ADR 0031–0037; R backlog + non-R (`0037`) in [`charter-ratify-backlog.json`](integrity/charter-ratify-backlog.json) |
-
----
-
-## Planit Evaluate-NLC wave-3 (coverage close)
-
-**Branch:** `fix/eval-nlc-coverage-close`. Closes download/child gaps from the coverage audit.
-
-| Item | Status |
-|------|--------|
-| Notion `manifesto.md` attachment | Merged Principles 5–6 + layer stack into docs SSOT; **full body at root** `MANIFESTO.md` |
-| `nlc-hub-audit` skill | Replaced with Notion draft + Gate section (`.agents/skills/nlc-hub-audit/`) |
-| P2.6 `gate missing` badges | USE-CASES expansion + FINDINGS Parked + JTBD pointer |
-| Notion Status sync | Evaluate-NLC leaf + children (this PR) |
-| Still parked | X4 full noun/verb rewrite; packs registry (out-of-band); ADR 0007/0009/UC16/UC20 expansion |
-
----
-
-## Planit parked residual queue (post wave-3)
-
-One produce leaf / PR per row. Do not soft-green as done without evidence.
-
-| Todo id | Work | Primary home |
-|---------|------|--------------|
-| **park-a1** | **Done** — ADR 0031–0037; backlog SSOT | [`integrity/charter-ratify-backlog.json`](integrity/charter-ratify-backlog.json) |
-| **park-x4** | **Tranche-done** — emit-path BOUNDARY batch + remainder inventory; full noun/verb rewrite soft-green residual | [`integrity/hub-x4-remainder.json`](integrity/hub-x4-remainder.json) |
-| **park-0029** | **Done** — lineage-check + bind-snapshot + freshness | ADR 0029 tools |
-| **park-acs** | **Done** — content under `docs/nlc/compiler/`; `docs/ai-compiled-systems/` stub redirects only | [`docs/nlc/compiler/README.md`](docs/nlc/compiler/README.md) |
-| **park-packs** | Consume **closed**; `pack_registry` remains **open** (out-of-band expansion) | FINDINGS Needed / hub_v02 |
-
----
-
-## Parked residuals tranche — Phase 6 execution audit
-
-**Verdict: PASS** (serial packs → 0029 → ACS → A1 → X4; each PR CI green before merge).
-
-| Leaf | PR | Evidence |
-|------|----|----------|
-| park-packs | #42 | `pack_consume_regen` closed; registry out-of-band |
-| park-0029 | #43 + #44 | lineage-check, bind-snapshot, freshness; hub_tool fix |
-| park-acs | #45 | `docs/nlc/compiler/`; stub redirects |
-| park-a1 | #46 | ADR 0031–0035 + `charter-ratify-backlog.json` |
-| park-x4 | #47 | emit-path BOUNDARY batch + `hub-x4-remainder.json` |
-
-### Soft-green residuals (explicitly out of this conclusion)
-
-| Residual | Status |
-|----------|--------|
-| `hub_v02.pack_registry` public product | open / out-of-band |
-| A1 non-R charter prose (§6, §16) | **Done** — [ADR 0037](adrs/0037-charter-non-r-surfaces.md) |
-| X4 emit-path noun rewrite | **Complete** (`emit_path_complete`); **assert tranche complete** (`assert_tranche_complete`); fitness-only interior residual |
-| ADR 0025 RCA packet schema binder | expansion |
-| Full charter rule ADR coverage beyond R-ids | **Waived** — binding matrix (`audit-binding-matrix.py`) is SSOT; no numeric ADR coverage claim ([ADR 0041](adrs/0041-product-completion-scope.md)) |
-
-**Handoff:** Notion Evaluate-NLC + this Last pass. `ssot_leaf_ids`: park-packs, park-0029, park-acs, park-a1, park-x4. `ssot_exit_status`: `program-complete-tranche`.
-
+Historical Planit wave ledgers (not live gaps): [`docs/history/findings-planit-waves-archive.md`](docs/history/findings-planit-waves-archive.md).

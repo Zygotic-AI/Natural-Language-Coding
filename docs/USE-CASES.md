@@ -6,7 +6,7 @@ SSOT for what this practice *does*. Code is derived. Actors: **human manager**
 
 **Why adopters show up (jobs + honest availability):** [`JOBS-TO-BE-DONE.md`](JOBS-TO-BE-DONE.md).
 
-**Product/binder SSOT (machine):** [`integrity/uc-product-status.json`](../integrity/uc-product-status.json) — `fitness-todo-use-cases-ssot.py` gates TODO `@done` against this file. **Proof index:** [`USE-CASES-PROOF.md`](USE-CASES-PROOF.md).
+**Product/binder SSOT (machine):** [`integrity/uc-product-status.json`](../integrity/uc-product-status.json) — `fitness-todo-use-cases-ssot.py` gates historical TODO `@done` rows in [`docs/history/TODO-work-log.md`](../docs/history/TODO-work-log.md) against this file. **Live gaps (Human / Needed / Parked):** [`FINDINGS.md`](../FINDINGS.md) only. **Proof index:** [`USE-CASES-PROOF.md`](USE-CASES-PROOF.md).
 
 Status: **in force** = charter/tool exists. **Parked** = decided, not executable (still needed when that expansion happens). **Missing** = **needed** — the product is incomplete without it; not optional polish.
 
@@ -51,18 +51,9 @@ Same conversation may produce UC1–UC4. Three artifacts, three gates: **[goal](
 
 ---
 
-## Needed (expansion)
+## Expansion and live gaps
 
-v1 binders above close the teaching spine; these rows still deepen at scale.
-**Badge:** `gate missing` = Accepted ADR / decided expansion ≠ wired deep gate (soft-green).
-
-| ID | Why it is still needed | Badge |
-|----|------------------------|-------|
-| EXPANSION-ONLY [UC14](TERMS.md#uc14) | Richer composable IR for cross-primitive policy beyond adopt-time conflicts. | `gate missing` |
-| EXPANSION-ONLY [UC16](TERMS.md#uc16) | Second-language **adapters** after [`LANGUAGE-SCANNER.md`](LANGUAGE-SCANNER.md) spec step 2. | `gate missing` |
-| EXPANSION-ONLY [UC20](TERMS.md#uc20) | Per-stack call-tree packs beyond Python `domain/` scan. | `gate missing` |
-
-**Requirement packs (v0.2):** ingest skill + `./nlc maintainer pack-ingest` → candidates JSON; human ratifies via `/interview` before export (ADR 0016). Not [UC19](TERMS.md#uc19). Consume/regen + registry remain FINDINGS Needed (`gate missing` until closed).
+UC expansion rows, `gate missing` badges, and product incompleteness live in [`FINDINGS.md`](../FINDINGS.md) (Needed / Parked). This file does not maintain a second gap queue.
 
 ---
 

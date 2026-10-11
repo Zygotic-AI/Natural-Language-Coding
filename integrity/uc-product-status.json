@@ -1,6 +1,8 @@
 {
   "schema": 1,
   "ssot": "Machine product/binder status for compile-system UCs. TODO @done (product) must match product_closed here.",
+  "live_gap_ssot": "FINDINGS.md",
+  "live_gap_note": "Human / Needed / Parked narrative gaps live only in FINDINGS.md; this file is binder closure only.",
   "hub_v02": {
     "pack_ingest": "closed",
     "pack_consume_regen": "closed",
@@ -41,7 +43,9 @@
     "UC4": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [],
+      "expansion_only": [
+        "UC4.semantic_rule_runner_adr_0007"
+      ],
       "blockers": [
         "rule_ir_blockers",
         "rule_runner_blockers"
@@ -55,7 +59,9 @@
     "UC5": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [],
+      "expansion_only": [
+        "UC5.semantic_apply_adr_0007"
+      ],
       "blockers": [
         "rule_apply_blockers",
         "rule_coverage_blockers"
@@ -145,7 +151,9 @@
     "UC14": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [],
+      "expansion_only": [
+        "UC14.composable_ir_cross_primitive"
+      ],
       "blockers": [
         "rule_conflict_blockers"
       ],
@@ -164,7 +172,9 @@
     "UC16": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [],
+      "expansion_only": [
+        "UC16.language_scanner_adapter_step2"
+      ],
       "blockers": [
         "non_python_adapter_blockers"
       ],
@@ -191,7 +201,9 @@
     "UC20": {
       "binder": "closed",
       "product": "closed",
-      "expansion_only": [],
+      "expansion_only": [
+        "UC20.per_stack_call_tree_packs"
+      ],
       "blockers": [
         "call_tree_blockers",
         "primitive_inventory_blockers"

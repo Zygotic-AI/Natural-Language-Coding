@@ -28,8 +28,8 @@ def main() -> int:
         violations.append("assert-non-python-adapter-passes must PASS")
     status = json.loads((ROOT / "integrity" / "uc-product-status.json").read_text(encoding="utf-8"))
     exp = (status.get("ucs") or {}).get("UC16", {}).get("expansion_only") or []
-    if exp:
-        violations.append(f"UC16 expansion_only must be empty: {exp}")
+    if "UC16.language_scanner_adapter_step2" not in exp:
+        violations.append("UC16 expansion_only must list UC16.language_scanner_adapter_step2")
     for v in violations:
         print(f"VIOLATION {v}")
     if violations:

@@ -111,6 +111,22 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-root-session-artifacts.py")],
     )
     run(
+        "fitness-live-gap-list-ssot",
+        [sys.executable, str(TOOLS / "fitness-live-gap-list-ssot.py")],
+    )
+    run(
+        "assert-live-gap-list-fails",
+        [sys.executable, str(TOOLS / "assert-live-gap-list-fails.py")],
+    )
+    run(
+        "fitness-gap-list-exclusions-doc-sync",
+        [sys.executable, str(TOOLS / "fitness-gap-list-exclusions-doc-sync.py")],
+    )
+    run(
+        "fitness-uc-product-findings-sync",
+        [sys.executable, str(TOOLS / "fitness-uc-product-findings-sync.py")],
+    )
+    run(
         "fitness-hub-public-self-contained",
         [sys.executable, str(TOOLS / "fitness-hub-public-self-contained.py")],
     )
