@@ -6,7 +6,7 @@
 - Ratified-by: Human manager (evidence identity content-not-history ADR, 2026-10-10)
 - Class: F (integrity / gates), A (release and audit evidence)
 - Corpus: nlc
-- RCA: none in this repository (operator packet and instance analysis kept outside the public hub; see Context below)
+- RCA: [`docs/rca/2026-10-10-sha-pinned-evidence-history-rewrite.md`](../docs/rca/2026-10-10-sha-pinned-evidence-history-rewrite.md) (instance record; analysis in operator packet)
 
 ## Context
 
