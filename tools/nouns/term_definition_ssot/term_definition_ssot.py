@@ -5,74 +5,38 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-TERMS_PATH = "docs/TERMS.md"
-
-POINTER_FILES = frozenset(
-    {
-        "integrity/LEXICON.md",
-        "docs/nlc/compiler/GLOSSARY.md",
-        "docs/nlc/compiler/NAMES.md",
-        "docs/nlc/RULE-VOCAB.md",
-    }
+from nouns.term_definition_ssot.term_definition_exclusions import (
+    POINTER_FILES,
+    TERMS_PATH,
+    is_path_fully_excluded,
+    line_is_exempt,
 )
 
-EXCLUDED_PREFIXES: tuple[str, ...] = (
-    "docs/history/",
-    "docs/rca/",
-    "theory/history/",
-    "examples/",
-    "tools/nouns/term_definition_bypass_fixtures/",
-    "reviews/",
-    "node_modules/",
-    ".git/",
-    "adrs/",
+HEADING_DEF = re.compile(
+    r"^(#{2,4})\s+(?!\[)([A-Za-z0-9][A-Za-z0-9 \-/']*)\s*$",
+    re.M,
 )
-
-EXCLUDED_EXACT: frozenset[str] = frozenset(
-    {
-        "integrity/TERM-DEFINITION-SSOT-EXCLUSIONS.md",
-        "integrity/GAP-LIST-SSOT-EXCLUSIONS.md",
-        # Id-prefix table (P/R/C/Q), not TERMS definitions
-        "CHARTER.md",
-        # Gate criteria binder; links TERMS for the Gate noun
-        "integrity/GATE.md",
-        # Operational binders that reuse term words as section titles
-        "docs/nlc/RULE-TRACE.md",
-        "docs/nlc/RCA-PACKET.md",
-        "docs/nlc/IMPLEMENTATION-COMPLEXITY-EXAMINATION-PLAN.md",
-        "docs/adoption/RELEASE-ZERO-PARAMS-PLAN.md",
-        "docs/bba/BBA-EMIT-PROCESS.md",
-        "docs/bba/POLICY-ADR-LINEAGE.md",
-        "docs/nlc/compiler/INTENT-SURFACE.md",
-    }
-)
-
-HEADING_DEF = re.compile(r"^#{2,3}\s+(?!\[)([A-Za-z0-9][A-Za-z0-9 \-/']*)\s*$", re.M)
-BOLD_COLON = re.compile(r"^\*\*([A-Za-z][A-Za-z0-9 \-/']*)\*\*\s*:\s+\S", re.M)
-TABLE_BOLD = re.compile(r"^\|\s*\*\*([A-Za-z][A-Za-z0-9 \-/']*)\*\*\s*\|", re.M)
-EM_DASH = re.compile(r"^([A-Za-z][A-Za-z0-9 \-/']*)\s+—\s+\S", re.M)
+BOLD_COLON_OUT = re.compile(r"^\*\*([A-Za-z][A-Za-z0-9 \-/']*)\*\*\s*:\s+\S")
+BOLD_COLON_IN = re.compile(r"^\*\*([A-Za-z][A-Za-z0-9 \-/']*):\*\*\s+\S")
+TABLE_BOLD = re.compile(r"^\|\s*\*\*([A-Za-z][A-Za-z0-9 \-/']*)\*\*\s*\|")
+TABLE_PLAIN = re.compile(r"^\|\s*([A-Za-z][A-Za-z0-9 \-/']*)\s*\|\s*([^|]+?)\s*\|")
+TABLE_PLAIN_SKIP_FIRST = frozenset({"ADR", "Condition", "Rule", "Corpus", "Ship"})
+EM_DASH = re.compile(r"^([A-Za-z][A-Za-z0-9 \-/']*)\s+—\s+\S")
+BULLET_BOLD_EM = re.compile(r"^-\s+\*\*([A-Za-z][A-Za-z0-9 \-/']*)\*\*\s+—\s+\S")
+LINE_START_TERM = re.compile(r"^([A-Za-z][A-Za-z0-9 \-/']*):\s+\S")
+BOLD_HYPHEN = re.compile(r"^\*\*([A-Za-z][A-Za-z0-9 \-/']*)\*\*\s+-\s+\S")
+ITALIC_COLON = re.compile(r"^\*([A-Za-z][A-Za-z0-9 \-/']*)\*:\s+\S")
 
 
 def load_term_names(terms_text: str) -> frozenset[str]:
     names: set[str] = set()
     for m in HEADING_DEF.finditer(terms_text):
-        raw = m.group(1).strip()
+        raw = m.group(2).strip()
         if raw.startswith("Operating bindings"):
             continue
         names.add(raw)
         names.add(raw.lower())
     return frozenset(names)
-
-
-def is_excluded(rel_posix: str) -> bool:
-    if rel_posix == TERMS_PATH:
-        return True
-    if rel_posix in EXCLUDED_EXACT:
-        return True
-    for prefix in EXCLUDED_PREFIXES:
-        if rel_posix.startswith(prefix):
-            return True
-    return False
 
 
 def strip_fences(text: str) -> str:
@@ -93,24 +57,48 @@ def term_matches(name: str, terms: frozenset[str]) -> bool:
     return n in terms or n.lower() in terms
 
 
+def scan_line(rel_posix: str, line: str, terms: frozenset[str]) -> list[str]:
+    if line_is_exempt(rel_posix, line):
+        return []
+    hits: list[str] = []
+    for pat, label in (
+        (HEADING_DEF, "heading"),
+        (BOLD_COLON_IN, "bold-colon-in"),
+        (BOLD_COLON_OUT, "bold-colon-out"),
+        (TABLE_BOLD, "table-bold"),
+        (TABLE_PLAIN, "table-plain"),
+        (EM_DASH, "em-dash"),
+        (BULLET_BOLD_EM, "bullet-bold-em"),
+        (LINE_START_TERM, "line-start-colon"),
+        (BOLD_HYPHEN, "bold-hyphen"),
+        (ITALIC_COLON, "italic-colon"),
+    ):
+        m = pat.match(line)
+        if not m:
+            continue
+        if label == "heading":
+            title = m.group(2).strip()
+        elif label == "table-plain":
+            title = m.group(1).strip()
+            second = m.group(2).strip()
+            if title in TABLE_PLAIN_SKIP_FIRST or re.fullmatch(r"UC\d+", title):
+                continue
+            if len(second) < 6:
+                continue
+        else:
+            title = m.group(1).strip()
+        if term_matches(title, terms):
+            hits.append(f"{rel_posix}: {label} defines {title!r}")
+    return hits
+
+
 def scan_markdown(rel_posix: str, text: str, terms: frozenset[str]) -> list[str]:
-    if is_excluded(rel_posix):
+    if is_path_fully_excluded(rel_posix):
         return []
     body = strip_fences(text)
     hits: list[str] = []
-    for m in HEADING_DEF.finditer(body):
-        title = m.group(1).strip()
-        if term_matches(title, terms):
-            hits.append(f"{rel_posix}: heading defines {title!r}")
-    for pat, label in (
-        (BOLD_COLON, "bold-colon"),
-        (TABLE_BOLD, "table-bold"),
-        (EM_DASH, "em-dash"),
-    ):
-        for m in pat.finditer(body):
-            title = m.group(1).strip()
-            if term_matches(title, terms):
-                hits.append(f"{rel_posix}: {label} defines {title!r}")
+    for line in body.splitlines():
+        hits.extend(scan_line(rel_posix, line, terms))
     return hits
 
 
@@ -122,6 +110,8 @@ def scan_repo(root: Path, terms: frozenset[str]) -> list[str]:
         try:
             rel = path.relative_to(root).as_posix()
         except ValueError:
+            continue
+        if is_path_fully_excluded(rel):
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
         violations.extend(scan_markdown(rel, text, terms))

@@ -17,13 +17,22 @@ from nouns.term_definition_ssot.term_definition_ssot import (  # noqa: E402
     scan_markdown,
 )
 
-PLANT_REL = {
+PLANT_REL: dict[str, str] = {
     "gate-h3.md": "docs/plant-gate-h3.md",
     "gate-bold-colon.md": "docs/plant-gate-bold.md",
+    "gate-bold-colon-in.md": "docs/plant-gate-bold-in.md",
     "gate-table-row.md": "docs/plant-gate-table.md",
+    "gate-table-plain.md": "docs/plant-gate-table-plain.md",
     "gate-h2.md": "docs/plant-gate-h2.md",
+    "gate-h4.md": "docs/plant-gate-h4.md",
     "gate-em-dash.md": "docs/plant-gate-em.md",
+    "gate-bullet-em.md": "docs/plant-gate-bullet-em.md",
+    "gate-line-colon.md": "docs/plant-gate-line-colon.md",
+    "gate-bold-hyphen.md": "docs/plant-gate-bold-hyphen.md",
+    "gate-italic-colon.md": "docs/plant-gate-italic-colon.md",
     "lexicon-gate-bold.md": "integrity/LEXICON.md",
+    "charter-gate-soft-term.md": "CHARTER.md",
+    "gate-table-soft-row.md": "integrity/GATE.md",
 }
 
 

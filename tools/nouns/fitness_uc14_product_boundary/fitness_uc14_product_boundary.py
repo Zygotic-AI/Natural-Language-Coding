@@ -35,8 +35,8 @@ def main() -> int:
             violations.append(f"{script} must PASS")
     status = json.loads((ROOT / "integrity" / "uc-product-status.json").read_text(encoding="utf-8"))
     exp = (status.get("ucs") or {}).get("UC14", {}).get("expansion_only") or []
-    if exp:
-        violations.append(f"UC14 expansion_only must be empty: {exp}")
+    if "UC14.composable_ir_cross_primitive" not in exp:
+        violations.append("UC14 expansion_only must list UC14.composable_ir_cross_primitive")
     for v in violations:
         print(f"VIOLATION {v}")
     if violations:

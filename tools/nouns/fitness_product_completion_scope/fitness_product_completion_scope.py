@@ -37,7 +37,7 @@ def main() -> int:
         status = json.loads(STATUS.read_text(encoding="utf-8"))
         for uc, block in (status.get("ucs") or {}).items():
             for key in block.get("expansion_only") or []:
-                sid = f"{uc}.{key}"
+                sid = key if key in exp_scope else f"{uc}.{key}"
                 if sid not in exp_scope:
                     violations.append(f"expansion_only key not in scope: {sid}")
         packs = status.get("packs_v02") or {}

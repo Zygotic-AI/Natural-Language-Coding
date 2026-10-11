@@ -42,16 +42,23 @@ def main() -> int:
     ucs = status.get("ucs") or {}
     uc4_exp = (ucs.get("UC4") or {}).get("expansion_only") or []
     uc5_exp = (ucs.get("UC5") or {}).get("expansion_only") or []
-    if uc4_exp:
-        violations.append("UC4 expansion_only must be empty after semantic runner v2")
-    if uc5_exp:
-        violations.append("UC5 expansion_only must be empty after semantic apply v2")
+    if "UC4.semantic_rule_runner_adr_0007" not in uc4_exp:
+        violations.append("UC4 expansion_only must list UC4.semantic_rule_runner_adr_0007 (ADR 0042)")
+    if "UC5.semantic_apply_adr_0007" not in uc5_exp:
+        violations.append("UC5 expansion_only must list UC5.semantic_apply_adr_0007 (ADR 0042)")
     if (ucs.get("UC9") or {}).get("expansion_only"):
         violations.append("UC9 expansion_only must be empty (P6.1 closed)")
     if (ucs.get("UC13") or {}).get("expansion_only"):
         violations.append("UC13 expansion_only must be empty (P6.2 closed)")
-    if (ucs.get("UC14") or {}).get("expansion_only"):
-        violations.append("UC14 uc-product-status expansion_only must be empty (v1 product closed)")
+    uc14_exp = (ucs.get("UC14") or {}).get("expansion_only") or []
+    if "UC14.composable_ir_cross_primitive" not in uc14_exp:
+        violations.append("UC14 expansion_only must list UC14.composable_ir_cross_primitive")
+    uc16_exp = (ucs.get("UC16") or {}).get("expansion_only") or []
+    if "UC16.language_scanner_adapter_step2" not in uc16_exp:
+        violations.append("UC16 expansion_only must list UC16.language_scanner_adapter_step2")
+    uc20_exp = (ucs.get("UC20") or {}).get("expansion_only") or []
+    if "UC20.per_stack_call_tree_packs" not in uc20_exp:
+        violations.append("UC20 expansion_only must list UC20.per_stack_call_tree_packs")
 
     if UC14.is_file():
         remain = json.loads(UC14.read_text(encoding="utf-8")).get("remain_expansion") or []

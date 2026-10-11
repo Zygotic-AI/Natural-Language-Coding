@@ -170,7 +170,7 @@ Runnable **BBP**-shaped tree in an **adopter** repo—not `examples/` **specimen
 
 An **action** composed of other **actions**, yet still possessing its own completion **gate**. Every inner **action** executes its own **gate**; the **compound action** also executes its outer **gate**.
 
-**Audit `A-LEXICON-COMPOUND`:** **Met** iff every **compound action** definition (a) names its constituent actions, (b) each constituent has a **gate**, and (c) the compound has its own outer **gate**.
+**Audit `A-LEXICON-COMPOUND`:** **Met** iff every **compound action** definition (a) names its constituent actions, (b) each constituent has a **gate**, and (c) the compound has its own outer **gate**. Not **met** if any constituent lacks a **gate** or the compound lacks an outer **gate**.
 
 ### Compound verb
 
@@ -188,13 +188,13 @@ Path that runs **fitness** + charter §11 evidence (often **bbp-confirmer**).
 
 A first-class artifact class in the repository (ADR, integrity doc, **agent noun**, **audit** definition, example). Each **content type** has a **type recipe** prescribing how to add or amend instances.
 
-**Audit `A-LEXICON-CONTENT-TYPE`:** **Met** iff each **content type** named in `content-types/` has a **type recipe**.
+**Audit `A-LEXICON-CONTENT-TYPE`:** **Met** iff each **content type** named in `content-types/` has a **type recipe**. Not **met** if any named **content type** lacks a **type recipe**.
 
 ### Contribution Gate
 
 The **refuse-wired** **gate** for contributions. Refuses when: **shared docs standard** not **met**; **type recipe** not followed; person names in SSOT surfaces; required fixture missing. See [`CONTRIBUTION.md`](../integrity/CONTRIBUTION.md) (CG-R1–CG-R7).
 
-**Audit `A-LEXICON-CONTRIB-GATE`:** **Met** iff the **contribution gate** definition states **refuse** criteria and an incomplete-packet fixture. **Audit `A-LEXICON-CONTRIBUTION`:** **Met** iff every add-X instruction links to the **type recipe** and states the **contribution gate**.
+**Audit `A-LEXICON-CONTRIB-GATE`:** **Met** iff the **contribution gate** definition states **refuse** criteria and an incomplete-packet fixture. Not **met** if **refuse** criteria or the incomplete-packet fixture is missing. **Audit `A-LEXICON-CONTRIBUTION`:** **Met** iff every add-X instruction links to the **type recipe** and states the **contribution gate**. Not **met** if any add-X omits the **type recipe** link or **contribution gate**.
 
 ### Contract
 
@@ -244,9 +244,9 @@ Binary enforcement checkpoint: **PASS / FAIL / REFUSE** only—no partial, provi
 
 ### Goal
 
-**Compile-time intent only** (owner decision, RCA 3, approved 2026-10-10): a **goal** names what the compile must deliver. Runtime behavior lives in the **application** (the compiled system); NLC does not use the term **orchestrator**.
+**Compile-time intent only** — Owner decision 2026-10-10 (RCA 3, kept outside this repo). **NLC** emits **nouns**, **verbs**, **adjectives**, and **goals** only. A **goal** states what the compile must deliver (for example a release as a top-line **goal** whose sub-**goals** are audit, validate, and the other steps it needs). It is not runtime call-graph prose.
 
-**Conflict note (Goal):** prior copy called goals an “orchestration boundary” — **retired**. Runtime-module rename is scheduled **v0.4**. Goals call **verbs** (and other goals) in emitted shape; they must not write **noun** fields directly.
+**Conflict note (Goal):** prior copy used “orchestration boundary” and runtime **orchestrator** vocabulary for **goals** — **retired** by owner decision. **Orchestrator term rename (v0.4)** — remaining surface uses listed in FINDINGS (not renamed in this batch). Do not describe **goals** as calling **verbs** at runtime.
 
 ### God-noun
 
@@ -496,7 +496,7 @@ Agent-noun structure / confirmation-systems id prefixes.
 
 Structure, naming, lexicon, evidence, role language, incomplete-packet **refuse**, and supersede rules for SSOT documents: (1) **Structure** — purpose, definition, refuse criteria, fixture, checklist, cross-refs; (2) **Naming** — predictable paths; (3) **Lexicon** — terms from **TERMS.md**; (4) **Evidence** — audits, binders, fixtures; (5) **Role language** — no person names in SSOT; (6) **Incomplete-packet refuse**; (7) **Supersede rules** (charter R22). See [`CONTRIBUTION.md`](../integrity/CONTRIBUTION.md).
 
-**Audit `A-LEXICON-SHARED-DOCS`:** **Met** iff **shared docs standard** is documented and contribution gates enforce it.
+**Audit `A-LEXICON-SHARED-DOCS`:** **Met** iff **shared docs standard** is documented and contribution gates enforce it. Not **met** if the standard is undocumented or gates do not enforce it.
 
 ### Ship
 
@@ -530,7 +530,7 @@ Classification on nouns/adjectives (`pan`, `runtime=temporal`, …) feeding **ru
 
 Prescribed steps and **gate** criteria for adding or amending **content type** X: (1) **Inputs**; (2) **Steps**; (3) **Gate criteria**; (4) **Incomplete-packet fixture** (must FAIL). Index: [`content-types/HOW-TO-ADD.md`](../content-types/HOW-TO-ADD.md).
 
-**Audit `A-LEXICON-TYPE-RECIPE`:** **Met** iff every **type recipe** documents inputs, steps, **gate** criteria, and incomplete-packet fixture.
+**Audit `A-LEXICON-TYPE-RECIPE`:** **Met** iff every **type recipe** documents inputs, steps, **gate** criteria, and incomplete-packet fixture. Not **met** if any **type recipe** omits inputs, steps, **gate** criteria, or the incomplete-packet fixture.
 
 ---
 

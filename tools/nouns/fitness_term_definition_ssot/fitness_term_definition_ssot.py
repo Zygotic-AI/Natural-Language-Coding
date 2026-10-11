@@ -13,8 +13,8 @@ TERMS = ROOT / "docs" / "TERMS.md"
 POINTER_MAX_LINES = 10
 
 sys.path.insert(0, str(ROOT / "tools"))
+from nouns.term_definition_ssot.term_definition_exclusions import POINTER_FILES  # noqa: E402
 from nouns.term_definition_ssot.term_definition_ssot import (  # noqa: E402
-    POINTER_FILES,
     load_term_names,
     scan_repo,
 )
@@ -33,6 +33,9 @@ REQUIRED_IN_TERMS: tuple[str, ...] = (
     "Conflict note (Goal)",
     "Conflict note (BBP vs BBA)",
     "Compile-time intent only",
+    "Owner decision 2026-10-10",
+    "Not **met** if",
+    "Orchestrator term rename (v0.4)",
     "v0.4",
 )
 
