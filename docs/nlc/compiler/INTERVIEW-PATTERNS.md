@@ -72,7 +72,7 @@ SSOT procedure: [`.agents/skills/interview/SKILL.md`](../../../.agents/skills/in
 
 **Ask:** Is this fixed input (requirement / fact) or a choice we must record (ADR)?
 
-**Pass:** Requirements state constraints; conflicts go to [ADR](../../TERMS.md#adr) precedence ([ADR 0012](../../../adrs/0012-adr-precedence-and-rule-conflicts.md)), not [interview](../../TERMS.md#interview) debate.
+**Pass:** Requirements state constraints; conflicts go to [ADR](../../TERMS.md#adr) precedence ([ADR 0012](../../../adrs/0012-rule-adoption-conflicts.md)), not [interview](../../TERMS.md#interview) debate.
 
 ---
 
