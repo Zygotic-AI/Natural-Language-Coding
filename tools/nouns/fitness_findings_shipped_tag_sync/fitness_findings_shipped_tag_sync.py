@@ -29,7 +29,13 @@ def main() -> int:
         print("RESULT:NOT_MET")
         return 1
 
-    text = FINDINGS.read_text(encoding="utf-8", errors="replace")
+    raw = FINDINGS.read_text(encoding="utf-8", errors="replace")
+    # Ignore SSOT instruction lines (they mention forbidden patterns literally).
+    text = "\n".join(
+        ln
+        for ln in raw.splitlines()
+        if "never hand-write" not in ln.lower() and "do not hand-write" not in ln.lower()
+    )
     shipped = last_shipped_tag("HEAD")
     shipped_ver = tag_version(shipped) if shipped else None
 
