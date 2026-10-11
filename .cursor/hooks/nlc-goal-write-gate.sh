@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # UC18: block goal-tree writes until nlc-before-generate stamp is fresh (planit step 6).
 set -euo pipefail
-input="$(cat)"
+input="$(/usr/bin/cat)"
 
 deny_fixed() {
   # No jq/python3 — static JSON only (fail-closed bootstrap).
