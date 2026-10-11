@@ -1,6 +1,8 @@
 {
   "schema": 1,
   "ssot": "Machine product/binder status for compile-system UCs. TODO @done (product) must match product_closed here.",
+  "live_gap_ssot": "FINDINGS.md",
+  "live_gap_note": "Human / Needed / Parked narrative gaps live only in FINDINGS.md; this file is binder closure only.",
   "hub_v02": {
     "pack_ingest": "closed",
     "pack_consume_regen": "closed",

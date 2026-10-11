@@ -1,0 +1,28 @@
+# Holes
+
+**Not the live gap SSOT.** This file is a historical closed-gate ledger.
+Open leftovers live in [`FINDINGS.md`](FINDINGS.md) only.
+
+In-reach items below are **CLOSED**. Named leftovers are out of reach
+for a static gate (judgment, a human, or code we do not have) and are
+tracked under FINDINGS Human / Parked — do not maintain a second queue here.
+
+| Item | Status |
+|---|---|
+| C17 failure + adjective preservation | CLOSED |
+| C18 goal test calls the goal | CLOSED |
+| C15 nested parens + verb uses the key | CLOSED |
+| C22 / C7 change set is git | CLOSED |
+| R20 annotated types | CLOSED |
+| R15 copied or imported helper | CLOSED |
+| R32 aliases + same-file + **cross-file** helpers | CLOSED |
+| R33 SQL / ORM / setattr | CLOSED |
+| C10 breaking at version 1 | CLOSED |
+| C1 note required; class C illegal when charter is in the change | CLOSED |
+| C23 confirmer FAIL is a finding | CLOSED as far as text goes. Out of reach: a cryptographic human signature. C24 refuses `Ratified-by: agent`. |
+| R4 read/write self.field | CLOSED. Out of reach: verb belongs on *this* noun. |
+| R1 / C3 / P2 | Out of reach: “would this noun be a lie”, “related”, every human action gated. |
+| Ship | `python3 tools/release-audit.py <tree>` is the pipeline hook. Compile-green ≠ released. |
+| Language | Source-level gates are **Python-only**. Contract/CONFIRM/matrix are not. Expanding to another language is **spec then adapter**, parked: [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md). |
+
+Live queue: [`FINDINGS.md`](FINDINGS.md).

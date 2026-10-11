@@ -1,0 +1,620 @@
+# TODO
+
+Open work SSOT: [`FINDINGS.md`](FINDINGS.md).
+
+Charter SSOT: `CHARTER.md`.
+
+How to read red vs green (hub CI): designed red on its specimen → NOT_MET; assert-fails → ASSERT:PASS; invoice-correct MET; true miss = invoice-correct red or a specimen green on its own tool.
+
+---
+
+## Consumable grade — Natural Language Coding (NLC)
+
+**Target story (three layers, one README spine).** Consumer-facing copy leads with the problem and usage; acronyms stay in a short glossary (NLC + BBA only in hero; spell out “compiler” and “compiled system” in prose).
+
+| Layer | Consumer name | Technical / doc name | Role |
+| ----- | ------------- | -------------------- | ---- |
+| 1 | **Natural Language Coding (NLC)** | This repo / product | You describe **what** (goals) and **how** (requirements, ADRs, policy) in natural language; gates and compile produce software or refuse. |
+| 2 | **AI system compiler** | Today: PLANIT + agent harness + `tools/` gates; doc cluster `docs/nlc/compiler/` | The worker that interviews, plans, binds, generates, and proves. Prefer “the compiler” in README; introduce **ASC** only in glossary if we keep it. |
+| 3 | **Compiled system** | BBP-shaped tree the compiler emits; **BBA** = roof architecture (`CHARTER.md`, `integrity/`) | Runnable artifact in *your* app repo—not the teaching specimens in `examples/`. |
+
+**Naming reconciliation (blocks consistent consumer docs):**
+
+- ✔ ADR 0011 + `NAMES.md` + `README.md` / `DESCRIBE.md` / `FINDINGS.md` @done(26-09-20 08:15)
+- ✔ Tagline in root `README.md` @done(26-09-20 08:15)
+- ✔ [`GLOSSARY.md`](docs/nlc/compiler/GLOSSARY.md) @done(26-09-20 08:15)
+
+**README + first-run (consumer front door):**
+
+- ✔ Consumer `README.md` rewrite @done(26-09-20 08:15)
+- ✔ [`scripts/install.sh`](scripts/install.sh) + curl one-liner (mac/linux/WSL) @done(26-09-20 08:15)
+- ✔ [`scripts/install.ps1`](scripts/install.ps1) + README / GETTING-STARTED Windows install @done(26-09-20 08:25)
+- ✔ **Windows prove path** — [`tools/ci_fitness.py`](tools/ci_fitness.py), [`tools/ci-fitness.ps1`](tools/ci-fitness.ps1); `ci-fitness.sh` delegates @done(26-09-20 08:25)
+- ✔ Distribution v0 — ADR 0015, tarball fetch, version store, lock, `nlc-update`/`nlc-fetch-hub`, release workflow @done(26-09-20 09:30)
+- ✔ v0.1.0 **pre-release** — scope in README, [`RELEASE-v0.1.0.md`](docs/adoption/RELEASE-v0.1.0.md), `nlc-release-smoke.sh`, CI on tag @done(26-09-20 09:45)
+- ✔ **Last:** `./release` / hub ship **v0.2.0** — `./release finish`; tag `v0.2.0` @ `397b1a0` (PR #19 merge) pushed to origin @done(26-09-23 14:00)
+- ✔ Install hub **checksum verify** — [`integrity/nlc-install-hashes.json`](integrity/nlc-install-hashes.json), [`nlc-install-verify.py`](tools/nlc-install-verify.py); `NLC_SKIP_VERIFY=1` to skip @done(26-09-20 09:00)
+- ✔ [`GETTING-STARTED.md`](docs/nlc/compiler/GETTING-STARTED.md) @done(26-09-20 08:15)
+- ✔ Manifesto + intent/quality/how-it-codes pages @done(26-09-17 10:15)
+
+**Slash commands / skills (UC1 + UC2 consumer UX):**
+
+- ✔ **`/interview` skill** v1 @done(26-09-20 08:15)
+- ✔ UC1 **interview pattern catalog** v1 — [`INTERVIEW-PATTERNS.md`](docs/nlc/compiler/INTERVIEW-PATTERNS.md); grow miss log from RCA @done(26-09-20 09:10)
+- ✔ **`/planit` consumer path** via GETTING-STARTED + PROCESS @done(26-09-20 08:15)
+- ✔ `.cursor/skills` → `.agents/skills` symlink @done(26-09-20 08:15)
+
+**Adopt a real application repo (UC15):**
+
+- ✔ Greenfield [`tools/nlc-init.py`](tools/nlc-init.py) @done(26-09-20 08:15)
+- ✔ [`docs/adoption/BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) + [`BROWNFIELD.md`](docs/adoption/BROWNFIELD.md) @done(26-09-20 08:15)
+- ✔ UC15 **brownfield** inventory beta — [`nlc-brownfield-inventory.py`](tools/nlc-brownfield-inventory.py) @done(26-09-20 11:30)
+- ✔ UC15 brownfield migrate automation — v1 `nlc-brownfield-migrate.py` MET; full automation = `brownfield_full_automation` expansion @done(26-09-23 16:00)
+
+**Compile spine (UC9 / UC14 / UC18) — v1 shipped, v2 open:**
+
+- ✔ UC9 impact graph [`IMPACT-GRAPH.md`](docs/spine/IMPACT-GRAPH.md), [`nlc-impact-graph.py`](tools/nlc-impact-graph.py), delta-regen `--orchestrate` @done(26-09-20 11:15)
+- ✔ UC9 v1 [`tools/nlc-delta-regen.py`](tools/nlc-delta-regen.py) + [`docs/spine/README.md`](docs/spine/README.md) @done(26-09-20 08:15)
+- ✔ UC9 v2 Planit procedure + [`nlc-before-generate.md`](.agents/skills/planit/references/nlc-before-generate.md) @done(26-09-20 08:50)
+- ✔ UC9 rule-tagged blast radius — `rules/goal-bindings.json` + [`nlc_uc9_bindings.py`](tools/nlc_uc9_bindings.py) @done(26-09-20 11:30)
+- ✔ UC14 v1 ADR 0012 + [`tools/check-rule-adoption.py`](tools/check-rule-adoption.py) @done(26-09-20 08:15)
+- ✔ UC14 v1 adopt-time composable (ADR 0043) — conflict/precedence landmines; cross-primitive IR v2 = expansion in `uc14-product-boundary.json` @done(26-09-23 18:50)
+- ✔ UC18 v1 [`knowledge/facts.json`](knowledge/facts.json) + [`validate-knowledge-facts.py`](tools/validate-knowledge-facts.py) @done(26-09-20 08:15)
+- ✔ UC18 verb + CLI: `load-knowledge-domain` / [`load-knowledge-domain.py`](tools/load-knowledge-domain.py) @done(26-09-20 08:35)
+- ✔ UC18 [`tools/nlc-before-generate.py`](tools/nlc-before-generate.py) + Planit step 6 gate @done(26-09-20 08:50)
+- ✔ UC18 harness doc [`docs/nlc/HARNESS.md`](docs/nlc/HARNESS.md) + session preflight + `nlc-init` CI template @done(26-09-20 11:15)
+- ✔ ADR 0016 retire UC19 / hub carries no product requirements @done(26-09-20 11:15)
+- ✔ ADR 0004 / 0005 Accepted @done(26-09-20 11:15)
+
+**Human interface (ADR 0017):**
+
+- ✔ `nlc` CLI + [`docs/nlc/MENU.md`](docs/nlc/MENU.md) v1 @done(26-09-20 12:00)
+- ✔ Repo-root **`./nlc`** (hub + `nlc-init` template) @done(26-09-20 12:15)
+- ✔ Dashboard v1 — auto queue from ADRs, regen queue, lock, CONFIRM, greenfield hint @done(26-09-20 12:15)
+- ✔ Dashboard: rules conflicts, planit-in-progress file, command-map step on queue @done(26-09-20 13:30)
+- ✔ `~/.local/bin/nlc` launcher (sh); Windows `nlc.cmd` on user PATH @done(26-09-20 13:30)
+- ✔ Harness hooks example + HARNESS.md (v2 wiring) @done(26-09-20 13:30)
+- ✔ Human UX batch: ADR 0018 gaps, verify split, maintainer subcommands, prove removed @done(26-09-20 13:30)
+- ✔ Human UX follow-through: guide CLI, UC9 regen-continue/advance, APP-VERIFY, judgment doc, hooks.example only, prove→verify doc sweep @done(26-09-20 14:00)
+
+**Parked spine (FINDINGS):** Requirement **packs** v0.2; code packs (UC16); call-tree packs (UC20); rule IR; per-generate binder (UC21); noun inheritance scan.
+
+---
+
+## ADR compliance — bring code up to policy (enforcement SSOT)
+
+Policy lives in ADRs + PROCESS + planit; this section is **machine wiring** so compile/validation cannot green when required gates are skipped. Cross-ref [`FINDINGS.md`](FINDINGS.md) parked “Per-generate gate binder.” **Section complete** @done(26-09-20 16:20) — remaining release work is housekeeping below (`v0.1.0` push).
+
+### ADR 0010 — gate immediately after every generate
+
+- ✔ **Per-artifact gate record** — `.nlc/gate-records.json` + [`nlc_gate_record.py`](tools/nlc_gate_record.py) @done(26-09-20 15:00)
+- ✔ **`./nlc maintainer gate-record`** — verify fails when `goals/**/implementation.py` newer than last PASS receipt @done(26-09-20 15:00)
+- ✔ **Planit skill** — step 6.5 calls `gate-record` @done(26-09-20 15:00)
+- ✔ **Harness** — adopter `templates/adopter/hooks.example.json` + `.nlc/hooks.example.json` (doc only) @done(26-09-20 16:00)
+- ✔ **Landmine** — `assert-batch-generate-policy-fails.py` + `assert-verify-gate-record-fails.py` in `ci_fitness.py` @done(26-09-20 16:00)
+
+### ADR 0004 + 0005 — produce package + SSOT exit evidence
+
+- ✔ **Fitness preflight** — [`nlc_produce_package.py`](tools/nlc_produce_package.py) `handoff_refused` in `ci_fitness.py` @done(26-09-20 16:00)
+- ✔ **PR / verify-deep path** — [`nlc_compliance.py`](tools/nlc_compliance.py) `produce_package_blockers` + hub `.nlc/produce-package.json` @done(26-09-20 16:00)
+- ✔ **`ssot_leaf_ids` + `quality_evidence`** — Q1/SSOT in produce preflight + verify-deep @done(26-09-20 16:00)
+- ✔ **Agent nouns** — [`validate-agent-noun-packages.py`](tools/validate-agent-noun-packages.py) in [`ci_fitness.py`](tools/ci_fitness.py) @done(26-09-20 15:00)
+
+### ADR 0003 + PROCESS §7 — adversarial review (machine, not optional)
+
+- ✔ **Rewrite [`HUMAN-JUDGMENT-GATES.md`](docs/nlc/HUMAN-JUDGMENT-GATES.md)** @done(26-09-20 15:00)
+- ✔ **Verify pipeline** — `verify-deep` + [`nlc_compliance.py`](tools/nlc_compliance.py) hub/app adversarial JSON @done(26-09-20 15:00)
+- ✔ **Planit skill** — `plan-audit` + verify while planit active @done(26-09-20 16:00)
+
+### Ratification, approval, default-closed (C24, ADR 0012, proposed ADR)
+
+- ✔ **Hub CI** — fitness + `nlc --project . verify` @done(26-09-20 15:00)
+- ✔ **`nlc verify` fast** — rule conflicts + stamp + gate records via [`nlc_compliance.py`](tools/nlc_compliance.py) @done(26-09-20 15:00)
+- ✔ **`Waived:`** — empty `Waived:` lines in `adrs/*.md` fail `verify` via `nlc_compliance` @done(26-09-20 16:00)
+- ✔ **Ratified-by / Released-by** — cross-walk in [`VERIFY-AND-SHIP.md`](docs/nlc/VERIFY-AND-SHIP.md) @done(26-09-20 15:00)
+- ✔ **ADR status** — [`nlc_adr_scan.py`](tools/nlc_adr_scan.py) SSOT @done(26-09-20 15:00)
+
+### ADR 0021 + 0019 — verify paths (hub + app)
+
+- ✔ **Hub PR gate** — `ci_fitness.py` + `nlc verify` in CI @done(26-09-20 15:00)
+- ✔ **Adopter template** — workflow + [`templates/adopter/README.md`](templates/adopter/README.md) `verified.json` guidance @done(26-09-20 16:00)
+- ✔ **`verify-deep` hub** — `.nlc/produce-package.json` (Q1 + SSOT + Q2) @done(26-09-20 16:00)
+
+### UC18 / PLANIT 6 — before generate
+
+- ✔ **Stamp enforcement** — in `verify` via `nlc_compliance` @done(26-09-20 15:00)
+- ✔ **Planit** — `guide before-generate` + verify stamp check @done(26-09-20 15:00)
+
+### ADR 0013 + 0018 — preflight and human CLI
+
+- ✔ Audit `tools/nlc-*.py` hub CLIs + pack/install + requirements/upgrade/install-verify interview stderr @done(26-09-20 16:15)
+- ✔ Install scripts: interview before `INSTALL:NOT_MET` on stderr; pack uses `emit_gap` @done(26-09-20 16:15)
+
+### ADR 0014–0015 — distribution (compliance with own locks)
+
+- ✔ Release workflow: tag build runs verify + fitness @done(26-09-20 15:00)
+- ✔ `nlc-init` scaffold — verify workflow, hooks example, change-adversarial example @done(26-09-20 16:00)
+
+### Charter / matrix (supporting gates)
+
+- ✔ **R27 binder** — [`docs/nlc/GATE-RECORD-BINDER.md`](docs/nlc/GATE-RECORD-BINDER.md) + `nlc_gate_record.py --describe` @done(26-09-20 16:15)
+- ✔ **ADR 0006** — `assert-verify-regen-queue-fails.py` + `examples/regen-queue-pending` in `ci_fitness` @done(26-09-20 16:15)
+
+### Done when (acceptance)
+
+- ✔ No merge to `main` on hub with Proposed ADR or failed `./nlc verify` (CI + `nlc_compliance`) @done(26-09-20 16:00)
+- ✔ App `verify-deep` refuses missing change adversarial + produce when `goals/**/implementation*` exists @done(26-09-20 16:00)
+- ✔ Generate path wired: gate-record + landmines + produce/plan-audit compliance (plan/change adversarial still skill-led export) @done(26-09-20 16:00)
+
+---
+
+## Hub v0.2.0 — requirement packs (ship target)
+
+- ✔ Pack schema + export/install CLIs v0.2 foundation — [`REQUIREMENT-PACKS.md`](docs/nlc/REQUIREMENT-PACKS.md) @done(26-09-20 11:30)
+- ✔ Ingest prompt/skill: source docs → candidate ADRs + if/then (human ratifies). @done(26-09-20 21:45)
+- ✔ Consume: scope data/tags + UC9 hint via `.nlc/pack-consume-status.json` after pack install @done(26-09-22 22:05)
+- ✔ Optional public registry repo (out of band) — wave 4.16 `skip:` @done(26-09-23 16:00)
+
+- ✔ ADR 0013 requirements preflight + [`nlc_requirements.py`](tools/nlc_requirements.py) on hub CLIs/installers @done(26-09-20 08:30)
+
+**Repo / distribution housekeeping:**
+
+- ✔ ADR 0014 explicit noop migrations + `UPGRADE:*` log lines — [`migrations/README.md`](migrations/README.md) @done(26-09-20 09:15)
+- ✔ `nlc-update.py` v0 (artifact store, lock pin, semver chain, noop migrations) — extend for interview/script migrations @done(26-09-20 09:30)
+- ✔ `docs/nlc/` doc map + [`PROVE-AND-SHIP.md`](docs/nlc/PROVE-AND-SHIP.md) @done(26-09-20 11:15)
+- ✔ `scripts/nlc-release-prep.sh` dummy-proof pre-tag @done(26-09-20 11:15)
+- ✔ Public install **checksum** in install scripts (sh + ps1) @done(26-09-20 09:00)
+- ✔ **Last (human):** hub ship via **`./release`** — same as consumable-grade row; **v0.2.0** tag pushed @done(26-09-23 14:00)
+- ✔ **Version class on every change** — SSOT [`.agents/instructions/change-version-class.md`](.agents/instructions/change-version-class.md); wired into `AGENTS.md`, `/interview`, `/planit`, `.cursor/rules/change-version-class.mdc` @done(26-09-20 20:10)
+- ✔ **`./release` orchestrator** — branch `release/vX.Y.Z` + PR; `./release finish` tags after merge @done(26-09-20 17:00)
+- ✔ **ADR 0023** — rule instance emit shape + instant audit scope (prescribed path only; not hand-edit insurance) @done(26-09-20 17:35)
+- ✔ **`tools/nlc_rule_coverage.py`** + `./nlc maintainer rule-coverage` + verify blocker + CI landmines @done(26-09-20 18:30)
+- ✔ **ADR 0023 (rest):** `./nlc maintainer rule-emit` + planit/bbp-proposer + landmines (`assert-rule-emit-sync`) @done(26-09-20 20:10)
+
+**ADR enforcement (every Accepted ADR → runnable binders)**
+
+- ✔ **ADR enforcement SSOT** — hub table: all **bound** except **0007/0009** gap (`fitness-adr-gap-parked.py`) @done(26-09-20 20:10)
+- ✔ **Adopter verify depth** — `adopter-verify-fast-green` verify_fast + fingerprints; contract_change landmines on non-specimens @done(26-09-20 20:10)
+- ✔ **0004–0006** — hub binder fitness bound @done(26-09-20 23:15)
+- ✔ **0014–0015** — migration + distribution landmines + binder fitness @done(26-09-20 23:00)
+- ✔ **0007–0009** — documented **gap** in [`docs/ADR-ENFORCEMENT.md`](docs/ADR-ENFORCEMENT.md) + `fitness-adr-gap-parked.py` (full IR runner / UC20 still future) @done(26-09-20 20:10)
+- ✔ **0013** — hub `nlc*.py` `hub_tool` fitness + landmine @done(26-09-20 22:30)
+- ✔ **0011** — naming fitness + landmine @done(26-09-20 22:45)
+- ✔ **0016** — hub no product requirements landmine @done(26-09-20 22:45)
+- ✔ **0010** — fitness-adr-0010-binder + landmines @done(26-09-20 23:15)
+- ✔ **0017–0020** — fitness-human-surface-binder + landmines @done(26-09-20 23:15)
+- ✔ **0019** — assert-guide-orchestration landmine @done(26-09-20 23:15)
+- ✔ **0008** — fitness-adr-0008-binder + invoice-correct MET landmine @done(26-09-20 23:15)
+- ✔ **0023** — verify blockers + `nlc_rule_emit.py` + RULE-TRACE.md + binder fitness @done(26-09-20 20:10)
+
+---
+
+## Build a compiled system — use-case dependencies
+
+SSOT stories: [`docs/USE-CASES.md`](docs/USE-CASES.md). Each row is required for **end-to-end** “describe → compile Python BBP app → prove → ship” (not hub specimens alone).
+
+- ✔ **UC1** — interview packet + verify (`requirements`, `knowledge_domains`) evidence=assert-interview-packet-fails,validate-interview-packet @done(26-09-21 12:00)
+- ✔ **UC2** — PLANIT execute (plan → bind → emit → audit) evidence=planit-orchestration @done(26-09-21 12:00)
+- ✔ **UC3** — Proposed ADRs + requirements-sync vs bind_ready evidence=assert-requirements-sync-pending-fails @done(26-09-21 12:00)
+- ✔ **UC4** — rule IR + snapshot runner evidence=assert-rule-runner-fails,assert-invoice-violation-fails @done(26-09-21 12:00)
+- ✔ **UC5** — rule-emit, goal-scaffold, rule-coverage evidence=assert-adopter-verify-fast-green-passes @done(26-09-21 12:00)
+- ✔ **UC6** — Change class A–F gates evidence=fitness-c1 @done(26-09-21 12:00)
+- ✔ **UC7** — Adversarial review before emit evidence=change-adversarial-blockers @done(26-09-21 12:00)
+- ✔ **UC8** — Prove/ship (`verify`, release audit) evidence=ci_fitness,release-audit @done(26-09-21 12:00)
+- ✔ **UC9** — delta-regen + goal-bindings narrow evidence=assert-goal-bindings-narrow-fails,assert-delta-regen-narrow-passes @done(26-09-21 12:00)
+- ✔ **UC10** — generate provenance on verify_fast evidence=assert-upstream-hand-patch-fails @done(26-09-21 12:00)
+- ✔ **UC11** — Breaking-contract acceptance evidence=assert-verify-breaking-accept @done(26-09-21 12:00)
+- ✔ **UC12** — closed set + primitive-propose evidence=closed_set_blockers @done(26-09-21 12:00)
+- ✔ **UC13** — durable engine + engine.runtime rule evidence=assert-durable-engine-rule-fails @done(26-09-21 12:00)
+- ✔ **UC14** — adopt-time rule conflicts evidence=check-rule-adoption @done(26-09-21 12:00)
+- ✔ **UC15** — brownfield inventory + migrate plan evidence=nlc-brownfield-migrate @done(26-09-21 12:00)
+- ✔ **UC16** — language-scan + non-Python adapter gate evidence=assert-non-python-adapter-fails @done(26-09-21 12:00)
+- ✔ **UC17** — ADR record/supersede evidence=adrs/README @done(26-09-21 12:00)
+- ✔ **UC18** — before-generate stamp on generate paths evidence=assert-verify-stale-stamp-fails @done(26-09-21 12:00)
+- ✔ **UC20** — call-tree domain + goals evidence=call-tree,primitive_inventory_blockers @done(26-09-21 12:00)
+- ✔ **UC21** — gate-scope + gate-record evidence=assert-verify-skill-gate-fails @done(26-09-21 12:00)
+- ✔ **Requirement packs** — export/install/ingest; consume sets sync-pending evidence=assert-pack-ingest-candidates-passes,assert-requirements-sync-pending-fails @done(26-09-21 12:00)
+
+---
+
+## SSOT / compile-system hardening (post-RCA backlog)
+
+Follow-up from [`docs/rca/2026-09-20-todo-uc-false-completion.md`](docs/rca/2026-09-20-todo-uc-false-completion.md) and the 2026-09-21 tightening list. **Binder MET ≠ product MET** — see [`.agents/instructions/todo-product-uc-completion.md`](.agents/instructions/todo-product-uc-completion.md).
+
+### TODO ↔ USE-CASES sync (`fitness-todo-use-cases-ssot.py`)
+
+- ✔ **PRODUCT-OPEN markers** — `integrity/uc-product-status.json` + `nlc_todo_ssot.py` @done(26-09-21 11:00)
+- ✔ **Bidirectional gate** — `check_todo_vs_status` closed/open vs TODO product rows @done(26-09-21 11:00)
+- ✔ **Negative landmine** — `assert-todo-use-cases-ssot-fails.py` + matrix in CI @done(26-09-21 11:00)
+- ✔ **Spine status vocabulary** — `check_spine_status_vocabulary` in SSOT fitness @done(26-09-21 11:00)
+- ✔ **Packs / Hub v0.2** — `hub_v02` keys in uc-product-status (ingest closed) @done(26-09-21 11:00)
+- ✔ **`JOBS-TO-BE-DONE` sync** — `fitness-jobs-todo-sync.py` in CI @done(26-09-21 11:00)
+- ✔ **Update `todo-product-uc-completion.md`** — uc-product-status SSOT @done(26-09-21 11:00)
+
+### CI: binder vs product vs landmines
+
+- ✔ **Per-UC product landmines** (partial) — UC4/UC9/UC10 + pack ingest asserts @done(26-09-21 11:00)
+- ✔ **Tighten `fitness-compiled-system-uc-product.py`** — specimen rule-runner + interview validate @done(26-09-21 11:00)
+- ✔ **`ADR-ENFORCEMENT` v1 vs gap** — 0007/0009 cite v1 tools + landmines @done(26-09-21 11:00)
+- ✔ **Anti-regression** — hollow `ucs` map fails SSOT fitness @done(26-09-21 11:00)
+- ✔ **Unit/fixture tests** — `fitness-todo-use-cases-ssot-matrix.py` @done(26-09-21 11:00)
+
+### TODO hygiene
+
+- ✔ **Dedupe tracking** — UC14/UC15 lines point at uc-product-status + expansion @done(26-09-21 11:00)
+- ✔ **Collapse binder+product rows** — single @done lines with `evidence=` / landmine ids when stable. @done(26-09-21 12:00)
+- ✔ **@done evidence suffix** — enforced by `check_todo_evidence_suffix` in SSOT fitness @done(26-09-21 12:00)
+
+### USE-CASES machine index
+
+- ✔ **UC index artifact** — `integrity/uc-product-status.json` @done(26-09-21 11:00)
+- ✔ **Expansion rows** — `EXPANSION-ONLY` prefix in USE-CASES Needed section @done(26-09-21 11:00)
+- ✔ **Cross-links** — [`docs/USE-CASES-PROOF.md`](docs/USE-CASES-PROOF.md) proof index @done(26-09-21 12:00)
+
+### Verify / product depth (v2)
+
+- ✔ **UC4/5** (partial) — charter specimens + invoice violation landmine; full semantic ADR 0007 still expansion evidence=assert-invoice-violation-fails @done(26-09-21 12:00)
+- ✔ **UC9** — landmine: rule change narrows regen via `goals_for_rule_change` evidence=assert-delta-regen-narrow-passes @done(26-09-21 12:00)
+- ✔ **UC10** — generate provenance on verify_fast evidence=assert-upstream-hand-patch-fails @done(26-09-21 12:00)
+- ✔ **UC13** — structured `engine.runtime` tag match in `durable_rule_blockers` @done(26-09-21 11:00)
+- ✔ **UC13** — durable specimen landmine evidence=assert-durable-engine-rule-fails @done(26-09-21 12:00)
+- ✔ **UC16** — non-Python adapter blocker evidence=assert-non-python-adapter-fails @done(26-09-21 12:00)
+- ✔ **UC20** (partial) — call-tree scans `goals/*/implementation.py`; per-stack packs still expansion @done(26-09-21 12:00)
+- ✔ **UC21** (partial) — Planit gate-scope step for `.agents/` writes; hooks doc still expansion @done(26-09-21 12:00)
+- ✔ **UC3** — interview vs `requirements-sync-pending` evidence=assert-requirements-sync-pending-fails @done(26-09-21 12:00)
+- ✔ **UC1** — `interview-packet.schema.json` + `validate-interview-packet.py` @done(26-09-21 11:00)
+
+### Packs, process, docs
+
+- ✔ **Pack ingest schema** — `validate-pack-ingest-candidates.py` + landmine @done(26-09-21 11:00)
+- ✔ **Pack consume specimen** — sync-pending after install evidence=assert-requirements-sync-pending-fails @done(26-09-21 12:00)
+- ✔ **`.cursor/skills` symlink** — `requirement-pack-ingest` → `.agents/skills` @done(26-09-21 11:00)
+- ✔ **Planit Phase 6** — SSOT fitness note in planit SKILL @done(26-09-21 11:00)
+- ✔ **bbp-confirmer** — uc-product-status checklist row @done(26-09-21 11:00)
+- ✔ **Docs** — `docs/nlc/README.md` maintainer matrix; RCA status line @done(26-09-21 11:00)
+
+---
+
+## Checklist style
+
+Use `☐` open, `✔ … @done(YY-MM-DD HH:MM)` when done.
+- ✔ **Planit Evaluate-NLC wave-1** — A1–A4 PASS; NLC-first CHARTER/DESCRIBE door; TERMS; FINDINGS SHA; README Python-first; root MANIFESTO pointer; A7–A12/P1 deferred wave-2 @done(26-09-22 21:22)
+- ✔ **Planit Evaluate-NLC wave-2** — A8–A10→ADR 0025 cite; A11 door fitness; A12 self-verify soft-green; PRINCIPLES NLC preface; ACS path stub + hero audit table @done(26-09-22 21:30)
+- ✔ **Planit Evaluate-NLC wave-3 coverage close** — manifesto Principles/layer stack + root full body; nlc-hub-audit=Notion draft; P2.6 gate-missing badges; Notion status sync @done(26-09-22 21:50)
+
+## Planit parked residuals (open produce leaves)
+
+- ✔ **Parked residuals tranche** serial packs→0029→ACS→A1→X4 — Phase 6 PASS; `ssot_exit_status=program-complete-tranche` @done(26-09-22 23:05)
+
+- ✔ **park-a1** A1 ratify tranche-done — ADR 0031–0035 + backlog; non-R residual soft-green @done(26-09-22 22:40)
+- ✔ **park-x4** X4 BOUNDARY tranche-done — emit-path batch + remainder inventory; full rewrite residual @done(26-09-22 22:55)
+- ✔ **park-0029** ADR 0029 tools — lineage-check + bind-snapshot + freshness @done(26-09-22 22:10)
+- ✔ **park-acs** ACS rename — content under `docs/nlc/compiler/`; stub at `docs/ai-compiled-systems/` @done(26-09-22 22:20)
+- ✔ **park-packs** consume/regen closed (`pack_consume_regen`); registry still open/out-of-band @done(26-09-22 22:05)
+
+## Soft-green / expansion residuals (post tranche)
+
+From [`FINDINGS.md`](FINDINGS.md) Last pass soft-green + Parked `gate missing` rows. Ordered in **Execution order** Wave 4 (steps 10–16).
+
+- ✔ **pack-registry** — out-of-band optional; not blocking hub ship @done(26-09-23 16:00)
+- ✔ **x4-emit-path** emit-path nouns complete (`emit_path_complete`) @done(26-09-23 07:10)
+- ✔ **x4-mass-interior-rewrite** — assert tranches P5.6–P5.7 complete; **91** `fitness-only` interior residual documented @done(26-09-24 10:35)
+- ✔ **a1-non-r-prose** — ADR 0037; backlog `non_r_residuals` ratified @done(26-09-23 16:00)
+- ✔ **adr-0025-rca-packet** — schema + `validate-rca-packet.py` + fitness/landmine @done(26-09-23 16:00)
+- ✔ **uc16-code-packs** — v1 MET; per-stack adapters = expansion_only @done(26-09-23 16:00)
+- ✔ **uc20-call-tree-packs** — v1 MET; multi-stack packs = expansion_only @done(26-09-23 16:00)
+- ✔ **rule-ir-runners** — v1 MET; full semantic ADR 0007 = expansion_only @done(26-09-23 16:00)
+
+## Execution order (Planit 26-09-23)
+
+**Status:** waves **0–4** complete @done(26-09-23 16:00) — steps 12–16 closed as v1 MET / `skip:` expansion or out-of-band per [`uc-product-status.json`](integrity/uc-product-status.json). Parked product SSOT: [`FINDINGS.md`](FINDINGS.md). Detail bullets for waves 0–3: **Post–v0.2.0 repo hygiene** below; wave 4: **Soft-green / expansion residuals** above.
+
+### Wave 0 — Ship truth (do first)
+
+1. ✔ **`v0.2.0` git tag** — `./release finish --yes`; tag on merge `397b1a0` (not `main` HEAD); pushed `origin` @done(26-09-23 14:00)
+2. ✔ **Close duplicate release TODO rows** — consumable-grade + housekeeping rows `@done` @done(26-09-23 14:00)
+
+### Wave 1 — Front door + SSOT
+
+3. ✔ **README restore `5090a4d`** — merged consumer spine (`5090a4d`) with post-#53 door (jobs table, verify/ship, hub maintainer) @done(26-09-23 14:05)
+4. ✔ **`fix/a13-tracker-ssot`** — already on `main` (live-gap SSOT + role table); FINDINGS Human row notes v0.2.0 tag vs unreleased `main` @done(26-09-23 14:05)
+- ✔ **`nlc-update` semver catalog** — union local `migrations/` + remote tags (hermetic 0.1.0→0.1.1 when GitHub has only `v0.2.0`); install hashes refreshed @done(26-09-23 14:15)
+
+### Wave 2 — Enforcement gaps (decide before merge)
+
+5. ✔ **Inference-only human surface** — [ADR 0036](adrs/0036-inference-only-human-surface.md) (not branch 0027); `fitness-nlc-0036-inference-only.py`; INTENT-SURFACE + MANIFESTO + interview @done(26-09-23 15:35)
+6. ✔ **`feat/nlc-spine-runners-x1-x3`** — superseded on `main` (X1–X3 tools + fitness wrappers + ADR 0026/0030); branch stale @done(26-09-23 15:35)
+7. ✔ **`feat/adr-0024-nlc-spine` + `copilot/update-charter-md`** — `skip:` landed via #29–#36 clean PRs; no file-level gaps found @done(26-09-23 15:35)
+8. ✔ **`feat/cloud-agent-env-clean`** — `.cursor/environment.json` already on `main` @done(26-09-23 15:35)
+
+### Wave 3 — Repo hygiene (after Wave 2)
+
+9. ✔ **Delete superseded `origin/feat/*` branches** — 14 remotes deleted (0026–0030 spine line, inference-only, a13, cloud-agent, copilot charter) @done(26-09-23 15:40)
+
+### Wave 4 — Expansion program (not blocking waves 0–3)
+
+10. ✔ **`adr-0025-rca-packet`** — [`docs/nlc/RCA-PACKET.md`](docs/nlc/RCA-PACKET.md) @done(26-09-23 16:00)
+11. ✔ **`a1-non-r-prose`** — ADR 0037 @done(26-09-23 16:00)
+12. ✔ **`rule-ir-runners`** + **UC14 v2** — `skip:` v1 bound (`nlc_rule_runner`, landmines); full ADR 0007 semantic apply stays `expansion_only` in [`uc-product-status.json`](integrity/uc-product-status.json) @done(26-09-23 16:00)
+13. ✔ **`uc16-code-packs`** — `skip:` v1 Python gate MET; per-stack adapters = `language_scanner_adapter_step2` expansion @done(26-09-23 16:00)
+14. ✔ **`uc20-call-tree-packs`** — `skip:` v1 Python `domain/` MET; multi-stack packs = ADR 0009 expansion @done(26-09-23 16:00)
+15. ✔ **UC15 brownfield migrate automation** — `skip:` inventory + `nlc-brownfield-migrate.py` v1 MET; `brownfield_full_automation` expansion @done(26-09-23 16:00)
+16. ✔ **`pack-registry`** — `skip:` out-of-band optional product (`hub_v02.pack_registry` open by design) @done(26-09-23 16:00)
+
+## Full NLC audit (continuity entrypoint)
+
+- ✔ **`full-nlc-audit`** — `tools/full-nlc-audit.py` + manifest + skill + landmine quick profile @done(26-09-23 17:15)
+
+### ADR 0038 remediations (handoff + doc drift — audit 26-09-23)
+
+Refs: RCA [`docs/rca/2026-09-23-planit-handoff-adr-0038.md`](docs/rca/2026-09-23-planit-handoff-adr-0038.md) (mitigated).
+
+- ✔ **ADR 0038 handoff pack (batch)** — instruction + manifest fitness + drift + RELEASE/`./release` full profile + doc/skill/planit wire @done(26-09-23 17:35)
+- ✔ **H1–H9 / D1–D3** — closed in same batch (see RCA §8 verification) @done(26-09-23 17:35)
+
+### Full audit feedback (26-09-23 @ `5eedc34`, profile `full`)
+
+Machine: `FULL_NLC_AUDIT:MET`. Inference: **PASS with residuals**. RCA: [`docs/rca/2026-09-23-full-nlc-audit-residual-gaps.md`](docs/rca/2026-09-23-full-nlc-audit-residual-gaps.md).
+
+**Roll-up (optional single program)**
+
+- ✔ **`fitness-findings-ssot-sync.py`** — umbrella CI suite (F1 + F3); wired in manifest `findings-ssot-sync` @done(26-09-23 18:05)
+
+**Doc / SSOT hygiene (symptom fix + preventive gate)**
+
+| ID | Symptom (now) | Preventive one thing |
+| ---- | ------------- | -------------------- |
+| F1 | ✔ FINDINGS ship/tag prose aligned (no false “tagged on origin”) @done(26-09-23 18:05) | ✔ **`tools/fitness-findings-shipped-tag-sync.py`** via umbrella + manifest @done(26-09-23 18:05) |
+| F2 | ✔ `hub-content-tree-hash.txt` + Last pass narrative @done(26-09-23 18:05) | ✔ **`tools/fitness-findings-last-pass-fresh.py`** in manifest `findings-last-pass-fresh` @done(26-09-23 18:05) |
+| F3 | ✔ ADR **0029** row bound in ADR-ENFORCEMENT @done(26-09-23 18:05) | ✔ **`tools/fitness-adr-enforcement-table-sync.py`** via umbrella @done(26-09-23 18:05) |
+| F4 | ✔ **`integration-leaves-waive.json`** with reason + audit_sha @done(26-09-23 18:05) | ✔ **`tools/fitness-integration-leaves-hygiene.py`** + skill § When to write leaves @done(26-09-23 18:05) |
+| F5 | `skip:` expected between releases — document only unless policy changes | `skip:` optional fitness not implemented |
+
+**`full-nlc-audit` product improvements (preventive one thing)**
+
+- ✔ **Inference checklist** — `--emit-inference-checklist` + skill + `assert-full-nlc-audit-emit-checklist-passes.py` @done(26-09-23 18:05)
+- ✔ **Dirty-tree preflight** — builtin `git_worktree_clean` on `full` profile; `--allow-dirty` @done(26-09-23 18:05)
+- ✔ **Release profile split** — `release-prep` on `./release` 0c; `full` for verify sweep; RELEASE.md runtime note @done(26-09-23 18:05)
+- ✔ **Integration-leaves guidance** — skill § When to write leaves + `fitness-full-nlc-audit-skill-leaves-section.py` @done(26-09-23 18:05)
+
+### Continuity vs product (pre-ship — use skill [`/release`](.agents/skills/release/SKILL.md))
+
+**Continuity** = belief → gates → SSOT agree at this SHA (machine + inference). **Product** = expansion / parked work in [`FINDINGS.md`](FINDINGS.md) — mostly **not** `./release` blockers when `uc-product-status` says v1 MET / `expansion_only`.
+
+| Layer | Status | What’s left |
+| ----- | ------ | ----------- |
+| **Continuity — machine** | ✔ @done(26-09-24 18:00) | `release-prep` MET @ `042e7d6` via [`/release`](.agents/skills/release/SKILL.md). |
+| **Continuity — clean snapshot** | ✔ commit @done(26-09-24 18:00) | Batch on `main` `042e7d6`; optional `--profile full` still available. |
+| **Continuity — FINDINGS header** | ✔ @done(26-09-24 18:00) | `integrity/hub-content-tree-hash.txt` (ADR 0050). |
+| **Continuity — inference** | ✔ PASS_WITH_RESIDUALS @done(26-09-24 18:00) | P2/P3 UC14/16/20 parked; [`/release`](.agents/skills/release/SKILL.md) owns closeout. |
+| **Continuity — tag baseline** | ✔ @done(26-09-23 18:10) | `origin` has **no** `v0.2.0` tag (`git ls-remote` empty); `RELEASE_SHIPPED_TAG:MET` (no reachable `v*` until next ship). Prior mistaken tag @ `397b1a0` is **not** a valid ship. |
+| **Product — Needed** | ✔ registry v1 closed @done(26-09-23 18:20) | FINDINGS **Needed** only ship narrative: version **0.2.0**, no tag until `./release`. |
+| **Product — Parked `gate missing`** | expansion_only | UC16 per-stack scanners, UC20 multi-stack call-tree packs, ADR 0007 full semantic rule IR — decided expansion, v1 binders MET per wave 4 @done(26-09-23 16:00). |
+| **Product — soft-green** | ✔ @done(26-09-24 15:15) | X4 mass interior rewrite — `fitness_only` **0** (`x4-t4-fitness-complete`). |
+| **Product — semantic IR** | ✔ @done(26-09-24 15:45) | UC4 + UC5 semantic v2 closed; UC14 composable IR remains expansion. |
+
+**Ship read:** continuity incomplete until **merged main + MET release-prep (and your chosen full/clean audit) + inference apex**; product incomplete items above are **expected** for v0.2.0 unless you widen scope.
+
+## Product completion plan (Planit 26-09-23)
+
+**Outcome:** Close every open **product** item in [`FINDINGS.md`](FINDINGS.md) (Needed + Parked + soft-green residuals) and matching `expansion_only` / `hub_v02` rows in [`integrity/uc-product-status.json`](integrity/uc-product-status.json). **Out of scope:** continuity/pre-ship rows in **Continuity vs product** above; human promotion / `./release` ritual.
+
+**Tier:** T3 — staged waves; one produce leaf / PR per step where possible; `ssot_leaf_ids` + `ssot_exit_status` on each merge per AGENTS.md.
+
+**SSOT rule:** When a step closes a gap, update FINDINGS + `uc-product-status.json` in the **same PR** (Wave P8 checklist per merge).
+
+## Still open (executing)
+
+Honest queue for active work. Do **not** `@done` until the stop predicate is MET. SSOT for X4 counts: [`integrity/hub-x4-remainder.json`](integrity/hub-x4-remainder.json); tranche ids: [`integrity/hub-x4-tranche-plan.json`](integrity/hub-x4-tranche-plan.json).
+
+### Continuity (pre-ship)
+
+- ✔ Commit product batch @ `042e7d6` @done(26-09-24 18:00); next: [`/release`](.agents/skills/release/SKILL.md) → `./release` (human prompts only).
+
+### X4 — hub tools mass noun/verb rewrite (emit-path + noun pilots ✔)
+
+Closed for **emit path**, **pilot nouns**, **`other_or_lib`**, **assert tranches**, and **fitness** (`assert_only` **0**; **125** `fitness-*` noun-backed; `fitness-hub-x4-tranche-t4.py` MET).
+
+| Tranche | Step | Stop predicate |
+| ------- | ---- | -------------- |
+| `x4-t1-other-or-lib` | ✔ P5.5 — `other_or_lib` **0**; `fitness-hub-x4-tranche-t1.py` MET @done(26-09-24 10:00) | `other_or_lib` → 0; `emit_path_open` stays 0; CI MET |
+| `x4-t2-assert-batch-a` | ✔ P5.6 — **70** asserts noun-backed; `assert_only` **139**; `fitness-hub-x4-tranche-t2.py` MET @done(26-09-24 10:15) | `assert_only_count` decreased (batch 1) |
+| `x4-t3-assert-batch-b` | ✔ P5.7 — `assert_only` **0**; `assert_tranche_complete`; `fitness-hub-x4-tranche-t3.py` MET @done(26-09-24 10:35) | Remaining assert-only batch + FINDINGS X4 row closed or inventory-only residual documented |
+| `x4-t4-fitness-complete` | ✔ P5.8 — **125** `fitness-*` noun-backed; `fitness_only` **0**; `fitness-hub-x4-tranche-t4.py` MET @done(26-09-24 15:15) | All hub fitness tools thin adapters + noun pilots |
+
+### Product completion — remaining plan rows
+
+- ✔ **P6.1** — UC9 `rule_tagged_blast_radius_v2` @done(26-09-24 14:45)
+- ✔ **P6.2** — UC13 `engine_runtime_tag_strict` @done(26-09-24 14:50)
+- ✔ **P8.2** — USE-CASES `EXPANSION-ONLY` sync @done(26-09-24 15:00)
+- ✔ **P8.3** — `integration-leaves.json` leaf (product-completion-p5-p6-x4); waive removed @done(26-09-24 15:00)
+- ✔ **P8.4** — inference record + `fitness-product-completion-p8-inference.py` @done(26-09-24 15:00)
+
+### Semantic rule IR (expansion; ADR 0042 / 0043)
+
+- ✔ **UC4** — `semantic_rule_runner_adr_0007` (`check_semantic_ir` + specimens) @done(26-09-24 15:30)
+- ✔ **UC5** — `semantic_apply_adr_0007` (`check_semantic_apply` + `nlc:obligation=`) @done(26-09-24 15:45)
+
+### Wave P0 — Scope lock (do before deep implementation)
+
+| # | Step | Stop predicate |
+| - | ---- | -------------- |
+| P0.1 | ✔ **Product completion scope** — [`integrity/product-completion-scope.json`](integrity/product-completion-scope.json) + [ADR 0041](adrs/0041-product-completion-scope.md) + `fitness-product-completion-scope.py` @done(26-09-23 18:20) |
+| P0.2 | ✔ FINDINGS wave-2 / soft-green prose reconciled (RCA packet done, A7–A12 scoped, ~89 waived) @done(26-09-23 18:20) |
+
+### Wave P1 — Packs registry (`hub_v02.pack_registry`, FINDINGS Needed)
+
+| # | Step | Stop predicate |
+| - | ---- | -------------- |
+| P1.1 | ✔ Pack registry v1 spec — [`docs/nlc/PACK-REGISTRY.md`](docs/nlc/PACK-REGISTRY.md) + schema + hub JSON @done(26-09-23 18:20) |
+| P1.2 | ✔ `nlc-pack-install` registry gate + `validate-hub-pack-registry.py` @done(26-09-23 18:20) |
+| P1.3 | ✔ `hub_v02.pack_registry` closed; FINDINGS Needed updated; `fitness-hub-pack-registry.py` @done(26-09-23 18:20) |
+
+### Wave P2 — Rule IR semantic depth (ADR 0007; UC4, UC5, UC14; FINDINGS Parked Rule IR)
+
+| # | Step | Stop predicate |
+| - | ---- | -------------- |
+| P2.1 | ✔ [ADR 0042](adrs/0042-rule-ir-hub-product-boundary.md) + `rule-ir-product-boundary.json` @done(26-09-23 18:35) |
+| P2.2 | ✔ UC14 v1 adopt-time — [ADR 0043](adrs/0043-uc14-composable-adopt-boundary.md) + `fitness-uc14-product-boundary.py` @done(26-09-23 18:50) |
+| P2.3 | ✔ v1 rule-runner pass landmine + `fitness-adr-0007-product-boundary.py` @done(26-09-23 18:35) |
+| P2.4 | ✔ UC5 v2 semantic apply — `check_semantic_apply` + obligation receipts @done(26-09-24 15:50) |
+| P2.5 | ✔ FINDINGS **Rule IR** row — UC4/UC5 v2 done (UC14 composable IR expansion) @done(26-09-24 15:50) |
+
+### Wave P3 — UC16 code packs (FINDINGS Parked UC16)
+
+| # | Step | Stop predicate |
+| - | ---- | -------------- |
+| P3.1 | ✔ Reference **typescript** adapter — `examples/non-python-with-adapter` @done(26-09-23 18:35) |
+| P3.2 | ✔ `assert-non-python-adapter-passes` + `fitness-uc16-reference-adapter.py`; UC16 expansion cleared @done(26-09-23 18:35) |
+
+### Wave P4 — UC20 call-tree packs (ADR 0009; FINDINGS Parked UC20)
+
+| # | Step | Stop predicate |
+| - | ---- | -------------- |
+| P4.1 | ✔ Reference TS pack — `examples/call-tree-pack-reference` + TS domain scan in call_tree @done(26-09-23 18:35) |
+| P4.2 | ✔ `call-tree-packs.json` + `fitness-uc20-call-tree-pack-reference.py`; UC20 expansion cleared @done(26-09-23 18:35) |
+
+### Wave P5 — X4 remainder + hub dogfood (FINDINGS soft-green X4; A7/A12)
+
+| # | Step | Stop predicate |
+| - | ---- | -------------- |
+| P5.1 | ✔ Tranche plan — [`integrity/hub-x4-tranche-plan.json`](integrity/hub-x4-tranche-plan.json) @done(26-09-23 18:20) |
+| P5.2 | ✔ Noun **pilots** only — `fitness-hub-x4-noun-pilot.py` MET (RuleReceipt, GateLedger, emit-path packages) @done(26-09-23 18:50) |
+| P5.3 | ✔ `fitness-product-completion-p5-dogfood.py` bundle (bba + interior + noun pilot) @done(26-09-23 18:50) |
+| P5.4 | ✔ FINDINGS X4 prose → inventory residual + tranche plan (does **not** close mass rewrite) @done(26-09-23 18:50) |
+| P5.5 | ✔ Tranche `x4-t1-other-or-lib` — all 43 original `other_or_lib` noun-backed; **66** pilots @done(26-09-24 10:00) | `other_or_lib` → 0 per `tranche_1_progress.target_other_or_lib` |
+| P5.6 | ✔ Tranche `x4-t2-assert-batch-a` — **70** landmines; **136** noun pilots @done(26-09-24 10:15) | `assert_only_count` **139** (was 209) |
+| P5.7 | ✔ Tranche `x4-t3-assert-batch-b` — **125** assert nouns; **189** pilots; fitness-only residual @done(26-09-24 10:35) | Mass rewrite closed or honest inventory-only residual |
+
+### Wave P6 — Secondary `expansion_only` (parallel leaves after P0)
+
+| # | Step | Stop predicate |
+| - | ---- | -------------- |
+| P6.1 | ✔ UC9 v2 — `uc9-product-boundary.json` + `fitness-uc9-blast-radius-v2.py` @done(26-09-24 14:45) | expansion_only cleared + proof_commands |
+| P6.2 | ✔ UC13 v2 — `uc13-product-boundary.json` + `fitness-uc13-engine-runtime-strict.py` @done(26-09-24 14:50) | expansion_only cleared + landmine |
+| P6.3 | ✔ UC15 **waived** — `product-expansion-waives.json` + `fitness-product-expansion-waives.py` @done(26-09-23 18:50) |
+| P6.4 | ✔ UC18 harness v1 — `fitness-uc18-harness-boundary.py` @done(26-09-23 18:50) |
+| P6.5 | ✔ UC21 gate-record v1 — `fitness-uc21-gate-record-boundary.py` @done(26-09-23 18:50) |
+
+### Wave P7 — Eval / hero residuals (FINDINGS wave-2)
+
+| # | Step | Stop predicate |
+| - | ---- | -------------- |
+| P7.1 | ✔ **P1.2 hero audit** — `bbp-*` **waived** under ADR 0011 in scope + FINDINGS @done(26-09-23 18:20) |
+| P7.2 | ✔ **Multi-lang honesty** — README soft-green + FINDINGS UC16/UC20 reference rows; USE-CASES already EXPANSION-ONLY @done(26-09-23 18:35) |
+| P7.3 | ✔ **Charter rule ADR coverage** claim retired — binding matrix SSOT @done(26-09-23 18:20) |
+
+### Wave P8 — SSOT closeout (every merge; final when all waves done)
+
+| # | Step | Stop predicate |
+| - | ---- | -------------- |
+| P8.1 | ✔ `fitness-product-completion-scope.py` + `fitness-todo-use-cases-ssot.py` MET @done(26-09-23 18:50) |
+| P8.2 | ✔ `fitness-use-cases-expansion-sync.py` in CI @done(26-09-24 15:00) | Spot-check + CI |
+| P8.3 | ✔ `integration-leaves.json` populated; waive file removed @done(26-09-24 15:00) | hygiene fitness MET |
+| P8.4 | ✔ `full-nlc-audit-inference-record.json` + `fitness-product-completion-p8-inference.py` @done(26-09-24 15:00) | Continuity PASS_WITH_RESIDUALS on product SSOT |
+
+**Execution order:** P0 → P1–P7 as dependency graph (P2↔P3/P4 may parallel after P0; P5 is large — start after P2 scope); **P8 every PR**.
+
+## Release process hardening (ADR 0038–0040)
+
+**Incident (26-09-23):** An agent ran `./release finish --yes` and pushed **`v0.2.0`** without the full prepare ritual (verify-deep, prep, release branch commit). The script **permitted** a thin `finish` path — process defect per [ADR 0038](adrs/0038-no-memory-in-process.md), not operator memory.
+
+- ✔ **Hub release tag gate** — `nlc_release_tag_gate.py`, `hub-release-record.json`, `release.yml`, `assert-release-tag-gate-fails.py` @done(26-09-23 16:30)
+- ✔ **Single `./release` state machine** — `nlc_release_resume.py` + `cmd_release`; legacy prepare/finish forward @done(26-09-23 16:30)
+- ✔ **Release context wizard** — `nlc_release_context.py` + prepare prompts @done(26-09-23 16:30)
+- ✔ **No-memory binder (v1)** — `fitness-adr-0038-no-memory.py` + `rules/nlc-0038.json` @done(26-09-23 17:00)
+- ✔ **Remediate `origin/v0.2.0` tag** — tag **deleted** on origin (verified empty `git ls-remote`); mistaken push @ `397b1a0` not a valid ship @done(26-09-23 18:10)
+
+## Post–v0.2.0 repo hygiene (branch / tag audit)
+
+Planit audit **26-09-23** — **decide before execute**; follow **Execution order** waves 0–3. SSOT for parked product work remains [`FINDINGS.md`](FINDINGS.md).
+
+### Tag and release
+
+- ✔ **`v0.2.0` git tag (mistaken)** — removed from origin; not a valid ship; next tag via hardened `./release` @done(26-09-23 18:10)
+
+### Consumer README
+
+- ✔ **README restore `5090a4d`** — merged spine @done(26-09-23 14:05)
+
+### Unmerged branches — review then PR or waive
+
+- ✔ **`fix/nlc-0027-inference-only`** — ADR 0036 on `main` @done(26-09-23 15:35)
+- ✔ **`fix/a13-tracker-ssot`** — on `main`; branch stale @done(26-09-23 14:05)
+- ✔ **`feat/nlc-spine-runners-x1-x3`** — on `main`; branch obsolete @done(26-09-23 15:35)
+- ✔ **`feat/adr-0024-nlc-spine` + `copilot/update-charter-md`** — skip @done(26-09-23 15:35)
+- ✔ **`feat/cloud-agent-env-clean`** — on `main` @done(26-09-23 15:35)
+
+### Stale remotes (after confirm superseded by #29–#36)
+
+- ✔ **Delete superseded `origin/feat/*` branches** — wave 3 cleanup @done(26-09-23 15:40)
+
+## Practice enforcement (Planit, ADR approval, BBP/BBA shape)
+
+The three enforcement programs are in force on this tree. Active architecture decision records are 0001–0048.
+
+### 1. Force this repository’s Planit
+
+- ✔ Define how every harness, including Cursor, proves it loaded `.agents/skills/planit/SKILL.md` before planning. @done(26-10-08 17:50)
+- ✔ Register that skill’s canonical path and content hash. @done(26-10-08 17:50)
+- ✔ Fail intake when the loaded skill does not match the registry. @done(26-10-08 17:50)
+- ✔ Record that identity on every Planit handoff. @done(26-10-08 17:50)
+- ✔ Add a negative fixture that fails when another Planit is loaded. @done(26-10-08 17:50)
+- ✔ Record machine evidence that each code change came through that Planit run. @done(26-10-08 17:50)
+
+### 2. Make every active architecture decision record approved and enforced
+
+- ✔ Choose one approval registry keyed by record number and content hash. @done(26-10-08 17:50)
+- ✔ Add approval receipts for 0001–0043, either one by one or as one bulk receipt that lists each hash. @done(26-10-08 17:50)
+- ✔ Make any edit to an approved record invalidate that approval. @done(26-10-08 17:50)
+- ✔ Close the enforcement gaps still listed in `docs/ADR-ENFORCEMENT.md`: 0007 (full rule application), 0009 (verb-to-primitive inventory), and 0028 (closed verb-set tooling). @done(26-10-08 17:50)
+- ✔ Give every active record a runnable pass/fail gate and a fixture that fails when the record is violated. @done(26-10-08 17:50)
+- ✔ Fail the hub compile when any active record is unapproved, unbound, or marked as a gap. @done(26-10-08 17:50)
+
+### 3. Make every executable file Boundary-Based Programming / Boundary-Based Architecture shaped
+
+Boundary-Based Programming is the noun, verb, adjective, and goal practice. Boundary-Based Architecture is the boundary and contract shape. They are not a runtime that executes the code.
+
+- ✔ List every executable class: Python, shell, workflows, tests, fixtures, generated code, templates, migrations, vendored code, and configuration. @done(26-10-08 17:50)
+- ✔ Give deliberate failure specimens their own fixture class so they are contained and are not required to conform. @done(26-10-08 17:50)
+- ✔ Define a measurable thin entrypoint: it may parse input, call one noun verb or goal, and report the result. It may not own policy or a state machine. @done(26-10-08 17:50)
+- ✔ Inventory every executable file into exactly one class: noun implementation, goal, primitive adapter, thin entrypoint, or contained fixture. @done(26-10-08 17:50)
+- ✔ Move the policy in `scripts/nlc-release.sh` into noun and goal packages, leaving the shell as a thin entrypoint. @done(26-10-08 17:50)
+- ✔ Keep a small kernel that checks itself and cannot exempt its own files. @done(26-10-08 17:50)
+- ✔ Turn on the repository gate only after that inventory is migrated. The gate fails when any executable file has no class. @done(26-10-08 17:50)
+
+### Done when all four are true
+
+- ✔ The loaded Planit matches this repository’s registered skill hash. @done(26-10-08 17:50)
+- ✔ Every active architecture decision record has an approval receipt for its current hash. @done(26-10-08 17:50)
+- ✔ Every active architecture decision record has a runnable gate, and the enforcement table has no gaps. @done(26-10-08 17:50)
+- ✔ The count of unclassified executable files is zero. @done(26-10-08 17:50)
+
+## Practice enforcement residuals
+
+The three programs above are in force. These rows close the two limits and the `./release` split.
+
+### Per-record behavior fixtures
+
+Most older architecture decision records share `tools/assert-adr-approval-mismatch-fails.py`. That fixture fails when the record’s bytes change. It does not fail when the decision’s behavior is violated. Example: record 0013 (hub command preflight) is mapped to that generic fixture, so a missing `hub_tool()` call is not what that fixture detects. The compile still catches that case through `fitness-requirements-hub-entrypoints.py`.
+
+- ✔ Map every active record to its actual behavioral gate and negative fixture. @done(26-10-09 22:31)
+- ✔ Add the missing behavioral fixtures. @done(26-10-09 22:31)
+- ✔ Make the record gate execute each fixture and verify its expected failure, rather than only checking that the fixture path exists. @done(26-10-09 22:31)
+
+### Effective decision after an amendment
+
+Record 0045 (one release identity) still says the executor is `scripts/nlc-release.sh`. Record 0048 (executable shape) amends that location: policy lives in `goals/hub_release/execute.sh`, and the shell only starts that goal. Do not edit record 0045 in place.
+
+- ☐ Add an effective-decision view that shows record 0045 decision 2 as amended by record 0048.
+
+### `./release` planner and resume
+
+The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (confirm the already shipped baseline). The shell does not stop there. It falls through to the resume detector, which can print that it is tagging because an older remote release tip is already merged, then the planner-backed gate refuses the tag.
+
+- ✔ Make the release-state planner the only phase authority. @done(26-10-09 22:31)
+- ✔ Remove the resume detector’s independent phase selection, or make it only a presentation of the planner decision. @done(26-10-09 22:31)
+- ✔ Handle `PREPARE_DRAFT` explicitly instead of falling through. @done(26-10-09 22:31)
+- ✔ Observe real verification facts. Do not hard-code `shipped_verify_met`, `target_verify_met`, and `prep_met` to false. @done(26-10-09 22:31)
+- ✔ Add a regression fixture where the remote release tip is merged but the local release branch has newer commits. Expected result: preparation continues and no tagging message is printed. @done(26-10-09 22:31)
+- ✔ Keep the invalid-merge fixture that proves an identity-mismatched merge is never tagged. @done(26-10-09 22:31)

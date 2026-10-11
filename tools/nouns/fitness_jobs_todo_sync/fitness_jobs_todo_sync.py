@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from nlc_todo_ssot import STATUS_PATH, check_jobs_vs_status, load_status  # noqa: E402
 
 JOBS = ROOT / "docs" / "JOBS-TO-BE-DONE.md"
-TODO = ROOT / "TODO"
+TODO = ROOT / "docs" / "history" / "TODO-work-log.md"
 
 
 def main() -> int:

@@ -2,7 +2,7 @@
 
 Why adopters want **[Natural Language Coding](TERMS.md#nlc)**—outcomes people seek, not every compiler use-case id.
 
-**Companion docs:** numbered [compiler](TERMS.md#compiler) stories live in [`USE-CASES.md`](USE-CASES.md). **ADR → binders:** [`ADR-ENFORCEMENT.md`](ADR-ENFORCEMENT.md), [`TODO`](../TODO).
+**Companion docs:** numbered [compiler](TERMS.md#compiler) stories live in [`USE-CASES.md`](USE-CASES.md). **Live gaps:** [`FINDINGS.md`](../FINDINGS.md) only. **ADR → binders:** [`ADR-ENFORCEMENT.md`](ADR-ENFORCEMENT.md). Historical work log: [`docs/history/TODO-work-log.md`](../docs/history/TODO-work-log.md).
 
 **Precondition:** Work runs through interview → planit → generate → gate → `./nlc verify` on an [adopter](TERMS.md#adopter) compiled-system layout.
 
@@ -91,32 +91,31 @@ Retries and verbs honor idempotency keys—checked in fitness.
 
 ## Mechanism map
 
-| # | Job | Status | Mechanisms (when available) | Blocking gap (implementation) |
-| --- | --- | --- | --- | --- |
-| J1 | Policy → ADRs → enforcement | **Available** (v1) | [`rule-coverage`](../tools/nlc_rule_coverage.py), [`rule-emit`](../tools/nlc_rule_emit.py), [`rule-runner`](../tools/nlc_rule_runner.py), verify blockers | Full ADR 0007 **semantic** apply on every emit still expansion ([`ADR-ENFORCEMENT.md`](ADR-ENFORCEMENT.md) gap). |
-| J2 | Tech change — sized blast radius | **Blocked** | [`nlc-delta-regen.py`](../tools/nlc-delta-regen.py), goal-bindings | UC16 adapters + full tag blast radius still expansion ([`IMPACT-GRAPH.md`](spine/IMPACT-GRAPH.md)). |
-| J3 | Goal → code audit | **Available** | `goals/<id>/`; [planit](../.agents/skills/planit/SKILL.md); [`nlc_gate_record.py`](../tools/nlc_gate_record.py); `./nlc verify`. | — |
-| J4 | Outcome in, spec out | **Available** | `/interview`, `.nlc/interview-packet.json`, [`validate-interview-packet.py`](../tools/validate-interview-packet.py) | — |
-| J5 | No invented requirements | **Available** (v1) | `before-generate` stamp + maintainer generate tools | Every ad-hoc agent write path still expansion (UC18). |
-| J6 | Decision log | **Available** | `adrs/`; [UC17](TERMS.md#uc17). | — |
-| J7 | Breaking API + callers | **Available** | C10/C21 + [`contract-break-accept`](../tools/nlc_contract_break_accept.py); diff-scoped [`fitness-c10-changed.py`](../tools/fitness-c10-changed.py) / [`fitness-c21-changed.py`](../tools/fitness-c21-changed.py) when CHANGED listed | Full product verify (non-specimen) still evolving. |
-| J8 | Requirement change — delta regen | **Available** (v1) | `nlc-delta-regen.py`, goal-bindings on multi-goal verify | Rule-tagged narrowing v2 still expansion. |
-| J9 | Tag / ADR scope audit | **Available** | `./nlc maintainer rule-coverage`; `./nlc maintainer rule-emit`; `./nlc maintainer call-tree` (Python v1). | Per-stack call-tree packs still expansion (ADR 0009). |
-| J10 | Rule conflicts at adopt | **Available** | [`check-rule-adoption.py`](../tools/check-rule-adoption.py); [ADR 0012](../adrs/0012-rule-adoption-conflicts.md). | — |
-| J11 | Prove before ship | **Available** | `./nlc verify`; [`VERIFY-AND-SHIP.md`](nlc/VERIFY-AND-SHIP.md); [`release-audit.py`](../tools/release-audit.py). | — |
-| J12 | Defect upstream | **Available** | [UC10](TERMS.md#uc10); planit + regen path; charter defect policy. | — |
-| J13 | Gate after generate | **Available** | [ADR 0010](../adrs/0010-gate-after-every-generate.md); `gate-record`; `nlc verify`. | — |
-| J14 | Greenfield adopt | **Available** | [`nlc-init.py`](../tools/nlc-init.py); [`BOOTSTRAP.md`](adoption/BOOTSTRAP.md). | — |
-| J15 | Hub upgrade | **Available** | [`nlc-update.py`](../tools/nlc-update.py); [`migrations/`](../migrations/README.md). | — |
-| J16 | Requirement packs | **Available** (v1) | export/install, [`pack-ingest`](../tools/nlc-pack-ingest.py), `/requirement-pack-ingest` | Consume/regen hook + optional registry ([`TODO`](../TODO) Hub v0.2). |
-| J17 | Adversarial before emit | **Available** | C23; [planit](../.agents/skills/planit/SKILL.md); [`bbp-reviewer`](../agents/). | — |
-| J18 | Produce ≠ audit ≠ ship | **Available** | [ADR 0003](../adrs/0003-systems-extension-agent-nouns.md); agent roles. | — |
-| J19 | Change class | **Available** | [`fitness-c1.py`](../tools/fitness-c1.py). | — |
-| J20 | Durable + tagged engine | **Available** (v2) | `durable_engine_blockers` + `durable_rule_blockers` + `engine_runtime_tag_strict_blockers` | Bare `engine.runtime` tag insufficient when goal declares `engine_runtime`. |
-| J21 | Idempotency under retry | **Available** | [`fitness-c15-idempotent.py`](../tools/fitness-c15-idempotent.py). | — |
+Mechanisms below are **available when listed**; live **blocking gaps** and expansion disposition are tracked only in [`FINDINGS.md`](../FINDINGS.md).
 
-**Blocked** = job is real; Accepted ADRs call for tooling we have not finished. Track in [`TODO`](../TODO) (ADR enforcement).
-**`gate missing` badge:** see [`USE-CASES.md`](USE-CASES.md) Needed (expansion) and [`FINDINGS.md`](../FINDINGS.md) Parked — Accepted ADR ≠ wired deep gate.
+| # | Job | Mechanisms (when available) |
+| --- | --- | --- |
+| J1 | Policy → ADRs → enforcement | [`rule-coverage`](../tools/nlc_rule_coverage.py), [`rule-emit`](../tools/nlc_rule_emit.py), [`rule-runner`](../tools/nlc_rule_runner.py), verify blockers |
+| J2 | Tech change — sized blast radius | [`nlc-delta-regen.py`](../tools/nlc-delta-regen.py), goal-bindings |
+| J3 | Goal → code audit | `goals/<id>/`; [planit](../.agents/skills/planit/SKILL.md); [`nlc_gate_record.py`](../tools/nlc_gate_record.py); `./nlc verify` |
+| J4 | Outcome in, spec out | `/interview`, `.nlc/interview-packet.json`, [`validate-interview-packet.py`](../tools/validate-interview-packet.py) |
+| J5 | No invented requirements | `before-generate` stamp + maintainer generate tools |
+| J6 | Decision log | `adrs/`; [UC17](TERMS.md#uc17) |
+| J7 | Breaking API + callers | C10/C21 + [`contract-break-accept`](../tools/nlc_contract_break_accept.py); diff-scoped [`fitness-c10-changed.py`](../tools/fitness-c10-changed.py) / [`fitness-c21-changed.py`](../tools/fitness-c21-changed.py) when CHANGED listed |
+| J8 | Requirement change — delta regen | `nlc-delta-regen.py`, goal-bindings on multi-goal verify |
+| J9 | Tag / ADR scope audit | `./nlc maintainer rule-coverage`; `./nlc maintainer rule-emit`; `./nlc maintainer call-tree` (Python v1) |
+| J10 | Rule conflicts at adopt | [`check-rule-adoption.py`](../tools/check-rule-adoption.py); [ADR 0012](../adrs/0012-rule-adoption-conflicts.md) |
+| J11 | Prove before ship | `./nlc verify`; [`VERIFY-AND-SHIP.md`](nlc/VERIFY-AND-SHIP.md); [`release-audit.py`](../tools/release-audit.py) |
+| J12 | Defect upstream | [UC10](TERMS.md#uc10); planit + regen path; charter defect policy |
+| J13 | Gate after generate | [ADR 0010](../adrs/0010-gate-after-every-generate.md); `gate-record`; `nlc verify` |
+| J14 | Greenfield adopt | [`nlc-init.py`](../tools/nlc-init.py); [`BOOTSTRAP.md`](adoption/BOOTSTRAP.md) |
+| J15 | Hub upgrade | [`nlc-update.py`](../tools/nlc-update.py); [`migrations/`](../migrations/README.md) |
+| J16 | Requirement packs | export/install, [`pack-ingest`](../tools/nlc-pack-ingest.py), `/requirement-pack-ingest` |
+| J17 | Adversarial before emit | C23; [planit](../.agents/skills/planit/SKILL.md); [`bbp-reviewer`](../agents/) |
+| J18 | Produce ≠ audit ≠ ship | [ADR 0003](../adrs/0003-systems-extension-agent-nouns.md); agent roles |
+| J19 | Change class | [`fitness-c1.py`](../tools/fitness-c1.py) |
+| J20 | Durable + tagged engine | `durable_engine_blockers` + `durable_rule_blockers` + `engine_runtime_tag_strict_blockers` |
+| J21 | Idempotency under retry | [`fitness-c15-idempotent.py`](../tools/fitness-c15-idempotent.py) |
 
 ---
 

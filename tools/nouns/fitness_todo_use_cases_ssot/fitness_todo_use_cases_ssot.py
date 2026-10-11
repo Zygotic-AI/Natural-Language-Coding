@@ -20,7 +20,8 @@ from nlc_todo_ssot import (  # noqa: E402
     load_status,
 )
 
-TODO = ROOT / "TODO"
+TODO = ROOT / "docs" / "history" / "TODO-work-log.md"
+TODO_STUB = ROOT / "TODO"
 USE_CASES = ROOT / "docs" / "USE-CASES.md"
 
 
@@ -30,7 +31,9 @@ def main() -> int:
     if not STATUS_PATH.is_file():
         violations.append("missing integrity/uc-product-status.json")
     if not TODO.is_file():
-        violations.append("missing TODO")
+        violations.append("missing docs/history/TODO-work-log.md")
+    if not TODO_STUB.is_file():
+        violations.append("missing root TODO stub")
     if not USE_CASES.is_file():
         violations.append("missing docs/USE-CASES.md")
     if violations:
