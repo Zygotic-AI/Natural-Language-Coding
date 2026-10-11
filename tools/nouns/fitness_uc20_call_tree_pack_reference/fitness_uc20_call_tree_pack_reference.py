@@ -28,8 +28,8 @@ def main() -> int:
         violations.append("assert-call-tree-pack-reference-passes must PASS")
     status = json.loads((ROOT / "integrity" / "uc-product-status.json").read_text(encoding="utf-8"))
     exp = (status.get("ucs") or {}).get("UC20", {}).get("expansion_only") or []
-    if exp:
-        violations.append(f"UC20 expansion_only must be empty: {exp}")
+    if "UC20.per_stack_call_tree_packs" not in exp:
+        violations.append("UC20 expansion_only must list UC20.per_stack_call_tree_packs")
     for v in violations:
         print(f"VIOLATION {v}")
     if violations:

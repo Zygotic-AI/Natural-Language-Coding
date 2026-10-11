@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 
-
-
 import re
 import sys
 from pathlib import Path
@@ -12,11 +10,24 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 FINDINGS = ROOT / "FINDINGS.md"
 
-TAGGED_ON_ORIGIN = re.compile(
-    r"v(\d+\.\d+\.\d+)\s+is\s+tagged\s+on\s+origin|tagged\s+on\s+origin.*v(\d+\.\d+\.\d+)",
+# Hand-written tag *existence* claims (must not appear in FINDINGS prose).
+HAND_WRITTEN_TAG = re.compile(
+    r"(tagged\s+on\s+origin|"
+    r"Shipped\s+git\s+tag\s*:\s*v?\d+\.\d+\.\d+|"
+    r"(?:Hub\s+)?no\s+shipped\s+tag|"
+    r"v(\d+\.\d+\.\d+)\s+is\s+tagged|"
+    r"tagged\s+on\s+origin.*v(\d+\.\d+\.\d+)|"
+    r"v(\d+\.\d+\.\d+)\s+.*\bon\s+origin\b)",
     re.I,
 )
-VERSION_TAG = re.compile(r"\bv(\d+\.\d+\.\d+)\b")
+
+# Lines that document the gate without asserting tag state.
+GATE_DOC_ONLY = re.compile(
+    r"(fitness-findings-shipped-tag-sync\.py|nlc_release_tags\.py|"
+    r"generate from git only|Machine SSOT|do not hand-write origin tag claims|"
+    r"never hand-write|fitness-findings-shipped-tag-sync)",
+    re.I,
+)
 
 
 def main() -> int:
@@ -29,33 +40,35 @@ def main() -> int:
         print("RESULT:NOT_MET")
         return 1
 
-    raw = FINDINGS.read_text(encoding="utf-8", errors="replace")
-    # Ignore SSOT instruction lines (they mention forbidden patterns literally).
-    text = "\n".join(
-        ln
-        for ln in raw.splitlines()
-        if "never hand-write" not in ln.lower() and "do not hand-write" not in ln.lower()
-    )
+    text = FINDINGS.read_text(encoding="utf-8", errors="replace")
     shipped = last_shipped_tag("HEAD")
     shipped_ver = tag_version(shipped) if shipped else None
 
     violations: list[str] = []
-    for m in TAGGED_ON_ORIGIN.finditer(text):
-        claimed = m.group(1) or m.group(2)
-        if shipped_ver is None:
-            violations.append(
-                f"FINDINGS claims v{claimed} tagged on origin but no reachable v*.*.* tag on HEAD"
-            )
-        elif claimed != shipped_ver:
-            violations.append(
-                f"FINDINGS claims v{claimed} on origin but newest reachable tag is v{shipped_ver}"
-            )
-
-    if shipped_ver is None and re.search(r"tagged\s+on\s+origin", text, re.I):
-        if TAGGED_ON_ORIGIN.search(text):
-            pass  # already caught
+    for num, line in enumerate(text.splitlines(), start=1):
+        if GATE_DOC_ONLY.search(line):
+            continue
+        m = HAND_WRITTEN_TAG.search(line)
+        if not m:
+            continue
+        claimed = None
+        for g in m.groups():
+            if g and re.match(r"\d+\.\d+\.\d+", g):
+                claimed = g
+                break
+        if claimed:
+            if shipped_ver is None:
+                violations.append(
+                    f"FINDINGS line {num}: claims v{claimed} tag state but no reachable v*.*.* tag on HEAD"
+                )
+            elif claimed != shipped_ver:
+                violations.append(
+                    f"FINDINGS line {num}: claims v{claimed} but newest reachable tag is v{shipped_ver}"
+                )
         else:
-            violations.append("FINDINGS mentions tagged on origin without matching reachable tag")
+            violations.append(
+                f"FINDINGS line {num}: hand-written tag existence prose (use git tag / fitness only)"
+            )
 
     for v in violations:
         print(f"VIOLATION {v}")
@@ -70,8 +83,4 @@ if __name__ == "__main__":
     sys.exit(main())
 
 
-
-
-
 BOUNDARY = "bba-emit"
-

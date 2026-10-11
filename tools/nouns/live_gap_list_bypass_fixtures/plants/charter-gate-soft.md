@@ -1,0 +1,1 @@
+- [ ] Open gap outside charter confirmation checklist

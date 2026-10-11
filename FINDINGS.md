@@ -42,9 +42,9 @@ v1 binders for UC9 / UC14 / UC15 / UC18 are **product-closed** in [`integrity/uc
 | **Packs registry** | **Closed (v1)** — hub-local curated registry [`integrity/hub-pack-registry.json`](integrity/hub-pack-registry.json) ([ADR 0041](adrs/0041-product-completion-scope.md), [`docs/nlc/PACK-REGISTRY.md`](docs/nlc/PACK-REGISTRY.md)). Not a public internet registry. |
 | **UC18 goal-write hook coverage** | **Partial (v0.3.0)** — Cursor `preToolUse` on `Write\|Delete` only (see [Cursor hooks](https://cursor.com/docs/hooks)). **Not covered:** `Shell` redirects into `goals/`, MCP tool writes, subagent `Task` writes. |
 | **0045 ⊕ 0048 effective-decision view** | **Open** — Record [0045](adrs/0045-hub-release-identity.md) decision 2 still names `scripts/nlc-release.sh` as executor; [0048](adrs/0048-executable-shape.md) amends: policy in `goals/hub_release/execute.sh`, shell is thin entrypoint only. Need a read-only **effective-decision** view (do not edit 0045 receipts in place). |
-| **Per-record behavior fixtures (D9)** | **Open** — each active ADR gate path needs a behavior fixture; the record gate must run its fixtures (see [`docs/history/TODO-work-log.md`](docs/history/TODO-work-log.md) Practice enforcement). |
+| **Per-record behavior fixtures (D9)** | **Closed (26-10-09)** — per-record behavioral gates and fixtures wired; record gate runs fixtures ([`docs/history/TODO-work-log.md`](docs/history/TODO-work-log.md) Practice enforcement). Remaining gap: **effective-decision view** for 0045⊕0048 (row above). |
 
-Hub **no shipped tag** on current `main` history (mistaken `v0.2.0` removed); `integrity/nlc-version.json` is **0.2.0** until the next `./release`. Promotion remains human (`ship-check`, not compile-green alone).
+`integrity/nlc-version.json` is **0.2.0** until the next `./release`. Promotion remains human (`ship-check`, not compile-green alone).
 
 ---
 
@@ -59,7 +59,7 @@ Hub **no shipped tag** on current `main` history (mistaken `v0.2.0` removed); `i
 | Hub BBA interiors (X4) | ADR 0024 / [`HUB-BBA-DOGFOOD.md`](docs/nlc/HUB-BBA-DOGFOOD.md) | **Not done** — emit-path tranche MET; **368 of 370** hub `tools/nouns/*/` packages have **empty** `fields.txt` (two non-empty); **15** packages lack `fields.txt` entirely among **396** dirs. Full noun/verb interior + populated `fields.txt` still open ([`integrity/hub-x4-remainder.json`](integrity/hub-x4-remainder.json)). | **gate missing** |
 | [Code packs](docs/TERMS.md#code-pack) (UC16) | [`docs/LANGUAGE-SCANNER.md`](docs/LANGUAGE-SCANNER.md) | Reference **typescript** adapter path (`examples/non-python-with-adapter`) | **done** (v1 reference; full scanner spec = expansion) |
 | Call-tree packs (UC20) | ADR 0009 | Reference TS pack [`examples/call-tree-pack-reference`](examples/call-tree-pack-reference) | **done** (v1 reference; additional stacks = expansion) |
-| [Rule IR](docs/TERMS.md#rule-ir) | ADR 0007 / [0042](adrs/0042-rule-ir-hub-product-boundary.md) | UC4/UC5 **v2 semantic** runner/apply MET on hub; [ADR 0042](adrs/0042-rule-ir-hub-product-boundary.md) **product boundary** still limits full semantic apply on every ad-hoc emit — composable UC14 IR expansion remains | **gate missing** (UC14 composable) |
+| [Rule IR](docs/TERMS.md#rule-ir) | ADR 0007 / [0042](adrs/0042-rule-ir-hub-product-boundary.md) | **v1 closed** — IR snapshot materialize + structural check on hub. **Expansion (ADR 0042 authority):** UC4/UC5 **semantic** runner/apply on every emit path; UC14 **composable IR** — not product-closed | **gate missing** (semantic + composable) |
 | ADR 0029 lineage tools | ADR 0029 | **Closed** — lineage-check + bind-snapshot + freshness + fitness | done |
 | RCA packet schema | ADR 0025 | `validate-rca-packet.py` + schema | done |
 
@@ -95,8 +95,8 @@ Live narrative for adopters; mechanisms stay in [`docs/JOBS-TO-BE-DONE.md`](docs
 | Topic | True status (this tree) |
 |-------|-------------------------|
 | **Shipped tag prose** | **Machine SSOT** — `fitness-findings-shipped-tag-sync.py` + reachable tags on HEAD; do not hand-write “vX on origin” in FINDINGS. |
-| **Rule IR vs ADR 0042** | Hub UC4/UC5 semantic gates MET; ADR 0042 draws product boundary — not every emit path is semantically bound; UC14 composable IR still **Parked** above. |
-| **`uc-product-status` `expansion_only` vs FINDINGS UC14/16/20** | JSON binder closure for UC14/16/20 product rows must match **Parked** rows here (no `expansion_only` leftovers claiming open product when FINDINGS says parked). |
+| **Rule IR vs ADR 0042** | **Not reconciled to “all semantic closed.”** Accepted [0042](adrs/0042-rule-ir-hub-product-boundary.md): v1 snapshot path closed; **UC4/UC5 semantic runner/apply remain expansion**; UC14 composable IR **expansion** — see Parked Rule IR row. |
+| **`uc-product-status` vs FINDINGS UC14/16/20** | `integrity/uc-product-status.json` **`expansion_only`** keys must match Parked expansion rows (UC14 composable; UC16 language scanner step 2; UC20 per-stack packs). |
 | **X4 “done” claim** | **Rejected** — empty `fields.txt` majority (368/370 review spot-check; 169/381 empty files in inventory) means interiors **not** done. |
 
 ---

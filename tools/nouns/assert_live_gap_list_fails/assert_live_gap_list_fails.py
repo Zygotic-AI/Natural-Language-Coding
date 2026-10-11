@@ -17,6 +17,10 @@ PLANT_REL: dict[str, str] = {
     "backlog-gap-table.md": "docs/BACKLOG.md",
     "use-cases-needed-section.md": "docs/USE-CASES.md",
     "jobs-blocked-row.md": "docs/JOBS-TO-BE-DONE.md",
+    "asterisk-task.md": "docs/plant-asterisk-task.md",
+    "numbered-task.md": "docs/plant-numbered-task.md",
+    "still-open-section.md": "docs/plant-still-open.md",
+    "charter-gate-soft.md": "CHARTER.md",
 }
 
 
