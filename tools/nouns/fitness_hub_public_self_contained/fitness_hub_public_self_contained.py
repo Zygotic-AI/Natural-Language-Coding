@@ -11,10 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools"))
-from nouns.hub_in_force_surfaces.hub_in_force_surfaces import (  # noqa: E402
-    PERSON_NAME_EXCLUDED_PREFIXES,
-    iter_in_force_files,
-)
+from nouns.hub_in_force_surfaces.hub_in_force_surfaces import iter_in_force_files  # noqa: E402
 
 FORBIDDEN_MARKERS = (
     "BBA-Bindings",
@@ -42,15 +39,9 @@ def main() -> int:
         for marker in FORBIDDEN_MARKERS:
             if marker in text:
                 violations.append(f"{rel}: forbidden marker {marker!r}")
-        rel_posix = rel.as_posix()
-        skip_person = any(
-            rel_posix == p.rstrip("/") or rel_posix.startswith(p)
-            for p in PERSON_NAME_EXCLUDED_PREFIXES
-        )
-        if not skip_person:
-            for pat in PERSON_PATTERNS:
-                if pat.search(text):
-                    violations.append(f"{rel}: person-name pattern {pat.pattern}")
+        for pat in PERSON_PATTERNS:
+            if pat.search(text):
+                violations.append(f"{rel}: person-name pattern {pat.pattern}")
     take_me = ROOT / ".agents" / "instructions" / "take-me-literally.md"
     if not take_me.is_file():
         violations.append("missing .agents/instructions/take-me-literally.md")

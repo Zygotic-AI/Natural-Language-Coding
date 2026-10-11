@@ -25,10 +25,6 @@ EXCLUDED_PREFIXES: tuple[str, ...] = (
 # Single-segment roots excluded entirely (session / review sandboxes).
 EXCLUDED_TOP_LEVEL: frozenset[str] = frozenset({"uploads"})
 
-# Paths skipped for CG-R4 person-name patterns only (see HUB-IN-FORCE-EXCLUSIONS.md).
-PERSON_NAME_EXCLUDED_PREFIXES: tuple[str, ...] = ("adrs/",)
-
-
 def is_excluded(rel_posix: str) -> bool:
     if not rel_posix or rel_posix == ".":
         return False

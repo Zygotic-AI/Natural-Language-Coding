@@ -15,17 +15,6 @@ from nouns.hub_in_force_surfaces.hub_in_force_surfaces import iter_in_force_file
 
 LINK_RE = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 
-# Accepted ADR links pending re-ratification (PR #9); not a second SSOT for RCA content.
-PENDING_RATIFICATION_LINKS: frozenset[tuple[str, str]] = frozenset(
-    {
-        (
-            "adrs/0050-evidence-identity-content-not-history.md",
-            "docs/rca/2026-10-10-sha-pinned-evidence-history-rewrite.md",
-        ),
-    }
-)
-
-
 def strip_fences(text: str) -> str:
     lines = text.splitlines()
     out: list[str] = []
@@ -69,20 +58,6 @@ def scan_file(path: Path) -> list[str]:
         if resolved.is_dir():
             continue
         if not resolved.is_file():
-            file_part = match.group(1).split("#", 1)[0].strip()
-            try:
-                target_rel = resolved.relative_to(ROOT).as_posix()
-            except ValueError:
-                target_rel = ""
-            pending = False
-            for src, tgt in PENDING_RATIFICATION_LINKS:
-                if rel.as_posix() != src:
-                    continue
-                if tgt in (target_rel, file_part) or target_rel.endswith(tgt):
-                    pending = True
-                    break
-            if pending:
-                continue
             violations.append(f"{rel}: broken link {match.group(1)!r}")
     return violations
 
