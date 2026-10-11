@@ -43,7 +43,7 @@ def run_hook(payload: dict | str, *, cwd: Path, env: dict[str, str]) -> dict:
 
 def make_path_env(*, include_python: bool, include_jq: bool) -> dict[str, str]:
     td = Path(tempfile.mkdtemp(prefix="goal-hook-bin-"))
-    for name in ("bash", "cat"):
+    for name in ("bash", "cat", "dirname"):
         src = shutil.which(name)
         if src:
             (td / name).symlink_to(src)
@@ -85,6 +85,49 @@ def main() -> int:
             print("ASSERT:FAIL (1) python fallback must deny goals without stamp when jq absent")
             return 1
 
+        allow_non_goals = run_hook(
+            {"tool_input": {"path": "notes/readme.txt"}},
+            cwd=tmp_path,
+            env=env_py_no_jq,
+        )
+        if allow_non_goals.get("permission") != "allow":
+            print(
+                "ASSERT:FAIL (1b) python fallback must allow non-goals writes when jq absent "
+                "(proves path was parsed; empty path would deny as bad_path)"
+            )
+            return 1
+
+    fresh_root = ROOT / ".landmine-goal-write-fresh"
+    fresh_root.mkdir(exist_ok=True)
+    (fresh_root / "goals" / "g").mkdir(parents=True, exist_ok=True)
+    (fresh_root / ".nlc").mkdir(exist_ok=True)
+    from datetime import datetime, timezone
+
+    (fresh_root / ".nlc" / "before-generate-stamp.json").write_text(
+        json.dumps(
+            {
+                "ok": True,
+                "at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "scopes": ["default"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    env_fresh = make_path_env(include_python=True, include_jq=False)
+    env_fresh["PWD"] = str(fresh_root)
+    allow_goals = run_hook(
+        {"tool_input": {"path": "goals/g/implementation.py"}},
+        cwd=fresh_root,
+        env=env_fresh,
+    )
+    shutil.rmtree(fresh_root, ignore_errors=True)
+    if allow_goals.get("permission") != "allow":
+        print(
+            "ASSERT:FAIL (1c) python fallback must allow goals/ with fresh stamp when jq absent "
+            "(proves path parsing; broken fallback returning empty path would deny as bad_path)"
+        )
+        return 1
+
     env_none = {k: v for k, v in os.environ.items() if k != "PATH"}
     env_none["PATH"] = tempfile.mkdtemp(prefix="goal-hook-empty-")
     env_none["PWD"] = str(ROOT)
@@ -123,15 +166,6 @@ def main() -> int:
     shutil.rmtree(expired_root, ignore_errors=True)
     if stale.get("permission") != "deny":
         print("ASSERT:FAIL expired stamp must deny without installed hub copy")
-        return 1
-
-    allow = run_hook(
-        {"tool_input": {"path": "README.md"}},
-        cwd=ROOT,
-        env={**os.environ, "PWD": str(ROOT)},
-    )
-    if allow.get("permission") != "allow":
-        print("ASSERT:FAIL expected allow for non-goals path")
         return 1
 
     hooks = json.loads((ROOT / ".cursor" / "hooks.json").read_text(encoding="utf-8"))
