@@ -18,8 +18,4 @@ Gates **fitness-hub-public-self-contained** and **fitness-internal-links** treat
 |------|------|
 | `uploads/` | Ephemeral agent uploads |
 
-## Person-name gate (CG-R4) only
-
-Accepted ADR ratification headers may still name deciders until a dedicated re-ratification PR lands (ADR 0047). **Person-name patterns** are not applied under `adrs/`; forbidden private-repo markers still apply there.
-
-Implementation: `tools/nouns/hub_in_force_surfaces/hub_in_force_surfaces.py` (`EXCLUDED_PREFIXES`, `EXCLUDED_TOP_LEVEL`, `PERSON_NAME_EXCLUDED_PREFIXES`).
+Implementation: `tools/nouns/hub_in_force_surfaces/hub_in_force_surfaces.py` (`EXCLUDED_PREFIXES`, `EXCLUDED_TOP_LEVEL`).
