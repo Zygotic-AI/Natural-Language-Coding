@@ -16,7 +16,9 @@ Optional acronym for a **compiled system** artifact only—not the whole product
 
 ### Action
 
-Named unit of work with contracted I/O and a completion **gate**. See [ACTIONS.md](../integrity/ACTIONS.md).
+Named unit of work with contracted I/O. Every **action** has a completion **gate** (complete / incomplete). See [ACTIONS.md](../integrity/ACTIONS.md).
+
+**Audit `A-LEXICON-ACTION`:** **Met** iff every artifact labeled “action” declares input, output, and **gate**. Not **met** if any action omits **gate**.
 
 ### Active set
 
@@ -48,7 +50,9 @@ Optional acronym for the **compiler** (integrator docs only).
 
 ### Atomic action
 
-**Action** that cannot split further without losing a binary **gate**.
+An **action** that cannot decompose further without losing a meaningful **gate**.
+
+**Audit `A-LEXICON-ATOMIC`:** **Met** iff no **atomic action** definition permits decomposition into gated sub-parts. Not **met** if an **atomic action** can be meaningfully split and each part still gated.
 
 ### Atomic verb
 
@@ -56,11 +60,13 @@ Member of the closed verb set — `create`, `read`, `write`, `update`, `delete`,
 
 ### Audit
 
-Role-based adversarial review producing findings; does not automatically block (**gate** blocks). See [GATE.md](../integrity/GATE.md).
+Role-based adversarial review producing findings for a **ship** decision. Audits yield binary per-item outcomes (**met** / not **met**) but do not block automatically.
+
+**Audit ≠ Gate.** Gates block the build; audits produce findings. See [`GATE.md`](../integrity/GATE.md).
 
 ### Audit receipt
 
-Evidence that an **audit** ran; may satisfy a downstream **gate**.
+Evidence artifact produced by an **audit**. An **audit receipt** is **gate evidence** when a **gate** requires proof an **audit** occurred (PASS / FAIL / REFUSE documented). **Audit receipt** is gate evidence; **audit** is not a **gate**.
 
 ### AWL
 
@@ -73,6 +79,8 @@ Agent workflow layering referenced inside the **planit** skill (phases, tier rul
 ### BBA
 
 **Boundary-Based Architecture**—integrity and emit *architecture* under **NLC** (boundaries, contracts, hub integrity). Not the public product name. Distinct from **BBP** (the emit *practice*). Not NLC process law (ADR 0024).
+
+**Conflict note (BBP vs BBA):** keep this split. Retired wording: RULE-VOCAB’s old “BBA = emit shape” line — **emit shape** belongs to **BBP** only; **BBA** is architecture/integrity under the covers.
 
 ### Operating bindings (P-0xx)
 
@@ -160,7 +168,9 @@ Runnable **BBP**-shaped tree in an **adopter** repo—not `examples/` **specimen
 
 ### Compound action
 
-**Action** composed of other actions, each gated, plus an outer **gate**.
+An **action** composed of other **actions**, yet still possessing its own completion **gate**. Every inner **action** executes its own **gate**; the **compound action** also executes its outer **gate**.
+
+**Audit `A-LEXICON-COMPOUND`:** **Met** iff every **compound action** definition (a) names its constituent actions, (b) each constituent has a **gate**, and (c) the compound has its own outer **gate**.
 
 ### Compound verb
 
@@ -176,11 +186,15 @@ Path that runs **fitness** + charter §11 evidence (often **bbp-confirmer**).
 
 ### Content type
 
-First-class artifact class (ADR, integrity doc, **agent noun**, …) with a **type recipe**.
+A first-class artifact class in the repository (ADR, integrity doc, **agent noun**, **audit** definition, example). Each **content type** has a **type recipe** prescribing how to add or amend instances.
+
+**Audit `A-LEXICON-CONTENT-TYPE`:** **Met** iff each **content type** named in `content-types/` has a **type recipe**.
 
 ### Contribution Gate
 
-Refuse-wired gate for **add-X** contributions. See [CONTRIBUTION.md](../integrity/CONTRIBUTION.md).
+The **refuse-wired** **gate** for contributions. Refuses when: **shared docs standard** not **met**; **type recipe** not followed; person names in SSOT surfaces; required fixture missing. See [`CONTRIBUTION.md`](../integrity/CONTRIBUTION.md) (CG-R1–CG-R7).
+
+**Audit `A-LEXICON-CONTRIB-GATE`:** **Met** iff the **contribution gate** definition states **refuse** criteria and an incomplete-packet fixture. **Audit `A-LEXICON-CONTRIBUTION`:** **Met** iff every add-X instruction links to the **type recipe** and states the **contribution gate**.
 
 ### Contract
 
@@ -220,7 +234,9 @@ All-required PASS bar for **gates** and **handoffs**. See [GATE.md](../integrity
 
 ### Gate
 
-Binary PASS/FAIL enforcement; automated and default-closed. ≠ **audit**, ≠ human review.
+Binary enforcement checkpoint: **PASS / FAIL / REFUSE** only—no partial, provisional, warn-only, or soft-pass. **Default-closed** and **refuse-wired** (if a check cannot run, the gate refuses). See [`GATE.md`](../integrity/GATE.md) (G1–G4 all-required PASS bar).
+
+**Gate ≠ Audit.** Gates block automatically; audits produce findings for a decision-maker.
 
 ### Gate record
 
@@ -228,7 +244,9 @@ Binary PASS/FAIL enforcement; automated and default-closed. ≠ **audit**, ≠ h
 
 ### Goal
 
-Use-case orchestration boundary; calls **verbs** and other goals; never writes **noun** fields.
+**Compile-time intent only** (owner decision, RCA 3, approved 2026-10-10): a **goal** names what the compile must deliver. Runtime behavior lives in the **application** (the compiled system); NLC does not use the term **orchestrator**.
+
+**Conflict note (Goal):** prior copy called goals an “orchestration boundary” — **retired**. Runtime-module rename is scheduled **v0.4**. Goals call **verbs** (and other goals) in emitted shape; they must not write **noun** fields directly.
 
 ### God-noun
 
@@ -448,7 +466,7 @@ Human sign-off for release liability (**C24** / ship).
 
 ### Requirement
 
-Constraint or policy in prose until **ADR** / **rule** adoption.
+Constraint, **standard**, or policy in prose until **ADR** / **rule** adoption.
 
 ### Requirement pack
 
@@ -476,7 +494,9 @@ Agent-noun structure / confirmation-systems id prefixes.
 
 ### Shared docs standard
 
-Structure and refuse rules for SSOT docs—[CONTRIBUTION.md](../integrity/CONTRIBUTION.md).
+Structure, naming, lexicon, evidence, role language, incomplete-packet **refuse**, and supersede rules for SSOT documents: (1) **Structure** — purpose, definition, refuse criteria, fixture, checklist, cross-refs; (2) **Naming** — predictable paths; (3) **Lexicon** — terms from **TERMS.md**; (4) **Evidence** — audits, binders, fixtures; (5) **Role language** — no person names in SSOT; (6) **Incomplete-packet refuse**; (7) **Supersede rules** (charter R22). See [`CONTRIBUTION.md`](../integrity/CONTRIBUTION.md).
+
+**Audit `A-LEXICON-SHARED-DOCS`:** **Met** iff **shared docs standard** is documented and contribution gates enforce it.
 
 ### Ship
 
@@ -508,7 +528,9 @@ Classification on nouns/adjectives (`pan`, `runtime=temporal`, …) feeding **ru
 
 ### Type recipe
 
-Steps and **gate** criteria for adding a **content type** instance.
+Prescribed steps and **gate** criteria for adding or amending **content type** X: (1) **Inputs**; (2) **Steps**; (3) **Gate criteria**; (4) **Incomplete-packet fixture** (must FAIL). Index: [`content-types/HOW-TO-ADD.md`](../content-types/HOW-TO-ADD.md).
+
+**Audit `A-LEXICON-TYPE-RECIPE`:** **Met** iff every **type recipe** documents inputs, steps, **gate** criteria, and incomplete-packet fixture.
 
 ---
 

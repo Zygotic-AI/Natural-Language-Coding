@@ -5,20 +5,35 @@ from __future__ import annotations
 
 BOUNDARY = "bba-emit"
 
-import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 TERMS = ROOT / "docs" / "TERMS.md"
 POINTER_MAX_LINES = 10
-DEFINITION_HEADING = re.compile(r"^###\s+(?!\[).+", re.M)
 
-POINTER_FILES = (
-    ROOT / "integrity" / "LEXICON.md",
-    ROOT / "docs" / "nlc" / "compiler" / "GLOSSARY.md",
-    ROOT / "docs" / "nlc" / "compiler" / "NAMES.md",
-    ROOT / "docs" / "nlc" / "RULE-VOCAB.md",
+sys.path.insert(0, str(ROOT / "tools"))
+from nouns.term_definition_ssot.term_definition_ssot import (  # noqa: E402
+    POINTER_FILES,
+    load_term_names,
+    scan_repo,
+)
+
+REQUIRED_IN_TERMS: tuple[str, ...] = (
+    "A-LEXICON-ACTION",
+    "A-LEXICON-ATOMIC",
+    "A-LEXICON-COMPOUND",
+    "A-LEXICON-CONTENT-TYPE",
+    "A-LEXICON-CONTRIBUTION",
+    "A-LEXICON-CONTRIB-GATE",
+    "A-LEXICON-SHARED-DOCS",
+    "A-LEXICON-TYPE-RECIPE",
+    "PASS / FAIL / REFUSE",
+    "refuse-wired",
+    "Conflict note (Goal)",
+    "Conflict note (BBP vs BBA)",
+    "Compile-time intent only",
+    "v0.4",
 )
 
 
@@ -27,11 +42,19 @@ def main() -> int:
     violations: list[str] = []
     if not TERMS.is_file():
         violations.append("missing docs/TERMS.md")
-    elif "## A" not in TERMS.read_text(encoding="utf-8", errors="replace"):
-        violations.append("docs/TERMS.md must contain alphabetized term sections")
+        print("RESULT:NOT_MET")
+        return 1
+    terms_text = TERMS.read_text(encoding="utf-8", errors="replace")
+    terms = load_term_names(terms_text)
+    if len(terms) < 20:
+        violations.append("docs/TERMS.md term heading set too small")
 
-    for path in POINTER_FILES:
-        rel = path.relative_to(ROOT)
+    for marker in REQUIRED_IN_TERMS:
+        if marker not in terms_text:
+            violations.append(f"TERMS missing merged lexicon marker: {marker!r}")
+
+    for rel in POINTER_FILES:
+        path = ROOT / rel
         if not path.is_file():
             violations.append(f"missing pointer file {rel}")
             continue
@@ -41,8 +64,8 @@ def main() -> int:
             violations.append(f"{rel} must be a short pointer (max {POINTER_MAX_LINES} lines)")
         if "TERMS.md" not in text:
             violations.append(f"{rel} must link to TERMS.md")
-        if DEFINITION_HEADING.search(text):
-            violations.append(f"{rel} must not host ### term definitions")
+
+    violations.extend(scan_repo(ROOT, terms))
 
     for msg in violations:
         print(f"VIOLATION {msg}")

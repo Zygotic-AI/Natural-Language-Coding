@@ -115,8 +115,16 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-live-gap-list-ssot.py")],
     )
     run(
+        "assert-live-gap-list-fails",
+        [sys.executable, str(TOOLS / "assert-live-gap-list-fails.py")],
+    )
+    run(
         "fitness-term-definition-ssot",
         [sys.executable, str(TOOLS / "fitness-term-definition-ssot.py")],
+    )
+    run(
+        "assert-term-definition-fails",
+        [sys.executable, str(TOOLS / "assert-term-definition-fails.py")],
     )
     run(
         "fitness-hub-public-self-contained",
