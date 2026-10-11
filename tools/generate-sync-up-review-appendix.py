@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from nouns.sync_up_review_appendix.sync_up_review_appendix import main  # noqa: E402
+from nouns.evidence_ref.sync_up_review_appendix_gen import main  # noqa: E402
 
 if __name__ == "__main__":
     sys.exit(main())
