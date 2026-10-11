@@ -98,6 +98,11 @@ def _refresh_before_generate_stamp_ci() -> None:
     proc = subprocess.run(argv, cwd=str(ROOT), check=False)
     if proc.returncode != 0:
         fail("before-generate stamp (CI)")
+    subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "sync-hub-content-tree-hash.py")],
+        cwd=str(ROOT),
+        check=False,
+    )
 
 
 def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
