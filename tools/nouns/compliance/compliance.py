@@ -4,6 +4,7 @@ from __future__ import annotations
 
 BOUNDARY = "bba-emit"
 
+import hashlib
 import json
 import re
 from datetime import datetime, timezone
@@ -53,6 +54,18 @@ def rule_conflict_blockers(root: Path) -> list[str]:
     return ["adopted rules conflict (run ./nlc maintainer check-rules)"]
 
 
+def product_content_fingerprint(root: Path) -> str:
+    """SHA-256 over sorted hub product paths and bytes (ADR 0050; not mtime)."""
+    digest = hashlib.sha256()
+    for path in sorted(_product_paths(root), key=lambda p: str(p).replace("\\", "/")):
+        rel = path.relative_to(root).as_posix()
+        digest.update(rel.encode())
+        digest.update(b"\0")
+        digest.update(path.read_bytes())
+        digest.update(b"\0")
+    return digest.hexdigest()
+
+
 def _product_paths(root: Path) -> list[Path]:
     out: list[Path] = []
     for name in ("goals", "domain"):
@@ -81,22 +94,19 @@ def before_generate_stamp_blockers(root: Path) -> list[str]:
         return ["invalid .nlc/before-generate-stamp.json"]
     if not stamp.get("ok"):
         return ["before-generate stamp not OK"]
-    at = _parse_utc(str(stamp.get("at", "")))
-    if at is None:
-        return ["before-generate stamp has no valid timestamp"]
-    stale: list[str] = []
-    for path in product:
-        mtime = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc)
-        if mtime > at:
-            rel = path.relative_to(root)
-            stale.append(str(rel).replace("\\", "/"))
-    if not stale:
-        return []
-    show = ", ".join(stale[:5]) + ("…" if len(stale) > 5 else "")
-    return [
-        f"product changed after before-generate stamp: {show} "
-        "(re-run ./nlc maintainer guide before-generate)"
-    ]
+    recorded_fp = stamp.get("product_content_sha256")
+    if not isinstance(recorded_fp, str) or not recorded_fp:
+        return [
+            "before-generate stamp missing product_content_sha256 "
+            "(re-run ./nlc maintainer guide before-generate with all hub scopes)"
+        ]
+    current_fp = product_content_fingerprint(root)
+    if current_fp != recorded_fp:
+        return [
+            "product changed after before-generate stamp (content fingerprint mismatch) "
+            "(re-run ./nlc maintainer guide before-generate)"
+        ]
+    return []
 
 
 def _goal_implementations(root: Path) -> list[Path]:

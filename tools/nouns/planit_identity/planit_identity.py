@@ -81,9 +81,27 @@ def prove(root: Path, loaded_path: str) -> list[str]:
     return identity_errors(registry, loaded_path, loaded)
 
 
+def resolve_root(argv: list[str]) -> Path:
+    """Hub tree under test: optional path argv before flags."""
+    args = list(argv)
+    while args and args[0].startswith("-"):
+        flag = args.pop(0)
+        if flag in {"--loaded", "--record"} and args:
+            args.pop(0)
+    if args and not args[0].startswith("-"):
+        return Path(args[0]).resolve()
+    return Path(__file__).resolve().parents[3]
+
+
 def main() -> int:
-    root = Path(__file__).resolve().parents[3]
     args = sys.argv[1:]
+    root = resolve_root(args)
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from nlc_pipeline import is_hub_repo
+
+    if not is_hub_repo(root):
+        print("PLANIT_IDENTITY:MET skip (hub-only gate, not hub tree)")
+        return 0
     loaded = CANONICAL_PATH
     if "--loaded" in args:
         loaded = args[args.index("--loaded") + 1]

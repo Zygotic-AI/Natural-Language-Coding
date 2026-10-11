@@ -42,6 +42,12 @@ def main() -> int:
         return 2
     if not ok:
         print(f"VIOLATION hub-content-tree-hash {recorded} != content digest {expected}")
+        print(
+            "Reproduce: python3 tools/sync-hub-content-tree-hash.py  "
+            "(commit integrity/hub-content-tree-hash.txt when content changed)",
+            file=sys.stderr,
+        )
+        print("Reproduce: ./nlc gate hub-content-tree-fresh --tree .", file=sys.stderr)
         print("RESULT:NOT_MET")
         return 1
 

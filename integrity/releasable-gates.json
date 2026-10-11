@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "ssot": "integrity/releasable-gates.json",
+  "description": "Single home for releasable gate profiles (RCA-1 containment, ADR 0050). verify is a strict subset of release.",
+  "profiles": {
+    "verify": [
+      "pipeline-blockers",
+      "planit-skill-identity",
+      "hub-content-tree-fresh"
+    ],
+    "release": [
+      "pipeline-blockers",
+      "planit-skill-identity",
+      "hub-content-tree-fresh",
+      "hub-ci-fitness"
+    ]
+  },
+  "release_prep_stages": [
+    "binding-matrix",
+    "todo-uc-ssot",
+    "jobs-todo-sync",
+    "adr-0038-no-memory",
+    "adr-enforcement-continuity",
+    "rules-gate-orphan",
+    "integration-leaves",
+    "findings-ssot-sync",
+    "findings-last-pass-fresh",
+    "release-preflight",
+    "shipped-tag"
+  ],
+  "hub_only_fitness": [
+    "fitness-planit-identity.py",
+    "fitness-no-history-ids-in-evidence.py",
+    "fitness-landmine-self-contained.py",
+    "fitness-findings-last-pass-fresh.py",
+    "fitness-product-completion-p8-inference.py",
+    "fitness-product-completion-p8-closeout.py",
+    "fitness-adr-0039-release-binder.py",
+    "fitness-full-nlc-audit-binder.py",
+    "fitness-full-nlc-audit-manifest.py",
+    "fitness-hub-no-product-requirements.py",
+    "fitness-p2-hub-scope.py",
+    "fitness-todo-use-cases-ssot.py",
+    "fitness-jobs-todo-sync.py",
+    "fitness-adr-record-gate.py",
+    "fitness-adr-approval.py",
+    "fitness-verb-set-lineage.py",
+    "fitness-executable-shape.py",
+    "fitness-release-planner-ownership.py",
+    "fitness-adr-0029-tools.py",
+    "fitness-hub-x4-tranche-t3.py",
+    "fitness-hub-x4-tranche-t4.py",
+    "fitness-product-completion-p5-dogfood.py",
+    "fitness-releasable-gate-ssot.py"
+  ],
+  "gates": {
+    "pipeline-blockers": {
+      "builtin": "pipeline_blockers",
+      "scope": "all",
+      "reproduce": "./nlc gate pipeline-blockers --tree {tree}"
+    },
+    "planit-skill-identity": {
+      "scope": "hub",
+      "argv": [
+        "python3",
+        "tools/fitness-planit-identity.py",
+        "--skill-only",
+        "--loaded",
+        ".agents/skills/planit/SKILL.md"
+      ],
+      "pass_substrings": ["PLANIT_IDENTITY:MET"],
+      "reproduce": "./nlc gate planit-skill-identity --tree {tree}"
+    },
+    "hub-content-tree-fresh": {
+      "scope": "hub",
+      "argv": ["python3", "tools/fitness-findings-last-pass-fresh.py"],
+      "pass_substrings": ["RESULT:MET"],
+      "reproduce": "./nlc gate hub-content-tree-fresh --tree {tree}"
+    },
+    "hub-ci-fitness": {
+      "scope": "hub",
+      "suite": "hub_ci_fitness",
+      "argv": ["python3", "tools/ci_fitness.py"],
+      "pass_substrings": ["CI:MET"],
+      "reproduce": "./nlc gate hub-ci-fitness --tree {tree}"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "ssot": "integrity/full-nlc-audit-manifest.json",
-  "description": "Machine stages for tools/full-nlc-audit.py. Append stages here; wire blocking in CI via fitness-full-nlc-audit-binder.py.",
+  "description": "Machine stages for tools/full-nlc-audit.py. Release-prep stage ids must match integrity/releasable-gates.json release_prep_stages (RCA-1).",
   "profiles": {
     "quick": [
       "binding-matrix",

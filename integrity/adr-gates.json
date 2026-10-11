@@ -196,6 +196,10 @@
     "0049": {
       "gate": "tools/fitness-release-planner-ownership.py",
       "fixture": "tools/assert-release-planner-ownership-fails.py"
+    },
+    "0050": {
+      "gate": "tools/fitness-no-history-ids-in-evidence.py",
+      "fixture": "tools/assert-history-rewrite-invariant-passes.py"
     }
   }
 }

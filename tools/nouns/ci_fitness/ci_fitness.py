@@ -77,8 +77,15 @@ def charter_check1() -> None:
             )
 
 
-def main() -> int:
-    hub_prove()
+def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
+    """Hub compile fitness. Releasable verify profile runs only when requested (not from hub-ci-fitness gate)."""
+    if include_releasable_verify:
+        from nouns.releasable_gates.releasable_gates import run_profile
+
+        print("=== releasable verify profile (SSOT) ===")
+        if run_profile("verify", ROOT) != 0:
+            fail("releasable verify profile")
+
     session_preflight()
 
     charter_check1()
@@ -125,7 +132,16 @@ def main() -> int:
 
     print("=== invoice-correct must MET on bound tools ===")
     correct = ROOT / "examples" / "invoice-correct"
+    hub_only: set[str] = set()
+    manifest = ROOT / "integrity" / "releasable-gates.json"
+    if manifest.is_file():
+        import json
+
+        hub_only = set(json.loads(manifest.read_text(encoding="utf-8")).get("hub_only_fitness") or [])
     for path in sorted(TOOLS.glob("fitness-*.py")):
+        if path.name in hub_only:
+            print(f"--- skip {path.name} invoice-correct (hub-only) ---")
+            continue
         run(
             f"{path.name} invoice-correct",
             [sys.executable, str(path), str(correct)],
@@ -613,8 +629,8 @@ def main() -> int:
     )
 
     run(
-        "fitness-planit-identity",
-        [sys.executable, str(TOOLS / "fitness-planit-identity.py")],
+        "fitness-releasable-gate-ssot",
+        [sys.executable, str(TOOLS / "fitness-releasable-gate-ssot.py")],
     )
     run(
         "fitness-adr-approval",
@@ -652,6 +668,27 @@ def main() -> int:
         "assert-executable-kernel-exempt",
         [sys.executable, str(TOOLS / "assert-executable-kernel-exempt-fails.py")],
     )
+    print("=== RCA-1 releasable gate landmines ===")
+    run(
+        "assert-releasable-gate-list-duplicate",
+        [sys.executable, str(TOOLS / "assert-releasable-gate-list-duplicate-fails.py")],
+    )
+    run(
+        "assert-releasable-failure-without-reproduce",
+        [sys.executable, str(TOOLS / "assert-releasable-failure-without-reproduce-fails.py")],
+    )
+    run(
+        "assert-releasable-home-invariant",
+        [sys.executable, str(TOOLS / "assert-releasable-home-invariant-passes.py")],
+    )
+    run(
+        "assert-stale-committed-evidence",
+        [sys.executable, str(TOOLS / "assert-stale-committed-evidence-fails.py")],
+    )
+    run(
+        "assert-hub-only-fitness-scope",
+        [sys.executable, str(TOOLS / "assert-hub-only-fitness-scope-passes.py")],
+    )
     print("=== produce handoff preflight ===")
     from nlc_produce_package import preflight_handoff
 
@@ -663,6 +700,11 @@ def main() -> int:
 
     print("CI:MET")
     return 0
+
+
+def main() -> int:
+    hub_prove()
+    return run_ci_fitness_suite(include_releasable_verify=True)
 
 
 if __name__ == "__main__":

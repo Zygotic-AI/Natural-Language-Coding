@@ -18,6 +18,10 @@ _SELF = {
     "tools/fitness-adr-record-gate.py",
     "tools/nouns/adr_record_gate/adr_record_gate.py",
 }
+# Run in dedicated workflow (history-rewrite-invariant.yml); invokes releasable gates and must not recurse here.
+_FIXTURES_EXTERNAL_WORKFLOW = {
+    "tools/assert-history-rewrite-invariant-passes.py",
+}
 
 
 def enforcement_rows(text: str) -> dict[str, str]:
@@ -87,7 +91,7 @@ def record_gate_errors(root: Path) -> list[str]:
         if not isinstance(row, dict):
             continue
         rel = row.get("fixture")
-        if not isinstance(rel, str) or rel in seen or rel in _SELF:
+        if not isinstance(rel, str) or rel in seen or rel in _SELF or rel in _FIXTURES_EXTERNAL_WORKFLOW:
             continue
         seen.add(rel)
         path = root / rel

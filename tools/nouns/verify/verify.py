@@ -133,17 +133,33 @@ def verify_fast(root: Path) -> tuple[bool, list[str]]:
     reasons: list[str] = []
     reasons.extend(pipeline_blockers(root))
     reasons.extend(fingerprint_mismatches(root))
+    if reasons:
+        return False, reasons
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from nlc_pipeline import is_hub_repo
+
+    if is_hub_repo(root):
+        from nouns.releasable_gates.releasable_gates import run_profile
+
+        if run_profile("verify", root.resolve()) != 0:
+            reasons.append("releasable verify profile failed (see FAILED lines above)")
     return (len(reasons) == 0, reasons)
 
 
-def emit_verify_fail(reasons: list[str]) -> None:
+def emit_verify_fail(reasons: list[str], *, root: Path | None = None) -> None:
     print("Verify failed.", file=sys.stderr)
     for r in reasons[:12]:
         print(f"  {r}", file=sys.stderr)
     if len(reasons) > 12:
         print(f"  … and {len(reasons) - 12} more", file=sys.stderr)
-    print("  Fix: /verify in your agent", file=sys.stderr)
-    print("  Or: ./nlc verify-deep  (full check and refresh fingerprints)", file=sys.stderr)
+    tree = root or Path.cwd()
+    try:
+        rel = tree.resolve().relative_to(Path(__file__).resolve().parents[3])
+        tree_arg = str(rel) if str(rel) != "." else "."
+    except ValueError:
+        tree_arg = str(tree.resolve())
+    print(f"Reproduce: ./nlc verify --project {tree_arg}", file=sys.stderr)
+    print("  Or: ./nlc verify-deep  (full release gates + refresh fingerprints)", file=sys.stderr)
 
 
 def _run_verify_suite(root: Path) -> int | None:
@@ -166,7 +182,6 @@ def _run_verify_suite(root: Path) -> int | None:
 
 
 def verify_deep(root: Path, hub: Path, hub_version: str) -> int:
-    fitness = hub / "tools" / "ci_fitness.py"
     from nlc_pipeline import is_hub_repo
 
     suite_code = _run_verify_suite(root)
@@ -175,11 +190,11 @@ def verify_deep(root: Path, hub: Path, hub_version: str) -> int:
         print("  See docs/nlc/APP-VERIFY.md", file=sys.stderr)
         return suite_code
 
-    if is_hub_repo(root) and fitness.is_file():
-        code = subprocess.run(
-            [sys.executable, str(fitness)],
-            cwd=str(root),
-        ).returncode
+    if is_hub_repo(root):
+        sys.path.insert(0, str(hub / "tools"))
+        from nouns.releasable_gates.releasable_gates import run_profile
+
+        code = run_profile("release", root.resolve())
     elif (root / ".nlc" / "lock.json").is_file():
         audit = hub / "tools" / "release-audit.py"
         if audit.is_file():
@@ -198,7 +213,7 @@ def verify_deep(root: Path, hub: Path, hub_version: str) -> int:
 
     if code != 0:
         print("Verify-deep failed (compile gates).", file=sys.stderr)
-        print("  Fix: /verify in your agent", file=sys.stderr)
+        emit_verify_fail(["release profile failed"], root=root)
         return code
 
     from nlc_compliance import verify_deep_extra_blockers
