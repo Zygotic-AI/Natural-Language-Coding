@@ -11,6 +11,9 @@ ROOT = Path(__file__).resolve().parents[3]
 FIXTURE = (
     ROOT / "tools" / "fixtures" / "quality-metric" / "invalid-produce-package-self-audit.json"
 )
+HUB_GATE_SUBJECT = (
+    ROOT / "tools" / "fixtures" / "hub-own" / "invalid-hub-own-gate-subject-same-actor.json"
+)
 
 
 def main() -> int:
@@ -27,7 +30,17 @@ def main() -> int:
     if "ROLE_SEPARATION" not in reason:
         print(f"ASSERT:FAIL expected ROLE_SEPARATION in reason: {reason}")
         return 1
-    print("ASSERT:PASS produce preflight refuses self-audit roles")
+    ok2, kind2, reason2 = load_and_validate(HUB_GATE_SUBJECT)
+    if ok2:
+        print("ASSERT:FAIL hub gate+subject same-actor fixture should not validate")
+        return 1
+    if kind2 != "handoff_refused":
+        print(f"ASSERT:FAIL hub gate-diff expected handoff_refused got {kind2}")
+        return 1
+    if "ROLE_SEPARATION" not in reason2 and "HUB_GATE_DIFF" not in reason2:
+        print(f"ASSERT:FAIL expected ROLE_SEPARATION or HUB_GATE_DIFF: {reason2}")
+        return 1
+    print("ASSERT:PASS produce preflight refuses self-audit and hub gate+subject same actor")
     return 0
 
 

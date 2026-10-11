@@ -51,7 +51,10 @@
     "fitness-hub-x4-tranche-t3.py",
     "fitness-hub-x4-tranche-t4.py",
     "fitness-product-completion-p5-dogfood.py",
-    "fitness-releasable-gate-ssot.py"
+    "fitness-releasable-gate-ssot.py",
+    "fitness-hub-own-principle-subgoals.py",
+    "fitness-hub-own-property-exit.py",
+    "fitness-gate-change-receipt.py"
   ],
   "gates": {
     "pipeline-blockers": {

@@ -60,6 +60,7 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0048 | 2026-10-08 | session | active | — | L-0048 |
 | 0049 | 2026-10-09 | RCA 2026-10-09 release stops outside planner | active | — | L-0049 |
 | 0050 | 2026-10-10 | RCA 2026-10-10 SHA-pinned evidence / content identity | active | — | L-0050 |
+| 0051 | 2026-10-11 | Hub-own produce compiles NLC principles (SG1–SG3) | active | — | L-0051 |
 
 ## Lineage format
 

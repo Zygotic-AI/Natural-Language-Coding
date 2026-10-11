@@ -62,5 +62,6 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0048 | L-0048 | session | 2026-10-08 |
 | 0049 | L-0049 | RCA 2026-10-09 release stops outside planner | 2026-10-09 |
 | 0050 | L-0050 | RCA 2026-10-10 SHA-pinned evidence / content identity | 2026-10-10 |
+| 0051 | L-0051 | Hub-own produce compiles NLC principles (SG1–SG3) | 2026-10-11 |
 
 When an ADR is superseded, remove it from this table and add its successor. Update INDEX status in the same change.

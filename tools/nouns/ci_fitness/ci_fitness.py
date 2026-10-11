@@ -700,6 +700,22 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-adr-approval-mismatch-fails.py")],
     )
     run(
+        "fitness-hub-own-principle-subgoals",
+        [sys.executable, str(TOOLS / "fitness-hub-own-principle-subgoals.py")],
+    )
+    run(
+        "fitness-hub-own-property-exit",
+        [sys.executable, str(TOOLS / "fitness-hub-own-property-exit.py")],
+    )
+    run(
+        "fitness-gate-change-receipt",
+        [sys.executable, str(TOOLS / "fitness-gate-change-receipt.py")],
+    )
+    run(
+        "assert-gate-change-receipt-mismatch",
+        [sys.executable, str(TOOLS / "assert-gate-change-receipt-mismatch-fails.py")],
+    )
+    run(
         "assert-verb-primitive-inventory",
         [sys.executable, str(TOOLS / "assert-verb-primitive-inventory-fails.py")],
     )

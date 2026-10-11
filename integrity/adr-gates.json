@@ -200,6 +200,10 @@
     "0050": {
       "gate": "tools/fitness-no-history-ids-in-evidence.py",
       "fixture": "tools/assert-history-rewrite-invariant-passes.py"
+    },
+    "0051": {
+      "gate": "tools/fitness-gate-change-receipt.py",
+      "fixture": "tools/assert-gate-change-receipt-mismatch-fails.py"
     }
   }
 }

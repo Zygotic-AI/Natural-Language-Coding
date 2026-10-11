@@ -36,7 +36,17 @@ def validate_role_separation(data: dict[str, Any]) -> tuple[bool, str]:
     return True, ""
 
 
-def validate_produce_package(data: dict[str, Any]) -> tuple[bool, str, str]:
+def _repo_root_for_package(path: Path | None) -> Path:
+    if path is not None:
+        for parent in [path.resolve(), *path.resolve().parents]:
+            if (parent / "CHARTER.md").is_file():
+                return parent
+    return Path(__file__).resolve().parents[3]
+
+
+def validate_produce_package(
+    data: dict[str, Any], *, root: Path | None = None
+) -> tuple[bool, str, str]:
     """Returns (ok, kind, reason) where kind is handoff_refused|fail|ok."""
     ok_sep, sep_reason = validate_role_separation(data)
     if not ok_sep:
@@ -51,6 +61,13 @@ def validate_produce_package(data: dict[str, Any]) -> tuple[bool, str, str]:
         return False, "handoff_refused", "SSOT_EXIT_EVIDENCE: ssot_leaf_ids missing"
     if not status or not str(status).strip():
         return False, "handoff_refused", "SSOT_EXIT_EVIDENCE: ssot_exit_status missing"
+    if data.get("hub_material"):
+        from nouns.hub_own_produce.hub_own_produce import validate_hub_material_package
+
+        hub_root = root if root is not None else _repo_root_for_package(None)
+        ok_hub, kind_hub, reason_hub = validate_hub_material_package(hub_root, data)
+        if not ok_hub:
+            return False, kind_hub, reason_hub
     if data.get("quality_snapshot"):
         ok2, reason2 = qm.validate_q2_adversarial(data)
         if not ok2:
@@ -62,10 +79,14 @@ def load_and_validate(path: Path) -> tuple[bool, str, str]:
     if not path.is_file():
         return False, "handoff_refused", "missing produce package"
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        raw = json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return False, "handoff_refused", "invalid produce package JSON"
-    return validate_produce_package(data)
+    if not isinstance(raw, dict):
+        return False, "handoff_refused", "produce package must be object"
+    data = {k: v for k, v in raw.items() if not str(k).startswith("_")}
+    root = _repo_root_for_package(path)
+    return validate_produce_package(data, root=root)
 
 
 def preflight_handoff(root: Path) -> int:

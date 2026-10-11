@@ -50,6 +50,8 @@ Skills and portable instructions live under [`.agents/`](.agents/). End-to-end c
 
 **Product UC TODO:** Do not mark [`TODO`](TODO) “Build a compiled system” rows `@done` for full USE-CASE closure while [`docs/USE-CASES.md`](docs/USE-CASES.md) still lists Parked/Needed — see [`.agents/instructions/todo-product-uc-completion.md`](.agents/instructions/todo-product-uc-completion.md). CI: `tools/fitness-todo-use-cases-ssot.py`.
 
+**Hub-own cloud briefs (ADR 0051):** Hub material cloud-agent briefs must declare **property leaf goals** and **forbid weakening checks** — see [`.agents/instructions/cloud-agent-hub-own-brief.md`](.agents/instructions/cloud-agent-hub-own-brief.md).
+
 **Take me literally (always):** Quote the user’s scope in your own resolution table; do not narrow or reinterpret their wording; if ambiguous, **one question and stop** — see [`.agents/instructions/take-me-literally.md`](.agents/instructions/take-me-literally.md).
 
 **Jidoka SSOT output (always):** When tooling output contradicts docs or the operator says it is wrong, **fix or RCA** — do **not** tell them to ignore or reinterpret defective fields — see [`.agents/instructions/jidoka-ssot-output.md`](.agents/instructions/jidoka-ssot-output.md).
