@@ -43,7 +43,7 @@ def run_hook(payload: dict | str, *, cwd: Path, env: dict[str, str]) -> dict:
 
 def make_path_env(*, include_python: bool, include_jq: bool) -> dict[str, str]:
     td = Path(tempfile.mkdtemp(prefix="goal-hook-bin-"))
-    for name in ("bash",):
+    for name in ("bash", "cat"):
         src = shutil.which(name)
         if src:
             (td / name).symlink_to(src)

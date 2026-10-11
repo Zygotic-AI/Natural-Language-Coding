@@ -2,17 +2,15 @@
 # UC18: block goal-tree writes until nlc-before-generate stamp is fresh (planit step 6).
 set -euo pipefail
 
-read_hook_input() {
-  local _line
-  REPLY=""
-  while IFS= read -r _line; do
-    REPLY+="${_line}"$'\n'
+if command -v cat >/dev/null 2>&1; then
+  input="$(cat)"
+else
+  input=""
+  while IFS= read -r _line || [[ -n "${_line:-}" ]]; do
+    input+="${_line}"$'\n'
   done
-  REPLY="${REPLY%$'\n'}"
-  printf '%s' "$REPLY"
-}
-
-input="$(read_hook_input)"
+  input="${input%$'\n'}"
+fi
 
 deny_fixed() {
   case "$1" in
