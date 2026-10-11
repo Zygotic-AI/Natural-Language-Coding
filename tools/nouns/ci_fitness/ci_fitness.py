@@ -100,6 +100,10 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-landmine-self-contained.py")],
     )
     run(
+        "fitness-root-session-artifacts",
+        [sys.executable, str(TOOLS / "fitness-root-session-artifacts.py")],
+    )
+    run(
         "assert-unresolvable-refuses-passes",
         [sys.executable, str(TOOLS / "assert-unresolvable-refuses-passes.py")],
     )
