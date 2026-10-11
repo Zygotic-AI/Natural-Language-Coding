@@ -1,8 +1,8 @@
 {
   "version": 1,
   "files": {
-    "scripts/install.sh": "924819f1b2df6028b65a2ccb4aab8fe7a761890e9b9b49a2e1b821deea755382",
-    "scripts/install.ps1": "0b3fcd14e8d39c1c95afb125abe73603b9d6268db6f4e1c2a62bfa76397e71d0",
+    "scripts/install.sh": "60fb053f6d9ca974ce6e53cd7195dace2c5bee35af225ae4aef7f8144a6d422e",
+    "scripts/install.ps1": "f656171f64df5766020231a9aa89a14f5d696b92c62141fb4ca6784c0b2dba02",
     "CHARTER.md": "0d5e4955d256fee76384a110993baf8dc9dadfda8b3a6b1fd8bc4ff2d0e7e6b8",
     "tools/ci_fitness.py": "790298b9486a842c48158139d05a27514c2d698b17a8a02d3d76d27ca5f0d69a",
     "tools/ci-fitness.ps1": "a852e9fe423329fc83f068f7ffc70b1898f6a0f3ffd3426e1e73c03f410bd47d",
