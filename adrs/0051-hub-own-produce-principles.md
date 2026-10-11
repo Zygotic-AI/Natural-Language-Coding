@@ -5,13 +5,13 @@
 - Deciders: Human manager
 - Class: F (integrity / hub produce), A (release stabilization scope)
 - Corpus: nlc
-- RCA: operator packet RCA 4 (`/opt/cursor/artifacts/RCA-4-agents-weaken-checks.md`); remediation plan (`/opt/cursor/artifacts/RCA-4-remediation-plan.md`)
+- RCA: RCA 4 (agents weakening checks), root confirmed by the human manager 2026-10-11; the RCA record is kept outside this repository.
 
 ## Context
 
 During v0.3.0 stabilization, hub material work repeatedly reached CI MET by weakening fitness tools, broadening exemptions, rewriting approval receipts, or self-referential checks—while roadmap finish lines described **properties** the checks were meant to prove. The root cause (confirmed by the human manager): hub-own produce did not compile [MANIFESTO.md](../MANIFESTO.md) principles as compile-time sub-goals; **CI green** acted as the terminal finish line.
 
-RCA 4 remediation (approved, amended): bind **SG1–SG3** only; drop gate-on-gate mutation suites in favor of the human manager’s **rule against regress** and **owner-ratified known-bad cases** on each codified constraint.
+RCA 4 remediation (approved, amended): bind **SG1–SG3** only; drop SG4 gate-mutation suites (re-judging gate logic) in favor of the human manager’s **rule against regress** and **owner-ratified known-bad cases** on each codified constraint.
 
 ## Top-line goal (compile-time intent)
 
@@ -25,10 +25,11 @@ Sub-goals below use only [nouns](../docs/TERMS.md#noun), [verbs](../docs/TERMS.m
 
 ## Rule against regress (applies to all codified constraints under this ADR)
 
-1. A [gate](../docs/TERMS.md#gate) may **only** check **work** or a **work product**—never another check, gate script, or exemption registry as its graded subject.
-2. Therefore no codified constraint may MET by running one fitness or assert tool against another fitness or assert tool (“check on a check”).
-3. **Known-bad case (required):** Every codified constraint introduced or amended under this ADR carries an **owner-ratified known-bad Candidate** (fixture bytes or pinned specimen) declared in the ADR or an integrity SSOT list at ratification time. **Nothing gates that known-bad case**—no wrapper fitness tool, no meta-landmine. [Verify](../docs/TERMS.md#verify) on the constraint runs against the known-bad Candidate directly and must REFUSE or NOT_MET for the named reason.
-4. This replaces gate-mutation landmines that exercised one check via another check.
+1. A [gate](../docs/TERMS.md#gate) may grade **only work** or a **work product**. It may **never** judge another check’s **quality or validity** (logic, exemptions, or whether the check is “good”).
+2. **Completion confirmation (allowed):** A gate whose **only** job is to confirm that a prior step **completed**—so the next step may run—is valid. It must not re-judge or re-certify the prior check. Example: step 2 must not run until step 1’s final QA check is **complete**; the confirmation gate asks *did step 1 complete?*, not *was step 1’s check correct?*
+3. **Forbidden (“check on a check”):** No codified constraint may MET by running one fitness or assert tool to evaluate another fitness or assert tool’s **correctness** (including mutation landmines that re-grade gate logic).
+4. **Known-bad case (required):** Every codified constraint introduced or amended under this ADR carries an **owner-ratified known-bad Candidate** (fixture bytes or pinned specimen) declared in the ADR or an integrity SSOT list at ratification time. **Nothing gates that known-bad case**—no wrapper fitness tool, no meta-landmine. [Verify](../docs/TERMS.md#verify) on the constraint runs against the known-bad Candidate directly and must REFUSE or NOT_MET for the named reason.
+5. This replaces SG4 gate-mutation landmines that re-judged gate logic via another check.
 
 ## Gate set (paths)
 
@@ -70,7 +71,7 @@ Edits under `docs/history/`, `docs/rca/`, and `reviews/` are provenance, not gat
 | **Policy** | **P-GATE-SET-RATIFY** | Gate-set member bytes are ratified; content hash change requires human manager receipt before merge. |
 | **Standard** | **S-GATE-SET-REGISTRY** | Registry `integrity/gate-change-receipts.json` keys each gate-set member path to SHA-256 of file contents (or declared bundle hash for split nouns), ratifier role, and date. |
 | **Rule** | **R-GATE-SET-NO-SILENT-WEAKEN** | A produce package that changes gate-set member bytes without a matching receipt is incomplete (handoff REFUSE). |
-| **Codified constraint** | (to implement) `fitness-gate-change-receipt` | NOT_MET when diff touches gate-set paths and receipt missing or hash mismatch. Known-bad: diff without receipt Candidate. |
+| **Codified constraint** | (to implement) `fitness-gate-change-receipt` | **Completion confirmation** (not a quality judgment on gate logic): confirms the gate-set bytes in the tree match the bytes the human manager ratified in `integrity/gate-change-receipts.json` (ratification is the start of the chain). NOT_MET when diff touches gate-set paths and receipt missing or hash mismatch; it does **not** evaluate whether a gate-set member’s grading logic is correct. Known-bad: diff without receipt Candidate. |
 
 ### Amendment to [ADR 0047](0047-adr-approval-receipts.md)
 
@@ -111,7 +112,7 @@ Edits under `docs/history/`, `docs/rca/`, and `reviews/` are provenance, not gat
 
 ## Rejected
 
-- **SG4 gate-mutation landmine (check on check):** violates rule against regress; replaced by owner-ratified known-bad Candidates verified directly.
+- **SG4 gate-mutation landmine:** re-judges another check’s quality or validity; violates rule against regress §2–3; replaced by owner-ratified known-bad Candidates verified directly on each constraint.
 - **CI green as terminal finish line** for hub-own produce.
 - **Producer hand-update of gate-change or ADR approval receipts** without ratification event.
 - **Single actor** changing gate-set and graded subject in one package without adversarial role.
