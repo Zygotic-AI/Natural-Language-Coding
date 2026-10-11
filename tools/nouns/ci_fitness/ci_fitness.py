@@ -88,6 +88,16 @@ _CI_STAMP_SCOPES = [
 ]
 
 
+def _ci_resync_content_hash() -> None:
+    if not os.environ.get("CI"):
+        return
+    subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "sync-hub-content-tree-hash.py")],
+        cwd=str(ROOT),
+        check=False,
+    )
+
+
 def _refresh_before_generate_stamp_ci() -> None:
     """Git checkout sets mtimes after stamp time; refresh on CI (RCA-1 verify profile)."""
     if not os.environ.get("CI"):
