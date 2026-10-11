@@ -18,7 +18,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 
 `last_pass_tree_hash:` see [`integrity/hub-content-tree-hash.txt`](integrity/hub-content-tree-hash.txt) (ADR 0050 content fingerprint; not a commit id).
 
-Last pass (26-09-25): `/release` closeout — agent instructions (literal scope, plain-language refs), integration leaf on_main, CI:MET + release-prep ready. **Shipped tag prose:** generate from git only (`python3 tools/nlc_release_tags.py` / `fitness-findings-shipped-tag-sync.py` on HEAD — never hand-write “tagged on origin”). `integrity/nlc-version.json` **0.2.0** until `./release`. Inference: [`integrity/full-nlc-audit-inference-record.json`](integrity/full-nlc-audit-inference-record.json).
+Last pass (26-09-25): `/release` closeout — agent instructions (literal scope, plain-language refs), integration leaf on_main, CI:MET + release-prep ready. **Shipped tag prose:** generate from git only (`python3 tools/nlc_release_tags.py` / `fitness-findings-shipped-tag-sync.py` on HEAD — do not hand-write origin tag claims). `integrity/nlc-version.json` **0.2.0** until `./release`. Inference: [`integrity/full-nlc-audit-inference-record.json`](integrity/full-nlc-audit-inference-record.json).
 
 ---
 
