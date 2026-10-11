@@ -120,6 +120,10 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-hub-in-force-exclusions-passes.py")],
     )
     run(
+        "fitness-goal-write-hook",
+        [sys.executable, str(TOOLS / "fitness-goal-write-hook.py")],
+    )
+    run(
         "assert-unresolvable-refuses-passes",
         [sys.executable, str(TOOLS / "assert-unresolvable-refuses-passes.py")],
     )
@@ -577,6 +581,10 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "assert-jidoka-ssot-agents-link",
         [sys.executable, str(TOOLS / "assert-jidoka-ssot-agents-link-passes.py")],
+    )
+    run(
+        "assert-goal-write-hook-landmine",
+        [sys.executable, str(TOOLS / "assert-goal-write-hook-landmine-passes.py")],
     )
     run(
         "assert-release-main-purity-remediation",
