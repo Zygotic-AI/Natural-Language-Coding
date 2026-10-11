@@ -16,8 +16,6 @@ Orchestrate **[AWL](../../../docs/TERMS.md#awl) Phases 0–7** and **[PLANIT](..
 
 [PLANIT](../../../docs/TERMS.md#planit) is the compile process; [BBP](../../../docs/TERMS.md#bbp) is the shape ([`docs/nlc/compiler/MERGE.md`](../../../docs/nlc/compiler/MERGE.md)). This skill orchestrates — it does not replace knowledge-steward, [RCA](../../../docs/TERMS.md#rca), or leaf [gate](../../../docs/TERMS.md#gate) skills.
 
-**Not the ai vault maintainer loop:** for durable ai-vault layers only (normative docs, manifests, intents, published prompts), route to **`~/.agents/skills/planit`** and its `local-*` leaf skills. Stay here for [ACS](../../../docs/TERMS.md#acs) + [BBP](../../../docs/TERMS.md#bbp) hub/adopter work.
-
 ## Required inputs
 
 | Input | Blocking? | Notes |

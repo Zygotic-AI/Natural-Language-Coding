@@ -102,7 +102,7 @@ The [gate](../docs/TERMS.md#gate) does not soft-pass to "address later."
 
 Under the all-required PASS bar:
 - **G1:** 15855 is incomplete (missing required fields) → must FAIL
-- **G2:** §7/R3/R4 checks require concrete content validation, not field-presence only (see SP4 below). **[Refuse-wired](../docs/TERMS.md#default-closed):** raise-to-HITL readiness G2 is [MET](../docs/TERMS.md#met) -- binders exist and are in force on Bindings main ([P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) @ `16104a47`). Binders: worker §7 metric, R3/R4 always-required checklist SSOT, NHR [refuse](../docs/TERMS.md#refuse). Skill: [`skills/raise-readiness-refuse.md`](https://github.com/richardpickett/BBA-Bindings/blob/main/skills/raise-readiness-refuse.md). This tip owns [refuse](../docs/TERMS.md#refuse) criteria and SSOT; Bindings owns the binder.
+- **G2:** §7/R3/R4 checks require concrete content validation, not field-presence only (see SP4 below). **[Refuse-wired](../docs/TERMS.md#default-closed):** raise-to-HITL readiness G2 is [MET](../docs/TERMS.md#met) when hub-local binders enforce [P-030](../docs/OPERATING_BINDINGS.md#p-030-raise-readiness-refuse) (§7 metric, R3/R4 checklist, NHR [refuse](../docs/TERMS.md#refuse)).
 - **G3:** 15855 is the incomplete-packet fixture; the [gate](../docs/TERMS.md#gate) fails it → [MET](../docs/TERMS.md#met) (by this tip's refuse criteria)
 - **G4:** PASS would require Human Root-Approver to add §7/R3/R4 → not self-sufficient → must FAIL
 

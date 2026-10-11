@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "algorithm": "sha256",
-  "recorded_at": "2026-10-11T00:52:50Z",
+  "recorded_at": "2026-10-11T04:43:52Z",
   "hub": "0.3.0",
   "files": {
     "adrs/0001-zero-variance-integrity.md": "3c5979c1832bab283044d51e7c9f9c30db418e0bbaa725258e76dc73ad52c767",
@@ -15,7 +15,7 @@
     "adrs/0009-primitive-interior-functions.md": "228c84c2d480e6a69118a6f2081594df96fb1b33727a001433e7a8b70bb7ed6e",
     "adrs/0010-gate-after-every-generate.md": "716098c125f4b3a2a86128aaed364f660138ddb40e05387ab0718f499a86b98c",
     "adrs/0011-natural-language-coding-naming.md": "93e229ee7f2831cae11a6e2ff4256dbcb745e6bb1efd1b52dbcf77d1ca6fc8b4",
-    "adrs/0012-adr-precedence-and-rule-conflicts.md": "ecc14c907b0e9b8a12bc53bb45b8e81e0a855e478bd8e13041025cfefa78f6cc",
+    "adrs/0012-rule-adoption-conflicts.md": "ecc14c907b0e9b8a12bc53bb45b8e81e0a855e478bd8e13041025cfefa78f6cc",
     "adrs/0013-requirements-preflight.md": "6c104ac01446c2aa1592b23ee34a2f86e18127d09c53331a17d377ee6ceec90d",
     "adrs/0014-semver-upgrade-steps-and-noop-migrations.md": "beac4680eca831982c85fa857ddd2f7c52e107be5300cf2c21371a8670bc53b9",
     "adrs/0015-distribution-lock-and-version-store.md": "2da7e3c6e238f5b75f973f8d7445a804a6067baffbbf0ae7e89ffdb21a717cc0",
@@ -57,7 +57,7 @@
     "adrs/ACTIVE.md": "89db1403b1323aca4f39db92174849a0226a5cab21753ac5051b2722a09ee39a",
     "adrs/CATALOG.md": "ebaa84dfe4e13db6904ca869f5d8134dc77b8e651b42d7376f1f4cc68fae8987",
     "adrs/INDEX.md": "ac55cbfabf9b10c91bb858724904efb2056108183f3638773c04d1bceddcb8a1",
-    "adrs/README.md": "23c0422fcaff5298bfc05daa7177afc285a96748c4acfaf7702545ce6fa06670",
+    "adrs/README.md": "4f054b32e452b819c44838554a59663d1fb0b0bd41d28c9ee00266ba691bc230",
     "rules/goal-bindings.json": "9956a3632532a8878e57aed3cd6ba26aa607d1b06ddffb882d10e50872255ba8",
     "rules/nlc-0024.json": "fa09d9c492dfd99fa52595f29b1bd774980e9faddacbd630bb54af8c1f8ba4ad",
     "rules/nlc-0025.json": "8a4440e1497501640bd8043ba9f2299f6623afecdea2f0ee8bf583de84a81064",

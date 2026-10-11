@@ -1,0 +1,6 @@
+{
+  "schema": 1,
+  "waived": false,
+  "reason": "No integration leaves waived at hub bootstrap; append leaves to integration-leaves.json before deleting long-lived branches.",
+  "audit_sha": null
+}
