@@ -6,7 +6,7 @@
 - Ratified-by: Human manager (evidence identity content-not-history ADR, 2026-10-10)
 - Class: F (integrity / gates), A (release and audit evidence)
 - Corpus: nlc
-- RCA: [`docs/rca/2026-10-10-sha-pinned-evidence-history-rewrite.md`](../docs/rca/2026-10-10-sha-pinned-evidence-history-rewrite.md) (instance record; analysis in operator packet)
+- RCA: [`docs/rca/2026-09-23-full-nlc-audit-residual-gaps.md`](../docs/rca/2026-09-23-full-nlc-audit-residual-gaps.md) (history/evidence residual class; ADR 0050 supersedes SHA-as-evidence)
 
 ## Context
 

@@ -2,7 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-09-04
-- Deciders: Richard Pickett
+- Deciders: product owner role
 
 ## Context
 

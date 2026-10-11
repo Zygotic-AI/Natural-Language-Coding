@@ -68,7 +68,7 @@ def charter_check1() -> None:
         for d in sorted(examples.iterdir()):
             if not d.is_dir():
                 continue
-            if d.name == "invoice-violation":
+            if d.name in {"invoice-violation", "internal-link-landmine"}:
                 continue
             print(f"scanning {d}/")
             run(
@@ -98,6 +98,14 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "fitness-landmine-self-contained",
         [sys.executable, str(TOOLS / "fitness-landmine-self-contained.py")],
+    )
+    run(
+        "fitness-hub-public-self-contained",
+        [sys.executable, str(TOOLS / "fitness-hub-public-self-contained.py")],
+    )
+    run(
+        "fitness-internal-links",
+        [sys.executable, str(TOOLS / "fitness-internal-links.py")],
     )
     run(
         "assert-unresolvable-refuses-passes",
