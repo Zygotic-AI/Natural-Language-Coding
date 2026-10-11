@@ -1,8 +1,8 @@
 # Terms dictionary
 
-SSOT for vocabulary in this repository (NLC product, BBP emit shape, BBA integrity, and tooling). Other docs link here as `[term](TERMS.md#anchor)` (path relative to each file).
+SSOT for vocabulary in this repository (NLC product, BBP emit shape, BBA integrity, and tooling). Other docs link here as `[term](TERMS.md#anchor)` (path relative to each file). **Do not define terms elsewhere** — [`integrity/LEXICON.md`](../integrity/LEXICON.md), [`docs/nlc/compiler/GLOSSARY.md`](nlc/compiler/GLOSSARY.md), [`docs/nlc/compiler/NAMES.md`](nlc/compiler/NAMES.md), and [`docs/nlc/RULE-VOCAB.md`](nlc/RULE-VOCAB.md) are pointers only.
 
-Charter-shaped **R** / **C** / **P** rules stay in [`CHARTER.md`](../CHARTER.md). Locked integrity nouns also appear in [`integrity/LEXICON.md`](../integrity/LEXICON.md).
+Charter-shaped **R** / **C** / **P** rules stay in [`CHARTER.md`](../CHARTER.md).
 
 After adding terms here, re-run `python3 tools/link-terms-dictionary.py` to refresh links in markdown across the repo.
 
