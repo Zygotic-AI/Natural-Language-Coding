@@ -2,7 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-09-05
-- Deciders: product owner role
+- Deciders: Richard Pickett
 - Class: F (charter extension)
 
 ## Context

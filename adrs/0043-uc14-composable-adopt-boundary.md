@@ -8,7 +8,7 @@
 
 ## Context
 
-[ADR 0012](0012-adr-precedence-and-rule-conflicts.md) requires adopt-time detection of conflicting rules. Product completion wave **P2.2** tracked `composable_ir_cross_primitive` as expansion. Hub already ships `check-rule-adoption.py` with precedence tiers and overrides.
+[ADR 0012](0012-rule-adoption-conflicts.md) requires adopt-time detection of conflicting rules. Product completion wave **P2.2** tracked `composable_ir_cross_primitive` as expansion. Hub already ships `check-rule-adoption.py` with precedence tiers and overrides.
 
 ## Decision
 

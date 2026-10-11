@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""O6: public hub docs must not depend on private repos or person names (CG-R4).
-
-Scans in-force markdown/json surfaces only (not reviews/, rcas/, history/).
-"""
+"""O6: in-force surfaces must not depend on private repos or person names (CG-R4)."""
 
 from __future__ import annotations
 
@@ -13,21 +10,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-
-IN_FORCE_FILES = [
-    ROOT / "AGENTS.md",
-    ROOT / "DESCRIBE.md",
-    ROOT / "CHARTER.md",
-    ROOT / "README.md",
-    ROOT / "docs" / "OPERATING_BINDINGS.md",
-    ROOT / "docs" / "TERMS.md",
-    ROOT / "docs" / "bba" / "BBA-EMIT-PROCESS.md",
-    ROOT / "integrity" / "ACTIONS.md",
-    ROOT / "integrity" / "BOUNDARY.md",
-    ROOT / "integrity" / "GATE.md",
-    ROOT / ".agents" / "skills" / "planit" / "SKILL.md",
-    ROOT / "docs" / "nlc" / "compiler" / "PLANIT-ORCHESTRATION.md",
-]
+sys.path.insert(0, str(ROOT / "tools"))
+from nouns.hub_in_force_surfaces.hub_in_force_surfaces import (  # noqa: E402
+    PERSON_NAME_EXCLUDED_PREFIXES,
+    iter_in_force_files,
+)
 
 FORBIDDEN_MARKERS = (
     "BBA-Bindings",
@@ -43,22 +30,27 @@ PERSON_PATTERNS = (
     re.compile(r"richardpickett", re.IGNORECASE),
 )
 
+TEXT_SUFFIXES = (".md", ".mdc", ".json", ".txt", ".yaml", ".yml")
+
 
 def main() -> int:
     _ = sys.argv[1:]
     violations: list[str] = []
-    for path in IN_FORCE_FILES:
-        if not path.is_file():
-            violations.append(f"missing in-force surface {path.relative_to(ROOT)}")
-            continue
+    for path in iter_in_force_files(ROOT, suffixes=TEXT_SUFFIXES):
         text = path.read_text(encoding="utf-8", errors="replace")
         rel = path.relative_to(ROOT)
         for marker in FORBIDDEN_MARKERS:
             if marker in text:
                 violations.append(f"{rel}: forbidden marker {marker!r}")
-        for pat in PERSON_PATTERNS:
-            if pat.search(text):
-                violations.append(f"{rel}: person-name pattern {pat.pattern}")
+        rel_posix = rel.as_posix()
+        skip_person = any(
+            rel_posix == p.rstrip("/") or rel_posix.startswith(p)
+            for p in PERSON_NAME_EXCLUDED_PREFIXES
+        )
+        if not skip_person:
+            for pat in PERSON_PATTERNS:
+                if pat.search(text):
+                    violations.append(f"{rel}: person-name pattern {pat.pattern}")
     take_me = ROOT / ".agents" / "instructions" / "take-me-literally.md"
     if not take_me.is_file():
         violations.append("missing .agents/instructions/take-me-literally.md")

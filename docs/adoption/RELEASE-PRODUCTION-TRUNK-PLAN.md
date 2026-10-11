@@ -15,7 +15,7 @@
 6. **Run `./release`** when ready (from your **release line branch**, not from memory).
 7. **Follow printed instructions** — `RELEASE:NOT_MET` or success; no quizzes on deterministic legs.
 
-**Preserved goals (not negotiable):** semver tag on merge commit; migration chain from last shipped tag; `hub-release-record.json` + release notes on release commit; tag gate + `verify-deep` at tag commit; GitHub Actions on tag push ([ADR 0022](https://github.com/richardpickett/Natural-Language-Coding/blob/main/adrs/0022-hub-release-fail-early.md), [0039](https://github.com/richardpickett/Natural-Language-Coding/blob/main/adrs/0039-single-command-human-surfaces.md), [0038–0040](https://github.com/richardpickett/Natural-Language-Coding/blob/main/adrs/0040-process-preflight-remediation.md)).
+**Preserved goals (not negotiable):** semver tag on merge commit; migration chain from last shipped tag; `hub-release-record.json` + release notes on release commit; tag gate + `verify-deep` at tag commit; GitHub Actions on tag push ([ADR 0022](../../adrs/0022-hub-release-fail-early.md), [0039](../../adrs/0039-single-command-human-surfaces.md), [0038–0040](../../adrs/0040-process-preflight-remediation.md)).
 
 ---
 

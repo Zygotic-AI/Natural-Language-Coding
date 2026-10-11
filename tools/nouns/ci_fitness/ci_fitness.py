@@ -100,12 +100,24 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-landmine-self-contained.py")],
     )
     run(
+        "fitness-root-session-artifacts",
+        [sys.executable, str(TOOLS / "fitness-root-session-artifacts.py")],
+    )
+    run(
         "fitness-hub-public-self-contained",
         [sys.executable, str(TOOLS / "fitness-hub-public-self-contained.py")],
     )
     run(
         "fitness-internal-links",
         [sys.executable, str(TOOLS / "fitness-internal-links.py")],
+    )
+    run(
+        "assert-internal-link-gate-fails",
+        [sys.executable, str(TOOLS / "assert-internal-link-gate-fails.py")],
+    )
+    run(
+        "assert-hub-in-force-exclusions-passes",
+        [sys.executable, str(TOOLS / "assert-hub-in-force-exclusions-passes.py")],
     )
     run(
         "assert-unresolvable-refuses-passes",

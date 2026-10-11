@@ -45,7 +45,7 @@ git ls-remote --tags origin 'v*' 2>/dev/null | tail -5
 ```
 
 - **`tag` / `planned_tag` in JSON** = name `./release` would create — **not** an existing ref unless **`git_tag_on_merge`** is true.
-- **`stale_release_branches`:** merged `release/v*` **without** `hub-release-record.json` on the merge commit ([RCA 26-09-24](../../docs/rca/2026-09-24-release-resume-planned-tag-conflation.md)) — agent **deletes** those refs in Step 1A when fixing resume hygiene.
+- **`stale_release_branches`:** merged `release/v*` **without** `hub-release-record.json` on the merge commit ([RCA 26-09-24](../../../docs/rca/2026-09-24-release-resume-planned-tag-conflation.md)) — agent **deletes** those refs in Step 1A when fixing resume hygiene.
 - **`closed_release_branches`:** shipped release lines (git tag exists for that version) — **do not delete**; resume skips them for the next `./release`. Keep branch history unless the user asks to prune.
 
 | Phase | Agent path |
@@ -56,7 +56,7 @@ git ls-remote --tags origin 'v*' 2>/dev/null | tail -5
 
 Never tell the user to run `./release finish` or `prepare` — **`./release`** only.
 
-Never tell the operator to **ignore or reinterpret** resume JSON ([`jidoka-ssot-output.md`](../../.agents/instructions/jidoka-ssot-output.md)); fix `nlc_release_resume.py` / docs when fields contradict SSOT.
+Never tell the operator to **ignore or reinterpret** resume JSON ([`jidoka-ssot-output.md`](../../../.agents/instructions/jidoka-ssot-output.md)); fix `nlc_release_resume.py` / docs when fields contradict SSOT.
 
 ### 1 — Bound ship state
 
