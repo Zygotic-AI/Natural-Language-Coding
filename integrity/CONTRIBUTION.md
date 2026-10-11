@@ -96,7 +96,7 @@ Superseded content is marked, not deleted (charter R22).
 | [Action](../docs/TERMS.md#action) | How |
 |--------|-----|
 | Supersede a document | Add `<!-- SUPERSEDED by <path> as of <date> -->` at top; retain file |
-| Supersede a section | Add `**SUPERSEDED** by [<new-section>](<link>).` inline; retain text |
+| Supersede a section | Add `**SUPERSEDED** by [<new-section>](#).` inline; retain text |
 | Supersede an [ADR](../docs/TERMS.md#adr) | Status line: `Status: Superseded by ADR NNNN` |
 
 Deletion removes [audit](../docs/TERMS.md#audit) trail. Mark-as-superseded preserves context.

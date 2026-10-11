@@ -59,8 +59,8 @@ This aligns with: S7 (produce→fitness default-closed); P-016; KD-010 quality n
 
 ## Related
 
-- [ADR 0004](0004-produce-fitness-handoff.md) — Produce→fitness handoff default-closed (P-016)
-- [ADR 0001](0001-zero-variance-integrity.md) — Zero-variance integrity (P1–P7)
+- [ADR 0004](../../../adrs/0004-produce-fitness-handoff.md) — Produce→fitness handoff default-closed (P-016)
+- [ADR 0001](../../../adrs/0001-zero-variance-integrity.md) — Zero-variance integrity (P1–P7)
 - Charter §6 (Order of agent execution)
 - Charter S7 (Produce→fitness handoff default-closed)
 - Charter S8 / CS8 (this decision)

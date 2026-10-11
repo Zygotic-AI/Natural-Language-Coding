@@ -31,7 +31,7 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
 }
 $CloneUrl = "https://github.com/$NlcRepoSlug.git"
 $RepoDir = Join-Path $Tmp 'repo'
-git clone --depth 1 --branch $NlcRef $CloneUrl $RepoDir
+git -c core.autocrlf=false clone --depth 1 --branch $NlcRef $CloneUrl $RepoDir
 $ExecuteRemote = Join-Path $RepoDir 'goals\hub_install\execute.ps1'
 & $ExecuteRemote @args
 if ($LASTEXITCODE -ne $null -and $LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

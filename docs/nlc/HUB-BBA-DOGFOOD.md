@@ -34,7 +34,7 @@ Covered modules (tranche-1 emit-path):
 
 Enforced by `tools/fitness-hub-bba-interior-slice.py`. A missing or renamed marker fails the gate (default-closed).
 
-Remainder inventory: [`integrity/hub-x4-remainder.json`](../integrity/hub-x4-remainder.json) (emit-path-open + assert-only counts). Full noun/verb package rewrite of `tools/*.py` interiors remains parked.
+Remainder inventory: [`integrity/hub-x4-remainder.json`](../../integrity/hub-x4-remainder.json) (emit-path-open + assert-only counts). Full noun/verb package rewrite of `tools/*.py` interiors remains parked.
 
 ## Hub self-verify (A12 soft-green)
 
@@ -54,7 +54,7 @@ First true interior rewrite (not BOUNDARY-only): ADR 0023 rule family lives as a
 - Thin CLI adapters: `nlc_rule_marker.py`, `nlc_rule_coverage.py`, `nlc_rule_runner.py`, `nlc_rule_emit.py`
 - Gate: `tools/fitness-hub-x4-noun-pilot.py`
 
-Full rewrite of remaining `tools/*.py` stays open — see [`integrity/hub-x4-remainder.json`](../integrity/hub-x4-remainder.json).
+Full rewrite of remaining `tools/*.py` stays open — see [`integrity/hub-x4-remainder.json`](../../integrity/hub-x4-remainder.json).
 
 ### GateLedger (second pilot)
 
@@ -72,21 +72,21 @@ Still residual (not claimed closed): mass rewrite of assert/fitness-only `tools/
 
 First `other-or-lib` conversions (shared libs, not CLI): `markdown_plain`, `changeset` under `tools/nouns/` with thin `tools/*.py` adapters.
 
-- Progress SSOT: [`integrity/hub-x4-tranche-plan.json`](../integrity/hub-x4-tranche-plan.json) (`tranche_1_progress`)
+- Progress SSOT: [`integrity/hub-x4-tranche-plan.json`](../../integrity/hub-x4-tranche-plan.json) (`tranche_1_progress`)
 - Gates: `fitness-hub-x4-tranche-t1.py`, `fitness-hub-x4-noun-pilot.py` (inventory + pilot shape)
 
 ## v6 — tranche `x4-t2-assert-batch-a` (assert slice)
 
 First **70** `assert_only` landmines are noun packages under `tools/nouns/assert_*` with thin `tools/assert-*.py` adapters.
 
-- Progress SSOT: [`integrity/hub-x4-tranche-plan.json`](../integrity/hub-x4-tranche-plan.json) (`tranche_2_progress`)
+- Progress SSOT: [`integrity/hub-x4-tranche-plan.json`](../../integrity/hub-x4-tranche-plan.json) (`tranche_2_progress`)
 - Gates: `fitness-hub-x4-tranche-t2.py`, `fitness-hub-x4-noun-pilot.py`
 
 ## v7 — tranche `x4-t3-assert-batch-b` (assert completion)
 
 All **209** `assert_only` landmines are noun-backed (`assert_tranche_complete` in remainder inventory).
 
-- Progress SSOT: [`integrity/hub-x4-tranche-plan.json`](../integrity/hub-x4-tranche-plan.json) (`tranche_3_progress`)
+- Progress SSOT: [`integrity/hub-x4-tranche-plan.json`](../../integrity/hub-x4-tranche-plan.json) (`tranche_3_progress`)
 - Gates: `fitness-hub-x4-tranche-t3.py`, `fitness-hub-x4-noun-pilot.py`
 - Honest residual: `fitness-*.py` tool interiors not in the assert inventory bucket (see FINDINGS X4 row).
 
@@ -94,7 +94,7 @@ All **209** `assert_only` landmines are noun-backed (`assert_tranche_complete` i
 
 All hub `fitness-*.py` tools are noun packages under `tools/nouns/fitness_*` with thin adapters (`hub-x4-migrate-fitness-noun.py` + `hub-x4-refresh-inventory.py`).
 
-- Progress SSOT: [`integrity/hub-x4-tranche-plan.json`](../integrity/hub-x4-tranche-plan.json) (`tranche_4_progress`)
+- Progress SSOT: [`integrity/hub-x4-tranche-plan.json`](../../integrity/hub-x4-tranche-plan.json) (`tranche_4_progress`)
 - Gates: `fitness-hub-x4-tranche-t4.py`, `fitness-hub-x4-noun-pilot.py`
-- Inventory: `fitness_only` **0**, `fitness_tranche_complete` in [`integrity/hub-x4-remainder.json`](../integrity/hub-x4-remainder.json)
+- Inventory: `fitness_only` **0**, `fitness_tranche_complete` in [`integrity/hub-x4-remainder.json`](../../integrity/hub-x4-remainder.json)
 

@@ -6,6 +6,13 @@
         "command": ".cursor/hooks/nlc-planit-identity.sh",
         "failClosed": true
       }
+    ],
+    "preToolUse": [
+      {
+        "command": ".cursor/hooks/nlc-goal-write-gate.sh",
+        "matcher": "Write|Delete",
+        "failClosed": true
+      }
     ]
   }
 }

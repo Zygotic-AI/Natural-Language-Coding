@@ -26,4 +26,4 @@ Before **planning, RCA scope, skill design, or durable writes**, every blocking 
 
 ## Harness
 
-Cursor: [`.cursor/rules/take-me-literally.mdc`](../../.cursor/rules/take-me-literally.mdc). Other harnesses: this file via [`AGENTS.md`](../../AGENTS.md).
+Portable harnesses: this file via [`AGENTS.md`](../../AGENTS.md). Cursor may mirror it under `.cursor/rules/` when needed; **SSOT is this path**.

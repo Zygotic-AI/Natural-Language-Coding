@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/richardpickett/Natural-Language-Coding/integrity/schemas/hub-pack-registry.schema.json",
+  "$id": "https://github.com/Zygotic-AI/Natural-Language-Coding/integrity/schemas/hub-pack-registry.schema.json",
   "title": "Hub curated pack registry (v1)",
   "type": "object",
   "required": ["schema", "ssot", "policy", "packs"],

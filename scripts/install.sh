@@ -29,8 +29,8 @@ fi
 
 clone_url="https://github.com/${NLC_REPO_SLUG}.git"
 if [[ -n "${NLC_REF}" ]]; then
-  git clone --depth 1 --branch "${NLC_REF}" "${clone_url}" "${tmpdir}/repo"
+  git -c core.autocrlf=false clone --depth 1 --branch "${NLC_REF}" "${clone_url}" "${tmpdir}/repo"
 else
-  git clone --depth 1 "${clone_url}" "${tmpdir}/repo"
+  git -c core.autocrlf=false clone --depth 1 "${clone_url}" "${tmpdir}/repo"
 fi
 exec bash "${tmpdir}/repo/goals/hub_install/execute.sh" "$@"

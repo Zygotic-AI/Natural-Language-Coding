@@ -12,7 +12,7 @@ How the **[ACS](../../TERMS.md#acs) compile loop** ([`PROCESS.md`](PROCESS.md)) 
 
 **Skill entrypoint:** [`.agents/skills/planit/SKILL.md`](../../../.agents/skills/planit/SKILL.md) (Cursor: `.cursor/skills/planit`).
 
-**Org-global [Planit](../../TERMS.md#planit)** (`~/.agents/skills/planit`) remains the orchestrator for ai-vault-only routes (DSI, `local-*` maintainer skills). This repo skill is authoritative **here** for [ACS](../../TERMS.md#acs) + [BBP](../../TERMS.md#bbp) [hub](../../TERMS.md#hub) work.
+This repository’s [`.agents/skills/planit/SKILL.md`](../../../.agents/skills/planit/SKILL.md) is authoritative for [ACS](../../TERMS.md#acs) + [BBP](../../TERMS.md#bbp) [hub](../../TERMS.md#hub) and [adopter](../../TERMS.md#adopter) compile work here.
 
 ---
 

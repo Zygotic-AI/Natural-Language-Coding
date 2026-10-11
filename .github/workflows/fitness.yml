@@ -62,7 +62,6 @@ jobs:
         shell: pwsh
         run: |
           Set-ExecutionPolicy -Scope Process Bypass -Force
-          git config --global core.autocrlf false
           Set-Location $env:RUNNER_TEMP
           New-Item -ItemType Directory -Force -Path piped-empty | Out-Null
           Set-Location piped-empty

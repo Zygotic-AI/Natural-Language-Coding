@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # NLC Hub Audit (alias)
 
-**Use [`full-nlc-audit`](full-nlc-audit/SKILL.md)** — single entrypoint:
+**Use [`full-nlc-audit`](../full-nlc-audit/SKILL.md)** — single entrypoint:
 
 1. `python3 tools/full-nlc-audit.py --check --profile quick|full`
 2. Inference phases in [`full-nlc-audit/references/inference-phases.md`](../full-nlc-audit/references/inference-phases.md)
