@@ -1,8 +1,9 @@
 # ADR 0051 — Hub-own produce compiles NLC principles
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-11
 - Deciders: Human manager
+- Ratified-by: Human manager (hub-own produce principles ADR, 2026-10-11)
 - Class: F (integrity / hub produce), A (release stabilization scope)
 - Corpus: nlc
 - RCA: RCA 4 (agents weakening checks), root confirmed by the human manager 2026-10-11; the RCA record is kept outside this repository.
