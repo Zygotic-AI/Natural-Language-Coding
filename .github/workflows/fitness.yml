@@ -18,14 +18,4 @@ jobs:
         run: bash tools/ci-fitness.sh
 
       - name: NLC verify (policy + fingerprints)
-        env:
-          CI: "true"
-        run: |
-          python3 tools/nlc.py maintainer guide before-generate \
-            --scope hub_release --scope hub_install --scope hub_release_smoke \
-            --scope hub_fitness_check1 --scope hub_release_prep --scope hub_session
-          export NLC_BEFORE_GENERATE_STAMP_FRESH="$(
-            python3 -c "import json; print(json.load(open('.nlc/before-generate-stamp.json'))['at'])"
-          )"
-          python3 tools/sync-hub-content-tree-hash.py
-          python3 tools/nlc.py --project . verify
+        run: python3 tools/nlc.py --project . verify

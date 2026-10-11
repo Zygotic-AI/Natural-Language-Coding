@@ -4,8 +4,6 @@ from __future__ import annotations
 
 BOUNDARY = "bba-emit"
 
-import os
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -14,18 +12,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 
 
-def run_fitness(cwd: Path) -> int:
-    env = os.environ.copy()
-    env.setdefault("CI", "true")
-    env.setdefault("GITHUB_ACTIONS", "true")
-    env["NLC_CI_FITNESS_DEPTH"] = str(int(env.get("NLC_CI_FITNESS_DEPTH", "0") or "0") + 1)
+def run_releasable_release(cwd: Path) -> int:
+    """Same releasable release profile as ./nlc gate --profile release (no CI-only side effects)."""
     proc = subprocess.run(
-        [sys.executable, str(cwd / "tools" / "ci_fitness.py")],
+        [
+            sys.executable,
+            str(cwd / "tools" / "nlc_gate.py"),
+            "--profile",
+            "release",
+            "--tree",
+            ".",
+        ],
         cwd=str(cwd),
         capture_output=True,
         text=True,
         check=False,
-        env=env,
     )
     return proc.returncode
 
@@ -86,7 +87,7 @@ def main() -> int:
             check=True,
             capture_output=True,
         )
-        baseline = run_fitness(baseline_clone)
+        baseline = run_releasable_release(baseline_clone)
         clone = tmp_path / "full"
         subprocess.run(
             ["git", "clone", "--local", str(baseline_clone), str(clone)],
@@ -97,7 +98,7 @@ def main() -> int:
         if not trees_equal(baseline_clone, clone):
             print("ASSERT:FAIL rewrite drill changed HEAD tree content")
             return 1
-        rewritten = run_fitness(clone)
+        rewritten = run_releasable_release(clone)
         if rewritten != baseline:
             print(
                 f"ASSERT:FAIL fitness exit {baseline} on hub != {rewritten} after history rewrite"
@@ -105,20 +106,19 @@ def main() -> int:
             return 1
 
         shallow = tmp_path / "shallow"
-        shallow_src = ROOT if os.environ.get("GITHUB_ACTIONS") else baseline_clone
         subprocess.run(
-            ["git", "clone", "--depth", "1", "--local", str(shallow_src), str(shallow)],
+            ["git", "clone", "--depth", "1", "--local", str(baseline_clone), str(shallow)],
             check=True,
             capture_output=True,
         )
-        shallow_code = run_fitness(shallow)
+        shallow_code = run_releasable_release(shallow)
         if shallow_code != baseline:
             print(
                 f"ASSERT:FAIL fitness exit {baseline} on hub != {shallow_code} on depth-1 clone"
             )
             return 1
 
-    print(f"ASSERT:PASS history rewrite invariant (fitness exit {baseline})")
+    print(f"ASSERT:PASS history rewrite invariant (release profile exit {baseline})")
     return 0
 
 

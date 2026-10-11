@@ -11,7 +11,6 @@ from __future__ import annotations
 
 BOUNDARY = "bba-emit"
 
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -78,54 +77,9 @@ def charter_check1() -> None:
             )
 
 
-_CI_STAMP_SCOPES = [
-    "hub_release",
-    "hub_install",
-    "hub_release_smoke",
-    "hub_fitness_check1",
-    "hub_release_prep",
-    "hub_session",
-]
-
-
-def _ci_resync_content_hash() -> None:
-    if not os.environ.get("CI"):
-        return
-    subprocess.run(
-        [sys.executable, str(ROOT / "tools" / "sync-hub-content-tree-hash.py")],
-        cwd=str(ROOT),
-        check=False,
-    )
-
-
-def _refresh_before_generate_stamp_ci() -> None:
-    """Git checkout sets mtimes after stamp time; refresh on CI (RCA-1 verify profile)."""
-    if not os.environ.get("CI"):
-        return
-    argv = [sys.executable, str(ROOT / "tools" / "nlc.py"), "maintainer", "guide", "before-generate"]
-    for scope in _CI_STAMP_SCOPES:
-        argv.extend(["--scope", scope])
-    proc = subprocess.run(argv, cwd=str(ROOT), check=False)
-    if proc.returncode != 0:
-        fail("before-generate stamp (CI)")
-    stamp_path = ROOT / ".nlc" / "before-generate-stamp.json"
-    if stamp_path.is_file():
-        try:
-            import json
-
-            payload = json.loads(stamp_path.read_text(encoding="utf-8"))
-            at = payload.get("at")
-            if isinstance(at, str) and at:
-                os.environ["NLC_BEFORE_GENERATE_STAMP_FRESH"] = at
-        except json.JSONDecodeError:
-            pass
-    _ci_resync_content_hash()
-
-
 def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     """Hub compile fitness. Releasable verify profile runs only when requested (not from hub-ci-fitness gate)."""
     if include_releasable_verify:
-        _refresh_before_generate_stamp_ci()
         from nouns.releasable_gates.releasable_gates import run_profile
 
         print("=== releasable verify profile (SSOT) ===")
@@ -167,7 +121,6 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "release signed",
         [sys.executable, str(TOOLS / "assert-release-signed-passes.py")],
     )
-    _ci_resync_content_hash()
     run(
         "full-nlc-audit quick",
         [sys.executable, str(TOOLS / "assert-full-nlc-audit-quick-passes.py")],
@@ -683,14 +636,10 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "fitness-adr-approval",
         [sys.executable, str(TOOLS / "fitness-adr-approval.py")],
     )
-    fitness_depth = int(os.environ.get("NLC_CI_FITNESS_DEPTH", "0") or "0")
-    if fitness_depth == 0:
-        run(
-            "fitness-adr-record-gate",
-            [sys.executable, str(TOOLS / "fitness-adr-record-gate.py")],
-        )
-    else:
-        print("--- skip fitness-adr-record-gate (nested ci_fitness drill) ---")
+    run(
+        "fitness-adr-record-gate",
+        [sys.executable, str(TOOLS / "fitness-adr-record-gate.py")],
+    )
     run(
         "fitness-verb-set-lineage",
         [sys.executable, str(TOOLS / "fitness-verb-set-lineage.py")],
@@ -719,20 +668,27 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "assert-executable-kernel-exempt",
         [sys.executable, str(TOOLS / "assert-executable-kernel-exempt-fails.py")],
     )
-    if fitness_depth == 0:
-        print("=== RCA-1 releasable gate landmines ===")
-        run(
-            "assert-releasable-gate-list-duplicate",
-            [sys.executable, str(TOOLS / "assert-releasable-gate-list-duplicate-fails.py")],
-        )
-        run(
-            "assert-releasable-failure-without-reproduce",
-            [sys.executable, str(TOOLS / "assert-releasable-failure-without-reproduce-fails.py")],
-        )
-        run(
-            "assert-releasable-home-invariant",
-            [sys.executable, str(TOOLS / "assert-releasable-home-invariant-passes.py")],
-        )
+    print("=== RCA-1 releasable gate landmines ===")
+    run(
+        "assert-releasable-gate-list-duplicate",
+        [sys.executable, str(TOOLS / "assert-releasable-gate-list-duplicate-fails.py")],
+    )
+    run(
+        "assert-releasable-failure-without-reproduce",
+        [sys.executable, str(TOOLS / "assert-releasable-failure-without-reproduce-fails.py")],
+    )
+    run(
+        "assert-releasable-home-invariant",
+        [sys.executable, str(TOOLS / "assert-releasable-home-invariant-passes.py")],
+    )
+    run(
+        "assert-stale-committed-evidence",
+        [sys.executable, str(TOOLS / "assert-stale-committed-evidence-fails.py")],
+    )
+    run(
+        "assert-hub-only-fitness-scope",
+        [sys.executable, str(TOOLS / "assert-hub-only-fitness-scope-passes.py")],
+    )
     print("=== produce handoff preflight ===")
     from nlc_produce_package import preflight_handoff
 
@@ -748,8 +704,7 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
 
 def main() -> int:
     hub_prove()
-    depth = int(os.environ.get("NLC_CI_FITNESS_DEPTH", "0") or "0")
-    return run_ci_fitness_suite(include_releasable_verify=(depth == 0))
+    return run_ci_fitness_suite(include_releasable_verify=True)
 
 
 if __name__ == "__main__":

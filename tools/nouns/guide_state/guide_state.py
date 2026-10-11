@@ -67,12 +67,20 @@ def handoff_build(root: Path) -> None:
 
 
 def before_generate_ok(root: Path, scopes: list[str]) -> None:
+    sys_path = Path(__file__).resolve().parents[2]
+    import sys
+
+    if str(sys_path) not in sys.path:
+        sys.path.insert(0, str(sys_path))
+    from nouns.compliance.compliance import product_content_fingerprint
+
     _write_json(
         _nlc(root) / "before-generate-stamp.json",
         {
             "ok": True,
             "scopes": scopes,
             "at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "product_content_sha256": product_content_fingerprint(root),
         },
     )
 

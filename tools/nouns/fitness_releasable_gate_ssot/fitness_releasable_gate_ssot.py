@@ -53,6 +53,55 @@ def scan_forbidden_redirect() -> list[str]:
     return violations
 
 
+_EVIDENCE_REGEN_IN_CI = re.compile(
+    r"sync-hub-content-tree-hash|before-generate|NLC_BEFORE_GENERATE_STAMP_FRESH",
+    re.I,
+)
+
+
+def scan_ci_workflow_self_attesting() -> list[str]:
+    violations: list[str] = []
+    for rel in (".github/workflows/fitness.yml", ".github/workflows/release.yml"):
+        path = ROOT / rel
+        if not path.is_file():
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace")
+        in_verify = False
+        for line in text.splitlines():
+            if "verify" in line.lower() and "run:" in line:
+                in_verify = True
+            if in_verify and _EVIDENCE_REGEN_IN_CI.search(line):
+                violations.append(f"CI must not regenerate evidence before verify: {rel}")
+                break
+    return violations
+
+
+def scan_verdict_branching_in_gate_code() -> list[str]:
+    violations: list[str] = []
+    needles = (
+        'os.environ.get("CI")',
+        "os.environ.get('CI')",
+        "GITHUB_ACTIONS",
+        "NLC_BEFORE_GENERATE_STAMP_FRESH",
+        "NLC_CI_FITNESS_DEPTH",
+    )
+    for rel in (
+        "tools/nouns/ci_fitness/ci_fitness.py",
+        "tools/nouns/compliance/compliance.py",
+        "tools/nouns/verify/verify.py",
+        "tools/nouns/releasable_gates/releasable_gates.py",
+        "tools/nouns/release_audit/release_audit.py",
+    ):
+        path = ROOT / rel
+        if not path.is_file():
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for needle in needles:
+            if needle in text:
+                violations.append(f"gate code must not branch on environment: {rel} ({needle})")
+    return violations
+
+
 def wired_to_runner() -> list[str]:
     violations: list[str] = []
     ci = ROOT / "tools" / "nouns" / "ci_fitness" / "ci_fitness.py"
@@ -84,6 +133,8 @@ def main() -> int:
     violations.extend(scan_duplicate_profiles())
     violations.extend(scan_forbidden_redirect())
     violations.extend(wired_to_runner())
+    violations.extend(scan_ci_workflow_self_attesting())
+    violations.extend(scan_verdict_branching_in_gate_code())
     for item in violations:
         print(f"VIOLATION {item}")
     if violations:
