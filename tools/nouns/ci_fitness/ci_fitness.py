@@ -709,6 +709,22 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-gate-set-manifest-tamper-fails.py")],
     )
     run(
+        "assert-gate-set-closure-member-tamper-release-state",
+        [
+            sys.executable,
+            str(TOOLS / "assert-gate-set-closure-member-tamper-fails.py"),
+            "tools/nouns/release_state/release_state.py",
+        ],
+    )
+    run(
+        "assert-gate-set-closure-member-tamper-nlc-requirements",
+        [
+            sys.executable,
+            str(TOOLS / "assert-gate-set-closure-member-tamper-fails.py"),
+            "tools/nouns/nlc_requirements/__init__.py",
+        ],
+    )
+    run(
         "fitness-adr-record-gate",
         [sys.executable, str(TOOLS / "fitness-adr-record-gate.py")],
     )

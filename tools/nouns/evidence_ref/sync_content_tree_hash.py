@@ -15,7 +15,12 @@ HASH_PATH = ROOT / HASH_REL
 
 def _content_exclude_rel() -> set[str]:
     """Paths omitted from the hub content digest (self-describing hash + harness stamps)."""
-    return {HASH_REL, PLANIT_EVIDENCE_REL}
+    return {
+        HASH_REL,
+        PLANIT_EVIDENCE_REL,
+        # Gate-set manifest lists hub-content-tree-hash and itself; omit from digest to converge.
+        "integrity/gate-set-baseline.manifest.sha256",
+    }
 
 
 def content_digest_excluding(root: Path, exclude_rel: set[str]) -> str:

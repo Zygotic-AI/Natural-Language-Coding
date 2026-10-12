@@ -101,6 +101,23 @@ def main() -> int:
         if not fixture_edit_would_break_manifest(ROOT, fixture_rel, tampered):
             violations.append("fixture-edit-manifest: tampered fixture should break manifest")
 
+    gate_set_cases = ROOT / "tools/fixtures/owner-ratification-gate-set/cases.json"
+    if gate_set_cases.is_file():
+        from nouns.gate_set_manifest.gate_set_manifest import gate_set_manifest_errors
+
+        for case in json.loads(gate_set_cases.read_text(encoding="utf-8")):
+            name = case["name"]
+            rel = case["document_rel"]
+            doc = ROOT / rel
+            if not doc.is_file():
+                violations.append(f"{name}: missing {rel}")
+                continue
+            suffix = case.get("tamper_suffix", "# tamper\n").encode("utf-8")
+            tampered = doc.read_bytes() + suffix
+            errs = gate_set_manifest_errors(ROOT, overrides={rel: tampered})
+            if not errs:
+                violations.append(f"{name}: tampered {rel} expected NOT_MET got MET")
+
     gate_subject = ROOT / "tools/fixtures/hub-own/invalid-hub-own-gate-subject-same-actor.json"
     gs = json.loads(gate_subject.read_text(encoding="utf-8"))
     gs = {k: v for k, v in gs.items() if not str(k).startswith("_")}

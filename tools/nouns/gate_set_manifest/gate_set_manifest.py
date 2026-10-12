@@ -5,40 +5,93 @@ from __future__ import annotations
 BOUNDARY = "bba-emit"
 
 import hashlib
+import os
 from pathlib import Path
 
-from nouns.gate_set.gate_set import iter_gate_set_relative_paths
-from nouns.owner_sidecar.owner_sidecar import content_hash, verify_sidecar_p1
+from nouns.gate_set.gate_set import derive_gate_set_paths, iter_gate_set_relative_paths
+from nouns.owner_sidecar.owner_sidecar import content_hash, sidecar_path_for_document, verify_sidecar_p1
 
 MANIFEST_REL = "integrity/gate-set-baseline.manifest.sha256"
 
 
-def manifest_lines(root: Path) -> list[str]:
+def _file_bytes(root: Path, rel: str, overrides: dict[str, bytes] | None) -> bytes | None:
+    if overrides is not None and rel in overrides:
+        return overrides[rel]
+    file_path = root / rel
+    if file_path.is_symlink():
+        return os.readlink(file_path).encode("utf-8")
+    if file_path.is_file():
+        return file_path.read_bytes()
+    return None
+
+
+def _other_manifest_lines(root: Path, *, overrides: dict[str, bytes] | None) -> list[str]:
     lines: list[str] = []
     for rel in iter_gate_set_relative_paths(root):
-        file_path = root / rel
-        if not file_path.is_file():
+        if rel == MANIFEST_REL:
             continue
-        digest = content_hash(file_path.read_bytes())
-        lines.append(f"{rel} {digest}")
+        body = _file_bytes(root, rel, overrides)
+        if body is None:
+            continue
+        lines.append(f"{rel} {content_hash(body)}")
     return sorted(lines)
 
 
-def manifest_bytes(root: Path) -> bytes:
-    return ("\n".join(manifest_lines(root)) + "\n").encode("utf-8")
+def manifest_lines(root: Path, *, overrides: dict[str, bytes] | None = None) -> list[str]:
+    rels = set(iter_gate_set_relative_paths(root))
+    other = _other_manifest_lines(root, overrides=overrides)
+    if MANIFEST_REL not in rels:
+        return other
+    # Self line digests all other member lines (not the manifest file bytes on disk).
+    without_self = ("\n".join(other) + "\n").encode("utf-8")
+    self_digest = content_hash(without_self)
+    return sorted(other + [f"{MANIFEST_REL} {self_digest}"])
 
 
-def gate_set_manifest_errors(root: Path) -> list[str]:
-    """MET when ALL OF: manifest bytes match tree; sidecar passes P1 on manifest."""
+def manifest_bytes(root: Path, *, overrides: dict[str, bytes] | None = None) -> bytes:
+    return ("\n".join(manifest_lines(root, overrides=overrides)) + "\n").encode("utf-8")
+
+
+def _manifest_path_set(manifest_bytes_on_disk: bytes) -> set[str]:
+    paths: set[str] = set()
+    for line in manifest_bytes_on_disk.decode("utf-8", errors="replace").splitlines():
+        parts = line.strip().split()
+        if len(parts) == 2:
+            paths.add(parts[0])
+    return paths
+
+
+def gate_set_manifest_errors(
+    root: Path, *, overrides: dict[str, bytes] | None = None
+) -> list[str]:
+    """MET when ALL OF: manifest path set == derive closure; bytes match tree; sidecar P1 if present."""
     errors: list[str] = []
     manifest_path = root / MANIFEST_REL
     if not manifest_path.is_file():
         return [f"missing {MANIFEST_REL}"]
-    expected = manifest_bytes(root)
-    actual = manifest_path.read_bytes()
-    if actual != expected:
+    derived = set(derive_gate_set_paths(root))
+    on_disk = manifest_path.read_bytes()
+    manifest_paths = _manifest_path_set(on_disk)
+    if manifest_paths != derived:
+        only_derived = sorted(derived - manifest_paths)
+        only_manifest = sorted(manifest_paths - derived)
+        if only_derived:
+            errors.append(
+                f"{MANIFEST_REL}: missing {len(only_derived)} derived gate-set path(s); "
+                f"first={only_derived[0]!r}"
+            )
+        if only_manifest:
+            errors.append(
+                f"{MANIFEST_REL}: {len(only_manifest)} extra path(s) not in derived closure; "
+                f"first={only_manifest[0]!r}"
+            )
+    expected = manifest_bytes(root, overrides=overrides)
+    if on_disk != expected:
         errors.append(f"{MANIFEST_REL}: bytes do not match current gate-set tree")
-    errors.extend(verify_sidecar_p1(root, MANIFEST_REL))
+    if overrides is None:
+        asc_rel = sidecar_path_for_document(MANIFEST_REL)
+        if (root / asc_rel).is_file():
+            errors.extend(verify_sidecar_p1(root, MANIFEST_REL))
     return errors
 
 
@@ -51,9 +104,10 @@ def path_in_manifest_holds(root: Path, rel_path: str) -> bool:
         parts = line.strip().split()
         if len(parts) == 2 and parts[0] == rel:
             file_path = root / rel
-            if not file_path.is_file():
+            body = _file_bytes(root, rel, None)
+            if body is None:
                 return False
-            return content_hash(file_path.read_bytes()) == parts[1]
+            return content_hash(body) == parts[1]
     return False
 
 

@@ -1,0 +1,12 @@
+[
+  {
+    "name": "release-state-closure-member-tamper",
+    "document_rel": "tools/nouns/release_state/release_state.py",
+    "tamper_suffix": "# tamper\n"
+  },
+  {
+    "name": "nlc-requirements-init-closure-member-tamper",
+    "document_rel": "tools/nouns/nlc_requirements/__init__.py",
+    "tamper_suffix": "# tamper\n"
+  }
+]
