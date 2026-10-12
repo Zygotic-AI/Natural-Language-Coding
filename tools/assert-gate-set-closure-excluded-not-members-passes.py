@@ -2,6 +2,7 @@
 """Landmine: v2 closure must not over-include root/doc paths (PM out-cases)."""
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -10,16 +11,15 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 from nouns.gate_set.gate_set import is_gate_set_path  # noqa: E402
 
-# PM closure v2 out-cases at 23a11c8 (closure.txt removed on branch).
-OUT_CASES = (
-    "LICENSE",
-    "MANIFESTO.md",
-    "HOLES.md",
-)
+CASES = ROOT / "tools/fixtures/owner-ratification-gate-set/out-cases.json"
 
 
 def main() -> int:
-    members = [rel for rel in OUT_CASES if is_gate_set_path(ROOT, rel)]
+    if not CASES.is_file():
+        print(f"ASSERT:FAIL missing {CASES.relative_to(ROOT)}")
+        return 1
+    out_cases = json.loads(CASES.read_text(encoding="utf-8")).get("out_cases") or []
+    members = [rel for rel in out_cases if is_gate_set_path(ROOT, rel)]
     if members:
         print(f"ASSERT:FAIL over-included paths in gate set: {members}")
         return 1
