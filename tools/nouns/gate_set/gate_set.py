@@ -1,18 +1,18 @@
 """ADR 0051 gate-set path enumeration (SSOT for S-GATE-SET-REGISTRY).
 
-Membership: tracked paths that grade hub/adopter work in CI (primary: invoked by
-hub compile fitness + releasable gate argv), plus verifier/orchestration paths.
-Documented exclusions are not gate-set members.
+Membership equals the transitive load closure of everything CI runs (computed,
+never hand-kept). Documented exclusions are not gate-set members.
 """
 
 from __future__ import annotations
 
 BOUNDARY = "bba-emit"
 
-import json
+import ast
+import fnmatch
 import re
 import subprocess
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 # Intentional exclusions (not grading gates); reason per entry.
 GATE_SET_EXCLUSIONS: dict[str, str] = {
@@ -21,26 +21,9 @@ GATE_SET_EXCLUSIONS: dict[str, str] = {
     "reviews/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
 }
 
-GATE_SET_INFRASTRUCTURE: tuple[str, ...] = (
-    "tools/ci_fitness.py",
-    "tools/ci-fitness.sh",
-    "tools/nouns/ci_fitness/ci_fitness.py",
-    "tools/generate-gate-set-baseline-manifest.py",
-    "integrity/releasable-gates.json",
-    ".github/workflows/fitness.yml",
-    ".github/workflows/release.yml",
-    ".github/workflows/history-rewrite-invariant.yml",
-)
-
-GATE_SET_VERIFIER_PREFIXES: tuple[str, ...] = (
-    "tools/nouns/owner_sidecar/",
-    "tools/nouns/gate_set/",
-    "tools/nouns/gate_set_manifest/",
-    "tools/nouns/fitness_adr_owner_sidecar/",
-    "tools/nouns/fitness_gate_set_manifest/",
-    "tools/nouns/fitness_owner_key_trust/",
-    "tools/nouns/fitness_owner_ratification_known_bad/",
-)
+_EXCL_PREFIXES = tuple(GATE_SET_EXCLUSIONS.keys())
+_BASES = ("", "tools/", "tools/nouns/")
+_TOKEN = re.compile(r"[A-Za-z0-9_.\-/*]+")
 
 
 def _git_tracked_files(root: Path) -> list[str]:
@@ -53,11 +36,17 @@ def _git_tracked_files(root: Path) -> list[str]:
     )
     if proc.returncode != 0:
         return []
-    return [line.strip().replace("\\", "/") for line in (proc.stdout or "").splitlines() if line.strip()]
+    out: list[str] = []
+    for line in (proc.stdout or "").splitlines():
+        line = line.strip().replace("\\", "/")
+        if not line or "__pycache__" in line or line.endswith(".pyc"):
+            continue
+        out.append(line)
+    return sorted(out)
 
 
 def _is_excluded(rel: str) -> bool:
-    for prefix, _reason in GATE_SET_EXCLUSIONS.items():
+    for prefix in _EXCL_PREFIXES:
         if rel == prefix.rstrip("/") or rel.startswith(prefix):
             return True
     if "/__pycache__/" in rel or rel.endswith(".pyc"):
@@ -65,125 +54,175 @@ def _is_excluded(rel: str) -> bool:
     return False
 
 
-def _prefix_gate_set(rel: str) -> bool:
-    if _is_excluded(rel):
-        return False
-    if rel.startswith("tools/nouns/fitness_") or rel.startswith("tools/nouns/assert_"):
-        return True
-    if rel.startswith("tools/fitness-") and rel.endswith(".py"):
-        return True
-    if rel.startswith("tools/assert-") and rel.endswith(".py"):
-        return True
-    name = rel.rsplit("/", 1)[-1]
-    if rel.startswith("integrity/owner-keys/"):
-        return True
-    if rel.startswith("integrity/") and "EXCLUSIONS" in name:
-        return True
-    if rel.startswith("integrity/") and name.endswith("-exclusions.json"):
-        return True
-    if rel == "integrity/releasable-gates.json":
-        return True
-    for prefix in GATE_SET_VERIFIER_PREFIXES:
-        if rel.startswith(prefix):
-            return True
-    if rel in GATE_SET_INFRASTRUCTURE:
-        return True
-    return False
+def _norm_path(p: str) -> str:
+    out: list[str] = []
+    for part in p.split("/"):
+        if part in ("", "."):
+            continue
+        if part == "..":
+            if out:
+                out.pop()
+            continue
+        out.append(part)
+    return "/".join(out)
 
 
-def _paths_from_ci_fitness_source(root: Path) -> set[str]:
-    rels: set[str] = set()
-    src = (root / "tools/nouns/ci_fitness/ci_fitness.py").read_text(encoding="utf-8")
-    for match in re.finditer(r'TOOLS / "([^"]+\.py)"', src):
-        rels.add(f"tools/{match.group(1)}")
-    for match in re.finditer(r'TOOLS / "([^"]+)"', src):
-        name = match.group(1)
-        if name.endswith(".py"):
-            rels.add(f"tools/{name}")
-    # Dynamic landmine glob: assert-*-fails.py
-    tools = root / "tools"
-    if tools.is_dir():
-        for path in tools.glob("assert-*-fails.py"):
-            rels.add(str(path.relative_to(root)).replace("\\", "/"))
-        for path in tools.glob("fitness-*.py"):
-            rels.add(str(path.relative_to(root)).replace("\\", "/"))
-    for rel in GATE_SET_INFRASTRUCTURE:
-        rels.add(rel)
-    # Noun packages backing each fitness/assert adapter
-    for rel in list(rels):
-        if rel.startswith("tools/fitness-") and rel.endswith(".py"):
-            stem = rel[len("tools/fitness-") : -3].replace("-", "_")
-            prefix = f"tools/nouns/fitness_{stem}/"
-            for tracked in _git_tracked_files(root):
-                if tracked.startswith(prefix):
-                    rels.add(tracked)
-        if rel.startswith("tools/assert-") and rel.endswith(".py"):
-            stem = rel[len("tools/assert-") : -3].replace("-", "_")
-            prefix = f"tools/nouns/assert_{stem}/"
-            for tracked in _git_tracked_files(root):
-                if tracked.startswith(prefix):
-                    rels.add(tracked)
-    return rels
+def _closure_dirs(tracked: list[str]) -> dict[str, list[str]]:
+    dirs: dict[str, list[str]] = {}
+    for f in tracked:
+        parts = f.split("/")
+        for i in range(1, len(parts)):
+            dirs.setdefault("/".join(parts[:i]), []).append(f)
+    return dirs
 
 
-def _paths_from_releasable_gates(root: Path) -> set[str]:
-    rels: set[str] = set()
-    manifest = root / "integrity/releasable-gates.json"
-    if not manifest.is_file():
-        return rels
-    data = json.loads(manifest.read_text(encoding="utf-8"))
-    for gate in (data.get("gates") or {}).values():
-        argv = gate.get("argv") or []
-        for part in argv:
-            if isinstance(part, str) and part.endswith(".py"):
-                name = Path(part).name
-                rels.add(f"tools/{name}")
-    for name in data.get("hub_only_fitness") or []:
-        if isinstance(name, str) and name.endswith(".py"):
-            rels.add(f"tools/{name}")
-    return rels
+def _resolve_ref(s: str, here: str, tracked: set[str], dirs: dict[str, list[str]]) -> set[str]:
+    s = s.strip().strip("'\"").lstrip("$").replace("\\", "/")
+    if not s or len(s) > 300 or s in (".", "/"):
+        return set()
+    hits: set[str] = set()
+    for base in (here + "/", *_BASES):
+        c = _norm_path(base + s)
+        if not c:
+            continue
+        if "*" in c:
+            hits |= {f for f in tracked if fnmatch.fnmatchcase(f, c)}
+        elif c in tracked:
+            hits.add(c)
+        elif c in dirs and "/" in c:
+            hits |= set(dirs[c])
+    return hits
 
 
+def _mod_files(
+    dotted: str, here: str, level: int, tracked: set[str]
+) -> set[str]:
+    out: set[str] = set()
+    if level:
+        base = here.split("/")
+        base = base[: len(base) - (level - 1)] if level > 1 else base
+        bases = ["/".join(base) + "/"]
+    else:
+        bases = [here + "/", *_BASES]
+    path = dotted.replace(".", "/")
+    for b in bases:
+        c = _norm_path(b + path)
+        for cand in (c + ".py", c + "/__init__.py"):
+            if cand in tracked:
+                out.add(cand)
+    return out
 
-def _paths_from_gate_specimens(root: Path, tracked: set[str]) -> set[str]:
-    """Known-bad, landmine, and expected pass/fail specimen bytes gates read."""
-    members: set[str] = set()
-    for rel in tracked:
-        if rel.startswith("tools/fixtures/"):
-            members.add(rel)
-        if rel.startswith("tools/examples/"):
-            members.add(rel)
-        if rel.startswith("examples/"):
-            members.add(rel)
-    return members
+
+def _path_chain(node: ast.AST) -> str | None:
+    if isinstance(node, ast.Constant) and isinstance(node.value, str):
+        return node.value
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div):
+        left, right = _path_chain(node.left), _path_chain(node.right)
+        if right is None:
+            return None
+        return right if left is None else left + "/" + right
+    return None
+
+
+def _py_edges(root: Path, rel: str, tracked: set[str], dirs: dict[str, list[str]]) -> set[str]:
+    here = str(PurePosixPath(rel).parent)
+    try:
+        tree = ast.parse((root / rel).read_text(encoding="utf-8"))
+    except Exception:
+        return set()
+    out: set[str] = set()
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Import):
+            for a in n.names:
+                parts = a.name.split(".")
+                for i in range(1, len(parts) + 1):
+                    out |= _mod_files(".".join(parts[:i]), here, 0, tracked)
+        elif isinstance(n, ast.ImportFrom):
+            m = n.module or ""
+            parts = m.split(".") if m else []
+            for i in range(1, len(parts) + 1):
+                out |= _mod_files(".".join(parts[:i]), here, n.level, tracked)
+            for a in n.names:
+                out |= _mod_files((m + "." if m else "") + a.name, here, n.level, tracked)
+        elif isinstance(n, ast.BinOp) and isinstance(n.op, ast.Div):
+            s = _path_chain(n)
+            if s:
+                out |= _resolve_ref(s, here, tracked, dirs)
+        elif isinstance(n, ast.Constant) and isinstance(n.value, str) and "\n" not in n.value:
+            if "/" in n.value or "." in n.value:
+                out |= _resolve_ref(n.value, here, tracked, dirs)
+    return out
+
+
+def _text_edges(root: Path, rel: str, tracked: set[str], dirs: dict[str, list[str]]) -> set[str]:
+    here = str(PurePosixPath(rel).parent)
+    try:
+        txt = (root / rel).read_text(encoding="utf-8", errors="replace")
+    except Exception:
+        return set()
+    out: set[str] = set()
+    for tok in _TOKEN.findall(txt):
+        if "/" in tok or tok.endswith((".py", ".sh", ".json")):
+            out |= _resolve_ref(tok, here, tracked, dirs)
+    return out
+
+
+def _pkg_edges(rel: str, tracked: set[str], dirs: dict[str, list[str]]) -> set[str]:
+    out: set[str] = set()
+    parts = rel.split("/")
+    for i in range(1, len(parts)):
+        d = "/".join(parts[:i])
+        if d + "/__init__.py" in tracked:
+            out.add(d + "/__init__.py")
+    d = "/".join(parts[:-1])
+    if d + "/__init__.py" in tracked:
+        out |= {
+            x
+            for x in dirs.get(d, [])
+            if not x.endswith(".py") or x.count("/") > d.count("/") + 1
+        }
+    return out
+
+
+def derive_gate_set_paths(root: Path) -> list[str]:
+    """Transitive load closure of CI workflow seeds (sorted repo-relative paths)."""
+    tracked_list = _git_tracked_files(root)
+    tracked = set(tracked_list)
+    dirs = _closure_dirs(tracked_list)
+    seeds = {f for f in tracked if f.startswith(".github/workflows/")}
+    todo, seen = list(seeds), set()
+    while todo:
+        f = todo.pop()
+        if f in seen or _is_excluded(f):
+            continue
+        seen.add(f)
+        if f.endswith(".py"):
+            e = _py_edges(root, f, tracked, dirs) | _pkg_edges(f, tracked, dirs)
+        elif f.endswith((".yml", ".yaml", ".sh")):
+            e = _text_edges(root, f, tracked, dirs)
+        else:
+            e = set()
+        todo.extend(x for x in e if x not in seen)
+    proc = subprocess.run(
+        ["sort"],
+        input="\n".join(seen) + ("\n" if seen else ""),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        return sorted(seen)
+    return [line for line in (proc.stdout or "").splitlines() if line]
+
 
 def iter_gate_set_relative_paths(root: Path) -> list[str]:
     """Return sorted repo-relative tracked gate-set members."""
-    tracked = set(_git_tracked_files(root))
-    members: set[str] = set()
-    for rel in tracked:
-        if _prefix_gate_set(rel):
-            members.add(rel)
-    members.update(_paths_from_ci_fitness_source(root) & tracked)
-    members.update(_paths_from_releasable_gates(root) & tracked)
-    for prefix in GATE_SET_VERIFIER_PREFIXES:
-        for rel in tracked:
-            if rel.startswith(prefix):
-                members.add(rel)
-    for rel in GATE_SET_INFRASTRUCTURE:
-        if rel in tracked:
-            members.add(rel)
-    for rel in tracked:
-        if rel.startswith("integrity/owner-keys/"):
-            members.add(rel)
-    members.update(_paths_from_gate_specimens(root, tracked))
-    members = {rel for rel in members if not _is_excluded(rel)}
-    return sorted(members)
+    return derive_gate_set_paths(root)
 
 
 def is_gate_set_path(root: Path, rel_posix: str) -> bool:
     normalized = rel_posix.replace("\\", "/").lstrip("./")
-    return normalized in set(iter_gate_set_relative_paths(root))
+    return normalized in set(derive_gate_set_paths(root))
 
 
 def gate_set_category_counts(root: Path) -> dict[str, int]:
@@ -200,7 +239,7 @@ def gate_set_category_counts(root: Path) -> dict[str, int]:
         "releasable_ssot": 0,
         "workflows": 0,
     }
-    for rel in iter_gate_set_relative_paths(root):
+    for rel in derive_gate_set_paths(root):
         if rel.startswith("tools/nouns/fitness_"):
             counts["fitness_nouns"] += 1
         elif rel.startswith("tools/nouns/assert_"):
@@ -227,8 +266,8 @@ def gate_set_category_counts(root: Path) -> dict[str, int]:
             or rel.startswith("tools/nouns/fitness_adr_owner")
             or rel.startswith("tools/nouns/fitness_gate_set")
             or rel.startswith("tools/nouns/fitness_owner")
-            or rel in GATE_SET_INFRASTRUCTURE
             or rel == "tools/nouns/ci_fitness/ci_fitness.py"
+            or rel.startswith("tools/ci")
         ):
             counts["verifier_orchestration"] += 1
     return counts
