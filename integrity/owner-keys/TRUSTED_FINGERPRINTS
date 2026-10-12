@@ -1,0 +1,4 @@
+# In-force owner ratification keys (OpenPGP fingerprints, hex, no spaces).
+# Used by hub approval verification (ADR 0052). One fingerprint per line.
+# Key changes require a clearsigned statement from a currently listed fingerprint.
+9D1BD57770FC3A1DE84702750AFD22B063AE01BC
