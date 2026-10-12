@@ -37,7 +37,7 @@ The signed artifact is committed **unchanged** beside the document:
 
 Example: `adrs/0052-owner-openpgp-ratification-amends-0051.approval.asc` next to this file.
 
-**Zyprompt consistency:** The document **Status** line is **Accepted** before merge. CI (step 2) will **NOT_MET** any `Status: Accepted` document lacking a valid sidecar whose **Decision** matches **Status** and whose **Content-SHA256** matches the file. Until the owner pastes the sidecar, the PR stays unmergeable under that gate.
+**Zyprompt consistency:** The document **Status** line is **Accepted** before merge. After step 2 lands, CI marks NOT_MET any document whose Status is Accepted unless a sidecar file `<document-path>.approval.asc` sits beside it and all three hold: (a) the sidecar is a valid clearsignature from a pinned fingerprint; (b) the sidecar's Content-SHA256 equals the SHA-256 of the document file; (c) the sidecar's Decision equals the document's Status. Until step 2 lands, no CI check enforces this; the PM holds the merge of any Accepted document until its sidecar is committed and the PM has verified it with an out-of-repo copy of the owner key.
 
 ## Decision
 
