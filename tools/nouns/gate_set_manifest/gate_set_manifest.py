@@ -68,3 +68,24 @@ def gate_paths_manifest_errors(root: Path, gate_paths: list[str]) -> list[str]:
         if not path_in_manifest_holds(root, rel):
             errors.append(f"{rel}: not covered by ratified gate-set manifest")
     return errors
+
+
+def manifest_member_digest(root: Path, rel_path: str) -> str | None:
+    """SHA-256 recorded in manifest for rel_path, or None if absent."""
+    manifest_path = root / MANIFEST_REL
+    if not manifest_path.is_file():
+        return None
+    rel = rel_path.replace("\\", "/").lstrip("./")
+    for line in manifest_path.read_text(encoding="utf-8").splitlines():
+        parts = line.strip().split()
+        if len(parts) == 2 and parts[0] == rel:
+            return parts[1]
+    return None
+
+
+def fixture_edit_would_break_manifest(root: Path, rel_path: str, tampered: bytes) -> bool:
+    """True when tampered bytes would NOT match ratified manifest (NOT_MET if on disk)."""
+    recorded = manifest_member_digest(root, rel_path)
+    if recorded is None:
+        return True
+    return content_hash(tampered) != recorded

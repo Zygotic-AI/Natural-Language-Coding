@@ -16,12 +16,9 @@ from pathlib import Path
 
 # Intentional exclusions (not grading gates); reason per entry.
 GATE_SET_EXCLUSIONS: dict[str, str] = {
-    "tools/fixtures/": "known-bad and landmine fixture bytes; graded by gates, not gates themselves",
-    "tools/examples/": "adopter specimen trees executed by gates, not gate logic",
-    "examples/": "adopter example trees under test, not hub gate implementations",
-    "docs/history/": "provenance (ADR 0051 table)",
-    "docs/rca/": "provenance (ADR 0051 table)",
-    "reviews/": "provenance (ADR 0051 table)",
+    "docs/history/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
+    "docs/rca/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
+    "reviews/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
 }
 
 GATE_SET_INFRASTRUCTURE: tuple[str, ...] = (
@@ -147,6 +144,19 @@ def _paths_from_releasable_gates(root: Path) -> set[str]:
     return rels
 
 
+
+def _paths_from_gate_specimens(root: Path, tracked: set[str]) -> set[str]:
+    """Known-bad, landmine, and expected pass/fail specimen bytes gates read."""
+    members: set[str] = set()
+    for rel in tracked:
+        if rel.startswith("tools/fixtures/"):
+            members.add(rel)
+        if rel.startswith("tools/examples/"):
+            members.add(rel)
+        if rel.startswith("examples/"):
+            members.add(rel)
+    return members
+
 def iter_gate_set_relative_paths(root: Path) -> list[str]:
     """Return sorted repo-relative tracked gate-set members."""
     tracked = set(_git_tracked_files(root))
@@ -166,6 +176,7 @@ def iter_gate_set_relative_paths(root: Path) -> list[str]:
     for rel in tracked:
         if rel.startswith("integrity/owner-keys/"):
             members.add(rel)
+    members.update(_paths_from_gate_specimens(root, tracked))
     members = {rel for rel in members if not _is_excluded(rel)}
     return sorted(members)
 
@@ -183,6 +194,8 @@ def gate_set_category_counts(root: Path) -> dict[str, int]:
         "assert_adapters": 0,
         "verifier_orchestration": 0,
         "owner_keys": 0,
+        "gate_specimens_fixtures": 0,
+        "gate_specimens_examples": 0,
         "exclusions_registry": 0,
         "releasable_ssot": 0,
         "workflows": 0,
@@ -196,6 +209,10 @@ def gate_set_category_counts(root: Path) -> dict[str, int]:
             counts["fitness_adapters"] += 1
         elif rel.startswith("tools/assert-"):
             counts["assert_adapters"] += 1
+        elif rel.startswith("tools/fixtures/"):
+            counts["gate_specimens_fixtures"] += 1
+        elif rel.startswith("examples/") or rel.startswith("tools/examples/"):
+            counts["gate_specimens_examples"] += 1
         elif rel.startswith("integrity/owner-keys/"):
             counts["owner_keys"] += 1
         elif rel.startswith(".github/workflows/"):

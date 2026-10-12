@@ -90,6 +90,17 @@ def main() -> int:
     if ok:
         violations.append(f"ci-only-exit: expected NOT_MET got pass ({reason})")
 
+    from nouns.gate_set_manifest.gate_set_manifest import fixture_edit_would_break_manifest, path_in_manifest_holds
+
+    fixture_rel = "tools/fixtures/hub-own/valid-hub-own-produce-package.json"
+    fixture_path = ROOT / fixture_rel
+    if not path_in_manifest_holds(ROOT, fixture_rel):
+        violations.append("fixture-edit-manifest: specimen not in ratified manifest")
+    elif fixture_path.is_file():
+        tampered = fixture_path.read_bytes() + b"\n# gate-set fixture tamper\n"
+        if not fixture_edit_would_break_manifest(ROOT, fixture_rel, tampered):
+            violations.append("fixture-edit-manifest: tampered fixture should break manifest")
+
     gate_subject = ROOT / "tools/fixtures/hub-own/invalid-hub-own-gate-subject-same-actor.json"
     gs = json.loads(gate_subject.read_text(encoding="utf-8"))
     gs = {k: v for k, v in gs.items() if not str(k).startswith("_")}
