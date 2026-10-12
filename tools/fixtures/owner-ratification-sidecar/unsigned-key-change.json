@@ -1,6 +1,0 @@
-{
-  "expect_not_met": true,
-  "rel": "integrity/owner-keys/TRUSTED_FINGERPRINTS",
-  "baseline_digest": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
-  "current_digest": "dfdad44a8f49234f23ba032133494870f47923435e189e3611f4a2f666307c40"
-}

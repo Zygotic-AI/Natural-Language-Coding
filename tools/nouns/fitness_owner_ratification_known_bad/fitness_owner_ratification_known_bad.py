@@ -57,21 +57,31 @@ def main() -> int:
                 if errs:
                     violations.append(f"{name}: expected MET got {errs}")
 
-    key_case = FIX / "unsigned-key-change.json"
-    if key_case.is_file():
-        spec = json.loads(key_case.read_text(encoding="utf-8"))
-        if spec.get("expect_not_met"):
-            # Simulate changed TRUSTED_FINGERPRINTS without sidecar via helper
-            from nouns.fitness_owner_key_trust.fitness_owner_key_trust import key_file_change_errors
+    from nouns.fitness_owner_key_trust.fitness_owner_key_trust import _trusted_before, _merge_base, DEFAULT_BASE_REF
+    from nouns.gate_set_manifest.gate_set_manifest import MANIFEST_REL
+    from nouns.owner_sidecar.owner_sidecar import sidecar_path_for_document, verify_sidecar_with_trusted_set
+    import tempfile
 
-            sim_errors = key_file_change_errors(
-                ROOT,
-                rel=spec["rel"],
-                baseline_digest=spec["baseline_digest"],
-                current_digest=spec["current_digest"],
-            )
-            if not sim_errors:
-                violations.append("unsigned-key-change: expected NOT_MET got MET")
+    base_rev = _merge_base(ROOT, DEFAULT_BASE_REF)
+    if base_rev:
+        trusted_before, _ = _trusted_before(ROOT, base_rev)
+        wrong_asc = FIX / "manifest-wrong-key.approval.asc"
+        if wrong_asc.is_file() and trusted_before:
+            with tempfile.TemporaryDirectory() as tmp:
+                from nouns.fitness_owner_key_trust.fitness_owner_key_trust import _git_show, OWNER_KEY_REL
+                base_key = _git_show(ROOT, base_rev, OWNER_KEY_REL)
+                if base_key:
+                    kp = Path(tmp) / "base.asc"
+                    kp.write_bytes(base_key)
+                    errs = verify_sidecar_with_trusted_set(
+                        ROOT,
+                        MANIFEST_REL,
+                        wrong_asc,
+                        trusted_fingerprints=trusted_before,
+                        key_import_paths=[kp],
+                    )
+                    if not errs:
+                        violations.append("key-rotation-wrong-signer: expected NOT_MET got MET")
 
     ci_fixture = ROOT / "tools/fixtures/hub-own/invalid-hub-own-ci-only-exit.json"
     data = json.loads(ci_fixture.read_text(encoding="utf-8"))
