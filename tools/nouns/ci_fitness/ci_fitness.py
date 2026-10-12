@@ -11,6 +11,7 @@ from __future__ import annotations
 
 BOUNDARY = "bba-emit"
 
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -22,10 +23,14 @@ from nouns.field_write_bypass_fixtures.field_write_bypass_fixtures import (  # n
     O9A_BYPASS_FIXTURE_DIRS,
 )
 TOOLS = ROOT / "tools"
+_CI_FAILURES: list[str] = []
 
 
 def fail(msg: str) -> None:
     print(f"CI:FAIL {msg}")
+    if os.environ.get("CI_FITNESS_CONTINUE") == "1":
+        _CI_FAILURES.append(msg)
+        return
     sys.exit(1)
 
 
@@ -798,13 +803,20 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     if handoff != 0:
         fail("produce preflight")
 
+    if _CI_FAILURES:
+        print("=== CI fitness failures (continue mode) ===")
+        for item in _CI_FAILURES:
+            print(f"CI:FAIL {item}")
+        return 1
     print("CI:MET")
     return 0
 
 
 def main() -> int:
+    _CI_FAILURES.clear()
     hub_prove()
-    return run_ci_fitness_suite(include_releasable_verify=True)
+    code = run_ci_fitness_suite(include_releasable_verify=True)
+    return code
 
 
 if __name__ == "__main__":
