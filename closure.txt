@@ -119,6 +119,7 @@ agents/ship-role/verbs.md
 agents/standards-steward/AGENT.md
 agents/standards-steward/verbs.md
 CHARTER.md
+closure.txt
 content-types/HOW-TO-ADD.md
 .cursor/environment.json
 .cursor/hooks.json
@@ -862,6 +863,7 @@ tools/assert-field-write-bypass-fails.py
 tools/assert-full-nlc-audit-emit-checklist-passes.py
 tools/assert-full-nlc-audit-quick-passes.py
 tools/assert-gate-record-describe-passes.py
+tools/assert-gate-set-closure-member-tamper-fails.py
 tools/assert-gate-set-manifest-tamper-fails.py
 tools/assert-goal-bindings-narrow-fails.py
 tools/assert-goal-scaffold-emits-markers.py
@@ -973,6 +975,7 @@ tools/ci-fitness-check1.sh
 tools/ci-fitness.ps1
 tools/ci_fitness.py
 tools/ci-fitness.sh
+tools/derive-gate-set-closure-reference.py
 tools/fitness-adjective-locality.py
 tools/fitness-adopter-verify-binder.py
 tools/fitness-adr-0001-binder.py
@@ -1124,6 +1127,7 @@ tools/fixtures/hub-own/invalid-hub-own-ci-only-exit.json
 tools/fixtures/hub-own/invalid-hub-own-gate-subject-same-actor.json
 tools/fixtures/hub-own/invalid-hub-own-missing-property-leaves.json
 tools/fixtures/hub-own/valid-hub-own-produce-package.json
+tools/fixtures/owner-ratification-gate-set/cases.json
 tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md
 tools/fixtures/owner-ratification-sidecar/cases.json
 tools/fixtures/owner-ratification-sidecar/keys/.gitignore
@@ -3601,6 +3605,11 @@ tools/nouns/verb_set_lineage/verb_set_lineage.py
 tools/nouns/verify/adjectives.txt
 tools/nouns/verify/fields.txt
 tools/nouns/verify/__init__.py
+tools/nouns/verify_owner_ratification_offline/adjectives.txt
+tools/nouns/verify_owner_ratification_offline/fields.txt
+tools/nouns/verify_owner_ratification_offline/__init__.py
+tools/nouns/verify_owner_ratification_offline/README.md
+tools/nouns/verify_owner_ratification_offline/verify_owner_ratification_offline.py
 tools/nouns/verify/README.md
 tools/nouns/verify/schemas/verbs.schema.json
 tools/nouns/verify/verify.py
