@@ -64,7 +64,7 @@ def _manifest_path_set(manifest_bytes_on_disk: bytes) -> set[str]:
 def gate_set_manifest_errors(
     root: Path, *, overrides: dict[str, bytes] | None = None
 ) -> list[str]:
-    """MET when ALL OF: manifest path set == derive closure; bytes match tree; sidecar P1 if present."""
+    """MET when ALL OF: manifest path set == derive closure; bytes match tree; sidecar passes P1."""
     errors: list[str] = []
     manifest_path = root / MANIFEST_REL
     if not manifest_path.is_file():

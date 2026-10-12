@@ -102,7 +102,9 @@ def main() -> int:
             violations.append("fixture-edit-manifest: tampered fixture should break manifest")
 
     gate_set_cases = ROOT / "tools/fixtures/owner-ratification-gate-set/cases.json"
-    if gate_set_cases.is_file():
+    if not gate_set_cases.is_file():
+        violations.append("missing tools/fixtures/owner-ratification-gate-set/cases.json")
+    else:
         from nouns.gate_set_manifest.gate_set_manifest import gate_set_manifest_errors
 
         for case in json.loads(gate_set_cases.read_text(encoding="utf-8")):

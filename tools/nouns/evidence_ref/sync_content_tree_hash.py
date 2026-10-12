@@ -8,8 +8,14 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
+_TOOLS = Path(__file__).resolve().parents[2]
+if str(_TOOLS) not in sys.path:
+    sys.path.insert(0, str(_TOOLS))
+from nouns.gate_set.gate_set import MANIFEST_APPROVAL_ASC_REL  # noqa: E402
+
 HASH_REL = "integrity/hub-content-tree-hash.txt"
 PLANIT_EVIDENCE_REL = ".nlc/planit-change-evidence.json"
+MANIFEST_REL = "integrity/gate-set-baseline.manifest.sha256"
 HASH_PATH = ROOT / HASH_REL
 
 
@@ -18,8 +24,8 @@ def _content_exclude_rel() -> set[str]:
     return {
         HASH_REL,
         PLANIT_EVIDENCE_REL,
-        # Fixed-point: manifest lists hub-content-tree-hash.txt; digest hashes manifest bytes.
-        "integrity/gate-set-baseline.manifest.sha256",
+        MANIFEST_REL,
+        MANIFEST_APPROVAL_ASC_REL,
     }
 
 

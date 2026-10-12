@@ -26,6 +26,14 @@ _BASES = ("", "tools/", "tools/nouns/")
 _TOKEN = re.compile(r"[A-Za-z0-9_.\-/*]+")
 _NAMESPACE_ROOTS = frozenset({"tools", "tools/nouns"})
 
+# Ratification sidecar: excluded from closure and hub digest (exact path; not a pattern).
+MANIFEST_APPROVAL_ASC_REL = "integrity/gate-set-baseline.manifest.sha256.approval.asc"
+_DERIVATION_EXCLUDE: frozenset[str] = frozenset({MANIFEST_APPROVAL_ASC_REL})
+
+
+def _is_derivation_excluded(rel: str) -> bool:
+    return rel in _DERIVATION_EXCLUDE
+
 
 def _git_tracked_files(root: Path) -> list[str]:
     proc = subprocess.run(
@@ -41,6 +49,8 @@ def _git_tracked_files(root: Path) -> list[str]:
     for line in (proc.stdout or "").splitlines():
         line = line.strip().replace("\\", "/")
         if not line or "__pycache__" in line or line.endswith(".pyc"):
+            continue
+        if _is_derivation_excluded(line):
             continue
         out.append(line)
     return sorted(out)
@@ -245,7 +255,7 @@ def derive_gate_set_paths(root: Path) -> list[str]:
     todo, seen = list(seeds), set()
     while todo:
         f = todo.pop()
-        if f in seen or _is_excluded(f):
+        if f in seen or _is_excluded(f) or _is_derivation_excluded(f):
             continue
         seen.add(f)
         if f.endswith(".py"):
@@ -254,7 +264,9 @@ def derive_gate_set_paths(root: Path) -> list[str]:
             e = _text_edges(root, f, tracked, dirs)
         else:
             e = set()
-        todo.extend(x for x in e if x not in seen)
+        todo.extend(
+            x for x in e if x not in seen and not _is_derivation_excluded(x)
+        )
     return sorted(seen)
 
 
