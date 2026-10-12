@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "content_sha256": {
+    "integrity/owner-keys/TRUSTED_FINGERPRINTS": "dfdad44a8f49234f23ba032133494870f47923435e189e3611f4a2f666307c40",
+    "integrity/owner-keys/richard-pickett.asc": "5ab861ae3acaf19f2e4e68c440a2b392c1e0e5f658ccb5ec69529d18b70f8499"
+  }
+}

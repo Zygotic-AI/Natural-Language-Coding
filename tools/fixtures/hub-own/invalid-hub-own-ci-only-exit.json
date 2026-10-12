@@ -1,0 +1,27 @@
+{
+  "_expect_hub_material": true,
+  "_expect_ok_principle_subgoals": true,
+  "_expect_ok_property_exit": false,
+  "hub_material": true,
+  "package_id": "pkg-hub-own-ci-only",
+  "hub_goal_tree": {
+    "root_goal_id": "G0-hub_own_integrity",
+    "property_leaf_goals": [
+      {
+        "leaf_id": "SG1-P1",
+        "statement": "Declared but exit names CI only",
+        "exit_status": "MET",
+        "evidence_path": "evidence/sg1.log"
+      }
+    ]
+  },
+  "quality_evidence": [
+    {
+      "gate_id": "ci_fitness",
+      "outcome": "PASS",
+      "timestamp": "2026-10-11T20:00:00Z"
+    }
+  ],
+  "ssot_leaf_ids": ["hub-ci-only"],
+  "ssot_exit_status": "ci fitness green"
+}

@@ -1,0 +1,30 @@
+{
+  "hub_material": true,
+  "package_id": "pkg-hub-own-gate-subject-same-actor",
+  "hub_goal_tree": {
+    "root_goal_id": "G0-hub_own_integrity",
+    "property_leaf_goals": [
+      {
+        "leaf_id": "SG3-P1",
+        "statement": "Gate and subject diff requires separate reviewer",
+        "exit_status": "MET",
+        "evidence_path": "evidence/sg3.log"
+      }
+    ]
+  },
+  "changed_paths": [
+    "tools/fitness-adr-approval.py",
+    "adrs/0051-hub-own-produce-principles.md"
+  ],
+  "producer_role": "cloud-agent-produce",
+  "adversarial_auditor_role": "cloud-agent-produce",
+  "quality_evidence": [
+    {
+      "gate_id": "fitness-demo",
+      "outcome": "MET",
+      "timestamp": "2026-10-11T20:00:00Z"
+    }
+  ],
+  "ssot_leaf_ids": ["sg3-gate-subject"],
+  "ssot_exit_status": "SG3 role separation required"
+}

@@ -679,6 +679,35 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "fitness-adr-approval",
         [sys.executable, str(TOOLS / "fitness-adr-approval.py")],
     )
+
+    run(
+        "fitness-adr-owner-sidecar",
+        [sys.executable, str(TOOLS / "fitness-adr-owner-sidecar.py")],
+    )
+    run(
+        "fitness-gate-set-manifest",
+        [sys.executable, str(TOOLS / "fitness-gate-set-manifest.py")],
+    )
+    run(
+        "fitness-owner-key-trust",
+        [sys.executable, str(TOOLS / "fitness-owner-key-trust.py")],
+    )
+    run(
+        "fitness-hub-own-principle-subgoals",
+        [sys.executable, str(TOOLS / "fitness-hub-own-principle-subgoals.py")],
+    )
+    run(
+        "fitness-hub-own-property-exit",
+        [sys.executable, str(TOOLS / "fitness-hub-own-property-exit.py")],
+    )
+    run(
+        "fitness-owner-ratification-known-bad",
+        [sys.executable, str(TOOLS / "fitness-owner-ratification-known-bad.py")],
+    )
+    run(
+        "assert-gate-set-manifest-tamper",
+        [sys.executable, str(TOOLS / "assert-gate-set-manifest-tamper-fails.py")],
+    )
     run(
         "fitness-adr-record-gate",
         [sys.executable, str(TOOLS / "fitness-adr-record-gate.py")],
