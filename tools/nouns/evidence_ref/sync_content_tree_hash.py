@@ -18,7 +18,7 @@ def _content_exclude_rel() -> set[str]:
     return {
         HASH_REL,
         PLANIT_EVIDENCE_REL,
-        # Gate-set manifest lists hub-content-tree-hash and itself; omit from digest to converge.
+        # Fixed-point: manifest lists hub-content-tree-hash.txt; digest hashes manifest bytes.
         "integrity/gate-set-baseline.manifest.sha256",
     }
 

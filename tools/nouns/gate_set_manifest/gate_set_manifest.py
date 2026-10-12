@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 
 from nouns.gate_set.gate_set import derive_gate_set_paths, iter_gate_set_relative_paths
-from nouns.owner_sidecar.owner_sidecar import content_hash, sidecar_path_for_document, verify_sidecar_p1
+from nouns.owner_sidecar.owner_sidecar import content_hash, verify_sidecar_p1
 
 MANIFEST_REL = "integrity/gate-set-baseline.manifest.sha256"
 
@@ -89,9 +89,7 @@ def gate_set_manifest_errors(
     if on_disk != expected:
         errors.append(f"{MANIFEST_REL}: bytes do not match current gate-set tree")
     if overrides is None:
-        asc_rel = sidecar_path_for_document(MANIFEST_REL)
-        if (root / asc_rel).is_file():
-            errors.extend(verify_sidecar_p1(root, MANIFEST_REL))
+        errors.extend(verify_sidecar_p1(root, MANIFEST_REL))
     return errors
 
 

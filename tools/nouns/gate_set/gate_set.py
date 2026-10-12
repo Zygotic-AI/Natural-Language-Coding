@@ -24,6 +24,7 @@ GATE_SET_EXCLUSIONS: dict[str, str] = {
 _EXCL_PREFIXES = tuple(GATE_SET_EXCLUSIONS.keys())
 _BASES = ("", "tools/", "tools/nouns/")
 _TOKEN = re.compile(r"[A-Za-z0-9_.\-/*]+")
+_NAMESPACE_ROOTS = frozenset({"tools", "tools/nouns"})
 
 
 def _git_tracked_files(root: Path) -> list[str]:
@@ -76,9 +77,19 @@ def _closure_dirs(tracked: list[str]) -> dict[str, list[str]]:
     return dirs
 
 
-def _resolve_ref(s: str, here: str, tracked: set[str], dirs: dict[str, list[str]]) -> set[str]:
+def _glob_hits(c: str, raw: str, tracked: set[str]) -> set[str]:
+    base = raw.rsplit("/", 1)[-1]
+    if "**" in raw or re.fullmatch(r"\*(\.[A-Za-z0-9]+)?", base):
+        return set()
+    depth = c.count("/")
+    return {f for f in tracked if f.count("/") == depth and fnmatch.fnmatchcase(f, c)}
+
+
+def _resolve_ref(
+    s: str, here: str, tracked: set[str], dirs: dict[str, list[str]]
+) -> set[str]:
     s = s.strip().strip("'\"").lstrip("$").replace("\\", "/")
-    if not s or len(s) > 300 or s in (".", "/"):
+    if not s or len(s) > 300 or not s.strip("./"):
         return set()
     hits: set[str] = set()
     for base in (here + "/", *_BASES):
@@ -86,10 +97,10 @@ def _resolve_ref(s: str, here: str, tracked: set[str], dirs: dict[str, list[str]
         if not c:
             continue
         if "*" in c:
-            hits |= {f for f in tracked if fnmatch.fnmatchcase(f, c)}
+            hits |= _glob_hits(c, s, tracked)
         elif c in tracked:
             hits.add(c)
-        elif c in dirs and "/" in c:
+        elif c in dirs and "/" in c and c not in _NAMESPACE_ROOTS:
             hits |= set(dirs[c])
     return hits
 
@@ -113,25 +124,64 @@ def _mod_files(
     return out
 
 
-def _path_chain(node: ast.AST) -> str | None:
+def _path_chain(node: ast.AST, vars_map: dict[str, str]) -> str | None:
     if isinstance(node, ast.Constant) and isinstance(node.value, str):
         return node.value
+    if isinstance(node, ast.Name):
+        return vars_map.get(node.id)
     if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div):
-        left, right = _path_chain(node.left), _path_chain(node.right)
+        left, right = _path_chain(node.left, vars_map), _path_chain(node.right, vars_map)
         if right is None:
             return None
         return right if left is None else left + "/" + right
     return None
 
 
-def _py_edges(root: Path, rel: str, tracked: set[str], dirs: dict[str, list[str]]) -> set[str]:
+def _py_edges(
+    root: Path, rel: str, tracked: set[str], dirs: dict[str, list[str]]
+) -> set[str]:
     here = str(PurePosixPath(rel).parent)
     try:
         tree = ast.parse((root / rel).read_text(encoding="utf-8"))
     except Exception:
         return set()
     out: set[str] = set()
+    vars_map: dict[str, str] = {}
     for n in ast.walk(tree):
+        if (
+            isinstance(n, ast.Assign)
+            and len(n.targets) == 1
+            and isinstance(n.targets[0], ast.Name)
+            and isinstance(n.value, ast.BinOp)
+        ):
+            v = _path_chain(n.value, vars_map)
+            if v is not None:
+                vars_map[n.targets[0].id] = v
+    for n in ast.walk(tree):
+        if (
+            isinstance(n, ast.Call)
+            and isinstance(n.func, ast.Attribute)
+            and n.func.attr in ("glob", "rglob", "iterdir")
+        ):
+            base = _path_chain(n.func.value, vars_map)
+            pat = (
+                n.args[0].value
+                if n.args and isinstance(n.args[0], ast.Constant) and isinstance(n.args[0].value, str)
+                else "*"
+            )
+            if base:
+                for b in (here + "/", *_BASES):
+                    d = _norm_path(b + base)
+                    if d in dirs:
+                        for member in dirs[d]:
+                            rest = member[len(d) + 1 :]
+                            if n.func.attr == "rglob":
+                                if fnmatch.fnmatchcase(rest.rsplit("/", 1)[-1], pat):
+                                    out.add(member)
+                            elif n.func.attr == "iterdir" or fnmatch.fnmatchcase(
+                                rest.split("/")[0], pat
+                            ):
+                                out.add(member)
         if isinstance(n, ast.Import):
             for a in n.names:
                 parts = a.name.split(".")
@@ -145,7 +195,7 @@ def _py_edges(root: Path, rel: str, tracked: set[str], dirs: dict[str, list[str]
             for a in n.names:
                 out |= _mod_files((m + "." if m else "") + a.name, here, n.level, tracked)
         elif isinstance(n, ast.BinOp) and isinstance(n.op, ast.Div):
-            s = _path_chain(n)
+            s = _path_chain(n, vars_map)
             if s:
                 out |= _resolve_ref(s, here, tracked, dirs)
         elif isinstance(n, ast.Constant) and isinstance(n.value, str) and "\n" not in n.value:
@@ -154,7 +204,9 @@ def _py_edges(root: Path, rel: str, tracked: set[str], dirs: dict[str, list[str]
     return out
 
 
-def _text_edges(root: Path, rel: str, tracked: set[str], dirs: dict[str, list[str]]) -> set[str]:
+def _text_edges(
+    root: Path, rel: str, tracked: set[str], dirs: dict[str, list[str]]
+) -> set[str]:
     here = str(PurePosixPath(rel).parent)
     try:
         txt = (root / rel).read_text(encoding="utf-8", errors="replace")
@@ -175,7 +227,7 @@ def _pkg_edges(rel: str, tracked: set[str], dirs: dict[str, list[str]]) -> set[s
         if d + "/__init__.py" in tracked:
             out.add(d + "/__init__.py")
     d = "/".join(parts[:-1])
-    if d + "/__init__.py" in tracked:
+    if d + "/__init__.py" in tracked and d not in _NAMESPACE_ROOTS:
         out |= {
             x
             for x in dirs.get(d, [])
@@ -185,7 +237,7 @@ def _pkg_edges(rel: str, tracked: set[str], dirs: dict[str, list[str]]) -> set[s
 
 
 def derive_gate_set_paths(root: Path) -> list[str]:
-    """Transitive load closure of CI workflow seeds (sorted repo-relative paths)."""
+    """Transitive load closure of CI workflow seeds (v2 rules, sorted repo-relative paths)."""
     tracked_list = _git_tracked_files(root)
     tracked = set(tracked_list)
     dirs = _closure_dirs(tracked_list)
@@ -203,16 +255,7 @@ def derive_gate_set_paths(root: Path) -> list[str]:
         else:
             e = set()
         todo.extend(x for x in e if x not in seen)
-    proc = subprocess.run(
-        ["sort"],
-        input="\n".join(seen) + ("\n" if seen else ""),
-        text=True,
-        capture_output=True,
-        check=False,
-    )
-    if proc.returncode != 0:
-        return sorted(seen)
-    return [line for line in (proc.stdout or "").splitlines() if line]
+    return sorted(seen)
 
 
 def iter_gate_set_relative_paths(root: Path) -> list[str]:

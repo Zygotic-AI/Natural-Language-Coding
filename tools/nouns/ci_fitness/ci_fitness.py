@@ -725,6 +725,14 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         ],
     )
     run(
+        "assert-gate-set-closure-excluded-not-members",
+        [sys.executable, str(TOOLS / "assert-gate-set-closure-excluded-not-members-passes.py")],
+    )
+    run(
+        "assert-gate-set-manifest-missing-sidecar",
+        [sys.executable, str(TOOLS / "assert-gate-set-manifest-missing-sidecar-fails.py")],
+    )
+    run(
         "fitness-adr-record-gate",
         [sys.executable, str(TOOLS / "fitness-adr-record-gate.py")],
     )

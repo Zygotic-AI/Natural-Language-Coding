@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Reference runner: derive gate-set closure (must match closure.txt at repo root).
+"""v2. Derive the NLC gate set = transitive load closure of everything CI runs.
 
-Usage: derive-gate-set-closure-reference.py <repo-root>
+Usage: derive-gate-set-closure-reference.py <repo-root>   -> prints sorted repo-relative paths.
+
+Reference algorithm (PM closure v2). SSOT implementation: nouns.gate_set.gate_set.derive_gate_set_paths.
 """
 from __future__ import annotations
 
