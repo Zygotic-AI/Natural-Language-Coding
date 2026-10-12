@@ -10,7 +10,7 @@
 
 ## Context
 
-RCA 5 (owner-signed remediation plan, 2026-10-11): the two-actor principle (human manager ratifies, agents produce) was not carried into approval controls. Hash-only registries let producers rewrite stamps without the owner's act.
+RCA 5, root confirmed and remediation plan approved by the human manager 2026-10-11 (the RCA record is kept outside this repository): the two-actor principle (human manager ratifies, agents produce) was not carried into approval controls. Hash-only registries let producers rewrite stamps without the owner's act.
 
 This record **amends policy** in ADR 0051: ratification is the human manager's **clearsigned approval statement** only. Private key stays on the owner's phone (PGPony). Agents commit pasted armor **unchanged**; they never create ratification.
 
@@ -73,4 +73,4 @@ Example: `adrs/0052-owner-openpgp-ratification-amends-0051.approval.asc` next to
 
 - [ADR 0051](0051-hub-own-produce-principles.md) — hub-own produce (amended in force by this record)
 - [ADR 0047](0047-adr-approval-receipts.md) — prior hash receipt model (superseded when wired)
-- RCA 5 remediation plan — `/opt/cursor/artifacts/RCA-5-remediation-plan.md`
+- RCA 5 — kept outside this repository.
