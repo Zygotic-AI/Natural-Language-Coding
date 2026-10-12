@@ -1,0 +1,20 @@
+{
+  "_expect_hub_material": true,
+  "_expect_ok_principle_subgoals": false,
+  "_expect_ok_property_exit": false,
+  "hub_material": true,
+  "package_id": "pkg-hub-own-no-leaves",
+  "hub_goal_tree": {
+    "root_goal_id": "G0-hub_own_integrity",
+    "property_leaf_goals": []
+  },
+  "quality_evidence": [
+    {
+      "gate_id": "fitness-demo",
+      "outcome": "MET",
+      "timestamp": "2026-10-11T20:00:00Z"
+    }
+  ],
+  "ssot_leaf_ids": ["hub-no-leaves"],
+  "ssot_exit_status": "properties incomplete"
+}

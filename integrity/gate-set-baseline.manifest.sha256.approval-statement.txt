@@ -1,0 +1,6 @@
+Repo: Zygotic-AI/Natural-Language-Coding
+Document: integrity/gate-set-baseline.manifest.sha256
+Content-SHA256: 578d4d44fbbe0af5b02e79cd487401c13d31126513d6609f4ed8321962d31211
+Decision: Accepted
+Date: 2026-10-11
+Summary: Ratify gate-set baseline manifest bytes for ADR 0051 SG2 under ADR 0052 OpenPGP ratification.

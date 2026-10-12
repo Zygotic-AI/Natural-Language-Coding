@@ -1,0 +1,6 @@
+Repo: Zygotic-AI/Natural-Language-Coding
+Document: tools/fixtures/owner-ratification-sidecar/stub-doc.md
+Content-SHA256: 0000000000000000000000000000000000000000000000000000000000000000
+Decision: Accepted
+Date: 2026-10-11
+Summary: wrong hash fixture

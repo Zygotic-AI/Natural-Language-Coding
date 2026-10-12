@@ -11,6 +11,7 @@ from __future__ import annotations
 
 BOUNDARY = "bba-emit"
 
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -22,10 +23,14 @@ from nouns.field_write_bypass_fixtures.field_write_bypass_fixtures import (  # n
     O9A_BYPASS_FIXTURE_DIRS,
 )
 TOOLS = ROOT / "tools"
+_CI_FAILURES: list[str] = []
 
 
 def fail(msg: str) -> None:
     print(f"CI:FAIL {msg}")
+    if os.environ.get("CI_FITNESS_CONTINUE") == "1":
+        _CI_FAILURES.append(msg)
+        return
     sys.exit(1)
 
 
@@ -679,6 +684,63 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "fitness-adr-approval",
         [sys.executable, str(TOOLS / "fitness-adr-approval.py")],
     )
+
+    run(
+        "fitness-adr-owner-sidecar",
+        [sys.executable, str(TOOLS / "fitness-adr-owner-sidecar.py")],
+    )
+    run(
+        "fitness-gate-set-manifest",
+        [sys.executable, str(TOOLS / "fitness-gate-set-manifest.py")],
+    )
+    run(
+        "fitness-owner-key-trust",
+        [sys.executable, str(TOOLS / "fitness-owner-key-trust.py")],
+    )
+    run(
+        "fitness-hub-own-principle-subgoals",
+        [sys.executable, str(TOOLS / "fitness-hub-own-principle-subgoals.py")],
+    )
+    run(
+        "fitness-hub-own-property-exit",
+        [sys.executable, str(TOOLS / "fitness-hub-own-property-exit.py")],
+    )
+    run(
+        "fitness-owner-ratification-known-bad",
+        [sys.executable, str(TOOLS / "fitness-owner-ratification-known-bad.py")],
+    )
+    run(
+        "assert-gate-set-manifest-tamper",
+        [sys.executable, str(TOOLS / "assert-gate-set-manifest-tamper-fails.py")],
+    )
+    run(
+        "assert-gate-set-closure-member-tamper-release-state",
+        [
+            sys.executable,
+            str(TOOLS / "assert-gate-set-closure-member-tamper-fails.py"),
+            "tools/nouns/release_state/release_state.py",
+        ],
+    )
+    run(
+        "assert-gate-set-closure-member-tamper-nlc-requirements",
+        [
+            sys.executable,
+            str(TOOLS / "assert-gate-set-closure-member-tamper-fails.py"),
+            "tools/nouns/nlc_requirements/__init__.py",
+        ],
+    )
+    run(
+        "assert-gate-set-closure-excluded-not-members",
+        [sys.executable, str(TOOLS / "assert-gate-set-closure-excluded-not-members-passes.py")],
+    )
+    run(
+        "assert-gate-set-manifest-missing-sidecar",
+        [sys.executable, str(TOOLS / "assert-gate-set-manifest-missing-sidecar-fails.py")],
+    )
+    run(
+        "assert-gate-set-manifest-placeholder-sidecar",
+        [sys.executable, str(TOOLS / "assert-gate-set-manifest-placeholder-sidecar-fails.py")],
+    )
     run(
         "fitness-adr-record-gate",
         [sys.executable, str(TOOLS / "fitness-adr-record-gate.py")],
@@ -741,13 +803,20 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     if handoff != 0:
         fail("produce preflight")
 
+    if _CI_FAILURES:
+        print("=== CI fitness failures (continue mode) ===")
+        for item in _CI_FAILURES:
+            print(f"CI:FAIL {item}")
+        return 1
     print("CI:MET")
     return 0
 
 
 def main() -> int:
+    _CI_FAILURES.clear()
     hub_prove()
-    return run_ci_fitness_suite(include_releasable_verify=True)
+    code = run_ci_fitness_suite(include_releasable_verify=True)
+    return code
 
 
 if __name__ == "__main__":

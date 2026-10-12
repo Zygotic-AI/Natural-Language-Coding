@@ -51,7 +51,13 @@
     "fitness-hub-x4-tranche-t3.py",
     "fitness-hub-x4-tranche-t4.py",
     "fitness-product-completion-p5-dogfood.py",
-    "fitness-releasable-gate-ssot.py"
+    "fitness-releasable-gate-ssot.py",
+    "fitness-adr-owner-sidecar.py",
+    "fitness-gate-set-manifest.py",
+    "fitness-owner-key-trust.py",
+    "fitness-hub-own-principle-subgoals.py",
+    "fitness-hub-own-property-exit.py",
+    "fitness-owner-ratification-known-bad.py"
   ],
   "gates": {
     "pipeline-blockers": {
@@ -68,20 +74,32 @@
         "--loaded",
         ".agents/skills/planit/SKILL.md"
       ],
-      "pass_substrings": ["PLANIT_IDENTITY:MET"],
+      "pass_substrings": [
+        "PLANIT_IDENTITY:MET"
+      ],
       "reproduce": "./nlc gate planit-skill-identity --tree {tree}"
     },
     "hub-content-tree-fresh": {
       "scope": "hub",
-      "argv": ["python3", "tools/fitness-findings-last-pass-fresh.py"],
-      "pass_substrings": ["RESULT:MET"],
+      "argv": [
+        "python3",
+        "tools/fitness-findings-last-pass-fresh.py"
+      ],
+      "pass_substrings": [
+        "RESULT:MET"
+      ],
       "reproduce": "./nlc gate hub-content-tree-fresh --tree {tree}"
     },
     "hub-ci-fitness": {
       "scope": "hub",
       "suite": "hub_ci_fitness",
-      "argv": ["python3", "tools/ci_fitness.py"],
-      "pass_substrings": ["CI:MET"],
+      "argv": [
+        "python3",
+        "tools/ci_fitness.py"
+      ],
+      "pass_substrings": [
+        "CI:MET"
+      ],
       "reproduce": "./nlc gate hub-ci-fitness --tree {tree}"
     }
   }
