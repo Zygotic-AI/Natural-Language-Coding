@@ -1,6 +1,7 @@
 # ADR 0049 — Release planner owns every intentional stop
 
-- Status: Accepted
+- Status: Proposed
+- Note: Pending a redraft; 0049 folds into 0048.
 - Date: 2026-10-09
 - Deciders: Human manager
 - Ratified-by: Human manager (release planner ownership and no automatic local-main repoint, 2026-10-09)

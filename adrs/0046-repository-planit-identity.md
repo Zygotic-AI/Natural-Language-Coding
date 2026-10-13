@@ -1,6 +1,7 @@
 # ADR 0046 — Repository Planit identity
 
-- Status: Accepted
+- Status: Proposed
+- Note: Pending a redraft.
 - Date: 2026-10-08
 - Deciders: Human manager
 - Ratified-by: Human manager (practice-enforcement task list, 2026-10-08)
