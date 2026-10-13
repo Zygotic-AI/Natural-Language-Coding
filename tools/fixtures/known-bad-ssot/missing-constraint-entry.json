@@ -188,9 +188,11 @@
       "known_bad_id": "KB-0052-unsigned"
     },
     "0052:L27": {
-      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
-      "verify_kind": "sidecar_p1",
-      "expected_reason_substring": "missing sidecar",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/wrong-decision-statement.txt",
+      "document_rel": "tools/fixtures/owner-ratification-sidecar/stub-doc.md",
+      "status": "Accepted",
+      "verify_kind": "sidecar_fields",
+      "expected_reason_substring": "Decision mismatch",
       "known_bad_id": "KB-0052-unsigned"
     },
     "0052:L40": {
@@ -206,15 +208,17 @@
       "known_bad_id": "GAP-0051-unsigned"
     },
     "0052:DEC-2": {
-      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
-      "verify_kind": "sidecar_p1",
-      "expected_reason_substring": "missing sidecar",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/wrong-key.approval.asc",
+      "document_rel": "tools/fixtures/owner-ratification-sidecar/stub-doc.md",
+      "status": "Accepted",
+      "verify_kind": "sidecar_on_bytes",
+      "expected_reason_substring": "No public key",
       "known_bad_id": "KB-0052-unsigned"
     },
     "0052:DEC-3": {
-      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
-      "verify_kind": "sidecar_p1",
-      "expected_reason_substring": "missing sidecar",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/manifest-wrong-key.approval.asc",
+      "verify_kind": "sidecar_rotation",
+      "expected_reason_substring": "No public key",
       "known_bad_id": "KB-0052-rotation"
     },
     "0052:DEC-4": {

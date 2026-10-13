@@ -20,8 +20,12 @@ from nouns.hub_own_produce.hub_own_produce import (
     validate_property_leaf_goals,
 )
 from nouns.owner_sidecar.owner_sidecar import (
+    parse_statement_plaintext,
     pending_presented_as_ratified_errors,
+    statement_field_errors,
     verify_sidecar_p1,
+    verify_sidecar_p1_on_bytes,
+    verify_sidecar_with_trusted_set,
 )
 from nouns.fitness_no_check_on_check.fitness_no_check_on_check import (
     check_on_check_errors_for_source,
@@ -87,6 +91,90 @@ def run_constraint_verify(root: Path, case: dict[str, object]) -> list[str]:
         if not errs:
             return ["expected sidecar NOT_MET got MET"]
         blob = " ".join(errs)
+        if needle and needle not in blob:
+            return [f"expected reason {needle!r} got {blob!r}"]
+        return []
+    if kind == "sidecar_fields":
+        if path is None or not path.is_file():
+            return [f"missing sidecar-fields candidate {candidate}"]
+        fields, parse_errors = parse_statement_plaintext(path.read_text(encoding="utf-8"))
+        doc_rel = str(case.get("document_rel") or fields.get("Document") or "")
+        doc_path = root / doc_rel if doc_rel else None
+        if doc_path is None or not doc_path.is_file():
+            return [f"missing sidecar-fields document {doc_rel}"]
+        status = str(case.get("status") or "Accepted")
+        found = list(parse_errors)
+        found.extend(
+            statement_field_errors(
+                fields,
+                document_rel=doc_rel,
+                document_bytes=doc_path.read_bytes(),
+                status=status,
+            )
+        )
+        if not found:
+            return ["expected sidecar-fields NOT_MET got MET"]
+        blob = " ".join(found)
+        if needle and needle not in blob:
+            return [f"expected reason {needle!r} got {blob!r}"]
+        return []
+    if kind == "sidecar_on_bytes":
+        if path is None or not path.is_file():
+            return [f"missing sidecar-on-bytes candidate {candidate}"]
+        doc_rel = str(case.get("document_rel") or "")
+        doc_path = root / doc_rel if doc_rel else None
+        if doc_path is None or not doc_path.is_file():
+            return [f"missing sidecar-on-bytes document {doc_rel}"]
+        status = str(case.get("status") or "Accepted")
+        found = verify_sidecar_p1_on_bytes(
+            root,
+            document_rel=doc_rel,
+            document_bytes=doc_path.read_bytes(),
+            asc_path=path,
+            status=status,
+        )
+        if not found:
+            return ["expected sidecar-on-bytes NOT_MET got MET"]
+        blob = " ".join(found)
+        if needle and needle not in blob:
+            return [f"expected reason {needle!r} got {blob!r}"]
+        return []
+    if kind == "sidecar_rotation":
+        if path is None or not path.is_file():
+            return [f"missing sidecar-rotation candidate {candidate}"]
+        from nouns.fitness_owner_key_trust.fitness_owner_key_trust import (
+            DEFAULT_BASE_REF,
+            OWNER_KEY_REL,
+            _git_show,
+            _merge_base,
+            _trusted_before,
+        )
+        from nouns.gate_set_manifest.gate_set_manifest import MANIFEST_REL
+
+        base_rev = _merge_base(root, DEFAULT_BASE_REF)
+        if not base_rev:
+            return ["sidecar-rotation: cannot resolve merge-base"]
+        trusted_before, terr = _trusted_before(root, base_rev)
+        if terr:
+            return [f"sidecar-rotation: {item}" for item in terr]
+        base_key = _git_show(root, base_rev, OWNER_KEY_REL)
+        if base_key is None:
+            return ["sidecar-rotation: cannot read owner key at base"]
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            key_path = Path(tmp) / "base-owner.asc"
+            key_path.write_bytes(base_key)
+            found = verify_sidecar_with_trusted_set(
+                root,
+                MANIFEST_REL,
+                path,
+                trusted_fingerprints=trusted_before,
+                key_import_paths=[key_path],
+            )
+        if not found:
+            return ["expected sidecar-rotation NOT_MET got MET"]
+        blob = " ".join(found)
         if needle and needle not in blob:
             return [f"expected reason {needle!r} got {blob!r}"]
         return []

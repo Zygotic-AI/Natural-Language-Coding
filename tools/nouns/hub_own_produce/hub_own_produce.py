@@ -133,8 +133,21 @@ def _resolve_merge_base(root: Path) -> str | None:
     return None
 
 
+def unresolved_merge_base_errors(root: Path) -> list[str]:
+    """NOT_MET when neither origin/release/v0.3.0 nor release/v0.3.0 can merge-base with HEAD."""
+    if _resolve_merge_base(root) is not None:
+        return []
+    return [
+        "unresolved merge-base origin/release/v0.3.0 "
+        "(also tried release/v0.3.0)"
+    ]
+
+
 def derived_changed_paths(root: Path) -> list[str]:
-    """Return repo-relative paths from git diff <merge-base origin/release/v0.3.0>..HEAD."""
+    """Return repo-relative paths from git diff <merge-base origin/release/v0.3.0>..HEAD.
+
+    Callers must treat unresolved_merge_base_errors as NOT_MET; an empty list is not MET.
+    """
     base = _resolve_merge_base(root)
     if not base:
         return []
@@ -292,6 +305,9 @@ def validate_hub_material_package(
     root: Path, data: dict[str, Any]
 ) -> tuple[bool, str, str]:
     """Validate a hub-material produce package; hub_material and changed_paths are git-derived."""
+    merge_base_errors = unresolved_merge_base_errors(root)
+    if merge_base_errors:
+        return False, "handoff_refused", merge_base_errors[0]
     hub, changed = derive_hub_scope(root)
     if not hub:
         return True, "ok", "not hub_material"
