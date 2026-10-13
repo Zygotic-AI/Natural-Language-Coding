@@ -1,0 +1,14 @@
+{
+  "brief_ref": "tools/fixtures/hub-brief/brief-missing-leaf.md",
+  "hub_goal_tree": {
+    "root_goal_id": "G0",
+    "property_leaf_goals": [
+      {
+        "leaf_id": "C3",
+        "statement": "brief names leaves",
+        "exit_status": "MET",
+        "evidence_path": "tools/fixtures/hub-brief/brief-missing-leaf.md"
+      }
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source": "adrs/ACTIVE.md",
-  "active_sha256": "cc4cbc6bc38d495f418a44b8b094eafee73f61866d9faa48878ef7d0d16a5ff9",
+  "active_sha256": "b05abd978b5e035154b9ed3985370e8e93138cc754133cb0c5983a5dfa2aec9f",
   "adrs": [
     {
       "adr": "0001",
@@ -274,29 +274,11 @@
       "effective": "2026-09-26"
     },
     {
-      "adr": "0046",
-      "lineage": "L-0046",
-      "origin": "session",
-      "effective": "2026-10-08"
-    },
-    {
-      "adr": "0047",
-      "lineage": "L-0047",
-      "origin": "session",
-      "effective": "2026-10-08"
-    },
-    {
-      "adr": "0048",
-      "lineage": "L-0048",
-      "origin": "session",
-      "effective": "2026-10-08"
-    },
-    {
-      "adr": "0049",
-      "lineage": "L-0049",
-      "origin": "RCA 2026-10-09 release stops outside planner",
-      "effective": "2026-10-09"
+      "adr": "0050",
+      "lineage": "L-0050",
+      "origin": "RCA 2026-10-10 SHA-pinned evidence / content identity",
+      "effective": "2026-10-10"
     }
   ],
-  "written_at": "2026-10-10T06:46:48Z"
+  "written_at": "2026-10-13T11:32:17Z"
 }

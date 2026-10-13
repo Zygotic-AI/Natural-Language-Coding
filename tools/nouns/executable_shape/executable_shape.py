@@ -134,6 +134,8 @@ def classify(rel: str, text: str) -> str | None:
         if "case " in text:
             return "goal"
         return "thin entrypoint"
+    if rel.startswith("tools/fixtures/"):
+        return "contained fixture"
     if rel.startswith("tools/") and rel.endswith(".py"):
         if "from nouns." in text and len(text) < 2500:
             return "primitive adapter"

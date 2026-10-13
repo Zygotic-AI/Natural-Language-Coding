@@ -17,6 +17,20 @@
     "theory/**",
     "agents/**"
   ],
+  "hub_material_globs": [
+    "adrs/**",
+    "docs/**",
+    "tools/**",
+    "integrity/**",
+    "agents/**",
+    "theory/**",
+    "content-types/**",
+    ".agents/**",
+    ".cursor/**",
+    ".nlc/**",
+    ".github/**",
+    "examples/**"
+  ],
   "graded_subject_exclude_globs": [
     "integrity/releasable-gates.json",
     "integrity/gate-change-receipts.json",
@@ -24,7 +38,6 @@
     "integrity/*-exclusions*.json",
     "integrity/gate-set-baseline.manifest.sha256",
     "integrity/gate-set-baseline.manifest.sha256.approval-statement.txt",
-    "integrity/adr-openpgp-legacy-report.txt",
     "integrity/owner-keys/**"
   ]
 }

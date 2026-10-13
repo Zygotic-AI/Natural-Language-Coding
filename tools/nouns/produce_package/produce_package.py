@@ -44,8 +44,22 @@ def _repo_root_for_package(path: Path | None) -> Path:
     return Path(__file__).resolve().parents[3]
 
 
+def _should_apply_hub_profile(path: Path | None, root: Path) -> bool:
+    """Apply the hub profile to the hub produce package and hub-own fixtures only.
+
+    Hub_material and changed_paths are never read from the package (ADR 0051 C1).
+    """
+    if path is None:
+        return False
+    resolved = path.resolve()
+    if resolved == (root / ".nlc" / "produce-package.json").resolve():
+        return True
+    posix = resolved.as_posix()
+    return "fixtures/hub-own/" in posix or posix.endswith("/fixtures/hub-own")
+
+
 def validate_produce_package(
-    data: dict[str, Any], *, root: Path | None = None
+    data: dict[str, Any], *, root: Path | None = None, package_path: Path | None = None
 ) -> tuple[bool, str, str]:
     """Returns (ok, kind, reason) where kind is handoff_refused|fail|ok."""
     ok_sep, sep_reason = validate_role_separation(data)
@@ -61,10 +75,10 @@ def validate_produce_package(
         return False, "handoff_refused", "SSOT_EXIT_EVIDENCE: ssot_leaf_ids missing"
     if not status or not str(status).strip():
         return False, "handoff_refused", "SSOT_EXIT_EVIDENCE: ssot_exit_status missing"
-    if data.get("hub_material"):
+    hub_root = root if root is not None else _repo_root_for_package(package_path)
+    if _should_apply_hub_profile(package_path, hub_root):
         from nouns.hub_own_produce.hub_own_produce import validate_hub_material_package
 
-        hub_root = root if root is not None else _repo_root_for_package(None)
         ok_hub, kind_hub, reason_hub = validate_hub_material_package(hub_root, data)
         if not ok_hub:
             return False, kind_hub, reason_hub
@@ -86,7 +100,7 @@ def load_and_validate(path: Path) -> tuple[bool, str, str]:
         return False, "handoff_refused", "produce package must be object"
     data = {k: v for k, v in raw.items() if not str(k).startswith("_")}
     root = _repo_root_for_package(path)
-    return validate_produce_package(data, root=root)
+    return validate_produce_package(data, root=root, package_path=path)
 
 
 def preflight_handoff(root: Path) -> int:

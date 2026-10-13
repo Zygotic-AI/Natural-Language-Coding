@@ -57,7 +57,15 @@
     "fitness-owner-key-trust.py",
     "fitness-hub-own-principle-subgoals.py",
     "fitness-hub-own-property-exit.py",
-    "fitness-owner-ratification-known-bad.py"
+    "fitness-owner-ratification-known-bad.py",
+    "fitness-hub-scope-derived.py",
+    "fitness-hub-brief-forbid-weaken.py",
+    "fitness-no-check-on-check.py",
+    "fitness-known-bad-ssot.py",
+    "fitness-pending-ratification.py",
+    "fitness-no-tool-writes-ratification.py",
+    "fitness-retired-key-denylist.py",
+    "fitness-adr-0051-0052-rules.py"
   ],
   "gates": {
     "pipeline-blockers": {

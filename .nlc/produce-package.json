@@ -1,15 +1,93 @@
 {
   "package_id": "hub-compile",
+  "brief_ref": ".nlc/briefs/hub-material-0051-0052.md",
+  "hub_goal_tree": {
+    "root_goal_id": "G0",
+    "property_leaf_goals": [
+      {
+        "leaf_id": "C1",
+        "statement": "Hub material and changed_paths are derived from git diff against origin/release/v0.3.0.",
+        "exit_status": "MET",
+        "evidence_path": "tools/fitness-hub-scope-derived.py"
+      },
+      {
+        "leaf_id": "C2",
+        "statement": "Produce handoff refuses a hub package with no property leaves.",
+        "exit_status": "MET",
+        "evidence_path": "tools/assert-produce-handoff-refused.py"
+      },
+      {
+        "leaf_id": "C3",
+        "statement": "Committed brief names every property leaf and forbids weakening a check, broadening an exemption, or rewriting a receipt.",
+        "exit_status": "MET",
+        "evidence_path": ".nlc/briefs/hub-material-0051-0052.md"
+      },
+      {
+        "leaf_id": "C4",
+        "statement": "No ci_fitness-wired tool grades another fitness or assert tool's source or logic.",
+        "exit_status": "MET",
+        "evidence_path": "tools/fitness-no-check-on-check.py"
+      },
+      {
+        "leaf_id": "C5",
+        "statement": "Every bound constraint has a known-bad Candidate that the constraint itself refuses.",
+        "exit_status": "MET",
+        "evidence_path": "integrity/known-bad-cases.json"
+      },
+      {
+        "leaf_id": "C6",
+        "statement": "Every Accepted document requires a valid owner sidecar; hash receipts are not ratification.",
+        "exit_status": "REFUSE",
+        "evidence_path": "tools/fitness-adr-owner-sidecar.py"
+      },
+      {
+        "leaf_id": "C7",
+        "statement": "Pending or Proposed presented as ratified is NOT_MET.",
+        "exit_status": "MET",
+        "evidence_path": "tools/fitness-pending-ratification.py"
+      },
+      {
+        "leaf_id": "C8",
+        "statement": "No tracked tool writes a ratification sidecar or ratified registry state.",
+        "exit_status": "MET",
+        "evidence_path": "tools/fitness-no-tool-writes-ratification.py"
+      },
+      {
+        "leaf_id": "C9",
+        "statement": "Retired fingerprint 1A86E89505A908766DFD7304F04AD1CEC768DB18 is denylisted and must not overlap TRUSTED_FINGERPRINTS.",
+        "exit_status": "MET",
+        "evidence_path": "integrity/owner-keys/RETIRED_FINGERPRINTS"
+      },
+      {
+        "leaf_id": "C10",
+        "statement": "adr-gates.json maps each 0051/0052 constraint to a check and known-bad.",
+        "exit_status": "MET",
+        "evidence_path": "integrity/adr-gates.json"
+      },
+      {
+        "leaf_id": "C11",
+        "statement": "adr-0051-0052-rules.json ids equal derive-adr-0051-0052-rules.py.",
+        "exit_status": "MET",
+        "evidence_path": "integrity/adr-0051-0052-rules.json"
+      }
+    ]
+  },
+  "producer_role": "cloud-agent-produce",
+  "adversarial_auditor_role": "adversarial-reviewer",
+  "adversarial_reviewer_receipt": {
+    "reviewer_role": "adversarial-reviewer",
+    "receipt_id": "hub-0051-0052-retrofit-review"
+  },
   "quality_evidence": [
     {
       "gate_id": "ci_fitness",
       "outcome": "PASS",
-      "timestamp": "2026-09-20T20:00:00Z",
+      "timestamp": "2026-10-13T04:00:00Z",
       "evidence_path": "tools/ci_fitness.py"
     }
   ],
-  "ssot_leaf_ids": ["hub-compile"],
-  "ssot_exit_status": "verify-deep",
+  "ssot_leaf_ids": ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11"],
+  "ssot_exit_status": "property leaves C1-C11 MET or REFUSE with evidence; owner ratification of legacy ADR sidecars and the unsigned gate-set manifest is outstanding",
   "quality_snapshot": {
     "opportunities": 1,
     "ops": 1,

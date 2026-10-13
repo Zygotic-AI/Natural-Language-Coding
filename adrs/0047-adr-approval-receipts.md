@@ -1,6 +1,7 @@
 # ADR 0047 — ADR approval receipts
 
-- Status: Accepted
+- Status: Superseded
+- Superseded-by: ADR 0052
 - Date: 2026-10-08
 - Deciders: Human manager
 - Ratified-by: Human manager (practice-enforcement task list, 2026-10-08)

@@ -7,6 +7,7 @@ BOUNDARY = "bba-emit"
 import fnmatch
 import json
 import re
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -14,6 +15,29 @@ from nouns.gate_set_manifest.gate_set_manifest import gate_paths_manifest_errors
 from nouns.gate_set.gate_set import is_gate_set_path
 
 PROFILE_REL = "integrity/hub-gate-diff-profile.json"
+DEFAULT_BASE_REFS = (
+    "origin/release/v0.3.0",
+    "release/v0.3.0",
+)
+FORBID_CLAUSE_NEEDLES = (
+    "weakening a check",
+    "broadening an exemption",
+    "rewriting a receipt",
+)
+_DEFAULT_HUB_MATERIAL_GLOBS = (
+    "adrs/**",
+    "docs/**",
+    "tools/**",
+    "integrity/**",
+    "agents/**",
+    "theory/**",
+    "content-types/**",
+    ".agents/**",
+    ".cursor/**",
+    ".nlc/**",
+    ".github/**",
+    "examples/**",
+)
 
 _CI_ONLY_EXIT = re.compile(
     r"^(?:ci\s*(?:fitness)?\s*green|fitness\s*green|github\s*actions?\s*(?:success|green)|ci\s*met)$",
@@ -47,7 +71,7 @@ def _glob_match(rel: str, pattern: str) -> bool:
 
 def is_graded_subject_path(root: Path, rel_posix: str) -> bool:
     """True when rel is a graded subject path per hub-gate-diff-profile SSOT."""
-    normalized = rel_posix.replace("\\", "/").lstrip("./")
+    normalized = _norm_rel(rel_posix)
     profile, err = _load_profile(root)
     if profile is None:
         return False
@@ -65,15 +89,102 @@ def is_graded_subject_path(root: Path, rel_posix: str) -> bool:
     return False
 
 
-def _normalize_changed_paths(data: dict[str, Any]) -> list[str]:
-    raw = data.get("changed_paths")
+def _norm_rel(rel: str) -> str:
+    """Normalize a repo-relative path without stripping leading-dot directories such as .nlc/."""
+    normalized = rel.replace("\\", "/").strip()
+    while normalized.startswith("./"):
+        normalized = normalized[2:]
+    return normalized
+
+
+def _normalize_path_list(raw: Any) -> list[str]:
     if not isinstance(raw, list):
         return []
     out: list[str] = []
     for item in raw:
         if isinstance(item, str) and item.strip():
-            out.append(item.replace("\\", "/").lstrip("./"))
+            out.append(_norm_rel(item))
     return out
+
+
+def _normalize_changed_paths(data: dict[str, Any]) -> list[str]:
+    """Normalize a Candidate path list. CI must pass git-derived paths, never package fields."""
+    return _normalize_path_list(data.get("changed_paths"))
+
+
+def is_hub_compile_root(root: Path) -> bool:
+    """True when root is the NLC hub compile tree (CHARTER + hub-gate-diff profile)."""
+    return (root / "CHARTER.md").is_file() and (root / PROFILE_REL).is_file()
+
+
+def _resolve_merge_base(root: Path) -> str | None:
+    for ref in DEFAULT_BASE_REFS:
+        proc = subprocess.run(
+            ["git", "merge-base", "HEAD", ref],
+            cwd=str(root),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if proc.returncode == 0:
+            sha = (proc.stdout or "").strip()
+            if sha:
+                return sha
+    return None
+
+
+def unresolved_merge_base_errors(root: Path) -> list[str]:
+    """NOT_MET when neither origin/release/v0.3.0 nor release/v0.3.0 can merge-base with HEAD."""
+    if _resolve_merge_base(root) is not None:
+        return []
+    return [
+        "unresolved merge-base origin/release/v0.3.0 "
+        "(also tried release/v0.3.0)"
+    ]
+
+
+def derived_changed_paths(root: Path) -> list[str]:
+    """Return repo-relative paths from git diff <merge-base origin/release/v0.3.0>..HEAD.
+
+    Callers must treat unresolved_merge_base_errors as NOT_MET; an empty list is not MET.
+    """
+    base = _resolve_merge_base(root)
+    if not base:
+        return []
+    proc = subprocess.run(
+        ["git", "diff", "--name-only", f"{base}..HEAD"],
+        cwd=str(root),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        return []
+    return _normalize_path_list((proc.stdout or "").splitlines())
+
+
+def is_hub_material_path(root: Path, rel_posix: str) -> bool:
+    """True when a changed path makes the hub produce profile mandatory."""
+    normalized = _norm_rel(rel_posix)
+    if is_gate_set_path(root, normalized) or is_graded_subject_path(root, normalized):
+        return True
+    profile, _err = _load_profile(root)
+    globs: list[str] = list(_DEFAULT_HUB_MATERIAL_GLOBS)
+    if profile is not None:
+        extra = profile.get("hub_material_globs")
+        if isinstance(extra, list) and extra:
+            globs = [p for p in extra if isinstance(p, str)]
+    for pat in globs:
+        if _glob_match(normalized, pat):
+            return True
+    return False
+
+
+def derive_hub_scope(root: Path) -> tuple[bool, list[str]]:
+    """Derive hub_material and changed_paths from git. Never read those fields from a package."""
+    changed = derived_changed_paths(root)
+    hub = is_hub_compile_root(root) or any(is_hub_material_path(root, p) for p in changed)
+    return hub, changed
 
 
 def validate_property_leaf_goals(data: dict[str, Any]) -> tuple[bool, str]:
@@ -162,24 +273,60 @@ def validate_gate_set_change_receipts(root: Path, data: dict[str, Any]) -> tuple
     return True, f"{len(gate_paths)} gate-set path(s) match receipts"
 
 
+def validate_hub_brief(root: Path, data: dict[str, Any]) -> tuple[bool, str]:
+    """R-HUB-BRIEF-FORBID-WEAKEN: committed brief names every leaf id and the forbid clause."""
+    ref = str(data.get("brief_ref") or "").strip()
+    if not ref:
+        return False, "R-HUB-BRIEF-FORBID-WEAKEN: brief_ref missing"
+    rel = _norm_rel(ref)
+    path = root / rel
+    if not path.is_file():
+        return False, f"R-HUB-BRIEF-FORBID-WEAKEN: brief {rel} not committed"
+    text = path.read_text(encoding="utf-8")
+    for needle in FORBID_CLAUSE_NEEDLES:
+        if needle not in text:
+            return False, f"R-HUB-BRIEF-FORBID-WEAKEN: brief missing forbid clause {needle!r}"
+    tree = data.get("hub_goal_tree")
+    leaves = tree.get("property_leaf_goals") if isinstance(tree, dict) else None
+    if not isinstance(leaves, list):
+        return False, "R-HUB-BRIEF-FORBID-WEAKEN: property leaf ids required"
+    for index, leaf in enumerate(leaves):
+        if not isinstance(leaf, dict):
+            continue
+        leaf_id = str(leaf.get("leaf_id") or "").strip()
+        if leaf_id and leaf_id not in text:
+            return False, f"R-HUB-BRIEF-FORBID-WEAKEN: brief missing leaf id {leaf_id}"
+        if not leaf_id:
+            return False, f"R-HUB-BRIEF-FORBID-WEAKEN: property_leaf_goals[{index}].leaf_id missing"
+    return True, "brief names property leaves and forbid clause"
+
+
 def validate_hub_material_package(
     root: Path, data: dict[str, Any]
 ) -> tuple[bool, str, str]:
-    """Validate hub_material produce package; returns (ok, kind, reason)."""
-    if not data.get("hub_material"):
+    """Validate a hub-material produce package; hub_material and changed_paths are git-derived."""
+    merge_base_errors = unresolved_merge_base_errors(root)
+    if merge_base_errors:
+        return False, "handoff_refused", merge_base_errors[0]
+    hub, changed = derive_hub_scope(root)
+    if not hub:
         return True, "ok", "not hub_material"
-    ok, reason = validate_property_leaf_goals(data)
+    effective = dict(data)
+    effective["changed_paths"] = changed
+    ok, reason = validate_property_leaf_goals(effective)
     if not ok:
         return False, "handoff_refused", reason
-    ok, reason = validate_hub_exit_not_ci_only(data)
+    ok, reason = validate_hub_exit_not_ci_only(effective)
     if not ok:
         return False, "handoff_refused", reason
-    ok, reason = validate_hub_gate_diff_role_separation(root, data)
+    ok, reason = validate_hub_brief(root, effective)
     if not ok:
         return False, "handoff_refused", reason
-    ok, reason = validate_gate_set_change_receipts(root, data)
+    ok, reason = validate_hub_gate_diff_role_separation(root, effective)
     if not ok:
         return False, "handoff_refused", reason
+    # Gate-set byte ratification stays on fitness-gate-set-manifest (SG2). C1
+    # does not re-grade the unsigned-manifest sidecar expected on this PR.
     return True, "ok", "hub material produce package valid"
 
 

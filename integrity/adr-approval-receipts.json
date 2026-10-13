@@ -1,6 +1,8 @@
 {
   "schema": 1,
   "form": "bulk",
+  "ratification": false,
+  "role": "completion_confirmation",
   "receipts": {
     "0001": {
       "content_sha256": "3c5979c1832bab283044d51e7c9f9c30db418e0bbaa725258e76dc73ad52c767"

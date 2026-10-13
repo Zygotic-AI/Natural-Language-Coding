@@ -136,6 +136,10 @@ These require human review or are inherently design-time decisions:
 
 Run `python3 tools/audit-binding-matrix.py` to [verify](docs/TERMS.md#verify) matrix [integrity](docs/TERMS.md#integrity). All in-force requirements must be bound; reference requirements may remain unbound without failing the [audit](docs/TERMS.md#audit).
 
+## ADR 0051 / 0052 hub-own retrofit (C1–C11)
+
+Hub material produce packages derive `hub_material` and `changed_paths` from `git diff <merge-base origin/release/v0.3.0>..HEAD` (`tools/nouns/hub_own_produce`). Those fields are never read from the package. Every Accepted document needs an OpenPGP sidecar (`fitness-adr-owner-sidecar`); `integrity/adr-approval-receipts.json` is a completion confirmation only, not ratification. Rule list SSOT: `integrity/adr-0051-0052-rules.json` (must equal `tools/derive-adr-0051-0052-rules.py`). Known-bad SSOT: `integrity/known-bad-cases.json`. Retired key denylist: `integrity/owner-keys/RETIRED_FINGERPRINTS` (never trust `1A86E89505A908766DFD7304F04AD1CEC768DB18`).
+
 ## Conventions in this workspace
 
 - Prefer promise chaining over `await`; `.catch()` instead of try/catch around chains; `async` on Promise-returning functions; JSDoc on methods (when JS/TS lands).

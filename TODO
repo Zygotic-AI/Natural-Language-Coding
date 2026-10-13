@@ -602,6 +602,21 @@ Most older architecture decision records share `tools/assert-adr-approval-mismat
 - ✔ Add the missing behavioral fixtures. @done(26-10-09 22:31)
 - ✔ Make the record gate execute each fixture and verify its expected failure, rather than only checking that the fixture path exists. @done(26-10-09 22:31)
 
+### ADR 0051 / 0052 PARTIAL and UNBUILT retrofit (C1–C11)
+
+- ✔ C1 hub-scope-derived: git-derived hub_material and changed_paths; hub profile on hub produce. @done(26-10-13 04:40)
+- ✔ C2 handoff-hub-profile: assert-produce-handoff-refused hub missing-leaves fixture. @done(26-10-13 04:40)
+- ✔ C3 brief-forbid-weaken: brief_ref names leaves and forbid clause. @done(26-10-13 04:40)
+- ✔ C4 no-check-on-check: static check over ci_fitness-wired tools. @done(26-10-13 04:40)
+- ✔ C5 known-bad-ssot: integrity/known-bad-cases.json + direct verify. @done(26-10-13 04:40)
+- ✔ C6 sidecar-all-accepted: every Accepted document; remove ≤0051 exemption and legacy report. @done(26-10-13 04:40)
+- ✔ C7 pending-known-bad: Pending/Proposed presented as ratified → NOT_MET. @done(26-10-13 04:40)
+- ✔ C8 no-tool-writes-ratification: no tool writes *.approval.asc or ratified state. @done(26-10-13 04:40)
+- ✔ C9 retired-key-denylist: RETIRED_FINGERPRINTS + overlap check. @done(26-10-13 04:40)
+- ✔ C10 adr-gates-rows: constraint → check → known-bad in adr-gates.json. @done(26-10-13 04:40)
+- ✔ C11 rules-ssot: integrity/adr-0051-0052-rules.json equals derive_rules.py. @done(26-10-13 04:40)
+- ✔ ADR 0053 Proposed: stale 0051/0052 text (derived gate-set, manifest name, spent deferral, step-1 notes). @done(26-10-13 04:40)
+
 ### Effective decision after an amendment
 
 Record 0045 (one release identity) still says the executor is `scripts/nlc-release.sh`. Record 0048 (executable shape) amends that location: policy lives in `goals/hub_release/execute.sh`, and the shell only starts that goal. Do not edit record 0045 in place.
