@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "algorithm": "sha256",
-  "recorded_at": "2026-10-12T00:44:02Z",
+  "recorded_at": "2026-10-13T16:21:58Z",
   "hub": "0.3.0",
   "files": {
     "adrs/0001-zero-variance-integrity.md": "3c5979c1832bab283044d51e7c9f9c30db418e0bbaa725258e76dc73ad52c767",
@@ -57,10 +57,12 @@
     "adrs/0051-hub-own-produce-principles.md": "b0c1bfc37a9a1e605c58c5237cf0fcdc95b5f21083bb7d57c3c321a8e27aae31",
     "adrs/0052-owner-openpgp-ratification-amends-0051.approval.asc": "0846112402dd9703946c5333a9d732870e104fded1e3338c6c8556aedc8a3da2",
     "adrs/0052-owner-openpgp-ratification-amends-0051.md": "9df14a1c8fa3d093a328234cf789b6e2177005578b2c24cde34c5d88fdb19f87",
+    "adrs/0053-0051-0052-text-retrofit.md": "60f38fe29b10b0871e9bc1006f7402a2a8461e6e75b1b581ee1541ea09fbc4fe",
     "adrs/ACTIVE.md": "73de9f1f20bfd46881eb1f529f132d9f4d8981c204cc6ff82e39e187da6b9edc",
     "adrs/CATALOG.md": "1b9367f50364a6d602b68dd0e6b6e6fea4317e7124b09c58485723e18a705db9",
     "adrs/INDEX.md": "32f7ce0b7fa01034e9f8ba293380674cdd2106ee8286384e8999b412f52c54d5",
     "adrs/README.md": "d5dc2689f3ecf3b1101870352c01dd8c67815687307bd8af272acd7f32a6d8ba",
+    "adrs/owner-approvals/adr-batch-47.approval.asc": "b359d44057d59b6ca321e3138ad75f791b9c16739846bb240b13db369cdfa923",
     "rules/goal-bindings.json": "9956a3632532a8878e57aed3cd6ba26aa607d1b06ddffb882d10e50872255ba8",
     "rules/nlc-0024.json": "fa09d9c492dfd99fa52595f29b1bd774980e9faddacbd630bb54af8c1f8ba4ad",
     "rules/nlc-0025.json": "8a4440e1497501640bd8043ba9f2299f6623afecdea2f0ee8bf583de84a81064",

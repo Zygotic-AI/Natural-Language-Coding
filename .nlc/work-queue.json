@@ -1,4 +1,20 @@
 {
   "schema": 1,
-  "items": []
+  "items": [
+    {
+      "id": "adrs-pending",
+      "stage": "requirements",
+      "label": "4 requirements unfinished \u2014 ratify",
+      "next": "/interview in your agent",
+      "detail": "0046-repository-planit-identity.md, 0048-executable-shape.md, 0049-release-planner-owns-stops.md, 0053-0051-0052-text-retrofit.md",
+      "priority": 10
+    },
+    {
+      "id": "verify-waiting",
+      "stage": "verify",
+      "label": "Verify before prod",
+      "next": "./nlc verify  (if fail: run the printed Reproduce command)",
+      "priority": 30
+    }
+  ]
 }
