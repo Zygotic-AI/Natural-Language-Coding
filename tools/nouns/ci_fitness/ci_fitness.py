@@ -690,6 +690,14 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-adr-owner-sidecar.py")],
     )
     run(
+        "assert-adr-batch-approval",
+        [sys.executable, str(TOOLS / "assert-adr-batch-approval-fails.py")],
+    )
+    run(
+        "assert-adr-status-heading",
+        [sys.executable, str(TOOLS / "assert-adr-status-heading-fails.py")],
+    )
+    run(
         "fitness-gate-set-manifest",
         [sys.executable, str(TOOLS / "fitness-gate-set-manifest.py")],
     )

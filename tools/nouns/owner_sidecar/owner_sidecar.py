@@ -16,6 +16,13 @@ OWNER_KEY_REL = "integrity/owner-keys/richard-pickett.asc"
 TRUSTED_REL = "integrity/owner-keys/TRUSTED_FINGERPRINTS"
 _FIELD = re.compile(r"^([A-Za-z0-9_-]+):\s*(.*)$")
 _REQUIRED_FIELDS = ("Repo", "Document", "Content-SHA256", "Decision", "Date", "Summary")
+OWNER_BATCH_FINGERPRINT = "9D1BD57770FC3A1DE84702750AFD22B063AE01BC"
+BATCH_DIR_REL = "adrs/owner-approvals"
+_BATCH_LINE = re.compile(r"^(\S+)\s+sha256:([0-9a-fA-F]{64})\s*$")
+_CLEARSIGN_BODY = re.compile(
+    r"-----BEGIN PGP SIGNED MESSAGE-----\r?\n(?:Hash:[^\n]*\n)?\r?\n(.*)\r?\n-----BEGIN PGP SIGNATURE-----",
+    re.DOTALL,
+)
 _KNOWN_DOCUMENT_STATUS = frozenset({"Accepted", "Proposed", "Superseded", "Rejected", "Deprecated"})
 _KNOWN_STATUS_FOLD = {item.lower(): item for item in _KNOWN_DOCUMENT_STATUS}
 _PENDING_DECISIONS = frozenset({"Pending", "Proposed"})
@@ -103,17 +110,18 @@ def _parse_gpg_status(status_lines: str) -> tuple[set[str], list[str]]:
     return validsigs, errors
 
 
-def gpg_verify_clearsigned(
+def gpg_verify_clearsigned_plaintext(
     asc_path: Path,
     *,
     trusted_fingerprints: set[str],
     key_import_paths: list[Path],
-) -> tuple[str | None, dict[str, str], list[str]]:
+) -> tuple[str | None, str, list[str]]:
+    """Verify a clearsignature. Returns (signer, plaintext, errors). No sidecar-field parse."""
     errors: list[str] = []
     if not trusted_fingerprints:
-        return None, {}, ["empty trusted fingerprint set"]
+        return None, "", ["empty trusted fingerprint set"]
     if not key_import_paths:
-        return None, {}, ["no key material provided for gpg import"]
+        return None, "", ["no key material provided for gpg import"]
     with tempfile.TemporaryDirectory() as tmp:
         home = Path(tmp) / "gnupg"
         home.mkdir()
@@ -132,7 +140,7 @@ def gpg_verify_clearsigned(
             if imp.returncode != 0:
                 errors.append(f"gpg import failed for {key_path}: {(imp.stderr or imp.stdout).strip()}")
         if errors:
-            return None, {}, errors
+            return None, "", errors
         decrypt = subprocess.run(
             ["gpg", "--batch", "--decrypt", "--status-fd", "2", str(asc_path)],
             capture_output=True,
@@ -141,17 +149,18 @@ def gpg_verify_clearsigned(
             check=False,
         )
         status_text = decrypt.stderr or ""
+        plaintext = decrypt.stdout or ""
         if decrypt.returncode != 0:
-            return None, {}, [f"gpg decrypt failed: {(decrypt.stderr or decrypt.stdout).strip()}"]
+            return None, plaintext, [f"gpg decrypt failed: {(decrypt.stderr or decrypt.stdout).strip()}"]
         validsigs, status_errors = _parse_gpg_status(status_text)
         errors.extend(status_errors)
         if errors:
-            return None, {}, errors
+            return None, plaintext, errors
         trusted_valid = {fp for fp in validsigs if fp in trusted_fingerprints}
         if not trusted_valid:
             return (
                 None,
-                {},
+                plaintext,
                 [
                     "no VALIDSIG primary fingerprint in trusted allowlist "
                     f"(saw {sorted(validsigs)}, trusted {sorted(trusted_fingerprints)})"
@@ -160,11 +169,27 @@ def gpg_verify_clearsigned(
         if len(trusted_valid) > 1:
             errors.append("multiple trusted VALIDSIG primary fingerprints")
         signer_fp = sorted(trusted_valid)[0]
-        fields, parse_errors = parse_statement_plaintext(decrypt.stdout or "")
-        errors.extend(parse_errors)
         if errors:
-            return signer_fp, fields, errors
-        return signer_fp, fields, []
+            return signer_fp, plaintext, errors
+        return signer_fp, plaintext, []
+
+
+def gpg_verify_clearsigned(
+    asc_path: Path,
+    *,
+    trusted_fingerprints: set[str],
+    key_import_paths: list[Path],
+) -> tuple[str | None, dict[str, str], list[str]]:
+    signer_fp, plaintext, errors = gpg_verify_clearsigned_plaintext(
+        asc_path, trusted_fingerprints=trusted_fingerprints, key_import_paths=key_import_paths
+    )
+    if errors:
+        return signer_fp, {}, errors
+    fields, parse_errors = parse_statement_plaintext(plaintext)
+    errors.extend(parse_errors)
+    if errors:
+        return signer_fp, fields, errors
+    return signer_fp, fields, []
 
 
 def gpg_verify_clearsigned_in_repo(root: Path, asc_path: Path) -> tuple[str | None, dict[str, str], list[str]]:
@@ -336,6 +361,152 @@ def sidecar_path_for_document(document_rel: str) -> str:
     if rel.endswith(".md"):
         return rel[:-3] + ".approval.asc"
     return rel + ".approval.asc"
+
+
+def _git_tracked_rels(root: Path) -> list[str]:
+    proc = subprocess.run(
+        ["git", "ls-files"],
+        cwd=str(root),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        return []
+    return [line.strip().replace("\\", "/") for line in (proc.stdout or "").splitlines() if line.strip()]
+
+
+def committed_batch_approval_rels(root: Path) -> list[str]:
+    found: list[str] = []
+    prefix = BATCH_DIR_REL.rstrip("/") + "/"
+    for rel in _git_tracked_rels(root):
+        if not rel.startswith(prefix):
+            continue
+        if rel.count("/") != 2:
+            continue
+        if rel.endswith(".approval.asc"):
+            found.append(rel)
+    return sorted(found)
+
+
+def extract_clearsigned_body(text: str) -> str:
+    match = _CLEARSIGN_BODY.search(text.replace("\r\n", "\n"))
+    if not match:
+        return ""
+    return match.group(1)
+
+
+def parse_batch_entries(plaintext: str) -> tuple[dict[str, str], list[str]]:
+    entries: dict[str, str] = {}
+    errors: list[str] = []
+    for raw in plaintext.replace("\r\n", "\n").splitlines():
+        stripped = raw.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        match = _BATCH_LINE.match(stripped)
+        if not match:
+            if _FIELD.match(stripped):
+                continue
+            errors.append(f"unparseable batch line {stripped!r}")
+            continue
+        path = match.group(1).replace("\\", "/").lstrip("./")
+        digest = match.group(2).lower()
+        if path in entries:
+            errors.append(f"duplicate batch path {path}")
+            continue
+        entries[path] = digest
+    return entries, errors
+
+
+def batch_allowed_fingerprints(trusted: set[str]) -> set[str]:
+    """Production pin is OWNER_BATCH_FINGERPRINT when that key is still trusted."""
+    if OWNER_BATCH_FINGERPRINT in trusted:
+        return {OWNER_BATCH_FINGERPRINT}
+    return set(trusted)
+
+
+def verify_batch_approval(root: Path, batch_rel: str) -> tuple[dict[str, str], list[str]]:
+    """Verify one committed batch. Returns (entries, errors). Entries parsed even on sig fail."""
+    rel = batch_rel.replace("\\", "/").lstrip("./")
+    path = root / rel
+    errors: list[str] = []
+    entries: dict[str, str] = {}
+    if not path.is_file():
+        return {}, [f"{rel}: batch missing"]
+    body = extract_clearsigned_body(path.read_text(encoding="utf-8", errors="replace"))
+    parsed, perr = parse_batch_entries(body)
+    entries.update(parsed)
+    errors.extend(f"{rel}: {item}" for item in perr)
+    trusted, terr = load_trusted_fingerprints(root)
+    if terr:
+        return entries, [f"{rel}: {item}" for item in terr]
+    signer, _plaintext, verr = gpg_verify_clearsigned_plaintext(
+        path, trusted_fingerprints=trusted, key_import_paths=[root / OWNER_KEY_REL]
+    )
+    if verr:
+        return entries, [f"{rel}: {item}" for item in verr] + errors
+    allowed = batch_allowed_fingerprints(trusted)
+    if signer is None or signer not in allowed:
+        return entries, [
+            f"{rel}: batch not signed by pinned key {OWNER_BATCH_FINGERPRINT}"
+        ] + errors
+    return entries, errors
+
+
+def committed_batch_file_errors(root: Path) -> list[str]:
+    errors: list[str] = []
+    for rel in committed_batch_approval_rels(root):
+        _entries, berr = verify_batch_approval(root, rel)
+        errors.extend(berr)
+    return errors
+
+
+def document_batch_result(root: Path, document_rel: str) -> tuple[bool, list[str]]:
+    """Return (covered, errors). covered True only when a valid batch lists a matching Accepted hash."""
+    doc_rel = document_rel.replace("\\", "/").lstrip("./")
+    doc_path = root / doc_rel
+    if not doc_path.is_file():
+        return False, [f"{doc_rel}: document missing"]
+    actual = content_hash(doc_path.read_bytes())
+    status = read_status_line(doc_path)
+    listed_errors: list[str] = []
+    for batch_rel in committed_batch_approval_rels(root):
+        entries, berr = verify_batch_approval(root, batch_rel)
+        if doc_rel not in entries:
+            continue
+        if berr:
+            listed_errors.append(f"{doc_rel}: listed in invalid batch {batch_rel}")
+            listed_errors.extend(berr)
+            continue
+        if entries[doc_rel] != actual:
+            listed_errors.append(
+                f"{doc_rel}: batch sha256 mismatch (statement {entries[doc_rel]} vs file {actual})"
+            )
+            continue
+        if status != "Accepted":
+            listed_errors.append(f"{doc_rel}: batch entry requires Status Accepted")
+            continue
+        return True, []
+    return False, listed_errors
+
+
+def verify_owner_signed(root: Path, document_rel: str) -> list[str]:
+    """Signed when own sidecar verifies, or a committed batch covers the Accepted bytes."""
+    doc_rel = document_rel.replace("\\", "/").lstrip("./")
+    sidecar = root / sidecar_path_for_document(doc_rel)
+    sidecar_errs: list[str] = []
+    if sidecar.is_file():
+        sidecar_errs = verify_sidecar_p1(root, doc_rel)
+        if not sidecar_errs:
+            return []
+    covered, batch_errs = document_batch_result(root, doc_rel)
+    if covered:
+        return []
+    if sidecar.is_file():
+        return sidecar_errs
+    if batch_errs:
+        return batch_errs
+    return [f"{doc_rel}: missing sidecar {doc_rel}.approval.asc"]
 
 
 def verify_sidecar_p1(root: Path, document_rel: str) -> list[str]:

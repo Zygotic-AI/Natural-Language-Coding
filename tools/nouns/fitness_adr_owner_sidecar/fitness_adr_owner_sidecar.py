@@ -10,10 +10,11 @@ import sys
 from pathlib import Path
 
 from nouns.owner_sidecar.owner_sidecar import (
+    committed_batch_file_errors,
     document_status_errors,
     non_adr_status_errors,
     read_status_line,
-    verify_sidecar_p1,
+    verify_owner_signed,
 )
 
 _ADR_FILE = re.compile(r"^(\d{4})-.+\.md$")
@@ -74,8 +75,9 @@ def sidecar_errors(root: Path) -> list[str]:
         for path in sorted(adrs.glob("[0-9][0-9][0-9][0-9]-*.md")):
             rel = path.relative_to(root).as_posix()
             errors.extend(document_status_errors(rel, path))
+    errors.extend(committed_batch_file_errors(root))
     for rel in accepted_document_rels(root):
-        errors.extend(verify_sidecar_p1(root, rel))
+        errors.extend(verify_owner_signed(root, rel))
     for rel in _git_tracked_files(root):
         if not rel.endswith(".md"):
             continue
