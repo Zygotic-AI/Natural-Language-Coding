@@ -9,15 +9,33 @@ import re
 import subprocess
 import tempfile
 from pathlib import Path
+from typing import NamedTuple
 
 REPO_SLUG = "Zygotic-AI/Natural-Language-Coding"
 OWNER_KEY_REL = "integrity/owner-keys/richard-pickett.asc"
 TRUSTED_REL = "integrity/owner-keys/TRUSTED_FINGERPRINTS"
 _FIELD = re.compile(r"^([A-Za-z0-9_-]+):\s*(.*)$")
-_STATUS_LINE = re.compile(r"^-?\s*Status:\s*(\S+)")
 _REQUIRED_FIELDS = ("Repo", "Document", "Content-SHA256", "Decision", "Date", "Summary")
 _KNOWN_DOCUMENT_STATUS = frozenset({"Accepted", "Proposed", "Superseded", "Rejected", "Deprecated"})
+_KNOWN_STATUS_FOLD = {item.lower(): item for item in _KNOWN_DOCUMENT_STATUS}
 _PENDING_DECISIONS = frozenset({"Pending", "Proposed"})
+_ADR_FILE = re.compile(r"^(\d{4})-.+\.md$")
+_INLINE_STATUS = re.compile(
+    r"^-?\s*(?:\*\*)?Status(?:\*\*)?:\s*(?:\*\*)?\s*(.+)$",
+    re.IGNORECASE,
+)
+_HEADING_STATUS = re.compile(r"^#{2,3}\s+Status\s*$", re.IGNORECASE)
+_STOP_HEADING = re.compile(r"^#{2,3}\s+(Decision|Context)\b", re.IGNORECASE)
+_EMPHASIS = re.compile(r"(\*\*|__|\*|_)")
+
+
+class StatusParse(NamedTuple):
+    """First header Status marker, or empty when the header has none."""
+
+    normalized: str | None
+    raw_line: str | None
+    raw_value: str | None
+    marker_present: bool
 
 
 def content_hash(body: bytes) -> str:
@@ -159,32 +177,108 @@ def gpg_verify_clearsigned_in_repo(root: Path, asc_path: Path) -> tuple[str | No
     )
 
 
-def read_status_line(doc_path: Path) -> str | None:
-    """Return the first header Status token (Accepted/Proposed/…), dash optional.
+def _normalize_status_token(raw: str) -> str | None:
+    """Strip emphasis and trailing punctuation; first word → known Status spelling."""
+    text = _EMPHASIS.sub("", raw).strip()
+    text = text.rstrip(".,;:!?…").strip()
+    if not text:
+        return None
+    first = text.split()[0].rstrip(".,;:!?…")
+    if not first:
+        return None
+    return _KNOWN_STATUS_FOLD.get(first.lower())
 
-    Later body lines that mention Status (for example INDEX field syntax) are ignored.
-    """
-    for line in doc_path.read_text(encoding="utf-8").splitlines():
-        match = _STATUS_LINE.match(line.strip())
-        if match:
-            return match.group(1)
-    return None
+
+def parse_document_status(text: str) -> StatusParse:
+    """First Status marker in the document header (before Decision/Context)."""
+    lines = text.replace("\r\n", "\n").splitlines()
+    index = 0
+    while index < len(lines):
+        stripped = lines[index].strip()
+        if _STOP_HEADING.match(stripped):
+            break
+        if _HEADING_STATUS.match(stripped):
+            value_line = None
+            scan = index + 1
+            while scan < len(lines):
+                nxt = lines[scan].strip()
+                if nxt:
+                    value_line = lines[scan]
+                    break
+                scan += 1
+            raw_value = value_line.strip() if value_line is not None else ""
+            return StatusParse(
+                normalized=_normalize_status_token(raw_value) if raw_value else None,
+                raw_line=value_line if value_line is not None else lines[index],
+                raw_value=raw_value or None,
+                marker_present=True,
+            )
+        inline = _INLINE_STATUS.match(stripped)
+        if inline:
+            raw_value = inline.group(1).strip()
+            return StatusParse(
+                normalized=_normalize_status_token(raw_value),
+                raw_line=lines[index],
+                raw_value=raw_value,
+                marker_present=True,
+            )
+        index += 1
+    return StatusParse(normalized=None, raw_line=None, raw_value=None, marker_present=False)
+
+
+def parse_document_status_path(doc_path: Path) -> StatusParse:
+    return parse_document_status(doc_path.read_text(encoding="utf-8"))
+
+
+def read_status_line(doc_path: Path) -> str | None:
+    """Return the first header Status token (Accepted/Proposed/…), or None."""
+    return parse_document_status_path(doc_path).normalized
 
 
 def _document_requires_status_line(document_rel: str) -> bool:
     rel = document_rel.replace("\\", "/").lstrip("./")
-    return rel.startswith("adrs/") and rel.endswith(".md")
+    return rel.startswith("adrs/") and bool(_ADR_FILE.match(Path(rel).name))
+
+
+def numbered_adr_rel(document_rel: str) -> bool:
+    return _document_requires_status_line(document_rel)
+
+
+def status_value_for_error(parsed: StatusParse) -> str:
+    if parsed.raw_value is not None:
+        return parsed.raw_value
+    if parsed.raw_line is not None:
+        return parsed.raw_line
+    return ""
+
+
+def document_status_errors(document_rel: str, doc_path: Path) -> list[str]:
+    """Numbered ADRs must have a known Status. Missing/unknown → C6 NOT_MET."""
+    rel = document_rel.replace("\\", "/").lstrip("./")
+    if not numbered_adr_rel(rel):
+        return []
+    parsed = parse_document_status_path(doc_path)
+    if parsed.normalized in _KNOWN_DOCUMENT_STATUS:
+        return []
+    value = status_value_for_error(parsed)
+    return [f"{rel}: unparseable or unknown Status {value}"]
+
+
+def non_adr_status_errors(document_rel: str, doc_path: Path) -> list[str]:
+    """Unparseable non-ADR Status is a violation only when the raw marker mentions accept."""
+    rel = document_rel.replace("\\", "/").lstrip("./")
+    parsed = parse_document_status_path(doc_path)
+    if not parsed.marker_present or parsed.normalized is not None:
+        return []
+    raw = parsed.raw_line or ""
+    if "accept" not in raw.lower():
+        return []
+    value = status_value_for_error(parsed)
+    return [f"{rel}: unparseable or unknown Status {value}"]
 
 
 def _status_line_errors(doc_path: Path, document_rel: str) -> list[str]:
-    if not _document_requires_status_line(document_rel):
-        return []
-    status = read_status_line(doc_path)
-    if status is None:
-        return [f"{document_rel}: missing Status line"]
-    if status not in _KNOWN_DOCUMENT_STATUS:
-        return [f"{document_rel}: unknown Status {status!r}"]
-    return []
+    return document_status_errors(document_rel, doc_path)
 
 
 def verify_sidecar_p1_fields(

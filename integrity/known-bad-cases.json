@@ -202,13 +202,13 @@
       "known_bad_id": "KB-0052-unsigned"
     },
     "0052:L40": {
-      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/9998-heading-status-accepted.md",
       "verify_kind": "sidecar_p1",
       "expected_reason_substring": "missing sidecar",
       "known_bad_id": "GAP-0051-unsigned"
     },
     "0052:DEC-1": {
-      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/9997-unparseable-status.md",
       "verify_kind": "sidecar_p1",
       "expected_reason_substring": "missing sidecar",
       "known_bad_id": "GAP-0051-unsigned"

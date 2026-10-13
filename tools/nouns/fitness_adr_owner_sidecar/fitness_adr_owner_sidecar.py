@@ -9,7 +9,12 @@ import subprocess
 import sys
 from pathlib import Path
 
-from nouns.owner_sidecar.owner_sidecar import read_status_line, verify_sidecar_p1
+from nouns.owner_sidecar.owner_sidecar import (
+    document_status_errors,
+    non_adr_status_errors,
+    read_status_line,
+    verify_sidecar_p1,
+)
 
 _ADR_FILE = re.compile(r"^(\d{4})-.+\.md$")
 _SKIP_PREFIXES = (
@@ -64,8 +69,24 @@ def accepted_document_rels(root: Path) -> list[str]:
 
 def sidecar_errors(root: Path) -> list[str]:
     errors: list[str] = []
+    adrs = root / "adrs"
+    if adrs.is_dir():
+        for path in sorted(adrs.glob("[0-9][0-9][0-9][0-9]-*.md")):
+            rel = path.relative_to(root).as_posix()
+            errors.extend(document_status_errors(rel, path))
     for rel in accepted_document_rels(root):
         errors.extend(verify_sidecar_p1(root, rel))
+    for rel in _git_tracked_files(root):
+        if not rel.endswith(".md"):
+            continue
+        if any(rel.startswith(prefix) for prefix in _SKIP_PREFIXES):
+            continue
+        if rel.startswith("adrs/") and _ADR_FILE.match(Path(rel).name):
+            continue
+        path = root / rel
+        if not path.is_file():
+            continue
+        errors.extend(non_adr_status_errors(rel, path))
     return errors
 
 
