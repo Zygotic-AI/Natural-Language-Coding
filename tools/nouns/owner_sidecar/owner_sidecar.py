@@ -16,6 +16,7 @@ TRUSTED_REL = "integrity/owner-keys/TRUSTED_FINGERPRINTS"
 _FIELD = re.compile(r"^([A-Za-z0-9_-]+):\s*(.*)$")
 _REQUIRED_FIELDS = ("Repo", "Document", "Content-SHA256", "Decision", "Date", "Summary")
 _KNOWN_DOCUMENT_STATUS = frozenset({"Accepted", "Proposed", "Superseded", "Rejected", "Deprecated"})
+_PENDING_DECISIONS = frozenset({"Pending", "Proposed"})
 
 
 def content_hash(body: bytes) -> str:
@@ -207,6 +208,25 @@ def verify_sidecar_p1_fields(
             errors.append(
                 f"{doc_rel}: Decision {fields.get('Decision')!r} != document Status {status!r}"
             )
+        errors.extend(pending_presented_as_ratified_errors(status, fields, document_rel=doc_rel))
+    else:
+        errors.extend(
+            pending_presented_as_ratified_errors(None, fields, document_rel=doc_rel)
+        )
+    return errors
+
+
+def pending_presented_as_ratified_errors(
+    status: str | None, fields: dict[str, str], *, document_rel: str = ""
+) -> list[str]:
+    """NOT_MET when a Pending/Proposed decision or Proposed document is presented as ratified."""
+    errors: list[str] = []
+    prefix = f"{document_rel}: " if document_rel else ""
+    decision = fields.get("Decision")
+    if decision in _PENDING_DECISIONS:
+        errors.append(f"{prefix}pending Decision {decision!r} is not ratification")
+    if status == "Proposed" and decision == "Accepted":
+        errors.append(f"{prefix}Proposed document presented as ratified")
     return errors
 
 

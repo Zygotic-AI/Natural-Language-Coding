@@ -710,6 +710,38 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-owner-ratification-known-bad.py")],
     )
     run(
+        "fitness-hub-scope-derived",
+        [sys.executable, str(TOOLS / "fitness-hub-scope-derived.py")],
+    )
+    run(
+        "fitness-hub-brief-forbid-weaken",
+        [sys.executable, str(TOOLS / "fitness-hub-brief-forbid-weaken.py")],
+    )
+    run(
+        "fitness-no-check-on-check",
+        [sys.executable, str(TOOLS / "fitness-no-check-on-check.py")],
+    )
+    run(
+        "fitness-known-bad-ssot",
+        [sys.executable, str(TOOLS / "fitness-known-bad-ssot.py")],
+    )
+    run(
+        "fitness-pending-ratification",
+        [sys.executable, str(TOOLS / "fitness-pending-ratification.py")],
+    )
+    run(
+        "fitness-no-tool-writes-ratification",
+        [sys.executable, str(TOOLS / "fitness-no-tool-writes-ratification.py")],
+    )
+    run(
+        "fitness-retired-key-denylist",
+        [sys.executable, str(TOOLS / "fitness-retired-key-denylist.py")],
+    )
+    run(
+        "fitness-adr-0051-0052-rules",
+        [sys.executable, str(TOOLS / "fitness-adr-0051-0052-rules.py")],
+    )
+    run(
         "assert-gate-set-manifest-tamper",
         [sys.executable, str(TOOLS / "assert-gate-set-manifest-tamper-fails.py")],
     )

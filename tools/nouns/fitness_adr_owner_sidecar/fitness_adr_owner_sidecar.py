@@ -1,55 +1,73 @@
-"""ADR 0052 P1/P2: OpenPGP sidecar for Accepted ADRs > 0051; legacy report for <= 0051."""
+"""ADR 0052 step 2: OpenPGP sidecar required for every Accepted document (C6)."""
 
 from __future__ import annotations
 
 BOUNDARY = "bba-emit"
 
 import re
+import subprocess
 import sys
 from pathlib import Path
 
-from nouns.adr_approval.adr_approval import active_numbers
 from nouns.owner_sidecar.owner_sidecar import verify_sidecar_p1
 
-REPORT_REL = "integrity/adr-openpgp-legacy-report.txt"
-_STATUS = re.compile(r"^-\s*Status:\s*(\S+)", re.M)
+_STATUS = re.compile(r"^-?\s*Status:\s*(\S+)", re.M)
+_ADR_FILE = re.compile(r"^(\d{4})-.+\.md$")
+_SKIP_PREFIXES = (
+    "tools/fixtures/",
+    "examples/",
+    "docs/history/",
+    "docs/rca/",
+    "reviews/",
+)
 
 
-def _adr_file(root: Path, number: str) -> Path | None:
-    matches = sorted((root / "adrs").glob(f"{number}-*.md"))
-    if len(matches) != 1:
-        return None
-    return matches[0]
+def _git_tracked_files(root: Path) -> list[str]:
+    proc = subprocess.run(
+        ["git", "ls-files"],
+        cwd=str(root),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        return []
+    return [line.strip().replace("\\", "/") for line in (proc.stdout or "").splitlines() if line.strip()]
 
 
-def _adr_int(number: str) -> int:
-    return int(number)
+def _status_of(path: Path) -> str:
+    text = path.read_text(encoding="utf-8")
+    match = _STATUS.search(text)
+    return match.group(1) if match else ""
+
+
+def accepted_document_rels(root: Path) -> list[str]:
+    """Every Accepted document. ACTIVE.md membership does not matter. Fixtures/examples excluded."""
+    found: list[str] = []
+    adrs = root / "adrs"
+    if adrs.is_dir():
+        for path in sorted(adrs.glob("[0-9][0-9][0-9][0-9]-*.md")):
+            if _status_of(path) == "Accepted":
+                found.append(path.relative_to(root).as_posix())
+    for rel in _git_tracked_files(root):
+        if not rel.endswith(".md"):
+            continue
+        if any(rel.startswith(prefix) for prefix in _SKIP_PREFIXES):
+            continue
+        if rel.startswith("adrs/") and _ADR_FILE.match(Path(rel).name):
+            continue
+        path = root / rel
+        if not path.is_file():
+            continue
+        if _status_of(path) == "Accepted":
+            found.append(rel)
+    return sorted(set(found))
 
 
 def sidecar_errors(root: Path) -> list[str]:
     errors: list[str] = []
-    legacy_lines: list[str] = []
-    for number in active_numbers((root / "adrs" / "ACTIVE.md").read_text(encoding="utf-8")):
-        path = _adr_file(root, number)
-        if path is None:
-            errors.append(f"{number}: ADR file missing")
-            continue
-        text = path.read_text(encoding="utf-8")
-        status_match = _STATUS.search(text)
-        status = status_match.group(1) if status_match else ""
-        if status != "Accepted":
-            continue
-        n = _adr_int(number)
-        if n <= 51:
-            legacy_lines.append(f"{number} unsigned (legacy hash receipt)")
-            continue
-        errors.extend(verify_sidecar_p1(root, str(path.relative_to(root).as_posix())))
-    report_path = root / REPORT_REL
-    expected_report = "\n".join(legacy_lines) + ("\n" if legacy_lines else "")
-    if not report_path.is_file():
-        errors.append(f"missing {REPORT_REL}")
-    elif report_path.read_text(encoding="utf-8") != expected_report:
-        errors.append(f"{REPORT_REL} stale (run tools/generate-adr-openpgp-legacy-report.py)")
+    for rel in accepted_document_rels(root):
+        errors.extend(verify_sidecar_p1(root, rel))
     return errors
 
 

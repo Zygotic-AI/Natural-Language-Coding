@@ -50,18 +50,63 @@ def status_errors(status: str) -> list[str]:
     return errors
 
 
+def constraint_row_errors(root: Path, payload: dict[str, object] | None = None) -> list[str]:
+    """C10: each codified 0051/0052 constraint has a check + known-bad row."""
+    errors: list[str] = []
+    if payload is None:
+        gates_path = root / "integrity" / "adr-gates.json"
+        if not gates_path.is_file():
+            return ["missing integrity/adr-gates.json"]
+        loaded = json.loads(gates_path.read_text(encoding="utf-8"))
+        if not isinstance(loaded, dict):
+            return ["integrity/adr-gates.json must be object"]
+        payload = loaded
+    constraints = payload.get("constraints")
+    if not isinstance(constraints, dict) or not constraints:
+        return ["integrity/adr-gates.json missing constraints rows for 0051/0052"]
+    rules_path = root / "integrity" / "adr-0051-0052-rules.json"
+    if not rules_path.is_file():
+        return ["missing integrity/adr-0051-0052-rules.json"]
+    rules_payload = json.loads(rules_path.read_text(encoding="utf-8"))
+    rows = rules_payload.get("rules") if isinstance(rules_payload, dict) else None
+    if not isinstance(rows, list):
+        return ["integrity/adr-0051-0052-rules.json rules must be array"]
+    exempt = {"0051:L25", "0052:DEC-6"}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        rid = str(row.get("id") or "")
+        status = str(row.get("status") or "")
+        if not rid or status == "CONTEXT" or rid in exempt:
+            continue
+        entry = constraints.get(rid)
+        if not isinstance(entry, dict):
+            errors.append(f"{rid}: missing adr-gates constraint row")
+            continue
+        check = entry.get("check")
+        known_bad = entry.get("known_bad")
+        if not isinstance(check, str) or not check.strip():
+            errors.append(f"{rid}: constraint row missing check")
+        if not isinstance(known_bad, str) or not known_bad.strip():
+            errors.append(f"{rid}: constraint row missing known-bad")
+    return errors
+
+
 def record_gate_errors(root: Path) -> list[str]:
     errors = [f"approval: {item}" for item in approval_errors(root)]
     numbers = active_numbers((root / "adrs" / "ACTIVE.md").read_text(encoding="utf-8"))
     rows = enforcement_rows((root / "docs" / "ADR-ENFORCEMENT.md").read_text(encoding="utf-8"))
     gates_path = root / "integrity" / "adr-gates.json"
+    payload: dict[str, object] = {}
     if not gates_path.is_file():
         errors.append("missing integrity/adr-gates.json")
         gates: dict[str, object] = {}
     else:
-        payload = json.loads(gates_path.read_text(encoding="utf-8"))
+        loaded = json.loads(gates_path.read_text(encoding="utf-8"))
+        payload = loaded if isinstance(loaded, dict) else {}
         raw = payload.get("records") if isinstance(payload, dict) else None
         gates = raw if isinstance(raw, dict) else {}
+    errors.extend(constraint_row_errors(root, payload if payload else None))
     backlog = root / "integrity" / "charter-ratify-backlog.json"
     if not backlog.is_file():
         errors.append("0031: missing charter ratification backlog")

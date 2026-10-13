@@ -1,0 +1,387 @@
+{
+  "schema": 1,
+  "records": {
+    "0001": {
+      "gate": "tools/fitness-adr-0001-binder.py",
+      "fixture": "tools/assert-binding-matrix-met.py"
+    },
+    "0002": {
+      "gate": "tools/fitness-p2-hub-scope.py",
+      "fixture": "tools/assert-p2-hub-scope-passes.py"
+    },
+    "0003": {
+      "gate": "tools/fitness-agent-noun-structure.py",
+      "fixture": "tools/assert-agent-noun-structure-passes.py"
+    },
+    "0004": {
+      "gate": "tools/fitness-adr-0004-0005-binder.py",
+      "fixture": "tools/fitness-adr-0004-0005-binder.py"
+    },
+    "0005": {
+      "gate": "tools/fitness-produce-ssot-binder.py",
+      "fixture": "tools/fitness-produce-ssot-binder.py"
+    },
+    "0006": {
+      "gate": "tools/fitness-verify-pipeline-wired.py",
+      "fixture": "tools/assert-verify-contract-change-fails.py"
+    },
+    "0007": {
+      "gate": "tools/nlc_rule_runner.py",
+      "fixture": "tools/assert-rule-semantic-pan-fails.py"
+    },
+    "0008": {
+      "gate": "tools/fitness-adr-0008-binder.py",
+      "fixture": "tools/fitness-adr-0008-binder.py"
+    },
+    "0009": {
+      "gate": "tools/nlc_call_tree.py",
+      "fixture": "tools/assert-verb-primitive-inventory-fails.py"
+    },
+    "0010": {
+      "gate": "tools/fitness-adr-0010-binder.py",
+      "fixture": "tools/fitness-adr-0010-binder.py"
+    },
+    "0011": {
+      "gate": "tools/fitness-nlc-naming.py",
+      "fixture": "tools/fitness-nlc-naming.py"
+    },
+    "0012": {
+      "gate": "tools/check-rule-adoption.py",
+      "fixture": "tools/assert-rule-adoption-conflicts-fails.py"
+    },
+    "0013": {
+      "gate": "tools/fitness-requirements-hub-entrypoints.py",
+      "fixture": "tools/assert-requirements-hub-entrypoints-passes.py"
+    },
+    "0014": {
+      "gate": "tools/assert-release-preflight-passes.py",
+      "fixture": "tools/assert-release-preflight-passes.py"
+    },
+    "0015": {
+      "gate": "tools/fitness-distribution-binder.py",
+      "fixture": "tools/fitness-distribution-binder.py"
+    },
+    "0016": {
+      "gate": "tools/fitness-hub-no-product-requirements.py",
+      "fixture": "tools/fitness-hub-no-product-requirements.py"
+    },
+    "0017": {
+      "gate": "tools/fitness-human-surface-binder.py",
+      "fixture": "tools/fitness-human-surface-binder.py"
+    },
+    "0018": {
+      "gate": "tools/fitness-human-surface-binder.py",
+      "fixture": "tools/fitness-human-surface-binder.py"
+    },
+    "0019": {
+      "gate": "tools/fitness-guide-orchestration.py",
+      "fixture": "tools/fitness-guide-orchestration.py"
+    },
+    "0020": {
+      "gate": "tools/fitness-dashboard-interview-sync.py",
+      "fixture": "tools/assert-dashboard-interview-passes.py"
+    },
+    "0021": {
+      "gate": "tools/assert-verify-deep-produce-refused.py",
+      "fixture": "tools/assert-verify-deep-produce-refused.py"
+    },
+    "0022": {
+      "gate": "tools/fitness-adr-0039-release-binder.py",
+      "fixture": "tools/assert-release-preflight-passes.py"
+    },
+    "0023": {
+      "gate": "tools/nlc_rule_emit.py",
+      "fixture": "tools/fitness-adr-0023-binder.py"
+    },
+    "0024": {
+      "gate": "tools/fitness-adr-0024-binder.py",
+      "fixture": "tools/fitness-adr-0024-binder.py"
+    },
+    "0025": {
+      "gate": "tools/validate-rca-packet.py",
+      "fixture": "tools/fitness-adr-0025-rca-packet.py"
+    },
+    "0026": {
+      "gate": "tools/nlc-action-plan-gate.py",
+      "fixture": "tools/fitness-nlc-action-plan-gate.py"
+    },
+    "0027": {
+      "gate": "tools/nlc-emit-from-prose.py",
+      "fixture": "tools/fitness-nlc-emit-from-prose.py"
+    },
+    "0028": {
+      "gate": "tools/fitness-verb-set-lineage.py",
+      "fixture": "tools/assert-verb-set-extension-fails.py"
+    },
+    "0029": {
+      "gate": "tools/fitness-adr-0029-tools.py",
+      "fixture": "tools/fitness-adr-0029-tools.py"
+    },
+    "0030": {
+      "gate": "tools/nlc-pipeline-wire.py",
+      "fixture": "tools/fitness-nlc-pipeline-wire.py"
+    },
+    "0031": {
+      "gate": "tools/fitness-adr-record-gate.py",
+      "fixture": "tools/fitness-adr-record-gate.py"
+    },
+    "0032": {
+      "gate": "tools/fitness-adr-record-gate.py",
+      "fixture": "tools/fitness-adr-record-gate.py"
+    },
+    "0033": {
+      "gate": "tools/fitness-adr-record-gate.py",
+      "fixture": "tools/fitness-adr-record-gate.py"
+    },
+    "0034": {
+      "gate": "tools/fitness-adr-record-gate.py",
+      "fixture": "tools/fitness-adr-record-gate.py"
+    },
+    "0035": {
+      "gate": "tools/fitness-adr-record-gate.py",
+      "fixture": "tools/fitness-adr-record-gate.py"
+    },
+    "0036": {
+      "gate": "tools/fitness-nlc-0036-inference-only.py",
+      "fixture": "tools/fitness-nlc-0036-inference-only.py"
+    },
+    "0037": {
+      "gate": "tools/fitness-adr-record-gate.py",
+      "fixture": "tools/fitness-adr-record-gate.py"
+    },
+    "0038": {
+      "gate": "tools/fitness-adr-0038-no-memory.py",
+      "fixture": "tools/fitness-adr-0038-no-memory.py"
+    },
+    "0039": {
+      "gate": "tools/nlc_release_tag_gate.py",
+      "fixture": "tools/fitness-adr-0039-release-binder.py"
+    },
+    "0040": {
+      "gate": "tools/nlc_release_shipped_tag_audit.py",
+      "fixture": "tools/assert-shipped-tag-audit-fails.py"
+    },
+    "0041": {
+      "gate": "tools/fitness-product-completion-scope.py",
+      "fixture": "tools/fitness-hub-pack-registry.py"
+    },
+    "0042": {
+      "gate": "tools/fitness-adr-0007-product-boundary.py",
+      "fixture": "tools/fitness-adr-0007-product-boundary.py"
+    },
+    "0043": {
+      "gate": "tools/fitness-uc14-product-boundary.py",
+      "fixture": "tools/fitness-uc14-product-boundary.py"
+    },
+    "0044": {
+      "gate": "tools/nlc_release_main_purity.py",
+      "fixture": "tools/fitness-adr-0039-release-binder.py"
+    },
+    "0045": {
+      "gate": "tools/nlc_release_state.py",
+      "fixture": "tools/assert-release-state-passes.py"
+    },
+    "0046": {
+      "gate": "tools/fitness-planit-identity.py",
+      "fixture": "tools/assert-planit-other-skill-fails.py"
+    },
+    "0047": {
+      "gate": "tools/fitness-adr-approval.py",
+      "fixture": "tools/assert-adr-approval-mismatch-fails.py"
+    },
+    "0048": {
+      "gate": "tools/fitness-executable-shape.py",
+      "fixture": "tools/assert-executable-kernel-exempt-fails.py"
+    },
+    "0049": {
+      "gate": "tools/fitness-release-planner-ownership.py",
+      "fixture": "tools/assert-release-planner-ownership-fails.py"
+    },
+    "0050": {
+      "gate": "tools/fitness-no-history-ids-in-evidence.py",
+      "fixture": "tools/assert-history-rewrite-invariant-passes.py"
+    },
+    "0051": {
+      "gate": "tools/fitness-hub-scope-derived.py",
+      "fixture": "tools/assert-produce-handoff-refused.py"
+    },
+    "0052": {
+      "gate": "tools/fitness-adr-owner-sidecar.py",
+      "fixture": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md"
+    }
+  },
+  "constraints": {
+    "0051:REGRESS-1": {
+      "check": "C4",
+      "known_bad": "KB-check-on-check"
+    },
+    "0051:REGRESS-3": {
+      "check": "C4",
+      "known_bad": "KB-check-on-check"
+    },
+    "0051:REGRESS-4": {
+      "check": "C5",
+      "known_bad": "KB-known-bad-ssot-gap"
+    },
+    "0051:GATE-SET-DEF": {
+      "check": "fitness-gate-set-manifest",
+      "known_bad": "KB-SG2-closure-member"
+    },
+    "0051:S-HUB-GOAL-TREE": {
+      "check": "C1",
+      "known_bad": "KB-SG1-leaves"
+    },
+    "0051:R-HUB-EXIT": {
+      "check": "C1",
+      "known_bad": "KB-SG1-exit"
+    },
+    "0051:R-HUB-BRIEF-FORBID-WEAKEN": {
+      "check": "C3",
+      "known_bad": "KB-brief-forbid"
+    },
+    "0051:CC-SG1": {
+      "check": "C2",
+      "known_bad": "KB-SG1-leaves"
+    },
+    "0051:P-GATE-SET-RATIFY": {
+      "check": "fitness-gate-set-manifest",
+      "known_bad": "KB-SG2-closure-member"
+    },
+    "0051:S-GATE-SET-REGISTRY": {
+      "check": "fitness-gate-set-manifest",
+      "known_bad": "KB-SG2-closure-member"
+    },
+    "0051:R-GATE-SET-NO-SILENT-WEAKEN": {
+      "check": "fitness-gate-set-manifest",
+      "known_bad": "KB-SG2-closure-member"
+    },
+    "0051:CC-SG2": {
+      "check": "fitness-gate-set-manifest",
+      "known_bad": "KB-SG2-closure-member"
+    },
+    "0051:AMEND-0047-1": {
+      "check": "fitness-gate-set-manifest",
+      "known_bad": "KB-SG2-closure-member"
+    },
+    "0051:AMEND-0047-2": {
+      "check": "fitness-gate-set-manifest",
+      "known_bad": "KB-SG2-closure-member"
+    },
+    "0051:AMEND-0047-3": {
+      "check": "C6",
+      "known_bad": "GAP-0051-unsigned"
+    },
+    "0051:P-HUB-ROLE-SEP": {
+      "check": "C1",
+      "known_bad": "GAP-self-declared-diff"
+    },
+    "0051:S-HUB-GATE-DIFF": {
+      "check": "assert-produce-role-separation",
+      "known_bad": "KB-SG3-sameactor"
+    },
+    "0051:R-HUB-SAME-PACKAGE-REFUSE": {
+      "check": "C1",
+      "known_bad": "GAP-self-declared-diff"
+    },
+    "0051:CC-SG3": {
+      "check": "C1",
+      "known_bad": "GAP-self-declared-diff"
+    },
+    "0051:DEC-1": {
+      "check": "C1",
+      "known_bad": "GAP-self-declared-scope"
+    },
+    "0051:DEC-2": {
+      "check": "C5",
+      "known_bad": "KB-known-bad-ssot-gap"
+    },
+    "0051:DEC-3": {
+      "check": "fitness-gate-set-manifest",
+      "known_bad": "KB-SG2-closure-member"
+    },
+    "0051:DEC-4": {
+      "check": "fitness-gate-set-manifest",
+      "known_bad": "KB-SG2-closure-member"
+    },
+    "0051:L110": {
+      "check": "C3",
+      "known_bad": "KB-brief-forbid"
+    },
+    "0051:L112": {
+      "check": "C10",
+      "known_bad": "GAP-adr-gates-rows"
+    },
+    "0051:REJ-116": {
+      "check": "C4",
+      "known_bad": "KB-check-on-check"
+    },
+    "0051:REJ-117": {
+      "check": "C1",
+      "known_bad": "KB-SG1-exit"
+    },
+    "0051:REJ-118": {
+      "check": "C6",
+      "known_bad": "GAP-0051-unsigned"
+    },
+    "0051:REJ-119": {
+      "check": "C1",
+      "known_bad": "GAP-self-declared-diff"
+    },
+    "0052:L9": {
+      "check": "C6",
+      "known_bad": "GAP-0051-unsigned"
+    },
+    "0052:L15": {
+      "check": "fitness-adr-owner-sidecar",
+      "known_bad": "KB-0052-unsigned"
+    },
+    "0052:L27": {
+      "check": "fitness-adr-owner-sidecar",
+      "known_bad": "KB-0052-unsigned"
+    },
+    "0052:L40": {
+      "check": "C6",
+      "known_bad": "GAP-0051-unsigned"
+    },
+    "0052:DEC-1": {
+      "check": "C6",
+      "known_bad": "GAP-0051-unsigned"
+    },
+    "0052:DEC-2": {
+      "check": "fitness-adr-owner-sidecar",
+      "known_bad": "KB-0052-unsigned"
+    },
+    "0052:DEC-3": {
+      "check": "fitness-owner-key-trust",
+      "known_bad": "KB-0052-rotation"
+    },
+    "0052:DEC-4": {
+      "check": "C7",
+      "known_bad": "KB-pending-ratified"
+    },
+    "0052:DEC-5": {
+      "check": "C6",
+      "known_bad": "GAP-0051-unsigned"
+    },
+    "0052:DEC-7": {
+      "check": "fitness-adr-owner-sidecar",
+      "known_bad": "KB-0052-unsigned"
+    },
+    "0052:DEC-8": {
+      "check": "fitness-adr-owner-sidecar",
+      "known_bad": "KB-0052-unsigned"
+    },
+    "0052:REJ-68": {
+      "check": "C6",
+      "known_bad": "GAP-0051-unsigned"
+    },
+    "0052:REJ-69": {
+      "check": "C8",
+      "known_bad": "KB-write-approval"
+    },
+    "0052:REJ-70": {
+      "check": "C9",
+      "known_bad": "KB-retired-trusted"
+    }
+  }
+}

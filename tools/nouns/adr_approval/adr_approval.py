@@ -1,4 +1,9 @@
-"""Approval receipts for active architecture decision records, keyed by hash."""
+"""Completion confirmation that active ADR bytes still match the hash registry.
+
+This is not ratification. Ratification is only the owner's OpenPGP sidecar
+(ADR 0052). `integrity/adr-approval-receipts.json` records that a hash update
+completed; it does not authorize Accepted status.
+"""
 
 from __future__ import annotations
 

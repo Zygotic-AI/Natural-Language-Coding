@@ -58,3 +58,6 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0048-executable-shape.md`](0048-executable-shape.md) | Every executable file has one Boundary-Based shape | Accepted |
 | [`0049-release-planner-owns-stops.md`](0049-release-planner-owns-stops.md) | Release planner owns every intentional stop | Accepted |
 | [`0050-evidence-identity-content-not-history.md`](0050-evidence-identity-content-not-history.md) | Evidence binds to content fingerprints, not commit ids | Accepted |
+| [`0051-hub-own-produce-principles.md`](0051-hub-own-produce-principles.md) | Hub-own produce principles (SG1–SG3) | Accepted |
+| [`0052-owner-openpgp-ratification-amends-0051.md`](0052-owner-openpgp-ratification-amends-0051.md) | Owner OpenPGP ratification (amends 0051) | Accepted |
+| [`0053-0051-0052-text-retrofit.md`](0053-0051-0052-text-retrofit.md) | Text retrofit for stale 0051/0052 sentences | Proposed |

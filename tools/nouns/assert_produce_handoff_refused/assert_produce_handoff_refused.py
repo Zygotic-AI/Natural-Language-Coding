@@ -9,6 +9,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 FIXTURE = ROOT / "tools" / "fixtures" / "quality-metric" / "invalid-produce-package-no-evidence.json"
+HUB_NO_LEAVES = (
+    ROOT / "tools" / "fixtures" / "hub-own" / "invalid-hub-own-missing-property-leaves.json"
+)
 
 
 def main() -> int:
@@ -25,7 +28,17 @@ def main() -> int:
     if "SSOT_EXIT_EVIDENCE" not in reason and "quality_evidence" not in reason:
         print(f"ASSERT:FAIL unexpected reason: {reason}")
         return 1
-    print("ASSERT:PASS produce preflight refuses missing evidence/SSOT")
+    ok_hub, kind_hub, reason_hub = load_and_validate(HUB_NO_LEAVES)
+    if ok_hub:
+        print("ASSERT:FAIL hub package missing property leaves should not validate")
+        return 1
+    if kind_hub != "handoff_refused":
+        print(f"ASSERT:FAIL hub profile expected handoff_refused got {kind_hub}: {reason_hub}")
+        return 1
+    if "HUB_GOAL_TREE" not in reason_hub and "property_leaf" not in reason_hub:
+        print(f"ASSERT:FAIL expected missing property leaves: {reason_hub}")
+        return 1
+    print("ASSERT:PASS produce preflight refuses missing evidence/SSOT and hub missing leaves")
     return 0
 
 
