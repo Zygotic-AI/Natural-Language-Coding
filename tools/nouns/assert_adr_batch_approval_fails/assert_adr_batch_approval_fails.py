@@ -102,6 +102,26 @@ def _clone() -> Path:
         ["git", "-C", str(ROOT), "rev-parse", "HEAD"], capture_output=True, text=True, check=True
     ).stdout.strip()
     subprocess.run(["git", "-C", str(tree), "checkout", "-q", head], check=True)
+    batch_dir = tree / "adrs" / "owner-approvals"
+    if batch_dir.is_dir():
+        for path in batch_dir.iterdir():
+            if path.is_file() and path.name.endswith(".approval.asc"):
+                path.unlink()
+        _run(["git", "add", "-A"], cwd=tree)
+        _run(
+            [
+                "git",
+                "-c",
+                "user.email=kb@example.invalid",
+                "-c",
+                "user.name=kb",
+                "commit",
+                "-m",
+                "isolate-batches",
+                "--allow-empty",
+            ],
+            cwd=tree,
+        )
     return tree
 
 
