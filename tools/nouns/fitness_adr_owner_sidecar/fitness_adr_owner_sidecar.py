@@ -9,9 +9,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-from nouns.owner_sidecar.owner_sidecar import verify_sidecar_p1
+from nouns.owner_sidecar.owner_sidecar import read_status_line, verify_sidecar_p1
 
-_STATUS = re.compile(r"^-?\s*Status:\s*(\S+)", re.M)
 _ADR_FILE = re.compile(r"^(\d{4})-.+\.md$")
 _SKIP_PREFIXES = (
     "tools/fixtures/",
@@ -36,9 +35,8 @@ def _git_tracked_files(root: Path) -> list[str]:
 
 
 def _status_of(path: Path) -> str:
-    text = path.read_text(encoding="utf-8")
-    match = _STATUS.search(text)
-    return match.group(1) if match else ""
+    """Document header Status token, or empty when the file has no Status line."""
+    return read_status_line(path) or ""
 
 
 def accepted_document_rels(root: Path) -> list[str]:

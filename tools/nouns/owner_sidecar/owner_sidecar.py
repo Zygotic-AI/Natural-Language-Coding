@@ -14,6 +14,7 @@ REPO_SLUG = "Zygotic-AI/Natural-Language-Coding"
 OWNER_KEY_REL = "integrity/owner-keys/richard-pickett.asc"
 TRUSTED_REL = "integrity/owner-keys/TRUSTED_FINGERPRINTS"
 _FIELD = re.compile(r"^([A-Za-z0-9_-]+):\s*(.*)$")
+_STATUS_LINE = re.compile(r"^-?\s*Status:\s*(\S+)")
 _REQUIRED_FIELDS = ("Repo", "Document", "Content-SHA256", "Decision", "Date", "Summary")
 _KNOWN_DOCUMENT_STATUS = frozenset({"Accepted", "Proposed", "Superseded", "Rejected", "Deprecated"})
 _PENDING_DECISIONS = frozenset({"Pending", "Proposed"})
@@ -158,11 +159,15 @@ def gpg_verify_clearsigned_in_repo(root: Path, asc_path: Path) -> tuple[str | No
     )
 
 
-def _read_status_line(doc_path: Path) -> str | None:
+def read_status_line(doc_path: Path) -> str | None:
+    """Return the first header Status token (Accepted/Proposed/…), dash optional.
+
+    Later body lines that mention Status (for example INDEX field syntax) are ignored.
+    """
     for line in doc_path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if line.startswith("- Status:"):
-            return line.split(":", 1)[1].strip()
+        match = _STATUS_LINE.match(line.strip())
+        if match:
+            return match.group(1)
     return None
 
 
@@ -174,7 +179,7 @@ def _document_requires_status_line(document_rel: str) -> bool:
 def _status_line_errors(doc_path: Path, document_rel: str) -> list[str]:
     if not _document_requires_status_line(document_rel):
         return []
-    status = _read_status_line(doc_path)
+    status = read_status_line(doc_path)
     if status is None:
         return [f"{document_rel}: missing Status line"]
     if status not in _KNOWN_DOCUMENT_STATUS:
@@ -203,7 +208,7 @@ def verify_sidecar_p1_fields(
         errors.append(f"{doc_rel}: Document field must be {doc_rel!r}")
     if require_status_line and doc_path is not None:
         errors.extend(_status_line_errors(doc_path, doc_rel))
-        status = _read_status_line(doc_path)
+        status = read_status_line(doc_path)
         if status is not None and fields.get("Decision") != status:
             errors.append(
                 f"{doc_rel}: Decision {fields.get('Decision')!r} != document Status {status!r}"

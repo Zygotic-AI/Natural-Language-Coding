@@ -92,7 +92,7 @@
       "known_bad_id": "KB-SG2-closure-member"
     },
     "0051:AMEND-0047-3": {
-      "candidate": "adrs/0051-hub-own-produce-principles.md",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
       "verify_kind": "sidecar_p1",
       "expected_reason_substring": "missing sidecar",
       "known_bad_id": "GAP-0051-unsigned"
@@ -170,7 +170,7 @@
       "known_bad_id": "KB-SG1-exit"
     },
     "0051:REJ-118": {
-      "candidate": "adrs/0051-hub-own-produce-principles.md",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
       "verify_kind": "sidecar_p1",
       "expected_reason_substring": "missing sidecar",
       "known_bad_id": "GAP-0051-unsigned"
@@ -182,7 +182,7 @@
       "known_bad_id": "GAP-self-declared-diff"
     },
     "0052:L9": {
-      "candidate": "adrs/0051-hub-own-produce-principles.md",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
       "verify_kind": "sidecar_p1",
       "expected_reason_substring": "missing sidecar",
       "known_bad_id": "GAP-0051-unsigned"
@@ -200,13 +200,13 @@
       "known_bad_id": "KB-0052-unsigned"
     },
     "0052:L40": {
-      "candidate": "adrs/0051-hub-own-produce-principles.md",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
       "verify_kind": "sidecar_p1",
       "expected_reason_substring": "missing sidecar",
       "known_bad_id": "GAP-0051-unsigned"
     },
     "0052:DEC-1": {
-      "candidate": "adrs/0051-hub-own-produce-principles.md",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
       "verify_kind": "sidecar_p1",
       "expected_reason_substring": "missing sidecar",
       "known_bad_id": "GAP-0051-unsigned"
@@ -230,7 +230,7 @@
       "known_bad_id": "KB-pending-ratified"
     },
     "0052:DEC-5": {
-      "candidate": "adrs/0051-hub-own-produce-principles.md",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
       "verify_kind": "sidecar_p1",
       "expected_reason_substring": "missing sidecar",
       "known_bad_id": "GAP-0051-unsigned"
@@ -248,7 +248,7 @@
       "known_bad_id": "KB-0052-unsigned"
     },
     "0052:REJ-68": {
-      "candidate": "adrs/0051-hub-own-produce-principles.md",
+      "candidate": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md",
       "verify_kind": "sidecar_p1",
       "expected_reason_substring": "missing sidecar",
       "known_bad_id": "GAP-0051-unsigned"
