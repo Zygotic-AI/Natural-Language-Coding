@@ -36,11 +36,6 @@ _DEFAULT_HUB_MATERIAL_GLOBS = (
     ".cursor/**",
     ".nlc/**",
     ".github/**",
-    "CHARTER.md",
-    "AGENTS.md",
-    "MANIFESTO.md",
-    "DESCRIBE.md",
-    "TODO",
     "examples/**",
 )
 

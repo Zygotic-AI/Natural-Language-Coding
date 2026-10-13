@@ -29,11 +29,6 @@
     ".cursor/**",
     ".nlc/**",
     ".github/**",
-    "CHARTER.md",
-    "AGENTS.md",
-    "MANIFESTO.md",
-    "DESCRIBE.md",
-    "TODO",
     "examples/**"
   ],
   "graded_subject_exclude_globs": [
