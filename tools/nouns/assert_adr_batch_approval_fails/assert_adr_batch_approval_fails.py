@@ -1,4 +1,4 @@
-"""Known-bad: batch owner approval must fail closed on hash, wrong key, missing entry, tamper."""
+"""Known-bad: batch owner approval must fail closed on hash, key, path, header, sidecar."""
 
 from __future__ import annotations
 
@@ -17,7 +17,9 @@ sys.path.insert(0, str(ROOT / "tools"))
 from nouns.fitness_adr_owner_sidecar.fitness_adr_owner_sidecar import (  # noqa: E402
     sidecar_errors,
 )
+from nouns.owner_sidecar import owner_sidecar as osc  # noqa: E402
 from nouns.owner_sidecar.owner_sidecar import (  # noqa: E402
+    REPO_SLUG,
     content_hash,
     verify_sidecar_p1,
 )
@@ -25,21 +27,30 @@ from nouns.owner_sidecar.owner_sidecar import (  # noqa: E402
 _A = "adrs/0001-zero-variance-integrity.md"
 _B = "adrs/0002-p2-scope.md"
 _C = "adrs/0003-systems-extension-agent-nouns.md"
+_P46 = "adrs/0046-repository-planit-identity.md"
+_S47 = "adrs/0047-adr-approval-receipts.md"
+_PIN = osc.OWNER_BATCH_FINGERPRINT
 
 
 def _run(argv: list[str], *, cwd: Path | None = None, env: dict[str, str] | None = None) -> subprocess.CompletedProcess[str]:
     return subprocess.run(argv, cwd=str(cwd) if cwd else None, env=env, capture_output=True, text=True, check=False)
 
 
-def _make_key(home: Path, name: str) -> str:
+def _make_key(home: Path, name: str, *, rsa: bool = False) -> str:
     home.mkdir(parents=True, exist_ok=True)
     os.chmod(home, 0o700)
     conf = home / "key.conf"
-    conf.write_text(
-        "%no-protection\nKey-Type: EDDSA\nKey-Curve: ed25519\nKey-Usage: sign\n"
-        f"Name-Real: {name}\nName-Email: {name}@example.invalid\nExpire-Date: 1d\n",
-        encoding="utf-8",
-    )
+    if rsa:
+        body = (
+            "%no-protection\nKey-Type: RSA\nKey-Length: 2048\nKey-Usage: sign\n"
+            f"Name-Real: {name}\nName-Email: {name}@example.invalid\nExpire-Date: 1d\n"
+        )
+    else:
+        body = (
+            "%no-protection\nKey-Type: EDDSA\nKey-Curve: ed25519\nKey-Usage: sign\n"
+            f"Name-Real: {name}\nName-Email: {name}@example.invalid\nExpire-Date: 1d\n"
+        )
+    conf.write_text(body, encoding="utf-8")
     env = {**os.environ, "GNUPGHOME": str(home)}
     gen = _run(["gpg", "--batch", "--generate-key", str(conf)], env=env)
     if gen.returncode != 0:
@@ -62,14 +73,40 @@ def _pin_key(tree: Path, home: Path, fp: str) -> None:
     )
 
 
-def _statement(tree: Path, rels: list[str], *, corrupt: str | None = None) -> str:
-    lines: list[str] = []
-    for rel in rels:
-        digest = content_hash((tree / rel).read_bytes())
-        if rel == corrupt:
+def _set_pin(fp: str) -> None:
+    osc.OWNER_BATCH_FINGERPRINT = fp
+
+
+def _statement(
+    tree: Path,
+    rels: list[str],
+    *,
+    corrupt: str | None = None,
+    written: list[str] | None = None,
+    repo: str = REPO_SLUG,
+    decision: str = "Accepted",
+    count: str | None = None,
+    include_count: bool = True,
+) -> str:
+    paths = written if written is not None else list(rels)
+    sha_lines: list[str] = []
+    for rel, shown in zip(rels, paths):
+        src = tree / rel
+        digest = content_hash(src.read_bytes()) if src.is_file() else ("a" * 64)
+        if rel == corrupt or shown == corrupt:
             digest = ("0" * 64) if digest[0] != "0" else ("1" * 64)
-        lines.append(f"{rel} sha256:{digest}")
-    return "\n".join(lines) + "\n"
+        sha_lines.append(f"{shown} sha256:{digest}")
+    headers = [
+        f"Repo: {repo}",
+        "Statement: ADR batch owner approval",
+        f"Decision: {decision}",
+        "Date: 2026-10-13",
+        "Signer: known-bad",
+        "Meaning: known-bad",
+    ]
+    if include_count:
+        headers.append(f"Count: {count if count is not None else str(len(sha_lines))}")
+    return "\n".join(headers + sha_lines) + "\n"
 
 
 def _clearsign(home: Path, body: str, dest: Path) -> None:
@@ -83,7 +120,7 @@ def _clearsign(home: Path, body: str, dest: Path) -> None:
     src.unlink(missing_ok=True)
 
 
-def _commit_batch(tree: Path, home: Path, fp: str, body: str, name: str) -> Path:
+def _commit_batch(tree: Path, home: Path, body: str, name: str) -> Path:
     dest = tree / "adrs" / "owner-approvals" / (name + ".approval.asc")
     _clearsign(home, body, dest)
     _run(["git", "add", "-A"], cwd=tree)
@@ -92,6 +129,13 @@ def _commit_batch(tree: Path, home: Path, fp: str, body: str, name: str) -> Path
         cwd=tree,
     )
     return dest
+
+
+def _drop(tree: Path, dest: Path) -> None:
+    if dest.is_file():
+        dest.unlink()
+    _run(["git", "add", "-A"], cwd=tree)
+    _run(["git", "-c", "user.email=kb@example.invalid", "-c", "user.name=kb", "commit", "-m", "drop"], cwd=tree)
 
 
 def _clone() -> Path:
@@ -129,60 +173,45 @@ def _needles(errs: list[str], rel: str) -> list[str]:
     return [item for item in errs if rel in item]
 
 
+def _check(ok_flag: bool, name: str, detail: object, acc: list[bool]) -> None:
+    print(f"{'PASS' if ok_flag else 'FAIL'} {name}: {detail}")
+    print(f"ASSERT:{'PASS' if ok_flag else 'FAIL'} {name}")
+    acc.append(ok_flag)
+
+
 def main() -> int:
     tree = _clone()
     home_a = Path(tempfile.mkdtemp(prefix="nlc-gpg-a-"))
     home_b = Path(tempfile.mkdtemp(prefix="nlc-gpg-b-"))
+    home_rsa = Path(tempfile.mkdtemp(prefix="nlc-gpg-rsa-"))
     fp_a = _make_key(home_a, "batch-a")
     fp_b = _make_key(home_b, "batch-b")
+    fp_rsa = _make_key(home_rsa, "batch-rsa", rsa=True)
     _pin_key(tree, home_a, fp_a)
-    ok = True
+    _set_pin(fp_a)
+    acc: list[bool] = []
 
-    # KB1: valid signature, one sha changed → that ADR NOT_MET
-    dest1 = _commit_batch(tree, home_a, fp_a, _statement(tree, [_A, _B], corrupt=_A), "kb-hash")
-    errs1 = sidecar_errors(tree)
-    a1 = _needles(errs1, _A)
-    b1 = _needles(errs1, _B)
-    good1 = any("sha256 mismatch" in item or "batch sha256" in item for item in a1)
-    print(f"{'PASS' if good1 else 'FAIL'} kb-hash-changed: A={a1[:1]} B_listed={bool(b1)}")
-    print(f"ASSERT:{'PASS' if good1 else 'FAIL'} batch correct signature one sha changed")
-    ok = ok and good1
-    dest1.unlink()
-    _run(["git", "add", "-A"], cwd=tree)
-    _run(["git", "-c", "user.email=kb@example.invalid", "-c", "user.name=kb", "commit", "-m", "drop1"], cwd=tree)
+    dest = _commit_batch(tree, home_a, _statement(tree, [_A, _B], corrupt=_A), "kb-hash")
+    errs = sidecar_errors(tree)
+    a1 = _needles(errs, _A)
+    _check(any("sha256 mismatch" in item or "batch sha256" in item for item in a1), "batch correct signature one sha changed", a1[:1], acc)
+    _drop(tree, dest)
 
-    # KB2: other key → all listed ADRs NOT_MET
-    dest2 = _commit_batch(tree, home_b, fp_b, _statement(tree, [_A, _B]), "kb-wrong-key")
-    errs2 = sidecar_errors(tree)
-    a2 = _needles(errs2, _A)
-    b2 = _needles(errs2, _B)
-    blob2 = " ".join(errs2)
-    good2 = bool(a2) and bool(b2) and (
-        "No public key" in blob2
-        or "pinned key" in blob2
-        or "trusted allowlist" in blob2
-        or "gpg decrypt failed" in blob2
+    dest = _commit_batch(tree, home_b, _statement(tree, [_A, _B]), "kb-wrong-key")
+    errs = sidecar_errors(tree)
+    blob = " ".join(errs)
+    good = bool(_needles(errs, _A)) and bool(_needles(errs, _B)) and (
+        "No public key" in blob or "pinned key" in blob or "trusted allowlist" in blob or "gpg decrypt failed" in blob
     )
-    print(f"{'PASS' if good2 else 'FAIL'} kb-wrong-key: A={bool(a2)} B={bool(b2)}")
-    print(f"ASSERT:{'PASS' if good2 else 'FAIL'} batch signed by another key")
-    ok = ok and good2
-    dest2.unlink()
-    _run(["git", "add", "-A"], cwd=tree)
-    _run(["git", "-c", "user.email=kb@example.invalid", "-c", "user.name=kb", "commit", "-m", "drop2"], cwd=tree)
+    _check(good, "batch signed by another key", f"A={bool(_needles(errs, _A))} B={bool(_needles(errs, _B))}", acc)
+    _drop(tree, dest)
 
-    # KB3: missing from batch and no sidecar → NOT_MET
-    _commit_batch(tree, home_a, fp_a, _statement(tree, [_A]), "kb-missing")
-    errs3 = sidecar_errors(tree)
-    c3 = _needles(errs3, _C)
-    good3 = any("missing sidecar" in item for item in c3)
-    print(f"{'PASS' if good3 else 'FAIL'} kb-missing-entry: C={c3[:1]}")
-    print(f"ASSERT:{'PASS' if good3 else 'FAIL'} ADR missing from batch and no sidecar")
-    ok = ok and good3
-
-    # KB4: tamper batch body → signature invalid
-    dest4 = tree / "adrs" / "owner-approvals" / "kb-missing.approval.asc"
+    dest = _commit_batch(tree, home_a, _statement(tree, [_A]), "kb-missing")
+    errs = sidecar_errors(tree)
+    _check(any("missing sidecar" in item for item in _needles(errs, _C)), "ADR missing from batch and no sidecar", _needles(errs, _C)[:1], acc)
+    dest4 = dest
     raw = dest4.read_text(encoding="utf-8")
-    tampered = raw.replace("sha256:", "sha256:", 1)
+    tampered = raw
     if "sha256:" in raw:
         idx = raw.index("sha256:") + 7
         hexpart = raw[idx : idx + 64]
@@ -191,39 +220,100 @@ def main() -> int:
     dest4.write_text(tampered, encoding="utf-8")
     _run(["git", "add", "-A"], cwd=tree)
     _run(["git", "-c", "user.email=kb@example.invalid", "-c", "user.name=kb", "commit", "-m", "tamper"], cwd=tree)
-    errs4 = sidecar_errors(tree)
-    blob4 = " ".join(errs4)
-    good4 = (
-        "gpg decrypt failed" in blob4
-        or "BADSIG" in blob4
-        or "signature" in blob4.lower()
-        or "GOODSIG" in blob4
-        or "no VALIDSIG" in blob4
-        or "gpg status missing" in blob4
+    errs = sidecar_errors(tree)
+    blob = " ".join(errs)
+    good = (
+        "gpg decrypt failed" in blob
+        or "BADSIG" in blob
+        or "signature" in blob.lower()
+        or "GOODSIG" in blob
+        or "no VALIDSIG" in blob
+        or "gpg status missing" in blob
     )
-    print(f"{'PASS' if good4 else 'FAIL'} kb-tamper: {errs4[:1]}")
-    print(f"ASSERT:{'PASS' if good4 else 'FAIL'} tampered batch body signature invalid")
-    ok = ok and good4
+    _check(good, "tampered batch body signature invalid", errs[:1], acc)
+    _drop(tree, dest4)
 
-    # Existing sidecar rejections still reject
+    dest = _commit_batch(tree, home_a, _statement(tree, [_P46]), "kb-proposed")
+    errs = sidecar_errors(tree)
+    blob = " ".join(errs)
+    _check("0046" in blob and ("Accepted" in blob or "Proposed" in blob or "invalid" in blob.lower()), "batch listing Proposed 0046", errs[:2], acc)
+    _drop(tree, dest)
+
+    dest = _commit_batch(tree, home_a, _statement(tree, [_S47]), "kb-superseded")
+    errs = sidecar_errors(tree)
+    blob = " ".join(errs)
+    _check("0047" in blob and ("Accepted" in blob or "Superseded" in blob or "invalid" in blob.lower()), "batch listing Superseded 0047", errs[:2], acc)
+    _drop(tree, dest)
+
+    for shown, label in (
+        (f"../{_A}", "../adrs/"),
+        (f"./{_A}", "./adrs/"),
+        (f"/{_A}", "/adrs/"),
+        ("docs/TERMS.md", "docs/TERMS.md"),
+    ):
+        dest = _commit_batch(tree, home_a, _statement(tree, [_A], written=[shown]), label.replace("/", "-"))
+        errs = sidecar_errors(tree)
+        blob = " ".join(errs)
+        _check("invalid batch path" in blob and shown in blob, f"batch path {label}", errs[:1], acc)
+        _drop(tree, dest)
+
+    dest = _commit_batch(tree, home_a, _statement(tree, [_A], repo="wrong/repo"), "kb-repo")
+    errs = sidecar_errors(tree)
+    _check("Repo" in " ".join(errs), "wrong Repo", errs[:1], acc)
+    _drop(tree, dest)
+
+    dest = _commit_batch(tree, home_a, _statement(tree, [_A], include_count=False), "kb-no-count")
+    errs = sidecar_errors(tree)
+    _check("missing Count" in " ".join(errs), "missing Count", errs[:1], acc)
+    _drop(tree, dest)
+
+    dest = _commit_batch(tree, home_a, _statement(tree, [_A], count="99"), "kb-wrong-count")
+    errs = sidecar_errors(tree)
+    _check("Count" in " ".join(errs) and "99" in " ".join(errs), "wrong Count", errs[:1], acc)
+    _drop(tree, dest)
+
+    dest = _commit_batch(tree, home_a, _statement(tree, [_A]), "kb-sidecar")
+    sidecar_dest = tree / "adrs" / "0001-zero-variance-integrity.approval.asc"
+    shutil.copy(ROOT / "tools/fixtures/owner-ratification-sidecar/wrong-key.approval.asc", sidecar_dest)
+    _run(["git", "add", "-A"], cwd=tree)
+    _run(["git", "-c", "user.email=kb@example.invalid", "-c", "user.name=kb", "commit", "-m", "bad-sidecar"], cwd=tree)
+    errs = sidecar_errors(tree)
+    a_errs = _needles(errs, _A)
+    good = bool(a_errs) and not any("missing sidecar" in item for item in a_errs)
+    _check(good, "invalid own sidecar next to a valid batch", a_errs[:1], acc)
+    sidecar_dest.unlink()
+    _drop(tree, dest)
+
+    _set_pin(_PIN)
+    _pin_key(tree, home_rsa, fp_rsa)
+    dest = _commit_batch(tree, home_rsa, _statement(tree, [_A]), "kb-rsa")
+    errs = sidecar_errors(tree)
+    blob = " ".join(errs)
+    good = (
+        "Ed25519" in blob
+        or "pinned key" in blob
+        or "trusted allowlist" in blob
+        or "No public key" in blob
+        or "gpg decrypt failed" in blob
+    )
+    _check(good, "RSA-only trusted key with the pin absent", errs[:2], acc)
+    _drop(tree, dest)
+    _set_pin(fp_a)
+
     fixture = ROOT / "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md"
     miss = verify_sidecar_p1(ROOT, fixture.relative_to(ROOT).as_posix())
     good5 = any("missing sidecar" in item for item in miss)
     wrong = ROOT / "tools/fixtures/owner-ratification-sidecar/wrong-key.approval.asc"
     stub = "tools/fixtures/owner-ratification-sidecar/stub-doc.md"
-    from nouns.owner_sidecar.owner_sidecar import verify_sidecar_p1_on_bytes
-
-    wrong_errs = verify_sidecar_p1_on_bytes(
+    wrong_errs = osc.verify_sidecar_p1_on_bytes(
         ROOT, document_rel=stub, document_bytes=(ROOT / stub).read_bytes(), asc_path=wrong, status="Accepted"
     )
     good6 = any("No public key" in item or "gpg" in item.lower() for item in wrong_errs)
-    print(f"{'PASS' if good5 else 'FAIL'} existing missing-sidecar still rejects")
-    print(f"{'PASS' if good6 else 'FAIL'} existing wrong-key sidecar still rejects")
-    print(f"ASSERT:{'PASS' if good5 and good6 else 'FAIL'} existing sidecar rejections")
-    ok = ok and good5 and good6
+    _check(good5 and good6, "existing sidecar rejections", f"missing={good5} wrong-key={good6}", acc)
 
     shutil.rmtree(tree.parent, ignore_errors=True)
-    return 0 if ok else 1
+    _set_pin(_PIN)
+    return 0 if all(acc) else 1
 
 
 if __name__ == "__main__":

@@ -1,3 +1,10 @@
+Repo: Zygotic-AI/Natural-Language-Coding
+Statement: ADR batch owner approval
+Decision: Accepted
+Date: 2026-10-13
+Signer: Richard Pickett, Ed25519 9D1BD57770FC3A1DE84702750AFD22B063AE01BC
+Meaning: By clearsigning this statement I ratify, as owner, each ADR listed below as Accepted, in exactly the bytes whose sha256 is given. This approval covers only those exact bytes. Any change to a listed file voids its approval. Any ADR not listed is not approved by this statement.
+Count: 47
 adrs/0001-zero-variance-integrity.md sha256:3c5979c1832bab283044d51e7c9f9c30db418e0bbaa725258e76dc73ad52c767
 adrs/0002-p2-scope.md sha256:57778fd60be4c7b4dd1ee07199851216822c22d2040f9bccbc52c3dafaca2f1c
 adrs/0003-systems-extension-agent-nouns.md sha256:a6e83194c42e0627dd00ec7e03e265f520fc4afff2120045b1c4741ab3eba4fc

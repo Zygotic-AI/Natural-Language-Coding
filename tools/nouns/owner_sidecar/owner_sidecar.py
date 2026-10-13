@@ -19,6 +19,8 @@ _REQUIRED_FIELDS = ("Repo", "Document", "Content-SHA256", "Decision", "Date", "S
 OWNER_BATCH_FINGERPRINT = "9D1BD57770FC3A1DE84702750AFD22B063AE01BC"
 BATCH_DIR_REL = "adrs/owner-approvals"
 _BATCH_LINE = re.compile(r"^(\S+)\s+sha256:([0-9a-fA-F]{64})\s*$")
+_EXACT_BATCH_ADR = re.compile(r"^adrs/[0-9]{4}-[^/]+\.md$")
+_EDDSA_PUBKEY_ALGO = "22"
 _CLEARSIGN_BODY = re.compile(
     r"-----BEGIN PGP SIGNED MESSAGE-----\r?\n(?:Hash:[^\n]*\n)?\r?\n(.*)\r?\n-----BEGIN PGP SIGNATURE-----",
     re.DOTALL,
@@ -397,6 +399,7 @@ def extract_clearsigned_body(text: str) -> str:
 
 
 def parse_batch_entries(plaintext: str) -> tuple[dict[str, str], list[str]]:
+    """Parse `path sha256:hex` lines. Paths are kept exactly as written (no lstrip)."""
     entries: dict[str, str] = {}
     errors: list[str] = []
     for raw in plaintext.replace("\r\n", "\n").splitlines():
@@ -409,7 +412,7 @@ def parse_batch_entries(plaintext: str) -> tuple[dict[str, str], list[str]]:
                 continue
             errors.append(f"unparseable batch line {stripped!r}")
             continue
-        path = match.group(1).replace("\\", "/").lstrip("./")
+        path = match.group(1)
         digest = match.group(2).lower()
         if path in entries:
             errors.append(f"duplicate batch path {path}")
@@ -418,11 +421,63 @@ def parse_batch_entries(plaintext: str) -> tuple[dict[str, str], list[str]]:
     return entries, errors
 
 
-def batch_allowed_fingerprints(trusted: set[str]) -> set[str]:
-    """Production pin is OWNER_BATCH_FINGERPRINT when that key is still trusted."""
-    if OWNER_BATCH_FINGERPRINT in trusted:
-        return {OWNER_BATCH_FINGERPRINT}
-    return set(trusted)
+def parse_batch_headers(plaintext: str) -> dict[str, str]:
+    fields: dict[str, str] = {}
+    for raw in plaintext.replace("\r\n", "\n").splitlines():
+        match = _FIELD.match(raw.strip())
+        if not match:
+            continue
+        name, value = match.group(1), match.group(2).strip()
+        if name not in fields:
+            fields[name] = value
+    return fields
+
+
+def batch_header_errors(fields: dict[str, str], entry_count: int) -> list[str]:
+    errors: list[str] = []
+    if fields.get("Repo") != REPO_SLUG:
+        errors.append(f"batch Repo must be {REPO_SLUG!r}")
+    if fields.get("Decision") != "Accepted":
+        errors.append("batch Decision must be 'Accepted'")
+    if "Count" not in fields:
+        errors.append("batch missing Count")
+    elif fields["Count"] != str(entry_count):
+        errors.append(f"batch Count {fields['Count']!r} != {entry_count}")
+    return errors
+
+
+def batch_allowed_fingerprints(_trusted: set[str] | None = None) -> set[str]:
+    """Batch signatures accept only OWNER_BATCH_FINGERPRINT. No trusted-set fallback."""
+    return {OWNER_BATCH_FINGERPRINT}
+
+
+def openpgp_key_is_ed25519(key_path: Path) -> bool:
+    """True when the public key packet is EdDSA (OpenPGP algo 22 / Ed25519)."""
+    if not key_path.is_file():
+        return False
+    proc = subprocess.run(
+        ["gpg", "--batch", "--show-keys", "--with-colons", str(key_path)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    for line in (proc.stdout or "").splitlines():
+        parts = line.split(":")
+        if parts and parts[0] == "pub" and len(parts) > 3 and parts[3] == _EDDSA_PUBKEY_ALGO:
+            return True
+    return False
+
+
+def batch_entry_errors(root: Path, path: str) -> list[str]:
+    """An entry is invalid when the path is not exactly adrs/NNNN-*.md, missing, or not Accepted."""
+    if not _EXACT_BATCH_ADR.match(path):
+        return [f"invalid batch path {path!r}"]
+    doc = root / path
+    if not doc.is_file():
+        return [f"batch path does not exist {path}"]
+    if read_status_line(doc) != "Accepted":
+        return [f"batch entry {path} requires Status Accepted"]
+    return []
 
 
 def verify_batch_approval(root: Path, batch_rel: str) -> tuple[dict[str, str], list[str]]:
@@ -437,16 +492,19 @@ def verify_batch_approval(root: Path, batch_rel: str) -> tuple[dict[str, str], l
     parsed, perr = parse_batch_entries(body)
     entries.update(parsed)
     errors.extend(f"{rel}: {item}" for item in perr)
-    trusted, terr = load_trusted_fingerprints(root)
-    if terr:
-        return entries, [f"{rel}: {item}" for item in terr]
+    errors.extend(f"{rel}: {item}" for item in batch_header_errors(parse_batch_headers(body), len(entries)))
+    for entry_path in entries:
+        errors.extend(f"{rel}: {item}" for item in batch_entry_errors(root, entry_path))
+    key_path = root / OWNER_KEY_REL
+    if not openpgp_key_is_ed25519(key_path):
+        errors.append(f"{rel}: batch key is not Ed25519")
+    pin = batch_allowed_fingerprints()
     signer, _plaintext, verr = gpg_verify_clearsigned_plaintext(
-        path, trusted_fingerprints=trusted, key_import_paths=[root / OWNER_KEY_REL]
+        path, trusted_fingerprints=pin, key_import_paths=[key_path]
     )
     if verr:
         return entries, [f"{rel}: {item}" for item in verr] + errors
-    allowed = batch_allowed_fingerprints(trusted)
-    if signer is None or signer not in allowed:
+    if signer is None or signer not in pin:
         return entries, [
             f"{rel}: batch not signed by pinned key {OWNER_BATCH_FINGERPRINT}"
         ] + errors
@@ -491,19 +549,14 @@ def document_batch_result(root: Path, document_rel: str) -> tuple[bool, list[str
 
 
 def verify_owner_signed(root: Path, document_rel: str) -> list[str]:
-    """Signed when own sidecar verifies, or a committed batch covers the Accepted bytes."""
+    """Own sidecar, if present, is decisive: invalid sidecar is NOT_MET even when a batch covers."""
     doc_rel = document_rel.replace("\\", "/").lstrip("./")
     sidecar = root / sidecar_path_for_document(doc_rel)
-    sidecar_errs: list[str] = []
     if sidecar.is_file():
-        sidecar_errs = verify_sidecar_p1(root, doc_rel)
-        if not sidecar_errs:
-            return []
+        return verify_sidecar_p1(root, doc_rel)
     covered, batch_errs = document_batch_result(root, doc_rel)
     if covered:
         return []
-    if sidecar.is_file():
-        return sidecar_errs
     if batch_errs:
         return batch_errs
     return [f"{doc_rel}: missing sidecar {doc_rel}.approval.asc"]
