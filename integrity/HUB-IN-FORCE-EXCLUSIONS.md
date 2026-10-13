@@ -20,7 +20,7 @@ Gates **fitness-hub-public-self-contained** and **fitness-internal-links** treat
 
 ## Person-name gate (CG-R4) only
 
-Accepted ADR ratification headers may still name deciders until a dedicated re-ratification PR lands (ADR 0047). **Person-name patterns** are not applied under `adrs/`; forbidden private-repo markers still apply there.
+Accepted ADR ratification headers may still name deciders until a dedicated re-ratification PR lands (ADR 0047). **Person-name patterns** are not applied under `adrs/` or `signing/` (owner batch statements name the signer and key); forbidden private-repo markers still apply there.
 
 ## Pending internal-link waiver (until PR #9)
 
