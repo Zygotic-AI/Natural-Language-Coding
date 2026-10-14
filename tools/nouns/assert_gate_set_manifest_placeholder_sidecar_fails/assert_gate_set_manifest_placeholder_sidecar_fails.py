@@ -1,4 +1,4 @@
-"""Landmine: committed placeholder manifest sidecar must not widen closure."""
+"""Landmine: committed placeholder manifest sidecar must not widen closure or hub digest."""
 
 from __future__ import annotations
 
@@ -69,8 +69,10 @@ def main() -> int:
             print("ASSERT:FAIL placeholder sidecar changed manifest path column")
             return 1
         after_hub = content_digest_excluding(tree, exclude).lower()
-        if after_hub == baseline_hub:
-            print("ASSERT:FAIL placeholder sidecar must be included in hub digest")
+        if after_hub != baseline_hub:
+            print(
+                f"ASSERT:FAIL placeholder sidecar changed hub digest ({baseline_hub} -> {after_hub})"
+            )
             return 1
 
         errors = gate_set_manifest_errors(tree)

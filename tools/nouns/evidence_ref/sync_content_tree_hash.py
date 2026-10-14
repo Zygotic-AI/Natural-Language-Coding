@@ -11,13 +11,23 @@ ROOT = Path(__file__).resolve().parents[3]
 _TOOLS = Path(__file__).resolve().parents[2]
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
+from nouns.gate_set.gate_set import MANIFEST_APPROVAL_ASC_REL  # noqa: E402
+
 HASH_REL = "integrity/hub-content-tree-hash.txt"
+PLANIT_EVIDENCE_REL = ".nlc/planit-change-evidence.json"
+MANIFEST_REL = "integrity/gate-set-baseline.manifest.sha256"
 HASH_PATH = ROOT / HASH_REL
 
 
 def _content_exclude_rel() -> set[str]:
-    """Paths omitted from the hub content digest (self-describing hash only)."""
-    return {HASH_REL}
+    """Paths omitted from the hub content digest (self-describing hash + harness stamps)."""
+    # The exclusion breaks a hash cycle.
+    return {
+        HASH_REL,
+        PLANIT_EVIDENCE_REL,
+        MANIFEST_REL,
+        MANIFEST_APPROVAL_ASC_REL,
+    }
 
 
 def content_digest_excluding(root: Path, exclude_rel: set[str]) -> str:
