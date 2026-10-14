@@ -11,7 +11,7 @@ adrs/0002-p2-scope.md sha256:24197a401ae9707d33f09a2bb3916cc31f2177e2606c50a3adf
 adrs/0003-systems-extension-agent-nouns.md sha256:74f3da1868f97169cb85eb37a58927ea2d9aa3b71c35238ec3885f5dde17bf12
 adrs/0050-evidence-identity-content-not-history.md sha256:4471757b71a3d3e9a6c0fd8e5bf3079adcaeb62682ab664e703e4c5bc5de7b83
 adrs/0052-owner-openpgp-ratification-amends-0051.md sha256:b9375405af9c14820cca24bfce03cbe2c7578bb10a9747e946e1fc314210a6f4
-Gate-set-manifest-sha256: 3f9c3405dbef4c7de2a06f38f4cad39b82cda7475d6de6fbb9159fd10f516808
+Gate-set-manifest-sha256: 6dea8890298b41dfcf67b5320c1ddc6bb2c2f93c941c31586509b85c622095f9
 # Full text of adrs/0001-zero-variance-integrity.md
 # # [ADR](../docs/TERMS.md#adr) 0001 — [Zero-variance](../docs/TERMS.md#zero-variance) [integrity](../docs/TERMS.md#integrity) for [Boundary-Based Programming](../docs/TERMS.md#bbp)
 #
