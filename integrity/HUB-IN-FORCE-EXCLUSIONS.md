@@ -18,12 +18,8 @@ Gates **fitness-hub-public-self-contained** and **fitness-internal-links** treat
 |------|------|
 | `uploads/` | Ephemeral agent uploads |
 
-## Person-name gate (CG-R4) only
+## Person-name gate (CG-R4)
 
-Accepted ADR ratification headers may still name deciders until a dedicated re-ratification PR lands (ADR 0047). **Person-name patterns** are not applied under `adrs/`; forbidden private-repo markers still apply there.
+Person-name patterns apply to every tracked repo text file (`.md`, `.mdc`, `.json`, `.txt`, `.yaml`, `.yml`). This list does not exclude any path from that scan. Forbidden private-repo markers still use the in-force exclusions above.
 
-## Pending internal-link waiver (until PR #9)
-
-`fitness-internal-links` accepts one broken relative link in ADR 0050 to the removed in-repo RCA path until [PR #9](https://github.com/Zygotic-AI/Natural-Language-Coding/pull/9) re-ratifies and drops `PENDING_RATIFICATION_LINKS` in `tools/nouns/fitness_internal_links/fitness_internal_links.py`.
-
-Implementation: `tools/nouns/hub_in_force_surfaces/hub_in_force_surfaces.py` (`EXCLUDED_PREFIXES`, `EXCLUDED_TOP_LEVEL`, `PERSON_NAME_EXCLUDED_PREFIXES`).
+Implementation: `tools/nouns/hub_in_force_surfaces/hub_in_force_surfaces.py` (`EXCLUDED_PREFIXES`, `EXCLUDED_TOP_LEVEL`).

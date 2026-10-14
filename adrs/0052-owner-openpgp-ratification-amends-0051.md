@@ -14,7 +14,7 @@ RCA 5, root confirmed and remediation plan approved by the human manager 2026-10
 
 This record **amends policy** in ADR 0051: ratification is the human manager's **clearsigned approval statement** only. Private key stays on the owner's phone (PGPony). Agents commit pasted armor **unchanged**; they never create ratification.
 
-Bootstrap trust anchor: Ed25519 public key `Richard Pickett <Richard@RichardPickett.com>`, fingerprint **`9D1BD57770FC3A1DE84702750AFD22B063AE01BC`**, committed under `integrity/owner-keys/` with `integrity/owner-keys/TRUSTED_FINGERPRINTS`.
+Bootstrap trust anchor: owner Ed25519 public key, fingerprint **`9D1BD57770FC3A1DE84702750AFD22B063AE01BC`**, committed under `integrity/owner-keys/` with `integrity/owner-keys/TRUSTED_FINGERPRINTS`.
 
 ## Approval statement format (zyprompt-compatible)
 

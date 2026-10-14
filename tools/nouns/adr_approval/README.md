@@ -1,3 +1,4 @@
 # adr_approval
 
-Approval receipts keyed by ADR number and content hash.
+Ratification is the owner's OpenPGP sidecar or batch (C6). The hash-only receipts file is retired and must not return.
+
