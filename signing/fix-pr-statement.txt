@@ -5,13 +5,11 @@ Date: 2026-10-14
 Signer: 9D1BD57770FC3A1DE84702750AFD22B063AE01BC
 Meaning: By clearsigning this statement I ratify, as owner, each ADR listed below as Accepted, in exactly the bytes whose sha256 is given. This approval covers only those exact bytes. Any change to a listed file voids its approval. Any ADR not listed is not approved by this statement.
 Count: 5
-Head: 6b5e056db216dc60716c1ca7dc83875bd63f177c
 adrs/0001-zero-variance-integrity.md sha256:a1e61d6c2998a3595b51983cc9ad029513e36fcc23878d62a80f8fee778693d2
 adrs/0002-p2-scope.md sha256:24197a401ae9707d33f09a2bb3916cc31f2177e2606c50a3adff86fa011a102c
 adrs/0003-systems-extension-agent-nouns.md sha256:74f3da1868f97169cb85eb37a58927ea2d9aa3b71c35238ec3885f5dde17bf12
 adrs/0050-evidence-identity-content-not-history.md sha256:4471757b71a3d3e9a6c0fd8e5bf3079adcaeb62682ab664e703e4c5bc5de7b83
 adrs/0052-owner-openpgp-ratification-amends-0051.md sha256:b9375405af9c14820cca24bfce03cbe2c7578bb10a9747e946e1fc314210a6f4
-Gate-set-manifest-sha256: 6dea8890298b41dfcf67b5320c1ddc6bb2c2f93c941c31586509b85c622095f9
 # Full text of adrs/0001-zero-variance-integrity.md
 # # [ADR](../docs/TERMS.md#adr) 0001 — [Zero-variance](../docs/TERMS.md#zero-variance) [integrity](../docs/TERMS.md#integrity) for [Boundary-Based Programming](../docs/TERMS.md#bbp)
 #
