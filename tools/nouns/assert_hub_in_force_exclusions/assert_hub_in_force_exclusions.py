@@ -7,6 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools"))
+import nouns.hub_in_force_surfaces.hub_in_force_surfaces as surfaces  # noqa: E402
 from nouns.hub_in_force_surfaces.hub_in_force_surfaces import (  # noqa: E402
     is_excluded,
     iter_in_force_files,
@@ -30,6 +31,9 @@ def main() -> int:
     agents = ROOT / "AGENTS.md"
     if agents not in in_force:
         print("ASSERT:FAIL AGENTS.md must be in-force")
+        return 1
+    if hasattr(surfaces, "PERSON_NAME_EXCLUDED_PREFIXES"):
+        print("ASSERT:FAIL PERSON_NAME_EXCLUDED_PREFIXES must stay deleted")
         return 1
     print("ASSERT:PASS hub in-force exclusions")
     return 0

@@ -20,7 +20,6 @@ def main() -> int:
     env = {
         **os.environ,
         "NLC_RAW_BASE": f"file://{ROOT}",
-        "NLC_SKIP_VERIFY": "1",
         "NLC_INSTALL_ROOT": "/tmp/nlc-piped-install-smoke-root",
     }
     proc = subprocess.run(

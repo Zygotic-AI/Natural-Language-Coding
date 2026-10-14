@@ -21,6 +21,7 @@ HASH_PATH = ROOT / HASH_REL
 
 def _content_exclude_rel() -> set[str]:
     """Paths omitted from the hub content digest (self-describing hash + harness stamps)."""
+    # The exclusion breaks a hash cycle.
     return {
         HASH_REL,
         PLANIT_EVIDENCE_REL,

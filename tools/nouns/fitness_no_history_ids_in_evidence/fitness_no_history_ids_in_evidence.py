@@ -26,7 +26,6 @@ SKIP_DIR_PARTS = {
 
 SKIP_FILES = {
     "integrity/nlc-install-hashes.json",
-    "integrity/adr-approval-receipts.json",
     "integrity/planit-skill-registry.json",
 }
 
