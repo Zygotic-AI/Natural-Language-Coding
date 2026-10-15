@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "algorithm": "sha256",
-  "recorded_at": "2026-10-14T18:48:28Z",
+  "recorded_at": "2026-10-15T18:35:32Z",
   "hub": "0.3.0",
   "files": {
     "adrs/0001-zero-variance-integrity.md": "a1e61d6c2998a3595b51983cc9ad029513e36fcc23878d62a80f8fee778693d2",
