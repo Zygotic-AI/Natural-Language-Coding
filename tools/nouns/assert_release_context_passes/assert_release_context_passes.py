@@ -124,5 +124,56 @@ def main() -> int:
         finally:
             pass
 
+    with tempfile.TemporaryDirectory() as raw:
+        repo = Path(raw)
+        _git(repo, "init")
+        _git(repo, "config", "user.email", "release-context@example.invalid")
+        _git(repo, "config", "user.name", "release-context")
+        (repo / "value").write_text("base\n", encoding="utf-8")
+        _git(repo, "add", "value")
+        _git(repo, "commit", "-m", "base")
+        base = _git(repo, "rev-parse", "HEAD")
+
+        _git(repo, "checkout", "-b", "old-release", base)
+        (repo / "value").write_text("old-release\n", encoding="utf-8")
+        _git(repo, "commit", "-am", "old release")
+        old_release = _git(repo, "rev-parse", "HEAD")
+
+        _git(repo, "checkout", "-b", "main", base)
+        _git(repo, "merge", "--no-ff", old_release, "-m", "merge old release")
+
+        _git(repo, "checkout", "-b", "release/v9.0.0", old_release)
+        (repo / "value").write_text("new-release\n", encoding="utf-8")
+        _git(repo, "commit", "-am", "new release")
+        new_release = _git(repo, "rev-parse", "HEAD")
+
+        _git(repo, "checkout", "main")
+        _git(repo, "merge", "--no-ff", "release/v9.0.0", "-m", "merge new release")
+        github_merge = _git(repo, "rev-parse", "HEAD")
+        if _git(repo, "rev-parse", f"{github_merge}^{{tree}}") != _git(
+            repo, "rev-parse", f"{new_release}^{{tree}}"
+        ):
+            print("ASSERT:FAIL diverged GitHub merge specimen tree != release")
+            return 1
+        _git(repo, "update-ref", "refs/remotes/origin/main", github_merge)
+
+        def repo_git(*args: str) -> subprocess.CompletedProcess[str]:
+            return subprocess.run(
+                ["git", *args],
+                cwd=str(repo),
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+        status, details = context.main_context(
+            "origin", "main", "release/v9.0.0", git=repo_git
+        )
+        if status != "contained" or details:
+            print(
+                f"ASSERT:FAIL diverged GitHub merge status={status} details={details}"
+            )
+            return 1
+
     print("ASSERT:PASS release context is closed and merge-aware")
     return 0

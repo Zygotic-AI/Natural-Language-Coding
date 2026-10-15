@@ -54,24 +54,30 @@ def main_context(
             details.append(f"{commit[:12]} is not a merge commit")
             continue
         parents = fields[1:]
+        absent: list[str] = []
         for parent in parents:
             ancestor = git("merge-base", "--is-ancestor", parent, rel_branch)
             if ancestor.returncode not in (0, 1):
                 return "unknown", [f"{commit[:12]} ancestry check failed"]
             if ancestor.returncode == 1:
+                absent.append(parent)
+        merge_tree = git("rev-parse", f"{commit}^{{tree}}")
+        second_tree = git("rev-parse", f"{parents[1]}^{{tree}}")
+        if merge_tree.returncode != 0 or second_tree.returncode != 0:
+            return "unknown", [f"{commit[:12]} tree lookup failed"]
+        merge_hex = merge_tree.stdout.strip()
+        second_hex = second_tree.stdout.strip()
+        # GitHub merge of the release tip: first parent is previous main (need not
+        # be on the release line) and the tree equals the release parent.
+        clean_release_merge = absent == [parents[0]] and merge_hex == second_hex
+        if absent and not clean_release_merge:
+            for parent in absent:
                 details.append(
                     f"{commit[:12]} parent {parent[:12]} is absent from {rel_branch}"
                 )
-                break
-        else:
-            merge_tree = git("rev-parse", f"{commit}^{{tree}}")
-            second_tree = git("rev-parse", f"{parents[1]}^{{tree}}")
-            if merge_tree.returncode != 0 or second_tree.returncode != 0:
-                return "unknown", [f"{commit[:12]} tree lookup failed"]
-            if merge_tree.stdout.strip() != second_tree.stdout.strip():
-                details.append(
-                    f"{commit[:12]} has merge-only tree changes"
-                )
+            continue
+        if not absent and merge_hex != second_hex:
+            details.append(f"{commit[:12]} has merge-only tree changes")
     if details:
         return "not_contained", details
     return "contained", []
