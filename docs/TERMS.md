@@ -74,9 +74,9 @@ Agent workflow layering referenced inside the **planit** skill (phases, tier rul
 
 **Boundary-Based Architecture**—integrity and emit *architecture* under **NLC** (boundaries, contracts, hub integrity). Not the public product name. Distinct from **BBP** (the emit *practice*). Not NLC process law (ADR 0024).
 
-### BBA-Bindings
+### Operating bindings (P-0xx)
 
-Companion repo for **P-0xx** operating policies; index in [OPERATING_BINDINGS.md](OPERATING_BINDINGS.md).
+Hub-local index of **P-0xx** operating policies in [OPERATING_BINDINGS.md](OPERATING_BINDINGS.md) (handoff default-closed, SSOT exit evidence, raise-readiness refuse, …).
 
 ### BBP
 
@@ -368,7 +368,7 @@ Hub integrity principle P1–P7—not **P-0xx** operating policies.
 
 ### P-0xx
 
-Operating policy in **BBA-Bindings** (handoff default-closed, SSOT exit, …).
+Operating policy indexed in [OPERATING_BINDINGS.md](OPERATING_BINDINGS.md) (handoff default-closed, SSOT exit, …).
 
 ### Plan audit
 

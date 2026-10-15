@@ -60,7 +60,7 @@ EXTRA_ALIASES: dict[str, str] = {
     "/verify": "verify",
     "verify-deep": "verify-deep",
     "ship-check": "ship-check",
-    "BBA-Bindings": "BBA-Bindings",
+    "Operating bindings": "Operating bindings (P-0xx)",
     "P-020": "SSOT exit evidence",
     "UC9": "UC9",
     "UC14": "UC14",

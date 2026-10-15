@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "artifacts": [
+    "adrs/0049-release-planner-owns-stops.md",
+    "tools/assert-release-context-passes.py",
+    "tools/assert-release-planner-ownership-fails.py",
+    "tools/fitness-release-planner-ownership.py",
+    "tools/nouns/fitness_release_planner_ownership/fitness_release_planner_ownership.py"
+  ]
+}

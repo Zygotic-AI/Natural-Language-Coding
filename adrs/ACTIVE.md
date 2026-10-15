@@ -55,5 +55,8 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0041 | L-0041 | session | 2026-09-23 |
 | 0042 | L-0042 | session | 2026-09-23 |
 | 0043 | L-0043 | session | 2026-09-23 |
+| 0044 | L-0044 | session | 2026-09-25 |
+| 0045 | L-0045 | session | 2026-09-26 |
+| 0050 | L-0050 | RCA 2026-10-10 SHA-pinned evidence / content identity | 2026-10-10 |
 
 When an ADR is superseded, remove it from this table and add its successor. Update INDEX status in the same change.

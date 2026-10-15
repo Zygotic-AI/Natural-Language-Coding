@@ -1,0 +1,1 @@
+# fitness_hub_own_property_exit

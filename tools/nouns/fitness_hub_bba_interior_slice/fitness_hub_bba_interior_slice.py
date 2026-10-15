@@ -24,6 +24,8 @@ import ast
 import sys
 from pathlib import Path
 
+from fitness_hub_source import implementation_path
+
 ROOT = Path(__file__).resolve().parents[3]
 EMIT_PATH_MODULES = (
     ROOT / "tools" / "nlc-init.py",
@@ -62,7 +64,7 @@ def main() -> int:
         if not path.is_file():
             violations.append(f"missing {path.relative_to(ROOT)}")
             continue
-        if not has_marker(path):
+        if not has_marker(implementation_path(path)):
             violations.append(f"{path.relative_to(ROOT)} lacks {MARKER}")
     for row in violations:
         print(f"VIOLATION {row}")

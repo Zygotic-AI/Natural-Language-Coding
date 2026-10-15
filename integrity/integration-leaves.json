@@ -1,5 +1,5 @@
 {
-  "schema": 1,
+  "schema": 2,
   "ssot": "integrity/integration-leaves.json",
   "description": "Branch/PR integration units after merge or abandon. Each leaf: claims + disposition (on_main | parked | rejected | absent) + evidence.",
   "leaves": [
@@ -11,8 +11,8 @@
       ],
       "disposition": "on_main",
       "evidence": {
-        "sha": "042e7d6",
-        "notes": "Product completion batch on main; P8 inference record + FINDINGS last_pass aligned at ship closeout."
+        "tree_hash_ref": "integrity/hub-content-tree-hash.txt",
+        "notes": "Product completion batch on main; P8 inference + FINDINGS aligned via hub-content-tree-hash.txt (ADR 0050)."
       }
     }
   ]

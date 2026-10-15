@@ -31,6 +31,13 @@ __pycache__/
 venv/
 *.egg-info/
 
+# Release prepare observation cache (rebuilt by the release executor)
+.nlc/release-prepare-facts.json
+
+# Root session artifacts (must not be committed)
+/in-process
+/agent
+
 # Logs
 *.log
 npm-debug.log*

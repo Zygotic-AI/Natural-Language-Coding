@@ -21,7 +21,7 @@ Async work (PR review, merge, CI) is normal; the human surface must still be **o
    - continue through waits (merge, Enter, or polling where implemented) without the operator running a different command for each phase,
    - persist or infer progress from **git and committed artifacts** (branches, release notes, release record), not from chat or operator memory.
 
-3. **Decompose internally, not in the menu.** Verify, notes, bump, prep, PR, merge wait, tag, and push are **steps inside** `./release`, not separate human products—aligned with [ADR 0020](0020-human-vs-agent-commands.md) (humans run `./release`; agents run maintainer tools).
+3. **Decompose internally, not in the menu.** Verify, notes, bump, prep, PR, merge wait, tag, and push are **steps inside** `./release`, not separate human products—aligned with [ADR 0020](0020-human-vs-agent-commands.md) (humans run `./release`; agents run maintainer tools). Releasable gate profiles live only in [`integrity/releasable-gates.json`](../integrity/releasable-gates.json); `./release` and `./nlc verify` call the same runner (RCA-1 containment).
 
 4. **Zero-parameter public surface (2026-09-25).** The documented human path is **`./release` with no required flags**. Version and `release/v*` branch are inferred ([`nlc_release_infer.py`](../tools/nlc_release_infer.py)); CLI flags remain for automation overrides only ([`RELEASE.md`](../docs/adoption/RELEASE.md) appendix).
 

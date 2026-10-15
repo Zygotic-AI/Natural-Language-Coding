@@ -82,7 +82,7 @@ Reference case for handoffs in the raise-to-HITL path (Human Root-Approver escal
 | Criterion | Evidence |
 |-----------|----------|
 | G1 | 15855 is incomplete (missing required fields) → must [REFUSE](../docs/TERMS.md#refuse) |
-| G2 | §7/R3/R4 checks require concrete content validation; **[refuse-wired](../docs/TERMS.md#default-closed)** via [P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) on Bindings main |
+| G2 | §7/R3/R4 checks require concrete content validation; **[refuse-wired](../docs/TERMS.md#default-closed)** via [P-030](../docs/OPERATING_BINDINGS.md#p-030-raise-readiness-refuse) (hub-local) |
 | G3 | 15855 is the incomplete-packet fixture; [handoff](../docs/TERMS.md#handoff) refuses it → [MET](../docs/TERMS.md#met) |
 | G4 | PASS would require Human root-approver to add §7/R3/R4 → not self-sufficient → must [REFUSE](../docs/TERMS.md#refuse) |
 
@@ -188,7 +188,7 @@ System-Remediate Design ──→ Produce ──→ Fitness ──→ Audit ─�
 |---|----------|---------|-------------|-----------------|---------------------------|
 | 1 | **Plan** | Plan Steward | Plan → Produce | *Off [Gate](../docs/TERMS.md#gate) [noun](../docs/TERMS.md#noun) until [refuse-wired](../docs/TERMS.md#default-closed) plan exit exists* | (future: plan without acceptance criteria) |
 | 2 | **Conduct-RCA** | [RCA](../docs/TERMS.md#rca) Conductor | [RCA](../docs/TERMS.md#rca) → Raise-Readiness | Investigation incomplete; no root cause named | [RCA](../docs/TERMS.md#rca) report without root cause statement |
-| 3 | **Raise-Readiness** | [RCA](../docs/TERMS.md#rca) Conductor, [Quality](../docs/TERMS.md#quality) Architect, Adversarial Auditor, Escalation Steward | Raise → HITL Root-Approve | Missing §7 (Owner/Path/Verification), missing R3, missing R4; Adversarial Auditor refuses P-030 readiness (R3/R4); Escalation Steward refuses NHR packaging; see [P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) | **15855 without §7/R3/R4** |
+| 3 | **Raise-Readiness** | [RCA](../docs/TERMS.md#rca) Conductor, [Quality](../docs/TERMS.md#quality) Architect, Adversarial Auditor, Escalation Steward | Raise → HITL Root-Approve | Missing §7 (Owner/Path/Verification), missing R3, missing R4; Adversarial Auditor refuses P-030 readiness (R3/R4); Escalation Steward refuses NHR packaging; see [P-030](../docs/OPERATING_BINDINGS.md#p-030-raise-readiness-refuse) | **15855 without §7/R3/R4** |
 | 4 | **HITL Root-Approve** | Human Root-Approver | HITL → Produce | Readiness not [MET](../docs/TERMS.md#met); missing root-approve decision; incomplete packet | Raise packet without HITL approval record |
 | 5 | **Produce** (code or standard tip) | Producer | Produce → Fitness | Missing [produce package](../docs/TERMS.md#produce-package); missing [SSOT exit evidence](../docs/TERMS.md#ssot-exit-evidence) (S7, S8) | Package without `ssot_leaf_ids` + `ssot_exit_status` |
 | 6 | **Fitness** | [Quality](../docs/TERMS.md#quality) Architect | Fitness → [Audit](../docs/TERMS.md#audit) | Preflight `handoff_refused`; scoring not [MET](../docs/TERMS.md#met) | [Produce package](../docs/TERMS.md#produce-package) incomplete → `handoff_refused` (not FAIL) |
@@ -278,4 +278,4 @@ For changes that add or modify boundaries or handoffs:
 - [`../agents/quality-architect/AGENT.md`](../agents/quality-architect/AGENT.md): Fitness preflight and scoring
 - [`../agents/adversarial-auditor/AGENT.md`](../agents/adversarial-auditor/AGENT.md): Adversarial review role
 - [`../agents/ship-role/AGENT.md`](../agents/ship-role/AGENT.md): [Ship](../docs/TERMS.md#ship) authority and mandate
-- [P-030 (BBA-Bindings)](https://github.com/richardpickett/BBA-Bindings/pull/9): Raise-readiness [refuse](../docs/TERMS.md#refuse) wire
+- [P-030](../docs/OPERATING_BINDINGS.md#p-030-raise-readiness-refuse): Raise-readiness [refuse](../docs/TERMS.md#refuse) wire (hub-local)

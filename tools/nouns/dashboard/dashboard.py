@@ -30,7 +30,8 @@ def _read_text(path: Path) -> str:
 
 
 def requirements_incomplete(root: Path) -> bool:
-    if list_pending_adrs(root / "adrs"):
+    # Hub Proposed ADRs are not adopter unfinished-requirements (ADR 0029: ACTIVE is bind-time).
+    if list_pending_adrs(root / "adrs") and not is_hub_repo(root):
         return True
     if (root / ".nlc" / "requirements-sync-pending.json").is_file():
         return True
@@ -206,7 +207,7 @@ def scan_verify_pending(root: Path) -> list[dict]:
             "id": "verify-waiting",
             "stage": "verify",
             "label": "Verify before prod",
-            "next": "./nlc verify  (if fail: /verify in your agent)",
+            "next": "./nlc verify  (if fail: run the printed Reproduce command)",
             "priority": 30,
         }
     ]

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 BOUNDARY = "bba-emit"
 
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -18,11 +19,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools"))
 from nlc_requirements import hub_prove  # noqa: E402
+from nouns.field_write_bypass_fixtures.field_write_bypass_fixtures import (  # noqa: E402
+    O9A_BYPASS_FIXTURE_DIRS,
+)
 TOOLS = ROOT / "tools"
+_CI_FAILURES: list[str] = []
 
 
 def fail(msg: str) -> None:
     print(f"CI:FAIL {msg}")
+    if os.environ.get("CI_FITNESS_CONTINUE") == "1":
+        _CI_FAILURES.append(msg)
+        return
     sys.exit(1)
 
 
@@ -68,8 +76,12 @@ def charter_check1() -> None:
         for d in sorted(examples.iterdir()):
             if not d.is_dir():
                 continue
-            if d.name == "invoice-violation":
+            if d.name in {"invoice-violation", "internal-link-landmine"}:
                 continue
+            if d.name in O9A_BYPASS_FIXTURE_DIRS:
+                continue
+            if d.name.startswith("invoice-bypass-"):
+                fail(f"unexpected invoice-bypass fixture {d.name} (not in O9A_BYPASS_FIXTURE_DIRS)")
             print(f"scanning {d}/")
             run(
                 f"no-noun-field-writes {d.name}",
@@ -77,11 +89,64 @@ def charter_check1() -> None:
             )
 
 
-def main() -> int:
-    hub_prove()
+def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
+    """Hub compile fitness. Releasable verify profile runs only when requested (not from hub-ci-fitness gate)."""
+    if include_releasable_verify:
+        from nouns.releasable_gates.releasable_gates import run_profile
+
+        print("=== releasable verify profile (SSOT) ===")
+        if run_profile("verify", ROOT) != 0:
+            fail("releasable verify profile")
+
     session_preflight()
 
     charter_check1()
+
+    print("=== ADR 0050 evidence identity ===")
+    run(
+        "fitness-no-history-ids-in-evidence",
+        [sys.executable, str(TOOLS / "fitness-no-history-ids-in-evidence.py")],
+    )
+    run(
+        "fitness-landmine-self-contained",
+        [sys.executable, str(TOOLS / "fitness-landmine-self-contained.py")],
+    )
+    run(
+        "fitness-root-session-artifacts",
+        [sys.executable, str(TOOLS / "fitness-root-session-artifacts.py")],
+    )
+    run(
+        "fitness-hub-public-self-contained",
+        [sys.executable, str(TOOLS / "fitness-hub-public-self-contained.py")],
+    )
+    run(
+        "fitness-internal-links",
+        [sys.executable, str(TOOLS / "fitness-internal-links.py")],
+    )
+    run(
+        "assert-internal-link-gate-fails",
+        [sys.executable, str(TOOLS / "assert-internal-link-gate-fails.py")],
+    )
+    run(
+        "assert-hub-in-force-exclusions-passes",
+        [sys.executable, str(TOOLS / "assert-hub-in-force-exclusions-passes.py")],
+    )
+    run(
+        "fitness-goal-write-hook",
+        [sys.executable, str(TOOLS / "fitness-goal-write-hook.py")],
+    )
+    run(
+        "assert-field-write-bypass-fails",
+        [sys.executable, str(TOOLS / "assert-field-write-bypass-fails.py")],
+    )
+    run(
+        "assert-unresolvable-refuses-passes",
+        [sys.executable, str(TOOLS / "assert-unresolvable-refuses-passes.py")],
+    )
+    run(
+        "assert-evidence-unresolved-ref-refuses",
+        [sys.executable, str(TOOLS / "assert-evidence-unresolved-ref-refuses.py")],
+    )
 
     print("=== designed-fail landmines (assert exit 0 = landmine live) ===")
     for path in sorted(TOOLS.glob("assert-*-fails.py")):
@@ -107,7 +172,16 @@ def main() -> int:
 
     print("=== invoice-correct must MET on bound tools ===")
     correct = ROOT / "examples" / "invoice-correct"
+    hub_only: set[str] = set()
+    manifest = ROOT / "integrity" / "releasable-gates.json"
+    if manifest.is_file():
+        import json
+
+        hub_only = set(json.loads(manifest.read_text(encoding="utf-8")).get("hub_only_fitness") or [])
     for path in sorted(TOOLS.glob("fitness-*.py")):
+        if path.name in hub_only:
+            print(f"--- skip {path.name} invoice-correct (hub-only) ---")
+            continue
         run(
             f"{path.name} invoice-correct",
             [sys.executable, str(path), str(correct)],
@@ -311,6 +385,10 @@ def main() -> int:
         [sys.executable, str(TOOLS / "assert-install-verify-passes.py")],
     )
     run(
+        "assert-piped-install-smoke",
+        [sys.executable, str(TOOLS / "assert-piped-install-smoke-passes.py")],
+    )
+    run(
         "assert-project-lock-schema",
         [sys.executable, str(TOOLS / "assert-project-lock-schema-passes.py")],
     )
@@ -505,8 +583,28 @@ def main() -> int:
         [sys.executable, str(TOOLS / "assert-release-infer-passes.py")],
     )
     run(
+        "assert-release-state",
+        [sys.executable, str(TOOLS / "assert-release-state-passes.py")],
+    )
+    run(
+        "assert-release-context",
+        [sys.executable, str(TOOLS / "assert-release-context-passes.py")],
+    )
+    run(
+        "fitness-release-planner-ownership",
+        [sys.executable, str(TOOLS / "fitness-release-planner-ownership.py")],
+    )
+    run(
+        "assert-release-planner-ownership",
+        [sys.executable, str(TOOLS / "assert-release-planner-ownership-fails.py")],
+    )
+    run(
         "assert-jidoka-ssot-agents-link",
         [sys.executable, str(TOOLS / "assert-jidoka-ssot-agents-link-passes.py")],
+    )
+    run(
+        "assert-goal-write-hook-landmine",
+        [sys.executable, str(TOOLS / "assert-goal-write-hook-landmine-passes.py")],
     )
     run(
         "assert-release-main-purity-remediation",
@@ -578,6 +676,164 @@ def main() -> int:
         [sys.executable, str(TOOLS / "assert-noun-inheritance-fails.py")],
     )
 
+    run(
+        "fitness-releasable-gate-ssot",
+        [sys.executable, str(TOOLS / "fitness-releasable-gate-ssot.py")],
+    )
+    run(
+        "fitness-adr-approval",
+        [sys.executable, str(TOOLS / "fitness-adr-approval.py")],
+    )
+
+    run(
+        "fitness-adr-owner-sidecar",
+        [sys.executable, str(TOOLS / "fitness-adr-owner-sidecar.py")],
+    )
+    run(
+        "assert-adr-batch-approval",
+        [sys.executable, str(TOOLS / "assert-adr-batch-approval-fails.py")],
+    )
+    run(
+        "assert-adr-status-heading",
+        [sys.executable, str(TOOLS / "assert-adr-status-heading-fails.py")],
+    )
+    run(
+        "fitness-gate-set-manifest",
+        [sys.executable, str(TOOLS / "fitness-gate-set-manifest.py")],
+    )
+    run(
+        "fitness-owner-key-trust",
+        [sys.executable, str(TOOLS / "fitness-owner-key-trust.py")],
+    )
+    run(
+        "fitness-hub-own-principle-subgoals",
+        [sys.executable, str(TOOLS / "fitness-hub-own-principle-subgoals.py")],
+    )
+    run(
+        "fitness-hub-own-property-exit",
+        [sys.executable, str(TOOLS / "fitness-hub-own-property-exit.py")],
+    )
+    run(
+        "fitness-owner-ratification-known-bad",
+        [sys.executable, str(TOOLS / "fitness-owner-ratification-known-bad.py")],
+    )
+    run(
+        "fitness-hub-scope-derived",
+        [sys.executable, str(TOOLS / "fitness-hub-scope-derived.py")],
+    )
+    run(
+        "fitness-hub-brief-forbid-weaken",
+        [sys.executable, str(TOOLS / "fitness-hub-brief-forbid-weaken.py")],
+    )
+    run(
+        "fitness-no-check-on-check",
+        [sys.executable, str(TOOLS / "fitness-no-check-on-check.py")],
+    )
+    run(
+        "fitness-known-bad-ssot",
+        [sys.executable, str(TOOLS / "fitness-known-bad-ssot.py")],
+    )
+    run(
+        "fitness-pending-ratification",
+        [sys.executable, str(TOOLS / "fitness-pending-ratification.py")],
+    )
+    run(
+        "fitness-no-tool-writes-ratification",
+        [sys.executable, str(TOOLS / "fitness-no-tool-writes-ratification.py")],
+    )
+    run(
+        "fitness-retired-key-denylist",
+        [sys.executable, str(TOOLS / "fitness-retired-key-denylist.py")],
+    )
+    run(
+        "fitness-adr-0051-0052-rules",
+        [sys.executable, str(TOOLS / "fitness-adr-0051-0052-rules.py")],
+    )
+    run(
+        "assert-gate-set-manifest-tamper",
+        [sys.executable, str(TOOLS / "assert-gate-set-manifest-tamper-fails.py")],
+    )
+    run(
+        "assert-gate-set-closure-member-tamper-release-state",
+        [
+            sys.executable,
+            str(TOOLS / "assert-gate-set-closure-member-tamper-fails.py"),
+            "tools/nouns/release_state/release_state.py",
+        ],
+    )
+    run(
+        "assert-gate-set-closure-member-tamper-nlc-requirements",
+        [
+            sys.executable,
+            str(TOOLS / "assert-gate-set-closure-member-tamper-fails.py"),
+            "tools/nouns/nlc_requirements/__init__.py",
+        ],
+    )
+    run(
+        "assert-gate-set-closure-excluded-not-members",
+        [sys.executable, str(TOOLS / "assert-gate-set-closure-excluded-not-members-passes.py")],
+    )
+    run(
+        "assert-gate-set-manifest-missing-sidecar",
+        [sys.executable, str(TOOLS / "assert-gate-set-manifest-missing-sidecar-fails.py")],
+    )
+    run(
+        "assert-gate-set-manifest-placeholder-sidecar",
+        [sys.executable, str(TOOLS / "assert-gate-set-manifest-placeholder-sidecar-fails.py")],
+    )
+    run(
+        "fitness-adr-record-gate",
+        [sys.executable, str(TOOLS / "fitness-adr-record-gate.py")],
+    )
+    run(
+        "fitness-verb-set-lineage",
+        [sys.executable, str(TOOLS / "fitness-verb-set-lineage.py")],
+    )
+    run(
+        "fitness-executable-shape",
+        [sys.executable, str(TOOLS / "fitness-executable-shape.py")],
+    )
+    run(
+        "assert-planit-other-skill",
+        [sys.executable, str(TOOLS / "assert-planit-other-skill-fails.py")],
+    )
+    run(
+        "assert-adr-approval-mismatch",
+        [sys.executable, str(TOOLS / "assert-adr-approval-mismatch-fails.py")],
+    )
+    run(
+        "assert-verb-primitive-inventory",
+        [sys.executable, str(TOOLS / "assert-verb-primitive-inventory-fails.py")],
+    )
+    run(
+        "assert-verb-set-extension",
+        [sys.executable, str(TOOLS / "assert-verb-set-extension-fails.py")],
+    )
+    run(
+        "assert-executable-kernel-exempt",
+        [sys.executable, str(TOOLS / "assert-executable-kernel-exempt-fails.py")],
+    )
+    print("=== RCA-1 releasable gate landmines ===")
+    run(
+        "assert-releasable-gate-list-duplicate",
+        [sys.executable, str(TOOLS / "assert-releasable-gate-list-duplicate-fails.py")],
+    )
+    run(
+        "assert-releasable-failure-without-reproduce",
+        [sys.executable, str(TOOLS / "assert-releasable-failure-without-reproduce-fails.py")],
+    )
+    run(
+        "assert-releasable-home-invariant",
+        [sys.executable, str(TOOLS / "assert-releasable-home-invariant-passes.py")],
+    )
+    run(
+        "assert-stale-committed-evidence",
+        [sys.executable, str(TOOLS / "assert-stale-committed-evidence-fails.py")],
+    )
+    run(
+        "assert-hub-only-fitness-scope",
+        [sys.executable, str(TOOLS / "assert-hub-only-fitness-scope-passes.py")],
+    )
     print("=== produce handoff preflight ===")
     from nlc_produce_package import preflight_handoff
 
@@ -587,8 +843,20 @@ def main() -> int:
     if handoff != 0:
         fail("produce preflight")
 
+    if _CI_FAILURES:
+        print("=== CI fitness failures (continue mode) ===")
+        for item in _CI_FAILURES:
+            print(f"CI:FAIL {item}")
+        return 1
     print("CI:MET")
     return 0
+
+
+def main() -> int:
+    _CI_FAILURES.clear()
+    hub_prove()
+    code = run_ci_fitness_suite(include_releasable_verify=True)
+    return code
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 **You remember one thing:** invoke **`/release`** in chat.
 
-**Your job:** run the **full pre-ship pipeline** — not a checklist for the human. **`/release` authorizes** the agent to commit the hub continuity/product batch, fix SSOT headers, remove stale `release/v*` branches, prove gates, run inference, then start **`./release`**. The orchestrator is **non-interactive** on deterministic legs; parse **`RELEASE:NOT_MET`** blocks and fix or re-run. **Human-only:** GitHub PR merge click, release notes **Highlights** content when invalid, **retag** confirm (`NLC_RELEASE_ALLOW_RETAG=1`).
+**Your job:** run the **full pre-ship pipeline** — not a checklist for the human. **`/release` authorizes** the agent to commit the hub continuity/product batch, fix SSOT headers, remove stale `release/v*` branches, prove gates, run inference, then start **`./release`**. The orchestrator performs deterministic audits and repairs and re-plans in the same invocation ([ADR 0049](../../../adrs/0049-release-planner-owns-stops.md)); `RELEASE:NOT_MET` is reserved for a named human decision. **Human-only:** GitHub PR merge click, release notes **Highlights** content when invalid, and explicitly named unsafe/ambiguous decisions. Do **not** move an existing tag, `reset` `main`, or force-push. Phase comes from `nlc_release_state.py` ([ADR 0045](../../../adrs/0045-hub-release-identity.md)). `INVALID_MERGED` is never tagged; the planner creates a new release-line candidate when safe.
 
 **Terminal orchestrator:** [`./release`](../../../docs/adoption/RELEASE.md) — ADR 0039 + **production trunk** [ADR 0044](../../../adrs/0044-hub-release-production-trunk.md). Start after **Ship: GO** (or **GO with residuals**).
 
@@ -31,7 +31,7 @@ Do **not** run `./release` until every **blocking** row is true.
 | Product residuals | yes when P2/P3 | User confirms **once** after table | Chat |
 | `./release` started | yes on GO | Orchestrator invoked from repo root | Terminal |
 
-**Done signals:** Closeout done; **Ship** verdict; `./release` running or honest NOT_MET with agent fix loop.
+**Done signals:** Closeout done; **Ship** verdict; `./release` running, awaiting the release pull-request merge, complete, or stopped on a named human decision.
 
 ## Procedure
 
@@ -45,7 +45,7 @@ git ls-remote --tags origin 'v*' 2>/dev/null | tail -5
 ```
 
 - **`tag` / `planned_tag` in JSON** = name `./release` would create — **not** an existing ref unless **`git_tag_on_merge`** is true.
-- **`stale_release_branches`:** merged `release/v*` **without** `hub-release-record.json` on the merge commit ([RCA 26-09-24](../../docs/rca/2026-09-24-release-resume-planned-tag-conflation.md)) — agent **deletes** those refs in Step 1A when fixing resume hygiene.
+- **`stale_release_branches`:** merged `release/v*` **without** `hub-release-record.json` on the merge commit ([RCA 26-09-24](../../../docs/rca/2026-09-24-release-resume-planned-tag-conflation.md)) — agent **deletes** those refs in Step 1A when fixing resume hygiene.
 - **`closed_release_branches`:** shipped release lines (git tag exists for that version) — **do not delete**; resume skips them for the next `./release`. Keep branch history unless the user asks to prune.
 
 | Phase | Agent path |
@@ -56,7 +56,7 @@ git ls-remote --tags origin 'v*' 2>/dev/null | tail -5
 
 Never tell the user to run `./release finish` or `prepare` — **`./release`** only.
 
-Never tell the operator to **ignore or reinterpret** resume JSON ([`jidoka-ssot-output.md`](../../.agents/instructions/jidoka-ssot-output.md)); fix `nlc_release_resume.py` / docs when fields contradict SSOT.
+Never tell the operator to **ignore or reinterpret** resume JSON ([`jidoka-ssot-output.md`](../../../.agents/instructions/jidoka-ssot-output.md)); fix `nlc_release_resume.py` / docs when fields contradict SSOT.
 
 ### 1 — Bound ship state
 
@@ -71,8 +71,8 @@ Execute **in order** (fix and retry on NOT_MET; do not dump steps on the user):
 1. **Prove working tree** — `python3 tools/ci_fitness.py` → **CI:MET**. If FAIL, fix until MET (jidoka).
 2. **Stale `release/v*` only** — for each name in **`stale_release_branches`** (missing record on merge, not **`closed_release_branches`**): `git branch -D <branch>`; `git push origin --delete <branch>` when remote exists (no force-push to `main`).
 3. **Stage and commit** ship-intent changes on the **release line branch** (never `main`). If user is on `main` with work, create/checkout `release/v*` first, then commit. Use repo commit message style; never `--no-verify`.
-4. **FINDINGS header** — set `` `last_pass_sha:` `` and **Last pass** line to `git rev-parse --short HEAD`; run `python3 tools/fitness-findings-last-pass-fresh.py` → MET. Commit if not in step 3.
-5. **Inference record** — update [`integrity/full-nlc-audit-inference-record.json`](../../../integrity/full-nlc-audit-inference-record.json): `audit_sha`, `machine_verdict`, `continuity_verdict`, `phases_summary`, empty `p0_p1_product_blockers` when true. Commit if needed.
+4. **FINDINGS header** — set `` `last_pass_tree_hash:` `` to the worktree tree hash (ADR 0050; same model as release `effective_tree_sha`); run `python3 tools/fitness-findings-last-pass-fresh.py` → MET. Commit if not in step 3.
+5. **Inference record** — update [`integrity/full-nlc-audit-inference-record.json`](../../../integrity/full-nlc-audit-inference-record.json): `audit_tree_hash`, `machine_verdict`, `continuity_verdict`, `phases_summary`, empty `p0_p1_product_blockers` when true. Commit if needed.
 6. **TODO continuity** — mark completed closeout rows `@done` when predicates MET (same commit or follow-up).
 7. **Re-prove** — `python3 tools/ci_fitness.py` → CI:MET on final HEAD.
 8. **Clean tree** — `git status --porcelain` empty.
@@ -91,7 +91,7 @@ Scan [`TODO`](../../../TODO), [`FINDINGS.md`](../../../FINDINGS.md), [`integrity
 python3 tools/full-nlc-audit.py --check --profile release-prep
 ```
 
-Skip when **await_merge** / **tag_ready** / **complete**. NOT_MET → agent fixes (Step 1A loop), not user homework.
+Skip when **await_merge** / **tag_ready** / **complete**. Deterministic release repairs remain inside `./release`; `NOT_MET` must name a human-only decision, not another command.
 
 **tag_ready:** optional `python3 tools/nlc_release_tag_gate.py --check --commit … --tag …`
 
@@ -119,9 +119,9 @@ Before **GO with residuals**, cite product gaps per [`.agents/instructions/reply
 ./release
 ```
 
-No flags. Infer sets bump and `release/v*`. Report **`RELEASE:NOT_MET`** verbatim; agent fixes what is fixable, then re-run **`./release`**.
+No flags. The planner sets the next action and runs deterministic repairs in the same invocation. Report **`RELEASE:NOT_MET`** verbatim only when it names a human-only decision.
 
-**Human-only:** GitHub merge, editing Highlights in release notes when gate fails, retag env + confirm.
+**Human-only:** GitHub merge, and editing Highlights in release notes when the notes gate fails. Do not retag.
 
 ## Routing
 

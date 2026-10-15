@@ -24,7 +24,7 @@
    - **Build & compile** — `/planit` only for humans; generate, bind, plan audits.
    - **Guide** — `/interview` only for humans; surfaces queue and walks any [workflow](../docs/TERMS.md#workflow).
 
-3. **[Verify](../docs/TERMS.md#verify) (`./nlc verify`)** does not require inference on **pass**; on **fail**, instruct **`/verify`** in the agent (ADR 0021). CI may [gate](../docs/TERMS.md#gate) on `./nlc verify` exit 0.
+3. **[Verify](../docs/TERMS.md#verify) (`./nlc verify`)** does not require inference on **pass**; on **fail**, print the deterministic **Reproduce** command (RCA-1; releasable profile in [`integrity/releasable-gates.json`](../integrity/releasable-gates.json)). The **`/verify`** skill runs that command, not alternate gate lists. CI may [gate](../docs/TERMS.md#gate) on `./nlc verify` exit 0.
 
 4. **Human surfaces** (dashboard, menu, queue) must not list agent-only commands as the next step when inference is required. Queue buckets name the **outcome** (“Requirements unfinished”) with **→ [/interview](../docs/TERMS.md#interview)** (or **/planit** for build), not “run `./nlc requirements` then go to agent.”
 

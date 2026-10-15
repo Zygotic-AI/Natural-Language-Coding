@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ADR 0007/0009: gaps documented — no fake binders claiming MET."""
+"""ADR 0007/0009/0028: enforcement rows are bound, not left as gaps."""
 
 from __future__ import annotations
 
@@ -19,10 +19,13 @@ def main() -> int:
         violations.append("missing ADR-ENFORCEMENT.md")
     else:
         text = ENFORCEMENT.read_text(encoding="utf-8", errors="replace")
-        if "| 0007 |" not in text or "gap" not in text.split("| 0007 |", 1)[1][:80].lower():
-            violations.append("ADR-ENFORCEMENT must mark 0007 as gap")
-        if "| 0009 |" not in text or "gap" not in text.split("| 0009 |", 1)[1][:80].lower():
-            violations.append("ADR-ENFORCEMENT must mark 0009 as gap")
+        for adr in ("0007", "0009", "0028"):
+            if f"| {adr} |" not in text:
+                violations.append(f"ADR-ENFORCEMENT missing {adr}")
+                continue
+            cell = text.split(f"| {adr} |", 1)[1].split("\n", 1)[0].lower()
+            if "gap" in cell or "bound" not in cell:
+                violations.append(f"ADR-ENFORCEMENT must mark {adr} bound and not gap")
     for adr in ("0007", "0009"):
         path = ROOT / "adrs"
         if path.is_dir():

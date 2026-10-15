@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "records": [
+    {
+      "artifact": "adrs/0049-release-planner-owns-stops.md",
+      "gate_id": "ADR0049-PROPOSAL",
+      "outcome": "PASS",
+      "command": "proposal fields + default-closed gate check",
+      "at": "2026-10-10T05:07:51Z"
+    }
+  ]
+}

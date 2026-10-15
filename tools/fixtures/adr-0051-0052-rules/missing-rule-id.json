@@ -1,0 +1,363 @@
+{
+  "schema": 1,
+  "source": "tools/derive-adr-0051-0052-rules.py",
+  "rules": [
+    {
+      "id": "0051:L15",
+      "location": "adrs/0051-hub-own-produce-principles.md:15",
+      "status": "CONTEXT",
+      "check_id": null,
+      "known_bad_id": null
+    },
+    {
+      "id": "0051:L25",
+      "location": "adrs/0051-hub-own-produce-principles.md:25",
+      "status": "UNBUILT",
+      "check_id": null,
+      "known_bad_id": null
+    },
+    {
+      "id": "0051:REGRESS-1",
+      "location": "adrs/0051-hub-own-produce-principles.md:29",
+      "status": "BUILT",
+      "check_id": "C4",
+      "known_bad_id": "KB-check-on-check"
+    },
+    {
+      "id": "0051:REGRESS-2",
+      "location": "adrs/0051-hub-own-produce-principles.md:30",
+      "status": "CONTEXT",
+      "check_id": null,
+      "known_bad_id": null
+    },
+    {
+      "id": "0051:REGRESS-3",
+      "location": "adrs/0051-hub-own-produce-principles.md:31",
+      "status": "BUILT",
+      "check_id": "C4",
+      "known_bad_id": "KB-check-on-check"
+    },
+    {
+      "id": "0051:REGRESS-4",
+      "location": "adrs/0051-hub-own-produce-principles.md:32",
+      "status": "BUILT",
+      "check_id": "C5",
+      "known_bad_id": "KB-known-bad-ssot-gap"
+    },
+    {
+      "id": "0051:REGRESS-5",
+      "location": "adrs/0051-hub-own-produce-principles.md:33",
+      "status": "CONTEXT",
+      "check_id": null,
+      "known_bad_id": null
+    },
+    {
+      "id": "0051:GATE-SET-DEF",
+      "location": "adrs/0051-hub-own-produce-principles.md:37",
+      "status": "BUILT",
+      "check_id": "fitness-gate-set-manifest",
+      "known_bad_id": "KB-SG2-closure-member"
+    },
+    {
+      "id": "0051:S-HUB-GOAL-TREE",
+      "location": "adrs/0051-hub-own-produce-principles.md:59",
+      "status": "BUILT",
+      "check_id": "C1",
+      "known_bad_id": "KB-SG1-leaves"
+    },
+    {
+      "id": "0051:R-HUB-EXIT",
+      "location": "adrs/0051-hub-own-produce-principles.md:60",
+      "status": "BUILT",
+      "check_id": "C1",
+      "known_bad_id": "KB-SG1-exit"
+    },
+    {
+      "id": "0051:R-HUB-BRIEF-FORBID-WEAKEN",
+      "location": "adrs/0051-hub-own-produce-principles.md:61",
+      "status": "BUILT",
+      "check_id": "C3",
+      "known_bad_id": "KB-brief-forbid"
+    },
+    {
+      "id": "0051:CC-SG1",
+      "location": "adrs/0051-hub-own-produce-principles.md:62",
+      "status": "BUILT",
+      "check_id": "C2",
+      "known_bad_id": "KB-SG1-leaves"
+    },
+    {
+      "id": "0051:P-GATE-SET-RATIFY",
+      "location": "adrs/0051-hub-own-produce-principles.md:72",
+      "status": "BUILT",
+      "check_id": "fitness-gate-set-manifest",
+      "known_bad_id": "KB-SG2-closure-member"
+    },
+    {
+      "id": "0051:S-GATE-SET-REGISTRY",
+      "location": "adrs/0051-hub-own-produce-principles.md:73",
+      "status": "BUILT",
+      "check_id": "fitness-gate-set-manifest",
+      "known_bad_id": "KB-SG2-closure-member"
+    },
+    {
+      "id": "0051:R-GATE-SET-NO-SILENT-WEAKEN",
+      "location": "adrs/0051-hub-own-produce-principles.md:74",
+      "status": "BUILT",
+      "check_id": "fitness-gate-set-manifest",
+      "known_bad_id": "KB-SG2-closure-member"
+    },
+    {
+      "id": "0051:CC-SG2",
+      "location": "adrs/0051-hub-own-produce-principles.md:75",
+      "status": "BUILT",
+      "check_id": "fitness-gate-set-manifest",
+      "known_bad_id": "KB-SG2-closure-member"
+    },
+    {
+      "id": "0051:AMEND-0047-1",
+      "location": "adrs/0051-hub-own-produce-principles.md:81",
+      "status": "BUILT",
+      "check_id": "fitness-gate-set-manifest",
+      "known_bad_id": "KB-SG2-closure-member"
+    },
+    {
+      "id": "0051:AMEND-0047-2",
+      "location": "adrs/0051-hub-own-produce-principles.md:82",
+      "status": "BUILT",
+      "check_id": "fitness-gate-set-manifest",
+      "known_bad_id": "KB-SG2-closure-member"
+    },
+    {
+      "id": "0051:AMEND-0047-3",
+      "location": "adrs/0051-hub-own-produce-principles.md:83",
+      "status": "BUILT",
+      "check_id": "C6",
+      "known_bad_id": "GAP-0051-unsigned"
+    },
+    {
+      "id": "0051:P-HUB-ROLE-SEP",
+      "location": "adrs/0051-hub-own-produce-principles.md:92",
+      "status": "BUILT",
+      "check_id": "C1",
+      "known_bad_id": "GAP-self-declared-diff"
+    },
+    {
+      "id": "0051:S-HUB-GATE-DIFF",
+      "location": "adrs/0051-hub-own-produce-principles.md:93",
+      "status": "BUILT",
+      "check_id": "assert-produce-role-separation",
+      "known_bad_id": "KB-SG3-sameactor"
+    },
+    {
+      "id": "0051:R-HUB-SAME-PACKAGE-REFUSE",
+      "location": "adrs/0051-hub-own-produce-principles.md:94",
+      "status": "BUILT",
+      "check_id": "C1",
+      "known_bad_id": "GAP-self-declared-diff"
+    },
+    {
+      "id": "0051:CC-SG3",
+      "location": "adrs/0051-hub-own-produce-principles.md:95",
+      "status": "BUILT",
+      "check_id": "C1",
+      "known_bad_id": "GAP-self-declared-diff"
+    },
+    {
+      "id": "0051:DEC-1",
+      "location": "adrs/0051-hub-own-produce-principles.md:101",
+      "status": "BUILT",
+      "check_id": "C1",
+      "known_bad_id": "GAP-self-declared-scope"
+    },
+    {
+      "id": "0051:DEC-2",
+      "location": "adrs/0051-hub-own-produce-principles.md:102",
+      "status": "BUILT",
+      "check_id": "C5",
+      "known_bad_id": "KB-known-bad-ssot-gap"
+    },
+    {
+      "id": "0051:DEC-3",
+      "location": "adrs/0051-hub-own-produce-principles.md:103",
+      "status": "BUILT",
+      "check_id": "fitness-gate-set-manifest",
+      "known_bad_id": "KB-SG2-closure-member"
+    },
+    {
+      "id": "0051:DEC-4",
+      "location": "adrs/0051-hub-own-produce-principles.md:104",
+      "status": "BUILT",
+      "check_id": "fitness-gate-set-manifest",
+      "known_bad_id": "KB-SG2-closure-member"
+    },
+    {
+      "id": "0051:DEC-5",
+      "location": "adrs/0051-hub-own-produce-principles.md:105",
+      "status": "CONTEXT",
+      "check_id": null,
+      "known_bad_id": null
+    },
+    {
+      "id": "0051:L110",
+      "location": "adrs/0051-hub-own-produce-principles.md:110",
+      "status": "BUILT",
+      "check_id": "C3",
+      "known_bad_id": "KB-brief-forbid"
+    },
+    {
+      "id": "0051:L112",
+      "location": "adrs/0051-hub-own-produce-principles.md:112",
+      "status": "BUILT",
+      "check_id": "C10",
+      "known_bad_id": "GAP-adr-gates-rows"
+    },
+    {
+      "id": "0051:REJ-116",
+      "location": "adrs/0051-hub-own-produce-principles.md:116",
+      "status": "BUILT",
+      "check_id": "C4",
+      "known_bad_id": "KB-check-on-check"
+    },
+    {
+      "id": "0051:REJ-117",
+      "location": "adrs/0051-hub-own-produce-principles.md:117",
+      "status": "BUILT",
+      "check_id": "C1",
+      "known_bad_id": "KB-SG1-exit"
+    },
+    {
+      "id": "0051:REJ-118",
+      "location": "adrs/0051-hub-own-produce-principles.md:118",
+      "status": "BUILT",
+      "check_id": "C6",
+      "known_bad_id": "GAP-0051-unsigned"
+    },
+    {
+      "id": "0051:REJ-119",
+      "location": "adrs/0051-hub-own-produce-principles.md:119",
+      "status": "BUILT",
+      "check_id": "C1",
+      "known_bad_id": "GAP-self-declared-diff"
+    },
+    {
+      "id": "0052:L9",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:9",
+      "status": "BUILT",
+      "check_id": "C6",
+      "known_bad_id": "GAP-0051-unsigned"
+    },
+    {
+      "id": "0052:L13",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:13",
+      "status": "CONTEXT",
+      "check_id": null,
+      "known_bad_id": null
+    },
+    {
+      "id": "0052:L15",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:15",
+      "status": "BUILT",
+      "check_id": "fitness-adr-owner-sidecar",
+      "known_bad_id": "KB-0052-unsigned"
+    },
+    {
+      "id": "0052:L27",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:27",
+      "status": "BUILT",
+      "check_id": "fitness-adr-owner-sidecar",
+      "known_bad_id": "KB-0052-unsigned"
+    },
+    {
+      "id": "0052:L40",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:40",
+      "status": "BUILT",
+      "check_id": "C6",
+      "known_bad_id": "GAP-0051-unsigned"
+    },
+    {
+      "id": "0052:DEC-1",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:44",
+      "status": "BUILT",
+      "check_id": "C6",
+      "known_bad_id": "GAP-0051-unsigned"
+    },
+    {
+      "id": "0052:DEC-2",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:46",
+      "status": "BUILT",
+      "check_id": "fitness-adr-owner-sidecar",
+      "known_bad_id": "KB-0052-unsigned"
+    },
+    {
+      "id": "0052:DEC-3",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:48",
+      "status": "BUILT",
+      "check_id": "fitness-owner-key-trust",
+      "known_bad_id": "KB-0052-rotation"
+    },
+    {
+      "id": "0052:DEC-4",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:50",
+      "status": "BUILT",
+      "check_id": "C7",
+      "known_bad_id": "KB-pending-ratified"
+    },
+    {
+      "id": "0052:DEC-5",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:52",
+      "status": "BUILT",
+      "check_id": "C6",
+      "known_bad_id": "GAP-0051-unsigned"
+    },
+    {
+      "id": "0052:DEC-6",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:54",
+      "status": "PARTIAL",
+      "check_id": null,
+      "known_bad_id": null
+    },
+    {
+      "id": "0052:DEC-7",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:56",
+      "status": "BUILT",
+      "check_id": "fitness-adr-owner-sidecar",
+      "known_bad_id": "KB-0052-unsigned"
+    },
+    {
+      "id": "0052:DEC-8",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:58",
+      "status": "BUILT",
+      "check_id": "fitness-adr-owner-sidecar",
+      "known_bad_id": "KB-0052-unsigned"
+    },
+    {
+      "id": "0052:L64",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:64",
+      "status": "CONTEXT",
+      "check_id": null,
+      "known_bad_id": null
+    },
+    {
+      "id": "0052:REJ-68",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:68",
+      "status": "BUILT",
+      "check_id": "C6",
+      "known_bad_id": "GAP-0051-unsigned"
+    },
+    {
+      "id": "0052:REJ-69",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:69",
+      "status": "BUILT",
+      "check_id": "C8",
+      "known_bad_id": "KB-write-approval"
+    },
+    {
+      "id": "0052:REJ-70",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:70",
+      "status": "BUILT",
+      "check_id": "C9",
+      "known_bad_id": "KB-retired-trusted"
+    }
+  ]
+}

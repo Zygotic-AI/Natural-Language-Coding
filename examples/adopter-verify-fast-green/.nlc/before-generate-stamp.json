@@ -1,5 +1,6 @@
 {
   "schema": 1,
   "ok": true,
-  "at": "2099-01-01T00:00:00Z"
+  "at": "2099-01-01T00:00:00Z",
+  "product_content_sha256": "190715194e6ea441746c15a0a05a7ef9b245fab387e6ea5d99d9213e584791a1"
 }

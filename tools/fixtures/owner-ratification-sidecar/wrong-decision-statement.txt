@@ -1,0 +1,6 @@
+Repo: Zygotic-AI/Natural-Language-Coding
+Document: tools/fixtures/owner-ratification-sidecar/stub-doc.md
+Content-SHA256: 372b387043d8fe591e8c619d2baf2ae7f6a3f9089597a3ed641485f74963ebf6
+Decision: Proposed
+Date: 2026-10-11
+Summary: decision mismatch fixture

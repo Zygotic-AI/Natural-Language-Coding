@@ -26,7 +26,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 
 ### [Integrity](docs/TERMS.md#integrity) note: [BBA](docs/TERMS.md#bba) vs Bindings
 
-**[NLC](docs/TERMS.md#nlc)** is the product roof. **[BBA](docs/TERMS.md#bba)** (Boundary-Based Architecture) is the under-covers integrity architecture — confirmable rules in this repo that define how boundaries, handoffs, and [integrity](docs/TERMS.md#integrity) work (`CHARTER.md`, `integrity/`). **Bindings** is the operating policy map consumed by agent processes — P-series policies (P-016…P-031 class) that wire [refuse](docs/TERMS.md#refuse) criteria and evidence requirements to executable gates. Bindings live in the companion repo (`richardpickett/BBA-Bindings`). See [`docs/OPERATING_BINDINGS.md`](docs/OPERATING_BINDINGS.md) for the policy index.
+**[NLC](docs/TERMS.md#nlc)** is the product roof. **[BBA](docs/TERMS.md#bba)** (Boundary-Based Architecture) is the under-covers integrity architecture — confirmable rules in this repo that define how boundaries, handoffs, and [integrity](docs/TERMS.md#integrity) work (`CHARTER.md`, `integrity/`). **Operating bindings** (P-series policies P-016…P-031 class) wire [refuse](docs/TERMS.md#refuse) criteria and evidence requirements to executable gates; the index and policy prose live in [`docs/OPERATING_BINDINGS.md`](docs/OPERATING_BINDINGS.md).
 
 ## Key paths
 
@@ -51,7 +51,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `integrity/LEXICON.md` | Locked term definitions (Action, Content type, Type recipe, etc.) |
 | `integrity/ACTIONS.md` | [Action](docs/TERMS.md#action) [noun](docs/TERMS.md#noun) SSOT; gated [action](docs/TERMS.md#action) catalog; nesting [rule](docs/TERMS.md#rule) |
 | `integrity/binding-matrix.json` | [Requirement](docs/TERMS.md#requirement) → [audit](docs/TERMS.md#audit) → [gate](docs/TERMS.md#gate) (JSON key is still `binder` until the auditor is updated) |
-| `docs/OPERATING_BINDINGS.md` | Operating policy index (P-016…P-031 class); links to [BBA-Bindings](docs/TERMS.md#bba-bindings) companion |
+| `docs/OPERATING_BINDINGS.md` | Operating policy index (P-016…P-031 class); hub-local P-series prose |
 | `content-types/HOW-TO-ADD.md` | Type recipes for adding content (ADR, integrity doc, agent noun, etc.) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
 | `AGENTS.md` | Cross-harness standing instructions |
@@ -80,7 +80,7 @@ Gates and audits both yield binary outcomes (ops vs defects), but differ in mech
 
 Boundaries include: Plan, Conduct-RCA, Raise-Readiness, Produce, Fitness, Adversarial [Audit](docs/TERMS.md#audit), [Ship](docs/TERMS.md#ship), UAT/Promote, System-Remediate Design, Instance Heal. Role-bound SOP maps boundaries to roles (Plan Steward, Quality Architect, Adversarial Auditor, Ship Role, etc.) -- no person names in SOP tables.
 
-**Incomplete-packet fixture:** 15855 without §7/R3/R4 must FAIL any raise-readiness [handoff](docs/TERMS.md#handoff). Policy wire: [P-030](https://github.com/richardpickett/BBA-Bindings/pull/9) on [BBA-Bindings](docs/TERMS.md#bba-bindings) main.
+**Incomplete-packet fixture:** 15855 without §7/R3/R4 must FAIL any raise-readiness [handoff](docs/TERMS.md#handoff). Policy wire: [P-030](docs/OPERATING_BINDINGS.md#p-030-raise-readiness-refuse) in [`docs/OPERATING_BINDINGS.md`](docs/OPERATING_BINDINGS.md).
 
 ## Terminology clarification (action)
 
@@ -135,6 +135,10 @@ These require human review or are inherently design-time decisions:
 - **P2**: [Zero variance](docs/TERMS.md#zero-variance) scope — meta-principle about the system itself
 
 Run `python3 tools/audit-binding-matrix.py` to [verify](docs/TERMS.md#verify) matrix [integrity](docs/TERMS.md#integrity). All in-force requirements must be bound; reference requirements may remain unbound without failing the [audit](docs/TERMS.md#audit).
+
+## ADR 0051 / 0052 hub-own retrofit (C1–C11)
+
+Hub material produce packages derive `hub_material` and `changed_paths` from `git diff <merge-base origin/release/v0.3.0>..HEAD` (`tools/nouns/hub_own_produce`). Those fields are never read from the package. Every Accepted document needs an OpenPGP sidecar or batch (`fitness-adr-owner-sidecar`). Hash-only approval receipts are retired; ratification is C6 only. Rule list SSOT: `integrity/adr-0051-0052-rules.json` (must equal `tools/derive-adr-0051-0052-rules.py`). Known-bad SSOT: `integrity/known-bad-cases.json`. Retired key denylist: `integrity/owner-keys/RETIRED_FINGERPRINTS` (never trust `1A86E89505A908766DFD7304F04AD1CEC768DB18`).
 
 ## Conventions in this workspace
 

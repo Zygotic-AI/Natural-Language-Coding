@@ -54,6 +54,15 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0042 | 2026-09-23 | session | active | — | L-0042 |
 | 0043 | 2026-09-23 | session | active | — | L-0043 |
 | 0044 | 2026-09-25 | session | active | — | L-0044 |
+| 0045 | 2026-09-26 | session | active | — | L-0045 |
+| 0046 | 2026-10-08 | session | proposed | — | L-0046 |
+| 0047 | 2026-10-08 | session | superseded | 0052 | L-0047 |
+| 0048 | 2026-10-08 | session | proposed | — | L-0048 |
+| 0049 | 2026-10-09 | RCA 2026-10-09 release stops outside planner | proposed | — | L-0049 |
+| 0050 | 2026-10-10 | RCA 2026-10-10 SHA-pinned evidence / content identity | active | — | L-0050 |
+| 0051 | 2026-10-11 | hub-own produce principles | accepted | — | L-0051 |
+| 0052 | 2026-10-11 | owner OpenPGP ratification amends 0051 | accepted | — | L-0052 |
+| 0053 | 2026-10-13 | text retrofit for stale 0051/0052 sentences | proposed | — | L-0053 |
 
 ## Lineage format
 

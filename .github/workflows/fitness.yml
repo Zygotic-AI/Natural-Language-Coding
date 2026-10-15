@@ -19,3 +19,51 @@ jobs:
 
       - name: NLC verify (policy + fingerprints)
         run: python3 tools/nlc.py --project . verify
+
+  piped-install-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Piped install.sh (HTTP raw, git clone, verify)
+        env:
+          NLC_INSTALL_ROOT: ${{ runner.temp }}/nlc-piped-install
+          NLC_REPO_SLUG: ${{ github.repository }}
+          NLC_REF: ${{ github.head_ref || github.ref_name }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq git curl
+          mkdir -p "${{ runner.temp }}/piped-empty"
+          cd "${{ runner.temp }}/piped-empty"
+          curl -fsSL "https://raw.githubusercontent.com/${NLC_REPO_SLUG}/${NLC_REF}/scripts/install.sh" | bash
+
+  piped-install-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Piped install.sh on macOS bash
+        env:
+          NLC_INSTALL_ROOT: ${{ runner.temp }}/nlc-piped-install
+          NLC_REPO_SLUG: ${{ github.repository }}
+          NLC_REF: ${{ github.head_ref || github.ref_name }}
+        run: |
+          set -euo pipefail
+          mkdir -p "${{ runner.temp }}/piped-empty"
+          cd "${{ runner.temp }}/piped-empty"
+          /bin/bash --version
+          curl -fsSL "https://raw.githubusercontent.com/${NLC_REPO_SLUG}/${NLC_REF}/scripts/install.sh" | /bin/bash
+
+  piped-install-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Piped install.ps1 (HTTP raw, git clone, verify)
+        env:
+          NLC_INSTALL_ROOT: ${{ runner.temp }}/nlc-piped-install
+          NLC_REPO_SLUG: ${{ github.repository }}
+          NLC_REF: ${{ github.head_ref || github.ref_name }}
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy -Scope Process Bypass -Force
+          Set-Location $env:RUNNER_TEMP
+          New-Item -ItemType Directory -Force -Path piped-empty | Out-Null
+          Set-Location piped-empty
+          $url = "https://raw.githubusercontent.com/$env:NLC_REPO_SLUG/$env:NLC_REF/scripts/install.ps1"
+          irm $url | iex

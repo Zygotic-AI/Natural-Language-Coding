@@ -365,7 +365,7 @@ Machine: `FULL_NLC_AUDIT:MET`. Inference: **PASS with residuals**. RCA: [`docs/r
 | ID | Symptom (now) | Preventive one thing |
 | ---- | ------------- | -------------------- |
 | F1 | ✔ FINDINGS ship/tag prose aligned (no false “tagged on origin”) @done(26-09-23 18:05) | ✔ **`tools/fitness-findings-shipped-tag-sync.py`** via umbrella + manifest @done(26-09-23 18:05) |
-| F2 | ✔ `last_pass_sha: 5eedc34` + Last pass narrative @done(26-09-23 18:05) | ✔ **`tools/fitness-findings-last-pass-fresh.py`** in manifest `findings-last-pass-fresh` @done(26-09-23 18:05) |
+| F2 | ✔ `hub-content-tree-hash.txt` + Last pass narrative @done(26-09-23 18:05) | ✔ **`tools/fitness-findings-last-pass-fresh.py`** in manifest `findings-last-pass-fresh` @done(26-09-23 18:05) |
 | F3 | ✔ ADR **0029** row bound in ADR-ENFORCEMENT @done(26-09-23 18:05) | ✔ **`tools/fitness-adr-enforcement-table-sync.py`** via umbrella @done(26-09-23 18:05) |
 | F4 | ✔ **`integration-leaves-waive.json`** with reason + audit_sha @done(26-09-23 18:05) | ✔ **`tools/fitness-integration-leaves-hygiene.py`** + skill § When to write leaves @done(26-09-23 18:05) |
 | F5 | `skip:` expected between releases — document only unless policy changes | `skip:` optional fitness not implemented |
@@ -385,7 +385,7 @@ Machine: `FULL_NLC_AUDIT:MET`. Inference: **PASS with residuals**. RCA: [`docs/r
 | ----- | ------ | ----------- |
 | **Continuity — machine** | ✔ @done(26-09-24 18:00) | `release-prep` MET @ `042e7d6` via [`/release`](.agents/skills/release/SKILL.md). |
 | **Continuity — clean snapshot** | ✔ commit @done(26-09-24 18:00) | Batch on `main` `042e7d6`; optional `--profile full` still available. |
-| **Continuity — FINDINGS header** | ✔ @done(26-09-24 18:00) | `last_pass_sha: 042e7d6`. |
+| **Continuity — FINDINGS header** | ✔ @done(26-09-24 18:00) | `integrity/hub-content-tree-hash.txt` (ADR 0050). |
 | **Continuity — inference** | ✔ PASS_WITH_RESIDUALS @done(26-09-24 18:00) | P2/P3 UC14/16/20 parked; [`/release`](.agents/skills/release/SKILL.md) owns closeout. |
 | **Continuity — tag baseline** | ✔ @done(26-09-23 18:10) | `origin` has **no** `v0.2.0` tag (`git ls-remote` empty); `RELEASE_SHIPPED_TAG:MET` (no reachable `v*` until next ship). Prior mistaken tag @ `397b1a0` is **not** a valid ship. |
 | **Product — Needed** | ✔ registry v1 closed @done(26-09-23 18:20) | FINDINGS **Needed** only ship narrative: version **0.2.0**, no tag until `./release`. |
@@ -548,3 +548,88 @@ Planit audit **26-09-23** — **decide before execute**; follow **Execution orde
 ### Stale remotes (after confirm superseded by #29–#36)
 
 - ✔ **Delete superseded `origin/feat/*` branches** — wave 3 cleanup @done(26-09-23 15:40)
+
+## Practice enforcement (Planit, ADR approval, BBP/BBA shape)
+
+The three enforcement programs are in force on this tree. Active architecture decision records are 0001–0048.
+
+### 1. Force this repository’s Planit
+
+- ✔ Define how every harness, including Cursor, proves it loaded `.agents/skills/planit/SKILL.md` before planning. @done(26-10-08 17:50)
+- ✔ Register that skill’s canonical path and content hash. @done(26-10-08 17:50)
+- ✔ Fail intake when the loaded skill does not match the registry. @done(26-10-08 17:50)
+- ✔ Record that identity on every Planit handoff. @done(26-10-08 17:50)
+- ✔ Add a negative fixture that fails when another Planit is loaded. @done(26-10-08 17:50)
+- ✔ Record machine evidence that each code change came through that Planit run. @done(26-10-08 17:50)
+
+### 2. Make every active architecture decision record approved and enforced
+
+- ✔ Choose one approval registry keyed by record number and content hash. @done(26-10-08 17:50)
+- ✔ Add approval receipts for 0001–0043, either one by one or as one bulk receipt that lists each hash. @done(26-10-08 17:50)
+- ✔ Make any edit to an approved record invalidate that approval. @done(26-10-08 17:50)
+- ✔ Close the enforcement gaps still listed in `docs/ADR-ENFORCEMENT.md`: 0007 (full rule application), 0009 (verb-to-primitive inventory), and 0028 (closed verb-set tooling). @done(26-10-08 17:50)
+- ✔ Give every active record a runnable pass/fail gate and a fixture that fails when the record is violated. @done(26-10-08 17:50)
+- ✔ Fail the hub compile when any active record is unapproved, unbound, or marked as a gap. @done(26-10-08 17:50)
+
+### 3. Make every executable file Boundary-Based Programming / Boundary-Based Architecture shaped
+
+Boundary-Based Programming is the noun, verb, adjective, and goal practice. Boundary-Based Architecture is the boundary and contract shape. They are not a runtime that executes the code.
+
+- ✔ List every executable class: Python, shell, workflows, tests, fixtures, generated code, templates, migrations, vendored code, and configuration. @done(26-10-08 17:50)
+- ✔ Give deliberate failure specimens their own fixture class so they are contained and are not required to conform. @done(26-10-08 17:50)
+- ✔ Define a measurable thin entrypoint: it may parse input, call one noun verb or goal, and report the result. It may not own policy or a state machine. @done(26-10-08 17:50)
+- ✔ Inventory every executable file into exactly one class: noun implementation, goal, primitive adapter, thin entrypoint, or contained fixture. @done(26-10-08 17:50)
+- ✔ Move the policy in `scripts/nlc-release.sh` into noun and goal packages, leaving the shell as a thin entrypoint. @done(26-10-08 17:50)
+- ✔ Keep a small kernel that checks itself and cannot exempt its own files. @done(26-10-08 17:50)
+- ✔ Turn on the repository gate only after that inventory is migrated. The gate fails when any executable file has no class. @done(26-10-08 17:50)
+
+### Done when all four are true
+
+- ✔ The loaded Planit matches this repository’s registered skill hash. @done(26-10-08 17:50)
+- ✔ Every active architecture decision record has an approval receipt for its current hash. @done(26-10-08 17:50)
+- ✔ Every active architecture decision record has a runnable gate, and the enforcement table has no gaps. @done(26-10-08 17:50)
+- ✔ The count of unclassified executable files is zero. @done(26-10-08 17:50)
+
+## Practice enforcement residuals
+
+The three programs above are in force. These rows close the two limits and the `./release` split.
+
+### Per-record behavior fixtures
+
+Most older architecture decision records share `tools/assert-adr-approval-mismatch-fails.py`. That fixture fails when the record’s bytes change. It does not fail when the decision’s behavior is violated. Example: record 0013 (hub command preflight) is mapped to that generic fixture, so a missing `hub_tool()` call is not what that fixture detects. The compile still catches that case through `fitness-requirements-hub-entrypoints.py`.
+
+- ✔ Map every active record to its actual behavioral gate and negative fixture. @done(26-10-09 22:31)
+- ✔ Add the missing behavioral fixtures. @done(26-10-09 22:31)
+- ✔ Make the record gate execute each fixture and verify its expected failure, rather than only checking that the fixture path exists. @done(26-10-09 22:31)
+
+### ADR 0051 / 0052 PARTIAL and UNBUILT retrofit (C1–C11)
+
+- ✔ C1 hub-scope-derived: git-derived hub_material and changed_paths; hub profile on hub produce. @done(26-10-13 04:40)
+- ✔ C2 handoff-hub-profile: assert-produce-handoff-refused hub missing-leaves fixture. @done(26-10-13 04:40)
+- ✔ C3 brief-forbid-weaken: brief_ref names leaves and forbid clause. @done(26-10-13 04:40)
+- ✔ C4 no-check-on-check: static check over ci_fitness-wired tools. @done(26-10-13 04:40)
+- ✔ C5 known-bad-ssot: integrity/known-bad-cases.json + direct verify. @done(26-10-13 04:40)
+- ✔ C6 sidecar-all-accepted: every Accepted document; remove ≤0051 exemption and legacy report. @done(26-10-13 04:40)
+- ✔ C7 pending-known-bad: Pending/Proposed presented as ratified → NOT_MET. @done(26-10-13 04:40)
+- ✔ C8 no-tool-writes-ratification: no tool writes *.approval.asc or ratified state. @done(26-10-13 04:40)
+- ✔ C9 retired-key-denylist: RETIRED_FINGERPRINTS + overlap check. @done(26-10-13 04:40)
+- ✔ C10 adr-gates-rows: constraint → check → known-bad in adr-gates.json. @done(26-10-13 04:40)
+- ✔ C11 rules-ssot: integrity/adr-0051-0052-rules.json equals derive_rules.py. @done(26-10-13 04:40)
+- ✔ ADR 0053 Proposed: stale 0051/0052 text (derived gate-set, manifest name, spent deferral, step-1 notes). @done(26-10-13 04:40)
+
+### Effective decision after an amendment
+
+Record 0045 (one release identity) still says the executor is `scripts/nlc-release.sh`. Record 0048 (executable shape) amends that location: policy lives in `goals/hub_release/execute.sh`, and the shell only starts that goal. Do not edit record 0045 in place.
+
+- ☐ Add an effective-decision view that shows record 0045 decision 2 as amended by record 0048.
+
+### `./release` planner and resume
+
+The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (confirm the already shipped baseline). The shell does not stop there. It falls through to the resume detector, which can print that it is tagging because an older remote release tip is already merged, then the planner-backed gate refuses the tag.
+
+- ✔ Make the release-state planner the only phase authority. @done(26-10-09 22:31)
+- ✔ Remove the resume detector’s independent phase selection, or make it only a presentation of the planner decision. @done(26-10-09 22:31)
+- ✔ Handle `PREPARE_DRAFT` explicitly instead of falling through. @done(26-10-09 22:31)
+- ✔ Observe real verification facts. Do not hard-code `shipped_verify_met`, `target_verify_met`, and `prep_met` to false. @done(26-10-09 22:31)
+- ✔ Add a regression fixture where the remote release tip is merged but the local release branch has newer commits. Expected result: preparation continues and no tagging message is printed. @done(26-10-09 22:31)
+- ✔ Keep the invalid-merge fixture that proves an identity-mismatched merge is never tagged. @done(26-10-09 22:31)

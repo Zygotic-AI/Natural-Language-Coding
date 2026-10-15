@@ -16,8 +16,6 @@ Orchestrate **[AWL](../../../docs/TERMS.md#awl) Phases 0–7** and **[PLANIT](..
 
 [PLANIT](../../../docs/TERMS.md#planit) is the compile process; [BBP](../../../docs/TERMS.md#bbp) is the shape ([`docs/nlc/compiler/MERGE.md`](../../../docs/nlc/compiler/MERGE.md)). This skill orchestrates — it does not replace knowledge-steward, [RCA](../../../docs/TERMS.md#rca), or leaf [gate](../../../docs/TERMS.md#gate) skills.
 
-**Not the ai vault maintainer loop:** for durable ai-vault layers only (normative docs, manifests, intents, published prompts), route to **`~/.agents/skills/planit`** and its `local-*` leaf skills. Stay here for [ACS](../../../docs/TERMS.md#acs) + [BBP](../../../docs/TERMS.md#bbp) hub/adopter work.
-
 ## Required inputs
 
 | Input | Blocking? | Notes |
@@ -42,6 +40,8 @@ Orchestrate **[AWL](../../../docs/TERMS.md#awl) Phases 0–7** and **[PLANIT](..
 | Multi-step flag (T2+) | yes when T2+ | Staged plan vs single pass recorded | Resolution table row |
 | Blocking gaps | yes | No unresolved blocking ambiguity; numbered questions asked and **stopped** if still open | Chat turn state |
 | Secrets | yes | No real credentials solicited in chat | Procedure compliance |
+
+**Identity (blocking).** Canonical path: `.agents/skills/planit/SKILL.md`. Registry: `integrity/planit-skill-registry.json` (path + content hash). Before planning, run `python3 tools/fitness-planit-identity.py --skill-only --loaded .agents/skills/planit/SKILL.md`. Intake fails when the loaded bytes do not match. Cursor runs `.cursor/hooks/nlc-planit-identity.sh` on `beforeSubmitPrompt` and blocks the prompt on mismatch. Every Planit handoff records `planit_skill_path` and `planit_skill_sha256` from that registry.
 
 After all **blocking** rows are **true**, emit **`## Verdict — Planit intake gate`** per [`operation-verdict-standard.md`](references/operation-verdict-standard.md) §4, then proceed to [AWL](../../../docs/TERMS.md#awl) Phase 2.
 

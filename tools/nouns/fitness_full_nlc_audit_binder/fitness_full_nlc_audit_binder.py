@@ -9,6 +9,8 @@ import json
 import sys
 from pathlib import Path
 
+from fitness_hub_source import read_tool
+
 ROOT = Path(__file__).resolve().parents[3]
 
 
@@ -46,7 +48,7 @@ def main() -> int:
         if "binding-matrix" not in quick:
             violations.append("quick profile must include binding-matrix")
 
-    text = script.read_text(encoding="utf-8") if script.is_file() else ""
+    text = read_tool("tools/full-nlc-audit.py") if script.is_file() else ""
     if "FULL_NLC_AUDIT:MET" not in text:
         violations.append("full-nlc-audit.py must emit FULL_NLC_AUDIT:MET")
     if "--emit-inference-checklist" not in text:

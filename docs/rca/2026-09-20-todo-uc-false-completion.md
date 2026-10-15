@@ -1,7 +1,7 @@
 # RCA: TODO marked product UCs complete while USE-CASES still Parked/Needed
 
 **Date:** 2026-09-20  
-**Context:** Natural-Language-Coding (`/home/rpicke1/workspace/richardpickett/Natural-Language-Coding`)  
+**Context:** Natural-Language-Coding repo  
 **Status:** mitigated (CI gate added; TODO relabeled; `integrity/uc-product-status.json` + matrix landmine @26-09-21)
 
 ---

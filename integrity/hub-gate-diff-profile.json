@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "description": "S-HUB-GATE-DIFF: graded subject paths for hub material produce (ADR 0051 SG3).",
+  "graded_subject_globs": [
+    "adrs/**",
+    "docs/**",
+    "AGENTS.md",
+    "MANIFESTO.md",
+    "CHARTER.md",
+    "DESCRIBE.md",
+    "TODO",
+    ".agents/**",
+    ".cursor/rules/**",
+    "integrity/**",
+    "content-types/**",
+    "examples/**",
+    "theory/**",
+    "agents/**"
+  ],
+  "hub_material_globs": [
+    "adrs/**",
+    "docs/**",
+    "tools/**",
+    "integrity/**",
+    "agents/**",
+    "theory/**",
+    "content-types/**",
+    ".agents/**",
+    ".cursor/**",
+    ".nlc/**",
+    ".github/**",
+    "examples/**"
+  ],
+  "graded_subject_exclude_globs": [
+    "integrity/releasable-gates.json",
+    "integrity/gate-change-receipts.json",
+    "integrity/*EXCLUSIONS*",
+    "integrity/*-exclusions*.json",
+    "integrity/gate-set-baseline.manifest.sha256",
+    "integrity/gate-set-baseline.manifest.sha256.approval-statement.txt",
+    "integrity/owner-keys/**"
+  ]
+}

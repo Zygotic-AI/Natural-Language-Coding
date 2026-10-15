@@ -47,6 +47,34 @@ def write_version(version: str) -> None:
     )
 
 
+def release_line_version(branch: str) -> str | None:
+    prefix = "release/v"
+    if branch.startswith(prefix):
+        body = branch[len(prefix) :]
+        parts = body.split(".")
+        if len(parts) == 3 and all(p.isdigit() for p in parts):
+            return body
+    return None
+
+
+def versions_match_release_line(branch: str, file_version: str) -> bool:
+    """Ship identity is the release/vX.Y.Z name, not a stale nlc-version.json."""
+    line = release_line_version(branch)
+    return bool(line) and line == file_version.strip()
+
+
+def align_to_version(target: str) -> tuple[str, str]:
+    """Write target into nlc-version.json when the release line is ahead of the file."""
+    from nlc_migration_catalog import ensure_migration_chain
+
+    current = read_version()
+    if current == target:
+        return current, current
+    ensure_migration_chain(ROOT, current, target)
+    write_version(target)
+    return current, target
+
+
 def bump_semver(current: str, level: str) -> str:
     major, minor, patch = (int(x) for x in current.split("."))
     if level == "major":
@@ -203,6 +231,16 @@ def main() -> int:
     parser.add_argument("--suggest", action="store_true", help="Print suggested bump level")
     parser.add_argument("--current", action="store_true", help="Print current version")
     parser.add_argument(
+        "--align-to",
+        metavar="X.Y.Z",
+        help="Write this version when it differs from the file (release line; not a semver bump from current)",
+    )
+    parser.add_argument(
+        "--matches-branch",
+        metavar="release/vX.Y.Z",
+        help="Exit 0 when nlc-version.json equals that release line",
+    )
+    parser.add_argument(
         "--apply",
         choices=("patch", "minor", "major", "keep"),
         help="Bump (or keep) and write integrity/nlc-version.json + migration",
@@ -224,6 +262,21 @@ def main() -> int:
 
     if args.current:
         print(read_version())
+        return 0
+    if args.matches_branch:
+        ok = versions_match_release_line(args.matches_branch, read_version())
+        if ok:
+            print(f"RELEASE_VERSION:MET {args.matches_branch}")
+            return 0
+        line = release_line_version(args.matches_branch) or "?"
+        print(
+            f"RELEASE_VERSION:NOT_MET {args.matches_branch} file={read_version()} expected={line}",
+            file=sys.stderr,
+        )
+        return 1
+    if args.align_to:
+        old, new = align_to_version(args.align_to.strip())
+        print(f"version: {old} -> {new}")
         return 0
     if args.suggest:
         level, reasons = suggest_bump()

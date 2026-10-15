@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "ssot": "integrity/full-nlc-audit-manifest.json",
-  "description": "Machine stages for tools/full-nlc-audit.py. Append stages here; wire blocking in CI via fitness-full-nlc-audit-binder.py.",
+  "description": "Machine stages for tools/full-nlc-audit.py. Release-prep stage ids must match integrity/releasable-gates.json release_prep_stages (RCA-1).",
   "profiles": {
     "quick": [
       "binding-matrix",
@@ -94,7 +94,7 @@
     },
     "findings-last-pass-fresh": {
       "blocking": true,
-      "label": "FINDINGS last_pass_sha matches HEAD (F2)",
+      "label": "FINDINGS last_pass_tree_hash matches worktree tree (F2, ADR 0050)",
       "command": ["python3", "tools/fitness-findings-last-pass-fresh.py"],
       "pass_substrings": ["RESULT:MET"]
     },

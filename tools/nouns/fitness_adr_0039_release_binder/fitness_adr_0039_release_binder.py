@@ -22,7 +22,8 @@ def _runs_hub_fitness_suite(yaml_text: str) -> bool:
 def main() -> int:
     _ = sys.argv[1:]
     violations: list[str] = []
-    script = ROOT / "scripts" / "nlc-release.sh"
+    executor = ROOT / "goals" / "hub_release" / "execute.sh"
+    entry = ROOT / "scripts" / "nlc-release.sh"
     workflow = ROOT / ".github" / "workflows" / "release.yml"
     fitness_wf = ROOT / ".github" / "workflows" / "fitness.yml"
     for path, label in (
@@ -31,13 +32,19 @@ def main() -> int:
         (ROOT / "tools" / "nlc_release_record.py", "release record"),
         (ROOT / "tools" / "nlc_release_shipped_tag_audit.py", "shipped tag audit"),
         (ROOT / "integrity/schemas/hub-release-record.schema.json", "record schema"),
-        (script, "nlc-release.sh"),
+        (executor, "hub release goal"),
+        (entry, "nlc-release.sh"),
         (workflow, "release.yml"),
     ):
         if not path.is_file():
             violations.append(f"missing {label}")
 
-    text = script.read_text(encoding="utf-8") if script.is_file() else ""
+    text = executor.read_text(encoding="utf-8") if executor.is_file() else ""
+    entry_text = entry.read_text(encoding="utf-8") if entry.is_file() else ""
+    if "exec bash" not in entry_text or "goals/hub_release/execute.sh" not in entry_text:
+        violations.append("scripts/nlc-release.sh must be a thin entrypoint to the release goal")
+    if "dispatch_release_plan" in entry_text or "cmd_finish" in entry_text:
+        violations.append("scripts/nlc-release.sh must not own release policy")
     if "nlc_release_tag_gate.py" not in text:
         violations.append("nlc-release.sh must invoke nlc_release_tag_gate.py")
     if "nlc_release_record.py" not in text:
@@ -54,8 +61,25 @@ def main() -> int:
         violations.append("nlc-release.sh must use release_fail for NOT_MET remediation")
     if "apply_release_infer" not in text or "nlc_release_infer.py" not in text:
         violations.append("nlc-release.sh must use nlc_release_infer.py / apply_release_infer (zero-parameter)")
-    if "normalize_main_trunk_for_release" not in text:
-        violations.append("nlc-release.sh must auto-normalize impure main (zero-parameter ADR 0044)")
+    if "nlc_release_state.py" not in text or "dispatch_release_plan" not in text:
+        violations.append("nlc-release.sh must plan through nlc_release_state.py before mutation (ADR 0045)")
+    if "--tag-argv" not in text:
+        violations.append("nlc-release.sh must create annotated tags via --tag-argv (explicit commit)")
+    if ".[0].mergeCommit" in text or "ancestry-path" in text:
+        violations.append("nlc-release.sh must match a merged PR by head SHA, not the first result")
+    if "headRefOid" not in text:
+        violations.append("nlc-release.sh must select the pull request whose head SHA is the candidate")
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("run git tag -f") or stripped.startswith("git tag -f"):
+            violations.append("nlc-release.sh must not move an existing tag")
+            break
+    if "git worktree add --detach" not in text:
+        violations.append("nlc-release.sh must verify the shipped baseline in a worktree")
+    if "git stash push" in text:
+        violations.append("nlc-release.sh must not stash the working tree")
+    if "git reset --hard" in text:
+        violations.append("nlc-release.sh must not hard-reset a branch outside the closed planner action set")
     if (ROOT / "tools" / "nlc_release_infer.py").is_file() is False:
         violations.append("missing nlc_release_infer.py")
     if (ROOT / "tools" / "nlc_release_main_purity.py").is_file() is False:
@@ -77,6 +101,7 @@ def main() -> int:
     for landmine in (
         "assert-release-resume-invariant-passes.py",
         "assert-release-infer-passes.py",
+        "assert-release-state-passes.py",
     ):
         proc = subprocess.run(
             [sys.executable, str(ROOT / "tools" / landmine)],
@@ -90,19 +115,32 @@ def main() -> int:
     if "nlc_release_tag_gate.py" not in wf:
         violations.append("release.yml must run tag gate")
 
+    schema = ROOT / "integrity" / "schemas" / "hub-release-record.schema.json"
+    if schema.is_file() and "content_tree_hash_ref" not in schema.read_text(encoding="utf-8"):
+        violations.append("hub-release-record schema must require content_tree_hash_ref (ADR 0050)")
+
     landmine = ROOT / "tools" / "nouns" / "assert_release_tag_gate_fails" / "assert_release_tag_gate_fails.py"
     if landmine.is_file() and "BAD_COMMIT" in landmine.read_text(encoding="utf-8"):
-        for wf_path, wf_label in ((fitness_wf, "fitness.yml"), (workflow, "release.yml")):
-            wf_text = wf_path.read_text(encoding="utf-8") if wf_path.is_file() else ""
-            if _runs_hub_fitness_suite(wf_text) and not _has_fetch_depth_zero(wf_text):
-                violations.append(
-                    f"{wf_label} must use actions/checkout fetch-depth: 0 "
-                    "(hub fitness landmines pin historic commits; shallow CI false-fails)"
-                )
+        violations.append("assert_release_tag_gate_fails must not pin BAD_COMMIT (ADR 0050)")
+
+    for gate in (
+        "fitness-no-history-ids-in-evidence.py",
+        "fitness-landmine-self-contained.py",
+        "assert-unresolvable-refuses-passes.py",
+    ):
+        proc = subprocess.run(
+            [sys.executable, str(ROOT / "tools" / gate)],
+            cwd=str(ROOT),
+            check=False,
+        )
+        if proc.returncode != 0:
+            violations.append(f"{gate} must MET")
 
     release_md = (ROOT / "docs/adoption/RELEASE.md").read_text(encoding="utf-8", errors="replace")
     if "0044" not in release_md and "production trunk" not in release_md.lower():
         violations.append("RELEASE.md must document production trunk (ADR 0044)")
+    if "0045" not in release_md:
+        violations.append("RELEASE.md must document release identity (ADR 0045)")
     hero = release_md.split("## Your workflow", 1)[-1].split("##", 1)[0] if "## Your workflow" in release_md else ""
     if hero and "--bump" in hero:
         violations.append("RELEASE.md seven-step hero must not require --bump flags")

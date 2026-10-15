@@ -1,0 +1,14 @@
+{
+  "brief_ref": "tools/fixtures/hub-brief/brief-missing-forbid.md",
+  "hub_goal_tree": {
+    "root_goal_id": "G0",
+    "property_leaf_goals": [
+      {
+        "leaf_id": "C1",
+        "statement": "scope derived",
+        "exit_status": "MET",
+        "evidence_path": "tools/fixtures/hub-brief/brief-missing-forbid.md"
+      }
+    ]
+  }
+}

@@ -9,6 +9,8 @@ import json
 import sys
 from pathlib import Path
 
+from fitness_hub_source import read_tool
+
 ROOT = Path(__file__).resolve().parents[3]
 INSTALL = ROOT / "tools" / "nlc-pack-install.py"
 STATUS = ROOT / "integrity" / "uc-product-status.json"
@@ -25,7 +27,7 @@ def main() -> int:
     status = json.loads(STATUS.read_text(encoding="utf-8"))
     hub = status.get("hub_v02") or {}
     flag = str(hub.get("pack_consume_regen", ""))
-    src = INSTALL.read_text(encoding="utf-8", errors="replace")
+    src = read_tool("tools/nlc-pack-install.py")
     missing = [n for n in NEEDLES if n not in src]
     if missing:
         for n in missing:

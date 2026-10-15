@@ -1,127 +1,36 @@
 #!/usr/bin/env bash
-# Natural Language Coding — install portable skills into the user's agent harness.
-# macOS, Linux, WSL. Requires: bash, curl or git, mkdir, cp or rsync.
+# Thin entrypoint. Policy lives in goals/hub_install/execute.sh.
 set -euo pipefail
 
-# ADR 0013 — requirements preflight (all gaps, then exit)
-requirements_preflight() {
-  local -a missing=()
-  command -v python3 >/dev/null 2>&1 || missing+=("python3")
-  local script_dir local_marker
-  script_dir="$(cd "$(dirname "$0")" && pwd)"
-  local_marker="${script_dir}/../.agents/skills/planit/SKILL.md"
-  if [[ ! -f "${local_marker}" ]]; then
-    command -v curl >/dev/null 2>&1 || missing+=("curl")
+if [[ -n "${BASH_SOURCE[0]:-}" && "${BASH_SOURCE[0]}" != "bash" ]]; then
+  _script="${BASH_SOURCE[0]}"
+  if [[ -f "$(dirname "$_script")/../goals/hub_install/execute.sh" ]]; then
+    ROOT="$(cd "$(dirname "$_script")/.." && pwd)"
+    exec bash "${ROOT}/goals/hub_install/execute.sh" "$@"
   fi
-  if ((${#missing[@]} > 0)); then
-    echo "Install can't continue — this machine is missing required tools." >&2
-    local m
-    for m in "${missing[@]}"; do
-      echo "  What's wrong: missing ${m}" >&2
-    done
-    echo "  Fix: install the tools above, or clone this repo and run: bash scripts/install.sh" >&2
-    exit 1
-  fi
-}
-requirements_preflight
+fi
 
 NLC_REPO_SLUG="${NLC_REPO_SLUG:-Zygotic-AI/Natural-Language-Coding}"
-NLC_RAW_BASE="${NLC_RAW_BASE:-https://raw.githubusercontent.com/${NLC_REPO_SLUG}/main}"
-NLC_REF="${NLC_REF:-}"
-INSTALL_ROOT="${NLC_INSTALL_ROOT:-${HOME}/.local/share/nlc}"
-AGENTS_SKILLS="${HOME}/.agents/skills"
-CURSOR_SKILLS="${HOME}/.cursor/skills"
+NLC_REF="${NLC_REF:-main}"
+NLC_RAW_BASE="${NLC_RAW_BASE:-https://raw.githubusercontent.com/${NLC_REPO_SLUG}/${NLC_REF}}"
 
-tmpdir=""
-cleanup() {
-  if [[ -n "${tmpdir}" && -d "${tmpdir}" ]]; then
-    rm -rf "${tmpdir}"
-  fi
-}
-trap cleanup EXIT
+tmpdir="$(mktemp -d)"
+trap 'rm -rf "${tmpdir}"' EXIT
 
-echo "Natural Language Coding — install"
-echo "  target: ${INSTALL_ROOT}"
-echo "  skills: ${AGENTS_SKILLS}"
+if [[ "${NLC_RAW_BASE}" == file://* ]]; then
+  local_root="${NLC_RAW_BASE#file://}"
+  exec bash "${local_root}/goals/hub_install/execute.sh" "$@"
+fi
 
-mkdir -p "${INSTALL_ROOT}" "${AGENTS_SKILLS}"
+if ! command -v git >/dev/null 2>&1; then
+  echo "Install can't continue — piped install requires git to fetch the hub." >&2
+  exit 1
+fi
 
-script_dir="$(cd "$(dirname "$0")" && pwd)"
-if [[ -f "${script_dir}/../.agents/skills/planit/SKILL.md" ]]; then
-  src_root="$(cd "${script_dir}/.." && pwd)"
-  echo "  source: local repo ${src_root}"
-  python3 "${src_root}/tools/nlc-fetch-hub.py" --install-root "${INSTALL_ROOT}" --from-path "${src_root}"
-  src_root="${INSTALL_ROOT}/hub"
+clone_url="https://github.com/${NLC_REPO_SLUG}.git"
+if [[ -n "${NLC_REF}" ]]; then
+  git -c core.autocrlf=false clone --depth 1 --branch "${NLC_REF}" "${clone_url}" "${tmpdir}/repo"
 else
-  tmpdir="$(mktemp -d)"
-  tool_dir="${tmpdir}/nlc-tools"
-  mkdir -p "${tool_dir}"
-  curl -fsSL "${NLC_RAW_BASE}/tools/nlc-fetch-hub.py" -o "${tool_dir}/nlc-fetch-hub.py"
-  curl -fsSL "${NLC_RAW_BASE}/tools/nlc_distribution.py" -o "${tool_dir}/nlc_distribution.py"
-  curl -fsSL "${NLC_RAW_BASE}/tools/nlc_requirements.py" -o "${tool_dir}/nlc_requirements.py"
-  fetch_args=(--install-root "${INSTALL_ROOT}" --repo "${NLC_REPO_SLUG}")
-  if [[ -n "${NLC_VERSION:-}" ]]; then
-    fetch_args+=(--version "${NLC_VERSION}")
-  elif [[ -n "${NLC_REF}" ]]; then
-    fetch_args+=(--version "${NLC_REF#v}")
-  fi
-  echo "  source: release tarball (latest semver unless NLC_VERSION/NLC_REF set)"
-  python3 "${tool_dir}/nlc-fetch-hub.py" "${fetch_args[@]}"
-  src_root="${INSTALL_ROOT}/hub"
+  git -c core.autocrlf=false clone --depth 1 "${clone_url}" "${tmpdir}/repo"
 fi
-
-if command -v rsync >/dev/null 2>&1; then
-  rsync -a "${src_root}/.agents/skills/" "${AGENTS_SKILLS}/"
-else
-  cp -R "${src_root}/.agents/skills/." "${AGENTS_SKILLS}/"
-fi
-
-if [[ -d "${HOME}/.cursor" ]]; then
-  mkdir -p "${CURSOR_SKILLS}"
-  for skill in bbp-confirmer bbp-proposer bbp-recorder bbp-reviewer interview planit verify; do
-    if [[ -d "${src_root}/.cursor/skills/${skill}" ]]; then
-      rm -rf "${CURSOR_SKILLS}/${skill}"
-      cp -R "${src_root}/.cursor/skills/${skill}" "${CURSOR_SKILLS}/${skill}"
-    fi
-  done
-  echo "  cursor: copied repo-local BBP + planit skills"
-fi
-
-if [[ -z "${NLC_SKIP_VERIFY:-}" ]] && [[ -f "${INSTALL_ROOT}/hub/tools/nlc-install-verify.py" ]]; then
-  echo "  verify: hub file hashes"
-  python3 "${INSTALL_ROOT}/hub/tools/nlc-install-verify.py" "${INSTALL_ROOT}/hub" || {
-    echo "Install could not verify the compiler file fingerprints." >&2
-    echo "  What's wrong: hub files do not match published fingerprints" >&2
-    echo "  Fix: re-run install from a clean checkout, or repair the hub tree." >&2
-    echo "  Optional: NLC_SKIP_VERIFY=1 only if you accept running an unverified hub." >&2
-    echo "INSTALL:NOT_MET hub verify failed" >&2
-    exit 1
-  }
-fi
-
-if [[ -f "${INSTALL_ROOT}/current" ]]; then
-  echo "  hub version: $(tr -d '\n' < "${INSTALL_ROOT}/current")"
-fi
-
-BIN_DIR="${HOME}/.local/bin"
-mkdir -p "${BIN_DIR}"
-launcher="${INSTALL_ROOT}/hub/scripts/nlc-launcher.sh"
-if [[ -f "${launcher}" ]]; then
-  cp "${launcher}" "${BIN_DIR}/nlc"
-  chmod +x "${BIN_DIR}/nlc"
-  echo "  command: ${BIN_DIR}/nlc (add ~/.local/bin to PATH if needed)"
-fi
-
-cat <<EOF
-
-Done.
-
-Hub copy (tools, charter): ${INSTALL_ROOT}/hub
-Portable skills: ${AGENTS_SKILLS}
-
-Next:
-  Run: nlc   (human menu — see ${INSTALL_ROOT}/hub/docs/nlc/MENU.md)
-
-  Or in Cursor: /interview then /planit
-
-EOF
+exec bash "${tmpdir}/repo/goals/hub_install/execute.sh" "$@"

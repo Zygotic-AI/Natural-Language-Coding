@@ -19,7 +19,7 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0009-primitive-interior-functions.md`](0009-primitive-interior-functions.md) | Primitives are interior functions | Accepted |
 | [`0010-gate-after-every-generate.md`](0010-gate-after-every-generate.md) | [Gate](../docs/TERMS.md#gate) immediately after every generate | Accepted |
 | [`0011-natural-language-coding-naming.md`](0011-natural-language-coding-naming.md) | [NLC](../docs/TERMS.md#nlc) product naming (compiler vs compiled system) | Accepted |
-| [`0012-adr-precedence-and-rule-conflicts.md`](0012-adr-precedence-and-rule-conflicts.md) | [ADR](../docs/TERMS.md#adr) precedence tiers and adopt-time [rule](../docs/TERMS.md#rule) conflicts | Accepted |
+| [`0012-rule-adoption-conflicts.md`](0012-rule-adoption-conflicts.md) | [ADR](../docs/TERMS.md#adr) precedence tiers and adopt-time [rule](../docs/TERMS.md#rule) conflicts | Accepted |
 | [`0013-requirements-preflight.md`](0013-requirements-preflight.md) | Requirements checked at entry; list all missing | Accepted |
 | [`0014-semver-upgrade-steps-and-noop-migrations.md`](0014-semver-upgrade-steps-and-noop-migrations.md) | Semver upgrade chain; explicit noop migrations and UPGRADE:* logs | Accepted |
 | [`0015-distribution-lock-and-version-store.md`](0015-distribution-lock-and-version-store.md) | [Version store](../docs/TERMS.md#version-store), `.nlc/lock.json`, tarball install, two layouts | Accepted |
@@ -51,3 +51,13 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0041-product-completion-scope.md`](0041-product-completion-scope.md) | Product completion scope SSOT; hub pack registry v1 | Accepted |
 | [`0042-rule-ir-hub-product-boundary.md`](0042-rule-ir-hub-product-boundary.md) | Rule IR v1 product vs semantic expansion | Accepted |
 | [`0043-uc14-composable-adopt-boundary.md`](0043-uc14-composable-adopt-boundary.md) | UC14 adopt-time composable v1 | Accepted |
+| [`0044-hub-release-production-trunk.md`](0044-hub-release-production-trunk.md) | Production trunk: unreleased work stays off `main` | Accepted |
+| [`0045-hub-release-identity.md`](0045-hub-release-identity.md) | One release identity, one planner action | Accepted |
+| [`0046-repository-planit-identity.md`](0046-repository-planit-identity.md) | This repository's Planit skill is the one that plans | Proposed |
+| [`0047-adr-approval-receipts.md`](0047-adr-approval-receipts.md) | Active ADR approval is a hash receipt | Superseded |
+| [`0048-executable-shape.md`](0048-executable-shape.md) | Every executable file has one Boundary-Based shape | Proposed |
+| [`0049-release-planner-owns-stops.md`](0049-release-planner-owns-stops.md) | Release planner owns every intentional stop | Proposed |
+| [`0050-evidence-identity-content-not-history.md`](0050-evidence-identity-content-not-history.md) | Evidence binds to content fingerprints, not commit ids | Accepted |
+| [`0051-hub-own-produce-principles.md`](0051-hub-own-produce-principles.md) | Hub-own produce principles (SG1–SG3) | Accepted |
+| [`0052-owner-openpgp-ratification-amends-0051.md`](0052-owner-openpgp-ratification-amends-0051.md) | Owner OpenPGP ratification (amends 0051) | Accepted |
+| [`0053-0051-0052-text-retrofit.md`](0053-0051-0052-text-retrofit.md) | Text retrofit for stale 0051/0052 sentences | Proposed |

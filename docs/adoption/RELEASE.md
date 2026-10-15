@@ -1,8 +1,6 @@
 # Releasing the [NLC](../TERMS.md#nlc) [hub](../TERMS.md#hub)
 
-**One entrypoint:** invoke **`/release`** in chat, then **`./release`** when **Ship: GO**. Policy: [ADR 0039](../../adrs/0039-single-command-human-surfaces.md), [ADR 0044](../../adrs/0044-hub-release-production-trunk.md) (production trunk), [ADR 0040](../../adrs/0040-process-preflight-remediation.md).
-
-Legacy **`./release prepare`** / **`finish`** forward into the same orchestrator.
+**One entrypoint:** invoke **`/release`** in chat, then **`./release`** when **Ship: GO**. Policy: [ADR 0039](../../adrs/0039-single-command-human-surfaces.md), [ADR 0044](../../adrs/0044-hub-release-production-trunk.md) (production trunk), [ADR 0045](../../adrs/0045-hub-release-identity.md) (one release identity and one next action), [ADR 0049](../../adrs/0049-release-planner-owns-stops.md) (the planner owns every intentional stop), and [ADR 0040](../../adrs/0040-process-preflight-remediation.md).
 
 ## Your workflow (seven steps)
 
@@ -11,12 +9,12 @@ Legacy **`./release prepare`** / **`finish`** forward into the same orchestrator
 3. **Branch from `main`:** `git checkout main && git pull && git checkout -b my-work` (any branch name).
 4. **Do all ship work on your branch** (or on `release/v*` after `./release` normalizes the line).
 5. **When another release ships:** `git fetch origin main && git merge origin/main` on your release line.
-6. **Run `./release`** — no flags required; the orchestrator infers version and `release/v*`, and **moves unreleased work off `main`** (local reset to last tag) when needed (ADR 0044).
-7. **Follow stderr** — `RELEASE:NOT_MET` + copy-paste fix, or success through PR merge and tag push.
+6. **Run `./release`** — no flags required. The planner names one version, one `release/v*` branch, and one tag. It does not merge, hard-reset, or otherwise repoint local `main`.
+7. **Follow the result** — known audits and repairs run inside this invocation. `RELEASE:NOT_MET` means the planner reached a named decision that cannot be performed safely. An open PR exits successfully; run the same `./release` after the merge.
 
-The tool runs gates ([ADR 0022](../../adrs/0022-hub-release-fail-early.md), 0038–0040) internally; you do not need a separate checklist.
+The tool runs gates ([ADR 0022](../../adrs/0022-hub-release-fail-early.md), 0038–0040, 0045, 0049) internally; you do not run `/verify`, `./nlc verify`, or a release subcommand between planner actions.
 
-**Human in GitHub:** merge the **release PR** (`release/v* → main`). **Retag:** `NLC_RELEASE_ALLOW_RETAG=1` + explicit confirm.
+**Human in GitHub:** merge the **release PR** (`release/v* → main`) whose head SHA is the candidate `./release` pushed. The tag is created on that merge commit only when the version file, release record, and branch name all match. An existing tag is not moved.
 
 ## Sync after someone else ships (step 5)
 
@@ -28,9 +26,11 @@ git merge origin/main
 
 ## What the orchestrator does (internal)
 
-Infer (`nlc_release_infer.py`) → resume probe → preflight → shipped-tag audit → release-prep audit → target preflight (auto noop) → `verify-deep` at **shipped tag** → release notes → version bump on release line → `verify-deep` → prep → record → push → merge poll → tag gate on **merge commit** → tag push → GitHub Actions.
+Planner (`nlc_release_state.py`) chooses the one next action. The executor performs exactly that action, observes fresh facts, and plans again in the same invocation. Then: preflight → shipped-tag audit → release-prep audit → `verify-deep` in a worktree at the **shipped tag** → release notes → version on the release line → `verify-deep` → prep → record → commit → push → exact PR → tag gate on **that merge commit** → `git tag -a` on that SHA → tag push → GitHub Actions.
 
-Details: [RELEASE-ZERO-PARAMS-PLAN.md](RELEASE-ZERO-PARAMS-PLAN.md), [RELEASE-PRODUCTION-TRUNK-PLAN.md](RELEASE-PRODUCTION-TRUNK-PLAN.md).
+A merged PR whose version file does not match the release branch is `INVALID_MERGED`. It is never tagged. The planner repairs the release line and creates a new candidate pull request, or names the human decision when no safe repair exists.
+
+Details: [ADR 0045](../../adrs/0045-hub-release-identity.md) and [ADR 0049](../../adrs/0049-release-planner-owns-stops.md). Older plan notes: [RELEASE-ZERO-PARAMS-PLAN.md](RELEASE-ZERO-PARAMS-PLAN.md), [RELEASE-PRODUCTION-TRUNK-PLAN.md](RELEASE-PRODUCTION-TRUNK-PLAN.md).
 
 ## Refusal output
 
@@ -42,11 +42,10 @@ Optional flags for scripts and recovery (not part of the seven-step contract):
 
 | Flag | Effect |
 | ---- | ------ |
-| `--bump patch\|minor\|major\|keep` | Override inferred bump |
-| `--from-branch release/vX.Y.Z` | Force release line branch |
-| `--no-push` | Local only; prints push commands |
+| `--no-push` | Local-only execution; reports the branch, pull request, or tag action that is ready |
 | `--dry-run` | Log actions, no git write |
-| `--yes` | Deprecated; default is non-interactive |
+| `--message "text"` | Override the release commit message |
+| `-h`, `--help` | Show command usage |
 
 ## Appendix — manual checks
 

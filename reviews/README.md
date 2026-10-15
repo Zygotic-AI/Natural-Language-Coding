@@ -25,4 +25,4 @@ bash reviews/pr-003/verify.sh
 
 ## Constraint
 
-**P-015 / KD-010:** Richard does NOT review PRs. All PR packages must be fully bot-auditable.
+**P-015 / KD-010:** The product owner role does not review PRs. All PR packages must be fully bot-auditable.

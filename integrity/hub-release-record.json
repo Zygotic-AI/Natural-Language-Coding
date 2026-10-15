@@ -1,6 +1,6 @@
 {
-  "schema": 1,
+  "schema": 2,
   "version": "0.3.0",
   "release_branch": "release/v0.3.0",
-  "prepare_head": "023bad16c1ff969d5c3b760fcaa131bf2828fa3c"
+  "content_tree_hash_ref": "integrity/hub-content-tree-hash.txt"
 }

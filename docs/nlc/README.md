@@ -34,6 +34,7 @@ This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler
 | [Knowledge domains](../TERMS.md#knowledge-domain) | [`tools/load-knowledge-domain.py`](../../tools/load-knowledge-domain.py), [`tools/nlc-before-generate.py`](../../tools/nlc-before-generate.py) |
 | Rule-shape example (not hub requirements) | [`docs/worked-examples/pan-handling/`](../worked-examples/pan-handling/README.md) |
 | Per-generate [gate](../TERMS.md#gate) receipts (ADR 0010 / R27) | [`GATE-RECORD-BINDER.md`](GATE-RECORD-BINDER.md), [`tools/nlc_gate_record.py`](../../tools/nlc_gate_record.py) |
+| Implementation complexity examination (plan only) | [`IMPLEMENTATION-COMPLEXITY-EXAMINATION-PLAN.md`](IMPLEMENTATION-COMPLEXITY-EXAMINATION-PLAN.md) |
 | UC product SSOT | [`integrity/uc-product-status.json`](../../integrity/uc-product-status.json), [`fitness-todo-use-cases-ssot.py`](../../tools/fitness-todo-use-cases-ssot.py) |
 
 ### `./nlc maintainer` (compile-system v1)

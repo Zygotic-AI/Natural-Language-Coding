@@ -10,6 +10,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from fitness_hub_source import read_tool
+
 ROOT = Path(__file__).resolve().parents[3]
 
 
@@ -45,7 +47,7 @@ def main() -> int:
             violations.append("packs_v02.expansion_only must be empty after registry v1")
 
     install = ROOT / "tools" / "nlc-pack-install.py"
-    if install.is_file() and "nlc_pack_registry" not in install.read_text(encoding="utf-8"):
+    if install.is_file() and "nlc_pack_registry" not in read_tool("tools/nlc-pack-install.py"):
         violations.append("nlc-pack-install.py must use nlc_pack_registry")
 
     for v in violations:

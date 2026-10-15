@@ -32,9 +32,15 @@ from nlc_regen_continue import regen_advance, regen_continue  # noqa: E402
 from nlc_verify import emit_verify_fail, verify_deep, verify_fast  # noqa: E402
 
 
-def hub_root() -> Path:
+def hub_root(project: Path | None = None) -> Path:
+    """Compiler tree for tools: checkout when project is the hub (RCA-1 C3)."""
     if os.environ.get("NLC_HUB"):
         return Path(os.environ["NLC_HUB"]).resolve()
+    from nlc_pipeline import is_hub_repo
+
+    probe = (project or Path.cwd()).resolve()
+    if is_hub_repo(probe):
+        return ROOT
     active = hub_active_path(default_install_root())
     if (active / "tools" / "nlc.py").is_file():
         return active
@@ -70,21 +76,21 @@ def _human_status(root: Path, hub: Path) -> tuple[str, int]:
 
 def cmd_dashboard(args: argparse.Namespace) -> int:
     root = project_root(args.project)
-    hub = hub_root()
+    hub = hub_root(root)
     text, code = _human_status(root, hub)
     print(text)
     return code
 
 
 def print_menu(root: Path) -> int:
-    hub = hub_root()
+    hub = hub_root(root)
     text, code = _human_status(root, hub)
     print(text)
     return code
 
 
 def run_tool(script: str, argv: list[str], *, cwd: Path | None = None) -> int:
-    hub = hub_root()
+    hub = hub_root(cwd)
     path = hub / "tools" / script
     if not path.is_file():
         path = ROOT / "tools" / script
@@ -107,7 +113,7 @@ def cmd_doctor(args: argparse.Namespace) -> int:
     if getattr(args, "doctor_cmd", None) == "fix":
         return cmd_doctor_fix(args)
     root = project_root(args.project)
-    hub = hub_root()
+    hub = hub_root(root)
     issues = preflight_issues(hub, root)
     if issues:
         print("Install check failed.")
@@ -123,7 +129,7 @@ def cmd_doctor(args: argparse.Namespace) -> int:
 
 def cmd_requirements(args: argparse.Namespace) -> int:
     root = project_root(args.project)
-    hub = hub_root()
+    hub = hub_root(root)
     issues = preflight_issues(hub, root)
     if issues:
         print(issues[0]["problem"], file=sys.stderr)
@@ -148,13 +154,28 @@ def cmd_verify(args: argparse.Namespace) -> int:
     if ok:
         print("Verify passed.")
         return 0
-    emit_verify_fail(reasons)
+    emit_verify_fail(reasons, root=root)
     return 1
+
+
+def cmd_gate(args: argparse.Namespace) -> int:
+    """Run one releasable gate or profile against a tree (RCA-1 reproduce path)."""
+    base = project_root(args.project)
+    tree = base if args.tree == "." else Path(args.tree).resolve()
+    sys.path.insert(0, str(ROOT / "tools"))
+    from nouns.releasable_gates.releasable_gates import run_gate, run_profile
+
+    if args.profile:
+        return run_profile(args.profile, tree)
+    if not args.gate_id:
+        print("gate requires gate id or --profile", file=sys.stderr)
+        return 2
+    return 0 if run_gate(args.gate_id, tree) else 1
 
 
 def cmd_verify_deep(args: argparse.Namespace) -> int:
     root = project_root(args.project)
-    hub = hub_root()
+    hub = hub_root(root)
     try:
         hub_ver = read_hub_version(hub)
     except (OSError, json.JSONDecodeError, KeyError, ValueError):
@@ -435,6 +456,16 @@ def main() -> int:
         "verify-deep",
         help="Full gates + refresh .nlc/verified.json",
     ).set_defaults(func=cmd_verify_deep)
+
+    p_gate = sub.add_parser("gate", help="Run one releasable gate (integrity/releasable-gates.json)")
+    p_gate.add_argument("gate_id", nargs="?", default=None, help="Gate id from releasable manifest")
+    p_gate.add_argument("--profile", choices=("verify", "release"), help="Run a gate profile")
+    p_gate.add_argument(
+        "--tree",
+        default=".",
+        help="Tree under test (default: same as --project)",
+    )
+    p_gate.set_defaults(func=cmd_gate)
 
     sub.add_parser("prove", help=argparse.SUPPRESS).set_defaults(func=cmd_prove_removed)
 
