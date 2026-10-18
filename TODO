@@ -651,7 +651,18 @@ The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (co
 
 - ✔ Widen F1 (FINDINGS/DESCRIBE current-ship) + leftover fixture; keep F1 out of shipped-tag `check_static` @done(26-10-18 19:20)
 - ✔ Align `nlc-version.json`, `hub-release-record.json`, `RELEASE-v0.3.2.md`, FINDINGS, DESCRIBE to **0.3.2** @done(26-10-18 19:45)
-- ☐ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar)
-- ☐ `./release` one PR `release/v0.3.2` → `main`; merge when all checks green; tag `v0.3.2` on that merge only
-- ☐ Confirm GitHub Release `v0.3.2` exists; `v0.3.0` peel still `d4abf9a`; `v0.3.1` peel still `50b6b6d`
+- ✔ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar) @done(26-10-18 19:49)
+- ✔ `./release` one PR `release/v0.3.2` → `main`; merge when all checks green; tag `v0.3.2` on that merge only @done(26-10-18 21:04)
+- ✔ Confirm GitHub Release `v0.3.2` exists; `v0.3.0` peel still `d4abf9a`; `v0.3.1` peel still `50b6b6d` @done(26-10-18 21:12)
 - ☐ README diagrams (left generic intent/policies; right healthcare HIPAA + SEC) — later, not this ship
+
+### Hub ship v0.3.3 (patch)
+
+`v0.3.2` git tag peel `4e67ce2` is shipped. This line is `release/v0.3.3`. Do not move `v0.3.0`, `v0.3.1`, or `v0.3.2`. Closed `release/v*` branches stay.
+
+- ✔ Strip notes draft footer from the helper and from `RELEASE-v0.3.2.md`; `--check` refuses the footer @done(26-10-18 22:13)
+- ✔ Drop stale binding-matrix percentage in DESCRIBE; label README Status history @done(26-10-18 22:13)
+- ✔ Align `nlc-version.json`, `hub-release-record.json`, `RELEASE-v0.3.3.md`, FINDINGS, DESCRIBE to **0.3.3** @done(26-10-18 22:28)
+- ☐ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar)
+- ☐ `./release` one PR `release/v0.3.3` → `main`; merge when all checks green; tag `v0.3.3` on that merge only
+- ☐ Confirm GitHub Release `v0.3.3` exists; prior peels unchanged
