@@ -6,7 +6,7 @@
   "machine_verdict": "FULL_NLC_AUDIT:MET",
   "inference_skill": ".agents/skills/full-nlc-audit/references/inference-phases.md",
   "continuity_verdict": "PASS_WITH_RESIDUALS",
-  "phases_summary": "Pre-ship closeout for 0.3.1 patch: v0.3.0 tag and GitHub Release published; release.yml fetch-depth 0; UC14/16/20 expansion residuals remain parked.",
+  "phases_summary": "Pre-ship closeout for 0.3.2 patch: F1 current-ship fitness widened; identity/notes/record aligned to 0.3.2; UC14/16/20 expansion residuals remain parked; README diagrams later TODO.",
   "p0_p1_product_blockers": [],
   "p2_p3_parked_accepted": [
     "UC14 composable_ir_cross_primitive_v2",

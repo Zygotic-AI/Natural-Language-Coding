@@ -636,11 +636,22 @@ The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (co
 
 ### Hub ship v0.3.1 (patch)
 
-`v0.3.0` git tag peel `d4abf9a` is shipped. GitHub Release for that tag is published without moving the tag. This line is `release/v0.3.1`.
+`v0.3.0` git tag peel `d4abf9a` is shipped. GitHub Release for that tag is published without moving the tag. Tag `v0.3.1` peel `50b6b6d` is shipped. GitHub Release `v0.3.1` is published.
 
 - ✔ Publish GitHub Release for existing tag `v0.3.0` (`gh release create --verify-tag`; peel unchanged) @done(26-10-18 01:18)
 - ✔ Create `release/v0.3.1` from `release/v0.3.0` tip and merge `origin/main` (v0.3.0 ancestor) @done(26-10-18 01:20)
 - ✔ Set `release.yml` `fetch-depth: 0` and binder-require it on every fitness-suite workflow @done(26-10-18 01:20)
+- ✔ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar) @done(26-10-18 19:00)
+- ✔ `./release` one PR `release/v0.3.1` → `main`; merge when all checks green; tag `v0.3.1` on that merge @done(26-10-18 19:00)
+- ✔ Confirm GitHub Release `v0.3.1` exists and `v0.3.0` peel is still `d4abf9a` @done(26-10-18 19:00)
+
+### Hub ship v0.3.2 (patch)
+
+`v0.3.1` git tag peel `50b6b6d` is shipped. This line is `release/v0.3.2`. Identity, notes, and record must say **0.3.2** before the next merge into `main` is tagged. Do not tag merge `3ce4ab8` (that tree still says 0.3.1). Do not move `v0.3.0` or `v0.3.1`.
+
+- ✔ Widen F1 (FINDINGS/DESCRIBE current-ship) + leftover fixture; keep F1 out of shipped-tag `check_static` @done(26-10-18 19:20)
+- ✔ Align `nlc-version.json`, `hub-release-record.json`, `RELEASE-v0.3.2.md`, FINDINGS, DESCRIBE to **0.3.2** @done(26-10-18 19:45)
 - ☐ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar)
-- ☐ `./release` one PR `release/v0.3.1` → `main`; merge when all checks green; tag `v0.3.1` on that merge
-- ☐ Confirm GitHub Release `v0.3.1` exists and `v0.3.0` peel is still `d4abf9a`
+- ☐ `./release` one PR `release/v0.3.2` → `main`; merge when all checks green; tag `v0.3.2` on that merge only
+- ☐ Confirm GitHub Release `v0.3.2` exists; `v0.3.0` peel still `d4abf9a`; `v0.3.1` peel still `50b6b6d`
+- ☐ README diagrams (left generic intent/policies; right healthcare HIPAA + SEC) — later, not this ship

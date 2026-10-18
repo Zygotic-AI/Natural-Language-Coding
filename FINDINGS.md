@@ -17,7 +17,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 
 `last_pass_tree_hash:` see [`integrity/hub-content-tree-hash.txt`](integrity/hub-content-tree-hash.txt) (ADR 0050 content fingerprint; not a commit id).
 
-Last pass (26-10-18): `/release` closeout. Shipped git tag **`v0.3.1`**. Inference: [`integrity/full-nlc-audit-inference-record.json`](integrity/full-nlc-audit-inference-record.json). UC14/16/20 expansion remains parked.
+Last pass (26-10-18): `/release` closeout. Shipped git tag **`v0.3.2`**. Inference: [`integrity/full-nlc-audit-inference-record.json`](integrity/full-nlc-audit-inference-record.json). UC14/16/20 expansion remains parked. README diagrams stay a later TODO (not in this signed tree).
 
 ---
 
@@ -70,6 +70,7 @@ Promotion remains human (`ship-check`, not compile-green alone).
 | E2 TERMS obligation/corpus | **Done** — Corpus/Condition/Obligation in TERMS |
 | E3 explicit ci_fitness 0024 | Glob already runs `fitness-*.py`; explicit run optional |
 | CHARTER / DESCRIBE door | **Done** — #38 NLC-first door (BBP body retained) |
+| README diagrams | Later TODO — left pane generic intent/policies; right pane healthcare HIPAA + SEC. Not in the signed v0.3.2 tree. |
 
 ---
 

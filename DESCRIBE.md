@@ -138,7 +138,7 @@ Run `python3 tools/audit-binding-matrix.py` to [verify](docs/TERMS.md#verify) ma
 
 ## Current ship
 
-Last tagged ship is **v0.3.1**.
+Last tagged ship is **v0.3.2**.
 
 ## ADR 0051 / 0052 hub-own retrofit (C1–C11)
 
