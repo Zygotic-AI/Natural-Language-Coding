@@ -44,7 +44,3 @@ Hub **v0.3.2** is a patch on **v0.3.1**. The git tags for v0.3.0 and v0.3.1 stay
  .../nlc_release_tag_gate/nlc_release_tag_gate.py   |  19 ++
  17 files changed, 275 insertions(+), 58 deletions(-)
 ```
-
----
-
-Draft commits/range from `python3 tools/nlc_release_notes.py --write-draft --version 0.3.2 --to HEAD`. Edit **Highlights** before merge; `./release finish` refuses to tag without them.
