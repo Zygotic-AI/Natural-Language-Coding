@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Known-bad: clone without release/v0.3.0 refs plus a same-actor package must NOT_MET."""
+"""Known-bad: clone without v0.3.0 merge-base refs plus a same-actor package must NOT_MET."""
 from __future__ import annotations
 
 import json
@@ -13,23 +13,40 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from nouns.fitness_hub_scope_derived.fitness_hub_scope_derived import scope_errors  # noqa: E402
-from nouns.hub_own_produce.hub_own_produce import validate_hub_material_package  # noqa: E402
+from nouns.hub_own_produce.hub_own_produce import (  # noqa: E402
+    DEFAULT_BASE_REFS,
+    validate_hub_material_package,
+)
 
 SAME_ACTOR = ROOT / "tools/fixtures/hub-own/invalid-hub-own-gate-subject-same-actor.json"
 
 
 def _delete_release_refs(tree: Path) -> None:
-    """Drop origin/release/v0.3.0 and release/v0.3.0 so merge-base cannot resolve."""
-    for ref in (
+    """Drop every DEFAULT_BASE_REFS candidate, including the immutable v0.3.0 tag."""
+    explicit = (
         "refs/remotes/origin/release/v0.3.0",
         "refs/heads/release/v0.3.0",
-    ):
+        "refs/tags/v0.3.0",
+    )
+    seen: set[str] = set()
+    for ref in (*explicit, *DEFAULT_BASE_REFS):
+        if ref in seen:
+            continue
+        seen.add(ref)
         subprocess.run(
             ["git", "update-ref", "-d", ref],
             cwd=str(tree),
             check=False,
             capture_output=True,
         )
+        # Names like v0.3.0 need the tags namespace; update-ref -d v0.3.0 is a no-op.
+        if "/" not in ref and not ref.startswith("refs/"):
+            subprocess.run(
+                ["git", "update-ref", "-d", f"refs/tags/{ref}"],
+                cwd=str(tree),
+                check=False,
+                capture_output=True,
+            )
 
 
 def main() -> int:

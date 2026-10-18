@@ -57,12 +57,13 @@ def main() -> int:
                 if errs:
                     violations.append(f"{name}: expected MET got {errs}")
 
-    from nouns.fitness_owner_key_trust.fitness_owner_key_trust import _trusted_before, _merge_base, DEFAULT_BASE_REF
+    from nouns.fitness_owner_key_trust.fitness_owner_key_trust import _trusted_before
+    from nouns.hub_own_produce.hub_own_produce import resolve_merge_base
     from nouns.gate_set_manifest.gate_set_manifest import MANIFEST_REL
     from nouns.owner_sidecar.owner_sidecar import sidecar_path_for_document, verify_sidecar_with_trusted_set
     import tempfile
 
-    base_rev = _merge_base(ROOT, DEFAULT_BASE_REF)
+    base_rev = resolve_merge_base(ROOT)
     if base_rev:
         trusted_before, _ = _trusted_before(ROOT, base_rev)
         wrong_asc = FIX / "manifest-wrong-key.approval.asc"

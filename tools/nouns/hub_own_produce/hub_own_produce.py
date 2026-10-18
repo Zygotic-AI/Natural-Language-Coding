@@ -15,7 +15,11 @@ from nouns.gate_set_manifest.gate_set_manifest import gate_paths_manifest_errors
 from nouns.gate_set.gate_set import is_gate_set_path
 
 PROFILE_REL = "integrity/hub-gate-diff-profile.json"
+# Immutable first production-trunk ship. Closed release/v* branches may be
+# pruned; the v0.3.0 tag stays. Branch names remain as leftover-clone fallbacks.
 DEFAULT_BASE_REFS = (
+    "v0.3.0",
+    "refs/tags/v0.3.0",
     "origin/release/v0.3.0",
     "release/v0.3.0",
 )
@@ -117,7 +121,8 @@ def is_hub_compile_root(root: Path) -> bool:
     return (root / "CHARTER.md").is_file() and (root / PROFILE_REL).is_file()
 
 
-def _resolve_merge_base(root: Path) -> str | None:
+def resolve_merge_base(root: Path) -> str | None:
+    """Return merge-base(HEAD, first resolvable DEFAULT_BASE_REFS name) or None."""
     for ref in DEFAULT_BASE_REFS:
         proc = subprocess.run(
             ["git", "merge-base", "HEAD", ref],
@@ -134,21 +139,19 @@ def _resolve_merge_base(root: Path) -> str | None:
 
 
 def unresolved_merge_base_errors(root: Path) -> list[str]:
-    """NOT_MET when neither origin/release/v0.3.0 nor release/v0.3.0 can merge-base with HEAD."""
-    if _resolve_merge_base(root) is not None:
+    """NOT_MET when no DEFAULT_BASE_REFS name can merge-base with HEAD."""
+    if resolve_merge_base(root) is not None:
         return []
-    return [
-        "unresolved merge-base origin/release/v0.3.0 "
-        "(also tried release/v0.3.0)"
-    ]
+    tried = ", ".join(DEFAULT_BASE_REFS)
+    return [f"unresolved merge-base {tried}"]
 
 
 def derived_changed_paths(root: Path) -> list[str]:
-    """Return repo-relative paths from git diff <merge-base origin/release/v0.3.0>..HEAD.
+    """Return repo-relative paths from git diff <merge-base v0.3.0>..HEAD.
 
     Callers must treat unresolved_merge_base_errors as NOT_MET; an empty list is not MET.
     """
-    base = _resolve_merge_base(root)
+    base = resolve_merge_base(root)
     if not base:
         return []
     proc = subprocess.run(

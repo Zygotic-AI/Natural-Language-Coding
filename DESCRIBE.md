@@ -116,7 +116,7 @@ Last tagged ship is **v0.3.3**.
 
 ## ADR 0051 / 0052 hub-own retrofit (C1–C11)
 
-Hub material produce packages derive `hub_material` and `changed_paths` from `git diff <merge-base origin/release/v0.3.0>..HEAD` (`tools/nouns/hub_own_produce`). Those fields are never read from the package. Every Accepted document needs an OpenPGP sidecar or batch (`fitness-adr-owner-sidecar`). Hash-only approval receipts are retired; ratification is C6 only. Rule list SSOT: `integrity/adr-0051-0052-rules.json` (must equal `tools/derive-adr-0051-0052-rules.py`). Known-bad SSOT: `integrity/known-bad-cases.json`. Retired key denylist: `integrity/owner-keys/RETIRED_FINGERPRINTS` (never trust `1A86E89505A908766DFD7304F04AD1CEC768DB18`).
+Hub material produce packages derive `hub_material` and `changed_paths` from `git diff <merge-base v0.3.0>..HEAD` (`tools/nouns/hub_own_produce`). The merge-base is the immutable **v0.3.0** git tag (first production-trunk ship). Closed `release/v*` branches may be pruned and are not required. Those fields are never read from the package. Every Accepted document needs an OpenPGP sidecar or batch (`fitness-adr-owner-sidecar`). Hash-only approval receipts are retired; ratification is C6 only. Rule list SSOT: `integrity/adr-0051-0052-rules.json` (must equal `tools/derive-adr-0051-0052-rules.py`). Known-bad SSOT: `integrity/known-bad-cases.json`. Retired key denylist: `integrity/owner-keys/RETIRED_FINGERPRINTS` (never trust `1A86E89505A908766DFD7304F04AD1CEC768DB18`).
 
 ## Conventions in this workspace
 

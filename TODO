@@ -658,11 +658,13 @@ The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (co
 
 ### Hub ship v0.3.3 (patch)
 
-`v0.3.2` git tag peel `4e67ce2` is shipped. This line is `release/v0.3.3`. Do not move `v0.3.0`, `v0.3.1`, or `v0.3.2`. Closed `release/v*` branches stay.
+`v0.3.2` git tag peel `4e67ce2` is shipped. This line is `release/v0.3.3`. Do not move `v0.3.0`, `v0.3.1`, or `v0.3.2`. Closed `release/v*` branches were pruned; merge-base is tag `v0.3.0`.
 
 - ✔ Strip notes draft footer from the helper and from `RELEASE-v0.3.2.md`; `--check` refuses the footer @done(26-10-18 22:13)
 - ✔ Drop stale binding-matrix percentage in DESCRIBE; label README Status history @done(26-10-18 22:13)
 - ✔ Align `nlc-version.json`, `hub-release-record.json`, `RELEASE-v0.3.3.md`, FINDINGS, DESCRIBE to **0.3.3** @done(26-10-18 22:28)
+- ✔ Prune closed `release/v*` remotes and locals; keep tags and GitHub Releases @done(26-10-18 23:40)
+- ✔ ADR 0051 merge-base default is immutable tag `v0.3.0` (not `origin/release/v0.3.0`) @done(26-10-18 23:50)
 - ☐ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar)
 - ☐ `./release` one PR `release/v0.3.3` → `main`; merge when all checks green; tag `v0.3.3` on that merge only
 - ☐ Confirm GitHub Release `v0.3.3` exists; prior peels unchanged

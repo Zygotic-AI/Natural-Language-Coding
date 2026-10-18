@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 from nouns.gate_set_manifest.gate_set_manifest import MANIFEST_REL
+from nouns.hub_own_produce.hub_own_produce import DEFAULT_BASE_REFS, resolve_merge_base
 from nouns.owner_sidecar.owner_sidecar import (
     TRUSTED_REL,
     OWNER_KEY_REL,
@@ -22,7 +23,7 @@ KEY_FILES = (
     "integrity/owner-keys/TRUSTED_FINGERPRINTS",
     "integrity/owner-keys/richard-pickett.asc",
 )
-DEFAULT_BASE_REF = "origin/release/v0.3.0"
+DEFAULT_BASE_REF = DEFAULT_BASE_REFS[0]
 
 
 def _git_show(root: Path, rev: str, rel: str) -> bytes | None:
@@ -69,11 +70,16 @@ def _trusted_before(root: Path, base_rev: str) -> tuple[set[str], list[str]]:
     return load_trusted_fingerprints_from_text(text)
 
 
-def key_rotation_errors(root: Path, *, base_ref: str = DEFAULT_BASE_REF) -> list[str]:
+def key_rotation_errors(root: Path, *, base_ref: str | None = None) -> list[str]:
     """When owner-key bytes changed since base, manifest sidecar must verify under pre-change trust."""
-    base_rev = _merge_base(root, base_ref)
+    if base_ref:
+        base_rev = _merge_base(root, base_ref)
+        tried = base_ref
+    else:
+        base_rev = resolve_merge_base(root)
+        tried = ", ".join(DEFAULT_BASE_REFS)
     if not base_rev:
-        return [f"cannot resolve merge-base with {base_ref}"]
+        return [f"cannot resolve merge-base with {tried}"]
     if not _key_material_changed(root, base_rev):
         return []
     trusted_before, terr = _trusted_before(root, base_rev)
