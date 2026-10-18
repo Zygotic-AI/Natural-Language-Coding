@@ -79,7 +79,7 @@ Follow [`references/inference-phases.md`](references/inference-phases.md) in ord
 ## Hard rules
 
 - Machine output is evidence — do not claim MET without the command exit code.
-- `FINDINGS.md` is the live gap queue; continuity means **present-complete**, **parked (`gate missing`)**, or **absent** — not partial.
+- `FINDINGS.md` is the live **gap** queue (undone work), not the shipped-version SSOT. Continuity means **present-complete**, **parked (`gate missing`)**, or **absent** — not partial. What is shipped? = semver tag reachable from `origin/main` + `integrity/nlc-version.json` + `integrity/hub-release-record.json` at that commit. If default-branch FINDINGS or DESCRIBE Current ship disagrees with those three, that is a factory FAIL, not a reader FAIL.
 - Integration units: record in `integrity/integration-leaves.json` before deleting long-lived branches.
 
 ## When to write leaves

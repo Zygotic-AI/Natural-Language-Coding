@@ -20,6 +20,10 @@ from nlc_release_record import git_show_json, read_version_at, validate_record  
 from nlc_release_tags import resolve_shipped_version  # noqa: E402
 from nlc_requirements import hub_tool  # noqa: E402
 from nouns.evidence_ref.evidence_ref import refuse_gate, resolve_commit  # noqa: E402
+from nouns.fitness_findings_shipped_tag_sync import (  # noqa: E402
+    check_surfaces,
+    resolve_shipped_version as f1_shipped_version,
+)
 
 RECORD_REL = "integrity/hub-release-record.json"
 
@@ -87,6 +91,18 @@ def check_static(repo_root: Path, commit: str, tag: str) -> list[str]:
     shipped = resolve_shipped_version(commit) or "0.0.0"
     if shipped != ver:
         problems.extend(migration_steps_blockers(ROOT, shipped, ver))
+
+    findings_text = git_show_text(repo_root, commit, "FINDINGS.md") or ""
+    describe_text = git_show_text(repo_root, commit, "DESCRIBE.md") or ""
+    problems.extend(
+        check_surfaces(
+            findings_text,
+            describe_text,
+            shipped_ver=f1_shipped_version(),
+            file_ver=ver,
+            on_main_or_tag=True,
+        )
+    )
 
     return problems
 
