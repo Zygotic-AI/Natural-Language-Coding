@@ -108,33 +108,7 @@ DPMO-class without the academic theater. Binary classification only — no parti
 
 ## [Binding matrix](docs/TERMS.md#binding-matrix) status
 
-**Current ratio: 40/78 bound (51.3%)**
-
-Bound requirements have fail-capable gates under `tools/`. The 38 unbound reference requirements fall into two categories:
-
-### Requirements needing future gates
-
-These can gain automated gates with additional tooling work:
-
-- **C5, R6**: Verb-path analysis (every state change through public verb) — needs call-graph tooling
-- **R9, R10, C7, C8**: [Contract](docs/TERMS.md#contract) presence checks — needs schema validation tooling
-- **R11, C9**: Field meaning uniqueness — needs semantic schema comparison
-- **C19**: Duplicated [adjective](docs/TERMS.md#adjective) detection — needs AST-based predicate matching
-- **R20**: Charter/ADR/code agreement — needs drift detection tooling
-
-### Requirements staying reference (judgment required)
-
-These require human review or are inherently design-time decisions:
-
-- **R1-R4**: Ownership placement rules — requires understanding intent
-- **R13, R15, R16, C11, C13**: Goal/noun design decisions — judgment calls
-- **R17, R18, C14, C15**: [Workflow](docs/TERMS.md#workflow) composition rules — design review
-- **C1-C3**: Change classification and home — proposal-time decisions
-- **C16-C18, R25**: Test coverage and scope — review-time checks
-- **C21-C24**: Proposal [integrity](docs/TERMS.md#integrity) — adversarial review items
-- **P2**: [Zero variance](docs/TERMS.md#zero-variance) scope — meta-principle about the system itself
-
-Run `python3 tools/audit-binding-matrix.py` to [verify](docs/TERMS.md#verify) matrix [integrity](docs/TERMS.md#integrity). All in-force requirements must be bound; reference requirements may remain unbound without failing the [audit](docs/TERMS.md#audit).
+Do not treat a percentage frozen in this file as live status. Run `python3 tools/audit-binding-matrix.py` to [verify](docs/TERMS.md#verify) matrix [integrity](docs/TERMS.md#integrity). Bound requirements have fail-capable gates under `tools/`. All in-force requirements must be bound; reference requirements may remain unbound without failing the [audit](docs/TERMS.md#audit).
 
 ## Current ship
 
