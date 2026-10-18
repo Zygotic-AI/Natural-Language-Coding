@@ -19,16 +19,9 @@ Hub **v0.3.3** is a patch on **v0.3.2**. The git tags for v0.3.0, v0.3.1, and v0
 ## Changes since v0.3.2
 
 - Strip shipped-notes draft footer and stale binding-matrix percent (`1c5b50f`)
+- Align release/v0.3.3 identity, notes, and record (`5a2f4b1`)
+- Use tag v0.3.0 as the ADR 0051 merge-base after prune (`36bf7f8`)
 
 ### Diff stat
 
-```
- DESCRIBE.md                                 | 28 +---------------------------
- README.md                                   |  2 +-
- docs/adoption/RELEASE-v0.3.2.md             |  4 ----
- integrity/gate-set-baseline.manifest.sha256 | 14 +++++++-------
- integrity/hub-content-tree-hash.txt         |  2 +-
- tools/nlc_release_notes.py                  |  2 +-
- tools/nouns/release_notes/release_notes.py  | 15 ++++-----------
- 7 files changed, 15 insertions(+), 52 deletions(-)
-```
+Commits `1c5b50f`, `5a2f4b1`, and `36bf7f8` on `release/v0.3.3`. Owner sidecar is last and is not in this list.
