@@ -92,19 +92,21 @@ def check_static(repo_root: Path, commit: str, tag: str) -> list[str]:
     if shipped != ver:
         problems.extend(migration_steps_blockers(ROOT, shipped, ver))
 
+    return problems
+
+
+def check_findings_describe_identity(repo_root: Path, commit: str, ver: str) -> list[str]:
+    """F1 on the commit being tagged. Not part of check_static: shipped-tag audit
+    reuses check_static on historical tags whose FINDINGS still have leftover prose."""
     findings_text = git_show_text(repo_root, commit, "FINDINGS.md") or ""
     describe_text = git_show_text(repo_root, commit, "DESCRIBE.md") or ""
-    problems.extend(
-        check_surfaces(
-            findings_text,
-            describe_text,
-            shipped_ver=f1_shipped_version(),
-            file_ver=ver,
-            on_main_or_tag=True,
-        )
+    return check_surfaces(
+        findings_text,
+        describe_text,
+        shipped_ver=f1_shipped_version(),
+        file_ver=ver,
+        on_main_or_tag=True,
     )
-
-    return problems
 
 
 def run_verify_deep_at(commit: str) -> list[str]:
@@ -170,6 +172,7 @@ def main() -> int:
         return 1
 
     problems = check_static(repo_root, commit, tag)
+    problems.extend(check_findings_describe_identity(repo_root, commit, ver))
     if not problems and not args.skip_verify_deep and repo_root == ROOT:
         problems.extend(run_verify_deep_at(commit))
 
