@@ -16,6 +16,9 @@ Hub **v0.3.1** is a patch on **v0.3.0**. The git tag for v0.3.0 stays on the sam
 
 ## Changes since v0.3.0
 
+- Drop commit peel from FINDINGS last-pass line (`4f60e04`)
+- Align release/v0.3.1 identity, notes, and record (`7b93b4b`)
+- Require full-history checkout on release tag CI (`065b67c`)
 - Add the owner-signed gate-set manifest sidecar (`0f7d896`)
 - Refresh the content digest and unsigned gate-set manifest (`0a9bb47`)
 - Run tag-commit verify-deep with that commit's tools (`a2adc77`)
@@ -24,13 +27,23 @@ Hub **v0.3.1** is a patch on **v0.3.0**. The git tag for v0.3.0 stays on the sam
 ### Diff stat
 
 ```
-integrity/gate-set-baseline.manifest.sha256        | 10 ++---
+.github/workflows/release.yml                      |  2 +-
+ DESCRIBE.md                                        |  4 ++
+ FINDINGS.md                                        |  2 +-
+ TODO                                               | 11 +++++
+ docs/adoption/RELEASE-v0.3.1.md                    | 38 ++++++++++++++++
+ integrity/full-nlc-audit-inference-record.json     |  4 +-
+ integrity/gate-set-baseline.manifest.sha256        | 10 ++---
  .../gate-set-baseline.manifest.sha256.approval.asc | 10 ++---
  integrity/hub-content-tree-hash.txt                |  2 +-
+ integrity/hub-release-record.json                  |  4 +-
+ integrity/nlc-version.json                         |  2 +-
+ migrations/0.3.0_to_0.3.1/migration.yaml           |  3 ++
  .../assert_release_context_passes.py               | 51 ++++++++++++++++++++++
+ .../fitness_adr_0039_release_binder.py             |  9 ++++
  .../nlc_release_context/nlc_release_context.py     | 26 ++++++-----
  .../nlc_release_tag_gate/nlc_release_tag_gate.py   |  3 +-
- 6 files changed, 80 insertions(+), 22 deletions(-)
+ 16 files changed, 152 insertions(+), 29 deletions(-)
 ```
 
 ---
