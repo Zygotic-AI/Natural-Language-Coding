@@ -17,9 +17,10 @@ Machine stages run via `python3 tools/full-nlc-audit.py --check`. These phases a
 
 ## Phase 2 — Gap tracker SSOT
 
-- `FINDINGS.md` sole live queue; `TODO` is log not second queue
-- Last pass SHA vs HEAD
+- `FINDINGS.md` sole live **gap** queue (not shipped-version SSOT); `TODO` is log not second queue
+- Last pass tree hash vs `integrity/hub-content-tree-hash.txt` (ADR 0050; not a commit SHA)
 - Stale FINDINGS rows
+- If FINDINGS or DESCRIBE Current ship disagrees with the tag on `origin/main` + version file + release record, that is a factory FAIL
 
 ## Phase 3 — Binding matrix buckets
 

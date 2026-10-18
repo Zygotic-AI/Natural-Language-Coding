@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FINDINGS ship/tag prose must match reachable git tags on HEAD (F1)."""
+"""FINDINGS / DESCRIBE current-ship prose must not contradict shipped identity (F1)."""
 from __future__ import annotations
 
 import sys

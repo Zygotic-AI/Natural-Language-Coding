@@ -63,10 +63,11 @@ Record each mismatch as a finding: severity, file, evidence, remediation.
 
 ## Phase 2 — Gap tracker SSOT
 
-- [ ] Does `FINDINGS.md` claim to be the single SSOT for undone work?
+- [ ] Does `FINDINGS.md` claim to be the single SSOT for **undone work** (gap queue), not the shipped-version SSOT?
 - [ ] Do `HOLES.md`, root `TODO`, and `USE-CASES.md` still coexist as live trackers?
-- [ ] Is FINDINGS "Last pass" SHA current vs HEAD?
+- [ ] Does FINDINGS Last pass point at `integrity/hub-content-tree-hash.txt` (ADR 0050 tree hash), not a commit SHA?
 - [ ] Are any FINDINGS rows stale (claiming a fix that already landed)?
+- [ ] If FINDINGS or DESCRIBE Current ship disagrees with the tag on `origin/main` + version file + release record, record a factory FAIL (not a reader FAIL).
 
 Record each as a finding.
 

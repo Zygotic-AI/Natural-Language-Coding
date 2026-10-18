@@ -5,7 +5,7 @@
 ## Your workflow (seven steps)
 
 1. **Never commit to `main`** — only merges (use branch protection).
-2. **`main` HEAD = last tagged release** — no unreleased work on `main`.
+2. **`main` HEAD = last tagged release** — no unreleased work on `main`. What is shipped? = semver tag reachable from `origin/main` + `integrity/nlc-version.json` + `integrity/hub-release-record.json` at that commit. `FINDINGS.md` is gap narrative only and must not contradict those three. `DESCRIBE.md` “Current ship” is narrative and must not contradict them either. Disagreement is a factory FAIL, not a reader FAIL.
 3. **Branch from `main`:** `git checkout main && git pull && git checkout -b my-work` (any branch name).
 4. **Do all ship work on your branch** (or on `release/v*` after `./release` normalizes the line).
 5. **When another release ships:** `git fetch origin main && git merge origin/main` on your release line.
@@ -71,4 +71,4 @@ python3 tools/nlc_release_notes.py --check --version X.Y.Z
 ## Branch protection (recommended)
 
 - `main`: require PR, no direct push, required CI.
-- Allow force-push **nowhere** on `main`; delete stale `release/v*` after ship.
+- Allow force-push **nowhere** on `main`. Delete a `release/v*` only when resume lists it in `stale_release_branches` (merged to `main` without `hub-release-record.json` on the merge). Keep `closed_release_branches` (a git tag exists for that version) unless a human asks to prune.
