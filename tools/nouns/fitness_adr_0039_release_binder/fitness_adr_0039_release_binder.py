@@ -114,6 +114,15 @@ def main() -> int:
     wf = workflow.read_text(encoding="utf-8") if workflow.is_file() else ""
     if "nlc_release_tag_gate.py" not in wf:
         violations.append("release.yml must run tag gate")
+    for wf_path, label in (
+        (workflow, "release.yml"),
+        (fitness_wf, "fitness.yml"),
+    ):
+        wf_text = wf_path.read_text(encoding="utf-8") if wf_path.is_file() else ""
+        if _runs_hub_fitness_suite(wf_text) and not _has_fetch_depth_zero(wf_text):
+            violations.append(
+                f"{label} must set fetch-depth: 0 when it runs the hub fitness suite"
+            )
 
     schema = ROOT / "integrity" / "schemas" / "hub-release-record.schema.json"
     if schema.is_file() and "content_tree_hash_ref" not in schema.read_text(encoding="utf-8"):
