@@ -99,8 +99,9 @@ def run_verify_deep_at(commit: str) -> list[str]:
         if proc.returncode != 0:
             return [f"cannot create worktree at {commit[:12]}: {proc.stderr.strip()}"]
         try:
+            # Grade the tag commit with that commit's tools, not the agent's worktree.
             vproc = subprocess.run(
-                [sys.executable, str(ROOT / "tools" / "nlc.py"), "--project", ".", "verify-deep"],
+                [sys.executable, str(wt / "tools" / "nlc.py"), "--project", ".", "verify-deep"],
                 cwd=str(wt),
                 capture_output=True,
                 text=True,

@@ -633,3 +633,14 @@ The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (co
 - ✔ Observe real verification facts. Do not hard-code `shipped_verify_met`, `target_verify_met`, and `prep_met` to false. @done(26-10-09 22:31)
 - ✔ Add a regression fixture where the remote release tip is merged but the local release branch has newer commits. Expected result: preparation continues and no tagging message is printed. @done(26-10-09 22:31)
 - ✔ Keep the invalid-merge fixture that proves an identity-mismatched merge is never tagged. @done(26-10-09 22:31)
+
+### Hub ship v0.3.1 (patch)
+
+`v0.3.0` git tag peel `d4abf9a` is shipped. GitHub Release for that tag is published without moving the tag. This line is `release/v0.3.1`.
+
+- ✔ Publish GitHub Release for existing tag `v0.3.0` (`gh release create --verify-tag`; peel unchanged) @done(26-10-18 01:18)
+- ✔ Create `release/v0.3.1` from `release/v0.3.0` tip and merge `origin/main` (v0.3.0 ancestor) @done(26-10-18 01:20)
+- ✔ Set `release.yml` `fetch-depth: 0` and binder-require it on every fitness-suite workflow @done(26-10-18 01:20)
+- ☐ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar)
+- ☐ `./release` one PR `release/v0.3.1` → `main`; merge when all checks green; tag `v0.3.1` on that merge
+- ☐ Confirm GitHub Release `v0.3.1` exists and `v0.3.0` peel is still `d4abf9a`
