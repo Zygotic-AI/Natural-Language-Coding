@@ -143,15 +143,14 @@ def run_constraint_verify(root: Path, case: dict[str, object]) -> list[str]:
         if path is None or not path.is_file():
             return [f"missing sidecar-rotation candidate {candidate}"]
         from nouns.fitness_owner_key_trust.fitness_owner_key_trust import (
-            DEFAULT_BASE_REF,
             OWNER_KEY_REL,
             _git_show,
-            _merge_base,
             _trusted_before,
         )
+        from nouns.hub_own_produce.hub_own_produce import resolve_merge_base
         from nouns.gate_set_manifest.gate_set_manifest import MANIFEST_REL
 
-        base_rev = _merge_base(root, DEFAULT_BASE_REF)
+        base_rev = resolve_merge_base(root)
         if not base_rev:
             return ["sidecar-rotation: cannot resolve merge-base"]
         trusted_before, terr = _trusted_before(root, base_rev)

@@ -91,6 +91,6 @@ Working [charter](docs/TERMS.md#charter) and [hub](docs/TERMS.md#hub) gates. Not
 
 Current ship: the latest `v*` tag on `main` (see `integrity/nlc-version.json`).
 
-**v0.1.0** — install, lock, [greenfield](docs/TERMS.md#greenfield) adopt, `/interview` + `/planit`, [verify](docs/TERMS.md#verify) path, impact graph + [delta-regen](docs/TERMS.md#delta-regen-queue). [Hub](docs/TERMS.md#hub) ships **no** product requirements (ADR 0016). **v0.2** — [requirement packs](docs/TERMS.md#requirement-pack). Gaps: [`FINDINGS.md`](FINDINGS.md).
+**History** (how the product grew; not the current ship): **v0.1.0** — install, lock, [greenfield](docs/TERMS.md#greenfield) adopt, `/interview` + `/planit`, [verify](docs/TERMS.md#verify) path, impact graph + [delta-regen](docs/TERMS.md#delta-regen-queue). [Hub](docs/TERMS.md#hub) ships **no** product requirements (ADR 0016). **v0.2** — [requirement packs](docs/TERMS.md#requirement-pack). Gaps: [`FINDINGS.md`](FINDINGS.md).
 
 **P / R / C** on [rule](docs/TERMS.md#rule) ids: **P**rinciple, **R**equirement, **C**onfirmation. Hyphenated `P-020` is operating policy in the companion bindings repo.

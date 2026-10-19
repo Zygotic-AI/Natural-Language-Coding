@@ -17,6 +17,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from nlc_requirements import hub_tool  # noqa: E402
 NOTES_DIR = ROOT / "docs" / "adoption"
 HIGHLIGHTS_PLACEHOLDER = "Replace this block with user-facing summary (required)."
+DRAFT_FOOTER_MARK = "Draft commits/range from"
 
 
 def notes_path(version: str) -> Path:
@@ -95,17 +96,7 @@ def build_draft(version: str, to_ref: str, from_tag: str | None) -> str:
     body_lines.append("")
     if stat:
         body_lines.extend(["### Diff stat", "", "```", stat, "```", ""])
-    body_lines.extend(
-        [
-            "---",
-            "",
-            "Draft commits/range from "
-            f"`python3 tools/nlc_release_notes.py --write-draft --version {ver} --to {to_ref}`. "
-            "Edit **Highlights** before merge; `./release finish` refuses to tag without them.",
-            "",
-        ]
-    )
-    return "\n".join(body_lines)
+    return "\n".join(body_lines) + "\n"
 
 
 _CHANGES_SECTION = re.compile(
@@ -169,6 +160,8 @@ def check_notes(version: str) -> tuple[bool, str]:
         return False, "Highlights still contains placeholder — write user-facing summary"
     if len(hi) < 24:
         return False, "Highlights too short — add a real summary (adopters read this)"
+    if DRAFT_FOOTER_MARK in text:
+        return False, "notes still contain the draft helper footer — strip it before ship"
     return True, "ok"
 
 

@@ -6,7 +6,7 @@
     "property_leaf_goals": [
       {
         "leaf_id": "C1",
-        "statement": "Hub material and changed_paths are derived from git diff against origin/release/v0.3.0.",
+        "statement": "Hub material and changed_paths are derived from git diff against tag v0.3.0.",
         "exit_status": "MET",
         "evidence_path": "tools/fitness-hub-scope-derived.py"
       },

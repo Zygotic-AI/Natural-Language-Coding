@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Known-bad: clone without release/v0.3.0 refs plus a same-actor package must NOT_MET."""
+"""Known-bad: clone without v0.3.0 merge-base refs plus a same-actor package must NOT_MET."""
 from __future__ import annotations
 
 import json
@@ -19,10 +19,11 @@ SAME_ACTOR = ROOT / "tools/fixtures/hub-own/invalid-hub-own-gate-subject-same-ac
 
 
 def _delete_release_refs(tree: Path) -> None:
-    """Drop origin/release/v0.3.0 and release/v0.3.0 so merge-base cannot resolve."""
+    """Hide branch and tag merge-base candidates so merge-base cannot resolve."""
     for ref in (
         "refs/remotes/origin/release/v0.3.0",
         "refs/heads/release/v0.3.0",
+        "refs/tags/v0.3.0",
     ):
         subprocess.run(
             ["git", "update-ref", "-d", ref],
