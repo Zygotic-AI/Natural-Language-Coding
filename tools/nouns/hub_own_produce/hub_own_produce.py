@@ -121,8 +121,44 @@ def is_hub_compile_root(root: Path) -> bool:
     return (root / "CHARTER.md").is_file() and (root / PROFILE_REL).is_file()
 
 
+def _rev_parse(root: Path, rev: str) -> str | None:
+    proc = subprocess.run(
+        ["git", "rev-parse", "--verify", rev],
+        cwd=str(root),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        return None
+    return (proc.stdout or "").strip() or None
+
+
+def _ancestor_with_tree(root: Path, tree: str) -> str | None:
+    """Return the first HEAD ancestor whose tree equals `tree` (ADR 0050)."""
+    proc = subprocess.run(
+        ["git", "log", "--pretty=%H %T", "HEAD"],
+        cwd=str(root),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        return None
+    for line in (proc.stdout or "").splitlines():
+        parts = line.split()
+        if len(parts) == 2 and parts[1] == tree:
+            return parts[0]
+    return None
+
+
 def resolve_merge_base(root: Path) -> str | None:
-    """Return merge-base(HEAD, first resolvable DEFAULT_BASE_REFS name) or None."""
+    """Return merge-base(HEAD, first resolvable DEFAULT_BASE_REFS name) or None.
+
+    After a history rewrite the v0.3.0 tag can still exist but not be an
+    ancestor of HEAD. Fall back to the ancestor whose tree matches that ref
+    (commit ids change; trees do not).
+    """
     for ref in DEFAULT_BASE_REFS:
         proc = subprocess.run(
             ["git", "merge-base", "HEAD", ref],
@@ -135,6 +171,13 @@ def resolve_merge_base(root: Path) -> str | None:
             sha = (proc.stdout or "").strip()
             if sha:
                 return sha
+    for ref in DEFAULT_BASE_REFS:
+        tree = _rev_parse(root, f"{ref}^{{tree}}")
+        if not tree:
+            continue
+        found = _ancestor_with_tree(root, tree)
+        if found:
+            return found
     return None
 
 
