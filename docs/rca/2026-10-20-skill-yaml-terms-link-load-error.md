@@ -4,7 +4,10 @@
 **Context:** Natural-Language-Coding hub — v0.3.3 install copies `.agents/skills/*/SKILL.md` as-is  
 **Status:** open (process named; preventive action tracked, not yet applied)
 
-**Scope (user words):** “Run /conduct-root-cause-analysis on why the skills have the text causing load errors”
+**Scope (user words):**
+
+- “Run /conduct-root-cause-analysis on why the skills have the text causing load errors”
+- “That's not high enough in the causal chain. Why does link_terms_dictionary.py have that defect?”
 
 ---
 
@@ -18,9 +21,9 @@
 - PyYAML `safe_load` of that frontmatter raises `ParserError` (`expected <block end>, but found '<scalar>'`). `[planit]` is a YAML flow sequence; the leftover `(...)` is not valid after it.
 - A skill whose frontmatter does not parse cannot load.
 
-**Inferred (not used as the one thing):**
+**This climb’s error condition (why the rewriter is shaped that way):**
 
-- Cursor skill discovery treats invalid frontmatter as a load error (same parse failure any YAML loader hits).
+- `link_terms_dictionary.py` walks `.agents/**/*.md` and treats YAML frontmatter as prose. It skips fenced ` ``` ` and inline backticks only. That is the defect in the tool, not an accident in one `name:` line.
 
 **Not the error condition:** body-prose TERMS links below the closing `---`. Those are markdown. The load failure is the machine `name:` line.
 
@@ -31,24 +34,32 @@
 | Step | Artifact / layer | What it did |
 | ---- | ---------------- | ----------- |
 | (symptom) | Installed `SKILL.md` YAML | `name:` holds `[term](docs/TERMS.md#anchor)` so the file cannot load |
-| 5 | Install | Copies hub skill bytes as-is (`rsync` / `cp`) |
-| 4 | Fitness / ship | No gate that `SKILL.md` frontmatter must parse as YAML with a plain identifier `name` |
-| 3 | `tools/nouns/link_terms_dictionary/link_terms_dictionary.py` | Walks `.agents/**/*.md`, skips fenced ` ``` ` only, does **not** skip the opening `---` YAML frontmatter, wraps TERMS headings in `[text](docs/TERMS.md#slug)` |
-| 2 | Tool contract | `docs/TERMS.md` + `tools/README.md`: after editing the term list, run the linker “across the repo” |
-| 1 | First write | Commit `d09ee22` (PR #19, 2026-09-21) added `docs/TERMS.md`, added the linker, and rewrote existing `name: planit` → `name: [planit](...)` in the same squash. Parent still had `name: planit`. |
+| 6 | Install | Copies hub skill bytes as-is (`rsync` / `cp`) |
+| 5 | `link_terms_dictionary.py` (emit) | Walks `.agents/**/*.md`; skips markdown fences / backticks; does **not** skip YAML frontmatter; wraps term-list headings |
+| 4 | TERMS-link **contract** | `docs/TERMS.md` line 7 and `tools/README.md`: after editing the term list, “refresh links in **markdown across the repo**.” Input type = `*.md` glob. No prose-vs-machine split. |
+| 3 | Content-type index | `content-types/HOW-TO-ADD.md` and `integrity/LEXICON.md` name ADR, integrity doc, agent noun, audit, example. **Skill is not a content type.** `SKILL.md` is therefore generic markdown. |
+| 2 | Contribution Gate | CG-R2 / CG-R3 refuse add-X without a type recipe. They cannot fire on skills: Skill is not X. Shared-docs lexicon linking then applies as if skills were SSOT prose. |
+| 1 | ADR 0010 (unbound on this emit) | “Never generate without metrics. Never pass generated output downstream before its gate.” Dated 2026-09-16 — before the linker (2026-09-21). Applies to skills and to tools Planit creates. No binder sees “this rewriter named a skill-load metric and the metric ran.” |
 
-**Furthest controllable upstream point:** the linker’s `process_file` / `process_line` path — it treats YAML frontmatter as prose.
+**Furthest controllable upstream point:** Skill is not a content type, so the TERMS-link contract is allowed to specify an untyped `*.md` rewriter. The linker has the frontmatter defect **because that contract produced it**.
 
-**Mechanism confirmed on reproduction:** yes. Calling `process_line("name: planit\n", …, in_fence=False)` yields `name: [planit](../../../docs/TERMS.md#planit)` and that block is `ParserError`. The same function leaves `name: release` and `name: full-nlc-audit` unchanged — those strings are not `docs/TERMS.md` headings. That matches v0.3.3: seven skills with TERMS-heading names cannot load; four without those headings can.
+**Why the linker’s own code looks like this (mechanism):**
+
+- `iter_markdown_files` includes `ROOT / ".agents"` and every `*.md` under it.
+- `process_line` skips `in_fence` and `` `code` `` — markdown’s own non-prose syntax.
+- YAML frontmatter is **not** markdown syntax. With no Skill type recipe saying “the opening `---` block is machine YAML; `name` is an identifier,” the rewriter had no typed region to exclude.
+- First write: `d09ee22` (PR #19, 2026-09-21) added `docs/TERMS.md`, added the linker, and rewrote `name: planit` → `name: [planit](...)` in the same squash. Parent still had `name: planit`.
+
+**Reproduction (emit layer, still true):** `process_line("name: planit\n", …, in_fence=False)` yields the v0.3.3 text and `ParserError`. `name: release` / `name: full-nlc-audit` stay plain — those strings are not term-list headings. The tool is doing exactly what an untyped `*.md` contract asks.
 
 ---
 
 ## 3. Impact / scope
 
-- A v0.3.3 install delivers unloadable `/planit`, `/interview`, `/verify`, and the four BBP leaf skills into both `~/.agents/skills` and `~/.cursor/skills`.
-- `release`, `full-nlc-audit`, `nlc-hub-audit`, and `requirement-pack-ingest` remain loadable only because their `name:` strings are not term-list headings — not because the process protected YAML.
-- Re-running the linker on a restored `name: planit` would write the defect again.
-- Hub ships `v0.2.0` through `v0.3.3` all carry the rewritten bytes.
+- A v0.3.3 install delivers unloadable `/planit`, `/interview`, `/verify`, and the four BBP leaf skills.
+- Four other installed skills stay loadable only because their `name:` strings are not term-list headings — not because any type protected YAML.
+- Patching only `process_file` to skip frontmatter leaves the contract intact. The next `*.md` rewriter (or a linker “improvement”) can break `name:` again.
+- Hub ships `v0.2.0` through `v0.3.3` carry the rewritten bytes.
 
 ---
 
@@ -56,18 +67,20 @@
 
 | Time | Event |
 | ---- | ----- |
-| 2026-09-21 | `d09ee22` / PR #19 adds term list + linker and rewrites skill YAML `name:` lines |
-| 2026-09-21 → 2026-10-19 | `v0.2.0` … `v0.3.3` ship those bytes; no skill-frontmatter parse gate |
+| 2026-09-16 | ADR 0010 accepted: generate then gate; applies to skills and later tools |
+| 2026-09-21 | `d09ee22` / PR #19: term list + “markdown across the repo” linker + rewritten skill YAML |
+| 2026-09-21 → 2026-10-19 | `v0.2.0` … `v0.3.3` ship those bytes; Skill still not a content type |
 | 2026-10-20 | Confirm: v0.3.3 install copies unloadable skills |
-| 2026-10-20 | This RCA |
+| 2026-10-20 | First RCA named the linker skip as the one thing (too low) |
+| 2026-10-20 | Climb: why the linker has that defect — this record |
 
 ---
 
 ## 5. Mechanism on reproduction
 
-**Confirmed.** Isolated call of the linker’s `process_line` on clean `name: planit` / `interview` / `verify` / `bbp-proposer` produces the exact `name: [term](../../../docs/TERMS.md#…)` text on tag `v0.3.3`. YAML parse then fails with the same `ParserError`. Names that are not term-list headings stay plain and parse.
+**Confirmed (emit):** isolated `process_line` on clean `name: planit` produces the tagged bytes; YAML parse fails.
 
-Log: `/opt/cursor/artifacts/rca-skill-yaml-terms-link-mechanism.log`.
+**Confirmed (process):** the linker’s skip set is markdown fences + inline code only; `frontmatter` does not appear in the noun. The written contract is “markdown across the repo.” Skill is absent from `content-types/HOW-TO-ADD.md` and from the LEXICON content-type list. CG-R3 cannot refuse “add/amend skill without a recipe” because Skill is not a named type.
 
 ---
 
@@ -75,9 +88,11 @@ Log: `/opt/cursor/artifacts/rca-skill-yaml-terms-link-mechanism.log`.
 
 | Candidate | §3 bar | Verdict |
 | --------- | ------ | ------- |
-| Restore the seven `name:` lines by hand | Output-only; linker will rewrite again | Reject (§3.1 / §2.1) |
-| Fitness that `SKILL.md` frontmatter must parse | Would have blocked **ship**; would not have stopped the linker **writing** the text | Contributing detection, not the one thing |
-| Linker skips YAML frontmatter so `name:` cannot be wrapped | One, deterministic, actionable, preventive, in-repo | **Survives** |
+| Restore the seven `name:` lines | Output-only | Reject |
+| Linker skips YAML frontmatter | Fixes this emit; does not change the contract that produced a `*.md` rewriter | **Too low** (prior answer; contributing follow-up) |
+| Skill is a content type whose recipe refuses unloadable YAML `name:`; TERMS-link may rewrite only regions marked prose | One process change; deterministic; earliest controllable; in-repo (Contribution Gate + type recipe) | **Survives** |
+
+ADR 0010 without a rewriter binder is a contributing factor, not a second root: the missing Skill type is why no metric existed to bind.
 
 ---
 
@@ -85,25 +100,25 @@ Log: `/opt/cursor/artifacts/rca-skill-yaml-terms-link-mechanism.log`.
 
 > What **one** deterministic, actionable thing, if it were different, would have **prevented this error condition from arising**?
 
-**Answer:** `tools/nouns/link_terms_dictionary/link_terms_dictionary.py` must skip the opening YAML frontmatter (`---` … `---`) so term linking cannot rewrite `name:` or any other machine key.
+**Answer:** Portable skill (`SKILL.md`) must be a **content type** with a **type recipe** whose gate refuses a `name:` that is not a plain identifier (frontmatter must parse as YAML). The TERMS-link contract may rewrite only regions that recipe marks as prose. That is the process that produced a linker which treats skill YAML as markdown.
 
 ---
 
 ## 8. Prevention test
 
-> If **the linker skipped YAML frontmatter** had been in place **before** `d09ee22` ran, **`name: [planit](../../../docs/TERMS.md#planit)` (and the six sibling rewrites)** could not have occurred because **`name: planit` would never be passed to `link_segment`.**
+> If **Skill had been a content type with that YAML-`name` gate, and the TERMS-link contract had been limited to recipe-marked prose,** had been in place **before** the linker was specified, **`link_terms_dictionary.py` walking `.agents/**/*.md` and wrapping `name: planit`** could not have occurred because **Contribution Gate CG-R2/CG-R3 would refuse an untyped `*.md` rewrite of a skill, and the linker contract would not have listed skill frontmatter as in-scope markdown.**
 
-**Completed:** yes (mechanism: frontmatter skip; reproduction shows `process_line` is what wraps the name).
+**Completed:** yes (mechanism: type boundary + contract scope; emit skip is how the current tool would then be written, not the root).
 
 ---
 
 ## 9. Contributing factors (optional)
 
-- Same squash introduced the term list, the linker, and the rewritten skills — no isolated review of machine YAML.
-- No fitness/landmine parses `.agents/skills/*/SKILL.md` frontmatter.
-- Extra aliases `/planit`, `/interview`, `/verify` also wrap those tokens in `description:` (description text is not the parse break; `name:` is).
-- `.cursor/skills` is a copy/symlink of `.agents/skills`, so both trees got the same bytes.
-- Install has no transform step (correct for integrity; it faithfully copies a defective producer).
+- ADR 0010 already required per-artifact metrics before generate; no fail-capable binder records that a rewriter named and ran a skill-load gate (ADR 0010 text defers a new R id until that binder exists).
+- Same squash introduced the term list, the linker, and the rewritten skills.
+- Extra aliases `/planit`, `/interview`, `/verify` also wrap `description:` (not the parse break).
+- `.cursor/skills` mirrors `.agents/skills`.
+- Install copies faithfully (correct); it is not the producer.
 
 ---
 
@@ -111,15 +126,17 @@ Log: `/opt/cursor/artifacts/rca-skill-yaml-terms-link-mechanism.log`.
 
 | Field | Value |
 | ----- | ----- |
-| Action | Skip YAML frontmatter in `link_terms_dictionary.py` so term linking cannot rewrite `name:` / other machine keys |
+| Action | Add Skill as a content type (type recipe + Contribution Gate refuse) whose gate is: frontmatter parses as YAML and `name` is a plain identifier matching the folder; narrow the TERMS-link contract to recipe-marked prose |
 | Owner | hub |
-| Path / artifact | `tools/nouns/link_terms_dictionary/link_terms_dictionary.py`; tracked in `TODO` |
-| Verification | `process_line` / `process_file` leaves `name: planit` unchanged; PyYAML loads every `.agents/skills/*/SKILL.md` frontmatter; `name` is a plain identifier matching the folder |
-| Belief / gate touch (ADR 0025) | Unsuitable process: linker treats machine YAML as prose. Closing this RCA also requires a refuse gate that unloadable `SKILL.md` names cannot ship (detection follow-up, not a second root). |
+| Path / artifact | `content-types/HOW-TO-ADD.md`, `integrity/LEXICON.md` / `integrity/CONTRIBUTION.md`, `docs/TERMS.md` + `tools/README.md` contract lines; tracked in `TODO` |
+| Verification | CG-R3/CG-R2 refuse a skill whose `name:` is a markdown link; linker contract text no longer says unbounded “markdown across the repo”; a landmine fixture with `name: [planit](...)` is NOT_MET |
+| Belief / gate touch (ADR 0025) | Unsuitable process: untyped `*.md` lexicon rewrite of a shipped machine artifact. Touches Contribution Gate (CG-R2/CG-R3), content-type / type-recipe lexicon, and the TERMS-link contract. |
 
 ---
 
-## 11. Follow-up (detection only)
+## 11. Follow-up (detection / emit only — not the root)
 
-- Fitness/landmine: every `.agents/skills/*/SKILL.md` frontmatter parses as YAML; `name` matches the skill folder (plain `[A-Za-z0-9-]+`).
-- After the linker skip exists, restore the seven already-written `name:` values and refresh install hashes. Do not treat that restore as the root — without the skip, the next linker run rewrites them.
+- Implement the type-recipe gate as fitness/landmine on `.agents/skills/*/SKILL.md`.
+- Then change `link_terms_dictionary.py` so it cannot rewrite frontmatter (emit aligned to the new contract).
+- Then restore the seven already-written `name:` values and refresh install hashes.
+- Bind ADR 0010 for rewriter generates (metrics named + gate ran) so the next bulk markdown tool cannot ship without a typed region list.

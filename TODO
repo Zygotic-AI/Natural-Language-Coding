@@ -671,6 +671,6 @@ The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (co
 
 ### Skill YAML load errors (RCA 2026-10-20)
 
-v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten by `link-terms-dictionary.py`. Those files do not parse; they cannot load. Record: [`docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md`](docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md).
+v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten by `link-terms-dictionary.py`. Those files do not parse; they cannot load. The linker has that defect because Skill is not a content type, so the TERMS-link contract is an untyped `*.md` glob. Record: [`docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md`](docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md).
 
-- ☐ Skip YAML frontmatter in `tools/nouns/link_terms_dictionary/link_terms_dictionary.py` so term linking cannot rewrite `name:` / other machine keys; fitness must refuse unloadable `SKILL.md` names
+- ☐ Add Skill as a content type whose type recipe refuses unloadable YAML `name:`; narrow the TERMS-link contract to recipe-marked prose (linker skip + restore `name:` are emit follow-up, not the root)
