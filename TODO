@@ -668,3 +668,9 @@ The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (co
 - ☐ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar)
 - ☐ `./release` one PR `release/v0.3.3` → `main`; merge when all checks green; tag `v0.3.3` on that merge only
 - ☐ Confirm GitHub Release `v0.3.3` exists; prior peels unchanged
+
+### Skill YAML load errors (RCA 2026-10-20)
+
+v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten by `link-terms-dictionary.py`. Those files do not parse; they cannot load. Record: [`docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md`](docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md).
+
+- ☐ Skip YAML frontmatter in `tools/nouns/link_terms_dictionary/link_terms_dictionary.py` so term linking cannot rewrite `name:` / other machine keys; fitness must refuse unloadable `SKILL.md` names
