@@ -4,7 +4,7 @@
 
 **Add constraints**, anything from hardware to HIPAA, GDPR, PCI-DSS, and FedRAMP - you name it.
 
-NLC give you an application and infrastructure that's fully traceable and auditable.
+NLC gives you an application and infrastructure that's fully traceable and auditable.
 
 *And just as easy to use if you don't have all that regulation.*
 
