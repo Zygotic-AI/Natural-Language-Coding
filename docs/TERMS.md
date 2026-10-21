@@ -4,7 +4,7 @@ SSOT for vocabulary in this repository (NLC product, BBP emit shape, BBA integri
 
 Charter-shaped **R** / **C** / **P** rules stay in [`CHARTER.md`](../CHARTER.md). Locked integrity nouns also appear in [`integrity/LEXICON.md`](../integrity/LEXICON.md).
 
-After adding terms here, re-run `python3 tools/link-terms-dictionary.py` to refresh links in markdown across the repo.
+After adding terms here, re-run `python3 tools/link-terms-dictionary.py` to refresh links in markdown across the repo. Do not rewrite published skills (`.agents/skills/`, `.cursor/skills/`) — those trees are installed off-repo; see `integrity/skill-author-checklist.json`.
 
 ---
 

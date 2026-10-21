@@ -2,7 +2,7 @@
 
 Enforcement. Specimens in `examples/` are not a product.
 
-**Vocabulary links:** after editing [`docs/TERMS.md`](../docs/TERMS.md), run `python3 tools/link-terms-dictionary.py` to refresh term links in markdown across the repo.
+**Vocabulary links:** after editing [`docs/TERMS.md`](../docs/TERMS.md), run `python3 tools/link-terms-dictionary.py` to refresh term links in markdown across the repo. Published skills (`.agents/skills/`) are out of scope for that rewrite.
 
 **Requirements preflight (ADR 0013):** Python tools call `nlc_requirements.hub_tool()` or `hub_prove()` at entry. Install scripts check `python3` / `git` before work.
 

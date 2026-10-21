@@ -27,6 +27,7 @@ These trees exist so a [gate](../docs/TERMS.md#gate) has something to scan. They
 | [`verify-no-before-stamp/`](verify-no-before-stamp/) | `./nlc verify` missing UC18 stamp |
 | [`verify-stale-stamp/`](verify-stale-stamp/) | `./nlc verify` stale before-generate stamp |
 | [`verify-skill-ungated/`](verify-skill-ungated/) | `./nlc verify` gate-scoped SKILL without receipt |
+| [`skill-author-check-landmine/`](skill-author-check-landmine/) | skill-author checklist (unloadable `name:` + repo-relative link) |
 | [`verify-produce-handoff/`](verify-produce-handoff/) | verify-deep incomplete produce package (SSOT) |
 | [`verify-produce-self-audit/`](verify-produce-self-audit/) | verify-deep produce package self-audit roles (CS5) |
 | [`regen-queue-pending/`](regen-queue-pending/) | open delta-regen queue on verify |

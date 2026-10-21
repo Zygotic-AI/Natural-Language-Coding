@@ -26,6 +26,7 @@
     "findings-ssot-sync",
     "findings-last-pass-fresh",
     "release-preflight",
+    "skill-author-check",
     "shipped-tag"
   ],
   "hub_only_fitness": [
@@ -65,7 +66,8 @@
     "fitness-pending-ratification.py",
     "fitness-no-tool-writes-ratification.py",
     "fitness-retired-key-denylist.py",
-    "fitness-adr-0051-0052-rules.py"
+    "fitness-adr-0051-0052-rules.py",
+    "fitness-skill-author-checklist.py"
   ],
   "gates": {
     "pipeline-blockers": {

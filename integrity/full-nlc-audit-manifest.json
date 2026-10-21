@@ -27,6 +27,7 @@
       "findings-ssot-sync",
       "findings-last-pass-fresh",
       "release-preflight",
+      "skill-author-check",
       "shipped-tag"
     ],
     "full": [
@@ -41,6 +42,7 @@
       "findings-ssot-sync",
       "findings-last-pass-fresh",
       "release-preflight",
+      "skill-author-check",
       "shipped-tag",
       "verify-deep",
       "verify"
@@ -108,6 +110,12 @@
       "label": "Release preflight (ADR 0022)",
       "command": ["python3", "tools/nlc_release_preflight.py", "--check"],
       "pass_substrings": ["RELEASE_PREFLIGHT:MET"]
+    },
+    "skill-author-check": {
+      "blocking": true,
+      "label": "Published skills author checklist (same list as post-install)",
+      "command": ["python3", "tools/nlc-skill-author-check.py", "--root", ".agents/skills"],
+      "pass_substrings": ["SKILL_AUTHOR:MET"]
     },
     "shipped-tag": {
       "blocking": true,

@@ -8,6 +8,8 @@
 
 - “Run /conduct-root-cause-analysis on why the skills have the text causing load errors”
 - “That's not high enough in the causal chain. Why does link_terms_dictionary.py have that defect?”
+- “I want that risk added” (repo-relative links that go nowhere after install)
+- “prior to release we should have a specific step… list of things that we would check to grow… installer to do the same… exact same checklist”
 
 ---
 
@@ -58,6 +60,7 @@
 
 - A v0.3.3 install delivers unloadable `/planit`, `/interview`, `/verify`, and the four BBP leaf skills.
 - Four other installed skills stay loadable only because their `name:` strings are not term-list headings — not because any type protected YAML.
+- **Dead links after install (same publish boundary).** Repo-relative `../../../docs/…`, `../../../adrs/…`, `../../../agents/…` links work in the hub checkout. After install, skills live under `~/.agents/skills/`. Those `../..` paths resolve under the home directory, not the hub copy, so the targets do not exist on that machine. Intra-skill links (`references/…`, `../full-nlc-audit/SKILL.md`) travel with the skill tree and stay valid. The TERMS linker created many of the dead `docs/TERMS.md` links; authors also wrote repo links by hand.
 - Patching only `process_file` to skip frontmatter leaves the contract intact. The next `*.md` rewriter (or a linker “improvement”) can break `name:` again.
 - Hub ships `v0.2.0` through `v0.3.3` carry the rewritten bytes.
 
@@ -134,9 +137,24 @@ ADR 0010 without a rewriter binder is a contributing factor, not a second root: 
 
 ---
 
-## 11. Follow-up (detection / emit only — not the root)
+## 11. Follow-up (the growable check — not a second root)
 
-- Implement the type-recipe gate as fitness/landmine on `.agents/skills/*/SKILL.md`.
-- Then change `link_terms_dictionary.py` so it cannot rewrite frontmatter (emit aligned to the new contract).
-- Then restore the seven already-written `name:` values and refresh install hashes.
+The Skill type recipe is still the one thing. The **step** that will grow is one checklist, used in two places:
+
+| When | Command |
+| ---- | ------- |
+| Before release (`release-prep` / `full` audit) | `python3 tools/nlc-skill-author-check.py --root .agents/skills` |
+| After install (same list on the copied tree) | `python3 tools/nlc-skill-author-check.py --root ~/.agents/skills` |
+
+Checklist SSOT: `integrity/skill-author-checklist.json`. Add a check id there, then implement it in `tools/nouns/skill_author_check/`.
+
+**Checks now (discovered problems):**
+
+1. `frontmatter-yaml` — `SKILL.md` frontmatter parses; `name` is a plain identifier matching the folder.
+2. `in-skill-links` — relative markdown links resolve inside the published skills tree (no `../../../` repo paths that vanish after install).
+
+Landmine: `examples/skill-author-check-landmine/` must stay `SKILL_AUTHOR:NOT_MET`.
+
+Current hub skills still fail the live check. Repair `name:` lines and out-of-tree links, then the release step and post-install step can MET. The TERMS linker now skips `.agents/skills/` / `.cursor/skills/` so a refresh cannot rewrite published skills.
+
 - Bind ADR 0010 for rewriter generates (metrics named + gate ran) so the next bulk markdown tool cannot ship without a typed region list.

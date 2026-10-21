@@ -673,4 +673,6 @@ The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (co
 
 v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten by `link-terms-dictionary.py`. Those files do not parse; they cannot load. The linker has that defect because Skill is not a content type, so the TERMS-link contract is an untyped `*.md` glob. Record: [`docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md`](docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md).
 
-- ☐ Add Skill as a content type whose type recipe refuses unloadable YAML `name:`; narrow the TERMS-link contract to recipe-marked prose (linker skip + restore `name:` are emit follow-up, not the root)
+- ✔ Growable skill-author checklist + landmine; same command on release-prep and post-install @done(26-10-21 13:20)
+- ☐ Repair current published skills so `nlc-skill-author-check.py --root .agents/skills` is `SKILL_AUTHOR:MET` (plain `name:` + in-skill links only)
+- ☐ Add Skill as a content type whose type recipe points at that checklist; keep TERMS-link out of published skills
