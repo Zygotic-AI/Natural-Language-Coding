@@ -2,7 +2,7 @@
 
 **Describe your app in plain English.** 
 
-*Add constraints**, anything from hardware to HIPAA, GDPR, PCI-DSS, and FedRAMP - you name it.
+**Add constraints**, anything from hardware to HIPAA, GDPR, PCI-DSS, and FedRAMP - you name it.
 
 NLC give you an application and infrastructure that's fully traceable and auditable.
 
