@@ -87,6 +87,18 @@ if [[ -d "${HOME}/.cursor" ]]; then
   echo "  cursor: copied repo-local BBP + planit skills"
 fi
 
+skill_check="${INSTALL_ROOT}/hub/tools/nlc-skill-author-check.py"
+if [[ -f "${skill_check}" ]]; then
+  echo "  verify: skill author checklist"
+  python3 "${skill_check}" --root "${AGENTS_SKILLS}" || {
+    echo "Install could not confirm installed skills are authored correctly." >&2
+    echo "  What's wrong: published skill checklist failed on ${AGENTS_SKILLS}" >&2
+    echo "  Fix: repair the hub skills, then re-run install." >&2
+    echo "INSTALL:NOT_MET skill author checklist failed" >&2
+    exit 1
+  }
+fi
+
 if [[ -z "${NLC_SKIP_VERIFY:-}" ]] && [[ -f "${INSTALL_ROOT}/hub/tools/nlc-install-verify.py" ]]; then
   echo "  verify: hub file hashes"
   python3 "${INSTALL_ROOT}/hub/tools/nlc-install-verify.py" "${INSTALL_ROOT}/hub" || {

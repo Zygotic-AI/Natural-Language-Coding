@@ -206,6 +206,8 @@ def should_skip_file(path: Path) -> bool:
     rel = path.relative_to(ROOT).as_posix()
     if rel == "docs/TERMS.md":
         return True
+    if rel.startswith(".agents/skills/") or rel.startswith(".cursor/skills/"):
+        return True
     for skip in SKIP_DIRS:
         if rel.startswith(skip):
             return True

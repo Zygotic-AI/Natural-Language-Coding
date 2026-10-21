@@ -668,3 +668,11 @@ The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (co
 - ☐ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar)
 - ☐ `./release` one PR `release/v0.3.3` → `main`; merge when all checks green; tag `v0.3.3` on that merge only
 - ☐ Confirm GitHub Release `v0.3.3` exists; prior peels unchanged
+
+### Skill YAML load errors (RCA 2026-10-20)
+
+v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten by `link-terms-dictionary.py`. Those files do not parse; they cannot load. The linker has that defect because Skill is not a content type, so the TERMS-link contract is an untyped `*.md` glob. Record: [`docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md`](docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md).
+
+- ✔ Growable skill-author checklist + landmine; same command on release-prep and post-install @done(26-10-21 13:20)
+- ☐ Repair current published skills so `nlc-skill-author-check.py --root .agents/skills` is `SKILL_AUTHOR:MET` (plain `name:` + in-skill links only)
+- ☐ Add Skill as a content type whose type recipe points at that checklist; keep TERMS-link out of published skills
