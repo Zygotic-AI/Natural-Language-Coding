@@ -1,6 +1,12 @@
 # [Natural Language Coding](docs/TERMS.md#nlc)
 
-**Describe outcomes and rules in plain language. Get a gated, boundary-shaped system, or a failed compile you can trust.**
+**Describe your app in plain English.** 
+
+*Add constraints**, anything from hardware to HIPAA, GDPR, PCI-DSS, and FedRAMP - you name it.
+
+NLC give you an application and infrastructure that's fully traceable and auditable.
+
+*And just as easy to use if you don't have all that regulation.*
 
 - The AI [compiler](docs/TERMS.md#compiler) turns ratified intent into gated, boundary-shaped code one increment at a time—from natural-language functionality, requirements, policies, and standards. End-to-end compiled apps are the target; today’s gaps are listed in [`FINDINGS.md`](FINDINGS.md).
 - Trace every [requirement](docs/TERMS.md#requirement) to where it is enforced—**when shipped**; see [jobs to be done](docs/JOBS-TO-BE-DONE.md) for what is available today vs not yet.
