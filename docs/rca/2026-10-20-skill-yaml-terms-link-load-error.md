@@ -146,7 +146,7 @@ The Skill type recipe is still the one thing. The **step** that will grow is one
 | Before release (`release-prep` / `full` audit) | `python3 tools/nlc-skill-author-check.py --root .agents/skills` |
 | After install (same list on the copied tree) | `python3 tools/nlc-skill-author-check.py --root ~/.agents/skills` |
 
-Checklist SSOT: `integrity/skill-author-checklist.json`. Add a check id there, then implement it in `tools/nouns/skill_author_check/`.
+Checklist SSOT: `integrity/skill-author-checklist.json`. Add a check id there, then implement it in `tools/nouns/skill_author_check/`. Demand: [ADR 0054](../../adrs/0054-published-skill-author-contract.md) (Proposed published-skill author contract), use-case `goals/hub_skill_author_check`, and `fitness-skill-author-check-presence.py` (install must still invoke that use-case). This is not helper code.
 
 **Checks now (discovered problems):**
 

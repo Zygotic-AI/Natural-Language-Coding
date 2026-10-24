@@ -4,6 +4,8 @@ Enforcement. Specimens in `examples/` are not a product.
 
 **Vocabulary links:** after editing [`docs/TERMS.md`](../docs/TERMS.md), run `python3 tools/link-terms-dictionary.py` to refresh term links in markdown across the repo. Published skills (`.agents/skills/`) are out of scope for that rewrite.
 
+**Published-skill author contract (ADR 0054):** `python3 tools/nlc-skill-author-check.py --root .agents/skills` (same CLI after install). Presence: `fitness-skill-author-check-presence.py` (install must still call `goals/hub_skill_author_check`).
+
 **Requirements preflight (ADR 0013):** Python tools call `nlc_requirements.hub_tool()` or `hub_prove()` at entry. Install scripts check `python3` / `git` before work.
 
 **Human CLI (`nlc`):** adopters use `./nlc`, `verify`, `new`, etc. **Maintainer / agent:**

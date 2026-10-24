@@ -67,7 +67,8 @@
     "fitness-no-tool-writes-ratification.py",
     "fitness-retired-key-denylist.py",
     "fitness-adr-0051-0052-rules.py",
-    "fitness-skill-author-checklist.py"
+    "fitness-skill-author-checklist.py",
+    "fitness-skill-author-check-presence.py"
   ],
   "gates": {
     "pipeline-blockers": {
