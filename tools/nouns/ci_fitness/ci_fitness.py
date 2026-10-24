@@ -648,6 +648,14 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-verify-skill-gate-fails.py")],
     )
     run(
+        "fitness-skill-author-checklist",
+        [sys.executable, str(TOOLS / "fitness-skill-author-checklist.py")],
+    )
+    run(
+        "assert-skill-author-check",
+        [sys.executable, str(TOOLS / "assert-skill-author-check-fails.py")],
+    )
+    run(
         "assert-produce-handoff-refused",
         [sys.executable, str(TOOLS / "assert-produce-handoff-refused.py")],
     )

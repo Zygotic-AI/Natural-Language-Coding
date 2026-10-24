@@ -33,6 +33,7 @@
     "tools/nlc-pipeline-wire.py": "bf8569df4957f9af4a2d008bcb7c0d9191d7e5dab5fcf90b5599a01c74a67df6",
     "tools/nlc-release-build.py": "f87bfd42f5d165060f252df9dcb4d5d5ff31c0d173b7597f31d0ac2d53d77250",
     "tools/nlc-reverse-audit.py": "0e2fd0d68bc102da38cf9bb85810fd9ca947f3d991ed9d7df8ce66d63d1fe30d",
+    "tools/nlc-skill-author-check.py": "226a6a13223d5834ed35331eefca9e24632056958156b829f0ecb5a2cc468de1",
     "tools/nlc-update.py": "68f60ad1efdb7b3da7fce1a4de530e86ef0161be05f08bcd8b1ec4e2f889755c",
     ".agents/skills/bbp-confirmer/SKILL.md": "4cf9a5009d5a92e9425ac9e4e987c243e85625e728e8419efd3005224a179ef4",
     ".agents/skills/bbp-proposer/SKILL.md": "f3f9d588e7801fab70987c4b3afcbba19f52ea91efb6e173b5ffd2edee333352",
