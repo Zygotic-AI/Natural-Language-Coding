@@ -30,6 +30,7 @@ Do **not** run `./release` until every **blocking** row is true.
 | Plain-language refs | yes | Reply references for every id in the verdict | Chat |
 | Product residuals | yes when P2/P3 | User confirms **once** after table | Chat |
 | `./release` started | yes on GO | Orchestrator invoked from repo root | Terminal |
+| Mandated pins | yes when a mandated path is touched | Derived list `python3 tools/derive-mandated-paths.py` imported; pins moved in the same change; unsigned manifest is INCOMPLETE, not a finished step | `python3 tools/fitness-mandate-inheritance.py` |
 
 **Done signals:** Closeout done; **Ship** verdict; `./release` running, awaiting the release pull-request merge, complete, or stopped on a named human decision.
 

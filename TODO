@@ -677,3 +677,12 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 - ✔ Bind the checklist as law: ADR 0054 (Proposed) + `goals/hub_skill_author_check` + presence fitness @done(26-10-24 14:51)
 - ✔ Repair current published skills so `nlc-skill-author-check.py --root .agents/skills` is `SKILL_AUTHOR:MET` (plain `name:` + in-skill links only) @done(26-10-24 19:49)
 - ✔ Add Skill as a content type whose type recipe points at that checklist; keep TERMS-link out of published skills @done(26-10-24 19:35)
+
+### Staged activation of gate machinery (ADR 0055, owner-approved 2026-10-24)
+
+- ✔ ADR 0055 Proposed: staged activation; derived self-ref set; mandate inheritance; control-lifecycle rules @done(26-10-25 01:50)
+- ✔ Stage/activate tools; fitness refuse of live-member edits; Planit registry generated from bytes @done(26-10-25 01:50)
+- ✔ Known-bads: direct live edit, split land, skill without registry, legitimate verifier change via staging @done(26-10-25 01:50)
+- ✔ GitHub ruleset JSON for `release/*` (no direct push; require fitness) @done(26-10-25 01:50)
+- ☐ Owner clearsign of `adrs/owner-approvals/staged-signing.statement.txt` (ADR 0055 + regenerated gate-set manifest)
+- ☐ Apply the `release/*` GitHub ruleset when the token allows

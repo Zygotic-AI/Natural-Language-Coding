@@ -19,6 +19,7 @@ GATE_SET_EXCLUSIONS: dict[str, str] = {
     "docs/history/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
     "docs/rca/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
     "reviews/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
+    "staging/": "candidate bytes; live signed machinery verifies then atomic-activates (ADR 0055)",
 }
 
 _EXCL_PREFIXES = tuple(GATE_SET_EXCLUSIONS.keys())

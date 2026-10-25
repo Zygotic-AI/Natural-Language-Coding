@@ -88,12 +88,33 @@ def check_in_skill_links(skills_root: Path, md_path: Path, text: str) -> list[st
     return violations
 
 
+def _hub_root_for_skills(skills_root: Path) -> Path | None:
+    resolved = skills_root.resolve()
+    if resolved.name != "skills" or resolved.parent.name != ".agents":
+        return None
+    hub = resolved.parent.parent
+    if (hub / "CHARTER.md").is_file() and (hub / "integrity" / "planit-skill-registry.json").is_file():
+        return hub
+    return None
+
+
+def check_mandate_pins(skills_root: Path) -> list[str]:
+    """Imported mandated-path list: skill edits must move pins in the same change."""
+    hub = _hub_root_for_skills(skills_root)
+    if hub is None:
+        return []
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from nouns.mandated_paths.mandated_paths import pin_move_errors
+
+    return pin_move_errors(hub)
+
+
 def run_checks(skills_root: Path) -> list[str]:
     root = skills_root.resolve()
     if not root.is_dir():
         return [f"skills root missing: {root}"]
     wanted = {c["id"] for c in load_checklist()}
-    unknown = wanted - {"frontmatter-yaml", "in-skill-links"}
+    unknown = wanted - {"frontmatter-yaml", "in-skill-links", "mandate-pins"}
     violations: list[str] = []
     for cid in sorted(unknown):
         violations.append(f"checklist id {cid} has no implementation")
@@ -112,6 +133,8 @@ def run_checks(skills_root: Path) -> list[str]:
                 continue
             text = md_path.read_text(encoding="utf-8")
             violations.extend(check_in_skill_links(root, md_path, text))
+    if "mandate-pins" in wanted:
+        violations.extend(check_mandate_pins(root))
     return violations
 
 
