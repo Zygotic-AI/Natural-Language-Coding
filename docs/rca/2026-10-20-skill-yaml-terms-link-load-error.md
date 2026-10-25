@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-20  
 **Context:** Natural-Language-Coding hub — v0.3.3 install copies `.agents/skills/*/SKILL.md` as-is  
-**Status:** open (process named; preventive action tracked, not yet applied)
+**Status:** closed (Skill type landed; live published skills repaired; `SKILL_AUTHOR:MET`)
 
 **Scope (user words):**
 
@@ -135,7 +135,7 @@ ADR 0010 without a rewriter binder is a contributing factor, not a second root: 
 | Verification | CG-R3/CG-R2 refuse a skill whose `name:` is a markdown link; linker contract text no longer says unbounded “markdown across the repo”; a landmine fixture with `name: [planit](...)` is NOT_MET |
 | Belief / gate touch (ADR 0025) | Unsuitable process: untyped `*.md` lexicon rewrite of a shipped machine artifact. Touches Contribution Gate (CG-R2/CG-R3), content-type / type-recipe lexicon, and the TERMS-link contract. |
 
-Landed on `release/v0.4.0`: Skill recipe in `content-types/HOW-TO-ADD.md`; gate is the same `nlc-skill-author-check.py` list. Live hub skills still fail that gate until the repair step.
+Landed on `release/v0.4.0`: Skill recipe in `content-types/HOW-TO-ADD.md`; gate is the same `nlc-skill-author-check.py` list. Live published skills repaired: plain `name:` matching the folder; out-of-tree hrefs dropped (display text kept); `python3 tools/nlc-skill-author-check.py --root .agents/skills` is `SKILL_AUTHOR:MET`.
 
 ---
 
@@ -148,7 +148,7 @@ The Skill type recipe is still the one thing. The **step** that will grow is one
 | Before release (`release-prep` / `full` audit) | `python3 tools/nlc-skill-author-check.py --root .agents/skills` |
 | After install (same list on the copied tree) | `python3 tools/nlc-skill-author-check.py --root ~/.agents/skills` |
 
-Checklist SSOT: `integrity/skill-author-checklist.json`. Add a check id there, then implement it in `tools/nouns/skill_author_check/`. Demand: [ADR 0054](../../adrs/0054-published-skill-author-contract.md) (Proposed published-skill author contract), use-case `goals/hub_skill_author_check`, and `fitness-skill-author-check-presence.py` (install must still invoke that use-case). This is not helper code.
+Checklist SSOT: `integrity/skill-author-checklist.json`. Add a check id there, then implement it in `tools/nouns/skill_author_check/`. Demand: [ADR 0054](../../adrs/0054-published-skill-author-contract.md) (Accepted published-skill author contract), use-case `goals/hub_skill_author_check`, and `fitness-skill-author-check-presence.py` (install must still invoke that use-case). This is not helper code.
 
 **Checks now (discovered problems):**
 
@@ -157,6 +157,6 @@ Checklist SSOT: `integrity/skill-author-checklist.json`. Add a check id there, t
 
 Landmine: `examples/skill-author-check-landmine/` must stay `SKILL_AUTHOR:NOT_MET`.
 
-Current hub skills still fail the live check. Repair `name:` lines and out-of-tree links, then the release step and post-install step can MET. The TERMS linker now skips `.agents/skills/` / `.cursor/skills/` so a refresh cannot rewrite published skills.
+Live hub check is `SKILL_AUTHOR:MET`. The landmine stays `SKILL_AUTHOR:NOT_MET`. The TERMS linker skips `.agents/skills/` / `.cursor/skills/` so a refresh cannot rewrite published skills.
 
 - Bind ADR 0010 for rewriter generates (metrics named + gate ran) so the next bulk markdown tool cannot ship without a typed region list.

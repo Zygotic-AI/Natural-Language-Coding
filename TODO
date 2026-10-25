@@ -675,5 +675,5 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 
 - ✔ Growable skill-author checklist + landmine; same command on release-prep and post-install @done(26-10-21 13:20)
 - ✔ Bind the checklist as law: ADR 0054 (Proposed) + `goals/hub_skill_author_check` + presence fitness @done(26-10-24 14:51)
-- ☐ Repair current published skills so `nlc-skill-author-check.py --root .agents/skills` is `SKILL_AUTHOR:MET` (plain `name:` + in-skill links only)
+- ✔ Repair current published skills so `nlc-skill-author-check.py --root .agents/skills` is `SKILL_AUTHOR:MET` (plain `name:` + in-skill links only) @done(26-10-24 19:49)
 - ✔ Add Skill as a content type whose type recipe points at that checklist; keep TERMS-link out of published skills @done(26-10-24 19:35)

@@ -1,25 +1,25 @@
 ---
-name: [bbp-confirmer](../../../docs/TERMS.md#bbp-confirmer)
-description: [BBP](../../../docs/TERMS.md#bbp) [confirmer](../../../docs/TERMS.md#confirmer) — [charter](../../../docs/TERMS.md#charter) §11 checklist plus [hub](../../../docs/TERMS.md#hub) fitness suite. Use before [ship](../../../docs/TERMS.md#ship).
+name: bbp-confirmer
+description: BBP confirmer — charter §11 checklist plus hub fitness suite. Use before ship.
 ---
 
-# [BBP](../../../docs/TERMS.md#bbp) [Confirmer](../../../docs/TERMS.md#confirmer)
+# BBP Confirmer
 
-[Gate](../../../docs/TERMS.md#gate): `G-CONFIRM`. [PLANIT](../../../docs/TERMS.md#planit) step 7 (prove).
+Gate: `G-CONFIRM`. PLANIT step 7 (prove).
 
-SSOT role: [`agents/confirmer.md`](../../../agents/confirmer.md).
+SSOT role: `agents/confirmer.md`.
 
 ```bash
 python3 tools/ci_fitness.py
 ```
 
-When the change touched **`TODO` → Build a compiled system** or **`docs/USE-CASES.md`** spine, also confirm `python3 tools/fitness-todo-use-cases-ssot.py` → `RESULT:MET` against [`integrity/uc-product-status.json`](../../../integrity/uc-product-status.json).
+When the change touched **`TODO` → Build a compiled system** or **`docs/USE-CASES.md`** spine, also confirm `python3 tools/fitness-todo-use-cases-ssot.py` → `RESULT:MET` against `integrity/uc-product-status.json`.
 
 **Complete:** every C1–C24 row is PASS / FAIL / N/A with `file:line` or N/A reason, and the suite output is included (`CI:MET` or an honest `CI:FAIL`).
 
-**Incomplete:** checklist without evidence, or only check 1 when the [hub](../../../docs/TERMS.md#hub) suite exists.
+**Incomplete:** checklist without evidence, or only check 1 when the hub suite exists.
 
-**You do not ratify. You do not release.** For class A/B/D/E/F leave `Ratified-by:` blank. Never write `Released-by:`. A human in the [ship](../../../docs/TERMS.md#ship) role fills those. `python3 tools/release-audit.py <tree>` must print `H-RELEASE` until they do.
+**You do not ratify. You do not release.** For class A/B/D/E/F leave `Ratified-by:` blank. Never write `Released-by:`. A human in the ship role fills those. `python3 tools/release-audit.py <tree>` must print `H-RELEASE` until they do.
 
 
-Designed red vs designed pass: assert scripts exit 0 when the landmine is still live. `invoice-correct` must be [MET](../../../docs/TERMS.md#met).
+Designed red vs designed pass: assert scripts exit 0 when the landmine is still live. `invoice-correct` must be MET.
