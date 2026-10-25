@@ -1,5 +1,7 @@
 # [Natural Language Coding](docs/TERMS.md#nlc)
 
+**Product: Natural Language Compiler**
+
 **Describe your app in plain English.** 
 
 **Add constraints**, anything from hardware to HIPAA, GDPR, PCI-DSS, and FedRAMP - you name it.
@@ -18,13 +20,26 @@ NLC gives you an application and infrastructure that's fully traceable and audit
 
 ## Quick start (app repo)
 
-1. **Install** (macOS, Linux, WSL):
+1. **Install** the Natural Language Compiler (Linux, macOS, Windows):
+
+   Linux:
 
    ```bash
    curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
    ```
 
-   Windows (PowerShell): [Getting started](docs/nlc/compiler/GETTING-STARTED.md) (install block).
+   macOS:
+
+   ```bash
+   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | /bin/bash
+   ```
+
+   Windows (PowerShell):
+
+   ```powershell
+   Set-ExecutionPolicy -Scope Process Bypass -Force
+   irm https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.ps1 | iex
+   ```
 
    Then check the install: `nlc doctor` (or `./nlc doctor` if you only use a repo-local launcher).
 
