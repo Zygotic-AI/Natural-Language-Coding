@@ -15,6 +15,8 @@
 - “How could this condition be created where we made a mandate for a signature and still allowed the skill edits to treat it as optional? What created that condition?”
 - “Climb one level above the current root: find what CREATED the condition that signature/identity pins are optional later steps for skill produce.”
 - “RCA ONLY, no remediation changes.”
+- “What causes will be left in place after this RCA remediation that can cause this again? It seems if something intentionally edits /planit we won't ever be able to sign it - because it will come to me waiting for the signature, ending its turn. Then I sign and give it to the agent, which uses /planit to handle the signature I gave it and fails because /planit is not signed.”
+- “I think we'll need to have a 'staging' area for new skills - so it can build a new /planit there, I can sign it, and after I sign it, the new version and the signature are put in place all at the same time.”
 
 ---
 
@@ -390,5 +392,206 @@ Climb 1 candidates (bind the Skill checklist to every pin; GitHub ruleset; pre-p
 | 3 | Climb 1 landing half (GitHub ruleset: no direct push to `release/*`; required fitness) | Unreviewed red land of a partial produce | The next produce session that still treats `SKILL_AUTHOR` as done locally |
 
 **Recommend (1) as the climbed one thing**, with (2) as the same compile (precondition, not detector-plus-later-sign). (3) remains the host backstop from Climb 1.
+
+RCA only. No remediation commit.
+
+---
+
+## 15. Climb 3 — verifier and verified are the same live artifact
+
+**Scope (user words):** “RCA ONLY, no remediation changes.” “What causes will be left in place after this RCA remediation that can cause this again? It seems if something intentionally edits /planit we won't ever be able to sign it - because it will come to me waiting for the signature, ending its turn. Then I sign and give it to the agent, which uses /planit to handle the signature I gave it and fails because /planit is not signed.” “I think we'll need to have a 'staging' area for new skills - so it can build a new /planit there, I can sign it, and after I sign it, the new version and the signature are put in place all at the same time.”
+
+**Climb 2 root (too low for this question):** mandates were compiled as after-the-fact detectors and an owner-last sign step that produce tools cannot complete, while Skill produce was a separate local checklist. That answers *why* this land treated the mandate as optional. It does not answer *how an intentional, mandate-complete /planit edit is supposed to finish*.
+
+**This climb’s error condition:** an intentional edit of `/planit` (or another gating skill or gate tool) has no trusted bootstrap path to ingest the owner’s signature. The live machinery that must load to handle the signature is the same artifact that is now unregistered.
+
+---
+
+### Q1. Confirm or refute the bootstrap deadlock
+
+**Confirmed** for the owner’s resume path (produce → unsigned live `/planit` → turn end → owner signs → agent uses `/planit` to handle the signature). Precision: the live refuse is the **identity hash pin**, not the OpenPGP sidecar. The owner’s word “signed” covers both mandates on those bytes. The sidecar being stale does **not** fail the hook or Planit intake. The identity mismatch **does**.
+
+**Traced path (this tree, 2026-10-25):**
+
+| Step | What happens | What actually blocks |
+| ---- | ------------ | -------------------- |
+| 1. Produce | Agent edits `.agents/skills/planit/SKILL.md` (incident: `d4b4648` → hash `0e0493b4…`). Registry still `85a11ef6…` (`integrity/planit-skill-registry.json` line 4). | Nothing in Skill produce. This is Climb 1/2. |
+| 2. Unsigned / unregistered live state | Two pins, two detectors. **Identity:** `python3 tools/fitness-planit-identity.py --skill-only --loaded .agents/skills/planit/SKILL.md` → `VIOLATION loaded Planit skill hash does not match the registry` / `PLANIT_IDENTITY:NOT_MET` (exit 1). **OpenPGP:** `python3 tools/fitness-gate-set-manifest.py` → `Content-SHA256 mismatch (statement 8ffa1481… vs file 1f3a82e5…)` / `RESULT:NOT_MET` (exit 1). | Identity is what the hook and `/planit` intake call. Sidecar red does not load-fail `/planit`. |
+| 3. Turn end | Climb 2 candidate 2: do not mark done until the owner has signed. Agent stops and waits. | Designed wait. |
+| 4. Owner signs | ADR 0052: owner clearsigns offline (PGPony). Agents never create ratification. Signing does **not** need `/planit`. | None. Offline sign works. |
+| 5. Owner gives the signature to the agent | Owner submits a prompt on a checkout of the edited tree. `.cursor/hooks.json` `beforeSubmitPrompt` runs `.cursor/hooks/nlc-planit-identity.sh` with `failClosed: true`. The hook is not Planit-only: it runs on **every** prompt. | **Hook deny.** Reproduced here: hook stdin `{}` → `{"permission":"deny","user_message":"This repository Planit skill does not match the registered hash."}` (exit 2). |
+| 6. If the prompt reaches an agent (cloud / hook absent) and that agent uses `/planit` | `.agents/skills/planit/SKILL.md` Identity (blocking): run the same `--skill-only --loaded` command; “Intake fails when the loaded bytes do not match.” | **Planit intake FAIL** — same `PLANIT_IDENTITY:NOT_MET`. |
+| 7. Tools that ingest the signature | There is **no** ingest tool. ADR 0052: agents commit pasted armor **unchanged**. C8 (`tools/nouns/fitness_no_tool_writes_ratification/fitness_no_tool_writes_ratification.py`) forbids tracked `tools/*.py` from writing `*.approval.asc`. `fitness-gate-set-manifest` / `verify_sidecar_p1` only **read** after the file exists. They do not check Planit identity. | Ingest is a file write of owner armor. The **process** that is supposed to do that write is `/planit` (or a raw write after a prompt). The hook can block the prompt before either happens. |
+
+**Cited identity check (the only load-time refuse):**
+
+- Hook `.cursor/hooks/nlc-planit-identity.sh` lines 5–7: runs `python3 tools/fitness-planit-identity.py --skill-only --loaded .agents/skills/planit/SKILL.md`; on non-zero prints deny JSON and `exit 2`.
+- Wiring `.cursor/hooks.json` lines 4–8: `beforeSubmitPrompt` → that hook, `failClosed: true`.
+- Adapter `tools/fitness-planit-identity.py`: imports `tools/nouns/planit_identity/planit_identity.py`.
+- `identity_errors()` lines 31–34: fail if `loaded_path != canonical_path` **or** `content_hash(loaded) != registry.content_sha256`.
+- `prove()` lines 78–81: read those bytes, return those errors. `--skill-only` does not run the evidence/tree-hash branch.
+- Registry `integrity/planit-skill-registry.json`: `canonical_path` = `.agents/skills/planit/SKILL.md`; `content_sha256` = `85a11ef6ce5037d3a4e0c54d074679598a19e347f4e1f80778d4f2f1ad15085e`.
+
+**Today’s identity tool cannot verify a staged path.** `--loaded docs/rca/2026-10-25-planit-unregistered-skill-edit.md` → `VIOLATION loaded path is not the canonical Planit skill` **and** hash mismatch / `PLANIT_IDENTITY:NOT_MET` (exit 1). The live tool only accepts the live canonical path.
+
+**Refute (narrow):** “We will never be able to sign” if “sign” means the owner’s offline clearsign. That still works. What fails is **giving the signature back through Cursor + `/planit` on the edited live tree**. A raw write of pasted armor would work **if** a prompt reached the agent; the owner hook is built to stop that prompt. Climb 2 candidate 1 (bump the registry in the same live produce, before the sidecar) would reopen the hook — and would let a producer rewrite the identity pin without the owner’s act, which RCA 5 / ADR 0052 rejected.
+
+---
+
+### Q2. The self-referential set
+
+An artifact is in this set when it is **both** (a) mandated — identity pin, install fingerprint, and/or gate-set member that needs the owner sidecar — **and** (b) part of the machinery that applies or verifies that pin or signature.
+
+| Artifact | Mandate | Machinery role |
+| -------- | ------- | -------------- |
+| `.agents/skills/planit/SKILL.md` | Identity registry; install hash; gate-set member (manifest line 20) | Intake runs the identity check; standing produce/handoff that would commit pasted armor |
+| `.agents/skills/release/SKILL.md` | Install hash; gate-set member | `/release` runs `ci_fitness.py` (identity + gate-set-manifest) on the release line |
+| `.agents/skills/verify/SKILL.md` | Install hash; gate-set member | `/verify` runs the verify profile, which includes `planit-skill-identity` |
+| `.cursor/hooks/nlc-planit-identity.sh` | Gate-set member (manifest line 47) | Applies the identity refuse on every local prompt |
+| `.cursor/hooks.json` | Gate-set member (line 45) | Wires `failClosed` `beforeSubmitPrompt` |
+| `integrity/planit-skill-registry.json` | Gate-set member (line 745); **is** the identity pin | The hash the hook and fitness tool read |
+| `tools/fitness-planit-identity.py` + `tools/nouns/planit_identity/planit_identity.py` | Gate-set members (lines 1093, 3546–3551) | Identity verifier |
+| `tools/fitness-gate-set-manifest.py` + `tools/nouns/fitness_gate_set_manifest/` + `tools/nouns/gate_set_manifest/` | Gate-set members | Verifies member bytes + sidecar `Content-SHA256` |
+| `tools/generate-gate-set-baseline-manifest.py` | Gate-set member (line 1190) | Writes the unsigned member list the owner is asked to sign |
+| `tools/nouns/gate_set/gate_set.py` | Gate-set member | `derive_gate_set_paths` decides what the signed set *is* |
+| `tools/nouns/owner_sidecar/owner_sidecar.py` | Gate-set member | `verify_sidecar_p1` / `gpg_verify_clearsigned` |
+| `tools/fitness-adr-owner-sidecar.py` | Gate-set member | Same sidecar model for Accepted ADRs |
+| `tools/fitness-no-tool-writes-ratification.py` (C8) | Gate-set member | Forbids tools writing `*.approval.asc` — forces paste-then-agent-commit |
+| `integrity/gate-set-baseline.manifest.sha256` | The signed document | Lists hashes of the verifiers, including itself (self-line) |
+| `integrity/owner-keys/` + `TRUSTED_FINGERPRINTS` | ADR 0052 pin; gate-set members | Trust anchor the sidecar verifier imports |
+| `integrity/releasable-gates.json` | Gate-set member | Puts `planit-skill-identity` on the verify profile |
+| `integrity/nlc-install-hashes.json` + `tools/nlc-install-verify.py` + `tools/nlc-install-hash-update.py` | Install pin; gate-set members | Fingerprints of `/planit`, `/release`, `/verify` |
+| `tools/ci_fitness.py` + `.github/workflows/fitness.yml` | Gate-set members (workflow is the derivation seed) | Runs the verifiers after the tree exists |
+
+**Not in the set (mandated or related, but not a verifier):** `integrity/gate-set-baseline.manifest.sha256.approval.asc` — excluded from `derive_gate_set_paths` (`MANIFEST_APPROVAL_ASC_REL`). It is the signature, not the checker. Published skills that are not load-gates (`interview`, `bbp-*`, …) are mandated members; they are not required to ingest the sidecar.
+
+---
+
+### Q3. What created verifier == verified, with no bootstrap
+
+**Higher than Climb 2. Same family, not the same sentence.**
+
+Climb 2 names the compile that made the mandate a **detector** and signing a **later human step**. That compile was a choice after RCA 4 (do not let CI green be the finish line; do not let producers rewrite receipts) and RCA 5 (hash-only registries let producers restamp without the owner’s act) → ADR 0051 / 0052 / C8 → unsigned-then-sign.
+
+Climb 3 asks what made that the **only** legal path for the gate machinery itself.
+
+Three constraints were bound on the **same live paths**:
+
+1. **ADR 0046** — the live canonical `/planit` bytes must match the registry **before** any Planit work, and Cursor must **deny the prompt** when they do not. The refuse is on the only path the owner uses to talk to the agent.
+2. **ADR 0052 + C8** — only the owner’s clearsigned statement counts; no tool may write the sidecar; agents commit pasted armor after the bytes exist.
+3. **Unsigned-then-sign playbook** — mutate live member bytes first, regenerate an unsigned manifest, owner signs last (`TODO` line 668; v0.3.1 / v0.3.2 notes; walkthrough step 8).
+
+(1) requires the live skill to already match. (2) and (3) require the live skill to have already changed, then to **run again** to commit the armor. No third path was authored: no staging tree, no previously-signed verifier that checks the next bytes, no pinned ingest tool outside the edited skill. `derive_gate_set_paths` then put the skill, the hook, the registry, the identity tool, the manifest generator, and the sidecar verifier **in the same signed closure** as each other.
+
+That is why Climb 2’s “inherit the mandate and wait for the signature” **prevents this incident’s land** and **deadlocks the next intentional `/planit` edit**. The unsigned-then-sign playbook was the workaround for a missing bootstrap, not only a recipe-authoring miss.
+
+---
+
+### Q4. Climb 2 remediations vs the self-referential set — causes that remain
+
+| Climb 2 candidate | On a non-self-ref produce (ordinary skill, ADR, FINDINGS) | On a self-ref produce (`/planit`, hook, identity tool, manifest generator, sidecar verifier, registry) |
+| ----------------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **1. Mandate inheritance** | Closes “local MET, mandate later” for that producer | Forces the produce to wait for the sidecar **while** the live `/planit` / hook already fail identity. Deadlock in Q1. |
+| **2. End unsigned-then-sign as a complete produce** | Closes `da90b90`-class “unsigned regenerate = done” | Same wait. If the registry is **not** bumped until after the sign → hook deny. If the registry **is** bumped first so the hook passes → producer rewrote the identity pin without the owner’s act (RCA 5 class). |
+| **3. GitHub ruleset + required fitness** | Stops a red no-PR land on `release/v*` | Does not give a way to get the sidecar onto the tree when the owner cannot submit a prompt. |
+
+**Causes that would remain after Climb 2 only (this incident or the deadlock can recur):**
+
+1. **Bootstrap deadlock** on an intentional `/planit` edit (Q1). Climb 2 candidate 2 *is* that deadlock.
+2. **In-place edit of any other self-ref member** (hook, `hooks.json`, identity noun, `derive_gate_set_paths`, manifest generator, `owner_sidecar`, C8, `releasable-gates.json`, owner-keys, registry JSON). Inheritance paints those red and waits for a sign; the live verifier that would finish the produce is the file just edited, or `/planit` which still has to load.
+3. **Producer rewrite of the identity registry** if someone “fixes” (1) by bumping `content_sha256` before the owner acts — RCA 5 / ADR 0052 rejected that class.
+4. **Host split land** — two commits (bytes, then sidecar) or a direct push to unprotected `release/v*` (Climb 1). Inheritance does not make git atomic.
+5. **Cloud / hook-absent resume** — a prompt can still land (this cloud run did). `/planit` intake still fails; a session that skips `/planit` can still write armor or further mutate pins.
+6. **Non-self-ref mandate gap** if inheritance (1) is not actually derived and imported — ordinary Skill/ADR/tool/FINDINGS produce still treats the mandate as later (Climb 2 class).
+7. **`derive_gate_set_paths` string-closure** — any new path mentioned from a CI-seeded file joins the signed set. A “fix” path that is not excluded becomes another self-ref member.
+8. **First-time bootstrap of whatever new ingest/staging machinery is added** — that machinery is itself a gate-set member the first time it lands.
+
+Climb 2 remediations do **not** remove this class. They remove “optional later” for producers that are not also the verifier.
+
+---
+
+### Climb 3 — the one thing
+
+> What **one** deterministic, actionable thing, if it were different, would have **prevented this condition from arising**?
+
+**Answer:** The previously signed live gate machinery must remain the verifier of the **next** version. New `/planit` (and other self-ref) bytes are built and signed **off** the live paths; live bytes plus the owner’s signature move onto those paths in **one** commit, or not at all.
+
+That is a trusted bootstrap path. Mandate inheritance (Climb 2) still applies to ordinary producers. It is not sufficient for members of Q2.
+
+**Prevention test:** If **self-ref edits had been required to land only as an atomic activate of already-signed staged bytes, with the live registered `/planit` and live sidecar verifier unchanged until that commit,** had been in place **before** walkthrough step 5, **`d4b4648` changing live `.agents/skills/planit/SKILL.md` to `0e0493b4…` while the registry still said `85a11ef6…`, and the later “sign then `/planit` again” deadlock,** could not have occurred because **the live canonical path would still have matched the registry (owner prompts and `/planit` intake still pass), and the new bytes could not replace that path without the sidecar whose `Content-SHA256` already named them.**
+
+**Completed:** yes (mechanism: trust chain + atomic activate; unsigned live mutation of the verifier is not a legal produce step).
+
+---
+
+### Climb 3 — the root (one sentence)
+
+The identity and signature compile made the live gating skill — and the other gate-set verifiers — both the mandated artifact and the machinery that must run to ingest the owner’s signature, with no separate trusted bootstrap path for signing the gate machinery itself.
+
+**Class:** process (bootstrap / trust-chain), not output. Higher than Climb 2’s “detector vs inherited precondition.” Same RCA 4/5 family.
+
+**Class this climbed root covers:** any produce that mutates a member of the Q2 set while that same set must load, prompt-gate, or ingest the pin or sidecar.
+
+---
+
+### Q5. Remediation candidates that break the deadlock without weakening a gate
+
+Owner preferred (verbatim): “a 'staging' area for new skills - so it can build a new /planit there, I can sign it, and after I sign it, the new version and the signature are put in place all at the same time.” Evaluated first. Not implemented here.
+
+#### Owner preferred — staging area + sign + atomic put-in-place
+
+**Where it lives**
+
+- **Not** `.agents/skills/planit/SKILL.md`. That path is `CANONICAL_PATH` / registry `canonical_path`. The hook and `--skill-only --loaded` check only that file.
+- **In-repo prefix excluded from `derive_gate_set_paths`**, same posture as `docs/rca/` in `GATE_SET_EXCLUSIONS` (`tools/nouns/gate_set/gate_set.py` lines 18–21, 249–270). Illustrative shape only: `staging/skills/planit/SKILL.md` (and the same prefix for any other staged self-ref artifact). Exclusion must be **by prefix**, not by hoping the path is never mentioned: `_py_edges` / `_resolve_ref` will pull a tracked path into the signed closure if a CI-seeded file contains that string.
+- **Not** a second live skill name that a harness can load as `/planit`. ADR 0046 exists to stop that. Staging is a candidate, not a loadable Planit.
+- Weaker alternatives: owner-local bundle (harder for the agent to iterate); separate worktree at signed HEAD (prompts work; the activate commit still has to be atomic).
+
+**How the live (still-signed) machinery stays the verifier**
+
+1. Live `.agents/skills/planit/SKILL.md` still matches `integrity/planit-skill-registry.json`. Hook allow. `/planit` intake can PASS. That live `/planit` is what writes the staging tree.
+2. Live `manifest_bytes(..., overrides=...)` already exists (`tools/nouns/gate_set_manifest/gate_set_manifest.py` lines 40–52). The live generator can compute the **proposed** member list as if staged bytes were already at the canonical paths, without touching those paths.
+3. Owner signs that **proposed** manifest (ADR 0052 statement: `Document: integrity/gate-set-baseline.manifest.sha256`, `Content-SHA256` of the proposed bytes). Offline. Live `/planit` can ask for that sign because live identity still matches.
+4. Live `verify_sidecar_p1` / `verify_sidecar_p1_on_bytes` (`owner_sidecar.py` lines 565–590, 655–677) checks the pasted armor against the **proposed** bytes, using live `integrity/owner-keys/` + `TRUSTED_FINGERPRINTS`. The staged `/planit` is never loaded to verify itself.
+5. Today’s `fitness-planit-identity.py` cannot be pointed at the staged file (`loaded path is not the canonical Planit skill`). Do **not** teach the hook to accept a staged path as live Planit. Either (a) the proposed-manifest sidecar is the sign over the new planit hash (already a member line), or (b) add a live-tool **candidate** mode that hashes staged bytes and does not change `canonical_path`. (b) is optional if (a) holds.
+
+**How the swap is atomic**
+
+One git commit, or nothing:
+
+1. Staged bytes → live canonical paths (at least `.agents/skills/planit/SKILL.md`; any other staged self-ref members).
+2. `integrity/planit-skill-registry.json` `content_sha256` → the new live hash.
+3. `integrity/nlc-install-hashes.json` rows for those published skills.
+4. `integrity/gate-set-baseline.manifest.sha256` **exactly** the proposed bytes the owner signed.
+5. `integrity/gate-set-baseline.manifest.sha256.approval.asc` the pasted armor.
+
+After that commit the hook, `PLANIT_IDENTITY`, install-verify, and sidecar P1 go green together. Two commits (bytes, then sidecar) reopen the Q1 window. A ruleset that requires the fitness job (Climb 1 candidate 2) is what stops a split push onto `release/v*`. C8 stays: no tool writes the `.asc`; the activate commit includes owner armor unchanged.
+
+**What it closes vs what remains**
+
+| Closes | Remains |
+| ------ | ------- |
+| Q1 deadlock for an intentional `/planit` skill edit | In-place edit of other Q2 members if they are **not** staged (hook, identity noun, `derive_gate_set_paths`, generator, `owner_sidecar`, C8, registry, owner-keys) |
+| Using the new unsigned `/planit` to ingest its own sidecar | Accidental write to the live canonical path before activate (hook deny returns). Produce must refuse live `/planit` writes except in the activate commit |
+| Climb 2 candidate 2 applied to `/planit` itself | Staging prefix leaking into the gate-set via a CI-seeded string reference (Q4.7) |
+| Producer rewrite of the registry as the way to unblock the hook | First land of the staging exclusion / activate procedure itself (Q4.8) — that land needs its own signed activate or a one-time owner-attended bootstrap |
+| | Climb 2 class for ordinary (non-self-ref) producers if inheritance is not also done |
+| | Climb 1 host class: unprotected `release/v*` still accepts a split or no-PR push |
+| | Cloud session that edits live `/planit` anyway (hook absent). Inheritance + activate refuse still required as the produce gate |
+
+**Minimum staging surface:** the Q2 set, not “new skills” in general. Ordinary published skills can be produced by live `/planit` once live identity matches; they need inheritance (Climb 2) and an owner sidecar on the gate-set, not a second Planit. If the owner’s “new skills” means “any skill that is also a load-gate,” that is the Q2 skill rows only.
+
+#### Other candidates (same bar: break deadlock, do not weaken a gate)
+
+| # | Candidate | Prevents | Remains |
+| - | --------- | -------- | ------- |
+| S | **Owner staging + atomic activate** (preferred, above) | Live verifier stays signed until the next signed bytes replace it | Q2 members left out of staging; host split; first bootstrap of staging itself; Climb 2 if inheritance skipped |
+| T | **Trust chain without a directory:** live tools verify a proposed-bytes bundle (overrides + sidecar) and the activate commit is the only write to live paths | Same as S if the bundle cannot be loaded as `/planit` | Same remain list; easier to lose the “don’t load this” rule if the bundle is a second `SKILL.md` on a harness search path |
+| U | **Pinned ingest tool outside the edited skill** (tiny activate/verify-candidate binary or script, rarely changed, itself in Q2 and staged when *it* changes) | Signature ingest does not require loading the edited `/planit` | Editing that ingest tool recreates Q1 unless *it* is staged; extra pin to keep |
+| V | **Bump live registry first so the hook passes, then sign** | Owner can submit prompts | **Weakens ADR 0052 / RCA 5** — producer rewrites the identity pin. Reject as a remediation |
+| W | **Disable or bypass the hook to deliver the sidecar** | Owner can submit prompts | **Weakens ADR 0046**. Reject |
+| X | Climb 2 (1)+(2) only | Ordinary “optional later” | **Q1 deadlock** and Q4.1–Q4.3 |
+
+**Recommend S (owner staging + atomic activate) as the Climb 3 one thing**, with Climb 2 inheritance still required for non-self-ref producers, and Climb 1 ruleset still required so activate cannot be split on `release/v*`. Do not implement V or W.
 
 RCA only. No remediation commit.
