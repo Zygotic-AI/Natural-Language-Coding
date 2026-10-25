@@ -442,6 +442,9 @@
       "gate_set_manifest",
       "owner_sidecar"
     ],
+    "adrs/0056-per-file-adr-detached-signatures.md": [
+      "gate_set_manifest"
+    ],
     "adrs/ACTIVE.md": [
       "gate_set_manifest"
     ],
@@ -452,12 +455,6 @@
       "gate_set_manifest"
     ],
     "adrs/README.md": [
-      "gate_set_manifest"
-    ],
-    "adrs/owner-approvals/adr-batch-47.approval.asc": [
-      "gate_set_manifest"
-    ],
-    "adrs/owner-approvals/fix-pr.approval.asc": [
       "gate_set_manifest"
     ],
     "agents/README.md": [
@@ -2456,6 +2453,9 @@
     "scripts/nlc-release.sh": [
       "gate_set_manifest"
     ],
+    "scripts/sign-adrs.sh": [
+      "gate_set_manifest"
+    ],
     "templates/adopter/README.md": [
       "gate_set_manifest"
     ],
@@ -2513,7 +2513,7 @@
     "tools/assert-adr-approval-mismatch-fails.py": [
       "gate_set_manifest"
     ],
-    "tools/assert-adr-batch-approval-fails.py": [
+    "tools/assert-adr-detached-sig-fails.py": [
       "gate_set_manifest"
     ],
     "tools/assert-adr-status-heading-fails.py": [
@@ -2931,6 +2931,9 @@
       "gate_set_manifest"
     ],
     "tools/assert-shipped-tag-audit-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-sign-adrs-script-passes.py": [
       "gate_set_manifest"
     ],
     "tools/assert-skill-author-check-fails.py": [
@@ -4058,6 +4061,21 @@
     "tools/nouns/adr_bind_snapshot/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/adr_file_sig/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/adr_file_sig/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/adr_file_sig/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/adr_file_sig/adr_file_sig.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/adr_file_sig/fields.txt": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/adr_lineage_check/README.md": [
       "gate_set_manifest"
     ],
@@ -4163,19 +4181,19 @@
     "tools/nouns/assert_adopter_verify_fast_green_passes/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
-    "tools/nouns/assert_adr_batch_approval_fails/README.md": [
+    "tools/nouns/assert_adr_detached_sig_fails/README.md": [
       "gate_set_manifest"
     ],
-    "tools/nouns/assert_adr_batch_approval_fails/__init__.py": [
+    "tools/nouns/assert_adr_detached_sig_fails/__init__.py": [
       "gate_set_manifest"
     ],
-    "tools/nouns/assert_adr_batch_approval_fails/adjectives.txt": [
+    "tools/nouns/assert_adr_detached_sig_fails/adjectives.txt": [
       "gate_set_manifest"
     ],
-    "tools/nouns/assert_adr_batch_approval_fails/assert_adr_batch_approval_fails.py": [
+    "tools/nouns/assert_adr_detached_sig_fails/assert_adr_detached_sig_fails.py": [
       "gate_set_manifest"
     ],
-    "tools/nouns/assert_adr_batch_approval_fails/fields.txt": [
+    "tools/nouns/assert_adr_detached_sig_fails/fields.txt": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_agent_noun_structure_passes/README.md": [
@@ -6435,6 +6453,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_shipped_tag_audit_fails/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_sign_adrs_script_passes/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_sign_adrs_script_passes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_sign_adrs_script_passes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_sign_adrs_script_passes/assert_sign_adrs_script_passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_sign_adrs_script_passes/fields.txt": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_skill_author_check_fails/README.md": [

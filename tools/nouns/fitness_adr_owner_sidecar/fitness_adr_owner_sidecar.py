@@ -1,4 +1,8 @@
-"""ADR 0052 step 2: OpenPGP sidecar required for every Accepted document (C6)."""
+"""Accepted ADRs require a per-file detached owner signature (ADR 0056 / C6).
+
+Non-ADR Accepted documents still use the clearsigned sidecar (ADR 0052).
+A batch owner-approvals statement does not cover an ADR.
+"""
 
 from __future__ import annotations
 
@@ -9,12 +13,15 @@ import subprocess
 import sys
 from pathlib import Path
 
+from nouns.adr_file_sig.adr_file_sig import (
+    numbered_adr_rel,
+    verify_adr_detached_signature,
+)
 from nouns.owner_sidecar.owner_sidecar import (
-    committed_batch_file_errors,
     document_status_errors,
     non_adr_status_errors,
     read_status_line,
-    verify_owner_signed,
+    verify_sidecar_p1,
 )
 
 _ADR_FILE = re.compile(r"^(\d{4})-.+\.md$")
@@ -75,9 +82,11 @@ def sidecar_errors(root: Path) -> list[str]:
         for path in sorted(adrs.glob("[0-9][0-9][0-9][0-9]-*.md")):
             rel = path.relative_to(root).as_posix()
             errors.extend(document_status_errors(rel, path))
-    errors.extend(committed_batch_file_errors(root))
     for rel in accepted_document_rels(root):
-        errors.extend(verify_owner_signed(root, rel))
+        if numbered_adr_rel(rel):
+            errors.extend(verify_adr_detached_signature(root, rel))
+        else:
+            errors.extend(verify_sidecar_p1(root, rel))
     for rel in _git_tracked_files(root):
         if not rel.endswith(".md"):
             continue

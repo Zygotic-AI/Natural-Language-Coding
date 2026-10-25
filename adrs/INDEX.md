@@ -65,6 +65,7 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0053 | 2026-10-13 | text retrofit for stale 0051/0052 sentences | proposed | — | L-0053 |
 | 0054 | 2026-10-24 | RCA 2026-10-20 published-skill author contract | active | — | L-0054 |
 | 0055 | 2026-10-25 | staged activation of gate machinery | active | — | L-0055 |
+| 0056 | 2026-10-25 | per-file detached owner signatures for ADRs | proposed | — | L-0056 |
 
 ## Lineage format
 
