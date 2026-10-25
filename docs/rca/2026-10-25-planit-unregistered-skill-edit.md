@@ -736,3 +736,11 @@ These are process requirements on **how signing is designed**. They are not prod
 **Recommend P+L as the Climb 4 one thing** (walkthrough + the known-bad that makes the walkthrough refuse). T and S are how that one thing is compiled into ADR review and the existing brief gate. Climb 3 product shape (staging + atomic activate) is what a passing L case looks like. Do not implement here.
 
 RCA only. No remediation commit.
+
+---
+
+## Remediation status
+
+**ADR 0055** (staged activation of gate machinery) and the repaired published skills merged via PR #29 (`bfe327c`). That batch is owner-signed by Richard's key `9D1BD57770FC3A1DE84702750AFD22B063AE01BC`. The GitHub `release/*` ruleset `release-line-no-direct-push` is active (id `25824126`).
+
+This record does not implement remediations. Climbs 1–4 are unchanged.
