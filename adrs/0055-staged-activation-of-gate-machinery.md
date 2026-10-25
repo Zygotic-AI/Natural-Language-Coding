@@ -58,7 +58,7 @@ Key rotation stays ADR 0052 decision 3: a currently pinned key authorizes a new 
 
 ### First bootstrap (this activation)
 
-The staging prefix, activate tool, derived-set generator, mandate list, and this record cannot be staged by machinery that does not yet exist. The first land is a one-time owner-attended bootstrap: this tree introduces the tools, keeps the nine published `SKILL.md` files, regenerates the Planit registry and install hashes **from bytes**, regenerates the gate-set manifest, and waits on the owner signing statement at `adrs/owner-approvals/staged-signing.statement.txt` for this ADR and that manifest. After those tools exist on the release-line base, further self-ref edits use staging + activate only.
+The staging prefix, activate tool, derived-set generator, mandate list, and this record cannot be staged by machinery that does not yet exist. The first land is a one-time owner-attended bootstrap: this tree introduces the tools, keeps the nine published `SKILL.md` files, regenerates the Planit registry and install hashes **from bytes**, regenerates the gate-set manifest, and waits on the owner signing statement at `adrs/owner-approvals/staged-signing.statement.txt` for this ADR and that manifest. That unsigned statement is excluded from gate-set derivation, the hub content-tree digest, and verify fingerprints (same class as the manifest sidecar) so it can name the manifest digest without a cycle. After those tools exist on the release-line base, further self-ref edits use staging + activate only.
 
 ## Consequences
 

@@ -27,9 +27,15 @@ _BASES = ("", "tools/", "tools/nouns/")
 _TOKEN = re.compile(r"[A-Za-z0-9_.\-/*]+")
 _NAMESPACE_ROOTS = frozenset({"tools", "tools/nouns"})
 
-# Ratification sidecar: excluded from closure and hub digest (exact path; not a pattern).
+# Ratification sidecar and the unsigned owner statement that lists that
+# manifest hash: excluded from closure (exact paths; not a pattern). Including
+# the statement would cycle: statement names the manifest digest; the
+# manifest would then name the statement digest.
 MANIFEST_APPROVAL_ASC_REL = "integrity/gate-set-baseline.manifest.sha256.approval.asc"
-_DERIVATION_EXCLUDE: frozenset[str] = frozenset({MANIFEST_APPROVAL_ASC_REL})
+BOOTSTRAP_STATEMENT_REL = "adrs/owner-approvals/staged-signing.statement.txt"
+_DERIVATION_EXCLUDE: frozenset[str] = frozenset(
+    {MANIFEST_APPROVAL_ASC_REL, BOOTSTRAP_STATEMENT_REL}
+)
 
 
 def _is_derivation_excluded(rel: str) -> bool:

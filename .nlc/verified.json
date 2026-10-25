@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "algorithm": "sha256",
-  "recorded_at": "2026-10-15T18:35:32Z",
-  "hub": "0.3.0",
+  "recorded_at": "2026-10-25T02:10:58Z",
+  "hub": "0.3.3",
   "files": {
     "adrs/0001-zero-variance-integrity.md": "a1e61d6c2998a3595b51983cc9ad029513e36fcc23878d62a80f8fee778693d2",
     "adrs/0002-p2-scope.md": "24197a401ae9707d33f09a2bb3916cc31f2177e2606c50a3adff86fa011a102c",
@@ -57,10 +57,13 @@
     "adrs/0051-hub-own-produce-principles.md": "b0c1bfc37a9a1e605c58c5237cf0fcdc95b5f21083bb7d57c3c321a8e27aae31",
     "adrs/0052-owner-openpgp-ratification-amends-0051.md": "b9375405af9c14820cca24bfce03cbe2c7578bb10a9747e946e1fc314210a6f4",
     "adrs/0053-0051-0052-text-retrofit.md": "60f38fe29b10b0871e9bc1006f7402a2a8461e6e75b1b581ee1541ea09fbc4fe",
-    "adrs/ACTIVE.md": "73de9f1f20bfd46881eb1f529f132d9f4d8981c204cc6ff82e39e187da6b9edc",
-    "adrs/CATALOG.md": "1b9367f50364a6d602b68dd0e6b6e6fea4317e7124b09c58485723e18a705db9",
-    "adrs/INDEX.md": "32f7ce0b7fa01034e9f8ba293380674cdd2106ee8286384e8999b412f52c54d5",
-    "adrs/README.md": "d5dc2689f3ecf3b1101870352c01dd8c67815687307bd8af272acd7f32a6d8ba",
+    "adrs/0054-published-skill-author-contract.approval.asc": "4f99e9ac13063e4ec376377a443eb9bb081fa5ff0f9bb475847ea66c353cc7d1",
+    "adrs/0054-published-skill-author-contract.md": "a958e22033ff29d9657c73b289ae970dacfdfe396d8f010eaede12adf135dbdf",
+    "adrs/0055-staged-activation-of-gate-machinery.md": "2c88ffbac28bd00fd38db24057c045b18bd94ba90ba5592e100068e364810514",
+    "adrs/ACTIVE.md": "4d5f51559816eaee3427210e7dc6fb498d11b0a527af8fe03c04c058b0f6ea37",
+    "adrs/CATALOG.md": "8ddf7a8f1aaade7c491c631aa33a12b6240294e99adce76058a5148cf1a190a0",
+    "adrs/INDEX.md": "37e3e50ddc9fcdd76ae9e5e5ed3923ee3b141f7943be2287c2649fc5755f42cc",
+    "adrs/README.md": "e57b9c5ffb445bb43ef695d1386f7954d8fed5b8e496f0e6478b826b4bf2ad6e",
     "adrs/owner-approvals/adr-batch-47.approval.asc": "b359d44057d59b6ca321e3138ad75f791b9c16739846bb240b13db369cdfa923",
     "adrs/owner-approvals/fix-pr.approval.asc": "c409e0bd928a426a6d0803f0c415795c4b49af267bea5413b893477e159c2bef",
     "rules/goal-bindings.json": "9956a3632532a8878e57aed3cd6ba26aa607d1b06ddffb882d10e50872255ba8",
@@ -70,11 +73,13 @@
     "rules/nlc-0038.json": "058361f60936e0fe98d0e939571a6a1c6071ac8e442175bc96a2810af420d98f",
     "knowledge/facts.json": "2087fe02479cf0c3489c3f3f46a3f6701e67d8a835742a09f44d0095df49b395",
     "goals/hub_fitness_check1/execute.sh": "e7a09fae8d08234b095b486bac143a58926e93b144e74f49940d45705bd5c503",
-    "goals/hub_install/execute.ps1": "2a38a3bae5698ea7d4da4f39fe938ed78bf1b47437ba7a34feb7a0873c82cfbd",
-    "goals/hub_install/execute.sh": "2abc848b8fe3a5ca59a81dd07b768a69ed35e9ff711628a9144b89d376e31e23",
+    "goals/hub_install/execute.ps1": "c08f5280e53668408448a4e5d4ca2b58fa3175a399010cd138054ed5ace8d0f0",
+    "goals/hub_install/execute.sh": "d53c95e12d10c69d347998910043657c85c750ce1a4958218e1f5bb55f9489df",
     "goals/hub_release/execute.sh": "e08c97ad18daa0a2f1b2f5193e3bce2a9c852afc26f4cd684a5ef7a16bd49373",
     "goals/hub_release_prep/execute.sh": "265ccd5bf4b0d12a0f3f270ac1a1de6f004f2d443d52b224fbddbe660e170cea",
     "goals/hub_release_smoke/execute.sh": "250f69f04350be07b67361896ff787d2698344700101395f933ef0d50309b887",
-    "goals/hub_session/execute.sh": "5cf487c368aec36bb3ed49070af039c60c4e4f5e484cfd76fb0f30a488ffe962"
+    "goals/hub_session/execute.sh": "5cf487c368aec36bb3ed49070af039c60c4e4f5e484cfd76fb0f30a488ffe962",
+    "goals/hub_skill_author_check/execute.ps1": "b51d3b0dd9385e7459fa6e92e16e89566fa3e20ecccc7a6af14de499213c0c9f",
+    "goals/hub_skill_author_check/execute.sh": "cdc99b749fc73108a4e1b710a44eccb34658863aca18c25a6b2a3395f5c02392"
   }
 }

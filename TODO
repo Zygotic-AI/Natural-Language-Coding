@@ -684,5 +684,6 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 - ✔ Stage/activate tools; fitness refuse of live-member edits; Planit registry generated from bytes @done(26-10-25 01:50)
 - ✔ Known-bads: direct live edit, split land, skill without registry, legitimate verifier change via staging @done(26-10-25 01:50)
 - ✔ GitHub ruleset JSON for `release/*` (no direct push; require fitness) @done(26-10-25 01:50)
+- ✔ Unsigned owner signing statement at `adrs/owner-approvals/staged-signing.statement.txt` (ADR 0055 + regenerated gate-set manifest; waits on owner clearsign) @done(26-10-25 02:15)
 - ☐ Owner clearsign of `adrs/owner-approvals/staged-signing.statement.txt` (ADR 0055 + regenerated gate-set manifest)
 - ☐ Apply the `release/*` GitHub ruleset when the token allows
