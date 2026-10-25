@@ -1,6 +1,6 @@
 # ADR 0054 — Published-skill author contract
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-24
 - Deciders: Human manager
 - Class: F (integrity / hub produce)
@@ -31,12 +31,12 @@ This record does **not** add Skill as a content type. That type recipe is a late
 
 6. **Landmine stays red.** `examples/skill-author-check-landmine/` must remain `SKILL_AUTHOR:NOT_MET`. Wiring MET does not require live hub skills MET.
 
-7. **ACTIVE tip.** This record is an ACTIVE tip: the binder applies it. File Status stays Proposed until the owner Accepts and signs. Presence fitness remains the compile binder that install still calls the same checklist.
+7. **ACTIVE tip.** This record is an ACTIVE tip: the binder applies it. Presence fitness is the compile binder that install still calls the same checklist. Owner ratification is the sidecar beside this file.
 
 ## Consequences
 
 - Version class **minor** on the 0.4.0 line (new policy + use-case).
-- Owner OpenPGP sidecar is required only when Status becomes Accepted.
+- Owner OpenPGP sidecar sits beside this file (`0054-published-skill-author-contract.md.approval.asc`).
 - Current published hub skills remain unloadable until the later repair step. The check stays hard.
 
 ## Rejected
