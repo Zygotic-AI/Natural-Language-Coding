@@ -8,9 +8,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 FIX = ROOT / "tools/fixtures/owner-ratification-sidecar"
 CASES = (
-    ("9998-heading-status-accepted.md", "adrs/9998", "missing sidecar", True),
+    ("9998-heading-status-accepted.md", "adrs/9998", "missing detached signature", True),
     ("9997-unparseable-status.md", "adrs/9997", "unparseable or unknown Status", False),
-    ("9996-bold-status-accepted.md", "adrs/9996", "missing sidecar", True),
+    ("9996-bold-status-accepted.md", "adrs/9996", "missing detached signature", True),
 )
 
 

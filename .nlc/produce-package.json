@@ -36,7 +36,7 @@
       },
       {
         "leaf_id": "C6",
-        "statement": "Every Accepted document requires a valid owner sidecar; hash receipts are not ratification.",
+        "statement": "Every Accepted numbered ADR requires a valid per-file detached owner signature; a batch statement does not cover.",
         "exit_status": "REFUSE",
         "evidence_path": "tools/fitness-adr-owner-sidecar.py"
       },
@@ -87,7 +87,7 @@
     }
   ],
   "ssot_leaf_ids": ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11"],
-  "ssot_exit_status": "property leaves C1-C11 MET or REFUSE with evidence; owner ratification of legacy ADR sidecars and the unsigned gate-set manifest is outstanding",
+  "ssot_exit_status": "property leaves C1-C11 MET or REFUSE with evidence; owner per-file ADR detached signatures and the regenerated gate-set manifest signature are outstanding",
   "quality_snapshot": {
     "opportunities": 1,
     "ops": 1,
