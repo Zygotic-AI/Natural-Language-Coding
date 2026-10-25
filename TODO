@@ -696,5 +696,6 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 - ✔ Delete batch-ratification statement/signature files and batch-only landmine @done(26-10-25 17:20)
 - ✔ ADR 0056 Proposed: per-file detached signatures; gate-set manifest stays single-signed @done(26-10-25 17:20)
 - ✔ Stage verifier candidate (ADR 0055); regenerate unsigned manifest; do not sign @done(26-10-25 17:20)
+- ✔ `scripts/sign-adrs.sh` thin entry to `goals/sign_adrs/execute.sh`; `staging/` is a contained fixture (executable-shape MET) @done(26-10-25 17:30)
 - ☐ Owner run of `scripts/sign-adrs.sh` on `cursor/per-file-adr-sigs-54bd` (catch-up `.md.asc` files)
 - ☐ Owner clearsign of the regenerated gate-set manifest statement after catch-up

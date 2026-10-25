@@ -13,6 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 SCRIPT = ROOT / "scripts" / "sign-adrs.sh"
+GOAL = ROOT / "goals" / "sign_adrs" / "execute.sh"
 
 
 def _run(
@@ -59,6 +60,9 @@ def _check(ok_flag: bool, name: str, detail: object, acc: list[bool]) -> None:
 def main() -> int:
     if not SCRIPT.is_file():
         print("ASSERT:FAIL missing scripts/sign-adrs.sh")
+        return 1
+    if not GOAL.is_file():
+        print("ASSERT:FAIL missing goals/sign_adrs/execute.sh")
         return 1
     tmp = Path(tempfile.mkdtemp(prefix="nlc-sign-adrs-"))
     tree = tmp / "r"
@@ -134,7 +138,14 @@ def main() -> int:
         out[-280:],
         acc,
     )
-    text = SCRIPT.read_text(encoding="utf-8")
+    wrapper = SCRIPT.read_text(encoding="utf-8")
+    _check(
+        "exec " in wrapper and "goals/sign_adrs/execute.sh" in wrapper,
+        "scripts/sign-adrs.sh is a thin entrypoint to the goal",
+        "exec wrapper",
+        acc,
+    )
+    text = GOAL.read_text(encoding="utf-8")
     _check(
         "--pinentry-mode error" in text
         and "default-cache-ttl" in text

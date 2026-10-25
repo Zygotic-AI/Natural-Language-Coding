@@ -1912,6 +1912,9 @@
     "goals/hub_skill_author_check/execute.sh": [
       "gate_set_manifest"
     ],
+    "goals/sign_adrs/execute.sh": [
+      "gate_set_manifest"
+    ],
     "integrity/ACTIONS.md": [
       "gate_set_manifest"
     ],

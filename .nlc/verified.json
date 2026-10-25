@@ -79,6 +79,7 @@
     "goals/hub_release_smoke/execute.sh": "250f69f04350be07b67361896ff787d2698344700101395f933ef0d50309b887",
     "goals/hub_session/execute.sh": "5cf487c368aec36bb3ed49070af039c60c4e4f5e484cfd76fb0f30a488ffe962",
     "goals/hub_skill_author_check/execute.ps1": "b51d3b0dd9385e7459fa6e92e16e89566fa3e20ecccc7a6af14de499213c0c9f",
-    "goals/hub_skill_author_check/execute.sh": "cdc99b749fc73108a4e1b710a44eccb34658863aca18c25a6b2a3395f5c02392"
+    "goals/hub_skill_author_check/execute.sh": "cdc99b749fc73108a4e1b710a44eccb34658863aca18c25a6b2a3395f5c02392",
+    "goals/sign_adrs/execute.sh": "7d59a20d3f4762423c8eef83f9bc4d6d8a118b4749699845ac30979f73b1a5c7"
   }
 }
