@@ -43,6 +43,17 @@ PLANIT is the compile process; BBP is the shape (`docs/nlc/compiler/MERGE.md`). 
 
 **Identity (blocking).** Canonical path: `.agents/skills/planit/SKILL.md`. Registry: `integrity/planit-skill-registry.json` (path + content hash). Before planning, run `python3 tools/fitness-planit-identity.py --skill-only --loaded .agents/skills/planit/SKILL.md`. Intake fails when the loaded bytes do not match. Cursor runs `.cursor/hooks/nlc-planit-identity.sh` on `beforeSubmitPrompt` and blocks the prompt on mismatch. Every Planit handoff records `planit_skill_path` and `planit_skill_sha256` from that registry.
 
+## Gate — CONTROL-LIFECYCLE (control or gate design)
+
+When the work designs a pin, sidecar, hook, verifier, registry, or trusted-key list, do **not** Accept or wire until every **blocking** row is true. Checked rules — not prose only.
+
+| Criterion | Blocking? | Pass when (true if…) | Evidence |
+| --------- | --------- | -------------------- | -------- |
+| Lifecycle walkthrough | yes when control or gate design | Plan/ADR walks create, change, sign, ingest, rotate, and first bootstrap | Named section in the plan or ADR |
+| Known-bad legitimate change to the verifier | yes when control or gate design | A staged path exists; the live verifier stays signed until atomic activate; `python3 tools/assert-verifier-change-via-staging-passes.py` is ASSERT:PASS | Command output |
+| Self-ref members stay off live paths | yes when the path is in `python3 tools/derive-self-ref-set.py` | Candidates live under `staging/<change-id>/`; live edit outside activate is refused | `python3 tools/fitness-live-self-ref-activation.py` |
+| Mandated pins imported | yes when a mandated path is touched | Pins move in the same change; unsigned manifest is INCOMPLETE, not done | `python3 tools/derive-mandated-paths.py` + `python3 tools/fitness-mandate-inheritance.py` |
+
 After all **blocking** rows are **true**, emit **`## Verdict — Planit intake gate`** per [`operation-verdict-standard.md`](references/operation-verdict-standard.md) §4, then proceed to AWL Phase 2.
 
 ## Procedure
@@ -136,7 +147,7 @@ Use AWL **Appendix D** plan template. Add **Leaf skill / procedure** column when
 Attack plan and statements: unbound items, god-noun, split adjectives, **noun inheritance** (ADR 0008), missing impact, wrong charter class, raw I/O that is not a primitive function (ADR 0009). **Hub:** **`bbp-reviewer`** on the proposal package; findings cite `R*` / `C*` / `P*`.
 
 
-**Register rows must include:** `GATE-STD` (planned artifacts will ship with §2-compliant gates).
+**Register rows must include:** `GATE-STD` (planned artifacts will ship with §2-compliant gates). When the work is a **control or gate design**, also `CONTROL-LIFECYCLE` (create, change, sign, ingest, rotate, first bootstrap + known-bad legitimate change to the verifier through staging).
 
 Emit **`## Verdict — Planit plan audit`** per [`operation-verdict-standard.md`](references/operation-verdict-standard.md) §4 before bind close-out and before AWL Phase 5.
 

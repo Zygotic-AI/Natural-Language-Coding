@@ -12,6 +12,11 @@
       "id": "in-skill-links",
       "blocking": true,
       "summary": "Relative markdown links resolve inside the published skills tree (no ../../../ repo paths that vanish after install)"
+    },
+    {
+      "id": "mandate-pins",
+      "blocking": true,
+      "summary": "Imported mandated-path list (python3 tools/derive-mandated-paths.py). Touching a listed skill path without moving its pins in the same change is a produce-time refuse. A regenerated-but-unsigned manifest is INCOMPLETE produce."
     }
   ]
 }

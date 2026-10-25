@@ -28,6 +28,11 @@ FORBID_CLAUSE_NEEDLES = (
     "broadening an exemption",
     "rewriting a receipt",
 )
+CONTROL_LIFECYCLE_NEEDLES = (
+    "create, change, sign, ingest, rotate",
+    "first bootstrap",
+    "legitimate change to the verifier",
+)
 _DEFAULT_HUB_MATERIAL_GLOBS = (
     "adrs/**",
     "docs/**",
@@ -344,6 +349,16 @@ def validate_hub_brief(root: Path, data: dict[str, Any]) -> tuple[bool, str]:
             return False, f"R-HUB-BRIEF-FORBID-WEAKEN: brief missing leaf id {leaf_id}"
         if not leaf_id:
             return False, f"R-HUB-BRIEF-FORBID-WEAKEN: property_leaf_goals[{index}].leaf_id missing"
+    control_design = bool(data.get("control_or_gate_design")) or (
+        "control or gate design" in text.lower()
+    )
+    if control_design:
+        for needle in CONTROL_LIFECYCLE_NEEDLES:
+            if needle not in text:
+                return (
+                    False,
+                    f"R-HUB-BRIEF-FORBID-WEAKEN: control or gate design missing {needle!r}",
+                )
     return True, "brief names property leaves and forbid clause"
 
 

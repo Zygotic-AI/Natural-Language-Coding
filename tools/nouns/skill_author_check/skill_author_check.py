@@ -9,8 +9,6 @@ import re
 import sys
 from pathlib import Path
 
-import yaml
-
 ROOT = Path(__file__).resolve().parents[3]
 CHECKLIST = ROOT / "integrity" / "skill-author-checklist.json"
 NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9-]*$")
@@ -26,13 +24,34 @@ def load_checklist() -> list[dict]:
 
 
 def extract_frontmatter(text: str) -> tuple[str | None, str | None]:
-    if not text.startswith("---\n"):
+    normalized = text.replace("\r\n", "\n")
+    if not normalized.startswith("---\n"):
         return None, "missing opening ---"
-    rest = text[4:]
+    rest = normalized[4:]
     end = rest.find("\n---\n")
     if end < 0:
         return None, "missing closing ---"
     return rest[:end], None
+
+
+def parse_frontmatter_mapping(fm: str) -> dict[str, str] | str:
+    """Stdlib key: value mapping. Install must not require PyYAML."""
+    data: dict[str, str] = {}
+    for raw in fm.replace("\r\n", "\n").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        if ":" not in line:
+            return f"YAML parse error: unparseable line {line!r}"
+        key, _, rest = line.partition(":")
+        key = key.strip()
+        val = rest.strip()
+        if len(val) >= 2 and val[0] == val[-1] and val[0] in {"'", '"'}:
+            val = val[1:-1]
+        if not key:
+            return f"YAML parse error: empty key in {line!r}"
+        data[key] = val
+    return data
 
 
 def check_frontmatter_yaml(skill_dir: Path, skill_md: Path, text: str) -> list[str]:
@@ -40,10 +59,10 @@ def check_frontmatter_yaml(skill_dir: Path, skill_md: Path, text: str) -> list[s
     fm, err = extract_frontmatter(text)
     if err:
         return [f"frontmatter-yaml {rel}: {err}"]
-    try:
-        data = yaml.safe_load(fm)
-    except yaml.YAMLError as exc:
-        return [f"frontmatter-yaml {rel}: YAML parse error: {exc}"]
+    parsed = parse_frontmatter_mapping(fm)
+    if isinstance(parsed, str):
+        return [f"frontmatter-yaml {rel}: {parsed}"]
+    data = parsed
     if not isinstance(data, dict):
         return [f"frontmatter-yaml {rel}: frontmatter must be a mapping"]
     name = data.get("name")
@@ -88,12 +107,33 @@ def check_in_skill_links(skills_root: Path, md_path: Path, text: str) -> list[st
     return violations
 
 
+def _hub_root_for_skills(skills_root: Path) -> Path | None:
+    resolved = skills_root.resolve()
+    if resolved.name != "skills" or resolved.parent.name != ".agents":
+        return None
+    hub = resolved.parent.parent
+    if (hub / "CHARTER.md").is_file() and (hub / "integrity" / "planit-skill-registry.json").is_file():
+        return hub
+    return None
+
+
+def check_mandate_pins(skills_root: Path) -> list[str]:
+    """Imported mandated-path list: skill edits must move pins in the same change."""
+    hub = _hub_root_for_skills(skills_root)
+    if hub is None:
+        return []
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from nouns.mandated_paths.mandated_paths import pin_move_errors
+
+    return pin_move_errors(hub)
+
+
 def run_checks(skills_root: Path) -> list[str]:
     root = skills_root.resolve()
     if not root.is_dir():
         return [f"skills root missing: {root}"]
     wanted = {c["id"] for c in load_checklist()}
-    unknown = wanted - {"frontmatter-yaml", "in-skill-links"}
+    unknown = wanted - {"frontmatter-yaml", "in-skill-links", "mandate-pins"}
     violations: list[str] = []
     for cid in sorted(unknown):
         violations.append(f"checklist id {cid} has no implementation")
@@ -112,6 +152,8 @@ def run_checks(skills_root: Path) -> list[str]:
                 continue
             text = md_path.read_text(encoding="utf-8")
             violations.extend(check_in_skill_links(root, md_path, text))
+    if "mandate-pins" in wanted:
+        violations.extend(check_mandate_pins(root))
     return violations
 
 

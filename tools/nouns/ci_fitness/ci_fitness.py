@@ -814,6 +814,34 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-planit-other-skill-fails.py")],
     )
     run(
+        "fitness-live-self-ref-activation",
+        [sys.executable, str(TOOLS / "fitness-live-self-ref-activation.py")],
+    )
+    run(
+        "fitness-mandate-inheritance",
+        [sys.executable, str(TOOLS / "fitness-mandate-inheritance.py")],
+    )
+    run(
+        "fitness-control-lifecycle",
+        [sys.executable, str(TOOLS / "fitness-control-lifecycle.py")],
+    )
+    run(
+        "assert-live-self-ref-direct-edit",
+        [sys.executable, str(TOOLS / "assert-live-self-ref-direct-edit-fails.py")],
+    )
+    run(
+        "assert-verifier-change-via-staging",
+        [sys.executable, str(TOOLS / "assert-verifier-change-via-staging-passes.py")],
+    )
+    run(
+        "assert-activation-split-land",
+        [sys.executable, str(TOOLS / "assert-activation-split-land-fails.py")],
+    )
+    run(
+        "assert-mandate-skill-without-registry",
+        [sys.executable, str(TOOLS / "assert-mandate-skill-without-registry-fails.py")],
+    )
+    run(
         "assert-adr-approval-mismatch",
         [sys.executable, str(TOOLS / "assert-adr-approval-mismatch-fails.py")],
     )
