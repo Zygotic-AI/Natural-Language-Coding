@@ -17,6 +17,9 @@
 - “RCA ONLY, no remediation changes.”
 - “What causes will be left in place after this RCA remediation that can cause this again? It seems if something intentionally edits /planit we won't ever be able to sign it - because it will come to me waiting for the signature, ending its turn. Then I sign and give it to the agent, which uses /planit to handle the signature I gave it and fails because /planit is not signed.”
 - “I think we'll need to have a 'staging' area for new skills - so it can build a new /planit there, I can sign it, and after I sign it, the new version and the signature are put in place all at the same time.”
+- “We're still remediating this error mode. I'm wanting to know what failed to realize this error mode was possible when this signing was set up.”
+- “This is about the DESIGN process, not the mechanism.”
+- “Add a 'Climb 4' section” reconstructing how signing was designed and which process step failed to surface the error mode.
 
 ---
 
@@ -593,5 +596,143 @@ After that commit the hook, `PLANIT_IDENTITY`, install-verify, and sidecar P1 go
 | X | Climb 2 (1)+(2) only | Ordinary “optional later” | **Q1 deadlock** and Q4.1–Q4.3 |
 
 **Recommend S (owner staging + atomic activate) as the Climb 3 one thing**, with Climb 2 inheritance still required for non-self-ref producers, and Climb 1 ruleset still required so activate cannot be split on `release/v*`. Do not implement V or W.
+
+RCA only. No remediation commit.
+
+---
+
+## 16. Climb 4 — what failed to realize this error mode was possible
+
+**Scope (user words):** “RCA ONLY, no remediation changes.” “We're still remediating this error mode. I'm wanting to know what failed to realize this error mode was possible when this signing was set up.” “This is about the DESIGN process, not the mechanism.” Reconstruct ADRs 0046, 0051, 0052, 0053, C6/C8, the Planit identity registry, the owner hook, and RCAs 4/5/6, including the plans and briefs that produced them. For each, show whether any step asked: “What happens when the verifier itself changes? How is a signature ingested if the ingesting machinery is unsigned? What is the update and bootstrap lifecycle of a signed artifact?” Identify which process step should have surfaced the error mode and why it didn't. Check whether Planit or the briefing standard requires lifecycle or self-reference analysis. End with one root sentence, its class, and candidate process remediations.
+
+**Climb 3 root (too low for this question):** the identity and signature compile made the live gating skill — and the other gate-set verifiers — both the mandated artifact and the machinery that must run to ingest the owner’s signature, with no separate trusted bootstrap path. That is the **mechanism**. This climb asks what in the **design process** failed to notice that mechanism was possible.
+
+**This climb’s error condition:** the signing design was set up, reviewed, briefed, known-bad’d, and Accepted without anyone being required to ask whether a legitimate change to the verifier could still ingest its own signature.
+
+---
+
+### Q1. How signing was designed (dates, SHAs, plans, briefs)
+
+The signing stack was not one Planit design. It was four separate produces, each answering a prior RCA’s attack class.
+
+| When (UTC unless noted) | SHA / PR | Artifact | What the plan or brief asked for |
+| ----------------------- | -------- | -------- | -------------------------------- |
+| 2026-10-08 (ADR date); first in-repo 2026-10-10 07:08 UTC | `5554b8b` “sync up” — **no dedicated PR** | **ADR 0046** (then Accepted), `integrity/planit-skill-registry.json`, `.cursor/hooks/nlc-planit-identity.sh` + `.cursor/hooks.json` `beforeSubmitPrompt` `failClosed: true`, `tools/fitness-planit-identity.py`, landmine `tools/assert-planit-other-skill-fails.py` | Context: “Two Planit skills can share the name `planit`.” Decisions 1–5 pin the live path and hash and **deny the prompt** on mismatch. Consequences: “A negative fixture loads a **different** skill path and **different** bytes and must fail.” Rejected: “Trusting the skill name without a content hash”; “Letting a harness skip the check.” `.nlc/plan-audit.json` in the same commit is for `rca-2026-10-09-release-stops-outside-planner`, not 0046. **0046 had no own Planit plan, PR body, or risk section.** |
+| 2026-10-11 | `5bd6113` | Registry last **content** change | O6 self-contained surfaces. No generator. No update procedure. |
+| 2026-10-11 | Cloud `bc-0400a9d2` “NLC RCA 4”; PR **#13** merge `f0a0216` | **RCA 4** (record outside repo) → **ADR 0051** Accepted | Brief: agents “made checks pass by weakening them or by having them check [their] own output.” Candidate branches included “Nothing in NLC states the principle that a **check's own code** and exemptions are governed” and “The producer and the gate author are the same actor.” Owner-approved remediation: SG1 property finish lines; SG2 receipt before merge; SG3 role split; **rule against regress**; **owner-ratified known-bad** on each constraint. **Dropped SG4** (gate-mutation suites). PR #13 body: “done means the property (not CI green alone); gate/exemption edits need your receipt… producer and grader must separate… known-bad cases on future bindings.” Decision 5: “this Proposed record **does not wire CI**.” |
+| 2026-10-11 | Cloud `bc-6165df2a` “NLC RCA 5”; PR **#15** merge `cd384ea` | **RCA 5** (outside repo) → **ADR 0052** Accepted + first `.approval.asc` + `integrity/owner-keys/` | RCA 5: “Hash-only registries let producers rewrite stamps without the owner's act.” Brief for step 1: keys only; “Agents commit pasted armor **unchanged**; they never create ratification.” Decision 3 is **key** rotation (currently pinned key authorizes a new fingerprint). Decision 8 **Bootstrap** is first-document sign of **this ADR**, not an update path for the verifier. Decision 4: “Stamp / fitness (**completion confirmation only**)… **No tool may write a ratified entry.**” PR #15 body: “This PR intentionally excludes step 2: no Python verifier… **Bootstrap:** PM posts the exact plain-text approval statement… Owner clearsigns in PGPony.” |
+| 2026-10-12 00:55–01:02 | `1bce2eb` then PM-review `3f73b6b`, `40f7f19`; PR **#16** merge `1246ace` | Step-2 verifier + unsigned manifest + known-bad fixtures | Commit `1bce2eb`: “gate-set baseline manifest **awaiting owner signature**… **Does not** … write ratification.” PM review (RCA 5 session, quoted): “**2. The gate set omits the verifier itself.** … Add ALL OF: `tools/nouns/owner_sidecar/**`, … CI runners, workflows, owner-keys.” Also: key rotation “requires … a sidecar … signed by a fingerprint that was listed **BEFORE** the change” plus known-bad “manifest signed by the **new unlisted** key.” PM review 2 (`40f7f19`): “Known-bad: **tampering** a fixture without manifest update.” That is the commit that put the verifier **inside** the signed closure — as a **tamper** close. |
+| 2026-10-12 | Cloud `bc-f7de26c2` “NLC RCA 6: PR #16 repeated review failures” | **RCA 6** (outside repo) | Brief: “The gate set … was kept as a **hand-maintained list**. Each review found some missing files by inspection. The producer patched exactly the named files, and the **property was never made the pass condition**.” PM climb: ADR 0051 “was ratified with **NO codified constraint and NO known-bad** for that property.” Remediation required: “every ratified NLC policy carries its **codified constraint and known-bad case** when it is ratified”; PR #16 instance is “gate-set membership computed as the **transitive closure** … plus a known-bad case where a **helper edit** must make the check fail.” Agent root (never owner-confirmed in that transcript): Accept / brief handoff skips the chain — “prose properties without a compiled finish line (derived verify target … plus owner-ratified known-bad).” |
+| 2026-10-13 04:59 | `d79e03b`; PR **#17** | **C1–C11**, **C6**, **C8**, **ADR 0053**, brief `.nlc/briefs/hub-material-0051-0052.md`, `integrity/known-bad-cases.json` | Brief “Why”: “RCA 6 found that **chain-skip at ADR Accept** is the root: rule rows had no codified constraint and no known-bad.” Finish line: name every leaf C1–C11 and the forbid clause. C5: “Every bound constraint has a known-bad Candidate that the constraint itself refuses.” C6: “Every Accepted document requires a valid owner sidecar” — package **`exit_status`: `REFUSE`**, `ssot_exit_status` “unsigned gate-set manifest is **outstanding**.” C8: “No tracked tool writes a ratification sidecar.” Commit body: “**Do not sign or write** `.approval.asc`.” ADR 0053: text retrofit only; “Editing 0051 or 0052 … would invalidate signatures.” |
+| 2026-10-13 11:35 | `9e3e442` (on PR #17) | ADR 0046 set **Proposed** / “Pending a redraft” | Owner decision on PR #17: demote 0046/0048/0049. Identity stayed an intake/verify detector. No update lifecycle added. |
+
+**C6 / C8 (what they are):** C6 is the leaf “every Accepted document needs a valid owner sidecar; hash receipts are not ratification” (`tools/fitness-adr-owner-sidecar.py`). C8 is the leaf “no tracked tool writes a ratification sidecar” (`tools/fitness-no-tool-writes-ratification.py`). Together they force: mutate bytes → write an **unsigned** manifest → owner signs later → agent pastes armor unchanged.
+
+**Identity registry + owner hook:** registry is a hand-kept `{canonical_path, content_sha256}` with **no updater**. The hook runs the same `--skill-only --loaded .agents/skills/planit/SKILL.md` command on **every** local prompt and denies on mismatch. Designed known-bad is the **other-skill** landmine, not a legitimate `/planit` edit.
+
+---
+
+### Q2. Did any step ask the three lifecycle questions?
+
+The three questions (owner, Climb 4): (A) What happens when the **verifier itself** changes? (B) How is a signature **ingested** if the ingesting machinery is **unsigned**? (C) What is the **update and bootstrap lifecycle** of a signed artifact?
+
+| Design step | Asked A / B / C? | What **was** considered (quoted) | What **was not** |
+| ----------- | ---------------- | -------------------------------- | ---------------- |
+| **ADR 0046** + hook + registry (`5554b8b`) | **No** | Wrong-skill / wrong-bytes **load**. “A negative fixture loads a different skill path and different bytes and must fail.” Hook: deny when on-disk skill does not match. | How the registered hash is refreshed after a **legitimate** `/planit` edit. How a denied prompt delivers a signature. Staging, rotate, ingest. |
+| **RCA 4 / ADR 0051 / PR #13** | **No** for A–C. Self-reference was a **grading** problem, not an update problem. | “a check's own code … are governed”; “The producer and the gate author are the same actor”; SG3 role split; SG2 “content hash change requires human manager receipt **before merge**”; known-bad = “diff without receipt Candidate.” Rule against regress §4: every constraint “carries an **owner-ratified known-bad Candidate** … Verify … must REFUSE or NOT_MET for the **named reason**.” | Legitimate change of the grader. Ingest while the grader is unsigned. Lifecycle of the receipt/manifest itself. |
+| **RCA 5 / ADR 0052 / PR #15** | **Partial C for keys and first document only.** Not A or B. | “**Key rotation / add:** A new fingerprint may enter `TRUSTED_FINGERPRINTS` only with a committed clearsigned statement **from a currently pinned key**.” “**Bootstrap:** First in-force ratification … is the owner's clearsigned statement for **this document**.” “Agents … **never create ratification**.” | What happens when `owner_sidecar.py`, the hook, or `/planit` **bytes** change. How pasted armor is committed if the live ingest path is the file just edited. |
+| **PR #16 PM review** (`3f73b6b`) — the moment verifier == verified was **chosen** | **A was seen and answered as tamper.** Not B. C only for **keys**. | “**The gate set omits the verifier itself.** … Add ALL OF: `owner_sidecar`, `gate_set`, the manifest generator, `ci_fitness`, workflows, owner-keys.” Key rotation: sidecar “signed by a fingerprint that was listed **BEFORE** the change.” Known-bad: “key and fingerprint replaced, with a manifest signed by the **new unlisted** key, gives NOT_MET.” “**tampering** a fixture without manifest update.” | “Now that the verifier is **in** the signed set, how do we **change** it and still ingest the next signature?” Unsigned ingest machinery. Staging / atomic activate. |
+| **RCA 6** (`bc-f7de26c2`) | **No** | Hand-kept vs **derived** membership. “a known-bad case where a **helper edit** must make the check fail.” Finish line = derived set + known-bad. Transcript search: **zero** user or assistant asks about verifier-change ingest, unsigned ingest machinery, or signed-artifact update lifecycle. “Bootstrap” appears only as ADR 0052 file text (first-document sign). | Legitimate verifier change. Ingest deadlock. |
+| **C1–C11 brief / C6 / C8 / ADR 0053** (`d79e03b`, `.nlc/briefs/hub-material-0051-0052.md`) | **No** | Finish line is **ALL OF** C1–C11. Brief names leaves and forbids “weakening a check, broadening an exemption, or rewriting a receipt.” C5 known-bads in `integrity/known-bad-cases.json` are: missing sidecar, wrong key, wrong Decision, pending-as-ratified, **tool writes** `.approval.asc`, retired-key overlap, tamper of a gate-set member, CI-only exit, same-actor gate+subject, missing forbid clause, missing known-bad row. C8 **forbids** completing the signature in-agent. ADR 0053 Rejected: “Editing 0051 or 0052 in the same change that wires CI (would invalidate their stamps).” | A known-bad of “legitimate change to the verifier.” Ingest while unsigned. Update lifecycle as a leaf. |
+| **ADR type recipe + Contribution Gate** (`content-types/HOW-TO-ADD.md` ADR section; `integrity/CONTRIBUTION.md`) | **No** | Required fields: Status, Date, Deciders, Context, Decision, Consequences, Rejected. Gate: sequence, slug, fields, no person names, index, cross-links. Incomplete-packet fixture: ADR **without Consequences**. | Lifecycle, self-reference, trust-model-as-a-whole. |
+| **Planit / AWL design** (see Q4) | **No required ask** | Phase 3 “risks, rollback” (risks unspecified). Phase 4: register coverage, stop predicates, step disposition, KCR, multi-step order. `GATE-STD`: every **touched path** has a default-closed gate. X6: “Gates of ADRs **bound to this action**.” | Lifecycle or self-reference analysis for a control artifact. |
+
+**What the known-bad class actually tests:** forging, tampering, omitting a receipt, using the wrong key, presenting pending as ratified, or a **tool writing** armor. It does **not** test a **legitimate** owner-intended change to the verifier that must then ingest the owner’s signature.
+
+**What “Bootstrap” meant when it was written:** first pin of the owner key, and first sidecar on ADR 0052 itself (`cd384ea`). Not the update/bootstrap lifecycle of a signed control that is also the ingest path.
+
+---
+
+### Q3. Which process step should have surfaced the error mode, and why it didn't
+
+**The step:** the **PM brief and its finish line**, together with the **known-bad case required on that finish line** (ADR 0051 rule against regress §4 → C5; RCA 6’s “compiled finish line”). That is the design-time adversarial step that was in force when the verifier was placed in the signed set.
+
+**Why that step, not a lower one**
+
+| Candidate step | Why it looks like the place | Why it is not the apex |
+| -------------- | --------------------------- | ---------------------- |
+| Planit design (AWL Phase 3 “risks”) | T2/T3 plans must list risks | “Risks” is an empty noun. 0046 never had a Planit plan. 0051/0052 were brief-driven cloud produces, not a Planit lifecycle design. |
+| Failure-mode review | RCA 4 named “check's own code” | Framed as **who may edit the grader** (SG3) and **receipt before merge** (SG2), not as **how the grader evolves**. |
+| Adversarial / known-bad required in briefs | RCA 6 made this the family fix | The **class** of known-bad was “constraint refuses a **bad** Candidate” (unsigned, wrong key, tamper, helper-edit-without-manifest). That class cannot see a **good** change that deadlocks ingest. |
+| ADR review (type recipe / human Accept) | 0051/0052 were Accepted | Recipe checks fields and Consequences, not a trust-model walkthrough. 0051 Decision 5 deferred wiring. 0052 Bootstrap was first-document only. |
+| **PM brief + finish line (C3 / R-HUB-BRIEF-FORBID-WEAKEN)** | RCA 6 already said: when the briefer can derive the finish line, a brief without property + verify + known-bad is defective. PR #16 item 2 **derived** “put the verifier in the set.” The next finish-line question was then available: “after it is in the set, how does a **legitimate** change finish?” | **This is the miss.** The compiled finish line stopped at “unsigned / wrong-key / tamper → NOT_MET” and “do not write `.approval.asc`.” |
+
+**Why it didn't fire**
+
+1. **Known-bad cases only test forging and tampering, not legitimate change.** ADR 0051 §4 and C5 require a Candidate the constraint **refuses**. Every row in `integrity/known-bad-cases.json` for 0051/0052 is an attack or omission. There is no required case “owner-intended edit of the verifier, then ingest the owner’s signature.”
+2. **Designs were reviewed one artifact at a time, not across the artifact’s lifecycle.** 0046 = load-time pin. 0052 = sidecar format + first sign. PR #16 = put verifiers in the manifest. C8 = tools must not write armor. Each review closed its local hole. No step assembled: pin + deny-hook + unsigned-then-sign + C8 + verifier-in-closure.
+3. **The trust model was never written down as a whole.** ADR 0052 Decision 8 “Bootstrap” is first-document. Decision 3 is **key** rotation. PR #16 added **verifier membership** as a tamper close (“the gate set omits the verifier itself”). Those three sentences were never one lifecycle.
+4. **RCA 4 / 5 / 6 asked how agents fake a finished signed state, not how a signed control is updated.** RCA 4: weaken checks / self-grade. RCA 5: rewrite hash receipts. RCA 6: Accept prose without a derived finish line. The family fix was “more compiled refuse on **bad** Candidates.” That **increased** detectors and **still** did not ask the update path. Putting the verifier in the signed set **looked like** the self-reference fix (RCA 4 “check's own code”). It is the opposite of asking how to change that code.
+5. **The briefing standard’s finish line cannot name a question it does not require.** `validate_hub_brief` (`tools/nouns/hub_own_produce/hub_own_produce.py`) passes when the brief **names every leaf id** and contains the three forbid needles (“weakening a check”, “broadening an exemption”, “rewriting a receipt”). The 0051/0052 brief did that. C3 MET. Lifecycle / self-reference / ingest-while-unsigned are not leaves and are not needles.
+
+---
+
+### Q4. Does Planit or the briefing standard require lifecycle or self-reference analysis?
+
+**Missing.** Evidence:
+
+| Surface | What it requires | Lifecycle / self-reference? |
+| ------- | ---------------- | --------------------------- |
+| AWL Phase 3 (`.agents/skills/planit/references/audited-work-loop-standard.md` lines 35, 191) | T2/T3: “full touch list, **risks**, rollback, and per-step audit hooks.” Risks are not defined. | **No** required create/change/sign/ingest/rotate walkthrough. `git grep` of `lifecycle`, `self-referen`, `bootstrap` in `.agents/skills/planit/references/` and `docs/nlc/compiler/` is empty (except this RCA’s later Climb 3). |
+| AWL Phase 4 audit checks (same file, Appendix E) | Register coverage; stop predicates; step disposition; KCR; multi-step order. | **No** self-reference row. |
+| Operation-verdict §2 (gate design) | Default-closed; testable true/false criteria on **produced** artifacts. | How to **author a gate**, not how a gate **updates itself**. |
+| Planit `GATE-STD` / X6 (`docs/nlc/compiler/PLANIT-ORCHESTRATION.md`) | Every **touched path** has a gate; “Gates of ADRs **bound to this action**.” | Per-action, per-path. Not the signed artifact’s life. |
+| ICC / Planit intake | Outcome, scope, tier, touch list, multi-step flag. | **No** control-lifecycle questions. |
+| `PROCESS.md` / `planit-process.md` | Load → interview → plan → bind → generate → verify. | Fail at verify → RCA into interview or bind. **No** control-lifecycle step. |
+| Agent failure-modes pointer | `.agents/skills/planit/references/agent-failure-modes-and-meta-prompt-patterns.md` is a stub: “Expanded catalog is maintained **outside** this public repository.” | Hub has **no** in-repo failure-mode catalog that would have named self-ref update. |
+| Briefing standard **R-HUB-BRIEF-FORBID-WEAKEN** / C3 | Committed brief names every property leaf id + forbid weaken/exempt/rewrite-receipt. Known-bad fixtures: `brief-missing-forbid.md`, `missing-leaf-id.json`. | **No** lifecycle leaf. **No** self-reference needle. A brief that never mentions ingest or rotate still MET. |
+| ADR type recipe | Fields + index + cross-links. | **No** trust-model or lifecycle section. |
+| C5 known-bad SSOT | Every bound constraint has a Candidate the constraint **refuses**. | Refuse-a-bad-Candidate, not survive-a-good-change. |
+
+RCA 6 **tightened** “brief must compile the finish line” into derived membership + known-bad-on-helper-edit. That is still the tamper/omission class. It did not add lifecycle or self-reference analysis.
+
+---
+
+### Climb 4 — the one thing
+
+> What **one** deterministic, actionable thing, if it were different, would have **prevented this condition from arising**?
+
+**Answer:** Control and gate designs must be briefed and reviewed as a **lifecycle**, not as a finished signed state. The compiled finish line for any pin, sidecar, hook, or verifier must include a walkthrough of **create, change, sign, ingest, and rotate**, and a known-bad of **legitimate change to the verifier** (the new bytes cannot be loaded as the live verifier until the previously signed machinery has ingested the owner’s signature, or the produce is refused).
+
+If that had been in force before PR #16 put the verifier in the signed set, “the gate set omits the verifier itself” could not have closed as “add these paths and a tamper known-bad.” The brief would have had to show how the next `/planit` or `owner_sidecar.py` edit is signed and ingested.
+
+**Prevention test:** If **every control-artifact brief had been required to walk create → change → sign → ingest → rotate and to carry a known-bad of legitimate verifier change,** had been in place **before** `3f73b6b` expanded the gate set to the verifier nouns and **before** C8 forbade in-agent sign, **the unsigned-then-sign playbook on live `/planit` + `beforeSubmitPrompt` deny** could not have been the designed path because **the finish line would have REFUSED a produce that can only ingest a signature by loading the artifact just mutated.**
+
+**Completed:** yes (mechanism: design-process requirement; Climb 3 staging + atomic activate is one product shape that would satisfy it).
+
+---
+
+### Climb 4 — the root (one sentence)
+
+The signing design process asked only how to refuse a forged or unsigned finished state, and never required a walkthrough of a control artifact’s own create–change–sign–ingest–rotate life — including the case where that artifact is also the ingesting machinery — so the bootstrap deadlock was not a question the briefs, known-bads, or ADR reviews had to answer.
+
+**Class:** process (design briefing / known-bad class), not mechanism. Higher than Climb 3’s trust-chain compile. Same RCA 4/5/6 family, different missed question: those RCAs asked how agents **fake** a finished signed state; they did not ask how a **legitimate** signed control is updated.
+
+**Class this climbed root covers:** any control or gate design whose review and known-bads only protect a static signed snapshot (wrong key, missing sidecar, tamper, helper omitted from a list) and therefore cannot see deadlock, split-brain, or unsigned ingest on the next **intended** change.
+
+---
+
+### Candidate process remediations (not done in this record)
+
+These are process requirements on **how signing is designed**. They are not product remediations (Climb 3 staging stays a product candidate).
+
+| # | Candidate | Prevents | Does not prevent |
+| - | --------- | -------- | ---------------- |
+| P | **Required lifecycle walkthrough** (create, change, sign, ingest, rotate) on every control artifact (pin, sidecar, hook, verifier, registry, trusted-key list) before Accept or wiring | Reviewing a hash pin or sidecar format as a finished state; unsigned-then-sign as the unexamined default | A walkthrough that is written and then ignored unless a known-bad (L) refuses |
+| L | **Required known-bad: “legitimate change to the verifier”** — mutate a Q2-set path, attempt ingest through the live unsigned/unregistered machinery, expect REFUSE **or** a staged path that leaves the live verifier signed until atomic activate | Known-bads that only forge, tamper, or omit; C5 MET on attack fixtures while the update path deadlocks | Ordinary Skill produce that never touches a verifier (Climb 2 inheritance still required) |
+| T | **Required whole trust-model write-down** (one page: what is pinned, who signs, what loads to ingest, what happens on rotate) as an ADR / brief input — not one artifact at a time | 0046 + 0052 + hook + C8 + “add the verifier to the set” never being composed | A trust-model page that still omits ingest unless P+L are bound |
+| S | **Required self-reference question in the briefing standard** (R-HUB-BRIEF / C3): “Is this artifact both the signed thing and the machinery that applies the pin or signature? If yes, the finish line includes P+L.” `validate_hub_brief` fails a control brief that has no lifecycle leaf. | A C3-MET brief that only names detector leaves and the forbid-weaken clause | Host split land (Climb 1 ruleset); first bootstrap of the staging machinery itself (Climb 3 Q4.8) |
+
+**Recommend P+L as the Climb 4 one thing** (walkthrough + the known-bad that makes the walkthrough refuse). T and S are how that one thing is compiled into ADR review and the existing brief gate. Climb 3 product shape (staging + atomic activate) is what a passing L case looks like. Do not implement here.
 
 RCA only. No remediation commit.
