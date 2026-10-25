@@ -26,6 +26,24 @@ def load_registry(root: Path) -> dict[str, object]:
     return payload
 
 
+def registry_from_bytes(root: Path) -> dict[str, object]:
+    """Derive the Planit identity registry from canonical skill bytes."""
+    body = (root / CANONICAL_PATH).read_bytes()
+    return {
+        "schema": 1,
+        "canonical_path": CANONICAL_PATH,
+        "content_sha256": content_hash(body),
+    }
+
+
+def write_registry_from_bytes(root: Path) -> Path:
+    """Write integrity/planit-skill-registry.json from current skill bytes."""
+    dest = root / REGISTRY_REL
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(json.dumps(registry_from_bytes(root), indent=2) + "\n", encoding="utf-8")
+    return dest
+
+
 def identity_errors(registry: dict[str, object], loaded_path: str, loaded: bytes) -> list[str]:
     errors: list[str] = []
     if loaded_path != registry.get("canonical_path"):

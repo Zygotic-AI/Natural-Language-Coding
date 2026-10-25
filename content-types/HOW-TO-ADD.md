@@ -298,6 +298,8 @@ Rationale: [ADR 0054](../adrs/0054-published-skill-author-contract.md) (publishe
 
 The [gate](../docs/TERMS.md#gate) is the growable checklist in `integrity/skill-author-checklist.json`, run by `python3 tools/nlc-skill-author-check.py`. Same command before release and after install. Do not add a second list.
 
+Mandated pins are **imported**, not restated here: `python3 tools/derive-mandated-paths.py` (snapshot `integrity/mandated-paths.json`). Touching a listed path without moving its pins in the same change is a produce-time refuse (`mandate-pins`). A regenerated-but-unsigned gate-set manifest is **INCOMPLETE** produce, not a finished step. Self-ref members (derived by `python3 tools/derive-self-ref-set.py`) change only through `staging/<change-id>/` and `python3 tools/activate-gate-machinery.py`.
+
 ### Inputs
 
 | Input | Required | Description |
@@ -314,7 +316,8 @@ The [gate](../docs/TERMS.md#gate) is the growable checklist in `integrity/skill-
 3. **Keep links inside the tree** — no `../../../docs/…` paths that vanish after install.
 4. **Mirror if needed** — copy to `.cursor/skills/<name>/` only as a copy of the same files.
 5. **Run the recipe [gate](../docs/TERMS.md#gate)** — `python3 tools/nlc-skill-author-check.py --root .agents/skills`.
-6. **Review [Contribution Gate](../docs/TERMS.md#contribution-gate)** — CG-R2 if the checklist fails; CG-R3 if this recipe is missing.
+6. **Move inherited pins in the same change** — if the skill path is on the derived mandated list, update those pins (Planit identity registry generated from bytes, install hashes, gate-set manifest). Unsigned manifest = incomplete, not done.
+7. **Review [Contribution Gate](../docs/TERMS.md#contribution-gate)** — CG-R2 if the checklist fails; CG-R3 if this recipe is missing.
 
 **TERMS-link:** YAML frontmatter is not prose. Published skill trees are out of the linker walk. The contract is not “every `*.md` in the repo.”
 
@@ -322,17 +325,18 @@ The [gate](../docs/TERMS.md#gate) is the growable checklist in `integrity/skill-
 
 | Criterion | Check |
 |-----------|-------|
-| Checklist SSOT | `integrity/skill-author-checklist.json` (ids now: `frontmatter-yaml`, `in-skill-links`) |
+| Checklist SSOT | `integrity/skill-author-checklist.json` (ids now: `frontmatter-yaml`, `in-skill-links`, `mandate-pins`) |
 | Frontmatter YAML | `SKILL.md` parses; `name` is a plain identifier matching the folder |
 | In-skill links | Relative links resolve inside the published skills tree |
+| Mandated pins | Derived list `python3 tools/derive-mandated-paths.py`; skill edit without pin move is produce-time refuse |
 | Same CLI | `tools/nlc-skill-author-check.py` (pre-release and post-install) |
 | No person names | Role language only |
 
 ### Incomplete-Packet Fixture
 
-**Scenario:** Skill added with YAML `name` set to a markdown glossary link, and/or a body href that leaves the skills tree (the landmine uses both).
+**Scenario:** Skill added with YAML `name` set to a markdown glossary link, and/or a body href that leaves the skills tree (the landmine uses both). A Planit skill edit that does not move `integrity/planit-skill-registry.json` in the same change is a second incomplete packet (`mandate-pins`).
 
-**Required outcome:** **[REFUSE](../docs/TERMS.md#refuse)** under CG-R2 (recipe [gate](../docs/TERMS.md#gate) not followed). Enforced by `nlc-skill-author-check.py`. Landmine: [`examples/skill-author-check-landmine/`](../examples/skill-author-check-landmine/) must stay `SKILL_AUTHOR:NOT_MET`.
+**Required outcome:** **[REFUSE](../docs/TERMS.md#refuse)** under CG-R2 (recipe [gate](../docs/TERMS.md#gate) not followed). Enforced by `nlc-skill-author-check.py`. Landmine: [`examples/skill-author-check-landmine/`](../examples/skill-author-check-landmine/) must stay `SKILL_AUTHOR:NOT_MET`. Mandate-pin landmine: `tools/assert-mandate-skill-without-registry-fails.py`.
 
 ---
 

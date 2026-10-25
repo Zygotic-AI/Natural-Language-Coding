@@ -32,7 +32,7 @@ Deliver **high-quality, already audited** outputs — plans, standards, prompts,
 | **0** | Authorize and bound | One-line outcome; in/out scope | User order or skill invocation satisfies authorization ([`lean-operating-principles.md`](lean-operating-principles.md) §2 — no re-confirm) |
 | **1** | Intake | Resolution table | Blocking inputs resolved, waived, or `Assumption:` ([`information-completion-contract.md`](information-completion-contract.md)); **tier** proposed or confirmed for T2+ (Appendix C) |
 | **2** | Applicability register | Register table (Appendix A) | Every norm that could apply is listed or excluded with reason |
-| **3** | Plan | Plan: steps, touch list, stop predicates, risks, rollback | Plan reviewable without reading implementation |
+| **3** | Plan | Plan: steps, touch list, stop predicates, risks, rollback | Plan reviewable without reading implementation. **Control or gate design:** plan includes create, change, sign, ingest, rotate, and first bootstrap, plus a known-bad of legitimate change to the verifier that must succeed through staging. |
 | **4** | Adversarial plan audit | Audit memo: **PASS/FAIL** apex + per-register rows | **Fail-closed** — see §4 |
 | **5** | Execute | Delivered artifacts | Only approved plan steps; scope creep → Phase 3 |
 | **6** | Adversarial execution audit | Audit memo + cited evidence | **Fail-closed** — same register as Phase 4, checked on **delivered** artifacts |
@@ -235,6 +235,7 @@ Shape per [`report-pyramid-structure.md`](report-pyramid-structure.md):
 - Every named step has disposition PASS, FAIL, or `skip: <reason>` — no silent omission.
 - KCR listed before any durable vault write step.
 - Multi-step order is coherent; no missing handoff between stages.
+- **CONTROL-LIFECYCLE** (blocking when the work is a control or gate design): the plan walks create, change, sign, ingest, rotate, and first bootstrap; a known-bad of **legitimate change to the verifier** exists and must succeed through staging (`assert-verifier-change-via-staging-passes`). A produce that can only ingest a signature by loading the artifact just mutated is FAIL.
 
 ### Phase 6 — Execution audit memo
 

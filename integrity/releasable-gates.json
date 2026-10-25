@@ -69,7 +69,10 @@
     "fitness-adr-0051-0052-rules.py",
     "fitness-skill-author-checklist.py",
     "fitness-skill-author-check-presence.py",
-    "fitness-skill-content-type.py"
+    "fitness-skill-content-type.py",
+    "fitness-live-self-ref-activation.py",
+    "fitness-mandate-inheritance.py",
+    "fitness-control-lifecycle.py"
   ],
   "gates": {
     "pipeline-blockers": {
