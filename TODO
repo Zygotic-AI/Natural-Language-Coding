@@ -685,5 +685,6 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 - ✔ Known-bads: direct live edit, split land, skill without registry, legitimate verifier change via staging @done(26-10-25 01:50)
 - ✔ GitHub ruleset JSON for `release/*` (no direct push; require fitness) @done(26-10-25 01:50)
 - ✔ Unsigned owner signing statement at `adrs/owner-approvals/staged-signing.statement.txt` (ADR 0055 + regenerated gate-set manifest; waits on owner clearsign) @done(26-10-25 02:15)
+- ✔ ADR 0055 Status Accepted in bytes before the owner statement exists (C6 batch requires Accepted) @done(26-10-25 03:35)
 - ☐ Owner clearsign of `adrs/owner-approvals/staged-signing.statement.txt` (ADR 0055 + regenerated gate-set manifest)
 - ☐ Apply the `release/*` GitHub ruleset when the token allows

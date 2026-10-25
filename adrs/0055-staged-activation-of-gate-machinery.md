@@ -1,6 +1,6 @@
 # ADR 0055 — Staged activation of gate machinery
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-25
 - Deciders: Human manager
 - Class: F (integrity / hub produce)

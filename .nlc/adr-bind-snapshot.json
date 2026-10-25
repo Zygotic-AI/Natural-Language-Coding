@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source": "adrs/ACTIVE.md",
-  "active_sha256": "b05abd978b5e035154b9ed3985370e8e93138cc754133cb0c5983a5dfa2aec9f",
+  "active_sha256": "a66f3fcc15e61830e49506da9b541665f6945e1a2e6c200a753a9d44874f2079",
   "adrs": [
     {
       "adr": "0001",
@@ -278,7 +278,19 @@
       "lineage": "L-0050",
       "origin": "RCA 2026-10-10 SHA-pinned evidence / content identity",
       "effective": "2026-10-10"
+    },
+    {
+      "adr": "0054",
+      "lineage": "L-0054",
+      "origin": "RCA 2026-10-20 published-skill author contract",
+      "effective": "2026-10-24"
+    },
+    {
+      "adr": "0055",
+      "lineage": "L-0055",
+      "origin": "RCA 2026-10-25 staged activation of gate machinery",
+      "effective": "2026-10-25"
     }
   ],
-  "written_at": "2026-10-13T11:32:17Z"
+  "written_at": "2026-10-25T03:32:44Z"
 }

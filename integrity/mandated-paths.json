@@ -439,7 +439,8 @@
       "owner_sidecar"
     ],
     "adrs/0055-staged-activation-of-gate-machinery.md": [
-      "gate_set_manifest"
+      "gate_set_manifest",
+      "owner_sidecar"
     ],
     "adrs/ACTIVE.md": [
       "gate_set_manifest"
