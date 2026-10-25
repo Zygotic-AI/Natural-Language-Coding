@@ -23,6 +23,8 @@ def _scratch_hub() -> Path:
         ignore=shutil.ignore_patterns(".git", "__pycache__", ".venv", "node_modules"),
     )
     subprocess.run(["git", "init"], cwd=dest, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "scratch@test.invalid"], cwd=dest, check=True)
+    subprocess.run(["git", "config", "user.name", "scratch"], cwd=dest, check=True)
     subprocess.run(["git", "add", "-A"], cwd=dest, check=True, capture_output=True)
     subprocess.run(
         ["git", "commit", "-m", "scratch base"],

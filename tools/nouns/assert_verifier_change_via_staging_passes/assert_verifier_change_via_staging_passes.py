@@ -40,6 +40,8 @@ def _scratch_hub() -> Path:
         ignore=shutil.ignore_patterns(".git", "__pycache__", ".venv", "node_modules"),
     )
     _run(["git", "init"], dest)
+    _run(["git", "config", "user.email", "scratch@test.invalid"], dest)
+    _run(["git", "config", "user.name", "scratch"], dest)
     _run(["git", "add", "-A"], dest)
     commit = _run(["git", "commit", "-m", "scratch base"], dest)
     if commit.returncode != 0:
