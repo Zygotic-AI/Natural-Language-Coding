@@ -57,3 +57,4 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0051 | Hub-own produce principles SG1–SG3 | accepted | L-0051 |
 | 0052 | Owner OpenPGP ratification amends 0051 | accepted | L-0052 |
 | 0053 | Text retrofit for stale 0051/0052 sentences | proposed | L-0053 |
+| 0054 | Published-skill author contract (one checklist, pre-release and post-install) | active | L-0054 |

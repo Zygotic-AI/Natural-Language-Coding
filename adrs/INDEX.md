@@ -63,7 +63,7 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0051 | 2026-10-11 | hub-own produce principles | accepted | — | L-0051 |
 | 0052 | 2026-10-11 | owner OpenPGP ratification amends 0051 | accepted | — | L-0052 |
 | 0053 | 2026-10-13 | text retrofit for stale 0051/0052 sentences | proposed | — | L-0053 |
-| 0054 | 2026-10-24 | RCA 2026-10-20 published-skill author contract | proposed | — | L-0054 |
+| 0054 | 2026-10-24 | RCA 2026-10-20 published-skill author contract | active | — | L-0054 |
 
 ## Lineage format
 

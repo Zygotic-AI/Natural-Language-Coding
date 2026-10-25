@@ -31,7 +31,7 @@ This record does **not** add Skill as a content type. That type recipe is a late
 
 6. **Landmine stays red.** `examples/skill-author-check-landmine/` must remain `SKILL_AUTHOR:NOT_MET`. Wiring MET does not require live hub skills MET.
 
-7. **ACTIVE tip.** This record joins `adrs/ACTIVE.md` when Status is Accepted. Until then the presence gate is the in-force binder.
+7. **ACTIVE tip.** This record is an ACTIVE tip: the binder applies it. File Status stays Proposed until the owner Accepts and signs. Presence fitness remains the compile binder that install still calls the same checklist.
 
 ## Consequences
 
