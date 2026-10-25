@@ -711,4 +711,4 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 ### v0.4.0 prepare identity before owner sign (2026-10-25)
 
 - ✔ Write `integrity/hub-release-record.json` 0.4.0 / `release/v0.4.0` and set DESCRIBE/FINDINGS last-tagged-ship to v0.4.0 so tag-time F1 and the record do not move after the owner signs @done(26-10-25 20:00)
-- ☐ Refresh hub-content-tree-hash / stamps and regenerate the gate-set manifest once after those prepare edits
+- ✔ Refresh hub-content-tree-hash / stamps and regenerate the gate-set manifest once after those prepare edits @done(26-10-25 20:01)
