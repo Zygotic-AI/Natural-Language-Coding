@@ -705,5 +705,5 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 - ✔ Bring in RCA docs from PR #28 and PR #30 (docs only) @done(26-10-25 19:16)
 - ✔ README + GETTING-STARTED Linux / macOS / Windows install matching fitness piped-install jobs; product name Natural Language Compiler @done(26-10-25 19:16)
 - ✔ Version bump to 0.4.0, noop `migrations/0.3.3_to_0.4.0`, `docs/adoption/RELEASE-v0.4.0.md` from `v0.3.0` @done(26-10-25 19:16)
-- ☐ Refresh hub-content-tree-hash, derived stamps / `.nlc/verified.json`, regenerate gate-set manifest once
+- ✔ Refresh hub-content-tree-hash, derived stamps / `.nlc/verified.json`, regenerate gate-set manifest once @done(26-10-25 19:17)
 - ☐ Owner clearsign of that regenerated manifest (C8 — agents do not sign)
