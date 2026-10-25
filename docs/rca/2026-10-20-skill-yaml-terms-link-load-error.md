@@ -135,6 +135,8 @@ ADR 0010 without a rewriter binder is a contributing factor, not a second root: 
 | Verification | CG-R3/CG-R2 refuse a skill whose `name:` is a markdown link; linker contract text no longer says unbounded “markdown across the repo”; a landmine fixture with `name: [planit](...)` is NOT_MET |
 | Belief / gate touch (ADR 0025) | Unsuitable process: untyped `*.md` lexicon rewrite of a shipped machine artifact. Touches Contribution Gate (CG-R2/CG-R3), content-type / type-recipe lexicon, and the TERMS-link contract. |
 
+Landed on `release/v0.4.0`: Skill recipe in `content-types/HOW-TO-ADD.md`; gate is the same `nlc-skill-author-check.py` list. Live hub skills still fail that gate until the repair step.
+
 ---
 
 ## 11. Follow-up (the growable check — not a second root)

@@ -2,7 +2,7 @@
 
 Enforcement. Specimens in `examples/` are not a product.
 
-**Vocabulary links:** after editing [`docs/TERMS.md`](../docs/TERMS.md), run `python3 tools/link-terms-dictionary.py` to refresh term links in markdown across the repo. Published skills (`.agents/skills/`) are out of scope for that rewrite.
+**Vocabulary links:** after editing [`docs/TERMS.md`](../docs/TERMS.md), run `python3 tools/link-terms-dictionary.py` on recipe-marked prose. The walk is not every `*.md`. Published skills (`.agents/skills/`, `.cursor/skills/`) are the Skill content type; YAML frontmatter is not prose.
 
 **Published-skill author contract (ADR 0054):** `python3 tools/nlc-skill-author-check.py --root .agents/skills` (same CLI after install). Presence: `fitness-skill-author-check-presence.py` (install must still call `goals/hub_skill_author_check`).
 

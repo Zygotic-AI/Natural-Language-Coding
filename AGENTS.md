@@ -36,7 +36,7 @@ Before adding or amending content, follow the [shared docs standard](docs/TERMS.
 
 - [`integrity/CONTRIBUTION.md`](integrity/CONTRIBUTION.md) — [shared docs standard](docs/TERMS.md#shared-docs-standard) + [Contribution Gate](docs/TERMS.md#contribution-gate)
 - [`integrity/LEXICON.md`](integrity/LEXICON.md) — locked term definitions
-- [`content-types/HOW-TO-ADD.md`](content-types/HOW-TO-ADD.md) — type recipes (ADR, integrity doc, agent noun, audit, example)
+- [`content-types/HOW-TO-ADD.md`](content-types/HOW-TO-ADD.md) — type recipes (ADR, integrity doc, agent noun, audit, example, Skill)
 
 [Contribution Gate](docs/TERMS.md#contribution-gate) [refuse](docs/TERMS.md#refuse) criteria (CG-R1 through CG-R7) apply to all [add-X](docs/TERMS.md#contribution-gate) contributions. No person names in SSOT surfaces (CG-R4); role language only.
 

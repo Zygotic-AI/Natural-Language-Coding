@@ -52,7 +52,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `integrity/ACTIONS.md` | [Action](docs/TERMS.md#action) [noun](docs/TERMS.md#noun) SSOT; gated [action](docs/TERMS.md#action) catalog; nesting [rule](docs/TERMS.md#rule) |
 | `integrity/binding-matrix.json` | [Requirement](docs/TERMS.md#requirement) → [audit](docs/TERMS.md#audit) → [gate](docs/TERMS.md#gate) (JSON key is still `binder` until the auditor is updated) |
 | `docs/OPERATING_BINDINGS.md` | Operating policy index (P-016…P-031 class); hub-local P-series prose |
-| `content-types/HOW-TO-ADD.md` | Type recipes for adding content (ADR, integrity doc, agent noun, etc.) |
+| `content-types/HOW-TO-ADD.md` | Type recipes for adding content (ADR, integrity doc, agent noun, Skill, etc.) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
 | `AGENTS.md` | Cross-harness standing instructions |
 | `.agents/` | Portable skills / instructions |

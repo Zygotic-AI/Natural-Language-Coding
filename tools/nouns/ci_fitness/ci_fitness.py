@@ -656,6 +656,10 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-skill-author-check-presence.py")],
     )
     run(
+        "fitness-skill-content-type",
+        [sys.executable, str(TOOLS / "fitness-skill-content-type.py")],
+    )
+    run(
         "assert-skill-author-check",
         [sys.executable, str(TOOLS / "assert-skill-author-check-fails.py")],
     )

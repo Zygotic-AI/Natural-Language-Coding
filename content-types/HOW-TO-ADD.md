@@ -15,6 +15,7 @@ Rationale: [`integrity/CONTRIBUTION.md`](../integrity/CONTRIBUTION.md) [Contribu
 | [Agent noun](#agent-noun) | Stub | `agents/<name>/AGENT.md` | Durable agent role |
 | [Audit](#audit) | Stub | `integrity/audits/A-<id>.md` | Per-requirement [audit](../docs/TERMS.md#audit) definition |
 | [Example](#example) | Stub | `examples/<name>/README.md` | [Adopter](../docs/TERMS.md#adopter) sample |
+| [Skill](#skill) | Complete | `.agents/skills/<name>/SKILL.md` | Published portable skill (YAML frontmatter + in-tree links) |
 
 ---
 
@@ -286,6 +287,52 @@ Per-requirement [audit](../docs/TERMS.md#audit) definition with binary met/not-m
 **Required outcome:** **[REFUSE](../docs/TERMS.md#refuse)** — incomplete (no entry point).
 
 **Status:** STUB — expand with example template.
+
+---
+
+## [Skill](../docs/TERMS.md#content-type)
+
+Published portable skill installed off this repository (`.agents/skills/<name>/`). The Cursor mirror `.cursor/skills/<name>/` is a copy of the same instance, not a second type.
+
+Rationale: [ADR 0054](../adrs/0054-published-skill-author-contract.md) (published-skill author contract); [RCA 2026-10-20](../docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md) (YAML `name:` rewritten as a glossary link).
+
+The [gate](../docs/TERMS.md#gate) is the growable checklist in `integrity/skill-author-checklist.json`, run by `python3 tools/nlc-skill-author-check.py`. Same command before release and after install. Do not add a second list.
+
+### Inputs
+
+| Input | Required | Description |
+|-------|----------|-------------|
+| Folder name | Yes | Lowercase identifier; must match YAML `name` |
+| `SKILL.md` | Yes | YAML frontmatter + body |
+| Frontmatter `name` | Yes | Plain identifier matching the folder (not a markdown link) |
+| In-skill links | Yes | Relative markdown links stay inside the published skills tree |
+
+### Steps
+
+1. **Create folder** — `.agents/skills/<name>/` (`<name>` matches `name:`).
+2. **Write `SKILL.md`** — opening and closing `---`; `name` is a plain identifier.
+3. **Keep links inside the tree** — no `../../../docs/…` paths that vanish after install.
+4. **Mirror if needed** — copy to `.cursor/skills/<name>/` only as a copy of the same files.
+5. **Run the recipe [gate](../docs/TERMS.md#gate)** — `python3 tools/nlc-skill-author-check.py --root .agents/skills`.
+6. **Review [Contribution Gate](../docs/TERMS.md#contribution-gate)** — CG-R2 if the checklist fails; CG-R3 if this recipe is missing.
+
+**TERMS-link:** YAML frontmatter is not prose. Published skill trees are out of the linker walk. The contract is not “every `*.md` in the repo.”
+
+### [Gate](../docs/TERMS.md#gate) Criteria
+
+| Criterion | Check |
+|-----------|-------|
+| Checklist SSOT | `integrity/skill-author-checklist.json` (ids now: `frontmatter-yaml`, `in-skill-links`) |
+| Frontmatter YAML | `SKILL.md` parses; `name` is a plain identifier matching the folder |
+| In-skill links | Relative links resolve inside the published skills tree |
+| Same CLI | `tools/nlc-skill-author-check.py` (pre-release and post-install) |
+| No person names | Role language only |
+
+### Incomplete-Packet Fixture
+
+**Scenario:** Skill added with YAML `name` set to a markdown glossary link, and/or a body href that leaves the skills tree (the landmine uses both).
+
+**Required outcome:** **[REFUSE](../docs/TERMS.md#refuse)** under CG-R2 (recipe [gate](../docs/TERMS.md#gate) not followed). Enforced by `nlc-skill-author-check.py`. Landmine: [`examples/skill-author-check-landmine/`](../examples/skill-author-check-landmine/) must stay `SKILL_AUTHOR:NOT_MET`.
 
 ---
 
