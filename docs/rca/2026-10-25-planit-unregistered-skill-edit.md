@@ -12,6 +12,9 @@
 - “`python3 tools/fitness-planit-identity.py --skill-only --loaded .agents/skills/planit/SKILL.md` gives `PLANIT_IDENTITY:NOT_MET`, and the owner's local hook now denies work.”
 - “Next, da90b90 regenerated the gate-set manifest, which is now unsigned.”
 - “first name the defective product, then the process that produced it, and climb until you reach a root that, if fixed, would have prevented this whole class.”
+- “How could this condition be created where we made a mandate for a signature and still allowed the skill edits to treat it as optional? What created that condition?”
+- “Climb one level above the current root: find what CREATED the condition that signature/identity pins are optional later steps for skill produce.”
+- “RCA ONLY, no remediation changes.”
 
 ---
 
@@ -241,6 +244,151 @@ RCA only. No remediation commit.
 
 ---
 
-## 13. The root (one sentence)
+## 13. The root (one sentence) — Climb 1 (superseded)
 
 Published-skill produce is allowed to treat a single author checklist as the finish line and land those bytes on an unprotected release line, while identity pins, install fingerprints, and owner-signed gate-set remain optional later steps.
+
+Climb 1 names the **condition**. Climb 2 asks what **created** that condition (owner, 2026-10-25): “How could this condition be created where we made a mandate for a signature and still allowed the skill edits to treat it as optional? What created that condition?”
+
+---
+
+## 14. Climb 2 — what created “pins are optional later steps”
+
+**Scope (user words):** “RCA ONLY, no remediation changes.” “Climb one level above the current root: find what CREATED the condition that signature/identity pins are optional later steps for skill produce.” Four evidence questions as numbered in the request.
+
+**Climb 1 root (too low):** the Skill produce finish line is one author checklist; identity, install fingerprints, and owner-signed gate-set are later optional steps; `release/v*` accepts the partial produce.
+
+**This climb’s error condition:** a signature/identity **mandate** exists, and Skill produce is still allowed to treat that mandate as optional.
+
+---
+
+### Q1. How were the owner-signature mandates expressed?
+
+**After-the-fact checks that report red on the result tree.** Policy text sometimes says “before merge” / “handoff REFUSE,” but the compiled form is a fitness/verify detector. None of these mandates is a precondition on Skill produce or on landing to `release/v*`.
+
+| Mandate | Date / SHA | What the text says | What was wired |
+| ------- | ---------- | ------------------ | -------------- |
+| **ADR 0051** SG2 (hub-own produce — gate-set bytes need owner receipt) | 2026-10-11 `f0a0216` | **P-GATE-SET-RATIFY:** “content hash change requires human manager receipt **before merge**.” **R-GATE-SET-NO-SILENT-WEAKEN:** a produce package that changes member bytes without a receipt is “incomplete (**handoff REFUSE**).” Same row’s **codified constraint** is already a detector: “(to implement) `fitness-gate-change-receipt` … **NOT_MET** when diff touches gate-set paths.” **Decision 5:** “Implementation of codified constraints is follow-on work; this Proposed record **does not wire CI**.” | Follow-on wiring `d79e03b` (2026-10-13) + **ADR 0053** (text retrofit, Proposed 2026-10-13): in-force check is `fitness-gate-set-manifest` on the tree. **ADR 0053** item 2: the receipt filename is stale; SSOT is `integrity/gate-set-baseline.manifest.sha256` plus its OpenPGP sidecar |
+| **ADR 0052** (owner OpenPGP ratification — amends 0051) | 2026-10-11 `cd384ea` (signed `#15`) | Context: “Agents commit pasted armor **unchanged**; they **never create ratification**.” Decision 4: “**Stamp / fitness (completion confirmation only)** … Unsigned, wrong key, hash mismatch, tampered manifest, or **pending** → **NOT_MET**. **No tool may write a ratified entry.**” Consequences: “Until step 2 lands, **no CI check enforces this**; the PM holds the merge.” | Same wiring: `fitness-adr-owner-sidecar` (C6) and `fitness-gate-set-manifest`. C6 in `.nlc/produce-package.json` at `d79e03b` is already **`exit_status`: `REFUSE`**, and `ssot_exit_status` is “owner ratification of legacy ADR sidecars and the **unsigned** gate-set manifest is **outstanding**.” Produce is allowed to finish with signing unfinished |
+| **Gate-set sidecar** | Generator `1bce2eb` (2026-10-12) | `tools/generate-gate-set-baseline-manifest.py` header: “Regenerate … from gate-set paths **(no ratification)**.” | A legal produce step writes an unsigned member list. The sidecar check then paints the tree red. Regenerating unsigned is a named ship step (`1ee783d` 2026-10-21 “Regenerate **unsigned** gate-set manifest…”) |
+| **ADR 0046** Planit identity registry | 2026-10-08; still **Proposed** / “Pending a redraft” (`9e3e442` 2026-10-13) | Decision 3: “**Intake fails** when the loaded path or the loaded bytes do not match the registry.” Decision 5: Cursor `beforeSubmitPrompt` hook; other harnesses run `fitness-planit-identity.py --skill-only`. | `integrity/adr-gates.json` binder **0046** → `tools/fitness-planit-identity.py`. `integrity/releasable-gates.json` puts `planit-skill-identity` on the **verify** profile (runs after the tree exists). Not a produce-time refuse on `SKILL.md` writes |
+
+**Quoted design of “red, not refuse produce”:**
+
+- **ADR 0051** Decision 5 (line 105): “this Proposed record does not wire CI.”
+- **ADR 0052** Decision 4 (line 50): “Stamp / fitness (completion confirmation only).”
+- **ADR 0052** line 40: “Until step 2 lands, no CI check enforces this.”
+- Hub produce package (`d79e03b`, unchanged at this tip): C6 **REFUSE** + “unsigned gate-set manifest is outstanding.”
+- C8 (`tools/nouns/fitness_no_tool_writes_ratification/fitness_no_tool_writes_ratification.py` line 1): “no tracked tool writes `*.approval.asc`.” A producer **cannot** complete the signature.
+
+Published `SKILL.md` files **are** gate-set members today (`integrity/gate-set-baseline.manifest.sha256` lines 11–20 include `.agents/skills/planit/SKILL.md` and the other published skills). **ADR 0053** item 1: membership is **derived** by `derive_gate_set_paths` from CI workflow seeds — not a hand-kept Skill-type list. So the signature mandate covers skill bytes as members, but only through the same after-the-fact manifest+sidecar detector. `d4b4648` already rewrote the **unsigned** manifest in the skill-repair commit; `da90b90` did it again. That is the mandate’s designed produce path, not a miss.
+
+---
+
+### Q2. Were the Skill recipe, the skill-author checklist, and `/release` derived from those mandates?
+
+**Authored separately.** No import, no derived list, no reference to **ADR 0051**, **ADR 0052**, the gate-set sidecar, or the Planit identity registry. Each produce recipe must restate those mandates by hand — and none of them did.
+
+| Produce surface | When / SHA | What it binds | Mentions 0051 / 0052 / 0046 / sidecar / identity registry? |
+| --------------- | ---------- | ------------- | ---------------------------------------------------------- |
+| `integrity/skill-author-checklist.json` | 2026-10-21 `11a904c` | `frontmatter-yaml`, `in-skill-links` only. Commit body: “Same checklist SSOT (**frontmatter YAML plus in-skill links**).” | No |
+| **ADR 0054** (published-skill author contract) | 2026-10-24 `bcb2f95`; Accepted `15c9bb0` | “**Checks now (discovered problems):** `frontmatter-yaml` … `in-skill-links`.” Context: “This record does **not** add Skill as a content type. … This record does **not** repair current hub skills.” Rejected: adding Skill as a type; repairing live skills | No. Rationale is **RCA 2026-10-20** (YAML `name:` / dead install links), not hub-own produce or identity |
+| Skill type recipe (`content-types/HOW-TO-ADD.md`) | 2026-10-25 `4f3caf2` “Add Skill as a content type **pointed at the author checklist**” | Gate table = that checklist. Steps 1–6 end at `nlc-skill-author-check.py` + Contribution Gate CG-R2/CG-R3 | No. `git grep` of `approval.asc`, `sidecar`, `0052`, `gate-set` in `HOW-TO-ADD.md` is empty. The **ADR** type recipe (same file, lines 69–78) also has no sidecar row |
+| `fitness-skill-content-type.py` | same `4f3caf2` | Module docstring: “recipe gate is the published-skill author checklist.” The binder **requires** the recipe to name `nlc-skill-author-check.py` and `skill-author-checklist.json` | Locks the separate checklist. Does not require identity or signing |
+| `/release` skill | last material identity work `605cd17` (2026-10-10, **ADR 0050**) before the 0051/0052 wave; later edits are current-ship prose and the `d4b4648` YAML repair | Closeout = `ci_fitness.py` CI:MET, FINDINGS tree hash, inference record. Ship prove is a later phase | `git grep` of `0051`, `0052`, `0046`, `planit-skill-registry`, `gate-set-baseline`, `approval.asc` in `.agents/skills/release/SKILL.md` is empty |
+
+**Contrast — what *is* derived from 0051/0052:** `integrity/adr-0051-0052-rules.json` must equal `tools/derive-adr-0051-0052-rules.py`; `integrity/adr-gates.json` maps those ADRs to **fitness** tools. That derivation feeds **detectors**, not type recipes.
+
+**ADR 0010** (2026-09-16, gate immediately after every generate) says skills “inherit this rule.” Inheritance here means “run **that artifact’s** gate.” The Skill artifact’s gate was later defined as the two-item author checklist. **PLANIT-ORCHESTRATION** X6 is “gates of ADRs **bound to this action**” (per-action), not “gates of every mandate that names a touched path.” **GATE-STD** is “every touched path has a default-closed gate or N/A” — and the Skill path’s named gate is `SKILL_AUTHOR`.
+
+The 0.4.0 TODO repair row restates the split in operator words: “Repair current published skills so … is `SKILL_AUTHOR:MET` (**plain `name:` + in-skill links only**).”
+
+---
+
+### Q3. Is this a general pattern? Other mandated artifacts with the same gap
+
+**Yes.** Mandates are compiled as detection gates on results (`integrity/releasable-gates.json`, `ci_fitness`, `adr-gates.json`). There is **no** mechanism that makes every producer that touches a mandated artifact inherit the mandate. Contribution Gate **CG-R2** only refuses a skipped **type-recipe** step. If the recipe never imported the mandate, CG-R2 cannot fire.
+
+| Mandated artifact | Mandate | Detector (reports red) | Produce recipe that touches it | Inherits the mandate? |
+| ----------------- | ------- | ---------------------- | ------------------------------ | --------------------- |
+| Published `SKILL.md` (also a **derived** gate-set member) | 0051/0052 sidecar + 0046 identity (Planit) + install fingerprints | `fitness-gate-set-manifest`; `planit-skill-identity`; `nlc-install-verify` | Skill type + author checklist + `/release` | **No** (this incident) |
+| Accepted ADR files | 0052 C6 sidecar | `fitness-adr-owner-sidecar` | ADR type recipe (`HOW-TO-ADD.md` lines 69–78): sequence, slug, required fields, index, cross-links | **No** sidecar / Content-SHA256 step |
+| Gate-set members generally (`tools/fitness-*.py`, `tools/assert-*.py`, `integrity/releasable-gates.json`, …) | 0051 SG2 / 0052 manifest+sidecar | `fitness-gate-set-manifest` | No “fitness-tool” type recipe. Generator header: **no ratification** | **No** — unsigned regenerate is the produce step |
+| `integrity/planit-skill-registry.json` | 0046 path + `content_sha256` | `fitness-planit-identity` (intake + verify) | None. Hand-kept; last content change `5bd6113` | **No** generator, no Skill-type step |
+| `integrity/nlc-install-hashes.json` | Piped-install fingerprint list | `nlc-install-verify` | Updater `nlc-install-hash-update.py` exists; no type recipe requires it | **No** |
+| `FINDINGS.md` `last_pass_tree_hash` / `integrity/hub-content-tree-hash.txt` | **ADR 0050** (evidence is content, not history) | `fitness-findings-last-pass-fresh` (`hub-content-tree-fresh` on verify) | `/release` Step 1A names it as **ship closeout**, not as an inherited produce gate | **No** for Skill/ADR/tool produce |
+| `integrity/nlc-version.json` + `integrity/hub-release-record.json` | **ADR 0045** ship identity | release tag/state gates | `/release` / `./release` later | **No** for ordinary produce |
+| `integrity/full-nlc-audit-inference-record.json` | `/release` inference pin | audit freshness | `/release` Step 1A.5 only | **No** |
+| `integrity/owner-keys/` + `TRUSTED_FINGERPRINTS` | 0052 pinned key / C9 retired denylist | `fitness-owner-key-trust`, `fitness-retired-key-denylist` | No key-rotation type recipe | **No** |
+| `integrity/known-bad-cases.json` | 0051 known-bad SSOT (C5) | `fitness-known-bad-ssot` | No | **No** |
+| `.nlc/planit-change-evidence.json` | 0046 decision 6 (tree hash with identity) | hub compile when wired | No Skill-type step | **No** (Climb 1 already recorded it stale at `85a11ef6…`) |
+
+Same class: a mandate lives in a fitness binder; the producer of the named bytes has a different local finish line.
+
+---
+
+### Q4. Why that design was chosen
+
+Signing was framed as a **final human step**, and mandates as **detectors on results**, on purpose.
+
+1. **RCA 4** (2026-10-11, record kept outside this repository; cited on **ADR 0051** line 9): agents weakened checks, broadened exemptions, or rewrote approval receipts to obtain CI green. **ADR 0051** rejected “CI green as terminal finish line” and forbade producer hand-update of receipts. The chosen compile was **property-leaf fitness** (C1–C11), not a produce-recipe import.
+
+2. **RCA 5** (2026-10-11, outside this repository; cited on **ADR 0052** line 13): “hash-only registries let producers rewrite stamps without the owner's act.” The two-actor principle (human manager ratifies, agents produce) was compiled as: **only** the owner’s clearsigned statement counts; **agents never create ratification**.
+
+3. **C8** (`d79e03b` 2026-10-13) makes that compile a hard gate: no tracked tool may write `*.approval.asc`. Combined with a generator whose job is “no ratification,” the **only legal produce path** is: mutate member bytes → write an **unsigned** manifest → leave the sidecar stale → fitness **NOT_MET** → owner signs later. Completing the mandate inside Skill produce is **forbidden**, not omitted.
+
+4. **Human-judgment split** (`docs/nlc/HUMAN-JUDGMENT-GATES.md` lines 18–23): “**ADR / rule adoption** — Human sets ADR Accepted; agent does not ratify.” Same file: ship is after verify, human signed.
+
+5. **Production-trunk + sidecar-last as the ship playbook.** **ADR 0044** puts unreleased work on `release/v*`. TODO and release notes encode unsigned-then-sign as two commits:
+   - `TODO` lines 644, 654 (done) and **668** (still open on the 0.3.3/0.4.0 line): “Owner clearsign of the unsigned gate-set manifest (**sidecar last**; no verify-deep after sidecar).”
+   - `docs/adoption/RELEASE-v0.3.1.md` lines 22–23: “Refresh the content digest and **unsigned** gate-set manifest (`0a9bb47`)” then “Add the owner-signed gate-set manifest sidecar (`0f7d896`).”
+   - `docs/adoption/RELEASE-v0.3.2.md` lines 20–22: same split (`9de2d26` unsigned, `89fb12b` sidecar).
+   - Walkthrough step 8 (Climb 1): owner sidecar last. The incident session followed that playbook.
+
+6. **Skill contract scoped to the YAML RCA only.** **RCA 2026-10-20** + **ADR 0054** were a later, separate produce (2026-10-21…25). They bound the two discovered load problems. They did not import 0051/0052/0046. **ADR 0046** was left Proposed / pending redraft, so identity stayed an intake/verify detector.
+
+**What this created:** a mandate that is real (CI goes red; owner hook denies Planit) and a Skill produce that is also real (`SKILL_AUTHOR:MET`) because the mandate was never a precondition on that produce. Optional later signing is not a walkthrough accident. It is the 0051/0052/C8 compile.
+
+---
+
+### Climb 2 — the one thing
+
+> What **one** deterministic, actionable thing, if it were different, would have **prevented this condition from arising**?
+
+**Answer:** Owner-signature and identity mandates must be compiled as **inherited produce preconditions** on every producer that touches a named artifact — a derived mandate list the type recipe / produce skill **imports**, not a result-tree detector plus an owner-last sign step that each recipe must restate by hand.
+
+If that had been in force before the Skill checklist and the 0.4.0 walkthrough, `SKILL_AUTHOR:MET` could not have been a complete Skill produce while Planit identity, install fingerprints, and the gate-set sidecar stayed later. C8 can still forbid tools from writing armor; the refuse is “this produce is incomplete,” not “regenerate unsigned and continue.”
+
+**Prevention test:** If **every producer that touches a path named by a mandate had imported that mandate as a produce-time refuse (derived list, not hand restatement), and an unsigned mutation of a signed pin had been handoff incomplete rather than a later sign step,** had been in place **before** walkthrough step 5, **`d4b4648` / `da90b90` treating `SKILL_AUTHOR:MET` as done while the registry still said `85a11ef6…` and the sidecar still named `8ffa1481…`** could not have occurred because **Skill produce would have inherited 0046 / 0051 / 0052 / install-hash and refused MET without those pins, instead of running a separately authored two-item checklist.**
+
+**Completed:** yes (mechanism: mandate → producer inheritance; the unsigned-then-sign playbook is how the current compile made inheritance unnecessary and, under C8, impossible to finish in-agent).
+
+---
+
+### Climb 2 — the root (one sentence)
+
+Mandates for owner signatures and identity pins were compiled as after-the-fact result-tree detectors and an owner-last sign step that produce tools are forbidden to complete, while Skill (and other) produce recipes were authored as separate local checklists with no import of those mandates.
+
+---
+
+### Class this climbed root covers
+
+Any producer that touches a mandated artifact can finish its own recipe while the mandate stays a red CI/verify row or a later human sign — because nothing makes the producer inherit the mandate.
+
+That class includes this unregistered Planit skill, an unsigned gate-set regenerate, a stale install-fingerprint list, an Accepted ADR without a sidecar, a fitness-tool edit that only rewrites the unsigned manifest, and a FINDINGS edit that leaves `last_pass_tree_hash` for `/release` closeout.
+
+---
+
+### Revised remediation candidates (not done in this record)
+
+Climb 1 candidates (bind the Skill checklist to every pin; GitHub ruleset; pre-push script) treat the **condition**. They do not remove the compile that **creates** “optional later.”
+
+| # | Candidate | Prevents | Does not prevent |
+| - | --------- | -------- | ---------------- |
+| 1 | **Mandate inheritance:** one derived list (paths named by 0051/0052/0046/install-hash/0050/…) that every type recipe and produce skill **imports**. Touching a named path makes those gates produce-time refuse. Contribution Gate CG-R2 fails a recipe that omitted an imported mandate. Do not hand-restate per recipe | This class: Skill/ADR/tool/FINDINGS produce that MET a local list while a mandate on those bytes stays later | A determined host push of a **complete** inherited produce; owner still must sign because C8 forbids tools writing armor |
+| 2 | **End unsigned-then-sign as a complete produce:** regenerate-without-sign is handoff incomplete. Keep C8 (no tool writes `.approval.asc`). Change the playbook: do not land, and do not mark the step done, until the owner has signed **or** the mutation is refused. Delete “sidecar last” / “unsigned gate-set” as a success path on `release/v*` | The designed split that made `da90b90` and v0.3.1/v0.3.2 notes look correct | A Skill recipe that still does not import identity/install-hash if inheritance (1) is skipped |
+| 3 | Climb 1 landing half (GitHub ruleset: no direct push to `release/*`; required fitness) | Unreviewed red land of a partial produce | The next produce session that still treats `SKILL_AUTHOR` as done locally |
+
+**Recommend (1) as the climbed one thing**, with (2) as the same compile (precondition, not detector-plus-later-sign). (3) remains the host backstop from Climb 1.
+
+RCA only. No remediation commit.
