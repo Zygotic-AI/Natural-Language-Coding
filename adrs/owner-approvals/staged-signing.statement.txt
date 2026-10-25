@@ -1,0 +1,9 @@
+Repo: Zygotic-AI/Natural-Language-Coding
+Statement: Staged activation bootstrap owner approval
+Decision: Accepted
+Count: 2
+Signer: 9D1BD57770FC3A1DE84702750AFD22B063AE01BC
+Date: 2026-10-25
+Meaning: By clearsigning this statement I ratify, as owner, ADR 0055 (Staged activation of gate machinery) and the regenerated gate-set baseline manifest in exactly the bytes whose sha256 is given. This one signature ratifies the ADR and bootstraps the staging machinery. This approval covers only those exact bytes. Any change to a listed file voids its approval.
+adrs/0055-staged-activation-of-gate-machinery.md sha256:2c88ffbac28bd00fd38db24057c045b18bd94ba90ba5592e100068e364810514
+integrity/gate-set-baseline.manifest.sha256 sha256:dc11048cf54f56fe9dc4f760c4bd10b1beff1c206832ca7fec5aa2fb6507e694

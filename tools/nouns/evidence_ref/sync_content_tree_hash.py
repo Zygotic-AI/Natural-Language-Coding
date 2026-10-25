@@ -12,8 +12,10 @@ _TOOLS = Path(__file__).resolve().parents[2]
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 from nouns.gate_set.gate_set import (  # noqa: E402
+    BOOTSTRAP_ARMOR_REL,
     BOOTSTRAP_STATEMENT_REL,
     MANIFEST_APPROVAL_ASC_REL,
+    armor_occupancy_paths,
 )
 
 HASH_REL = "integrity/hub-content-tree-hash.txt"
@@ -31,6 +33,8 @@ def _content_exclude_rel() -> set[str]:
         MANIFEST_REL,
         MANIFEST_APPROVAL_ASC_REL,
         BOOTSTRAP_STATEMENT_REL,
+        BOOTSTRAP_ARMOR_REL,
+        *armor_occupancy_paths(),
     }
 
 

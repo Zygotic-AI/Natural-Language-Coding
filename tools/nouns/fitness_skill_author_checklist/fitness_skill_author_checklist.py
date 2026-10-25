@@ -5,6 +5,7 @@ from __future__ import annotations
 BOUNDARY = "bba-emit"
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -13,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[3]
 CHECKLIST = ROOT / "integrity" / "skill-author-checklist.json"
 CLI = ROOT / "tools" / "nlc-skill-author-check.py"
 LANDMINE = ROOT / "tools" / "assert-skill-author-check-fails.py"
+NOUN = ROOT / "tools" / "nouns" / "skill_author_check" / "skill_author_check.py"
 REQUIRED_IDS = ("frontmatter-yaml", "in-skill-links")
 
 
@@ -41,6 +43,10 @@ def main() -> int:
         )
         if proc.returncode != 0:
             violations.append("landmine assert-skill-author-check-fails must PASS")
+    if NOUN.is_file():
+        src = NOUN.read_text(encoding="utf-8")
+        if re.search(r"^\s*import\s+yaml\b|^\s*from\s+yaml\b", src, re.M):
+            violations.append("skill_author_check must not import PyYAML (piped install has no yaml)")
     for v in violations:
         print(f"VIOLATION {v}")
     if violations:

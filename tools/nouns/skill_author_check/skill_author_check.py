@@ -9,8 +9,6 @@ import re
 import sys
 from pathlib import Path
 
-import yaml
-
 ROOT = Path(__file__).resolve().parents[3]
 CHECKLIST = ROOT / "integrity" / "skill-author-checklist.json"
 NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9-]*$")
@@ -26,13 +24,34 @@ def load_checklist() -> list[dict]:
 
 
 def extract_frontmatter(text: str) -> tuple[str | None, str | None]:
-    if not text.startswith("---\n"):
+    normalized = text.replace("\r\n", "\n")
+    if not normalized.startswith("---\n"):
         return None, "missing opening ---"
-    rest = text[4:]
+    rest = normalized[4:]
     end = rest.find("\n---\n")
     if end < 0:
         return None, "missing closing ---"
     return rest[:end], None
+
+
+def parse_frontmatter_mapping(fm: str) -> dict[str, str] | str:
+    """Stdlib key: value mapping. Install must not require PyYAML."""
+    data: dict[str, str] = {}
+    for raw in fm.replace("\r\n", "\n").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        if ":" not in line:
+            return f"YAML parse error: unparseable line {line!r}"
+        key, _, rest = line.partition(":")
+        key = key.strip()
+        val = rest.strip()
+        if len(val) >= 2 and val[0] == val[-1] and val[0] in {"'", '"'}:
+            val = val[1:-1]
+        if not key:
+            return f"YAML parse error: empty key in {line!r}"
+        data[key] = val
+    return data
 
 
 def check_frontmatter_yaml(skill_dir: Path, skill_md: Path, text: str) -> list[str]:
@@ -40,10 +59,10 @@ def check_frontmatter_yaml(skill_dir: Path, skill_md: Path, text: str) -> list[s
     fm, err = extract_frontmatter(text)
     if err:
         return [f"frontmatter-yaml {rel}: {err}"]
-    try:
-        data = yaml.safe_load(fm)
-    except yaml.YAMLError as exc:
-        return [f"frontmatter-yaml {rel}: YAML parse error: {exc}"]
+    parsed = parse_frontmatter_mapping(fm)
+    if isinstance(parsed, str):
+        return [f"frontmatter-yaml {rel}: {parsed}"]
+    data = parsed
     if not isinstance(data, dict):
         return [f"frontmatter-yaml {rel}: frontmatter must be a mapping"]
     name = data.get("name")

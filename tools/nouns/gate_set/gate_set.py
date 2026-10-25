@@ -27,15 +27,31 @@ _BASES = ("", "tools/", "tools/nouns/")
 _TOKEN = re.compile(r"[A-Za-z0-9_.\-/*]+")
 _NAMESPACE_ROOTS = frozenset({"tools", "tools/nouns"})
 
-# Ratification sidecar and the unsigned owner statement that lists that
-# manifest hash: excluded from closure (exact paths; not a pattern). Including
-# the statement would cycle: statement names the manifest digest; the
-# manifest would then name the statement digest.
+# Ratification artifacts that name the manifest digest: excluded from
+# closure (exact paths; not a pattern). Including them would cycle.
 MANIFEST_APPROVAL_ASC_REL = "integrity/gate-set-baseline.manifest.sha256.approval.asc"
 BOOTSTRAP_STATEMENT_REL = "adrs/owner-approvals/staged-signing.statement.txt"
+BOOTSTRAP_ARMOR_REL = "adrs/owner-approvals/staged-signing.approval.asc"
 _DERIVATION_EXCLUDE: frozenset[str] = frozenset(
-    {MANIFEST_APPROVAL_ASC_REL, BOOTSTRAP_STATEMENT_REL}
+    {MANIFEST_APPROVAL_ASC_REL, BOOTSTRAP_STATEMENT_REL, BOOTSTRAP_ARMOR_REL}
 )
+_PLACEHOLDER_ARMOR = b"-----BEGIN PGP SIGNED MESSAGE-----\nnot-valid\n"
+
+
+def armor_occupancy_paths() -> tuple[str, ...]:
+    """Every path real owner armor occupies for this bootstrap (ADR 0055)."""
+    return (MANIFEST_APPROVAL_ASC_REL, BOOTSTRAP_ARMOR_REL)
+
+
+def place_placeholder_armor(root: Path) -> list[str]:
+    """Write non-signature placeholder bytes at every occupancy path. Returns rels."""
+    placed: list[str] = []
+    for rel in armor_occupancy_paths():
+        dest = root / rel
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(_PLACEHOLDER_ARMOR)
+        placed.append(rel)
+    return placed
 
 
 def _is_derivation_excluded(rel: str) -> bool:
