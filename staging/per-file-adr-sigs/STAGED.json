@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "change_id": "per-file-adr-sigs",
+  "members": [
+    {
+      "live": "tools/nouns/owner_sidecar/owner_sidecar.py",
+      "staged": "staging/per-file-adr-sigs/tools/nouns/owner_sidecar/owner_sidecar.py"
+    }
+  ]
+}

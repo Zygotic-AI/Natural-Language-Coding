@@ -35,6 +35,7 @@ Predictable paths and slugs:
 | [Agent noun](../docs/TERMS.md#agent-noun) | `agents/<name>/AGENT.md` | Lowercase folder, AGENT.md entry point |
 | [Audit](../docs/TERMS.md#audit) | `integrity/audits/A-<id>.md` | A- prefix, uppercase id |
 | Example | `examples/<name>/README.md` | Lowercase folder, README.md entry point |
+| Skill | `.agents/skills/<name>/SKILL.md` | Lowercase folder; YAML `name` matches folder; in-tree links only |
 
 Superseded documents retain their path with a `<!-- SUPERSEDED by ... -->` marker at the top (charter R22).
 
@@ -43,7 +44,7 @@ Superseded documents retain their path with a `<!-- SUPERSEDED by ... -->` marke
 Terms from [`LEXICON.md`](LEXICON.md) carry stable meanings:
 
 - **[Action](../docs/TERMS.md#action), [Atomic action](../docs/TERMS.md#atomic-action), [Compound action](../docs/TERMS.md#compound-action)** — units of work with gates
-- **[Content type](../docs/TERMS.md#content-type)** — first-class artifact class (ADR, integrity doc, agent noun, audit, example)
+- **[Content type](../docs/TERMS.md#content-type)** — first-class artifact class (ADR, integrity doc, agent noun, audit, example, Skill)
 - **Contribution / [add-X](../docs/TERMS.md#contribution-gate)** — gated [action](../docs/TERMS.md#action) of adding/amending type X
 - **[Shared docs standard](../docs/TERMS.md#shared-docs-standard)** — this standard
 - **[Type recipe](../docs/TERMS.md#type-recipe)** — prescribed steps + [gate](../docs/TERMS.md#gate) criteria for type X
@@ -195,6 +196,7 @@ The adversarial half: can an incomplete contribution still slip through?
 |-----------|------------|
 | Add-X with no recipe | CG-R3 |
 | Add-X skipping recipe steps | CG-R2 |
+| Skill with `name:` as a markdown link | CG-R2 (`nlc-skill-author-check.py`) |
 | SSOT with person names | CG-R4 |
 | [Gate](../docs/TERMS.md#gate) tip without [refuse](../docs/TERMS.md#refuse)+fixture | CG-R5, CG-R7 |
 | Missing [SSOT exit evidence](../docs/TERMS.md#ssot-exit-evidence) | CG-R6 (enforced at fitness) |

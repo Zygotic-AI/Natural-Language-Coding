@@ -57,3 +57,6 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0051 | Hub-own produce principles SG1–SG3 | accepted | L-0051 |
 | 0052 | Owner OpenPGP ratification amends 0051 | accepted | L-0052 |
 | 0053 | Text retrofit for stale 0051/0052 sentences | proposed | L-0053 |
+| 0054 | Published-skill author contract (one checklist, pre-release and post-install) | accepted | L-0054 |
+| 0055 | Staged activation of gate machinery | accepted | L-0055 |
+| 0056 | Per-file detached owner signatures for ADRs; manifest stays single-signed | proposed | L-0056 |

@@ -45,7 +45,14 @@ def iter_verify_paths(root: Path) -> list[Path]:
                 continue
             if path.suffix in {".pyc", ".pyo"}:
                 continue
-            rels.append(path.relative_to(root))
+            rel = path.relative_to(root)
+            key = str(rel).replace("\\", "/")
+            if key in {
+                "adrs/owner-approvals/staged-signing.statement.txt",
+                "adrs/owner-approvals/staged-signing.approval.asc",
+            }:
+                continue
+            rels.append(rel)
     return rels
 
 

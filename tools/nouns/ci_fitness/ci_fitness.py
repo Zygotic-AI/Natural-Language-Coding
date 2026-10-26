@@ -648,6 +648,22 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-verify-skill-gate-fails.py")],
     )
     run(
+        "fitness-skill-author-checklist",
+        [sys.executable, str(TOOLS / "fitness-skill-author-checklist.py")],
+    )
+    run(
+        "fitness-skill-author-check-presence",
+        [sys.executable, str(TOOLS / "fitness-skill-author-check-presence.py")],
+    )
+    run(
+        "fitness-skill-content-type",
+        [sys.executable, str(TOOLS / "fitness-skill-content-type.py")],
+    )
+    run(
+        "assert-skill-author-check",
+        [sys.executable, str(TOOLS / "assert-skill-author-check-fails.py")],
+    )
+    run(
         "assert-produce-handoff-refused",
         [sys.executable, str(TOOLS / "assert-produce-handoff-refused.py")],
     )
@@ -690,8 +706,12 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-adr-owner-sidecar.py")],
     )
     run(
-        "assert-adr-batch-approval",
-        [sys.executable, str(TOOLS / "assert-adr-batch-approval-fails.py")],
+        "assert-adr-detached-sig",
+        [sys.executable, str(TOOLS / "assert-adr-detached-sig-fails.py")],
+    )
+    run(
+        "assert-sign-adrs-script",
+        [sys.executable, str(TOOLS / "assert-sign-adrs-script-passes.py")],
     )
     run(
         "assert-adr-status-heading",
@@ -796,6 +816,34 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "assert-planit-other-skill",
         [sys.executable, str(TOOLS / "assert-planit-other-skill-fails.py")],
+    )
+    run(
+        "fitness-live-self-ref-activation",
+        [sys.executable, str(TOOLS / "fitness-live-self-ref-activation.py")],
+    )
+    run(
+        "fitness-mandate-inheritance",
+        [sys.executable, str(TOOLS / "fitness-mandate-inheritance.py")],
+    )
+    run(
+        "fitness-control-lifecycle",
+        [sys.executable, str(TOOLS / "fitness-control-lifecycle.py")],
+    )
+    run(
+        "assert-live-self-ref-direct-edit",
+        [sys.executable, str(TOOLS / "assert-live-self-ref-direct-edit-fails.py")],
+    )
+    run(
+        "assert-verifier-change-via-staging",
+        [sys.executable, str(TOOLS / "assert-verifier-change-via-staging-passes.py")],
+    )
+    run(
+        "assert-activation-split-land",
+        [sys.executable, str(TOOLS / "assert-activation-split-land-fails.py")],
+    )
+    run(
+        "assert-mandate-skill-without-registry",
+        [sys.executable, str(TOOLS / "assert-mandate-skill-without-registry-fails.py")],
     )
     run(
         "assert-adr-approval-mismatch",

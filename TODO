@@ -668,3 +668,47 @@ The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (co
 - ☐ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar)
 - ☐ `./release` one PR `release/v0.3.3` → `main`; merge when all checks green; tag `v0.3.3` on that merge only
 - ☐ Confirm GitHub Release `v0.3.3` exists; prior peels unchanged
+
+### Skill YAML load errors (RCA 2026-10-20)
+
+v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten by `link-terms-dictionary.py`. Those files do not parse; they cannot load. The linker has that defect because Skill is not a content type, so the TERMS-link contract is an untyped `*.md` glob. Record: [`docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md`](docs/rca/2026-10-20-skill-yaml-terms-link-load-error.md).
+
+- ✔ Growable skill-author checklist + landmine; same command on release-prep and post-install @done(26-10-21 13:20)
+- ✔ Bind the checklist as law: ADR 0054 (Proposed) + `goals/hub_skill_author_check` + presence fitness @done(26-10-24 14:51)
+- ✔ Repair current published skills so `nlc-skill-author-check.py --root .agents/skills` is `SKILL_AUTHOR:MET` (plain `name:` + in-skill links only) @done(26-10-24 19:49)
+- ✔ Add Skill as a content type whose type recipe points at that checklist; keep TERMS-link out of published skills @done(26-10-24 19:35)
+
+### Staged activation of gate machinery (ADR 0055, owner-approved 2026-10-24)
+
+- ✔ ADR 0055 Proposed: staged activation; derived self-ref set; mandate inheritance; control-lifecycle rules @done(26-10-25 01:50)
+- ✔ Stage/activate tools; fitness refuse of live-member edits; Planit registry generated from bytes @done(26-10-25 01:50)
+- ✔ Known-bads: direct live edit, split land, skill without registry, legitimate verifier change via staging @done(26-10-25 01:50)
+- ✔ GitHub ruleset JSON for `release/*` (no direct push; require fitness) @done(26-10-25 01:50)
+- ✔ Unsigned owner signing statement at `adrs/owner-approvals/staged-signing.statement.txt` (ADR 0055 + regenerated gate-set manifest; waits on owner clearsign) @done(26-10-25 02:15)
+- ✔ ADR 0055 Status Accepted in bytes before the owner statement exists (C6 batch requires Accepted) @done(26-10-25 03:35)
+- ☐ Owner clearsign of `adrs/owner-approvals/staged-signing.statement.txt` (ADR 0055 + regenerated gate-set manifest)
+- ☐ Apply the `release/*` GitHub ruleset when the token allows
+
+### Per-file ADR detached signatures (ADR 0056, owner-directed 2026-10-25)
+
+- ✔ `scripts/sign-adrs.sh` (idempotent, dry-run, test-key override, no stored passphrase) @done(26-10-25 17:20)
+- ✔ Accepted ADR check requires per-file detached signature by the pinned key; batch no longer covers @done(26-10-25 17:20)
+- ✔ Delete batch-ratification statement/signature files and batch-only landmine @done(26-10-25 17:20)
+- ✔ ADR 0056 Proposed: per-file detached signatures; gate-set manifest stays single-signed @done(26-10-25 17:20)
+- ✔ Stage verifier candidate (ADR 0055); regenerate unsigned manifest; do not sign @done(26-10-25 17:20)
+- ✔ `scripts/sign-adrs.sh` thin entry to `goals/sign_adrs/execute.sh`; `staging/` is a contained fixture (executable-shape MET) @done(26-10-25 17:30)
+- ✔ Owner run of `scripts/sign-adrs.sh` on `cursor/per-file-adr-sigs-54bd` (catch-up `.md.asc` files) @done(26-10-25 19:11)
+- ☐ Owner clearsign of the regenerated gate-set manifest statement after the v0.4.0 identity batch
+
+### Complete v0.4.0 release on `cursor/per-file-adr-sigs-54bd` (2026-10-25)
+
+- ✔ Bring in RCA docs from PR #28 and PR #30 (docs only) @done(26-10-25 19:16)
+- ✔ README + GETTING-STARTED Linux / macOS / Windows install matching fitness piped-install jobs; product name Natural Language Compiler @done(26-10-25 19:16)
+- ✔ Version bump to 0.4.0, noop `migrations/0.3.3_to_0.4.0`, `docs/adoption/RELEASE-v0.4.0.md` from `v0.3.0` @done(26-10-25 19:16)
+- ✔ Refresh hub-content-tree-hash, derived stamps / `.nlc/verified.json`, regenerate gate-set manifest once @done(26-10-25 19:17)
+- ☐ Owner clearsign of the regenerated manifest after v0.4.0 prepare identity (C8 — agents do not sign)
+
+### v0.4.0 prepare identity before owner sign (2026-10-25)
+
+- ✔ Write `integrity/hub-release-record.json` 0.4.0 / `release/v0.4.0` and set DESCRIBE/FINDINGS last-tagged-ship to v0.4.0 so tag-time F1 and the record do not move after the owner signs @done(26-10-25 20:00)
+- ✔ Refresh hub-content-tree-hash / stamps and regenerate the gate-set manifest once after those prepare edits @done(26-10-25 20:01)

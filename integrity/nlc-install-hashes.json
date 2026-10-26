@@ -33,17 +33,18 @@
     "tools/nlc-pipeline-wire.py": "bf8569df4957f9af4a2d008bcb7c0d9191d7e5dab5fcf90b5599a01c74a67df6",
     "tools/nlc-release-build.py": "f87bfd42f5d165060f252df9dcb4d5d5ff31c0d173b7597f31d0ac2d53d77250",
     "tools/nlc-reverse-audit.py": "0e2fd0d68bc102da38cf9bb85810fd9ca947f3d991ed9d7df8ce66d63d1fe30d",
+    "tools/nlc-skill-author-check.py": "9d7316270bcb599b146e04311d1679fe2e6f5f59735b604a85c6fffe134b44bd",
     "tools/nlc-update.py": "68f60ad1efdb7b3da7fce1a4de530e86ef0161be05f08bcd8b1ec4e2f889755c",
-    ".agents/skills/bbp-confirmer/SKILL.md": "4cf9a5009d5a92e9425ac9e4e987c243e85625e728e8419efd3005224a179ef4",
-    ".agents/skills/bbp-proposer/SKILL.md": "f3f9d588e7801fab70987c4b3afcbba19f52ea91efb6e173b5ffd2edee333352",
-    ".agents/skills/bbp-recorder/SKILL.md": "7ee8659d50003bfe3f421ec1bd77b85f34cf2d3cae48a0ae5d753a5d27c79bb4",
-    ".agents/skills/bbp-reviewer/SKILL.md": "7c0c3e265bc52d28e3fea9a8fb02a735bf75cf17fb58ba42fcc414b47225ea5a",
-    ".agents/skills/full-nlc-audit/SKILL.md": "ad3f63966d69e7b4609a5370f62ac28210f6b8881ac3c444d2c04b23f63fcefc",
-    ".agents/skills/interview/SKILL.md": "1d7a8861e476d1220bcb1144985a77266a7b914d6688a7c9ade59f97e0496e58",
+    ".agents/skills/bbp-confirmer/SKILL.md": "6ed5bc11a3e3475d6d626f35259331251ad199152afdb8d598c66c3c9a1c8554",
+    ".agents/skills/bbp-proposer/SKILL.md": "4c2d40a2cbc33365c75680630920beb3d1afea321e6b13c6e408514e7539d029",
+    ".agents/skills/bbp-recorder/SKILL.md": "87f5ea131682e03eee71f706111ad24521cfab0db6946b0920a40d782b0330e1",
+    ".agents/skills/bbp-reviewer/SKILL.md": "24ed5101dfdec2080d6a789aa533af17eaca1937e8066e24ad05725ac7db1655",
+    ".agents/skills/full-nlc-audit/SKILL.md": "5dcd8e90f2e08eec8493a705e5ccf02cd4f1a1a528c411f2a5d89c4c45a03866",
+    ".agents/skills/interview/SKILL.md": "73ea432dc2492048e9df5835aab98ca5785a6cd961cb96d61765695df492c403",
     ".agents/skills/nlc-hub-audit/SKILL.md": "a9f07c3c7e17bb1346c288875d3b1319c5dad5a929f6319993c7a0664eac11d3",
-    ".agents/skills/planit/SKILL.md": "85a11ef6ce5037d3a4e0c54d074679598a19e347f4e1f80778d4f2f1ad15085e",
-    ".agents/skills/release/SKILL.md": "a83161f30b2d6e37f21e7a8ac02f25fde8ec349b491e98621d415b5e2db03331",
+    ".agents/skills/planit/SKILL.md": "784859779123b02053ac1cede8caee0915d796770c0b430eedacf1d456e731fa",
+    ".agents/skills/release/SKILL.md": "99cada6d491af683eab0637bb1b0c6ab9671ec33b66e3fcc5d4c9dda4f505def",
     ".agents/skills/requirement-pack-ingest/SKILL.md": "0cde87530d9b7efbcf0e8a56104256ebffae4b72e547d229eb1383af1fdfcefd",
-    ".agents/skills/verify/SKILL.md": "70b0604fef757f4194892288cec4acdf00b91cd30ffc2b4f048388c7b1a73831"
+    ".agents/skills/verify/SKILL.md": "4164ff20b6966bb08a5d0f5385092d90abdc36e5498d77b92001a58cf4a52fee"
   }
 }

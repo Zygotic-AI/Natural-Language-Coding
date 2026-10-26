@@ -32,7 +32,7 @@ Do **not** emit the final audit report until every **blocking** row is true.
 | Input | Default |
 | ----- | ------- |
 | Repo root | Workspace root |
-| Profile | `quick` (CI landmine); `release-prep` on `./release` prepare; `full` adds clean-tree + verify stages ([`docs/adoption/RELEASE.md`](../../../docs/adoption/RELEASE.md)) |
+| Profile | `quick` (CI landmine); `release-prep` on `./release` prepare; `full` adds clean-tree + verify stages (`docs/adoption/RELEASE.md`) |
 | Prior findings | Optional diff |
 
 ## Procedure
@@ -84,7 +84,7 @@ Follow [`references/inference-phases.md`](references/inference-phases.md) in ord
 
 ## When to write leaves
 
-Before deleting or abandoning a **long-lived integration branch** (or remote that represented a bounded initiative), append a leaf to [`integrity/integration-leaves.json`](../../../integrity/integration-leaves.json):
+Before deleting or abandoning a **long-lived integration branch** (or remote that represented a bounded initiative), append a leaf to `integrity/integration-leaves.json`:
 
 | Field | Requirement |
 | ----- | ----------- |
@@ -92,11 +92,11 @@ Before deleting or abandoning a **long-lived integration branch** (or remote tha
 | **disposition** | `on_main` \| `parked` \| `rejected` \| `absent` — must match reality on `main`. |
 | **evidence** | For `on_main`: merge commit or `sha`. For `parked`: `findings_ref` pointing at a FINDINGS row. For `rejected`/`absent`: short reason. |
 
-If leaves are intentionally empty (e.g. remotes already deleted without records), add [`integrity/integration-leaves-waive.json`](../../../integrity/integration-leaves-waive.json) with `waived`, `reason`, and `audit_sha` — do not leave an empty `leaves` array without waive.
+If leaves are intentionally empty (e.g. remotes already deleted without records), add `integrity/integration-leaves-waive.json` with `waived`, `reason`, and `audit_sha` — do not leave an empty `leaves` array without waive.
 
 ## Reference
 
-- [`docs/nlc/FULL-NLC-AUDIT.md`](../../../docs/nlc/FULL-NLC-AUDIT.md)
-- [`docs/nlc/VERIFY-AND-SHIP.md`](../../../docs/nlc/VERIFY-AND-SHIP.md)
-- [`docs/ADR-ENFORCEMENT.md`](../../../docs/ADR-ENFORCEMENT.md)
+- `docs/nlc/FULL-NLC-AUDIT.md`
+- `docs/nlc/VERIFY-AND-SHIP.md`
+- `docs/ADR-ENFORCEMENT.md`
 - Legacy alias skill: `.agents/skills/nlc-hub-audit/SKILL.md`

@@ -115,6 +115,24 @@ if (Test-Path -LiteralPath $CursorHome) {
     Write-Host '  cursor: copied repo-local BBP + planit skills'
 }
 
+$SkillCheckGoal = Join-Path $HubDest 'goals\hub_skill_author_check\execute.ps1'
+if (-not (Test-Path -LiteralPath $SkillCheckGoal)) {
+    Write-Host 'Install could not confirm installed skills are authored correctly.' -ForegroundColor Red
+    Write-Host '  What''s wrong: missing goals/hub_skill_author_check/execute.ps1'
+    Write-Host '  Fix: re-run install from a hub that includes the skill-author use-case.'
+    [Console]::Error.WriteLine('INSTALL:NOT_MET missing skill author check')
+    exit 1
+}
+Write-Host '  verify: skill author checklist'
+& $SkillCheckGoal --root $AgentsSkills
+if ($LASTEXITCODE -ne 0) {
+    Write-Host 'Install could not confirm installed skills are authored correctly.' -ForegroundColor Red
+    Write-Host "  What's wrong: published skill checklist failed on $AgentsSkills"
+    Write-Host '  Fix: repair the hub skills, then re-run install.'
+    [Console]::Error.WriteLine('INSTALL:NOT_MET skill author checklist failed')
+    exit 1
+}
+
 if (-not $env:NLC_SKIP_VERIFY) {
     $Verify = Join-Path $HubDest 'tools\nlc-install-verify.py'
     if (Test-Path -LiteralPath $Verify) {

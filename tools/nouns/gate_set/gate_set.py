@@ -19,6 +19,7 @@ GATE_SET_EXCLUSIONS: dict[str, str] = {
     "docs/history/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
     "docs/rca/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
     "reviews/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
+    "staging/": "candidate bytes; live signed machinery verifies then atomic-activates (ADR 0055)",
 }
 
 _EXCL_PREFIXES = tuple(GATE_SET_EXCLUSIONS.keys())
@@ -26,9 +27,31 @@ _BASES = ("", "tools/", "tools/nouns/")
 _TOKEN = re.compile(r"[A-Za-z0-9_.\-/*]+")
 _NAMESPACE_ROOTS = frozenset({"tools", "tools/nouns"})
 
-# Ratification sidecar: excluded from closure and hub digest (exact path; not a pattern).
+# Ratification artifacts that name the manifest digest: excluded from
+# closure (exact paths; not a pattern). Including them would cycle.
 MANIFEST_APPROVAL_ASC_REL = "integrity/gate-set-baseline.manifest.sha256.approval.asc"
-_DERIVATION_EXCLUDE: frozenset[str] = frozenset({MANIFEST_APPROVAL_ASC_REL})
+BOOTSTRAP_STATEMENT_REL = "adrs/owner-approvals/staged-signing.statement.txt"
+BOOTSTRAP_ARMOR_REL = "adrs/owner-approvals/staged-signing.approval.asc"
+_DERIVATION_EXCLUDE: frozenset[str] = frozenset(
+    {MANIFEST_APPROVAL_ASC_REL, BOOTSTRAP_STATEMENT_REL, BOOTSTRAP_ARMOR_REL}
+)
+_PLACEHOLDER_ARMOR = b"-----BEGIN PGP SIGNED MESSAGE-----\nnot-valid\n"
+
+
+def armor_occupancy_paths() -> tuple[str, ...]:
+    """Every path real owner armor occupies for this bootstrap (ADR 0055)."""
+    return (MANIFEST_APPROVAL_ASC_REL, BOOTSTRAP_ARMOR_REL)
+
+
+def place_placeholder_armor(root: Path) -> list[str]:
+    """Write non-signature placeholder bytes at every occupancy path. Returns rels."""
+    placed: list[str] = []
+    for rel in armor_occupancy_paths():
+        dest = root / rel
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(_PLACEHOLDER_ARMOR)
+        placed.append(rel)
+    return placed
 
 
 def _is_derivation_excluded(rel: str) -> bool:

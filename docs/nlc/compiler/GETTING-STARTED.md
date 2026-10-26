@@ -1,13 +1,19 @@
 # Getting started (about five minutes)
 
-**Product = [Natural Language Coding (NLC)](../../TERMS.md#nlc).** This page is the NLC compiler docs home (`docs/nlc/compiler/`); it is not a second public roof.
+**Product = Natural Language Compiler** ([Natural Language Coding (NLC)](../../TERMS.md#nlc) practice). This page is the NLC compiler docs home (`docs/nlc/compiler/`); it is not a second public roof.
 
 1. **Install**
 
-   macOS / Linux / WSL:
+   Linux:
 
    ```bash
    curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
+   ```
+
+   macOS:
+
+   ```bash
+   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | /bin/bash
    ```
 
    Windows (PowerShell):

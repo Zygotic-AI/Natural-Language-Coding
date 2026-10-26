@@ -1,5 +1,7 @@
 # [Natural Language Coding](docs/TERMS.md#nlc)
 
+**Product: Natural Language Compiler**
+
 **Describe your app in plain English.** 
 
 **Add constraints**, anything from hardware to HIPAA, GDPR, PCI-DSS, and FedRAMP - you name it.
@@ -18,13 +20,26 @@ NLC gives you an application and infrastructure that's fully traceable and audit
 
 ## Quick start (app repo)
 
-1. **Install** (macOS, Linux, WSL):
+1. **Install** the Natural Language Compiler (Linux, macOS, Windows):
+
+   Linux:
 
    ```bash
    curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
    ```
 
-   Windows (PowerShell): [Getting started](docs/nlc/compiler/GETTING-STARTED.md) (install block).
+   macOS:
+
+   ```bash
+   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | /bin/bash
+   ```
+
+   Windows (PowerShell):
+
+   ```powershell
+   Set-ExecutionPolicy -Scope Process Bypass -Force
+   irm https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.ps1 | iex
+   ```
 
    Then check the install: `nlc doctor` (or `./nlc doctor` if you only use a repo-local launcher).
 
@@ -71,20 +86,6 @@ Design SSOT: [`CHARTER.md`](CHARTER.md). Words: [`GLOSSARY.md`](docs/nlc/compile
 | Adopt step-by-step | [`BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) |
 | Full doc map | [`docs/nlc/README.md`](docs/nlc/README.md) |
 
-## Working on this [hub](docs/TERMS.md#hub) repo
-
-Clone and `bash scripts/install.sh` (or `install.ps1`). [Hub](docs/TERMS.md#hub) compile [gate](docs/TERMS.md#gate):
-
-```bash
-python3 tools/ci_fitness.py
-```
-
-Windows: `powershell -File tools/ci-fitness.ps1`.
-
-**[Ship](docs/TERMS.md#hub) version:** **`./release`** (one session; or **`./release prepare`** then **`./release finish`**) — [release guide](docs/adoption/RELEASE.md).
-
-Install layout, version pins, and checksums: [`docs/nlc/README.md`](docs/nlc/README.md) (distribution section).
-
 ## Not for you if
 
 - You want to hand-edit generated [noun](docs/TERMS.md#noun) code to stay green without changing intent.
@@ -100,3 +101,7 @@ Current ship: the latest `v*` tag on `main` (see `integrity/nlc-version.json`).
 **History** (how the product grew; not the current ship): **v0.1.0** — install, lock, [greenfield](docs/TERMS.md#greenfield) adopt, `/interview` + `/planit`, [verify](docs/TERMS.md#verify) path, impact graph + [delta-regen](docs/TERMS.md#delta-regen-queue). [Hub](docs/TERMS.md#hub) ships **no** product requirements (ADR 0016). **v0.2** — [requirement packs](docs/TERMS.md#requirement-pack). Gaps: [`FINDINGS.md`](FINDINGS.md).
 
 **P / R / C** on [rule](docs/TERMS.md#rule) ids: **P**rinciple, **R**equirement, **C**onfirmation. Hyphenated `P-020` is operating policy in the companion bindings repo.
+
+## Participate
+
+This README is how you **use** published [NLC](docs/TERMS.md#nlc) in an app. Changing *this* repository is a different job: the compiler is process engineering with AI, and edits have to keep that discipline. If you want to help, start at [Contributing](CONTRIBUTING.md).

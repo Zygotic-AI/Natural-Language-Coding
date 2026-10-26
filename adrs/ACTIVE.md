@@ -58,5 +58,7 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0044 | L-0044 | session | 2026-09-25 |
 | 0045 | L-0045 | session | 2026-09-26 |
 | 0050 | L-0050 | RCA 2026-10-10 SHA-pinned evidence / content identity | 2026-10-10 |
+| 0054 | L-0054 | RCA 2026-10-20 published-skill author contract | 2026-10-24 |
+| 0055 | L-0055 | RCA 2026-10-25 staged activation of gate machinery | 2026-10-25 |
 
 When an ADR is superseded, remove it from this table and add its successor. Update INDEX status in the same change.

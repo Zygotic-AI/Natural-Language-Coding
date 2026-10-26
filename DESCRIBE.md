@@ -52,7 +52,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `integrity/ACTIONS.md` | [Action](docs/TERMS.md#action) [noun](docs/TERMS.md#noun) SSOT; gated [action](docs/TERMS.md#action) catalog; nesting [rule](docs/TERMS.md#rule) |
 | `integrity/binding-matrix.json` | [Requirement](docs/TERMS.md#requirement) → [audit](docs/TERMS.md#audit) → [gate](docs/TERMS.md#gate) (JSON key is still `binder` until the auditor is updated) |
 | `docs/OPERATING_BINDINGS.md` | Operating policy index (P-016…P-031 class); hub-local P-series prose |
-| `content-types/HOW-TO-ADD.md` | Type recipes for adding content (ADR, integrity doc, agent noun, etc.) |
+| `content-types/HOW-TO-ADD.md` | Type recipes for adding content (ADR, integrity doc, agent noun, Skill, etc.) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
 | `AGENTS.md` | Cross-harness standing instructions |
 | `.agents/` | Portable skills / instructions |
@@ -112,11 +112,15 @@ Do not treat a percentage frozen in this file as live status. Run `python3 tools
 
 ## Current ship
 
-Last tagged ship is **v0.3.3**.
+Last tagged ship is **v0.4.0**.
 
 ## ADR 0051 / 0052 hub-own retrofit (C1–C11)
 
-Hub material produce packages derive `hub_material` and `changed_paths` from `git diff <merge-base v0.3.0>..HEAD` (`tools/nouns/hub_own_produce`). The merge-base is the immutable **v0.3.0** git tag (first production-trunk ship). Closed `release/v*` branches may be pruned and are not required. Those fields are never read from the package. Every Accepted document needs an OpenPGP sidecar or batch (`fitness-adr-owner-sidecar`). Hash-only approval receipts are retired; ratification is C6 only. Rule list SSOT: `integrity/adr-0051-0052-rules.json` (must equal `tools/derive-adr-0051-0052-rules.py`). Known-bad SSOT: `integrity/known-bad-cases.json`. Retired key denylist: `integrity/owner-keys/RETIRED_FINGERPRINTS` (never trust `1A86E89505A908766DFD7304F04AD1CEC768DB18`).
+Hub material produce packages derive `hub_material` and `changed_paths` from `git diff <merge-base v0.3.0>..HEAD` (`tools/nouns/hub_own_produce`). The merge-base is the immutable **v0.3.0** git tag (first production-trunk ship). Closed `release/v*` branches may be pruned and are not required. Those fields are never read from the package. Every Accepted numbered ADR needs a per-file detached OpenPGP signature beside it (`adrs/NNNN-slug.md.asc`, `fitness-adr-owner-sidecar`). A batch owner-approvals statement does not cover an ADR (ADR 0056). The gate-set manifest stays on one clearsigned sidecar. Hash-only approval receipts are retired; ratification is C6 only. The owner catch-up script is `scripts/sign-adrs.sh`. Rule list SSOT: `integrity/adr-0051-0052-rules.json` (must equal `tools/derive-adr-0051-0052-rules.py`). Known-bad SSOT: `integrity/known-bad-cases.json`. Retired key denylist: `integrity/owner-keys/RETIRED_FINGERPRINTS` (never trust `1A86E89505A908766DFD7304F04AD1CEC768DB18`).
+
+## Staged gate machinery (ADR 0055)
+
+Self-referential gate members are derived (`python3 tools/derive-self-ref-set.py`), not hand-kept. Candidates live under `staging/<change-id>/`. Live members change only through `python3 tools/activate-gate-machinery.py` (verify pasted owner armor, place unchanged, swap) or the first bootstrap of that machinery. Mandated paths are derived (`python3 tools/derive-mandated-paths.py`) and imported by the Skill type recipe, the skill-author checklist, and `/release`. The Planit identity registry is generated from skill bytes (`python3 tools/generate-planit-identity-registry.py`).
 
 ## Conventions in this workspace
 

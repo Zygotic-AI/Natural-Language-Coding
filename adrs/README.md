@@ -61,3 +61,6 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0051-hub-own-produce-principles.md`](0051-hub-own-produce-principles.md) | Hub-own produce principles (SG1–SG3) | Accepted |
 | [`0052-owner-openpgp-ratification-amends-0051.md`](0052-owner-openpgp-ratification-amends-0051.md) | Owner OpenPGP ratification (amends 0051) | Accepted |
 | [`0053-0051-0052-text-retrofit.md`](0053-0051-0052-text-retrofit.md) | Text retrofit for stale 0051/0052 sentences | Proposed |
+| [`0054-published-skill-author-contract.md`](0054-published-skill-author-contract.md) | Published-skill author contract (one checklist, pre-release and post-install) | Accepted |
+| [`0055-staged-activation-of-gate-machinery.md`](0055-staged-activation-of-gate-machinery.md) | Staged activation of gate machinery | Accepted |
+| [`0056-per-file-adr-detached-signatures.md`](0056-per-file-adr-detached-signatures.md) | Per-file detached owner signatures for ADRs; manifest stays single-signed | Proposed |

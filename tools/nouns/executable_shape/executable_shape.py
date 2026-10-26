@@ -108,6 +108,8 @@ def _thin_shell(text: str) -> bool:
 
 def classify(rel: str, text: str) -> str | None:
     """Return one shape class, or None when the file is unclassified."""
+    if rel.startswith("staging/"):
+        return "contained fixture"
     if rel.startswith("reviews/"):
         return "contained fixture"
     if rel.startswith("examples/"):

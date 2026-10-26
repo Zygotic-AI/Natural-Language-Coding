@@ -208,6 +208,14 @@
     "0052": {
       "gate": "tools/fitness-adr-owner-sidecar.py",
       "fixture": "tools/fixtures/owner-ratification-sidecar/accepted-doc-no-sidecar.md"
+    },
+    "0054": {
+      "gate": "tools/fitness-skill-author-check-presence.py",
+      "fixture": "tools/assert-skill-author-check-fails.py"
+    },
+    "0055": {
+      "gate": "tools/fitness-live-self-ref-activation.py",
+      "fixture": "tools/assert-live-self-ref-direct-edit-fails.py"
     }
   },
   "constraints": {

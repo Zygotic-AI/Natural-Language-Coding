@@ -16,6 +16,7 @@ This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler
 | [Verify](../TERMS.md#verify) vs [ship](../TERMS.md#ship) (QA vs release) | [`VERIFY-AND-SHIP.md`](VERIFY-AND-SHIP.md), [`APP-VERIFY.md`](APP-VERIFY.md) |
 | Human judgment (C24, adversarial, nouns) | [`HUMAN-JUDGMENT-GATES.md`](HUMAN-JUDGMENT-GATES.md) |
 | Cut a [hub](../TERMS.md#hub) release | **`./release`** — [`docs/adoption/RELEASE.md`](../adoption/RELEASE.md) |
+| Change *this* compiler repo | [`CONTRIBUTING.md`](../../CONTRIBUTING.md) |
 
 ## Three layers
 

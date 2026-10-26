@@ -46,7 +46,7 @@ An [Action](../docs/TERMS.md#action) composed of other Actions, yet still posses
 
 ### [Content type](../docs/TERMS.md#content-type)
 
-A first-class artifact class in the repository. Content types include [ADR](../docs/TERMS.md#adr), [integrity](../docs/TERMS.md#integrity) doc, [agent noun](../docs/TERMS.md#agent-noun), [audit](../docs/TERMS.md#audit) definition, example. Each [content type](../docs/TERMS.md#content-type) has a [type recipe](../docs/TERMS.md#type-recipe) prescribing how to add or amend instances.
+A first-class artifact class in the repository. Content types include [ADR](../docs/TERMS.md#adr), [integrity](../docs/TERMS.md#integrity) doc, [agent noun](../docs/TERMS.md#agent-noun), [audit](../docs/TERMS.md#audit) definition, example, Skill. Each [content type](../docs/TERMS.md#content-type) has a [type recipe](../docs/TERMS.md#type-recipe) prescribing how to add or amend instances.
 
 **[Audit](../docs/TERMS.md#audit) `A-LEXICON-CONTENT-TYPE`:** [Met](../docs/TERMS.md#met) iff each [content type](../docs/TERMS.md#content-type) named in `content-types/` has a [type recipe](../docs/TERMS.md#type-recipe). Not [met](../docs/TERMS.md#met) if a [content type](../docs/TERMS.md#content-type) is named without a recipe.
 

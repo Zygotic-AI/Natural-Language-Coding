@@ -4,7 +4,7 @@ SSOT for vocabulary in this repository (NLC product, BBP emit shape, BBA integri
 
 Charter-shaped **R** / **C** / **P** rules stay in [`CHARTER.md`](../CHARTER.md). Locked integrity nouns also appear in [`integrity/LEXICON.md`](../integrity/LEXICON.md).
 
-After adding terms here, re-run `python3 tools/link-terms-dictionary.py` to refresh links in markdown across the repo.
+After adding terms here, re-run `python3 tools/link-terms-dictionary.py` on recipe-marked prose only. The walk is not every `*.md` in the repo. Published skills (`.agents/skills/`, `.cursor/skills/`) are the Skill content type: YAML frontmatter is not prose; the linker must not walk those trees. Author gate: `integrity/skill-author-checklist.json`.
 
 ---
 
@@ -176,7 +176,7 @@ Path that runs **fitness** + charter §11 evidence (often **bbp-confirmer**).
 
 ### Content type
 
-First-class artifact class (ADR, integrity doc, **agent noun**, …) with a **type recipe**.
+First-class artifact class (ADR, integrity doc, **agent noun**, Skill, …) with a **type recipe**.
 
 ### Contribution Gate
 
