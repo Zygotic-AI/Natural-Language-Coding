@@ -16,6 +16,10 @@ The tool runs gates ([ADR 0022](../../adrs/0022-hub-release-fail-early.md), 0038
 
 **Human in GitHub:** merge the **release PR** (`release/v* → main`) whose head SHA is the candidate `./release` pushed. The tag is created on that merge commit only when the version file, release record, and branch name all match. An existing tag is not moved.
 
+## Creating a release branch
+
+Release branches (`release/vX.Y.Z`) are created only via the **start-release** workflow ([`.github/workflows/start-release.yml`](../../.github/workflows/start-release.yml)). Run it from the Actions tab with a version that matches `^v\d+\.\d+\.\d+$`. The workflow creates `release/<version>` from the current `main` HEAD and does nothing else (no commits, no tags). Do not create `release/*` refs by hand or by toggling the ruleset.
+
 ## Sync after someone else ships (step 5)
 
 ```bash
