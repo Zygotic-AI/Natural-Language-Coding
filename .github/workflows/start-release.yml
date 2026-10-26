@@ -1,5 +1,9 @@
 name: start-release
 
+# Fail-closed: preflight required binaries (missing => fail).
+# Branch/tag probes proceed only on HTTP 404. 200 => exists (refuse).
+# Any other HTTP status, missing status, or transport error => fail.
+
 on:
   workflow_dispatch:
     inputs:
@@ -30,6 +34,15 @@ jobs:
           fi
           echo "version ${VERSION} accepted"
 
+      - name: Preflight required binaries
+        run: |
+          set -euo pipefail
+          for bin in gh; do
+            path="$(command -v "${bin}" || true)"
+            test -n "${path}" || { echo "ERROR: required binary missing: ${bin}"; exit 1; }
+            echo "preflight: ${bin} -> ${path}"
+          done
+
       - name: Mint start-release GitHub App token
         id: app-token
         uses: actions/create-github-app-token@v3
@@ -45,14 +58,37 @@ jobs:
         run: |
           set -euo pipefail
           BRANCH="release/${VERSION}"
-          if gh api --silent "repos/${REPO}/git/ref/heads/${BRANCH}"; then
-            echo "ERROR: branch ${BRANCH} already exists"
-            exit 1
-          fi
-          if gh api --silent "repos/${REPO}/git/ref/tags/${VERSION}"; then
-            echo "ERROR: tag ${VERSION} already exists"
-            exit 1
-          fi
+
+          # Proceed only on HTTP 404. 200 => exists (refuse).
+          # Any other status, missing status, or transport error => fail.
+          # Parse HTTP status explicitly. Do not treat command success as exists.
+          probe_absent() {
+            local path="$1"
+            local label="$2"
+            local raw ec status
+            set +e
+            raw="$(gh api --include --silent --method GET "${path}" 2>&1)"
+            ec=$?
+            set -e
+            status="$(printf '%s\n' "${raw}" | tr -d '\r' | sed -n 's/^HTTP\/[0-9.]* \([0-9][0-9][0-9]\).*/\1/p' | tail -n 1)"
+            case "${status}" in
+              404)
+                echo "${label} absent (HTTP 404)"
+                ;;
+              200)
+                echo "ERROR: ${label} already exists"
+                exit 1
+                ;;
+              *)
+                echo "ERROR: ${label} existence probe failed (HTTP ${status:-<empty>}; gh exit ${ec})"
+                printf '%s\n' "${raw}"
+                exit 1
+                ;;
+            esac
+          }
+
+          probe_absent "repos/${REPO}/git/ref/heads/${BRANCH}" "branch ${BRANCH}"
+          probe_absent "repos/${REPO}/git/ref/tags/${VERSION}" "tag ${VERSION}"
           SHA="$(gh api "repos/${REPO}/git/ref/heads/main" --jq .object.sha)"
           test -n "${SHA}"
           gh api --method POST "repos/${REPO}/git/refs" \
