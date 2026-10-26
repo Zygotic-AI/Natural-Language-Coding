@@ -171,6 +171,9 @@
     ".github/workflows/release.yml": [
       "gate_set_manifest"
     ],
+    ".github/workflows/start-release.yml": [
+      "gate_set_manifest"
+    ],
     ".gitignore": [
       "gate_set_manifest"
     ],
