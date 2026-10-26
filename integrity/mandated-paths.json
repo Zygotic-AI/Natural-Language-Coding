@@ -2433,7 +2433,6 @@
       "gate_set_manifest"
     ],
     "integrity/hub-content-tree-hash.txt": [
-      "gate_set_manifest",
       "content_tree"
     ],
     "integrity/hub-gate-diff-profile.json": [
@@ -2804,6 +2803,9 @@
     "tools/assert-changed-missing-fails.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-content-only-change-does-not-trip-gate-set-signature-passes.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-contract-change-detects-c21-fails.py": [
       "gate_set_manifest"
     ],
@@ -2868,6 +2870,9 @@
       "gate_set_manifest"
     ],
     "tools/assert-gate-set-manifest-tamper-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-gate-set-member-change-fails-closed.py": [
       "gate_set_manifest"
     ],
     "tools/assert-goal-bindings-narrow-fails.py": [
