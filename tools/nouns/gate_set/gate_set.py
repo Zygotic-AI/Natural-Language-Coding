@@ -27,13 +27,21 @@ _BASES = ("", "tools/", "tools/nouns/")
 _TOKEN = re.compile(r"[A-Za-z0-9_.\-/*]+")
 _NAMESPACE_ROOTS = frozenset({"tools", "tools/nouns"})
 
-# Ratification artifacts that name the manifest digest: excluded from
-# closure (exact paths; not a pattern). Including them would cycle.
+# Exact-path derivation exclusions (not a pattern). Armor/statement name the
+# manifest digest; including them would cycle. The whole-tree freshness stamp
+# is a CI-loaded path, so without this exclude it becomes a signed member and
+# every content edit requires a new owner signature (PR #30 option A).
 MANIFEST_APPROVAL_ASC_REL = "integrity/gate-set-baseline.manifest.sha256.approval.asc"
 BOOTSTRAP_STATEMENT_REL = "adrs/owner-approvals/staged-signing.statement.txt"
 BOOTSTRAP_ARMOR_REL = "adrs/owner-approvals/staged-signing.approval.asc"
+CONTENT_TREE_HASH_REL = "integrity/hub-content-tree-hash.txt"
 _DERIVATION_EXCLUDE: frozenset[str] = frozenset(
-    {MANIFEST_APPROVAL_ASC_REL, BOOTSTRAP_STATEMENT_REL, BOOTSTRAP_ARMOR_REL}
+    {
+        MANIFEST_APPROVAL_ASC_REL,
+        BOOTSTRAP_STATEMENT_REL,
+        BOOTSTRAP_ARMOR_REL,
+        CONTENT_TREE_HASH_REL,
+    }
 )
 _PLACEHOLDER_ARMOR = b"-----BEGIN PGP SIGNED MESSAGE-----\nnot-valid\n"
 

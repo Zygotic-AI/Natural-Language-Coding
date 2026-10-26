@@ -802,6 +802,17 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-gate-set-manifest-placeholder-sidecar-fails.py")],
     )
     run(
+        "assert-content-only-change-does-not-trip-gate-set-signature",
+        [
+            sys.executable,
+            str(TOOLS / "assert-content-only-change-does-not-trip-gate-set-signature-passes.py"),
+        ],
+    )
+    run(
+        "assert-gate-set-member-change-fails-closed",
+        [sys.executable, str(TOOLS / "assert-gate-set-member-change-fails-closed.py")],
+    )
+    run(
         "fitness-adr-record-gate",
         [sys.executable, str(TOOLS / "fitness-adr-record-gate.py")],
     )
