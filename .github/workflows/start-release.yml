@@ -11,16 +11,6 @@ on:
         description: "Release version matching ^v\\d+\\.\\d+\\.\\d+$"
         required: true
         type: string
-      debug_hide_gh:
-        description: "TEMPORARY debug: empty PATH so gh is missing (remove before final)"
-        required: false
-        type: boolean
-        default: false
-      debug_bogus_token:
-        description: "TEMPORARY debug: overwrite GH_TOKEN with bogus (remove before final)"
-        required: false
-        type: boolean
-        default: false
 
 concurrency:
   group: nlc-release
@@ -45,14 +35,8 @@ jobs:
           echo "version ${VERSION} accepted"
 
       - name: Preflight required binaries
-        env:
-          DEBUG_HIDE_GH: ${{ inputs.debug_hide_gh }}
         run: |
           set -euo pipefail
-          if [[ "${DEBUG_HIDE_GH:-}" == "true" ]]; then
-            export PATH=""
-            echo "debug: PATH emptied to hide gh"
-          fi
           for bin in gh; do
             path="$(command -v "${bin}" || true)"
             test -n "${path}" || { echo "ERROR: required binary missing: ${bin}"; exit 1; }
@@ -71,14 +55,8 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           VERSION: ${{ inputs.version }}
           REPO: ${{ github.repository }}
-          DEBUG_BOGUS_TOKEN: ${{ inputs.debug_bogus_token }}
         run: |
           set -euo pipefail
-          if [[ "${DEBUG_BOGUS_TOKEN:-}" == "true" ]]; then
-            GH_TOKEN="bogus"
-            export GH_TOKEN
-            echo "debug: GH_TOKEN replaced with bogus value"
-          fi
           BRANCH="release/${VERSION}"
 
           # Proceed only on HTTP 404. 200 => exists (refuse).
