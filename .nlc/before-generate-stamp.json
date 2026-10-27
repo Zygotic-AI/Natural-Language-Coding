@@ -1,13 +1,11 @@
 {
   "ok": true,
   "scopes": [
+    "default",
+    "release",
     "hub_release",
-    "hub_install",
-    "hub_release_smoke",
-    "hub_fitness_check1",
-    "hub_release_prep",
-    "hub_session"
+    "sign_adrs"
   ],
-  "at": "2026-10-25T17:59:33Z",
-  "product_content_sha256": "997ad36439be7f01bef959332606a99c257090d859fe65b4c6d8a5d198812a11"
+  "at": "2026-10-27T15:10:08Z",
+  "product_content_sha256": "9d0ce8b34af0ee337717714967eb79db4359bc92d7358c3eb129774eb2613df9"
 }

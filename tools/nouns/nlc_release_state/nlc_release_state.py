@@ -19,6 +19,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nlc_release_record import git_show_json, read_version_at  # noqa: E402
 from nlc_release_context import main_context  # noqa: E402
 from nlc_requirements import hub_tool  # noqa: E402
+from nouns.release_probe.release_probe import (  # noqa: E402
+    ProbeFailure,
+    confirmed_text,
+    run_argv,
+)
 from nouns.release_state import (  # noqa: E402
     annotated_tag_argv,
     executor_permits,
@@ -29,15 +34,19 @@ ROOT = Path(__file__).resolve().parents[3]
 STAMP = ROOT / ".nlc" / "release-prepare-facts.json"
 
 
-def _run(args: list[str]) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(args, cwd=str(ROOT), capture_output=True, text=True, check=False)
+def _run(args: list[str], runner: object | None = None) -> subprocess.CompletedProcess[str]:
+    return run_argv(args, cwd=ROOT, runner=runner)
 
 
-def _out(args: list[str]) -> str:
-    proc = _run(args)
-    if proc.returncode != 0:
-        return ""
-    return proc.stdout.strip()
+def _out(
+    args: list[str],
+    *,
+    empty_ok: bool = False,
+    absent_codes: tuple[int, ...] = (),
+    runner: object | None = None,
+) -> str:
+    proc = _run(args, runner=runner)
+    return confirmed_text(proc, empty_ok=empty_ok, absent_codes=absent_codes)
 
 
 def _worktree_version() -> str:
@@ -100,12 +109,16 @@ def _record_at(commit: str) -> tuple[str, str]:
 
 def _closed_branches(remote: str) -> set[str]:
     closed: set[str] = set()
-    names = _out(["git", "tag", "-l", "v*.*.*"]).split()
+    names = _out(["git", "tag", "-l", "v*.*.*"], empty_ok=True).split()
     for tag in names:
         if not tag.startswith("v"):
             continue
         version = tag[1:]
-        peel = _out(["git", "rev-parse", f"{tag}^{{commit}}"])
+        peel = _out(
+            ["git", "rev-parse", "-q", "--verify", f"{tag}^{{commit}}"],
+            empty_ok=True,
+            absent_codes=(1,),
+        )
         if len(peel) != 40:
             remote_peel = _remote_tag_peel(remote, tag)
             peel = remote_peel
@@ -118,8 +131,12 @@ def _closed_branches(remote: str) -> set[str]:
     return closed
 
 
-def _remote_tag_peel(remote: str, tag: str) -> str:
-    proc = _run(["git", "ls-remote", remote, f"refs/tags/{tag}", f"refs/tags/{tag}^{{}}"])
+def _remote_tag_peel(remote: str, tag: str, runner: object | None = None) -> str:
+    proc = _run(
+        ["git", "ls-remote", remote, f"refs/tags/{tag}", f"refs/tags/{tag}^{{}}"],
+        runner=runner,
+    )
+    confirmed_text(proc, empty_ok=True)
     peeled = ""
     for line in proc.stdout.splitlines():
         parts = line.split()
@@ -131,8 +148,9 @@ def _remote_tag_peel(remote: str, tag: str) -> str:
     return peeled
 
 
-def _remote_branch_sha(remote: str, branch: str) -> str:
-    proc = _run(["git", "ls-remote", remote, f"refs/heads/{branch}"])
+def _remote_branch_sha(remote: str, branch: str, runner: object | None = None) -> str:
+    proc = _run(["git", "ls-remote", remote, f"refs/heads/{branch}"], runner=runner)
+    confirmed_text(proc, empty_ok=True)
     for line in proc.stdout.splitlines():
         parts = line.split()
         if len(parts) == 2 and parts[1] == f"refs/heads/{branch}":
@@ -154,7 +172,9 @@ def _relation(local_sha: str, remote_sha: str, remote_known: bool) -> str:
     return "diverged"
 
 
-def _pull_requests(branch: str, base: str) -> tuple[bool, list[dict[str, Any]]]:
+def _pull_requests(
+    branch: str, base: str, runner: object | None = None
+) -> tuple[bool, list[dict[str, Any]]]:
     proc = _run(
         [
             "gh",
@@ -168,14 +188,14 @@ def _pull_requests(branch: str, base: str) -> tuple[bool, list[dict[str, Any]]]:
             "all",
             "--json",
             "number,state,headRefOid,mergeCommit",
-        ]
+        ],
+        runner=runner,
     )
-    if proc.returncode != 0:
-        return False, []
+    text = confirmed_text(proc, empty_ok=False)
     try:
-        rows = json.loads(proc.stdout or "[]")
-    except json.JSONDecodeError:
-        return False, []
+        rows = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise ProbeFailure(f"empty output: pr list JSON: {exc}", kind="empty") from exc
     found: list[dict[str, Any]] = []
     for row in rows:
         if not isinstance(row, dict):
@@ -209,11 +229,20 @@ def _notes_valid(version: str) -> bool:
     return proc.returncode == 0
 
 
-def _publish_status(tag: str) -> str:
-    proc = _run(["gh", "release", "view", tag, "--json", "tagName"])
-    if proc.returncode == 0 and tag in proc.stdout:
+def _publish_status(tag: str, runner: object | None = None) -> str:
+    proc = _run(["gh", "release", "view", tag, "--json", "tagName"], runner=runner)
+    if proc.returncode == 0:
+        if not (proc.stdout or "").strip() or tag not in proc.stdout:
+            raise ProbeFailure("empty output: gh release view", kind="empty")
         return "success"
-    return "missing"
+    if proc.returncode == 1:
+        blob = ((proc.stderr or "") + (proc.stdout or "")).lower()
+        if "not found" in blob or "could not find" in blob:
+            return "missing"
+    raise ProbeFailure(
+        f"unexpected error rc={proc.returncode} {(proc.stderr or '').strip()}".strip(),
+        kind="unexpected_error",
+    )
 
 
 def _load_stamp() -> dict[str, Any]:
@@ -246,19 +275,32 @@ def record_fact(name: str, remote: str, base: str) -> None:
     STAMP.write_text(json.dumps(stamp, indent=2) + "\n", encoding="utf-8")
 
 
+def fetch_marks_remote_known(remote: str, runner: object | None = None) -> bool:
+    """Fetch then confirm remote state. Probe error refuses (does not return False)."""
+    fetch = _run(["git", "fetch", remote, "--prune", "--tags"], runner=runner)
+    confirmed_text(fetch, empty_ok=True)
+    return True
+
+
 def observe(remote: str, base: str) -> dict[str, Any]:
-    fetch = _run(["git", "fetch", remote, "--prune", "--tags"])
-    remote_known = fetch.returncode == 0
+    remote_known = fetch_marks_remote_known(remote)
     head_branch = _out(["git", "rev-parse", "--abbrev-ref", "HEAD"])
     closed = _closed_branches(remote) if remote_known else set()
-    listed = _out(["git", "for-each-ref", "--format=%(refname:short)", "refs/heads/release/v*"]).split()
+    listed = _out(
+        ["git", "for-each-ref", "--format=%(refname:short)", "refs/heads/release/v*"],
+        empty_ok=True,
+    ).split()
     active = [name for name in listed if name not in closed]
     plan_branch = head_branch
     if not head_branch.startswith("release/v") and len(active) == 1:
         plan_branch = active[0]
-    candidate = _out(["git", "rev-parse", plan_branch]) if plan_branch else ""
+    candidate = (
+        _out(["git", "rev-parse", "-q", "--verify", plan_branch], absent_codes=(1,))
+        if plan_branch
+        else ""
+    )
     if len(candidate) != 40:
-        candidate = _out(["git", "rev-parse", "HEAD"])
+        candidate = _out(["git", "rev-parse", "-q", "--verify", "HEAD"])
     remote_sha = _remote_branch_sha(remote, plan_branch) if remote_known and plan_branch.startswith("release/v") else ""
     pr_known, prs = (False, [])
     if plan_branch.startswith("release/v"):
@@ -268,9 +310,36 @@ def observe(remote: str, base: str) -> dict[str, Any]:
         version = plan_branch[len("release/v") :]
     record_version, record_branch = _record_at(candidate) if len(candidate) == 40 else ("", "")
     tag = f"v{version}" if version else ""
-    shipped = _out(["git", "rev-parse", "origin/main"]) if remote_known else ""
-    last_tag = _out(["git", "describe", "--tags", "--abbrev=0", "--match", "v*.*.*", "origin/main"]) if remote_known else ""
-    shipped_peel = _out(["git", "rev-parse", f"{last_tag}^{{commit}}"]) if last_tag else ""
+    shipped = (
+        _out(["git", "rev-parse", "-q", "--verify", "origin/main"], absent_codes=(1,))
+        if remote_known
+        else ""
+    )
+    last_tag = ""
+    if remote_known:
+        describe = _run(
+            ["git", "describe", "--tags", "--abbrev=0", "--match", "v*.*.*", "origin/main"]
+        )
+        if describe.returncode == 0:
+            last_tag = (describe.stdout or "").strip()
+            if not last_tag:
+                raise ProbeFailure("empty output: git describe", kind="empty")
+        else:
+            blob = ((describe.stderr or "") + (describe.stdout or "")).lower()
+            if "no names found" not in blob and "no tags" not in blob:
+                raise ProbeFailure(
+                    f"unexpected error rc={describe.returncode} {(describe.stderr or '').strip()}".strip(),
+                    kind="unexpected_error",
+                )
+    shipped_peel = (
+        _out(
+            ["git", "rev-parse", "-q", "--verify", f"{last_tag}^{{commit}}"],
+            empty_ok=True,
+            absent_codes=(1,),
+        )
+        if last_tag
+        else ""
+    )
     stamp = _load_stamp()
     shipped_key = shipped_peel if len(shipped_peel) == 40 else candidate
     effective_tree = _effective_tree()
@@ -279,14 +348,28 @@ def observe(remote: str, base: str) -> dict[str, Any]:
         if plan_branch.startswith("release/v")
         else ("unknown", ["release line is not selected"])
     )
+    local_tag_peeled_sha = ""
+    remote_tag_peeled_sha = ""
+    local_tag_known = True
+    remote_tag_known = True
+    if tag:
+        local_tag_peeled_sha = _out(
+            ["git", "rev-parse", "-q", "--verify", f"{tag}^{{commit}}"],
+            empty_ok=True,
+            absent_codes=(1,),
+        )
+        if remote_known:
+            remote_tag_peeled_sha = _remote_tag_peel(remote, tag)
     return {
         "remote_known": remote_known,
         "pr_list_known": pr_known if plan_branch.startswith("release/v") else True,
+        "local_tag_known": local_tag_known,
+        "remote_tag_known": remote_tag_known,
         "local_branch": plan_branch,
         "desired_version": version,
         "candidate_sha": candidate,
         "effective_tree_sha": effective_tree,
-        "dirty": bool(_out(["git", "status", "--porcelain"])),
+        "dirty": bool(_out(["git", "status", "--porcelain"], empty_ok=True)),
         "worktree_file_version": _worktree_version(),
         "head_file_version": read_version_at("HEAD") or "",
         "candidate_record_version": record_version,
@@ -296,8 +379,8 @@ def observe(remote: str, base: str) -> dict[str, Any]:
         "pull_requests": prs,
         "origin_main_sha": shipped if len(shipped) == 40 else "",
         "shipped_tag_sha": shipped_peel if len(shipped_peel) == 40 else "",
-        "local_tag_peeled_sha": _out(["git", "rev-parse", f"{tag}^{{commit}}"]) if tag else "",
-        "remote_tag_peeled_sha": _remote_tag_peel(remote, tag) if tag and remote_known else "",
+        "local_tag_peeled_sha": local_tag_peeled_sha,
+        "remote_tag_peeled_sha": remote_tag_peeled_sha,
         "publish_status": _publish_status(tag) if tag else "missing",
         "main_context": context_status,
         "main_context_details": context_details,
@@ -326,7 +409,11 @@ def main() -> int:
     parser.add_argument("--record-fact", choices=("shipped_verify_met", "target_verify_met", "prep_met"))
     args = parser.parse_args()
     if args.record_fact:
-        record_fact(args.record_fact, args.remote, args.base)
+        try:
+            record_fact(args.record_fact, args.remote, args.base)
+        except ProbeFailure as exc:
+            print(f"RELEASE:NOT_MET probe={exc}", file=sys.stderr)
+            return 1
         return 0
     if args.tag_argv:
         version = args.tag[1:] if args.tag.startswith("v") else args.tag
@@ -336,7 +423,11 @@ def main() -> int:
     if args.facts:
         facts = json.loads(args.facts.read_text(encoding="utf-8"))
     else:
-        facts = observe(args.remote, args.base)
+        try:
+            facts = observe(args.remote, args.base)
+        except ProbeFailure as exc:
+            print(f"RELEASE:NOT_MET probe={exc}", file=sys.stderr)
+            return 1
     if args.emit == "facts":
         print(json.dumps(facts, indent=2))
         return 0

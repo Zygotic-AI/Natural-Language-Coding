@@ -122,6 +122,10 @@ Hub material produce packages derive `hub_material` and `changed_paths` from `gi
 
 Self-referential gate members are derived (`python3 tools/derive-self-ref-set.py`), not hand-kept. Candidates live under `staging/<change-id>/`. Live members change only through `python3 tools/activate-gate-machinery.py` (verify pasted owner armor, place unchanged, swap) or the first bootstrap of that machinery. Mandated paths are derived (`python3 tools/derive-mandated-paths.py`) and imported by the Skill type recipe, the skill-author checklist, and `/release`. The Planit identity registry is generated from skill bytes (`python3 tools/generate-planit-identity-registry.py`).
 
+## Release-tool probes (fail-closed)
+
+Release-tool existence and fact probes open a gate only when every check is a hard binary true. Missing tool, empty output, or unexpected error is false (refuse). Shared helper: `tools/nouns/release_probe/`. The 22 instances from v0.4.1 item 2 each have a known-bad and a known-good adapter under `tools/assert-release-probe-*-fails.py` / `*-passes.py`.
+
 ## Conventions in this workspace
 
 - Prefer promise chaining over `await`; `.catch()` instead of try/catch around chains; `async` on Promise-returning functions; JSDoc on methods (when JS/TS lands).

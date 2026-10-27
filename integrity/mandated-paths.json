@@ -3052,6 +3052,138 @@
     "tools/assert-release-preflight-passes.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-release-probe-align-local-tag-to-remote-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-align-local-tag-to-remote-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-branch-exists-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-branch-exists-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-changelog-tag-exists-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-changelog-tag-exists-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-create-release-line-show-ref-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-create-release-line-show-ref-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-git-changed-paths-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-git-changed-paths-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-github-latest-tag-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-github-latest-tag-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-is-resolvable-commit-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-is-resolvable-commit-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-list-version-tags-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-list-version-tags-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-main-purity-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-main-purity-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-publish-decision-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-publish-decision-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-publish-status-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-publish-status-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-pull-requests-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-pull-requests-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-release-state-out-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-release-state-out-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-branch-exists-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-branch-exists-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-branch-sha-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-branch-sha-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-known-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-known-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-tag-commit-only-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-tag-commit-only-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-resolve-ref-sha-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-resolve-ref-sha-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-sig-ok-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-sig-ok-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-exists-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-exists-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-is-ancestor-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-is-ancestor-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-on-commit-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-on-commit-passes.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-release-resume-invariant-passes.py": [
       "gate_set_manifest"
     ],
@@ -6272,6 +6404,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_release_preflight_passes/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_probe_fail_closed/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_probe_fail_closed/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_probe_fail_closed/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_probe_fail_closed/assert_release_probe_fail_closed.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_probe_fail_closed/fields.txt": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_release_resume_invariant_passes/README.md": [
@@ -11399,6 +11546,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/release_preflight/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_probe/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_probe/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_probe/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_probe/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_probe/release_probe.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/release_remediate/README.md": [

@@ -130,12 +130,12 @@
     "goals/hub_fitness_check1/execute.sh": "e7a09fae8d08234b095b486bac143a58926e93b144e74f49940d45705bd5c503",
     "goals/hub_install/execute.ps1": "c08f5280e53668408448a4e5d4ca2b58fa3175a399010cd138054ed5ace8d0f0",
     "goals/hub_install/execute.sh": "d53c95e12d10c69d347998910043657c85c750ce1a4958218e1f5bb55f9489df",
-    "goals/hub_release/execute.sh": "e08c97ad18daa0a2f1b2f5193e3bce2a9c852afc26f4cd684a5ef7a16bd49373",
+    "goals/hub_release/execute.sh": "59ed34e55faa8afa785b5616a578774edb8154da8e08bc044a9ef812c4639334",
     "goals/hub_release_prep/execute.sh": "265ccd5bf4b0d12a0f3f270ac1a1de6f004f2d443d52b224fbddbe660e170cea",
     "goals/hub_release_smoke/execute.sh": "250f69f04350be07b67361896ff787d2698344700101395f933ef0d50309b887",
     "goals/hub_session/execute.sh": "5cf487c368aec36bb3ed49070af039c60c4e4f5e484cfd76fb0f30a488ffe962",
     "goals/hub_skill_author_check/execute.ps1": "b51d3b0dd9385e7459fa6e92e16e89566fa3e20ecccc7a6af14de499213c0c9f",
     "goals/hub_skill_author_check/execute.sh": "cdc99b749fc73108a4e1b710a44eccb34658863aca18c25a6b2a3395f5c02392",
-    "goals/sign_adrs/execute.sh": "7d59a20d3f4762423c8eef83f9bc4d6d8a118b4749699845ac30979f73b1a5c7"
+    "goals/sign_adrs/execute.sh": "7b317bdae699c120665009b171d79fda7bb76a4eaa4ad3a3d17c572e8624e2f5"
   }
 }

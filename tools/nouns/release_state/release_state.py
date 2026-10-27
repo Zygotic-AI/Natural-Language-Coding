@@ -229,6 +229,24 @@ def _publish_decision(
     tag: str,
     merge_sha: str,
 ) -> dict[str, Any]:
+    if "local_tag_known" in facts and not _b(facts, "local_tag_known"):
+        return _blocked(
+            "BLOCKED_TAG_PROBE",
+            f"Local {tag} peel probe failed or is unknown.",
+            ["Re-run ./release after git and the tag refs are readable."],
+            desired_version=desired,
+            desired_branch=branch,
+            planned_tag=tag,
+        )
+    if "remote_tag_known" in facts and not _b(facts, "remote_tag_known"):
+        return _blocked(
+            "BLOCKED_TAG_PROBE",
+            f"Remote {tag} peel probe failed or is unknown.",
+            ["Re-run ./release after git fetch succeeds."],
+            desired_version=desired,
+            desired_branch=branch,
+            planned_tag=tag,
+        )
     local_peel = _s(facts, "local_tag_peeled_sha")
     remote_peel = _s(facts, "remote_tag_peeled_sha")
     if local_peel and local_peel != merge_sha:

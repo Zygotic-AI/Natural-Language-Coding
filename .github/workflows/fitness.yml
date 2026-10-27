@@ -20,6 +20,7 @@ jobs:
         run: bash tools/ci-fitness.sh
 
       - name: NLC verify (policy + fingerprints)
+        if: always()
         run: python3 tools/nlc.py --project . verify
 
   piped-install-linux:
