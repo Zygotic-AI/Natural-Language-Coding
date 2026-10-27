@@ -20,6 +20,7 @@ from nlc_release_record import git_show_json, read_version_at, validate_record  
 from nlc_release_tags import resolve_shipped_version  # noqa: E402
 from nlc_requirements import hub_tool  # noqa: E402
 from nouns.evidence_ref.evidence_ref import refuse_gate, resolve_commit  # noqa: E402
+from nouns.release_probe.release_probe import ProbeFailure  # noqa: E402
 from nouns.fitness_findings_shipped_tag_sync import (  # noqa: E402
     check_surfaces,
     resolve_shipped_version as f1_shipped_version,
@@ -88,7 +89,11 @@ def check_static(repo_root: Path, commit: str, tag: str) -> list[str]:
 
     from nlc_migration_catalog import migration_steps_blockers
 
-    shipped = resolve_shipped_version(commit) or "0.0.0"
+    try:
+        shipped = resolve_shipped_version(commit, root=repo_root) or "0.0.0"
+    except ProbeFailure as exc:
+        problems.append(f"shipped-baseline probe refused: {exc}")
+        shipped = "0.0.0"
     if shipped != ver:
         problems.extend(migration_steps_blockers(ROOT, shipped, ver))
 

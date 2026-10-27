@@ -34,13 +34,13 @@ PROBE_REF_SET=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --probe-ref)
-      if [[ $# -lt 2 ]]; then
-        echo "CREATE_RELEASE_LINE:REFUSE --probe-ref needs a branch" >&2
-        exit 2
-      fi
-      PROBE_REF="$2"
       PROBE_REF_SET=1
-      shift
+      if [[ $# -ge 2 ]]; then
+        PROBE_REF="$2"
+        shift
+      else
+        PROBE_REF=""
+      fi
       ;;
     --dry-run) DRY_RUN=1 ;;
     --no-push) NO_PUSH=1 ;;
@@ -108,12 +108,12 @@ run_planned() {
 create_release_line_ref_state() {
   local branch="$1"
   if ! command -v git >/dev/null 2>&1; then
-    echo "error:missing_tool" >&2
-    return 2
+    echo "error:missing_tool"
+    return 0
   fi
   if [[ -z "${branch}" ]]; then
-    echo "error:empty" >&2
-    return 2
+    echo "error:empty"
+    return 0
   fi
   git show-ref --verify --quiet "refs/heads/${branch}"
   local show_rc=$?
@@ -125,8 +125,8 @@ create_release_line_ref_state() {
     echo "absent"
     return 0
   fi
-  echo "error:unexpected rc=${show_rc}" >&2
-  return 2
+  echo "error:unexpected rc=${show_rc}"
+  return 0
 }
 
 apply_release_infer() {
@@ -156,6 +156,16 @@ clear_action_observations() {
 }
 
 dispatch_release_plan() {
+  if [[ "${PROBE_REF_SET}" -eq 1 ]]; then
+    local ref_state
+    ref_state="$(create_release_line_ref_state "${PROBE_REF}")"
+    printf '%s\n' "${ref_state}"
+    if [[ "${ref_state}" == "exists" || "${ref_state}" == "absent" ]]; then
+      exit 0
+    fi
+    echo "CREATE_RELEASE_LINE:REFUSE ${ref_state}" >&2
+    exit 2
+  fi
   local phase action kind desired branch tag merge_sha rc worktree shipped_sha
   local tag_output run_id
   local -a tag_argv=()
@@ -297,10 +307,8 @@ dispatch_release_plan() {
         if [[ -z "${branch}" ]]; then
           rc=2
         else
-          ref_state="$(create_release_line_ref_state "${branch}")" || rc=$?
-          if [[ "${rc}" -ne 0 ]]; then
-            echo "CREATE_RELEASE_LINE:REFUSE ${ref_state}" >&2
-          elif [[ "${ref_state}" == "exists" ]]; then
+          ref_state="$(create_release_line_ref_state "${branch}")"
+          if [[ "${ref_state}" == "exists" ]]; then
             run_planned git checkout "${branch}" || rc=$?
           elif [[ "${ref_state}" == "absent" ]]; then
             run_planned git checkout -b "${branch}" || rc=$?
@@ -421,7 +429,6 @@ cmd_release() {
 # Planner observer selects pull requests by headRefOid, not list position.
 # Shipped tag integrity remains an action input and is rechecked during PREP.
 if [[ "${PROBE_REF_SET}" -eq 1 ]]; then
-  create_release_line_ref_state "${PROBE_REF}"
-  exit $?
+  dispatch_release_plan
 fi
 cmd_release
