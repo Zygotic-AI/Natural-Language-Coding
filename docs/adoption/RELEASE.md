@@ -16,6 +16,14 @@ The tool runs gates ([ADR 0022](../../adrs/0022-hub-release-fail-early.md), 0038
 
 **Human in GitHub:** merge the **release PR** (`release/v* → main`) whose head SHA is the candidate `./release` pushed. The tag is created on that merge commit only when the version file, release record, and branch name all match. An existing tag is not moved.
 
+## Checklist rule (ordinary content after the signed set)
+
+A content-only change (paths that are not gate-set members) must not require a new owner gate-set signature. The whole-tree freshness stamp [`integrity/hub-content-tree-hash.txt`](../../integrity/hub-content-tree-hash.txt) is not a gate-set member. Sync it when content changes; do not remanifest or ask the owner to re-sign for that stamp.
+
+A change to a real gate-set file still fails closed: missing tool, empty result, or unknown result counts as false (not a pass). The owner sidecar is required only when gate-set member bytes change.
+
+Known-bad: `python3 tools/assert-content-only-change-does-not-trip-gate-set-signature-passes.py` (content-only plus hash sync leaves the signed manifest alone) and `python3 tools/assert-gate-set-member-change-fails-closed.py` (a real member edit is NOT_MET).
+
 ## Creating a release branch
 
 Release branches (`release/vX.Y.Z`) are created only via the **start-release** workflow ([`.github/workflows/start-release.yml`](../../.github/workflows/start-release.yml)). Run it from the Actions tab with a version that matches `^v\d+\.\d+\.\d+$`. The workflow creates `release/<version>` from the current `main` HEAD and does nothing else (no commits, no tags). Do not create `release/*` refs by hand or by toggling the ruleset.
