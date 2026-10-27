@@ -708,6 +708,11 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 - ✔ Refresh hub-content-tree-hash, derived stamps / `.nlc/verified.json`, regenerate gate-set manifest once @done(26-10-25 19:17)
 - ☐ Owner clearsign of the regenerated manifest after v0.4.0 prepare identity (C8 — agents do not sign)
 
+### v0.4.1 item 2 — fail-open sweep of 22 release-tool checks (2026-10-27)
+
+- ✔ `release_main_purity` empty tag peel is NOT_MET; remaining 21 release-tool probes refuse missing tool / empty / unexpected error @done(26-10-27 15:00)
+- ✔ One known-bad + one known-good thin adapter per instance (`assert-release-probe-*-fails|passes.py`) @done(26-10-27 15:00)
+
 ### v0.4.0 prepare identity before owner sign (2026-10-25)
 
 - ✔ Write `integrity/hub-release-record.json` 0.4.0 / `release/v0.4.0` and set DESCRIBE/FINDINGS last-tagged-ship to v0.4.0 so tag-time F1 and the record do not move after the owner signs @done(26-10-25 20:00)

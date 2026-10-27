@@ -28,8 +28,20 @@ Automation overrides:
 EOF
 }
 
+PROBE_REF=""
+PROBE_REF_SET=0
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --probe-ref)
+      if [[ $# -lt 2 ]]; then
+        echo "CREATE_RELEASE_LINE:REFUSE --probe-ref needs a branch" >&2
+        exit 2
+      fi
+      PROBE_REF="$2"
+      PROBE_REF_SET=1
+      shift
+      ;;
     --dry-run) DRY_RUN=1 ;;
     --no-push) NO_PUSH=1 ;;
     --message)
@@ -91,6 +103,30 @@ run_planned() {
   else
     "$@"
   fi
+}
+
+create_release_line_ref_state() {
+  local branch="$1"
+  if ! command -v git >/dev/null 2>&1; then
+    echo "error:missing_tool" >&2
+    return 2
+  fi
+  if [[ -z "${branch}" ]]; then
+    echo "error:empty" >&2
+    return 2
+  fi
+  git show-ref --verify --quiet "refs/heads/${branch}"
+  local show_rc=$?
+  if [[ "${show_rc}" -eq 0 ]]; then
+    echo "exists"
+    return 0
+  fi
+  if [[ "${show_rc}" -eq 1 ]]; then
+    echo "absent"
+    return 0
+  fi
+  echo "error:unexpected rc=${show_rc}" >&2
+  return 2
 }
 
 apply_release_infer() {
@@ -260,10 +296,18 @@ dispatch_release_plan() {
       if [[ "${rc}" -eq 0 ]]; then
         if [[ -z "${branch}" ]]; then
           rc=2
-        elif git show-ref --verify --quiet "refs/heads/${branch}"; then
-          run_planned git checkout "${branch}" || rc=$?
         else
-          run_planned git checkout -b "${branch}" || rc=$?
+          ref_state="$(create_release_line_ref_state "${branch}")" || rc=$?
+          if [[ "${rc}" -ne 0 ]]; then
+            echo "CREATE_RELEASE_LINE:REFUSE ${ref_state}" >&2
+          elif [[ "${ref_state}" == "exists" ]]; then
+            run_planned git checkout "${branch}" || rc=$?
+          elif [[ "${ref_state}" == "absent" ]]; then
+            run_planned git checkout -b "${branch}" || rc=$?
+          else
+            echo "CREATE_RELEASE_LINE:REFUSE unknown ref state" >&2
+            rc=2
+          fi
         fi
       fi
       ;;
@@ -376,4 +420,8 @@ cmd_release() {
 
 # Planner observer selects pull requests by headRefOid, not list position.
 # Shipped tag integrity remains an action input and is rechecked during PREP.
+if [[ "${PROBE_REF_SET}" -eq 1 ]]; then
+  create_release_line_ref_state "${PROBE_REF}"
+  exit $?
+fi
 cmd_release

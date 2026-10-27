@@ -610,6 +610,38 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "assert-release-main-purity-remediation",
         [sys.executable, str(TOOLS / "assert-release-main-purity-remediation-passes.py")],
     )
+    for _probe_name in (
+        "main-purity",
+        "tag-exists",
+        "list-version-tags",
+        "tag-is-ancestor",
+        "remote-tag-commit-only",
+        "align-local-tag-to-remote",
+        "changelog-tag-exists",
+        "branch-exists",
+        "remote-branch-exists",
+        "resolve-ref-sha",
+        "tag-on-commit",
+        "is-resolvable-commit",
+        "release-state-out",
+        "remote-branch-sha",
+        "remote-known",
+        "pull-requests",
+        "publish-status",
+        "publish-decision",
+        "git-changed-paths",
+        "github-latest-tag",
+        "create-release-line-show-ref",
+        "sig-ok",
+    ):
+        run(
+            f"assert-release-probe-{_probe_name}-fails",
+            [sys.executable, str(TOOLS / f"assert-release-probe-{_probe_name}-fails.py")],
+        )
+        run(
+            f"assert-release-probe-{_probe_name}-passes",
+            [sys.executable, str(TOOLS / f"assert-release-probe-{_probe_name}-passes.py")],
+        )
     run(
         "assert-human-surface",
         [sys.executable, str(TOOLS / "assert-human-surface-passes.py")],
