@@ -163,6 +163,9 @@ def match_errors(root: Path) -> list[str]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    from nlc_requirements import hub_tool  # noqa: E402
+
+    hub_tool()
     parser = argparse.ArgumentParser(description="Script-only FINDINGS/DESCRIBE/record at prep")
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
