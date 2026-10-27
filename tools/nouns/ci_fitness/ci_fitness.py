@@ -35,7 +35,7 @@ def fail(msg: str) -> None:
 
 
 def run(label: str, argv: list[str]) -> None:
-    print(f"--- {label} ---")
+    print(f"--- {label} ---", flush=True)
     proc = subprocess.run(
         argv,
         cwd=str(ROOT),
@@ -180,7 +180,7 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         hub_only = set(json.loads(manifest.read_text(encoding="utf-8")).get("hub_only_fitness") or [])
     for path in sorted(TOOLS.glob("fitness-*.py")):
         if path.name in hub_only:
-            print(f"--- skip {path.name} invoice-correct (hub-only) ---")
+            print(f"--- skip {path.name} invoice-correct (hub-only) ---", flush=True)
             continue
         run(
             f"{path.name} invoice-correct",

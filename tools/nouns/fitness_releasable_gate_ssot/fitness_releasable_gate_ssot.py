@@ -59,6 +59,9 @@ _EVIDENCE_REGEN_IN_CI = re.compile(
 )
 
 
+_ALWAYS_RUN = re.compile(r"if:\s*(always\(\)|success\(\)\s*\|\|\s*failure\(\))\s*$")
+
+
 def scan_ci_workflow_self_attesting() -> list[str]:
     violations: list[str] = []
     for rel in (".github/workflows/fitness.yml", ".github/workflows/release.yml"):
@@ -74,6 +77,40 @@ def scan_ci_workflow_self_attesting() -> list[str]:
                 violations.append(f"CI must not regenerate evidence before verify: {rel}")
                 break
     return violations
+
+
+def scan_fitness_nlc_verify_always_runs() -> list[str]:
+    """Refuse fitness.yml NLC verify skipped when an earlier step fails."""
+    rel = ".github/workflows/fitness.yml"
+    path = ROOT / rel
+    if not path.is_file():
+        return [f"missing {rel}"]
+    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    in_step = False
+    saw_always = False
+    saw_run = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("- name:") and "NLC verify" in stripped:
+            in_step = True
+            saw_always = False
+            saw_run = False
+            continue
+        if in_step and stripped.startswith("- name:"):
+            break
+        if in_step and _ALWAYS_RUN.search(stripped):
+            saw_always = True
+        if in_step and stripped.startswith("run:"):
+            saw_run = True
+            break
+    if not saw_run:
+        return [f"{rel} must contain an NLC verify step"]
+    if not saw_always:
+        return [
+            f"{rel} NLC verify must use if: always() (or success() || failure()) "
+            "so the step runs after an earlier failure"
+        ]
+    return []
 
 
 def scan_verdict_branching_in_gate_code() -> list[str]:
@@ -134,6 +171,7 @@ def main() -> int:
     violations.extend(scan_forbidden_redirect())
     violations.extend(wired_to_runner())
     violations.extend(scan_ci_workflow_self_attesting())
+    violations.extend(scan_fitness_nlc_verify_always_runs())
     violations.extend(scan_verdict_branching_in_gate_code())
     for item in violations:
         print(f"VIOLATION {item}")
