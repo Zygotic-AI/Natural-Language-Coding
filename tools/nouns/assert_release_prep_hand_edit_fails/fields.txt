@@ -1,0 +1,3 @@
+# assert_release_prep_hand_edit_fails
+findings
+describe

@@ -1,0 +1,5 @@
+# check_selection
+full_suite
+reason
+selected
+skipped
