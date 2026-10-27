@@ -5011,6 +5011,21 @@
     "tools/nouns/assert_changed_missing_fails/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/assert_content_only_change_does_not_trip_gate_set_signature_passes/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_content_only_change_does_not_trip_gate_set_signature_passes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_content_only_change_does_not_trip_gate_set_signature_passes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_content_only_change_does_not_trip_gate_set_signature_passes/assert_content_only_change_does_not_trip_gate_set_signature_passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_content_only_change_does_not_trip_gate_set_signature_passes/fields.txt": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/assert_contract_change_detects_c21_fails/README.md": [
       "gate_set_manifest"
     ],
@@ -5300,6 +5315,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_member_change_fails_closed/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_member_change_fails_closed/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_member_change_fails_closed/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_member_change_fails_closed/assert_gate_set_member_change_fails_closed.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_member_change_fails_closed/fields.txt": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_goal_bindings_narrow_fails/README.md": [
