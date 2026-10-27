@@ -2413,6 +2413,9 @@
     "integrity/charter-ratify-backlog.json": [
       "gate_set_manifest"
     ],
+    "integrity/check-inputs.json": [
+      "gate_set_manifest"
+    ],
     "integrity/examples/pan-rules-adopted.json": [
       "gate_set_manifest"
     ],
@@ -2857,6 +2860,9 @@
     "tools/assert-gate-record-describe-passes.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-gate-set-cache-once-passes.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-gate-set-closure-excluded-not-members-passes.py": [
       "gate_set_manifest"
     ],
@@ -2933,6 +2939,9 @@
       "gate_set_manifest"
     ],
     "tools/assert-jidoka-ssot-agents-link-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-landmine-file-change-triggers-landmine-passes.py": [
       "gate_set_manifest"
     ],
     "tools/assert-live-self-ref-direct-edit-fails.py": [
@@ -3050,6 +3059,9 @@
       "gate_set_manifest"
     ],
     "tools/assert-release-preflight-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-prep-hand-edit-fails.py": [
       "gate_set_manifest"
     ],
     "tools/assert-release-probe-align-local-tag-to-remote-fails.py": [
@@ -3247,6 +3259,9 @@
     "tools/assert-schema-identity-fails.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-selection-error-runs-full-suite-passes.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-shipped-tag-audit-fails.py": [
       "gate_set_manifest"
     ],
@@ -3275,6 +3290,9 @@
       "gate_set_manifest"
     ],
     "tools/assert-todo-use-cases-ssot-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-unmapped-file-runs-full-suite-passes.py": [
       "gate_set_manifest"
     ],
     "tools/assert-unresolvable-refuses-passes.py": [
@@ -3353,6 +3371,9 @@
       "gate_set_manifest"
     ],
     "tools/derive-adr-0051-0052-rules.py": [
+      "gate_set_manifest"
+    ],
+    "tools/derive-check-inputs.py": [
       "gate_set_manifest"
     ],
     "tools/derive-gate-set-closure-reference.py": [
@@ -3491,6 +3512,9 @@
       "gate_set_manifest"
     ],
     "tools/fitness-charter-nlc-door.py": [
+      "gate_set_manifest"
+    ],
+    "tools/fitness-check-inputs-declaration.py": [
       "gate_set_manifest"
     ],
     "tools/fitness-compiled-system-uc-binder.py": [
@@ -3761,6 +3785,9 @@
       "gate_set_manifest"
     ],
     "tools/fitness-release-planner-ownership.py": [
+      "gate_set_manifest"
+    ],
+    "tools/fitness-release-prep-script-match.py": [
       "gate_set_manifest"
     ],
     "tools/fitness-requirements-hub-entrypoints.py": [
@@ -4211,6 +4238,9 @@
       "gate_set_manifest"
     ],
     "tools/nlc_release_preflight.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nlc_release_prep_surfaces.py": [
       "gate_set_manifest"
     ],
     "tools/nlc_release_record.py": [
@@ -5434,6 +5464,21 @@
     "tools/nouns/assert_gate_record_describe_passes/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/assert_gate_set_cache_once_passes/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_cache_once_passes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_cache_once_passes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_cache_once_passes/assert_gate_set_cache_once_passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_cache_once_passes/fields.txt": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/README.md": [
       "gate_set_manifest"
     ],
@@ -5774,6 +5819,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_jidoka_ssot_agents_link/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_landmine_file_change_triggers_landmine_passes/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_landmine_file_change_triggers_landmine_passes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_landmine_file_change_triggers_landmine_passes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_landmine_file_change_triggers_landmine_passes/assert_landmine_file_change_triggers_landmine_passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_landmine_file_change_triggers_landmine_passes/fields.txt": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_live_self_ref_direct_edit_fails/README.md": [
@@ -6406,6 +6466,21 @@
     "tools/nouns/assert_release_preflight_passes/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/assert_release_prep_hand_edit_fails/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_prep_hand_edit_fails/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_prep_hand_edit_fails/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_prep_hand_edit_fails/assert_release_prep_hand_edit_fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_prep_hand_edit_fails/fields.txt": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/assert_release_probe_fail_closed/README.md": [
       "gate_set_manifest"
     ],
@@ -6799,6 +6874,21 @@
     "tools/nouns/assert_schema_identity_fails/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/assert_selection_error_runs_full_suite_passes/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_selection_error_runs_full_suite_passes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_selection_error_runs_full_suite_passes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_selection_error_runs_full_suite_passes/assert_selection_error_runs_full_suite_passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_selection_error_runs_full_suite_passes/fields.txt": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/assert_shipped_tag_audit_fails/README.md": [
       "gate_set_manifest"
     ],
@@ -6959,6 +7049,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_todo_use_cases_ssot_fails/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_unmapped_file_runs_full_suite_passes/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_unmapped_file_runs_full_suite_passes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_unmapped_file_runs_full_suite_passes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_unmapped_file_runs_full_suite_passes/assert_unmapped_file_runs_full_suite_passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_unmapped_file_runs_full_suite_passes/fields.txt": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_unresolvable_refuses_passes/README.md": [
@@ -7372,6 +7477,21 @@
     "tools/nouns/charter_corpus_pointer/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/check_inputs/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_inputs/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_inputs/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_inputs/check_inputs.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_inputs/fields.txt": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/check_rule_adoption/README.md": [
       "gate_set_manifest"
     ],
@@ -7388,6 +7508,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/check_rule_adoption/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_selection/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_selection/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_selection/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_selection/check_selection.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_selection/fields.txt": [
       "gate_set_manifest"
     ],
     "tools/nouns/ci_fitness/README.md": [
@@ -8363,6 +8498,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/fitness_charter_nlc_door/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_check_inputs_declaration/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_check_inputs_declaration/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_check_inputs_declaration/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_check_inputs_declaration/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_check_inputs_declaration/fitness_check_inputs_declaration.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/fitness_compiled_system_uc_binder/README.md": [
@@ -9917,6 +10067,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/fitness_release_planner_ownership/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_release_prep_script_match/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_release_prep_script_match/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_release_prep_script_match/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_release_prep_script_match/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_release_prep_script_match/fitness_release_prep_script_match.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/fitness_requirements_hub_entrypoints/README.md": [
@@ -11546,6 +11711,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/release_preflight/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_prep_surfaces/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_prep_surfaces/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_prep_surfaces/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_prep_surfaces/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_prep_surfaces/release_prep_surfaces.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/release_probe/README.md": [
