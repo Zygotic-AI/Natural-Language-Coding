@@ -1,0 +1,1131 @@
+{
+  "id": "nlc-components",
+  "name": "NLC components",
+  "description": "Compiler spine: human-held intent, PLANIT load-plan-bind-generate, gates, verify, and ship into a compiled system. Refuse returns to Interview.",
+  "sampleRevision": 1,
+  "updatedAt": "2026-10-28T03:00:00.000Z",
+  "nodes": [
+    {
+      "id": "group-human-held",
+      "type": "group",
+      "position": {
+        "x": 500,
+        "y": 16
+      },
+      "zIndex": 0,
+      "style": {
+        "width": 860,
+        "height": 176
+      },
+      "data": {
+        "label": "Human-held",
+        "subtitle": "goals, requirements, rules",
+        "kind": "surface",
+        "colorToken": "muted",
+        "fillColorToken": "primary",
+        "fillOpacity": 0.12,
+        "borderColorToken": "primary"
+      }
+    },
+    {
+      "id": "group-compiler",
+      "type": "group",
+      "position": {
+        "x": 500,
+        "y": 224
+      },
+      "zIndex": 0,
+      "style": {
+        "width": 1120,
+        "height": 210
+      },
+      "data": {
+        "label": "Compiler",
+        "subtitle": "PLANIT \u2014 one artifact or refuse",
+        "kind": "surface",
+        "colorToken": "muted",
+        "fillColorToken": "primary",
+        "fillOpacity": 0.12,
+        "borderColorToken": "primary"
+      }
+    },
+    {
+      "id": "group-emitted",
+      "type": "group",
+      "position": {
+        "x": 1180,
+        "y": 470
+      },
+      "zIndex": 0,
+      "style": {
+        "width": 900,
+        "height": 176
+      },
+      "data": {
+        "label": "Emitted",
+        "subtitle": "BBP-shaped output",
+        "kind": "surface",
+        "colorToken": "muted",
+        "fillColorToken": "primary",
+        "fillOpacity": 0.12,
+        "borderColorToken": "primary"
+      }
+    },
+    {
+      "id": "human",
+      "type": "diagram",
+      "position": {
+        "x": 0,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "human",
+        "label": "Human",
+        "subtitle": "goals, requirements, Released-by",
+        "kind": "person",
+        "colorToken": "green",
+        "status": "active",
+        "badge": 1,
+        "phosphorIcon": "user"
+      }
+    },
+    {
+      "id": "interview",
+      "type": "diagram",
+      "position": {
+        "x": 250,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "interview",
+        "label": "Interview",
+        "subtitle": "outcomes and constraints",
+        "kind": "accent",
+        "colorToken": "green",
+        "status": "active",
+        "badge": 2
+      }
+    },
+    {
+      "id": "goal",
+      "type": "diagram",
+      "position": {
+        "x": 540,
+        "y": 72
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "goal",
+        "label": "Goal",
+        "subtitle": "one outcome, verb calls only",
+        "kind": "surface",
+        "colorToken": "primary"
+      }
+    },
+    {
+      "id": "requirement",
+      "type": "diagram",
+      "position": {
+        "x": 800,
+        "y": 72
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "requirement",
+        "label": "Requirement and ADR",
+        "subtitle": "charter decisions",
+        "kind": "surface",
+        "colorToken": "primary"
+      }
+    },
+    {
+      "id": "rule",
+      "type": "diagram",
+      "position": {
+        "x": 1060,
+        "y": 72
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "rule",
+        "label": "Rule",
+        "subtitle": "ADR 0007 tags and if-then",
+        "kind": "surface",
+        "colorToken": "primary"
+      }
+    },
+    {
+      "id": "load",
+      "type": "diagram",
+      "position": {
+        "x": 540,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "load",
+        "label": "Load",
+        "subtitle": "charter, ADRs, rules, knowledge",
+        "kind": "primary",
+        "colorToken": "primary",
+        "status": "active",
+        "badge": 3
+      }
+    },
+    {
+      "id": "plan",
+      "type": "diagram",
+      "position": {
+        "x": 800,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "plan",
+        "label": "Plan",
+        "subtitle": "statements and atomic actions",
+        "kind": "primary",
+        "colorToken": "primary",
+        "status": "active",
+        "badge": 4
+      }
+    },
+    {
+      "id": "bind",
+      "type": "diagram",
+      "position": {
+        "x": 1060,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "bind",
+        "label": "Bind",
+        "subtitle": "every statement points at ids",
+        "kind": "primary",
+        "colorToken": "primary",
+        "status": "active",
+        "badge": 5
+      }
+    },
+    {
+      "id": "generate",
+      "type": "diagram",
+      "position": {
+        "x": 1320,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "generate",
+        "label": "Generate",
+        "subtitle": "one artifact",
+        "kind": "primary",
+        "colorToken": "primary",
+        "status": "active",
+        "badge": 6
+      }
+    },
+    {
+      "id": "noun",
+      "type": "diagram",
+      "position": {
+        "x": 1220,
+        "y": 522
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "noun",
+        "label": "Noun and verbs",
+        "subtitle": "identity, state, adjectives",
+        "kind": "surface",
+        "colorToken": "primary"
+      }
+    },
+    {
+      "id": "contract",
+      "type": "diagram",
+      "position": {
+        "x": 1480,
+        "y": 522
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "contract",
+        "label": "Contract",
+        "subtitle": "published verb I/O",
+        "kind": "surface",
+        "colorToken": "primary"
+      }
+    },
+    {
+      "id": "store",
+      "type": "diagram",
+      "position": {
+        "x": 1760,
+        "y": 522
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "store",
+        "label": ".nlc store",
+        "subtitle": "lock, gate records, impact graph",
+        "kind": "surface",
+        "colorToken": "primary"
+      }
+    },
+    {
+      "id": "gate",
+      "type": "diagram",
+      "position": {
+        "x": 1760,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "gate",
+        "label": "Gate",
+        "subtitle": "X1 X2 then X5 X3 X6",
+        "kind": "accent",
+        "colorToken": "accent",
+        "status": "active",
+        "badge": 7
+      }
+    },
+    {
+      "id": "fitness",
+      "type": "diagram",
+      "position": {
+        "x": 2020,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "fitness",
+        "label": "Fitness",
+        "subtitle": "MET, FAIL, or handoff refused",
+        "kind": "primary",
+        "colorToken": "accent",
+        "status": "active",
+        "badge": 8
+      }
+    },
+    {
+      "id": "audit",
+      "type": "diagram",
+      "position": {
+        "x": 2280,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "audit",
+        "label": "Adversarial audit",
+        "subtitle": "findings only, no ship",
+        "kind": "audit",
+        "colorToken": "accent",
+        "status": "active",
+        "badge": 9
+      }
+    },
+    {
+      "id": "verify",
+      "type": "diagram",
+      "position": {
+        "x": 2540,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "verify",
+        "label": "Verify",
+        "subtitle": "compile, not release",
+        "kind": "primary",
+        "colorToken": "primary",
+        "status": "active",
+        "badge": 10
+      }
+    },
+    {
+      "id": "ship",
+      "type": "diagram",
+      "position": {
+        "x": 2800,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "ship",
+        "label": "Ship",
+        "subtitle": "after Released-by",
+        "kind": "primary",
+        "colorToken": "green",
+        "status": "active",
+        "badge": 11
+      }
+    },
+    {
+      "id": "compiled",
+      "type": "diagram",
+      "position": {
+        "x": 3060,
+        "y": 292
+      },
+      "zIndex": 1,
+      "data": {
+        "libraryId": "compiled",
+        "label": "Compiled system",
+        "subtitle": "BBP-shaped app tree",
+        "kind": "primary",
+        "colorToken": "green",
+        "status": "active",
+        "badge": 12
+      }
+    }
+  ],
+  "edges": [
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#4A4A55",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(74,74,85)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "muted",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "human",
+      "sourceHandle": "right-source",
+      "target": "interview",
+      "targetHandle": "left-target",
+      "id": "e-human-interview-right-source-left-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#4A4A55",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(74,74,85)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "muted",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "interview",
+      "sourceHandle": "right-source",
+      "target": "load",
+      "targetHandle": "left-target",
+      "id": "e-interview-load-right-source-left-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#3D5A80",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(61,90,128)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "soft",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "goal",
+      "sourceHandle": "bottom-source",
+      "target": "load",
+      "targetHandle": "top-target",
+      "id": "e-goal-load-bottom-source-top-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#3D5A80",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(61,90,128)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "soft",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "requirement",
+      "sourceHandle": "bottom-source",
+      "target": "load",
+      "targetHandle": "top-target",
+      "id": "e-requirement-load-bottom-source-top-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#3D5A80",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(61,90,128)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "soft",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "rule",
+      "sourceHandle": "bottom-source",
+      "target": "load",
+      "targetHandle": "top-target",
+      "id": "e-rule-load-bottom-source-top-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#4A4A55",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(74,74,85)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "muted",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "load",
+      "sourceHandle": "right-source",
+      "target": "plan",
+      "targetHandle": "left-target",
+      "id": "e-load-plan-right-source-left-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#4A4A55",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(74,74,85)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "muted",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "plan",
+      "sourceHandle": "right-source",
+      "target": "bind",
+      "targetHandle": "left-target",
+      "id": "e-plan-bind-right-source-left-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#4A4A55",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(74,74,85)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "muted",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "bind",
+      "sourceHandle": "right-source",
+      "target": "generate",
+      "targetHandle": "left-target",
+      "id": "e-bind-generate-right-source-left-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#4A4A55",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(74,74,85)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "muted",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "generate",
+      "sourceHandle": "right-source",
+      "target": "gate",
+      "targetHandle": "left-target",
+      "id": "e-generate-gate-right-source-left-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#3D5A80",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(61,90,128)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "soft",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "generate",
+      "sourceHandle": "bottom-source",
+      "target": "noun",
+      "targetHandle": "top-target",
+      "id": "e-generate-noun-bottom-source-top-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#3D5A80",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(61,90,128)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "soft",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "generate",
+      "sourceHandle": "bottom-source",
+      "target": "contract",
+      "targetHandle": "top-target",
+      "id": "e-generate-contract-bottom-source-top-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#3D5A80",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(61,90,128)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "soft",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "generate",
+      "sourceHandle": "bottom-source",
+      "target": "store",
+      "targetHandle": "top-target",
+      "id": "e-generate-store-bottom-source-top-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#4A4A55",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(74,74,85)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "muted",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "gate",
+      "sourceHandle": "right-source",
+      "target": "fitness",
+      "targetHandle": "left-target",
+      "id": "e-gate-fitness-right-source-left-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#4A4A55",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(74,74,85)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "muted",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "fitness",
+      "sourceHandle": "right-source",
+      "target": "audit",
+      "targetHandle": "left-target",
+      "id": "e-fitness-audit-right-source-left-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#4A4A55",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(74,74,85)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "muted",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "audit",
+      "sourceHandle": "right-source",
+      "target": "verify",
+      "targetHandle": "left-target",
+      "id": "e-audit-verify-right-source-left-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#3d6b5c",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(61,107,92)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "green",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "verify",
+      "sourceHandle": "right-source",
+      "target": "ship",
+      "targetHandle": "left-target",
+      "id": "e-verify-ship-right-source-left-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#3d6b5c",
+        "strokeWidth": 1.5
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(61,107,92)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "green",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 1.5,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "ship",
+      "sourceHandle": "right-source",
+      "target": "compiled",
+      "targetHandle": "left-target",
+      "id": "e-ship-compiled-right-source-left-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#F34213",
+        "strokeWidth": 2
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(243,66,19)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "accent",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 2,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "gate",
+      "sourceHandle": "bottom-source",
+      "target": "interview",
+      "targetHandle": "top-target",
+      "id": "e-gate-interview-bottom-source-top-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    },
+    {
+      "type": "diagram",
+      "style": {
+        "stroke": "#F34213",
+        "strokeWidth": 2
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "rgb(243,66,19)",
+        "width": 16,
+        "height": 16
+      },
+      "markerStart": null,
+      "data": {
+        "colorToken": "accent",
+        "pathMarkers": "none",
+        "markerEndSize": 16,
+        "markerStartSize": 16,
+        "strokeWidth": 2,
+        "pathBorderRadius": 8,
+        "pathOffset": 24,
+        "pathStepPosition": 0.5
+      },
+      "interactionWidth": 20,
+      "selectable": true,
+      "deletable": true,
+      "reconnectable": true,
+      "focusable": true,
+      "source": "audit",
+      "sourceHandle": "bottom-source",
+      "target": "interview",
+      "targetHandle": "top-target",
+      "id": "e-audit-interview-bottom-source-top-target",
+      "pathOptions": {
+        "borderRadius": 8,
+        "offset": 24,
+        "stepPosition": 0.5
+      }
+    }
+  ]
+}
