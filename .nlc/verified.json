@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "algorithm": "sha256",
-  "recorded_at": "2026-10-25T19:17:48Z",
+  "recorded_at": "2026-10-27T21:05:31Z",
   "hub": "0.4.0",
   "files": {
     "adrs/0001-zero-variance-integrity.md": "a1e61d6c2998a3595b51983cc9ad029513e36fcc23878d62a80f8fee778693d2",
@@ -131,7 +131,7 @@
     "goals/hub_install/execute.ps1": "c08f5280e53668408448a4e5d4ca2b58fa3175a399010cd138054ed5ace8d0f0",
     "goals/hub_install/execute.sh": "d53c95e12d10c69d347998910043657c85c750ce1a4958218e1f5bb55f9489df",
     "goals/hub_release/execute.sh": "59ed34e55faa8afa785b5616a578774edb8154da8e08bc044a9ef812c4639334",
-    "goals/hub_release_prep/execute.sh": "265ccd5bf4b0d12a0f3f270ac1a1de6f004f2d443d52b224fbddbe660e170cea",
+    "goals/hub_release_prep/execute.sh": "d23f2d30c7b9a995c7802b46f97c882a63edab231d28a9fec4f6d36f2fe8d3ab",
     "goals/hub_release_smoke/execute.sh": "250f69f04350be07b67361896ff787d2698344700101395f933ef0d50309b887",
     "goals/hub_session/execute.sh": "5cf487c368aec36bb3ed49070af039c60c4e4f5e484cfd76fb0f30a488ffe962",
     "goals/hub_skill_author_check/execute.ps1": "b51d3b0dd9385e7459fa6e92e16e89566fa3e20ecccc7a6af14de499213c0c9f",

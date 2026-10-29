@@ -708,6 +708,15 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 - ✔ Refresh hub-content-tree-hash, derived stamps / `.nlc/verified.json`, regenerate gate-set manifest once @done(26-10-25 19:17)
 - ☐ Owner clearsign of the regenerated manifest after v0.4.0 prepare identity (C8 — agents do not sign)
 
+### v0.4.1 item 3 — cached gate-set, touched-files selection, script-only prep (2026-10-27)
+
+- ✔ Cached gate-set lookup once per run; checks reuse the cache @done(26-10-27 21:10)
+- ✔ Touched-files check selection on PRs; landmines scoped to own files; fail-closed to full suite @done(26-10-27 21:10)
+- ✔ Script-only release prep for FINDINGS, DESCRIBE, and hub-release-record @done(26-10-27 21:10)
+- ✔ Self-derived committed check-inputs list + declaration test @done(26-10-27 21:10)
+- ✔ Known-bad: unmapped file, selection error, hand-edit FINDINGS/DESCRIBE, landmine file change @done(26-10-27 21:10)
+- ✔ Cache-once proof test @done(26-10-27 21:10)
+
 ### v0.4.1 item 2 — fail-open sweep of 22 release-tool checks (2026-10-27)
 
 - ✔ `release_main_purity` empty tag peel is NOT_MET; remaining 21 release-tool probes refuse missing tool / empty / unexpected error @done(26-10-27 15:00)

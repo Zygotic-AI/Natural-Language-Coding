@@ -1,0 +1,2 @@
+# assert_gate_set_cache_once_passes
+compute_count

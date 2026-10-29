@@ -1,0 +1,3 @@
+# check_selection
+fail-closed
+pr-only

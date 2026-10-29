@@ -35,6 +35,11 @@ def fail(msg: str) -> None:
 
 
 def run(label: str, argv: list[str]) -> None:
+    from nouns.check_selection.check_selection import should_run_check, skip_reason_for
+
+    if not should_run_check(label):
+        print(f"SKIPPED {label} reason={skip_reason_for(label)}", flush=True)
+        return
     print(f"--- {label} ---", flush=True)
     proc = subprocess.run(
         argv,
@@ -97,6 +102,21 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         print("=== releasable verify profile (SSOT) ===")
         if run_profile("verify", ROOT) != 0:
             fail("releasable verify profile")
+
+    from nouns.gate_set.gate_set import prime_run_cache
+    from nouns.check_selection.check_selection import apply_run_selection
+
+    cache_path = prime_run_cache(ROOT)
+    print(f"GATE_SET_CACHE {cache_path}", flush=True)
+    selection = apply_run_selection(ROOT)
+    if selection.full_suite:
+        print(f"SELECTION:FULL reason={selection.reason}", flush=True)
+    else:
+        print(
+            f"SELECTION:NARROW selected={len(selection.selected)} "
+            f"skipped={len(selection.skipped)} reason={selection.reason}",
+            flush=True,
+        )
 
     session_preflight()
 
@@ -843,6 +863,34 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "assert-gate-set-member-change-fails-closed",
         [sys.executable, str(TOOLS / "assert-gate-set-member-change-fails-closed.py")],
+    )
+    run(
+        "assert-gate-set-cache-once",
+        [sys.executable, str(TOOLS / "assert-gate-set-cache-once-passes.py")],
+    )
+    run(
+        "fitness-check-inputs-declaration",
+        [sys.executable, str(TOOLS / "fitness-check-inputs-declaration.py")],
+    )
+    run(
+        "assert-unmapped-file-runs-full-suite",
+        [sys.executable, str(TOOLS / "assert-unmapped-file-runs-full-suite-passes.py")],
+    )
+    run(
+        "assert-selection-error-runs-full-suite",
+        [sys.executable, str(TOOLS / "assert-selection-error-runs-full-suite-passes.py")],
+    )
+    run(
+        "assert-landmine-file-change-triggers-landmine",
+        [sys.executable, str(TOOLS / "assert-landmine-file-change-triggers-landmine-passes.py")],
+    )
+    run(
+        "fitness-release-prep-script-match",
+        [sys.executable, str(TOOLS / "fitness-release-prep-script-match.py")],
+    )
+    run(
+        "assert-release-prep-hand-edit",
+        [sys.executable, str(TOOLS / "assert-release-prep-hand-edit-fails.py")],
     )
     run(
         "fitness-adr-record-gate",

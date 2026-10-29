@@ -10,6 +10,8 @@ BOUNDARY = "bba-emit"
 
 import ast
 import fnmatch
+import json
+import os
 import re
 import subprocess
 from pathlib import Path, PurePosixPath
@@ -44,6 +46,11 @@ _DERIVATION_EXCLUDE: frozenset[str] = frozenset(
     }
 )
 _PLACEHOLDER_ARMOR = b"-----BEGIN PGP SIGNED MESSAGE-----\nnot-valid\n"
+
+# Once-per-run membership cache. Checks reuse this; they do not re-derive.
+_PROCESS_CACHE: dict[str, list[str]] = {}
+_COMPUTE_COUNT = 0
+_ENV_CACHE = "NLC_GATE_SET_CACHE"
 
 
 def armor_occupancy_paths() -> tuple[str, ...]:
@@ -277,8 +284,52 @@ def _pkg_edges(rel: str, tracked: set[str], dirs: dict[str, list[str]]) -> set[s
     return out
 
 
-def derive_gate_set_paths(root: Path) -> list[str]:
+def _root_key(root: Path) -> str:
+    return str(root.resolve())
+
+
+def compute_count() -> int:
+    """How many times membership was derived this process (tests)."""
+    return _COMPUTE_COUNT
+
+
+def reset_cache_for_tests(*, process_only: bool = False) -> None:
+    """Drop the in-process cache. process_only keeps the run-cache file."""
+    global _COMPUTE_COUNT
+    _PROCESS_CACHE.clear()
+    if not process_only:
+        _COMPUTE_COUNT = 0
+
+
+def _load_run_cache() -> list[str] | None:
+    raw = os.environ.get(_ENV_CACHE, "").strip()
+    if not raw:
+        return None
+    path = Path(raw)
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(data, list) or not data:
+        return None
+    if not all(isinstance(item, str) and item for item in data):
+        return None
+    return list(data)
+
+
+def _store_run_cache(paths: list[str]) -> None:
+    raw = os.environ.get(_ENV_CACHE, "").strip()
+    if not raw:
+        return
+    path = Path(raw)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(paths) + "\n", encoding="utf-8")
+
+
+def _compute_gate_set_paths(root: Path) -> list[str]:
     """Transitive load closure of CI workflow seeds (v2 rules, sorted repo-relative paths)."""
+    global _COMPUTE_COUNT
+    _COMPUTE_COUNT += 1
     tracked_list = _git_tracked_files(root)
     tracked = set(tracked_list)
     dirs = _closure_dirs(tracked_list)
@@ -299,6 +350,36 @@ def derive_gate_set_paths(root: Path) -> list[str]:
             x for x in e if x not in seen and not _is_derivation_excluded(x)
         )
     return sorted(seen)
+
+
+def derive_gate_set_paths(root: Path) -> list[str]:
+    """Return cached membership for this run, computing it at most once per root."""
+    key = _root_key(root)
+    hit = _PROCESS_CACHE.get(key)
+    if hit is not None:
+        return list(hit)
+    cached = _load_run_cache()
+    if cached is not None:
+        _PROCESS_CACHE[key] = cached
+        return list(cached)
+    paths = _compute_gate_set_paths(root)
+    _PROCESS_CACHE[key] = paths
+    _store_run_cache(paths)
+    return list(paths)
+
+
+def prime_run_cache(root: Path, dest: Path | None = None) -> Path:
+    """Compute membership once and publish the run-cache path for child checks."""
+    path = dest
+    if path is None:
+        raw = os.environ.get(_ENV_CACHE, "").strip()
+        path = Path(raw) if raw else Path(os.environ.get("TMPDIR", "/tmp")) / "nlc-gate-set-cache.json"
+    os.environ[_ENV_CACHE] = str(path)
+    reset_cache_for_tests(process_only=True)
+    paths = _compute_gate_set_paths(root)
+    _PROCESS_CACHE[_root_key(root)] = paths
+    _store_run_cache(paths)
+    return path
 
 
 def iter_gate_set_relative_paths(root: Path) -> list[str]:

@@ -1,0 +1,3 @@
+# fitness_check_inputs_declaration
+complete
+derived
