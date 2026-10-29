@@ -691,6 +691,18 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-verify-before-generate-stamp-fails.py")],
     )
     run(
+        "assert-before-generate-hub-stamp-scopes-writer",
+        [sys.executable, str(TOOLS / "assert-before-generate-hub-stamp-scopes-writer-fails.py")],
+    )
+    run(
+        "assert-fitness-hub-stamp-scopes-check",
+        [sys.executable, str(TOOLS / "assert-fitness-hub-stamp-scopes-check-fails.py")],
+    )
+    run(
+        "assert-fitness-hub-stamp-scopes-source",
+        [sys.executable, str(TOOLS / "assert-fitness-hub-stamp-scopes-source-fails.py")],
+    )
+    run(
         "assert-verify-stale-stamp",
         [sys.executable, str(TOOLS / "assert-verify-stale-stamp-fails.py")],
     )
@@ -796,6 +808,10 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "fitness-hub-brief-forbid-weaken",
         [sys.executable, str(TOOLS / "fitness-hub-brief-forbid-weaken.py")],
+    )
+    run(
+        "fitness-hub-stamp-scopes",
+        [sys.executable, str(TOOLS / "fitness-hub-stamp-scopes.py")],
     )
     run(
         "fitness-no-check-on-check",

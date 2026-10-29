@@ -2447,6 +2447,9 @@
     "integrity/hub-release-record.json": [
       "gate_set_manifest"
     ],
+    "integrity/hub-stamp-scopes.json": [
+      "gate_set_manifest"
+    ],
     "integrity/hub-x4-remainder.json": [
       "gate_set_manifest"
     ],
@@ -2707,6 +2710,9 @@
     "tools/assert-batch-generate-policy-fails.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-before-generate-hub-stamp-scopes-writer-fails.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-binding-matrix-met.py": [
       "gate_set_manifest"
     ],
@@ -2849,6 +2855,12 @@
       "gate_set_manifest"
     ],
     "tools/assert-field-write-bypass-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-fitness-hub-stamp-scopes-check-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-fitness-hub-stamp-scopes-source-fails.py": [
       "gate_set_manifest"
     ],
     "tools/assert-full-nlc-audit-emit-checklist-passes.py": [
@@ -3610,6 +3622,9 @@
     "tools/fitness-hub-scope-derived.py": [
       "gate_set_manifest"
     ],
+    "tools/fitness-hub-stamp-scopes.py": [
+      "gate_set_manifest"
+    ],
     "tools/fitness-hub-x4-noun-pilot.py": [
       "gate_set_manifest"
     ],
@@ -3905,6 +3920,12 @@
       "gate_set_manifest"
     ],
     "tools/fixtures/hub-own/valid-hub-own-produce-package.json": [
+      "gate_set_manifest"
+    ],
+    "tools/fixtures/hub-stamp-scopes/empty-scopes-source.json": [
+      "gate_set_manifest"
+    ],
+    "tools/fixtures/hub-stamp-scopes/partial-stamp-scopes.json": [
       "gate_set_manifest"
     ],
     "tools/fixtures/known-bad-ssot/missing-constraint-entry.json": [
@@ -4580,6 +4601,12 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_batch_generate_policy_fails/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_before_generate_hub_stamp_scopes_writer_fails/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_before_generate_hub_stamp_scopes_writer_fails/assert_before_generate_hub_stamp_scopes_writer_fails.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_binding_matrix_met/README.md": [
@@ -5411,6 +5438,18 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_field_write_bypass_fails/assert_field_write_bypass_fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_fitness_hub_stamp_scopes_check_fails/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_fitness_hub_stamp_scopes_check_fails/assert_fitness_hub_stamp_scopes_check_fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_fitness_hub_stamp_scopes_source_fails/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_fitness_hub_stamp_scopes_source_fails/assert_fitness_hub_stamp_scopes_source_fails.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_full_nlc_audit_emit_checklist_passes/README.md": [
@@ -9061,6 +9100,18 @@
     "tools/nouns/fitness_hub_source/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/fitness_hub_stamp_scopes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_hub_stamp_scopes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_hub_stamp_scopes/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_hub_stamp_scopes/fitness_hub_stamp_scopes.py": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/fitness_hub_x4_noun_pilot/README.md": [
       "gate_set_manifest"
     ],
@@ -10748,6 +10799,12 @@
       "gate_set_manifest"
     ],
     "tools/nouns/hub_own_produce/hub_own_produce.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/hub_stamp_scopes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/hub_stamp_scopes/hub_stamp_scopes.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/hub_update/README.md": [

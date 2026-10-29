@@ -41,7 +41,9 @@ def run_before_generate(root: Path, hub: Path, scopes: list[str]) -> int:
             file=sys.stderr,
         )
         return proc.returncode
-    before_generate_ok(root, scopes)
+    rc = before_generate_ok(root, scopes)
+    if rc != 0:
+        return rc
     print("Before-generate passed. Stamp written under .nlc/")
     return 0
 
@@ -77,7 +79,13 @@ def dispatch_guide(args: argparse.Namespace, root: Path, hub: Path) -> int:
         print("Build handoff queued (pipeline-state).")
         return 0
     if cmd == "before-generate":
-        scopes = args.scope or ["default"]
+        if args.scope:
+            scopes = list(args.scope)
+        else:
+            sys.path.insert(0, str(hub / "tools"))
+            from nouns.hub_stamp_scopes.hub_stamp_scopes import default_hub_scopes
+
+            scopes = default_hub_scopes(root) or ["default"]
         return run_before_generate(root, hub, scopes)
     print(f"Unknown guide command: {cmd}", file=sys.stderr)
     return 2

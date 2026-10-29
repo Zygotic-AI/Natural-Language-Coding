@@ -61,6 +61,7 @@
     "fitness-owner-ratification-known-bad.py",
     "fitness-hub-scope-derived.py",
     "fitness-hub-brief-forbid-weaken.py",
+    "fitness-hub-stamp-scopes.py",
     "fitness-no-check-on-check.py",
     "fitness-known-bad-ssot.py",
     "fitness-pending-ratification.py",
