@@ -319,7 +319,7 @@ def format_dashboard(
     hub_version: str,
 ) -> str:
     lines = [
-        "Natural Language Coding",
+        "Natural Language Compiler",
         "=======================",
         f"Project: {root}",
         f"Compiler: {hub_version}",

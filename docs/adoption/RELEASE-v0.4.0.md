@@ -1,4 +1,4 @@
-# Natural Language Coding hub v0.4.0
+# Natural Language Compiler hub v0.4.0
 
 ## Highlights
 

@@ -1,4 +1,4 @@
-"""Human command surface for Natural Language Coding (ADR 0017)."""
+"""Human command surface for Natural Language Compiler (ADR 0017)."""
 
 from __future__ import annotations
 
@@ -55,7 +55,7 @@ def _human_status(root: Path, hub: Path) -> tuple[str, int]:
     issues = preflight_issues(hub, root)
     if issues:
         lines = [
-            "Natural Language Coding",
+            "Natural Language Compiler",
             "=======================",
             "",
             "Cannot continue yet.",
@@ -429,7 +429,7 @@ def main() -> int:
     hub_tool()
     parser = argparse.ArgumentParser(
         prog="nlc",
-        description="Natural Language Coding — human menu and commands (ADR 0017)",
+        description="Natural Language Compiler — human menu and commands (ADR 0017)",
     )
     parser.add_argument("--project", type=Path, default=None, help="App repo root")
     sub = parser.add_subparsers(dest="command")

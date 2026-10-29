@@ -39,7 +39,7 @@ Pin a commit or fork when you ratify adoption.
 
 README = """# {name}
 
-Greenfield **compiled system** under Natural Language Coding (NLC).
+Greenfield **compiled system** under Natural Language Compiler (NLC).
 
 ## Agent workflow
 

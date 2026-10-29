@@ -4,7 +4,7 @@ Short index—**full dictionary:** [`TERMS.md`](../../TERMS.md). Full intent spl
 
 | Term | Meaning |
 | ---- | ------- |
-| **[NLC](../../TERMS.md#nlc)** | [Natural Language Coding](../../TERMS.md#nlc) — the product. |
+| **[NLC](../../TERMS.md#nlc)** | [Natural Language Compiler](../../TERMS.md#nlc) — the product. |
 | **[Compiler](../../TERMS.md#compiler)** | [AI system compiler](../../TERMS.md#compiler) — turns bound intent into a [compiled system](../../TERMS.md#compiled-system). Optional acronym **[ASC](../../TERMS.md#asc)** (avoid in first-read copy). |
 | **[Compiled system](../../TERMS.md#compiled-system)** | Runnable BBP-shaped code in your [app repo](../../TERMS.md#adopter). Optional acronym **[ACS](../../TERMS.md#acs)** (artifact only). |
 | **[Goal](../../TERMS.md#goal)** | Outcome the system must deliver. |

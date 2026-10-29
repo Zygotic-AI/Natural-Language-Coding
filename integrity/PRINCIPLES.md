@@ -1,6 +1,6 @@
 # Practice [integrity](../docs/TERMS.md#integrity) principles ([NLC](../docs/TERMS.md#nlc) roof)
 
-**Product roof = [Natural Language Coding (NLC)](../docs/TERMS.md#nlc)** ([ADR 0011](../adrs/0011-natural-language-coding-naming.md)).
+**Product roof = [Natural Language Compiler (NLC)](../docs/TERMS.md#nlc)** ([ADR 0011](../adrs/0011-natural-language-coding-naming.md)).
 This file is the [BBP](../docs/TERMS.md#bbp) / [BBA](../docs/TERMS.md#bba) integrity principle set **under that roof** — not a competing public product name.
 
 SSOT for how this repo keeps itself honest. Ratified by [`../adrs/0001-zero-variance-integrity.md`](../adrs/0001-zero-variance-integrity.md). [Charter](../docs/TERMS.md#charter) rules: [`../CHARTER.md`](../CHARTER.md) §5.8.
