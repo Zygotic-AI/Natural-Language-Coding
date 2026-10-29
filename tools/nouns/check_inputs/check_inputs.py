@@ -180,7 +180,7 @@ def extra_inputs(root: Path, files: list[str], tracked: set[str]) -> list[str]:
         except OSError:
             continue
         for raw in _string_constants(text):
-            norm = raw.replace("\\", "/").lstrip("./")
+            norm = raw.replace("\\", "/").removeprefix("./")
             if norm in tracked:
                 extra.add(norm)
     return sorted(extra)
