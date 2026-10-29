@@ -28,6 +28,8 @@ Known-bad: `python3 tools/assert-content-only-change-does-not-trip-gate-set-sign
 
 Release branches (`release/vX.Y.Z`) are created only via the **start-release** workflow ([`.github/workflows/start-release.yml`](../../.github/workflows/start-release.yml)). Run it from the Actions tab with a version that matches `^v\d+\.\d+\.\d+$`. The workflow creates `release/<version>` from the current `main` HEAD and does nothing else (no commits, no tags). Do not create `release/*` refs by hand or by toggling the ruleset.
 
+The ADR 0050 history rewrite drill runs at release tag time on the same self-hosted runner labels as start-release (vhost11), not on every pull request or push.
+
 ## Sync after someone else ships (step 5)
 
 ```bash

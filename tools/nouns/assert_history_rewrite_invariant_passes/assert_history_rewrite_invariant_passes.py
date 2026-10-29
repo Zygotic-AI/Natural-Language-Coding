@@ -4,12 +4,62 @@ from __future__ import annotations
 
 BOUNDARY = "bba-emit"
 
+import os
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
+
+
+def resolve_drill_git(env: dict[str, str] | None = None) -> str | None:
+    """Return git executable path for the drill, or None when missing or unknown."""
+    use_env = env if env is not None else os.environ
+    git_cmd = (use_env.get("NLC_DRILL_GIT") or "git").strip() or "git"
+    try:
+        proc = subprocess.run(
+            [git_cmd, "--version"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except (FileNotFoundError, OSError):
+        return None
+    if proc.returncode != 0:
+        return None
+    if not (proc.stdout or "").strip() and not (proc.stderr or "").strip():
+        return None
+    return git_cmd
+
+
+def drill_git_clone(
+    git_cmd: str,
+    source: str | Path,
+    dest: str | Path,
+    *,
+    depth: int | None = None,
+    local: bool = False,
+) -> int:
+    """Run git clone for the drill with --no-hardlinks; print git stderr on failure."""
+    cmd = [git_cmd, "clone", "--no-hardlinks"]
+    if local:
+        cmd.append("--local")
+    if depth is not None:
+        cmd.extend(["--depth", str(int(depth))])
+    cmd.extend([str(source), str(dest)])
+    proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    if proc.returncode != 0:
+        err = (proc.stderr or proc.stdout or "").strip()
+        if err:
+            print(err, file=sys.stderr)
+        else:
+            print(
+                "history-rewrite-drill: git clone failed with empty stderr",
+                file=sys.stderr,
+            )
+        return proc.returncode if proc.returncode != 0 else 1
+    return 0
 
 
 def run_releasable_release(cwd: Path) -> int:
@@ -31,7 +81,7 @@ def run_releasable_release(cwd: Path) -> int:
     return proc.returncode
 
 
-def rewrite_history(repo: Path) -> None:
+def rewrite_history(repo: Path, git_cmd: str = "git") -> None:
     """Change author metadata on all commits so commit ids change, trees unchanged."""
     env_filter = (
         "GIT_AUTHOR_NAME='history-rewrite-drill';"
@@ -41,7 +91,7 @@ def rewrite_history(repo: Path) -> None:
     )
     subprocess.run(
         [
-            "git",
+            git_cmd,
             "filter-branch",
             "-f",
             "--env-filter",
@@ -55,9 +105,9 @@ def rewrite_history(repo: Path) -> None:
     )
 
 
-def trees_equal(a: Path, b: Path) -> bool:
+def trees_equal(a: Path, b: Path, git_cmd: str = "git") -> bool:
     proc = subprocess.run(
-        ["git", "rev-parse", "HEAD^{tree}"],
+        [git_cmd, "rev-parse", "HEAD^{tree}"],
         cwd=str(a),
         capture_output=True,
         text=True,
@@ -67,7 +117,7 @@ def trees_equal(a: Path, b: Path) -> bool:
         return False
     tree_a = (proc.stdout or "").strip()
     proc_b = subprocess.run(
-        ["git", "rev-parse", "HEAD^{tree}"],
+        [git_cmd, "rev-parse", "HEAD^{tree}"],
         cwd=str(b),
         capture_output=True,
         text=True,
@@ -79,23 +129,27 @@ def trees_equal(a: Path, b: Path) -> bool:
 
 
 def main() -> int:
+    git_cmd = resolve_drill_git()
+    if git_cmd is None:
+        print(
+            "ASSERT:FAIL history rewrite drill refuses: git missing or unknown",
+            file=sys.stderr,
+        )
+        return 2
+
     with tempfile.TemporaryDirectory(prefix="nlc-rewrite-drill-") as tmp:
         tmp_path = Path(tmp)
         baseline_clone = tmp_path / "baseline"
-        subprocess.run(
-            ["git", "clone", "--local", str(ROOT), str(baseline_clone)],
-            check=True,
-            capture_output=True,
-        )
+        rc = drill_git_clone(git_cmd, ROOT, baseline_clone, local=True)
+        if rc != 0:
+            return rc
         baseline = run_releasable_release(baseline_clone)
         clone = tmp_path / "full"
-        subprocess.run(
-            ["git", "clone", "--local", str(baseline_clone), str(clone)],
-            check=True,
-            capture_output=True,
-        )
-        rewrite_history(clone)
-        if not trees_equal(baseline_clone, clone):
+        rc = drill_git_clone(git_cmd, baseline_clone, clone, local=True)
+        if rc != 0:
+            return rc
+        rewrite_history(clone, git_cmd=git_cmd)
+        if not trees_equal(baseline_clone, clone, git_cmd=git_cmd):
             print("ASSERT:FAIL rewrite drill changed HEAD tree content")
             return 1
         rewritten = run_releasable_release(clone)
@@ -106,11 +160,9 @@ def main() -> int:
             return 1
 
         shallow = tmp_path / "shallow"
-        subprocess.run(
-            ["git", "clone", "--depth", "1", "--local", str(baseline_clone), str(shallow)],
-            check=True,
-            capture_output=True,
-        )
+        rc = drill_git_clone(git_cmd, baseline_clone, shallow, depth=1, local=True)
+        if rc != 0:
+            return rc
         shallow_code = run_releasable_release(shallow)
         if shallow_code != baseline:
             print(

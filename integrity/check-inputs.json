@@ -632,6 +632,19 @@
       ]
     },
     {
+      "label": "assert-history-rewrite-drill-clone-fails",
+      "script": "tools/assert-history-rewrite-drill-clone-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-history-rewrite-drill-clone-fails.py",
+        "tools/nouns/assert_history_rewrite_drill_clone_fails/README.md",
+        "tools/nouns/assert_history_rewrite_drill_clone_fails/__init__.py",
+        "tools/nouns/assert_history_rewrite_drill_clone_fails/adjectives.txt",
+        "tools/nouns/assert_history_rewrite_drill_clone_fails/assert_history_rewrite_drill_clone_fails.py",
+        "tools/nouns/assert_history_rewrite_drill_clone_fails/fields.txt"
+      ]
+    },
+    {
       "label": "assert-hub-scope-unresolved-merge-base-fails",
       "script": "tools/assert-hub-scope-unresolved-merge-base-fails.py",
       "kind": "landmine",
@@ -5505,6 +5518,19 @@
         "tools/nouns/assert_goal_bindings_narrow_fails/assert_goal_bindings_narrow_fails.py",
         "tools/nouns/assert_goal_bindings_narrow_fails/fields.txt",
         "tools/nouns/assert_goal_bindings_narrow_fails/schemas/verbs.schema.json"
+      ]
+    },
+    {
+      "label": "tools/assert-history-rewrite-drill-clone-fails.py",
+      "script": "tools/assert-history-rewrite-drill-clone-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-history-rewrite-drill-clone-fails.py",
+        "tools/nouns/assert_history_rewrite_drill_clone_fails/README.md",
+        "tools/nouns/assert_history_rewrite_drill_clone_fails/__init__.py",
+        "tools/nouns/assert_history_rewrite_drill_clone_fails/adjectives.txt",
+        "tools/nouns/assert_history_rewrite_drill_clone_fails/assert_history_rewrite_drill_clone_fails.py",
+        "tools/nouns/assert_history_rewrite_drill_clone_fails/fields.txt"
       ]
     },
     {
