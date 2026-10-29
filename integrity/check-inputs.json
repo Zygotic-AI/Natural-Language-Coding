@@ -73,6 +73,16 @@
       ]
     },
     {
+      "label": "assert-before-generate-hub-stamp-scopes-writer-fails",
+      "script": "tools/assert-before-generate-hub-stamp-scopes-writer-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-before-generate-hub-stamp-scopes-writer-fails.py",
+        "tools/nouns/assert_before_generate_hub_stamp_scopes_writer_fails/__init__.py",
+        "tools/nouns/assert_before_generate_hub_stamp_scopes_writer_fails/assert_before_generate_hub_stamp_scopes_writer_fails.py"
+      ]
+    },
+    {
       "label": "assert-boundary-io-fails",
       "script": "tools/assert-boundary-io-fails.py",
       "kind": "landmine",
@@ -578,6 +588,26 @@
         "tools/assert-field-write-bypass-fails.py",
         "tools/nouns/assert_field_write_bypass_fails/__init__.py",
         "tools/nouns/assert_field_write_bypass_fails/assert_field_write_bypass_fails.py"
+      ]
+    },
+    {
+      "label": "assert-fitness-hub-stamp-scopes-check-fails",
+      "script": "tools/assert-fitness-hub-stamp-scopes-check-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-fitness-hub-stamp-scopes-check-fails.py",
+        "tools/nouns/assert_fitness_hub_stamp_scopes_check_fails/__init__.py",
+        "tools/nouns/assert_fitness_hub_stamp_scopes_check_fails/assert_fitness_hub_stamp_scopes_check_fails.py"
+      ]
+    },
+    {
+      "label": "assert-fitness-hub-stamp-scopes-source-fails",
+      "script": "tools/assert-fitness-hub-stamp-scopes-source-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-fitness-hub-stamp-scopes-source-fails.py",
+        "tools/nouns/assert_fitness_hub_stamp_scopes_source_fails/__init__.py",
+        "tools/nouns/assert_fitness_hub_stamp_scopes_source_fails/assert_fitness_hub_stamp_scopes_source_fails.py"
       ]
     },
     {
@@ -1856,6 +1886,7 @@
       "script": "tools/fitness-adr-0008-binder.py",
       "kind": "fitness",
       "inputs": [
+        ".agents/skills/bbp-reviewer/SKILL.md",
         "tools/ci_fitness.py",
         "tools/fitness-adr-0008-binder.py",
         "tools/nouns/fitness_adr_0008_binder/README.md",
@@ -1871,6 +1902,7 @@
       "script": "tools/fitness-adr-0010-binder.py",
       "kind": "fitness",
       "inputs": [
+        ".nlc/before-generate-stamp.json",
         "tools/ci_fitness.py",
         "tools/fitness-adr-0010-binder.py",
         "tools/nlc_compliance.py",
@@ -1889,6 +1921,7 @@
       "script": "tools/fitness-adr-0023-binder.py",
       "kind": "fitness",
       "inputs": [
+        ".agents/skills/planit/SKILL.md",
         "tools/ci_fitness.py",
         "tools/fitness-adr-0023-binder.py",
         "tools/nlc_goal_scaffold.py",
@@ -2319,6 +2352,7 @@
       "script": "tools/fitness-compiled-system-uc-binder.py",
       "kind": "fitness",
       "inputs": [
+        ".nlc/before-generate-stamp.json",
         "tools/ci_fitness.py",
         "tools/fitness-compiled-system-uc-binder.py",
         "tools/nlc-pack-install.py",
@@ -2337,7 +2371,7 @@
       "script": "tools/fitness-compiled-system-uc-product.py",
       "kind": "fitness",
       "inputs": [
-        "nlc",
+        ".nlc/before-generate-stamp.json",
         "tools/fitness-compiled-system-uc-product.py",
         "tools/fitness-todo-use-cases-ssot.py",
         "tools/nlc.py",
@@ -2506,6 +2540,7 @@
       "script": "tools/fitness-goal-write-hook.py",
       "kind": "fitness",
       "inputs": [
+        ".cursor/hooks/nlc-goal-write-gate.sh",
         "tools/fitness-goal-write-hook.py",
         "tools/nouns/fitness_goal_write_hook/README.md",
         "tools/nouns/fitness_goal_write_hook/__init__.py",
@@ -2520,6 +2555,8 @@
       "script": "tools/fitness-guide-orchestration.py",
       "kind": "fitness",
       "inputs": [
+        ".nlc/before-generate-stamp.json",
+        "integrity/hub-stamp-scopes.json",
         "tools/fitness-guide-orchestration.py",
         "tools/nlc.py",
         "tools/nlc_dashboard.py",
@@ -2762,6 +2799,7 @@
       "script": "tools/fitness-nlc-0036-inference-only.py",
       "kind": "fitness",
       "inputs": [
+        ".agents/skills/interview/SKILL.md",
         "docs/nlc/compiler/INTENT-SURFACE.md",
         "docs/nlc/compiler/MANIFESTO.md",
         "tools/fitness-nlc-0036-inference-only.py",
@@ -3220,6 +3258,7 @@
       "script": "tools/fitness-root-session-artifacts.py",
       "kind": "fitness",
       "inputs": [
+        ".gitignore",
         "tools/fitness-root-session-artifacts.py",
         "tools/nouns/fitness_root_session_artifacts/README.md",
         "tools/nouns/fitness_root_session_artifacts/__init__.py",
@@ -3291,6 +3330,7 @@
       "script": "tools/fitness-uc13-engine-runtime-strict.py",
       "kind": "fitness",
       "inputs": [
+        ".nlc/before-generate-stamp.json",
         "tools/fitness-uc13-engine-runtime-strict.py",
         "tools/nlc_compliance.py",
         "tools/nouns/fitness_uc13_engine_runtime_strict/README.md",
@@ -3465,6 +3505,7 @@
       "script": "tools/fitness-verify-pipeline-wired.py",
       "kind": "fitness",
       "inputs": [
+        ".nlc/before-generate-stamp.json",
         "tools/fitness-verify-pipeline-wired.py",
         "tools/nlc_compliance.py",
         "tools/nouns/fitness_verify_pipeline_wired/README.md",
@@ -3480,6 +3521,7 @@
       "script": "tools/fitness-verify-rule-coverage-wired.py",
       "kind": "fitness",
       "inputs": [
+        ".nlc/before-generate-stamp.json",
         "tools/ci_fitness.py",
         "tools/fitness-verify-rule-coverage-wired.py",
         "tools/nlc_compliance.py",
@@ -4962,6 +5004,16 @@
       ]
     },
     {
+      "label": "tools/assert-before-generate-hub-stamp-scopes-writer-fails.py",
+      "script": "tools/assert-before-generate-hub-stamp-scopes-writer-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-before-generate-hub-stamp-scopes-writer-fails.py",
+        "tools/nouns/assert_before_generate_hub_stamp_scopes_writer_fails/__init__.py",
+        "tools/nouns/assert_before_generate_hub_stamp_scopes_writer_fails/assert_before_generate_hub_stamp_scopes_writer_fails.py"
+      ]
+    },
+    {
       "label": "tools/assert-boundary-io-fails.py",
       "script": "tools/assert-boundary-io-fails.py",
       "kind": "landmine",
@@ -5467,6 +5519,26 @@
         "tools/assert-field-write-bypass-fails.py",
         "tools/nouns/assert_field_write_bypass_fails/__init__.py",
         "tools/nouns/assert_field_write_bypass_fails/assert_field_write_bypass_fails.py"
+      ]
+    },
+    {
+      "label": "tools/assert-fitness-hub-stamp-scopes-check-fails.py",
+      "script": "tools/assert-fitness-hub-stamp-scopes-check-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-fitness-hub-stamp-scopes-check-fails.py",
+        "tools/nouns/assert_fitness_hub_stamp_scopes_check_fails/__init__.py",
+        "tools/nouns/assert_fitness_hub_stamp_scopes_check_fails/assert_fitness_hub_stamp_scopes_check_fails.py"
+      ]
+    },
+    {
+      "label": "tools/assert-fitness-hub-stamp-scopes-source-fails.py",
+      "script": "tools/assert-fitness-hub-stamp-scopes-source-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-fitness-hub-stamp-scopes-source-fails.py",
+        "tools/nouns/assert_fitness_hub_stamp_scopes_source_fails/__init__.py",
+        "tools/nouns/assert_fitness_hub_stamp_scopes_source_fails/assert_fitness_hub_stamp_scopes_source_fails.py"
       ]
     },
     {

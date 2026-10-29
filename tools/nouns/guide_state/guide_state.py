@@ -66,13 +66,20 @@ def handoff_build(root: Path) -> None:
     _write_json(path, {"schema": 1, "items": items})
 
 
-def before_generate_ok(root: Path, scopes: list[str]) -> None:
+def before_generate_ok(root: Path, scopes: list[str]) -> int:
     sys_path = Path(__file__).resolve().parents[2]
     import sys
 
     if str(sys_path) not in sys.path:
         sys.path.insert(0, str(sys_path))
     from nouns.compliance.compliance import product_content_fingerprint
+    from nouns.hub_stamp_scopes.hub_stamp_scopes import writer_scope_errors
+
+    scope_errors = writer_scope_errors(root, scopes)
+    if scope_errors:
+        for item in scope_errors:
+            print(item, file=sys.stderr)
+        return 1
 
     _write_json(
         _nlc(root) / "before-generate-stamp.json",
@@ -83,6 +90,7 @@ def before_generate_ok(root: Path, scopes: list[str]) -> None:
             "product_content_sha256": product_content_fingerprint(root),
         },
     )
+    return 0
 
 
 def before_generate_stamp_valid(root: Path, max_age_seconds: int = 7200) -> bool:

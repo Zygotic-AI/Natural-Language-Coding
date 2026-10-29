@@ -11,6 +11,7 @@ from pathlib import Path
 from fitness_hub_source import read_tool
 
 ROOT = Path(__file__).resolve().parents[3]
+HUB_BEFORE_GENERATE_STAMP = ".nlc/before-generate-stamp.json"
 COMPLIANCE = ROOT / "tools" / "nlc_compliance.py"
 VERIFY = ROOT / "tools" / "nlc_verify.py"
 VERIFY_NOUN = ROOT / "tools" / "nouns" / "verify" / "verify.py"
