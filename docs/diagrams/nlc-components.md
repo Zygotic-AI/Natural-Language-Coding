@@ -2,7 +2,9 @@
 
 Reference map of Natural Language Coding at the same grain as the Zygotic workflow diagram (`richardpickett/webs/doc/diagrams/zygotic-workflow.json`).
 
-React Flow seed (same document shape as that workflow): [`nlc-components.json`](nlc-components.json).
+React Flow seed in this repo: [`nlc-components.json`](nlc-components.json).
+
+Branded React Flow diagram (same palette, duotone Phosphor icons, and green group as the Zygotic workflow): `richardpickett/webs/doc/diagrams/nlc-components.json`.
 
 Sources: [`ARCHITECTURE.md`](../nlc/compiler/ARCHITECTURE.md), [`PROCESS.md`](../nlc/compiler/PROCESS.md), [`BOUNDARY.md`](../../integrity/BOUNDARY.md).
 
@@ -54,6 +56,8 @@ Produce, Audit, and Ship are different roles. Audit does not authorize release. 
 
 ## Diagram
 
+**Gate** checks the one artifact just generated. **Verify** is the later compile check, `./nlc verify`. Fitness is its machine half. Adversarial audit is its other half. Those two sit inside Verify. They do not lead to a second box with the same name. **Ship** and the compiled system come after Verify.
+
 ```mermaid
 flowchart LR
   Human[Human]
@@ -63,6 +67,11 @@ flowchart LR
     Plan[Plan and statements]
     Bind[Bind]
     Emit[Generate one artifact]
+    Gate[Gate]
+    subgraph verify [Verify]
+      Fitness[Fitness]
+      Audit[Adversarial audit]
+    end
   end
   subgraph held [Human-held]
     Goal[Goal]
@@ -74,10 +83,6 @@ flowchart LR
     Contract[Contract]
   end
   Store[".nlc lock, gate records, impact graph"]
-  Gate[Gate X1 X2 then X5 X3 X6]
-  Fitness[Fitness]
-  Audit[Adversarial audit]
-  Verify[Verify]
   Ship[Ship]
   App[Compiled system]
 
@@ -89,9 +94,5 @@ flowchart LR
   Emit --> Noun
   Emit --> Contract
   Emit --> Store
-  Emit --> Gate --> Fitness --> Audit --> Verify --> Ship --> App
-  Gate -.-> Interview
-  Audit -.-> Interview
+  Emit --> Gate --> Fitness --> Audit --> Ship --> App
 ```
-
-A gate or audit failure returns to Interview or Bind, then Generate again. The next statement does not start on FAIL.

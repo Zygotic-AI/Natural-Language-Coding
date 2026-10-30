@@ -1,7 +1,7 @@
 {
   "id": "nlc-components",
   "name": "NLC components",
-  "description": "Compiler spine: human-held intent, PLANIT load-plan-bind-generate, gates, verify, and ship into a compiled system. Refuse returns to Interview.",
+  "description": "Compiler spine: human-held intent, PLANIT load-plan-bind-generate, gates, verify, and ship into a compiled system.",
   "sampleRevision": 1,
   "updatedAt": "2026-10-28T03:00:00.000Z",
   "nodes": [
@@ -1043,84 +1043,6 @@
       "target": "compiled",
       "targetHandle": "left-target",
       "id": "e-ship-compiled-right-source-left-target",
-      "pathOptions": {
-        "borderRadius": 8,
-        "offset": 24,
-        "stepPosition": 0.5
-      }
-    },
-    {
-      "type": "diagram",
-      "style": {
-        "stroke": "#F34213",
-        "strokeWidth": 2
-      },
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "rgb(243,66,19)",
-        "width": 16,
-        "height": 16
-      },
-      "markerStart": null,
-      "data": {
-        "colorToken": "accent",
-        "pathMarkers": "none",
-        "markerEndSize": 16,
-        "markerStartSize": 16,
-        "strokeWidth": 2,
-        "pathBorderRadius": 8,
-        "pathOffset": 24,
-        "pathStepPosition": 0.5
-      },
-      "interactionWidth": 20,
-      "selectable": true,
-      "deletable": true,
-      "reconnectable": true,
-      "focusable": true,
-      "source": "gate",
-      "sourceHandle": "bottom-source",
-      "target": "interview",
-      "targetHandle": "top-target",
-      "id": "e-gate-interview-bottom-source-top-target",
-      "pathOptions": {
-        "borderRadius": 8,
-        "offset": 24,
-        "stepPosition": 0.5
-      }
-    },
-    {
-      "type": "diagram",
-      "style": {
-        "stroke": "#F34213",
-        "strokeWidth": 2
-      },
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "rgb(243,66,19)",
-        "width": 16,
-        "height": 16
-      },
-      "markerStart": null,
-      "data": {
-        "colorToken": "accent",
-        "pathMarkers": "none",
-        "markerEndSize": 16,
-        "markerStartSize": 16,
-        "strokeWidth": 2,
-        "pathBorderRadius": 8,
-        "pathOffset": 24,
-        "pathStepPosition": 0.5
-      },
-      "interactionWidth": 20,
-      "selectable": true,
-      "deletable": true,
-      "reconnectable": true,
-      "focusable": true,
-      "source": "audit",
-      "sourceHandle": "bottom-source",
-      "target": "interview",
-      "targetHandle": "top-target",
-      "id": "e-audit-interview-bottom-source-top-target",
       "pathOptions": {
         "borderRadius": 8,
         "offset": 24,
