@@ -19,7 +19,7 @@ def _tools_on_path() -> None:
 
 
 def is_hub(root: Path) -> bool:
-    """True when root is the Natural Language Coding hub tree."""
+    """True when root is the Natural Language Compiler hub tree."""
     _tools_on_path()
     from nlc_pipeline import is_hub_repo
 
