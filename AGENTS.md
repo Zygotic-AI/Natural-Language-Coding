@@ -56,6 +56,8 @@ Skills and portable instructions live under [`.agents/`](.agents/). End-to-end c
 
 **Reply references (always):** Whenever you mention UC/ADR/P/R ids, paths, or hub jargon in user-facing text, include plain language **in the same message** — see [`.agents/instructions/reply-references-plain-language.md`](.agents/instructions/reply-references-plain-language.md). No bare id lists as explanation; applies to every reply, not only when asking the human to decide.
 
+**Signature text (always):** Anytime you need a signature, give the exact text in that same message. In an IDE, put only that text in one fenced block so it can be copied. In a terminal, put a start marker line above it and an end marker line below it — see [`.agents/instructions/signature-text-handoff.md`](.agents/instructions/signature-text-handoff.md).
+
 ## Memory files
 
 - [`DESCRIBE.md`](DESCRIBE.md) — durable project facts for agents
