@@ -79,6 +79,36 @@ Agents also run `./nlc maintainer …` (requirements sync, regen queue, before-g
 
 Design SSOT: [`CHARTER.md`](CHARTER.md). Words: [`GLOSSARY.md`](docs/nlc/compiler/GLOSSARY.md).
 
+## Product picture
+
+Two views of the same compiler. The left is any app. The right is the same path with healthcare and securities policies named. Gaps in what the hub can do today stay in [`FINDINGS.md`](FINDINGS.md).
+
+```mermaid
+flowchart LR
+  intent["Plain-language intent"]
+  goals["Goals"]
+  policy["Policies and standards"]
+  decisions["Accepted decisions"]
+  rules["If/then rules"]
+  code["Compiled code"]
+  intent --> goals --> decisions
+  policy --> decisions
+  decisions --> rules --> code
+```
+
+```mermaid
+flowchart LR
+  hipaa["HIPAA"]
+  sec["SEC"]
+  decisions["Accepted decisions"]
+  rules["If/then rules"]
+  code["Healthcare and securities app code"]
+  audit["The code those policies touch"]
+  hipaa --> decisions
+  sec --> decisions
+  decisions --> rules --> code --> audit
+```
+
 ## Go deeper
 
 | If you want… | Read |

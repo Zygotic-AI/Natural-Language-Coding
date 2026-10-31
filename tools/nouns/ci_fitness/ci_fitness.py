@@ -798,8 +798,12 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-adr-status-heading-fails.py")],
     )
     run(
-        "fitness-gate-set-manifest",
-        [sys.executable, str(TOOLS / "fitness-gate-set-manifest.py")],
+        "fitness-derived-release-state",
+        [sys.executable, str(TOOLS / "fitness-derived-release-state.py")],
+    )
+    run(
+        "assert-tag-digest-signature-required",
+        [sys.executable, str(TOOLS / "assert-tag-digest-signature-required-fails.py")],
     )
     run(
         "fitness-owner-key-trust",
@@ -944,10 +948,7 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "fitness-live-self-ref-activation",
         [sys.executable, str(TOOLS / "fitness-live-self-ref-activation.py")],
     )
-    run(
-        "fitness-mandate-inheritance",
-        [sys.executable, str(TOOLS / "fitness-mandate-inheritance.py")],
-    )
+    # Mandate drift is inside fitness-derived-release-state (one check).
     run(
         "fitness-control-lifecycle",
         [sys.executable, str(TOOLS / "fitness-control-lifecycle.py")],

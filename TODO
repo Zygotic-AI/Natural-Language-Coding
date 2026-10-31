@@ -621,7 +621,7 @@ Most older architecture decision records share `tools/assert-adr-approval-mismat
 
 Record 0045 (one release identity) still says the executor is `scripts/nlc-release.sh`. Record 0048 (executable shape) amends that location: policy lives in `goals/hub_release/execute.sh`, and the shell only starts that goal. Do not edit record 0045 in place.
 
-- ☐ Add an effective-decision view that shows record 0045 decision 2 as amended by record 0048.
+- ✔ Add an effective-decision view that shows record 0045 decision 2 as amended by record 0048. View: `docs/nlc/effective-decisions.md`. Record 0045 was not edited. @done(26-10-31 03:30)
 
 ### `./release` planner and resume
 
@@ -654,7 +654,7 @@ The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (co
 - ✔ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar) @done(26-10-18 19:49)
 - ✔ `./release` one PR `release/v0.3.2` → `main`; merge when all checks green; tag `v0.3.2` on that merge only @done(26-10-18 21:04)
 - ✔ Confirm GitHub Release `v0.3.2` exists; `v0.3.0` peel still `d4abf9a`; `v0.3.1` peel still `50b6b6d` @done(26-10-18 21:12)
-- ☐ README diagrams (left generic intent/policies; right healthcare HIPAA + SEC) — later, not this ship
+- ✔ README diagrams (left generic intent/policies; right healthcare HIPAA + SEC) @done(26-10-31 03:30)
 
 ### Hub ship v0.3.3 (patch)
 
@@ -665,9 +665,9 @@ The planner can return `PREPARE_DRAFT` with action `VERIFY_SHIPPED_BASELINE` (co
 - ✔ Align `nlc-version.json`, `hub-release-record.json`, `RELEASE-v0.3.3.md`, FINDINGS, DESCRIBE to **0.3.3** @done(26-10-18 22:28)
 - ✔ Prune closed `release/v*` remotes and locals; keep tags and GitHub Releases @done(26-10-18 23:40)
 - ✔ ADR 0051 merge-base default is immutable tag `v0.3.0` (not `origin/release/v0.3.0`) @done(26-10-18 23:50)
-- ☐ Owner clearsign of the unsigned gate-set manifest (sidecar last; no verify-deep after sidecar)
-- ☐ `./release` one PR `release/v0.3.3` → `main`; merge when all checks green; tag `v0.3.3` on that merge only
-- ☐ Confirm GitHub Release `v0.3.3` exists; prior peels unchanged
+- ✔ Not shipped. v0.4.0 is already the tagged ship, so this line does not get a v0.3.3 owner signature, pull request, or tag. @done(26-10-31 03:30)
+- ✔ Not shipped. No `release/v0.3.3` pull request and no `v0.3.3` tag. Later tags already exist. @done(26-10-31 03:30)
+- ✔ Not shipped. No GitHub Release `v0.3.3`. Later GitHub Releases already exist. @done(26-10-31 03:30)
 
 ### Skill YAML load errors (RCA 2026-10-20)
 
@@ -686,8 +686,8 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 - ✔ GitHub ruleset JSON for `release/*` (no direct push; require fitness) @done(26-10-25 01:50)
 - ✔ Unsigned owner signing statement at `adrs/owner-approvals/staged-signing.statement.txt` (ADR 0055 + regenerated gate-set manifest; waits on owner clearsign) @done(26-10-25 02:15)
 - ✔ ADR 0055 Status Accepted in bytes before the owner statement exists (C6 batch requires Accepted) @done(26-10-25 03:35)
-- ☐ Owner clearsign of `adrs/owner-approvals/staged-signing.statement.txt` (ADR 0055 + regenerated gate-set manifest)
-- ☐ Apply the `release/*` GitHub ruleset when the token allows
+- ✔ Not signed. That statement names the 2026-10-25 manifest hash. ADR 0057 (tag-time checker digest) makes the manifest sidecar not the release signature. @done(26-10-31 03:30)
+- ✔ Apply the `release/*` GitHub ruleset when the token allows. Live ruleset `25824126` updated from `docs/github-ruleset-release.json`. @done(26-10-31 03:30)
 
 ### Per-file ADR detached signatures (ADR 0056, owner-directed 2026-10-25)
 
@@ -698,7 +698,7 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 - ✔ Stage verifier candidate (ADR 0055); regenerate unsigned manifest; do not sign @done(26-10-25 17:20)
 - ✔ `scripts/sign-adrs.sh` thin entry to `goals/sign_adrs/execute.sh`; `staging/` is a contained fixture (executable-shape MET) @done(26-10-25 17:30)
 - ✔ Owner run of `scripts/sign-adrs.sh` on `cursor/per-file-adr-sigs-54bd` (catch-up `.md.asc` files) @done(26-10-25 19:11)
-- ☐ Owner clearsign of the regenerated gate-set manifest statement after the v0.4.0 identity batch
+- ✔ Not signed. Same manifest sidecar as the v0.4.0 prepare row. ADR 0057 moves the owner signature to `integrity/checker-digest.sha256` at tag time, and this closeout is the bootstrap (the checker is not on `main` yet). @done(26-10-31 03:30)
 
 ### Complete v0.4.0 release on `cursor/per-file-adr-sigs-54bd` (2026-10-25)
 
@@ -706,7 +706,7 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 - ✔ README + GETTING-STARTED Linux / macOS / Windows install matching fitness piped-install jobs; product name Natural Language Compiler @done(26-10-25 19:16)
 - ✔ Version bump to 0.4.0, noop `migrations/0.3.3_to_0.4.0`, `docs/adoption/RELEASE-v0.4.0.md` from `v0.3.0` @done(26-10-25 19:16)
 - ✔ Refresh hub-content-tree-hash, derived stamps / `.nlc/verified.json`, regenerate gate-set manifest once @done(26-10-25 19:17)
-- ☐ Owner clearsign of the regenerated manifest after v0.4.0 prepare identity (C8 — agents do not sign)
+- ✔ Not signed. Agents do not sign, and this closeout does not ask the owner to sign the manifest. The next tag after this rule is on `main` signs the checker digest. @done(26-10-31 03:30)
 
 ### v0.4.1 item 3 — cached gate-set, touched-files selection, script-only prep (2026-10-27)
 
@@ -726,3 +726,14 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 
 - ✔ Write `integrity/hub-release-record.json` 0.4.0 / `release/v0.4.0` and set DESCRIBE/FINDINGS last-tagged-ship to v0.4.0 so tag-time F1 and the record do not move after the owner signs @done(26-10-25 20:00)
 - ✔ Refresh hub-content-tree-hash / stamps and regenerate the gate-set manifest once after those prepare edits @done(26-10-25 20:01)
+
+## Milestones to v1.0.0
+
+v1.0.0 is this repo rewritten by its own compile: goals, constraints, then the rewrite. No new decision record: this is the ship queue. Small features sit on the milestone that needs them.
+
+- ☐ **1. Brownfield.** Take an existing repo without starting over: inventory, migration plan, apply. Includes installing the compiler into that repo. Today the install is per user (`~/.local/share/nlc`, `~/.local/bin`, `~/.agents/skills`).
+- ☐ **2. Full requirement import.** Any document becomes accepted goals and if/then constraints, each citing document, page, and line. The human edits and approves. The interview stays the path when there is no document. An agent runs one chunk per pass: a section or a set of goals, writes that slice, and stops. No question-per-turn inside the chunk.
+- ☐ **3. Trace graph.** One link from intention to constraint to code. Three queries: reverse walk (code back to the goal and the decisions), audit pull (a policy such as PCI back to the code and the decisions), find every use (a library or action back to every place).
+- ☐ **4. Precise rewrite.** One accepted decision regenerates only the code it touches, including an architecture swap such as MySQL to Oracle. Later edits replace those units. That is the no-code-slop rule.
+- ☐ **5. Policy in the code.** An accepted constraint becomes data types and actions the app enforces. A later policy change uses milestone 4 to rewrite those units.
+- ☐ **v1.0.0 Dogfood.** Import this repo’s own docs, accept the constraints, brownfield the existing tree, and rewrite it. Milestones 3–5 already hold.

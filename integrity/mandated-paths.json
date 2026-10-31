@@ -24,6 +24,9 @@
     ".agents/instructions/reply-references-plain-language.md": [
       "gate_set_manifest"
     ],
+    ".agents/instructions/signature-text-handoff.md": [
+      "gate_set_manifest"
+    ],
     ".agents/instructions/take-me-literally.md": [
       "gate_set_manifest"
     ],
@@ -602,6 +605,9 @@
     "adrs/0056-per-file-adr-detached-signatures.md.asc": [
       "gate_set_manifest"
     ],
+    "adrs/0057-tag-time-checker-digest.md": [
+      "gate_set_manifest"
+    ],
     "adrs/ACTIVE.md": [
       "gate_set_manifest"
     ],
@@ -722,6 +728,9 @@
     "docs/adoption/RELEASE-v0.4.0.md": [
       "gate_set_manifest"
     ],
+    "docs/adoption/RELEASE-v0.4.1.md": [
+      "gate_set_manifest"
+    ],
     "docs/adoption/RELEASE.md": [
       "gate_set_manifest"
     ],
@@ -831,6 +840,9 @@
       "gate_set_manifest"
     ],
     "docs/nlc/compiler/README.md": [
+      "gate_set_manifest"
+    ],
+    "docs/nlc/effective-decisions.md": [
       "gate_set_manifest"
     ],
     "docs/nlc/emit-manifest.schema.json": [
@@ -1199,6 +1211,9 @@
     "integrity/check-inputs.json": [
       "gate_set_manifest"
     ],
+    "integrity/checker-digest.sha256": [
+      "gate_set_manifest"
+    ],
     "integrity/examples/pan-rules-adopted.json": [
       "gate_set_manifest"
     ],
@@ -1377,6 +1392,9 @@
       "gate_set_manifest"
     ],
     "migrations/0.3.3_to_0.4.0/migration.yaml": [
+      "gate_set_manifest"
+    ],
+    "migrations/0.4.0_to_0.4.1/migration.yaml": [
       "gate_set_manifest"
     ],
     "migrations/README.md": [
@@ -2075,6 +2093,9 @@
     "tools/assert-stale-committed-evidence-fails.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-tag-digest-signature-required-fails.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-taint-alias-fails.py": [
       "gate_set_manifest"
     ],
@@ -2154,6 +2175,9 @@
       "gate_set_manifest"
     ],
     "tools/changeset.py": [
+      "gate_set_manifest"
+    ],
+    "tools/check-checker-digest-signature.py": [
       "gate_set_manifest"
     ],
     "tools/check-rule-adoption.py": [
@@ -2328,6 +2352,9 @@
       "gate_set_manifest"
     ],
     "tools/fitness-dashboard-interview-sync.py": [
+      "gate_set_manifest"
+    ],
+    "tools/fitness-derived-release-state.py": [
       "gate_set_manifest"
     ],
     "tools/fitness-distribution-binder.py": [
@@ -5801,6 +5828,9 @@
     "tools/nouns/assert_stale_committed_evidence_fails/assert_stale_committed_evidence_fails.py": [
       "gate_set_manifest"
     ],
+    "tools/nouns/assert_tag_digest_signature_required_fails/assert_tag_digest_signature_required_fails.py": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/assert_taint_alias_fails/README.md": [
       "gate_set_manifest"
     ],
@@ -6363,6 +6393,9 @@
       "gate_set_manifest"
     ],
     "tools/nouns/check_selection/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/checker_digest/checker_digest.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/ci_fitness/README.md": [
@@ -7440,6 +7473,9 @@
       "gate_set_manifest"
     ],
     "tools/nouns/fitness_dashboard_interview_sync/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_derived_release_state/fitness_derived_release_state.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/fitness_distribution_binder/README.md": [
@@ -10920,6 +10956,9 @@
       "gate_set_manifest"
     ],
     "tools/product_tree.py": [
+      "gate_set_manifest"
+    ],
+    "tools/regen-derived-release-state.py": [
       "gate_set_manifest"
     ],
     "tools/release-audit.py": [

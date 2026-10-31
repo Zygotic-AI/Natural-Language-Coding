@@ -203,23 +203,12 @@ def pin_move_errors(root: Path, changed: list[str] | None = None) -> list[str]:
 
 
 def unsigned_manifest_incomplete(root: Path, changed: list[str] | None = None) -> list[str]:
-    """A regenerated-but-unsigned manifest is INCOMPLETE produce, not a finished step."""
-    try:
-        changed_list = list(changed) if changed is not None else git_changed_paths(root)
-    except ProbeFailure as exc:
-        return [f"INCOMPLETE changed-path probe: {exc}"]
-    mandated = derive_mandated_paths(root)
-    touches_member = any(PIN_MANIFEST in (mandated.get(rel) or []) for rel in changed_list)
-    if not touches_member and MANIFEST_REL not in changed_list:
-        return []
-    sidecar = root / (MANIFEST_REL + ".approval.asc")
-    if not sidecar.is_file():
-        return [f"INCOMPLETE {MANIFEST_REL}: regenerated without owner sidecar"]
-    from nouns.owner_sidecar.owner_sidecar import verify_sidecar_p1
+    """Branch produce does not need manifest armor (ADR 0057).
 
-    errors = verify_sidecar_p1(root, MANIFEST_REL)
-    if errors:
-        return [f"INCOMPLETE {MANIFEST_REL}: {errors[0]}"]
+    The tag gate refuses an unsigned checker digest. A missing manifest
+    sidecar is not an incomplete branch.
+    """
+    _ = (root, changed)
     return []
 
 

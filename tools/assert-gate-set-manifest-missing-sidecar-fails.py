@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Landmine: unsigned gate-set manifest must NOT_MET with missing sidecar."""
+"""Landmine: a missing gate-set sidecar must not fail the branch suite (ADR 0057)."""
 from __future__ import annotations
 
 import shutil
@@ -31,14 +31,11 @@ def main() -> int:
     else:
         errors = gate_set_manifest_errors(ROOT)
 
-    if not errors:
-        print("ASSERT:FAIL expected NOT_MET for missing gate-set manifest sidecar")
+    missing = [e for e in errors if "missing sidecar" in e or "Content-SHA256" in e]
+    if missing:
+        print(f"ASSERT:FAIL branch suite still requires manifest armor: {missing!r}")
         return 1
-    missing = [e for e in errors if "missing sidecar" in e]
-    if not missing:
-        print(f"ASSERT:FAIL expected missing sidecar in violations, got {errors!r}")
-        return 1
-    print(f"ASSERT:PASS missing sidecar yields NOT_MET ({missing[0]})")
+    print("ASSERT:PASS missing sidecar does not fail the branch suite")
     return 0
 
 
