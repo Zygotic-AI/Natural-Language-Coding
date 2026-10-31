@@ -26,6 +26,12 @@ This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler
 | **[Compiler](../TERMS.md#compiler)** | [`PROCESS.md`](./compiler/PROCESS.md), [`PLANIT-ORCHESTRATION.md`](./compiler/PLANIT-ORCHESTRATION.md), [`.agents/skills/planit/SKILL.md`](../../.agents/skills/planit/SKILL.md) |
 | **[Compiled system](../TERMS.md#compiled-system) (your app)** | [`CHARTER.md`](../../CHARTER.md), [`docs/adoption/BROWNFIELD.md`](../adoption/BROWNFIELD.md) |
 
+## Diagrams
+
+| Diagram | Files |
+| ------- | ----- |
+| Component map (compiler, gates, compiled system) | [`nlc-components.md`](../diagrams/nlc-components.md), React Flow seed [`nlc-components.json`](../diagrams/nlc-components.json) |
+
 ## Compile spine (tools)
 
 | Topic | Doc / tool |
