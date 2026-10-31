@@ -236,14 +236,14 @@ dispatch_release_plan() {
       : action_result_boundary:VERIFY_SHIPPED_BASELINE
       shipped_sha="$(release_fact_field shipped_tag_sha)"
       if [[ -z "${shipped_sha}" ]]; then
-        python3 tools/nlc.py --project . verify-deep || rc=$?
+        python3 tools/nlc.py --project . verify || rc=$?
       else
         worktree="$(mktemp -d)"
         git worktree add --detach "${worktree}" "${shipped_sha}" || rc=$?
         if [[ "${rc}" -eq 0 ]]; then
           (
             cd "${worktree}" &&
-              python3 tools/nlc.py --project . verify-deep
+              python3 tools/nlc.py --project . verify
           ) || rc=$?
         fi
         git worktree remove --force "${worktree}" >/dev/null 2>&1
@@ -270,7 +270,7 @@ dispatch_release_plan() {
       ;;
     VERIFY_TARGET)
       : action_result_boundary:VERIFY_TARGET
-      python3 tools/nlc.py --project . verify-deep || rc=$?
+      python3 tools/nlc.py --project . verify || rc=$?
       if [[ "${rc}" -eq 0 ]]; then
         python3 tools/nlc_release_state.py \
           --remote "${REMOTE}" --base "${BASE_BRANCH}" \

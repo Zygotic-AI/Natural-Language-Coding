@@ -150,6 +150,18 @@ def cmd_new(args: argparse.Namespace) -> int:
 
 def cmd_verify(args: argparse.Namespace) -> int:
     root = project_root(args.project)
+    from nlc_pipeline import is_hub_repo
+
+    if is_hub_repo(root):
+        suite = ROOT / "tools" / "ci_fitness.py"
+        proc = subprocess.run([sys.executable, str(suite)], cwd=str(root))
+        if proc.returncode != 0:
+            print("Verify failed.", file=sys.stderr)
+            print("  hub fitness suite failed (tools/ci_fitness.py)", file=sys.stderr)
+            print("Reproduce: ./nlc verify --project .", file=sys.stderr)
+            return proc.returncode
+        print("Verify passed.")
+        return 0
     ok, reasons = verify_fast(root)
     if ok:
         print("Verify passed.")

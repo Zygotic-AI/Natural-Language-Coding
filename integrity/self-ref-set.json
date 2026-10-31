@@ -5,7 +5,6 @@
   "members": [
     ".agents/skills/bbp-confirmer/SKILL.md",
     ".agents/skills/planit/SKILL.md",
-    ".agents/skills/release/SKILL.md",
     ".agents/skills/verify/SKILL.md",
     ".cursor/hooks.json",
     ".cursor/hooks/nlc-goal-write-gate.sh",

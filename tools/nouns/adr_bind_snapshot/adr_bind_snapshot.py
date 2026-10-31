@@ -16,6 +16,30 @@ from nlc_requirements import hub_tool  # noqa: E402
 ROOT = Path(__file__).resolve().parents[3]
 
 
+def write_bind_snapshot(out: Path, active_text: str) -> bool:
+    """Write the snapshot only when the ACTIVE hash or rows changed.
+
+    ``written_at`` stays when the hash is unchanged.
+    """
+    payload = bind_snapshot_payload(active_text)
+    if out.is_file():
+        try:
+            old = json.loads(out.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            old = None
+        if (
+            isinstance(old, dict)
+            and old.get("schema") == payload["schema"]
+            and old.get("source") == payload["source"]
+            and old.get("active_sha256") == payload["active_sha256"]
+            and old.get("adrs") == payload["adrs"]
+        ):
+            return False
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    return True
+
+
 def main() -> int:
     hub_tool()
     parser = argparse.ArgumentParser(description="Write ADR bind snapshot from ACTIVE.md")
@@ -32,12 +56,13 @@ def main() -> int:
     if not active_path.is_file():
         print("BIND_SNAPSHOT:NOT_MET missing adrs/ACTIVE.md", file=sys.stderr)
         return 1
-    payload = bind_snapshot_payload(active_path.read_text(encoding="utf-8"))
+    active_text = active_path.read_text(encoding="utf-8")
     out = args.out if args.out.is_absolute() else root / args.out
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    wrote = write_bind_snapshot(out, active_text)
+    payload = bind_snapshot_payload(active_text)
+    state = "wrote" if wrote else "unchanged"
     print(
-        f"BIND_SNAPSHOT:MET path={out} sha256={payload['active_sha256'][:12]}… "
+        f"BIND_SNAPSHOT:MET {state} path={out} sha256={payload['active_sha256'][:12]}… "
         f"count={len(payload['adrs'])}"
     )
     return 0
