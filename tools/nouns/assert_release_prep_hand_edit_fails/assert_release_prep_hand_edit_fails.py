@@ -40,11 +40,11 @@ def main() -> int:
 
     version = json.loads((tmp / VERSION_REL).read_text(encoding="utf-8"))["version"]
     findings = (tmp / FINDINGS_REL).read_text(encoding="utf-8")
-    token = f"v{version}"
-    if token not in findings:
-        return _fail(f"FINDINGS missing {token} for the hand-edit landmine")
+    needle = f"Shipped git tag **`v{version}`**"
+    if needle not in findings:
+        return _fail(f"FINDINGS missing {needle!r} for the hand-edit landmine")
     (tmp / FINDINGS_REL).write_text(
-        findings.replace(token, "v0.0.0", 1),
+        findings.replace(needle, "Shipped git tag **`v0.0.0`**", 1),
         encoding="utf-8",
     )
     bad_findings = match_errors(tmp)
