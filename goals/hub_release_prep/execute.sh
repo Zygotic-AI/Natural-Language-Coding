@@ -37,6 +37,8 @@ if ! git diff --quiet; then
   git status -sb
 fi
 
+SHA="$(git rev-parse HEAD)"
+
 cat <<EOF
 
 RELEASE_PREP:READY
