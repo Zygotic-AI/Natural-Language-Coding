@@ -8,7 +8,7 @@ Software failures are usually not missing `if` statements. They are two truths a
 
 The [compiler](../../TERMS.md#compiler) is AI. That does not mean autocomplete in a file. It means: humans keep intent; the compiler emits a boundary-shaped system; a [gate](../../TERMS.md#gate) fails a quiet fork.
 
-**[NLC](../../TERMS.md#nlc) — Natural Language Coding — is the product and the factory.** Everything else in this repo exists so that factory can compile or refuse. [BBA](../../TERMS.md#bba) and [BBP](../../TERMS.md#bbp) are subcomponents: the architecture and the emit practice the factory is allowed to produce. They are not peer products and not the public name.
+**[NLC](../../TERMS.md#nlc) — Natural Language Compiler — is the product and the factory.** Everything else in this repo exists so that factory can compile or refuse. [BBA](../../TERMS.md#bba) and [BBP](../../TERMS.md#bbp) are subcomponents: the architecture and the emit practice the factory is allowed to produce. They are not peer products and not the public name.
 
 ## Thesis
 
@@ -63,7 +63,7 @@ This page is the belief. NLC is the factory that has to carry it.
 
 ## The stack (NLC owns the name)
 
-- **[NLC](../../TERMS.md#nlc)** — Natural Language Coding. The product. Describe intent. Compile or [refuse](../../TERMS.md#refuse).
+- **[NLC](../../TERMS.md#nlc)** — Natural Language Compiler. The product. Describe intent. Compile or [refuse](../../TERMS.md#refuse).
 - **[Compiler](../../TERMS.md#compiler)** — `/interview` + `/planit` + gates. Turns bound intent into a [compiled system](../../TERMS.md#compiled-system).
 - **[BBP](../../TERMS.md#bbp)** — Boundary-Based Programming. The emit *practice*: [nouns](../../TERMS.md#noun) own [adjectives](../../TERMS.md#adjective); verbs are the only mutation path; [goals](../../TERMS.md#goal) orchestrate.
 - **[BBA](../../TERMS.md#bba)** — Boundary-Based Architecture. The emit *architecture* and hub [integrity](../../TERMS.md#integrity) doctrine under NLC. Not the consumer name.

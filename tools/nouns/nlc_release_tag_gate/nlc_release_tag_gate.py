@@ -124,14 +124,14 @@ def run_verify_deep_at(commit: str) -> list[str]:
         try:
             # Grade the tag commit with that commit's tools, not the agent's worktree.
             vproc = subprocess.run(
-                [sys.executable, str(wt / "tools" / "nlc.py"), "--project", ".", "verify-deep"],
+                [sys.executable, str(wt / "tools" / "nlc.py"), "--project", ".", "verify"],
                 cwd=str(wt),
                 capture_output=True,
                 text=True,
                 check=False,
             )
             if vproc.returncode != 0:
-                problems.append("verify-deep NOT_MET at tag commit")
+                problems.append("verify NOT_MET at tag commit")
                 tail = ((vproc.stdout or "") + (vproc.stderr or "")).strip().splitlines()
                 for line in tail[-6:]:
                     problems.append(f"  {line}")

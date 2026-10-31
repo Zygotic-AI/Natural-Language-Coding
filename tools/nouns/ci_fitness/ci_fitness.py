@@ -45,9 +45,15 @@ def run(label: str, argv: list[str]) -> None:
         argv,
         cwd=str(ROOT),
         check=False,
+        capture_output=True,
+        text=True,
     )
     if proc.returncode != 0:
+        sys.stdout.write(proc.stdout or "")
+        sys.stderr.write(proc.stderr or "")
         fail(label)
+        return
+    print(f"MET {label}", flush=True)
 
 
 def session_preflight() -> None:
@@ -689,6 +695,16 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "assert-verify-before-generate-stamp",
         [sys.executable, str(TOOLS / "assert-verify-before-generate-stamp-fails.py")],
+    )
+    run(
+        "assert-hash-ledger-stable",
+        [
+            sys.executable,
+            "-c",
+            "import sys; sys.path.insert(0, 'tools'); "
+            "from nouns.verify.verify import assert_hash_ledger_stable; "
+            "raise SystemExit(assert_hash_ledger_stable())",
+        ],
     )
     run(
         "assert-before-generate-hub-stamp-scopes-writer",

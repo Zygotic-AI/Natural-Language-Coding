@@ -1,7 +1,7 @@
 # RCA: `./release` stops and hands the operator another command
 
 **Date:** 2026-10-09  
-**Context:** Natural Language Coding hub — `./release`  
+**Context:** Natural Language Compiler hub — `./release`  
 **Status:** prevented
 
 ---
