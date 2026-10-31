@@ -31,7 +31,7 @@ def main() -> int:
         check=False,
     )
     out = (proc.stdout or "") + (proc.stderr or "")
-    if "Natural Language Coding — install" not in out:
+    if "Natural Language Compiler — install" not in out:
         print("ASSERT:FAIL piped install never reached execute.sh banner")
         print(out[-600:])
         return 1

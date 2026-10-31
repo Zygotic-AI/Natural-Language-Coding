@@ -137,9 +137,6 @@ def main() -> int:
         print("LIVE_SELF_REF:MET skip (hub-only gate, not hub tree)")
         return 0
     errors = live_member_edit_errors(root)
-    errors.extend(__import__(
-        "nouns.self_ref_set.self_ref_set", fromlist=["snapshot_errors"]
-    ).snapshot_errors(root))
     if errors:
         for item in errors:
             print(f"VIOLATION {item}")

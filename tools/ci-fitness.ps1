@@ -1,4 +1,4 @@
-# Natural Language Coding — hub compile fitness (Windows native). ADR 0013.
+# Natural Language Compiler — hub compile fitness (Windows native). ADR 0013.
 #Requires -Version 5.1
 $ErrorActionPreference = 'Stop'
 $Tools = Split-Path -Parent $MyInvocation.MyCommand.Path

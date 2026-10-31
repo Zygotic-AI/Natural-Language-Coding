@@ -4,7 +4,7 @@ Use these on purpose ([ADR 0011](../../../adrs/0011-natural-language-coding-nami
 
 | Say | When |
 | ----- | ---- |
-| **[NLC](../../TERMS.md#nlc)** | The product: [Natural Language Coding](../../TERMS.md#nlc). |
+| **[NLC](../../TERMS.md#nlc)** | The product: [Natural Language Compiler](../../TERMS.md#nlc). |
 | **[Compiler](../../TERMS.md#compiler)** | [Interview](../../TERMS.md#interview) → plan → bind → generate → [prove](../../TERMS.md#prove). Optional **[ASC](../../TERMS.md#asc)** in integrator docs only. |
 | **[Compiled system](../../TERMS.md#compiled-system)** | Runnable output in an [adopter repo](../../TERMS.md#adopter). Optional **[ACS](../../TERMS.md#acs)** = artifact only. |
 | **[BBP](../../TERMS.md#bbp)** | Emit shape: [noun](../../TERMS.md#noun) / verb / [adjective](../../TERMS.md#adjective) / [goal](../../TERMS.md#goal). |

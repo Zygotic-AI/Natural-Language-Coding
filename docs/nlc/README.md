@@ -1,4 +1,4 @@
-# [Natural Language Coding](../TERMS.md#nlc) — doc map
+# [Natural Language Compiler](../TERMS.md#nlc) — doc map
 
 This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler), gates, and skills. It does **not** [ship](../TERMS.md#ship) product requirements (no PCI, no HIPAA built-in). Adopters bring requirements via their own ADRs, rules, and **[requirement packs](../TERMS.md#requirement-pack)** (v0.2 — see [`TODO`](../../TODO)).
 
@@ -25,6 +25,12 @@ This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler
 | **[NLC](../TERMS.md#nlc) (product)** | [`GLOSSARY.md`](./compiler/GLOSSARY.md), [`MANIFESTO.md`](./compiler/MANIFESTO.md), [`NAMES.md`](./compiler/NAMES.md) |
 | **[Compiler](../TERMS.md#compiler)** | [`PROCESS.md`](./compiler/PROCESS.md), [`PLANIT-ORCHESTRATION.md`](./compiler/PLANIT-ORCHESTRATION.md), [`.agents/skills/planit/SKILL.md`](../../.agents/skills/planit/SKILL.md) |
 | **[Compiled system](../TERMS.md#compiled-system) (your app)** | [`CHARTER.md`](../../CHARTER.md), [`docs/adoption/BROWNFIELD.md`](../adoption/BROWNFIELD.md) |
+
+## Diagrams
+
+| Diagram | Files |
+| ------- | ----- |
+| Component map (compiler, gates, compiled system) | [`nlc-components.md`](../diagrams/nlc-components.md), React Flow seed [`nlc-components.json`](../diagrams/nlc-components.json) |
 
 ## Compile spine (tools)
 

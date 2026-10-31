@@ -14,14 +14,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Hub fitness suite
+      - name: NLC verify
+        if: always()
         env:
           CI_FITNESS_CONTINUE: "1"
-        run: bash tools/ci-fitness.sh
-
-      - name: NLC verify (policy + fingerprints)
-        if: always()
-        run: python3 tools/nlc.py --project . verify
+        run: |
+          # Hub ./nlc verify runs tools/ci_fitness.py. One command, same as local.
+          python3 tools/nlc.py --project . verify
 
   piped-install-linux:
     runs-on: ubuntu-latest

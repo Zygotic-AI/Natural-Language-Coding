@@ -1,7 +1,7 @@
-"""Accepted ADRs require a per-file detached owner signature (ADR 0056 / C6).
+"""Numbered ADRs are not branch-signed (ADR 0057).
 
 Non-ADR Accepted documents still use the clearsigned sidecar (ADR 0052).
-A batch owner-approvals statement does not cover an ADR.
+Per-file adrs/*.md.asc files are not a suite requirement.
 """
 
 from __future__ import annotations
@@ -13,10 +13,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from nouns.adr_file_sig.adr_file_sig import (
-    numbered_adr_rel,
-    verify_adr_detached_signature,
-)
+from nouns.adr_file_sig.adr_file_sig import numbered_adr_rel
 from nouns.owner_sidecar.owner_sidecar import (
     document_status_errors,
     non_adr_status_errors,
@@ -84,9 +81,8 @@ def sidecar_errors(root: Path) -> list[str]:
             errors.extend(document_status_errors(rel, path))
     for rel in accepted_document_rels(root):
         if numbered_adr_rel(rel):
-            errors.extend(verify_adr_detached_signature(root, rel))
-        else:
-            errors.extend(verify_sidecar_p1(root, rel))
+            continue
+        errors.extend(verify_sidecar_p1(root, rel))
     for rel in _git_tracked_files(root):
         if not rel.endswith(".md"):
             continue

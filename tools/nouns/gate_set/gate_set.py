@@ -22,6 +22,7 @@ GATE_SET_EXCLUSIONS: dict[str, str] = {
     "docs/rca/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
     "reviews/": "provenance only; never a pass/fail grading input (ADR 0051 table)",
     "staging/": "candidate bytes; live signed machinery verifies then atomic-activates (ADR 0055)",
+    "examples/": "adopter specimens are test inputs, not the referee; editing one must not require an owner signature",
 }
 
 _EXCL_PREFIXES = tuple(GATE_SET_EXCLUSIONS.keys())
@@ -37,6 +38,18 @@ MANIFEST_APPROVAL_ASC_REL = "integrity/gate-set-baseline.manifest.sha256.approva
 BOOTSTRAP_STATEMENT_REL = "adrs/owner-approvals/staged-signing.statement.txt"
 BOOTSTRAP_ARMOR_REL = "adrs/owner-approvals/staged-signing.approval.asc"
 CONTENT_TREE_HASH_REL = "integrity/hub-content-tree-hash.txt"
+# Generated ledgers and the findings narrative. The content-tree stamp already
+# covers their bytes. Keeping them in the signed set made every refresh a new signature.
+_LEDGER_EXCLUDE: frozenset[str] = frozenset(
+    {
+        ".nlc/verified.json",
+        ".nlc/work-queue.json",
+        ".nlc/before-generate-stamp.json",
+        ".nlc/adr-bind-snapshot.json",
+        ".nlc/planit-change-evidence.json",
+        "FINDINGS.md",
+    }
+)
 _DERIVATION_EXCLUDE: frozenset[str] = frozenset(
     {
         MANIFEST_APPROVAL_ASC_REL,
@@ -44,7 +57,7 @@ _DERIVATION_EXCLUDE: frozenset[str] = frozenset(
         BOOTSTRAP_ARMOR_REL,
         CONTENT_TREE_HASH_REL,
     }
-)
+) | _LEDGER_EXCLUDE
 _PLACEHOLDER_ARMOR = b"-----BEGIN PGP SIGNED MESSAGE-----\nnot-valid\n"
 
 # Once-per-run membership cache. Checks reuse this; they do not re-derive.

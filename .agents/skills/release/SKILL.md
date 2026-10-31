@@ -25,7 +25,7 @@ Do **not** run `./release` until every **blocking** row is true.
 | Agent closeout (Step 1A) | yes | Clean tree at ship HEAD **or** resume leg with no ship-intent dirty edits | `git status --porcelain` |
 | Resume probe | yes | Step 0 complete | `nlc_release_resume.py` |
 | Machine continuity | yes | **prepare:** `release-prep` MET on ship HEAD. **await_merge / tag_ready:** waived | Command output |
-| Hub compile | yes | `python3 tools/ci_fitness.py` → CI:MET on ship HEAD | Exit 0 |
+| Hub compile | yes | `./nlc verify` → `Verify passed.` on ship HEAD (that command runs `tools/ci_fitness.py`) | Exit 0 |
 | P0/P1 inference | yes | None from Step 4 | Inference apex |
 | Plain-language refs | yes | Reply references for every id in the verdict | Chat |
 | Product residuals | yes when P2/P3 | User confirms **once** after table | Chat |
@@ -70,14 +70,13 @@ Record branch, short SHA, dirty file count. **Prepare:** work on **`release/v*`*
 
 Execute **in order** (fix and retry on NOT_MET; do not dump steps on the user):
 
-1. **Prove working tree** — `python3 tools/ci_fitness.py` → **CI:MET**. If FAIL, fix until MET (jidoka).
-2. **Stale `release/v*` only** — for each name in **`stale_release_branches`** (missing record on merge, not **`closed_release_branches`**): `git branch -D <branch>`; `git push origin --delete <branch>` when remote exists (no force-push to `main`).
-3. **Stage and commit** ship-intent changes on the **release line branch** (never `main`). If user is on `main` with work, create/checkout `release/v*` first, then commit. Use repo commit message style; never `--no-verify`.
-4. **FINDINGS header** — set `` `last_pass_tree_hash:` `` to the worktree tree hash (ADR 0050; same model as release `effective_tree_sha`); run `python3 tools/fitness-findings-last-pass-fresh.py` → MET. Commit if not in step 3.
-5. **Inference record** — update `integrity/full-nlc-audit-inference-record.json`: `audit_tree_hash`, `machine_verdict`, `continuity_verdict`, `phases_summary`, empty `p0_p1_product_blockers` when true. Commit if needed.
-6. **TODO continuity** — mark completed closeout rows `@done` when predicates MET (same commit or follow-up).
-7. **Re-prove** — `python3 tools/ci_fitness.py` → CI:MET on final HEAD.
-8. **Clean tree** — `git status --porcelain` empty.
+1. **Stale `release/v*` only** — for each name in **`stale_release_branches`** (missing record on merge, not **`closed_release_branches`**): `git branch -D <branch>`; `git push origin --delete <branch>` when remote exists (no force-push to `main`).
+2. **Stage and commit** ship-intent changes on the **release line branch** (never `main`). If user is on `main` with work, create/checkout `release/v*` first, then commit. Use repo commit message style; never `--no-verify`.
+3. **Content-tree stamp only** — `python3 tools/sync-hub-content-tree-hash.py`, then `python3 tools/fitness-findings-last-pass-fresh.py` → MET. Do not rewrite `FINDINGS.md` or `DESCRIBE.md` unless a sentence contradicts `integrity/hub-release-record.json` or `integrity/nlc-version.json`. Commit the stamp if it changed.
+4. **Inference record** — update `integrity/full-nlc-audit-inference-record.json` only when `audit_tree_hash` would change. Do not rewrite it to repeat the release record.
+5. **TODO continuity** — mark completed closeout rows `@done` when predicates MET (same commit or follow-up).
+6. **Prove once** — `./nlc verify` → `Verify passed.` on the final HEAD. This is the only suite run in closeout. Do not prove before the commit and again after. If FAIL, fix until it passes, then commit that fix and prove once more.
+7. **Clean tree** — `git status --porcelain` empty. Do not run `./nlc verify-deep` after the owner gate-set signature. That command is a writer; `./nlc verify` is the read-only merge check.
 
 **Stop / NO-GO only if:** CI cannot MET after fix attempts; git push rejected; P0/P1 inference; user refused product residuals.
 

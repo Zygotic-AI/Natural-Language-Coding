@@ -1,6 +1,6 @@
-# [Natural Language Coding](docs/TERMS.md#nlc) — charter (BBP emit + integrity under the roof)
+# [Natural Language Compiler](docs/TERMS.md#nlc) — charter (BBP emit + integrity under the roof)
 
-**Product / consumer roof = [Natural Language Coding (NLC)](docs/TERMS.md#nlc)** ([ADR 0011](adrs/0011-natural-language-coding-naming.md)).
+**Product / consumer roof = [Natural Language Compiler (NLC)](docs/TERMS.md#nlc)** ([ADR 0011](adrs/0011-natural-language-coding-naming.md)).
 This document is the **[Boundary-Based Programming](docs/TERMS.md#bbp) (BBP)** emit + integrity doctrine **under that roof**.
 **[BBA](docs/TERMS.md#bba)** is under-covers integrity architecture, not the public product name.
 
@@ -56,7 +56,7 @@ That is the whole model. Everything else is how we keep it honest.
 
 ## 3. Naming
 
-**Practice name (under NLC roof):** [Boundary-Based Programming](docs/TERMS.md#bbp) — emit + integrity. **Product roof:** [Natural Language Coding](docs/TERMS.md#nlc) ([ADR 0011](adrs/0011-natural-language-coding-naming.md)).
+**Practice name (under NLC roof):** [Boundary-Based Programming](docs/TERMS.md#bbp) — emit + integrity. **Product roof:** [Natural Language Compiler](docs/TERMS.md#nlc) ([ADR 0011](adrs/0011-natural-language-coding-naming.md)).
 
 **Mechanism:** boundaries are enforced (contracts, privacy of fields, gates, review).
 
@@ -669,7 +669,7 @@ Until item 4 is true, treat the rest as a style guide.
 You may paste this block into an agent. The rest of this file remains authoritative.
 
 ```text
-You practice Natural Language Coding. Emit shape is Boundary-Based Programming.
+You practice Natural Language Compiler. Emit shape is Boundary-Based Programming.
 
 Nouns own identity, private state, and adjectives.
 The only legal mutation of a noun is a public verb with an input/output contract.

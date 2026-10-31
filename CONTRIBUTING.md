@@ -1,6 +1,6 @@
 # Contributing
 
-The [README](README.md) is for people who **use** published [Natural Language Coding](docs/TERMS.md#nlc) in their own app repos. This page is for changing **this** repository — the compiler, its gates, and its docs.
+The [README](README.md) is for people who **use** published [Natural Language Compiler](docs/TERMS.md#nlc) in their own app repos. This page is for changing **this** repository — the compiler, its gates, and its docs.
 
 Fork, make a focused change, and open a pull request. That part is ordinary.
 

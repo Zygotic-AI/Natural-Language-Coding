@@ -45,9 +45,15 @@ def run(label: str, argv: list[str]) -> None:
         argv,
         cwd=str(ROOT),
         check=False,
+        capture_output=True,
+        text=True,
     )
     if proc.returncode != 0:
+        sys.stdout.write(proc.stdout or "")
+        sys.stderr.write(proc.stderr or "")
         fail(label)
+        return
+    print(f"MET {label}", flush=True)
 
 
 def session_preflight() -> None:
@@ -691,6 +697,16 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-verify-before-generate-stamp-fails.py")],
     )
     run(
+        "assert-hash-ledger-stable",
+        [
+            sys.executable,
+            "-c",
+            "import sys; sys.path.insert(0, 'tools'); "
+            "from nouns.verify.verify import assert_hash_ledger_stable; "
+            "raise SystemExit(assert_hash_ledger_stable())",
+        ],
+    )
+    run(
         "assert-before-generate-hub-stamp-scopes-writer",
         [sys.executable, str(TOOLS / "assert-before-generate-hub-stamp-scopes-writer-fails.py")],
     )
@@ -782,8 +798,12 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-adr-status-heading-fails.py")],
     )
     run(
-        "fitness-gate-set-manifest",
-        [sys.executable, str(TOOLS / "fitness-gate-set-manifest.py")],
+        "fitness-derived-release-state",
+        [sys.executable, str(TOOLS / "fitness-derived-release-state.py")],
+    )
+    run(
+        "assert-tag-digest-signature-required",
+        [sys.executable, str(TOOLS / "assert-tag-digest-signature-required-fails.py")],
     )
     run(
         "fitness-owner-key-trust",
@@ -928,10 +948,7 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "fitness-live-self-ref-activation",
         [sys.executable, str(TOOLS / "fitness-live-self-ref-activation.py")],
     )
-    run(
-        "fitness-mandate-inheritance",
-        [sys.executable, str(TOOLS / "fitness-mandate-inheritance.py")],
-    )
+    # Mandate drift is inside fitness-derived-release-state (one check).
     run(
         "fitness-control-lifecycle",
         [sys.executable, str(TOOLS / "fitness-control-lifecycle.py")],

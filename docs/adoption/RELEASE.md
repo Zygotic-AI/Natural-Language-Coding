@@ -40,7 +40,7 @@ git merge origin/main
 
 ## What the orchestrator does (internal)
 
-Planner (`nlc_release_state.py`) chooses the one next action. The executor performs exactly that action, observes fresh facts, and plans again in the same invocation. Then: preflight → shipped-tag audit → release-prep audit (includes the published-skill author checklist `nlc-skill-author-check.py`, same list as post-install) → `verify-deep` in a worktree at the **shipped tag** → release notes → version on the release line → `verify-deep` → prep → record → commit → push → exact PR → tag gate on **that merge commit** → `git tag -a` on that SHA → tag push → GitHub Actions.
+Planner (`nlc_release_state.py`) chooses the one next action. The executor performs exactly that action, observes fresh facts, and plans again in the same invocation. Then: preflight → shipped-tag audit → release-prep audit (includes the published-skill author checklist `nlc-skill-author-check.py`, same list as post-install) → read-only `./nlc verify` in a worktree at the **shipped tag** → release notes → version on the release line → read-only `./nlc verify` on the release line → prep → record → commit → push → exact PR → tag gate on **that merge commit** (`./nlc verify` in a worktree, not `verify-deep`) → `git tag -a` on that SHA → tag push → GitHub Actions. `verify-deep` is a writer. Run it once, before the owner gate-set signature, and do not run it again after that signature.
 
 A merged PR whose version file does not match the release branch is `INVALID_MERGED`. It is never tagged. The planner repairs the release line and creates a new candidate pull request, or names the human decision when no safe repair exists.
 

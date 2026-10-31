@@ -1544,6 +1544,15 @@
       ]
     },
     {
+      "label": "assert-tag-digest-signature-required-fails",
+      "script": "tools/assert-tag-digest-signature-required-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-tag-digest-signature-required-fails.py",
+        "tools/nouns/assert_tag_digest_signature_required_fails/assert_tag_digest_signature_required_fails.py"
+      ]
+    },
+    {
       "label": "assert-taint-alias-fails",
       "script": "tools/assert-taint-alias-fails.py",
       "kind": "landmine",
@@ -6296,6 +6305,15 @@
         "tools/assert-stale-committed-evidence-fails.py",
         "tools/nouns/assert_stale_committed_evidence_fails/__init__.py",
         "tools/nouns/assert_stale_committed_evidence_fails/assert_stale_committed_evidence_fails.py"
+      ]
+    },
+    {
+      "label": "tools/assert-tag-digest-signature-required-fails.py",
+      "script": "tools/assert-tag-digest-signature-required-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-tag-digest-signature-required-fails.py",
+        "tools/nouns/assert_tag_digest_signature_required_fails/assert_tag_digest_signature_required_fails.py"
       ]
     },
     {

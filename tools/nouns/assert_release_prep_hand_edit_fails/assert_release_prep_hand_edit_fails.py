@@ -38,9 +38,13 @@ def main() -> int:
     if clean:
         return _fail(f"clean copy should match script output: {clean}")
 
+    version = json.loads((tmp / VERSION_REL).read_text(encoding="utf-8"))["version"]
     findings = (tmp / FINDINGS_REL).read_text(encoding="utf-8")
+    needle = f"Shipped git tag **`v{version}`**"
+    if needle not in findings:
+        return _fail(f"FINDINGS missing {needle!r} for the hand-edit landmine")
     (tmp / FINDINGS_REL).write_text(
-        findings.replace("v0.4.0", "v0.0.0", 1) if "v0.4.0" in findings else findings + "\n# hand edit\n",
+        findings.replace(needle, "Shipped git tag **`v0.0.0`**", 1),
         encoding="utf-8",
     )
     bad_findings = match_errors(tmp)
@@ -48,7 +52,6 @@ def main() -> int:
         return _fail("hand-edited FINDINGS matched script output")
 
     _copy_surface(tmp, FINDINGS_REL)
-    version = json.loads((tmp / VERSION_REL).read_text(encoding="utf-8"))["version"]
     describe = (tmp / DESCRIBE_REL).read_text(encoding="utf-8")
     (tmp / DESCRIBE_REL).write_text(
         describe.replace(f"v{version}", "v0.0.0", 1),

@@ -18,7 +18,7 @@ def preflight_issues(hub: Path, project: Path) -> list[dict[str, str]]:
         issues.append(
             {
                 "id": "hub-missing",
-                "problem": "Natural Language Coding is not installed on this machine.",
+                "problem": "Natural Language Compiler is not installed on this machine.",
                 "fix": f"Run: {INSTALL_CMD}",
             }
         )

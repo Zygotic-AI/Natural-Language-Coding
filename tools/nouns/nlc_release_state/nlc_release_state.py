@@ -417,7 +417,7 @@ def main() -> int:
         return 0
     if args.tag_argv:
         version = args.tag[1:] if args.tag.startswith("v") else args.tag
-        for part in annotated_tag_argv(args.tag, args.commit, f"Natural Language Coding hub {version}"):
+        for part in annotated_tag_argv(args.tag, args.commit, f"Natural Language Compiler hub {version}"):
             print(part)
         return 0
     if args.facts:

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Natural Language Coding — run from your app repo root: ./nlc
+# Natural Language Compiler — run from your app repo root: ./nlc
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 if [[ -n "${NLC_HUB:-}" ]]; then

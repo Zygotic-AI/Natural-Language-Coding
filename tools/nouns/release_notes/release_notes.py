@@ -94,7 +94,7 @@ def build_draft(version: str, to_ref: str, from_tag: str | None) -> str:
         stat = ""
 
     body_lines = [
-        f"# Natural Language Coding hub v{ver}",
+        f"# Natural Language Compiler hub v{ver}",
         "",
         "## Highlights",
         "",
@@ -166,7 +166,7 @@ def check_notes(version: str) -> tuple[bool, str]:
         return False, f"missing file: {path.relative_to(ROOT)}"
     text = path.read_text(encoding="utf-8")
     if f"v{version.lstrip('v')}" not in text.splitlines()[0]:
-        return False, "title line should be '# Natural Language Coding hub vX.Y.Z'"
+        return False, "title line should be '# Natural Language Compiler hub vX.Y.Z'"
     hi = highlights_body(text)
     if not hi:
         return False, "Highlights section is empty (remove placeholder comment and write summary)"
