@@ -7,7 +7,7 @@
 | When | Command | Pass means |
 | ---- | ------- | ---------- |
 | CI / before release artifact | `./nlc verify` | Fingerprints match `.nlc/verified.json`; pipeline blockers clear |
-| After material change | `./nlc verify-deep` | Full gates + refresh fingerprints |
+| After material change | `./nlc verify-deep` | Full gates + refresh fingerprints when a recorded file hash changed |
 | Promotion | `./nlc ship-check` | Bundle check + human `Released-by:` when required |
 
 On [verify](../TERMS.md#verify) failure: **`/verify`** in your agent — not a ping-pong of scripts.

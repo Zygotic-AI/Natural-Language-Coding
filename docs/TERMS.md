@@ -328,7 +328,7 @@ Machine apex line: check passed (CI/agents). Not the first line humans should re
 
 ### NLC
 
-**Natural Language Coding**—the product.
+**Natural Language Compiler**—the product.
 
 ### NOT_MET
 

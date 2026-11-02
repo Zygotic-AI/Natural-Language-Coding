@@ -33,6 +33,15 @@ def main() -> int:
     repo = args.repo.resolve()
     scopes: list[str] = args.scope or ["default"]
 
+    from nouns.hub_stamp_scopes.hub_stamp_scopes import writer_scope_errors
+
+    scope_errors = writer_scope_errors(repo, scopes)
+    if scope_errors:
+        for item in scope_errors:
+            print(item, file=sys.stderr)
+        print("BEFORE_GENERATE:NOT_MET hub stamp scopes")
+        return 1
+
     proc = subprocess.run(
         [sys.executable, str(ROOT / "tools" / "validate-knowledge-facts.py"), str(repo)],
         capture_output=True,

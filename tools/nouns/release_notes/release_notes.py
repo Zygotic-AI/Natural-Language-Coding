@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 from nlc_release_tags import previous_shipped_tag, tag_exists
+from nouns.release_probe.release_probe import ProbeFailure  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools"))
@@ -38,6 +39,19 @@ def _git(*args: str) -> subprocess.CompletedProcess[str]:
 def changelog_base_tag(release_version: str, to_ref: str) -> str | None:
     """Git tag to start changelog from — never integrity/nlc-version.json."""
     return previous_shipped_tag(release_version, to_ref)
+
+
+def resolve_changelog_from_tag(
+    from_tag: str | None,
+    runner: object | None = None,
+    root: Path | None = None,
+) -> str | None:
+    """Keep from_tag only when the tag probe confirms it exists. Probe error refuses."""
+    if not from_tag:
+        return None
+    if not tag_exists(from_tag, root=root, runner=runner):
+        return None
+    return from_tag
 
 
 def commit_lines(from_ref: str, to_ref: str) -> list[str]:
@@ -80,7 +94,7 @@ def build_draft(version: str, to_ref: str, from_tag: str | None) -> str:
         stat = ""
 
     body_lines = [
-        f"# Natural Language Coding hub v{ver}",
+        f"# Natural Language Compiler hub v{ver}",
         "",
         "## Highlights",
         "",
@@ -152,7 +166,7 @@ def check_notes(version: str) -> tuple[bool, str]:
         return False, f"missing file: {path.relative_to(ROOT)}"
     text = path.read_text(encoding="utf-8")
     if f"v{version.lstrip('v')}" not in text.splitlines()[0]:
-        return False, "title line should be '# Natural Language Coding hub vX.Y.Z'"
+        return False, "title line should be '# Natural Language Compiler hub vX.Y.Z'"
     hi = highlights_body(text)
     if not hi:
         return False, "Highlights section is empty (remove placeholder comment and write summary)"
@@ -193,8 +207,11 @@ def main() -> int:
         return 2
 
     from_tag = args.from_tag or changelog_base_tag(args.version, args.to_ref)
-    if from_tag and not tag_exists(from_tag):
-        from_tag = None
+    try:
+        from_tag = resolve_changelog_from_tag(from_tag)
+    except ProbeFailure as exc:
+        print(f"error: tag probe refused: {exc}", file=sys.stderr)
+        return 2
 
     if args.print_draft:
         print(build_draft(args.version, args.to_ref, from_tag))

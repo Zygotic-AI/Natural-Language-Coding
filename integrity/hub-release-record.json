@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "version": "0.4.0",
-  "release_branch": "release/v0.4.0",
+  "version": "0.4.1",
+  "release_branch": "release/v0.4.1",
   "content_tree_hash_ref": "integrity/hub-content-tree-hash.txt"
 }

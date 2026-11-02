@@ -16,9 +16,19 @@ The tool runs gates ([ADR 0022](../../adrs/0022-hub-release-fail-early.md), 0038
 
 **Human in GitHub:** merge the **release PR** (`release/v* → main`) whose head SHA is the candidate `./release` pushed. The tag is created on that merge commit only when the version file, release record, and branch name all match. An existing tag is not moved.
 
+## Checklist rule (ordinary content after the signed set)
+
+A content-only change (paths that are not gate-set members) must not require a new owner gate-set signature. The whole-tree freshness stamp [`integrity/hub-content-tree-hash.txt`](../../integrity/hub-content-tree-hash.txt) is not a gate-set member. Sync it when content changes; do not remanifest or ask the owner to re-sign for that stamp.
+
+A change to a real gate-set file still fails closed: missing tool, empty result, or unknown result counts as false (not a pass). The owner sidecar is required only when gate-set member bytes change.
+
+Known-bad: `python3 tools/assert-content-only-change-does-not-trip-gate-set-signature-passes.py` (content-only plus hash sync leaves the signed manifest alone) and `python3 tools/assert-gate-set-member-change-fails-closed.py` (a real member edit is NOT_MET).
+
 ## Creating a release branch
 
 Release branches (`release/vX.Y.Z`) are created only via the **start-release** workflow ([`.github/workflows/start-release.yml`](../../.github/workflows/start-release.yml)). Run it from the Actions tab with a version that matches `^v\d+\.\d+\.\d+$`. The workflow creates `release/<version>` from the current `main` HEAD and does nothing else (no commits, no tags). Do not create `release/*` refs by hand or by toggling the ruleset.
+
+The ADR 0050 history rewrite drill runs at release tag time on the same self-hosted runner labels as start-release (vhost11), not on every pull request or push.
 
 ## Sync after someone else ships (step 5)
 
@@ -30,7 +40,7 @@ git merge origin/main
 
 ## What the orchestrator does (internal)
 
-Planner (`nlc_release_state.py`) chooses the one next action. The executor performs exactly that action, observes fresh facts, and plans again in the same invocation. Then: preflight → shipped-tag audit → release-prep audit (includes the published-skill author checklist `nlc-skill-author-check.py`, same list as post-install) → `verify-deep` in a worktree at the **shipped tag** → release notes → version on the release line → `verify-deep` → prep → record → commit → push → exact PR → tag gate on **that merge commit** → `git tag -a` on that SHA → tag push → GitHub Actions.
+Planner (`nlc_release_state.py`) chooses the one next action. The executor performs exactly that action, observes fresh facts, and plans again in the same invocation. Then: preflight → shipped-tag audit → release-prep audit (includes the published-skill author checklist `nlc-skill-author-check.py`, same list as post-install) → read-only `./nlc verify` in a worktree at the **shipped tag** → release notes → version on the release line → read-only `./nlc verify` on the release line → prep → record → commit → push → exact PR → tag gate on **that merge commit** (`./nlc verify` in a worktree, not `verify-deep`) → `git tag -a` on that SHA → tag push → GitHub Actions. `verify-deep` is a writer. Run it once, before the owner gate-set signature, and do not run it again after that signature.
 
 A merged PR whose version file does not match the release branch is `INVALID_MERGED`. It is never tagged. The planner repairs the release line and creates a new candidate pull request, or names the human decision when no safe repair exists.
 

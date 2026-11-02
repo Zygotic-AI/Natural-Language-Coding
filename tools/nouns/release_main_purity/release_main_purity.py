@@ -8,40 +8,46 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from nlc_release_tags import last_shipped_tag, remote_tag_commit  # noqa: E402
+from nouns.release_probe.release_probe import (  # noqa: E402
+    ProbeFailure,
+    confirmed_exists,
+    confirmed_text,
+    run_argv,
+)
 
 BOUNDARY = "bba-emit"
 
 HUB_ROOT = Path(__file__).resolve().parents[3]
 
 
-def _git(*args: str, root: Path) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        ["git", *args],
-        cwd=str(root),
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+def _git(
+    *args: str, root: Path, runner: object | None = None
+) -> subprocess.CompletedProcess[str]:
+    return run_argv(["git", *args], cwd=root, runner=runner)
 
 
-def resolve_base_head(remote: str, base: str, root: Path) -> str:
-    for ref in (f"{remote}/{base}", base):
-        proc = _git("rev-parse", ref, root=root)
-        if proc.returncode == 0 and proc.stdout.strip():
-            return proc.stdout.strip()
-    proc = _git("rev-parse", "HEAD", root=root)
-    return proc.stdout.strip() if proc.returncode == 0 else ""
+def resolve_base_head(
+    remote: str, base: str, root: Path, runner: object | None = None
+) -> str:
+    for ref in (f"{remote}/{base}", base, "HEAD"):
+        proc = _git("rev-parse", "-q", "--verify", ref, root=root, runner=runner)
+        if confirmed_exists(proc, require_stdout=True):
+            return (proc.stdout or "").strip()
+    raise ProbeFailure("empty output: base head", kind="empty")
 
 
-def tag_commit(tag: str, root: Path) -> str:
-    proc = _git("rev-parse", f"{tag}^{{commit}}", root=root)
-    return proc.stdout.strip() if proc.returncode == 0 else ""
+def tag_commit(tag: str, root: Path, runner: object | None = None) -> str:
+    proc = _git("rev-parse", "-q", "--verify", f"{tag}^{{commit}}", root=root, runner=runner)
+    if not confirmed_exists(proc, require_stdout=True):
+        return ""
+    return (proc.stdout or "").strip()
 
 
-def commits_after_tag(tag: str, head: str, root: Path) -> list[str]:
-    proc = _git("log", f"{tag}..{head}", "--oneline", "-n", "20", root=root)
-    if proc.returncode != 0:
-        return []
+def commits_after_tag(
+    tag: str, head: str, root: Path, runner: object | None = None
+) -> list[str]:
+    proc = _git("log", f"{tag}..{head}", "--oneline", "-n", "20", root=root, runner=runner)
+    confirmed_text(proc, empty_ok=True)
     return [ln for ln in (proc.stdout or "").splitlines() if ln.strip()]
 
 
@@ -50,11 +56,25 @@ def check_main_purity(
     head: str,
     tag: str | None,
     tag_at: str,
+    tag_known: bool = True,
 ) -> tuple[bool, list[str]]:
-    """Pure when no tag yet, or head equals tag commit."""
+    """Pure when a confirmed empty tag list, or head equals the tag commit.
+
+    Empty or unknown tag peel is NOT_MET (fail-closed). Confirmed no shipped
+    tag (tag is None and tag_known) is MET.
+    """
     problems: list[str] = []
-    if not tag or not tag_at:
+    if not tag_known:
+        problems.append("shipped-tag probe failed or unknown")
+        return False, problems
+    if not tag:
         return True, problems
+    if not tag_at:
+        problems.append("empty tag commit (probe failed or unknown)")
+        return False, problems
+    if not head:
+        problems.append("empty HEAD (probe failed or unknown)")
+        return False, problems
     if head == tag_at:
         return True, problems
     problems.append(f"main ({head[:12]}) is not at last shipped tag {tag} ({tag_at[:12]})")
@@ -67,10 +87,13 @@ def evaluate_main_purity(
     base: str = "main",
     to_ref: str | None = None,
 ) -> tuple[bool, list[str], str | None, str | None]:
-    head = resolve_base_head(remote, base, hub)
-    tag = last_shipped_tag(f"{remote}/{base}", root=hub) or last_shipped_tag(base, root=hub)
-    tag_at = remote_tag_commit(tag, remote, hub) if tag else ""
-    ok, problems = check_main_purity(head=head, tag=tag, tag_at=tag_at)
+    try:
+        head = resolve_base_head(remote, base, hub)
+        tag = last_shipped_tag(f"{remote}/{base}", root=hub) or last_shipped_tag(base, root=hub)
+        tag_at = remote_tag_commit(tag, remote, hub) if tag else ""
+        ok, problems = check_main_purity(head=head, tag=tag, tag_at=tag_at, tag_known=True)
+    except ProbeFailure as exc:
+        return False, [str(exc)], None, None
     if not ok and tag:
         for ln in commits_after_tag(tag, head, hub):
             problems.append(f"  commit on main after tag: {ln}")

@@ -2,8 +2,8 @@
 
 [Hub](../TERMS.md#hub) specimens use `ci_fitness.py`. **Your app** uses a layered [verify](../TERMS.md#verify) story:
 
-1. **`./nlc verify`** — fast fingerprints (`.nlc/verified.json`) + pipeline blockers.
-2. **`./nlc verify-deep`** — full gates, then refresh fingerprints.
+1. **`./nlc verify`** — on an app repo, fast fingerprints (`.nlc/verified.json`) + pipeline blockers. On the hub, this is the one merge command: it runs `tools/ci_fitness.py`. The hub does not also fail on `.nlc/verified.json`; the content-tree stamp covers those bytes.
+2. **`./nlc verify-deep`** — full gates, then refresh fingerprints. The fingerprint file and its `recorded_at` are rewritten only when a recorded file hash changed. A second run on the same bytes leaves `.nlc/verified.json` untouched. Run it once before an owner gate-set signature, not after.
 
 ## Default deep [gate](../TERMS.md#gate) (app with `.nlc/lock.json`)
 

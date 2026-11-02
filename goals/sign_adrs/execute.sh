@@ -31,6 +31,7 @@ GIT_ADD=0
 CI_LESS=0
 TEST_FINGERPRINT=""
 ALLOW_TEST_KEY=0
+PROBE_SIG=""
 
 usage() {
   cat <<'EOF'
@@ -82,24 +83,31 @@ while [[ $# -gt 0 ]]; do
       ADR_DIR="$2"
       shift 2
       ;;
+    --probe-sig)
+      [[ $# -ge 2 ]] || die "--probe-sig needs a document path"
+      PROBE_SIG="$2"
+      shift 2
+      ;;
     -h|--help) usage; exit 0 ;;
     *) die "unknown argument: $1" ;;
   esac
 done
 
-if [[ -n "${GITHUB_ACTIONS:-}" || "${CI:-}" == "true" ]] && [[ "$CI_LESS" -eq 0 ]]; then
+if [[ -z "$PROBE_SIG" ]] && [[ -n "${GITHUB_ACTIONS:-}" || "${CI:-}" == "true" ]] && [[ "$CI_LESS" -eq 0 ]]; then
   die "refusing to create signatures in CI; owner runs this locally (or pass --ci-less in tests)"
 fi
 
-if [[ -n "$TEST_FINGERPRINT" && "$ALLOW_TEST_KEY" -eq 0 ]]; then
-  die "--test-fingerprint is for tests only; pass --allow-test-key"
-fi
-if [[ "$ALLOW_TEST_KEY" -eq 1 && -z "$TEST_FINGERPRINT" ]]; then
-  die "--allow-test-key requires --test-fingerprint"
-fi
-if [[ -n "$TEST_FINGERPRINT" ]]; then
-  FINGERPRINT="$(printf '%s' "$TEST_FINGERPRINT" | tr -d '[:space:]' | tr '[:lower:]' '[:upper:]')"
-  echo "SIGN-ADRS:WARN using --test-fingerprint (tests only)" >&2
+if [[ -z "$PROBE_SIG" ]]; then
+  if [[ -n "$TEST_FINGERPRINT" && "$ALLOW_TEST_KEY" -eq 0 ]]; then
+    die "--test-fingerprint is for tests only; pass --allow-test-key"
+  fi
+  if [[ "$ALLOW_TEST_KEY" -eq 1 && -z "$TEST_FINGERPRINT" ]]; then
+    die "--allow-test-key requires --test-fingerprint"
+  fi
+  if [[ -n "$TEST_FINGERPRINT" ]]; then
+    FINGERPRINT="$(printf '%s' "$TEST_FINGERPRINT" | tr -d '[:space:]' | tr '[:lower:]' '[:upper:]')"
+    echo "SIGN-ADRS:WARN using --test-fingerprint (tests only)" >&2
+  fi
 fi
 
 if [[ -z "$ROOT" ]]; then
@@ -109,9 +117,10 @@ ROOT="$(cd "$ROOT" && pwd)"
 if [[ -z "$ADR_DIR" ]]; then
   ADR_DIR="${ROOT}/adrs"
 fi
-[[ -d "$ADR_DIR" ]] || die "ADR directory missing: $ADR_DIR"
-
-command -v gpg >/dev/null 2>&1 || die "gpg not found"
+if [[ -z "$PROBE_SIG" ]]; then
+  [[ -d "$ADR_DIR" ]] || die "ADR directory missing: $ADR_DIR"
+  command -v gpg >/dev/null 2>&1 || die "gpg not found"
+fi
 
 normalize_fpr() {
   printf '%s' "$1" | tr -d '[:space:]' | tr '[:lower:]' '[:upper:]'
@@ -120,8 +129,10 @@ normalize_fpr() {
 FINGERPRINT="$(normalize_fpr "$FINGERPRINT")"
 [[ ${#FINGERPRINT} -ge 16 ]] || die "fingerprint looks empty"
 
-if ! gpg --batch --list-secret-keys --with-colons "$FINGERPRINT" 2>/dev/null | grep -q '^sec:'; then
-  die "signing key $FINGERPRINT is not in the local keyring"
+if [[ -z "$PROBE_SIG" ]]; then
+  if ! gpg --batch --list-secret-keys --with-colons "$FINGERPRINT" 2>/dev/null | grep -q '^sec:'; then
+    die "signing key $FINGERPRINT is not in the local keyring"
+  fi
 fi
 
 gpg_pinentry_args=()
@@ -140,8 +151,23 @@ sig_ok() {
   local sig
   sig="$(sig_path_for "$doc")"
   [[ -f "$sig" ]] || return 1
-  local status
-  status="$(gpg --batch --status-fd 2 --verify "$sig" "$doc" 2>&1 >/dev/null || true)"
+  if ! command -v gpg >/dev/null 2>&1; then
+    echo "SIGN-ADRS:REFUSE missing tool: gpg" >&2
+    return 2
+  fi
+  local status gpg_rc
+  set +e
+  status="$(gpg --batch --status-fd 2 --verify "$sig" "$doc" 2>&1 >/dev/null)"
+  gpg_rc=$?
+  set -e
+  if [[ "$gpg_rc" -ge 2 ]]; then
+    echo "SIGN-ADRS:REFUSE unexpected error: gpg verify rc=${gpg_rc}" >&2
+    return 2
+  fi
+  if [[ -z "${status}" && "$gpg_rc" -eq 0 ]]; then
+    echo "SIGN-ADRS:REFUSE empty output: gpg verify" >&2
+    return 2
+  fi
   local line fpr
   local good=0
   while IFS= read -r line; do
@@ -157,6 +183,11 @@ sig_ok() {
   [[ "$good" -eq 1 ]]
 }
 
+if [[ -n "$PROBE_SIG" ]]; then
+  sig_ok "$PROBE_SIG"
+  exit $?
+fi
+
 mapfile -t ADRS < <(find "$ADR_DIR" -maxdepth 1 -type f -name '[0-9][0-9][0-9][0-9]-*.md' | sort)
 [[ ${#ADRS[@]} -gt 0 ]] || die "no numbered ADR files under $ADR_DIR"
 
@@ -166,6 +197,10 @@ for doc in "${ADRS[@]}"; do
   if sig_ok "$doc"; then
     fresh+=("$doc")
   else
+    sig_rc=$?
+    if [[ "$sig_rc" -eq 2 ]]; then
+      die "sig probe failed for $doc"
+    fi
     need+=("$doc")
   fi
 done

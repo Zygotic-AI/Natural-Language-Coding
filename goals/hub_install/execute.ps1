@@ -1,4 +1,4 @@
-# Natural Language Coding — install portable skills (Windows PowerShell 5.1+ / PowerShell 7+).
+# Natural Language Compiler — install portable skills (Windows PowerShell 5.1+ / PowerShell 7+).
 #Requires -Version 5.1
 $ErrorActionPreference = 'Stop'
 
@@ -29,7 +29,7 @@ $AgentsSkills = Join-Path $env:USERPROFILE '.agents\skills'
 $CursorSkills = Join-Path $env:USERPROFILE '.cursor\skills'
 $CursorSkillsRepo = @('bbp-confirmer', 'bbp-proposer', 'bbp-recorder', 'bbp-reviewer', 'interview', 'planit', 'verify')
 
-Write-Host 'Natural Language Coding — install'
+Write-Host 'Natural Language Compiler — install'
 Write-Host "  target: $InstallRoot"
 Write-Host "  skills: $AgentsSkills"
 

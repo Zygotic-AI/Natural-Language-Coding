@@ -1,6 +1,6 @@
 # NLC components
 
-Reference map of Natural Language Coding at the same grain as the Zygotic workflow diagram (`richardpickett/webs/doc/diagrams/zygotic-workflow.json`).
+Reference map of Natural Language Coding at the same grain as the Zygotic workflow diagram.
 
 React Flow seed (same document shape as that workflow): [`nlc-components.json`](nlc-components.json).
 

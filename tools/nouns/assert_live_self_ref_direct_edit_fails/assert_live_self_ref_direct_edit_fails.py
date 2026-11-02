@@ -32,6 +32,12 @@ def _scratch_hub() -> Path:
         check=True,
         capture_output=True,
     )
+    subprocess.run(
+        ["git", "update-ref", "refs/remotes/origin/release/v0.4.0", "HEAD"],
+        cwd=dest,
+        check=True,
+        capture_output=True,
+    )
     return dest
 
 

@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "scopes": [
+    "default",
+    "release",
+    "hub_release",
+    "sign_adrs"
+  ]
+}

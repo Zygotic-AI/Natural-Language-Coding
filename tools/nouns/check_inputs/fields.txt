@@ -1,0 +1,5 @@
+# check_inputs
+label
+script
+kind
+inputs

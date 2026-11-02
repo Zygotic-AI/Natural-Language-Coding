@@ -11,6 +11,7 @@ from pathlib import Path
 from fitness_hub_source import read_tool
 
 ROOT = Path(__file__).resolve().parents[3]
+HUB_BEFORE_GENERATE_STAMP = ".nlc/before-generate-stamp.json"
 
 TOOLS = (
     "nlc_uc_blockers.py",

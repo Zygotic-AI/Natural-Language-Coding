@@ -6,7 +6,11 @@ on:
       - "v*.*.*"
 
 jobs:
+  history-rewrite-invariant:
+    uses: ./.github/workflows/history-rewrite-invariant.yml
+
   release:
+    needs: [history-rewrite-invariant]
     runs-on: ubuntu-latest
     permissions:
       contents: write

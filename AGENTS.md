@@ -4,7 +4,7 @@ Standing instructions for any coding harness working in this repository.
 
 ## Practice
 
-This repo is the **[Natural Language Coding](docs/TERMS.md#nlc) (NLC)** hub. [BBP](docs/TERMS.md#bbp) / [BBA](docs/TERMS.md#bba) are emit practice and architecture under that roof. Read [`CHARTER.md`](CHARTER.md) before changing theory, agent materials, or tools. Confirmable rules live in the [charter](docs/TERMS.md#charter); wishes are not rules.
+This repo is the **[Natural Language Compiler](docs/TERMS.md#nlc) (NLC)** hub. [BBP](docs/TERMS.md#bbp) / [BBA](docs/TERMS.md#bba) are emit practice and architecture under that roof. Read [`CHARTER.md`](CHARTER.md) before changing theory, agent materials, or tools. Confirmable rules live in the [charter](docs/TERMS.md#charter); wishes are not rules.
 
 Id prefixes: **P** = principle (hub honesty), **R** = [requirement](docs/TERMS.md#requirement) (charter shape), **C** = confirmation (this change). `P-0xx` (hyphen) is an operating policy in the companion bindings repo, not P1–P7.
 
@@ -55,6 +55,8 @@ Skills and portable instructions live under [`.agents/`](.agents/). End-to-end c
 **Jidoka SSOT output (always):** When tooling output contradicts docs or the operator says it is wrong, **fix or RCA** — do **not** tell them to ignore or reinterpret defective fields — see [`.agents/instructions/jidoka-ssot-output.md`](.agents/instructions/jidoka-ssot-output.md).
 
 **Reply references (always):** Whenever you mention UC/ADR/P/R ids, paths, or hub jargon in user-facing text, include plain language **in the same message** — see [`.agents/instructions/reply-references-plain-language.md`](.agents/instructions/reply-references-plain-language.md). No bare id lists as explanation; applies to every reply, not only when asking the human to decide.
+
+**Signature text (always):** Anytime you need a signature, give the exact text in that same message. In an IDE, put only that text in one fenced block so it can be copied. In a terminal, put a start marker line above it and an end marker line below it — see [`.agents/instructions/signature-text-handoff.md`](.agents/instructions/signature-text-handoff.md).
 
 ## Memory files
 

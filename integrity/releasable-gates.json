@@ -61,6 +61,7 @@
     "fitness-owner-ratification-known-bad.py",
     "fitness-hub-scope-derived.py",
     "fitness-hub-brief-forbid-weaken.py",
+    "fitness-hub-stamp-scopes.py",
     "fitness-no-check-on-check.py",
     "fitness-known-bad-ssot.py",
     "fitness-pending-ratification.py",
@@ -72,7 +73,10 @@
     "fitness-skill-content-type.py",
     "fitness-live-self-ref-activation.py",
     "fitness-mandate-inheritance.py",
-    "fitness-control-lifecycle.py"
+    "fitness-derived-release-state.py",
+    "fitness-control-lifecycle.py",
+    "fitness-check-inputs-declaration.py",
+    "fitness-release-prep-script-match.py"
   ],
   "gates": {
     "pipeline-blockers": {

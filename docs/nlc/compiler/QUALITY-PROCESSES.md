@@ -1,6 +1,6 @@
 # [Quality](../../TERMS.md#quality) processes
 
-How [Natural Language Coding](../../TERMS.md#nlc) uses [lean](https://en.wikipedia.org/wiki/Lean_manufacturing) and [Six Sigma](https://en.wikipedia.org/wiki/Six_Sigma) ideas **in this repo**. The [manifesto](MANIFESTO.md) states principles in plain language; this page names the methods and maps them to [PLANIT](../../TERMS.md#planit), gates, and the [intent surface](../../TERMS.md#intent-surface).
+How [Natural Language Compiler](../../TERMS.md#nlc) uses [lean](https://en.wikipedia.org/wiki/Lean_manufacturing) and [Six Sigma](https://en.wikipedia.org/wiki/Six_Sigma) ideas **in this repo**. The [manifesto](MANIFESTO.md) states principles in plain language; this page names the methods and maps them to [PLANIT](../../TERMS.md#planit), gates, and the [intent surface](../../TERMS.md#intent-surface).
 
 Public reference metrics (example): [Zygotic.ai](https://zygotic.ai) — illustrative of automatic [quality](../../TERMS.md#quality) display; not a [charter](../../TERMS.md#charter) [requirement](../../TERMS.md#requirement).
 

@@ -1,8 +1,8 @@
-# DESCRIBE.md — [Natural Language Coding](docs/TERMS.md#nlc) hub (BBP/BBA under the covers)
+# DESCRIBE.md — [Natural Language Compiler](docs/TERMS.md#nlc) hub (BBP/BBA under the covers)
 
 ## What this repo is
 
-**[Natural Language Coding](docs/TERMS.md#nlc) (NLC)** [hub](docs/TERMS.md#hub): goals and requirements in; [compiler](docs/TERMS.md#compiler) out a BBP-shaped **[compiled system](docs/TERMS.md#compiled-system)** or [refuse](docs/TERMS.md#refuse). BBP/BBA remain the design SSOT under the covers (`CHARTER.md`, `integrity/`). Tagline (consumer): stopping agents from shipping slop by compiling intent, not patching emit. Stand-alone branding: no foreign brand packages in [integrity](docs/TERMS.md#integrity); copy and re/unbrand if a shape is useful. Naming: [ADR](docs/TERMS.md#adr) 0011, [`docs/nlc/compiler/GLOSSARY.md`](docs/nlc/compiler/GLOSSARY.md).
+**[Natural Language Compiler](docs/TERMS.md#nlc) (NLC)** [hub](docs/TERMS.md#hub): goals and requirements in; [compiler](docs/TERMS.md#compiler) out a BBP-shaped **[compiled system](docs/TERMS.md#compiled-system)** or [refuse](docs/TERMS.md#refuse). BBP/BBA remain the design SSOT under the covers (`CHARTER.md`, `integrity/`). Tagline (consumer): stopping agents from shipping slop by compiling intent, not patching emit. Stand-alone branding: no foreign brand packages in [integrity](docs/TERMS.md#integrity); copy and re/unbrand if a shape is useful. Naming: [ADR](docs/TERMS.md#adr) 0011, [`docs/nlc/compiler/GLOSSARY.md`](docs/nlc/compiler/GLOSSARY.md).
 
 ## Core model (short)
 
@@ -112,7 +112,7 @@ Do not treat a percentage frozen in this file as live status. Run `python3 tools
 
 ## Current ship
 
-Last tagged ship is **v0.4.0**.
+Last tagged ship is **v0.4.1**.
 
 ## ADR 0051 / 0052 hub-own retrofit (C1–C11)
 
@@ -121,6 +121,10 @@ Hub material produce packages derive `hub_material` and `changed_paths` from `gi
 ## Staged gate machinery (ADR 0055)
 
 Self-referential gate members are derived (`python3 tools/derive-self-ref-set.py`), not hand-kept. Candidates live under `staging/<change-id>/`. Live members change only through `python3 tools/activate-gate-machinery.py` (verify pasted owner armor, place unchanged, swap) or the first bootstrap of that machinery. Mandated paths are derived (`python3 tools/derive-mandated-paths.py`) and imported by the Skill type recipe, the skill-author checklist, and `/release`. The Planit identity registry is generated from skill bytes (`python3 tools/generate-planit-identity-registry.py`).
+
+## Release-tool probes (fail-closed)
+
+Release-tool existence and fact probes open a gate only when every check is a hard binary true. Missing tool, empty output, or unexpected error is false (refuse). Shared helper: `tools/nouns/release_probe/`. The 22 instances from v0.4.1 item 2 each have a known-bad and a known-good adapter under `tools/assert-release-probe-*-fails.py` / `*-passes.py`.
 
 ## Conventions in this workspace
 
