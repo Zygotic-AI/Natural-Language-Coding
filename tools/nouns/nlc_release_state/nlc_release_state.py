@@ -7,6 +7,7 @@ BOUNDARY = "bba-emit"
 
 
 import argparse
+import base64
 import json
 import os
 import subprocess
@@ -34,11 +35,38 @@ ROOT = Path(__file__).resolve().parents[3]
 STAMP = ROOT / ".nlc" / "release-prepare-facts.json"
 
 
+def _token_from_checkout_header() -> str:
+    """actions/checkout stores the job token in local git config, not in GH_TOKEN."""
+    proc = subprocess.run(
+        ["git", "config", "--local", "--get-all", "http.https://github.com/.extraheader"],
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        return ""
+    prefix = "x-access-token:"
+    for raw in reversed((proc.stdout or "").splitlines()):
+        line = raw.strip()
+        marker = "basic "
+        idx = line.lower().rfind(marker)
+        if idx < 0:
+            continue
+        try:
+            decoded = base64.b64decode(line[idx + len(marker):].strip()).decode("utf-8")
+        except (ValueError, UnicodeDecodeError):
+            continue
+        if decoded.startswith(prefix) and decoded[len(prefix):].strip():
+            return decoded[len(prefix):].strip()
+    return ""
+
+
 def _ensure_gh_token() -> None:
-    """Actions exposes GITHUB_TOKEN. gh refuses unless GH_TOKEN is set."""
+    """gh in Actions exits unless GH_TOKEN is set. The workflow does not export it."""
     if os.environ.get("GH_TOKEN", "").strip():
         return
-    github = os.environ.get("GITHUB_TOKEN", "").strip()
+    github = os.environ.get("GITHUB_TOKEN", "").strip() or _token_from_checkout_header()
     if github:
         os.environ["GH_TOKEN"] = github
 
