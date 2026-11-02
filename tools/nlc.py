@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Human command surface for Natural Language Coding (ADR 0017)."""
+"""Human command surface for Natural Language Compiler (ADR 0017)."""
 
 from __future__ import annotations
 

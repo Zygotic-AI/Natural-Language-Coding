@@ -1,4 +1,4 @@
-"""Human command surface for Natural Language Coding (ADR 0017)."""
+"""Human command surface for Natural Language Compiler (ADR 0017)."""
 
 from __future__ import annotations
 
@@ -55,7 +55,7 @@ def _human_status(root: Path, hub: Path) -> tuple[str, int]:
     issues = preflight_issues(hub, root)
     if issues:
         lines = [
-            "Natural Language Coding",
+            "Natural Language Compiler",
             "=======================",
             "",
             "Cannot continue yet.",
@@ -150,6 +150,18 @@ def cmd_new(args: argparse.Namespace) -> int:
 
 def cmd_verify(args: argparse.Namespace) -> int:
     root = project_root(args.project)
+    from nlc_pipeline import is_hub_repo
+
+    if is_hub_repo(root):
+        suite = ROOT / "tools" / "ci_fitness.py"
+        proc = subprocess.run([sys.executable, str(suite)], cwd=str(root))
+        if proc.returncode != 0:
+            print("Verify failed.", file=sys.stderr)
+            print("  hub fitness suite failed (tools/ci_fitness.py)", file=sys.stderr)
+            print("Reproduce: ./nlc verify --project .", file=sys.stderr)
+            return proc.returncode
+        print("Verify passed.")
+        return 0
     ok, reasons = verify_fast(root)
     if ok:
         print("Verify passed.")
@@ -429,7 +441,7 @@ def main() -> int:
     hub_tool()
     parser = argparse.ArgumentParser(
         prog="nlc",
-        description="Natural Language Coding — human menu and commands (ADR 0017)",
+        description="Natural Language Compiler — human menu and commands (ADR 0017)",
     )
     parser.add_argument("--project", type=Path, default=None, help="App repo root")
     sub = parser.add_subparsers(dest="command")

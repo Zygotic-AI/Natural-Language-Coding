@@ -24,6 +24,9 @@
     ".agents/instructions/reply-references-plain-language.md": [
       "gate_set_manifest"
     ],
+    ".agents/instructions/signature-text-handoff.md": [
+      "gate_set_manifest"
+    ],
     ".agents/instructions/take-me-literally.md": [
       "gate_set_manifest"
     ],
@@ -177,12 +180,6 @@
     ".gitignore": [
       "gate_set_manifest"
     ],
-    ".nlc/adr-bind-snapshot.json": [
-      "gate_set_manifest"
-    ],
-    ".nlc/before-generate-stamp.json": [
-      "gate_set_manifest"
-    ],
     ".nlc/gate-records.json": [
       "gate_set_manifest"
     ],
@@ -196,19 +193,12 @@
       "gate_set_manifest"
     ],
     ".nlc/planit-change-evidence.json": [
-      "gate_set_manifest",
       "identity_registry"
     ],
     ".nlc/produce-package.json": [
       "gate_set_manifest"
     ],
     ".nlc/verbs.json": [
-      "gate_set_manifest"
-    ],
-    ".nlc/verified.json": [
-      "gate_set_manifest"
-    ],
-    ".nlc/work-queue.json": [
       "gate_set_manifest"
     ],
     "AGENTS.md": [
@@ -221,7 +211,6 @@
       "gate_set_manifest"
     ],
     "FINDINGS.md": [
-      "gate_set_manifest",
       "content_tree"
     ],
     "README.md": [
@@ -616,6 +605,9 @@
     "adrs/0056-per-file-adr-detached-signatures.md.asc": [
       "gate_set_manifest"
     ],
+    "adrs/0057-tag-time-checker-digest.md": [
+      "gate_set_manifest"
+    ],
     "adrs/ACTIVE.md": [
       "gate_set_manifest"
     ],
@@ -736,6 +728,9 @@
     "docs/adoption/RELEASE-v0.4.0.md": [
       "gate_set_manifest"
     ],
+    "docs/adoption/RELEASE-v0.4.1.md": [
+      "gate_set_manifest"
+    ],
     "docs/adoption/RELEASE.md": [
       "gate_set_manifest"
     ],
@@ -847,6 +842,9 @@
     "docs/nlc/compiler/README.md": [
       "gate_set_manifest"
     ],
+    "docs/nlc/effective-decisions.md": [
+      "gate_set_manifest"
+    ],
     "docs/nlc/emit-manifest.schema.json": [
       "gate_set_manifest"
     ],
@@ -854,1209 +852,6 @@
       "gate_set_manifest"
     ],
     "docs/spine/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/action-plan-bad/plan.json": [
-      "gate_set_manifest"
-    ],
-    "examples/action-plan-ok/plan.json": [
-      "gate_set_manifest"
-    ],
-    "examples/adjective-untested/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/adjective-untested/domain/invoice/adjectives.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/adjective-untested/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/adjective-untested/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/adjective-untested/domain/invoice/tests/test_invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/adjectives-in-goal/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/adjectives-in-goal/goals/record-bank-payment/adjectives.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/adjectives-in-goal/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/.nlc/before-generate-stamp.json": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/.nlc/change-adversarial.json": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/.nlc/gate-records.json": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/.nlc/generate-provenance.json": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/.nlc/interview-packet.json": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/.nlc/pipeline-state.json": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/.nlc/produce-package.json": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/.nlc/rule-ir.snapshot.json": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/.nlc/verified.json": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/.nlc/work-queue.json": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/adopter-verify-fast-green/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/agent-ratified/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/agent-ratified/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/breaking-no-adr/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/breaking-no-adr/domain/invoice/schemas/verbs.previous.json": [
-      "gate_set_manifest"
-    ],
-    "examples/breaking-no-adr/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/c10-changed-out-of-scope/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/c10-changed-out-of-scope/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/c10-changed-out-of-scope/goals/bad/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/c10-changed-out-of-scope/goals/bad/input.previous.json": [
-      "gate_set_manifest"
-    ],
-    "examples/c10-changed-out-of-scope/goals/bad/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/c10-changed-out-of-scope/goals/good/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/c10-changed-out-of-scope/goals/good/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/c10-changed-out-of-scope/goals/good/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/c21-changed-out-of-scope/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/c21-changed-out-of-scope/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/c21-changed-out-of-scope/goals/bad/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/c21-changed-out-of-scope/goals/good/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/c22-na-with-both/CHARTER.md": [
-      "gate_set_manifest"
-    ],
-    "examples/c22-na-with-both/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/c22-na-with-both/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/c22-na-with-both/goals/pay/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/call-tree-pack-reference/.nlc/verb-primitives.json": [
-      "gate_set_manifest"
-    ],
-    "examples/call-tree-pack-reference/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/call-tree-pack-reference/domain/demo/handler.ts": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-alias/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-alias/domain/card/taint.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-alias/goals/print-receipt/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-crossfile/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-crossfile/domain/card/taint.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-crossfile/goals/print-receipt/helper.py": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-crossfile/goals/print-receipt/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-helper/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-helper/domain/card/taint.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-helper/goals/print-receipt/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-violation/domain/card/card.py": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-violation/domain/card/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-violation/domain/card/taint.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-violation/goals/print-receipt/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-violation/goals/print-receipt/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-violation/goals/print-receipt/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/card-taint-violation/goals/print-receipt/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-missing-schema/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-missing-schema/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-missing-schema/goals/bad/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-missing-schema/goals/good/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-missing-schema/goals/good/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-missing-schema/goals/good/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-only-ok/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-only-ok/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-only-ok/goals/bad/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-only-ok/goals/bad/run.py": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-only-ok/goals/good/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-only-ok/goals/good/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/changed-only-ok/goals/good/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/class-c-on-charter/CHARTER.md": [
-      "gate_set_manifest"
-    ],
-    "examples/class-c-on-charter/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/class-c-on-charter/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/class-c-on-charter/goals/pay/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/confirmer-open-fail/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/confirmer-open-fail/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/copied-goal-helper/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/copied-goal-helper/goals/issue-credit/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/copied-goal-helper/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/duplicated-adjective-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/duplicated-adjective-violation/domain/invoice/adjectives.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/duplicated-adjective-violation/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/duplicated-adjective-violation/domain/invoice/rules.py": [
-      "gate_set_manifest"
-    ],
-    "examples/duplicated-adjective-violation/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/duplicated-adjective-violation/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/duplicated-adjective-violation/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/duplicated-adjective-violation/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/duplicated-adjective-violation/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-missing-rule/.nlc/interview-packet.json": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-missing-rule/goals/workflow/goal.json": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-missing-rule/goals/workflow/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-missing-rule/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-strict-ok/goals/workflow/goal.json": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-strict-ok/goals/workflow/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-strict-ok/knowledge/facts.json": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-strict-ok/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-vague-tag/goals/workflow/goal.json": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-vague-tag/goals/workflow/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-vague-tag/knowledge/facts.json": [
-      "gate_set_manifest"
-    ],
-    "examples/durable-engine-vague-tag/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/emit-from-prose/plan.md": [
-      "gate_set_manifest"
-    ],
-    "examples/emit-manifest-bad/emit-manifest.json": [
-      "gate_set_manifest"
-    ],
-    "examples/emit-manifest-missing-audit/emit-manifest.json": [
-      "gate_set_manifest"
-    ],
-    "examples/emit-manifest-ok/emit-manifest.json": [
-      "gate_set_manifest"
-    ],
-    "examples/evidence-unresolved-ref/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/evidence-unresolved-ref/integrity/evidence-dangling-ref.json": [
-      "gate_set_manifest"
-    ],
-    "examples/extra-goal-entrypoint/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/extra-goal-entrypoint/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/extra-goal-entrypoint/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/extra-goal-entrypoint/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/extra-goal-entrypoint/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/extra-goal-entrypoint/goals/record-bank-payment/run.py": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-bindings-narrow-missing/.nlc/interview-packet.json": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-bindings-narrow-missing/goals/one/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-bindings-narrow-missing/goals/two/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-bindings-narrow-missing/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-test-no-call/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-test-no-call/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-test-no-call/goals/record-bank-payment/tests/test_record_bank_payment.py": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-tests-copy-adjectives/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-tests-copy-adjectives/domain/invoice/adjectives.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-tests-copy-adjectives/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-tests-copy-adjectives/goals/record-bank-payment/tests/test_goal.py": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-untested/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/goal-untested/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/impact-list-mismatch/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/impact-list-mismatch/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/impact-list-mismatch/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/imported-goal-helper/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/imported-goal-helper/goals/pay/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/imported-goal-helper/goals/refund/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/internal-link-landmine/broken.md": [
-      "gate_set_manifest"
-    ],
-    "examples/interview-packet-missing/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/interview-packet-missing/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/interview-packet-missing/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-dict-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-dict-violation/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-dict-violation/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-dict-violation/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-dict-violation/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-dict-violation/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-dict-violation/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-dict-violation/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-multiline-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-multiline-violation/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-multiline-violation/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-multiline-violation/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-multiline-violation/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-multiline-violation/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-multiline-violation/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-multiline-violation/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-object-setattr-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-object-setattr-violation/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-object-setattr-violation/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-object-setattr-violation/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-object-setattr-violation/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-object-setattr-violation/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-object-setattr-violation/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-object-setattr-violation/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-setattr-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-setattr-violation/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-setattr-violation/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-setattr-violation/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-setattr-violation/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-setattr-violation/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-setattr-violation/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-bypass-setattr-violation/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/.nlc/work-queue.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/domain/invoice/adjectives.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/domain/invoice/tests/test_invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-correct/goals/record-bank-payment/tests/test_record_bank_payment.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-escape-hatch-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-escape-hatch-violation/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-escape-hatch-violation/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-escape-hatch-violation/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-escape-hatch-violation/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-escape-hatch-violation/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-escape-hatch-violation/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-locality-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-locality-violation/domain/invoice/adjectives.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-locality-violation/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-locality-violation/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-locality-violation/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-locality-violation/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-locality-violation/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-locality-violation/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-locality-violation/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-verb-path-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-verb-path-violation/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-verb-path-violation/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-verb-path-violation/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-verb-path-violation/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-verb-path-violation/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-verb-path-violation/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-verb-path-violation/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-violation/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-violation/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-violation/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-violation/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-violation/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-violation/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/invoice-violation/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/mention-only-verb/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/mention-only-verb/domain/invoice/adjectives.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/mention-only-verb/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/mention-only-verb/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-c22/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-c22/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-change-class/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-change-class/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-contract/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-contract/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-contract/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-failure-mode/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-failure-mode/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-failure-mode/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-failure-mode/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-failure-mode/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/missing-failure-mode/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/non-python-with-adapter/.nlc/language-adapters.json": [
-      "gate_set_manifest"
-    ],
-    "examples/non-python-with-adapter/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/non-python-with-adapter/domain/demo/handler.ts": [
-      "gate_set_manifest"
-    ],
-    "examples/non-python-without-adapter/.nlc/interview-packet.json": [
-      "gate_set_manifest"
-    ],
-    "examples/non-python-without-adapter/domain/demo/handler.ts": [
-      "gate_set_manifest"
-    ],
-    "examples/noun-inheritance-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/noun-inheritance-violation/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/noun-retries/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/noun-retries/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/noun-without-tests/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/noun-without-tests/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/noun-without-tests/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/open-findings/FINDINGS.md": [
-      "gate_set_manifest"
-    ],
-    "examples/open-findings/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/orchestration-on-noun/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/orchestration-on-noun/domain/customer/customer.py": [
-      "gate_set_manifest"
-    ],
-    "examples/orchestration-on-noun/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/pipeline-wire-ok/pipeline.json": [
-      "gate_set_manifest"
-    ],
-    "examples/product-no-confirm/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/product-no-confirm/goals/pay/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/rca-packet-blame-agent/rca-packet.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rca-packet-ok/rca-packet.json": [
-      "gate_set_manifest"
-    ],
-    "examples/regen-queue-pending/.nlc/delta-regen-queue.json": [
-      "gate_set_manifest"
-    ],
-    "examples/regen-queue-pending/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/releasable-gate-list-duplicate/.gitignore": [
-      "gate_set_manifest"
-    ],
-    "examples/releasable-gate-list-duplicate/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/requirements-sync-pending/.nlc/interview-packet.json": [
-      "gate_set_manifest"
-    ],
-    "examples/requirements-sync-pending/.nlc/requirements-sync-pending.json": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-goal/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-goal/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-goal/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-key-unused/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-key-unused/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-key-unused/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-key-unused/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-nested-no-key/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-nested-no-key/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-nested-no-key/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-nested-ok/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-nested-ok/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-nested-ok/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-nested-ok/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-no-key/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-no-key/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/retrying-no-key/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/reverse-audit-bad/audit.json": [
-      "gate_set_manifest"
-    ],
-    "examples/reverse-audit-ok/audit.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-adoption-conflict/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-adoption-conflict/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-coverage-minimal/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-coverage-minimal/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-coverage-minimal/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-coverage-missing/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-coverage-missing/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-coverage-missing/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-marker-domain/domain/demo/enforce.py": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-marker-domain/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-runner-missing-snapshot/.nlc/interview-packet.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-runner-missing-snapshot/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-runner-missing-snapshot/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-apply-must-ok/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-apply-must-ok/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-apply-must-violation/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-apply-must-violation/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return-ok/.nlc/rule-ir.snapshot.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return-ok/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return-ok/domain/card/taint.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return-ok/goals/print-receipt/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return-ok/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return/.nlc/rule-ir.snapshot.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return/domain/card/card.py": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return/domain/card/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return/domain/card/taint.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return/goals/print-receipt/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return/goals/print-receipt/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return/goals/print-receipt/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return/goals/print-receipt/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/rule-semantic-pan-forbid-return/rules/adopted.json": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-field-missing/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-field-missing/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-field-missing/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-identity-violation/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-identity-violation/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-identity-violation/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-identity-violation/goals/record-bank-payment/failure.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-identity-violation/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-identity-violation/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-identity-violation/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-type-mismatch/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-type-mismatch/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-type-mismatch/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-unannotated/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-unannotated/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/schema-unannotated/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/skill-author-check-landmine/.agents/skills/demo/SKILL.md": [
-      "gate_set_manifest"
-    ],
-    "examples/skill-author-check-landmine/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/sql-escape-hatch/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/sql-escape-hatch/goals/pay/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/stray-verb/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/stray-verb/domain/invoice/adjectives.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/stray-verb/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/stray-verb/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/unsigned-class-a/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/unsigned-class-a/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/unversioned-contract/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/unversioned-contract/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/unversioned-contract/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/unversioned-contract/goals/record-bank-payment/output.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/upstream-hand-patch-missing/.nlc/interview-packet.json": [
-      "gate_set_manifest"
-    ],
-    "examples/upstream-hand-patch-missing/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-no-preserve/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-no-preserve/domain/invoice/adjectives.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-no-preserve/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-no-preserve/domain/invoice/tests/test_invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-success-only/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-success-only/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-success-only/domain/invoice/tests/test_invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-untested/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-untested/domain/invoice/fields.txt": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-untested/domain/invoice/invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-untested/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verb-untested/domain/invoice/tests/test_invoice.py": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-breaking-accept/.nlc/before-generate-stamp.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-breaking-accept/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-breaking-accept/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-breaking-accept/adrs/0099-breaking-currency.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-breaking-accept/domain/invoice/schemas/verbs.previous.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-breaking-accept/domain/invoice/schemas/verbs.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-impact-c21/.nlc/before-generate-stamp.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-impact-c21/.nlc/gate-records.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-impact-c21/CONFIRM.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-impact-c21/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-impact-c21/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-no-before-stamp/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-no-before-stamp/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-handoff/.nlc/before-generate-stamp.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-handoff/.nlc/change-adversarial.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-handoff/.nlc/gate-records.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-handoff/.nlc/produce-package.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-handoff/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-handoff/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-self-audit/.nlc/before-generate-stamp.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-self-audit/.nlc/change-adversarial.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-self-audit/.nlc/gate-records.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-self-audit/.nlc/produce-package.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-self-audit/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-produce-self-audit/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-skill-ungated/.agents/skills/demo/SKILL.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-skill-ungated/.nlc/before-generate-stamp.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-skill-ungated/.nlc/gate-scope.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-skill-ungated/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-stale-stamp/.nlc/before-generate-stamp.json": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-stale-stamp/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/verify-stale-stamp/goals/demo/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/version-bump-no-adr/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/version-bump-no-adr/goals/record-bank-payment/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/version-bump-no-adr/goals/record-bank-payment/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/workflow-as-goal/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/workflow-as-goal/workflows/pay-invoice/implementation.py": [
-      "gate_set_manifest"
-    ],
-    "examples/workflow-as-goal/workflows/pay-invoice/input.schema.json": [
-      "gate_set_manifest"
-    ],
-    "examples/wrapper-goal/README.md": [
-      "gate_set_manifest"
-    ],
-    "examples/wrapper-goal/goals/pay/implementation.py": [
       "gate_set_manifest"
     ],
     "goals/hub_fitness_check1/execute.sh": [
@@ -2413,6 +1208,12 @@
     "integrity/charter-ratify-backlog.json": [
       "gate_set_manifest"
     ],
+    "integrity/check-inputs.json": [
+      "gate_set_manifest"
+    ],
+    "integrity/checker-digest.sha256": [
+      "gate_set_manifest"
+    ],
     "integrity/examples/pan-rules-adopted.json": [
       "gate_set_manifest"
     ],
@@ -2433,7 +1234,6 @@
       "gate_set_manifest"
     ],
     "integrity/hub-content-tree-hash.txt": [
-      "gate_set_manifest",
       "content_tree"
     ],
     "integrity/hub-gate-diff-profile.json": [
@@ -2443,6 +1243,9 @@
       "gate_set_manifest"
     ],
     "integrity/hub-release-record.json": [
+      "gate_set_manifest"
+    ],
+    "integrity/hub-stamp-scopes.json": [
       "gate_set_manifest"
     ],
     "integrity/hub-x4-remainder.json": [
@@ -2591,6 +1394,9 @@
     "migrations/0.3.3_to_0.4.0/migration.yaml": [
       "gate_set_manifest"
     ],
+    "migrations/0.4.0_to_0.4.1/migration.yaml": [
+      "gate_set_manifest"
+    ],
     "migrations/README.md": [
       "gate_set_manifest"
     ],
@@ -2705,6 +1511,9 @@
     "tools/assert-batch-generate-policy-fails.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-before-generate-hub-stamp-scopes-writer-fails.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-binding-matrix-met.py": [
       "gate_set_manifest"
     ],
@@ -2804,6 +1613,9 @@
     "tools/assert-changed-missing-fails.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-content-only-change-does-not-trip-gate-set-signature-passes.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-contract-change-detects-c21-fails.py": [
       "gate_set_manifest"
     ],
@@ -2846,6 +1658,12 @@
     "tools/assert-field-write-bypass-fails.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-fitness-hub-stamp-scopes-check-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-fitness-hub-stamp-scopes-source-fails.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-full-nlc-audit-emit-checklist-passes.py": [
       "gate_set_manifest"
     ],
@@ -2853,6 +1671,9 @@
       "gate_set_manifest"
     ],
     "tools/assert-gate-record-describe-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-gate-set-cache-once-passes.py": [
       "gate_set_manifest"
     ],
     "tools/assert-gate-set-closure-excluded-not-members-passes.py": [
@@ -2870,6 +1691,9 @@
     "tools/assert-gate-set-manifest-tamper-fails.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-gate-set-member-change-fails-closed.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-goal-bindings-narrow-fails.py": [
       "gate_set_manifest"
     ],
@@ -2880,6 +1704,9 @@
       "gate_set_manifest"
     ],
     "tools/assert-guide-orchestration-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-history-rewrite-drill-clone-fails.py": [
       "gate_set_manifest"
     ],
     "tools/assert-history-rewrite-invariant-passes.py": [
@@ -2928,6 +1755,9 @@
       "gate_set_manifest"
     ],
     "tools/assert-jidoka-ssot-agents-link-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-landmine-file-change-triggers-landmine-passes.py": [
       "gate_set_manifest"
     ],
     "tools/assert-live-self-ref-direct-edit-fails.py": [
@@ -3047,6 +1877,141 @@
     "tools/assert-release-preflight-passes.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-release-prep-hand-edit-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-align-local-tag-to-remote-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-align-local-tag-to-remote-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-branch-exists-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-branch-exists-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-changelog-tag-exists-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-changelog-tag-exists-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-create-release-line-show-ref-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-create-release-line-show-ref-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-git-changed-paths-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-git-changed-paths-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-github-latest-tag-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-github-latest-tag-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-is-resolvable-commit-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-is-resolvable-commit-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-list-version-tags-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-list-version-tags-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-main-purity-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-main-purity-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-publish-decision-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-publish-decision-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-publish-status-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-publish-status-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-pull-requests-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-pull-requests-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-release-state-out-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-release-state-out-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-branch-exists-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-branch-exists-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-branch-sha-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-branch-sha-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-known-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-known-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-tag-commit-only-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-remote-tag-commit-only-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-resolve-ref-sha-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-resolve-ref-sha-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-sig-ok-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-sig-ok-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-exists-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-exists-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-is-ancestor-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-is-ancestor-passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-on-commit-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-release-probe-tag-on-commit-passes.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-release-resume-invariant-passes.py": [
       "gate_set_manifest"
     ],
@@ -3110,6 +2075,9 @@
     "tools/assert-schema-identity-fails.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-selection-error-runs-full-suite-passes.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-shipped-tag-audit-fails.py": [
       "gate_set_manifest"
     ],
@@ -3125,6 +2093,9 @@
     "tools/assert-stale-committed-evidence-fails.py": [
       "gate_set_manifest"
     ],
+    "tools/assert-tag-digest-signature-required-fails.py": [
+      "gate_set_manifest"
+    ],
     "tools/assert-taint-alias-fails.py": [
       "gate_set_manifest"
     ],
@@ -3138,6 +2109,9 @@
       "gate_set_manifest"
     ],
     "tools/assert-todo-use-cases-ssot-fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/assert-unmapped-file-runs-full-suite-passes.py": [
       "gate_set_manifest"
     ],
     "tools/assert-unresolvable-refuses-passes.py": [
@@ -3203,6 +2177,9 @@
     "tools/changeset.py": [
       "gate_set_manifest"
     ],
+    "tools/check-checker-digest-signature.py": [
+      "gate_set_manifest"
+    ],
     "tools/check-rule-adoption.py": [
       "gate_set_manifest"
     ],
@@ -3216,6 +2193,9 @@
       "gate_set_manifest"
     ],
     "tools/derive-adr-0051-0052-rules.py": [
+      "gate_set_manifest"
+    ],
+    "tools/derive-check-inputs.py": [
       "gate_set_manifest"
     ],
     "tools/derive-gate-set-closure-reference.py": [
@@ -3356,6 +2336,9 @@
     "tools/fitness-charter-nlc-door.py": [
       "gate_set_manifest"
     ],
+    "tools/fitness-check-inputs-declaration.py": [
+      "gate_set_manifest"
+    ],
     "tools/fitness-compiled-system-uc-binder.py": [
       "gate_set_manifest"
     ],
@@ -3369,6 +2352,9 @@
       "gate_set_manifest"
     ],
     "tools/fitness-dashboard-interview-sync.py": [
+      "gate_set_manifest"
+    ],
+    "tools/fitness-derived-release-state.py": [
       "gate_set_manifest"
     ],
     "tools/fitness-distribution-binder.py": [
@@ -3444,6 +2430,9 @@
       "gate_set_manifest"
     ],
     "tools/fitness-hub-scope-derived.py": [
+      "gate_set_manifest"
+    ],
+    "tools/fitness-hub-stamp-scopes.py": [
       "gate_set_manifest"
     ],
     "tools/fitness-hub-x4-noun-pilot.py": [
@@ -3626,6 +2615,9 @@
     "tools/fitness-release-planner-ownership.py": [
       "gate_set_manifest"
     ],
+    "tools/fitness-release-prep-script-match.py": [
+      "gate_set_manifest"
+    ],
     "tools/fitness-requirements-hub-entrypoints.py": [
       "gate_set_manifest"
     ],
@@ -3738,6 +2730,12 @@
       "gate_set_manifest"
     ],
     "tools/fixtures/hub-own/valid-hub-own-produce-package.json": [
+      "gate_set_manifest"
+    ],
+    "tools/fixtures/hub-stamp-scopes/empty-scopes-source.json": [
+      "gate_set_manifest"
+    ],
+    "tools/fixtures/hub-stamp-scopes/partial-stamp-scopes.json": [
       "gate_set_manifest"
     ],
     "tools/fixtures/known-bad-ssot/missing-constraint-entry.json": [
@@ -4076,6 +3074,9 @@
     "tools/nlc_release_preflight.py": [
       "gate_set_manifest"
     ],
+    "tools/nlc_release_prep_surfaces.py": [
+      "gate_set_manifest"
+    ],
     "tools/nlc_release_record.py": [
       "gate_set_manifest"
     ],
@@ -4410,6 +3411,12 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_batch_generate_policy_fails/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_before_generate_hub_stamp_scopes_writer_fails/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_before_generate_hub_stamp_scopes_writer_fails/assert_before_generate_hub_stamp_scopes_writer_fails.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_binding_matrix_met/README.md": [
@@ -5006,6 +4013,21 @@
     "tools/nouns/assert_changed_missing_fails/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/assert_content_only_change_does_not_trip_gate_set_signature_passes/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_content_only_change_does_not_trip_gate_set_signature_passes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_content_only_change_does_not_trip_gate_set_signature_passes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_content_only_change_does_not_trip_gate_set_signature_passes/assert_content_only_change_does_not_trip_gate_set_signature_passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_content_only_change_does_not_trip_gate_set_signature_passes/fields.txt": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/assert_contract_change_detects_c21_fails/README.md": [
       "gate_set_manifest"
     ],
@@ -5228,6 +4250,18 @@
     "tools/nouns/assert_field_write_bypass_fails/assert_field_write_bypass_fails.py": [
       "gate_set_manifest"
     ],
+    "tools/nouns/assert_fitness_hub_stamp_scopes_check_fails/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_fitness_hub_stamp_scopes_check_fails/assert_fitness_hub_stamp_scopes_check_fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_fitness_hub_stamp_scopes_source_fails/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_fitness_hub_stamp_scopes_source_fails/assert_fitness_hub_stamp_scopes_source_fails.py": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/assert_full_nlc_audit_emit_checklist_passes/README.md": [
       "gate_set_manifest"
     ],
@@ -5282,6 +4316,21 @@
     "tools/nouns/assert_gate_record_describe_passes/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/assert_gate_set_cache_once_passes/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_cache_once_passes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_cache_once_passes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_cache_once_passes/assert_gate_set_cache_once_passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_cache_once_passes/fields.txt": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/README.md": [
       "gate_set_manifest"
     ],
@@ -5295,6 +4344,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_member_change_fails_closed/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_member_change_fails_closed/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_member_change_fails_closed/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_member_change_fails_closed/assert_gate_set_member_change_fails_closed.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_gate_set_member_change_fails_closed/fields.txt": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_goal_bindings_narrow_fails/README.md": [
@@ -5364,6 +4428,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_guide_orchestration_passes/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_history_rewrite_drill_clone_fails/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_history_rewrite_drill_clone_fails/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_history_rewrite_drill_clone_fails/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_history_rewrite_drill_clone_fails/assert_history_rewrite_drill_clone_fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_history_rewrite_drill_clone_fails/fields.txt": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_history_rewrite_invariant_passes/README.md": [
@@ -5607,6 +4686,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_jidoka_ssot_agents_link/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_landmine_file_change_triggers_landmine_passes/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_landmine_file_change_triggers_landmine_passes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_landmine_file_change_triggers_landmine_passes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_landmine_file_change_triggers_landmine_passes/assert_landmine_file_change_triggers_landmine_passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_landmine_file_change_triggers_landmine_passes/fields.txt": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_live_self_ref_direct_edit_fails/README.md": [
@@ -6239,6 +5333,36 @@
     "tools/nouns/assert_release_preflight_passes/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/assert_release_prep_hand_edit_fails/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_prep_hand_edit_fails/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_prep_hand_edit_fails/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_prep_hand_edit_fails/assert_release_prep_hand_edit_fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_prep_hand_edit_fails/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_probe_fail_closed/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_probe_fail_closed/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_probe_fail_closed/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_probe_fail_closed/assert_release_probe_fail_closed.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_release_probe_fail_closed/fields.txt": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/assert_release_resume_invariant_passes/README.md": [
       "gate_set_manifest"
     ],
@@ -6617,6 +5741,21 @@
     "tools/nouns/assert_schema_identity_fails/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/assert_selection_error_runs_full_suite_passes/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_selection_error_runs_full_suite_passes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_selection_error_runs_full_suite_passes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_selection_error_runs_full_suite_passes/assert_selection_error_runs_full_suite_passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_selection_error_runs_full_suite_passes/fields.txt": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/assert_shipped_tag_audit_fails/README.md": [
       "gate_set_manifest"
     ],
@@ -6687,6 +5826,9 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_stale_committed_evidence_fails/assert_stale_committed_evidence_fails.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_tag_digest_signature_required_fails/assert_tag_digest_signature_required_fails.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_taint_alias_fails/README.md": [
@@ -6777,6 +5919,21 @@
       "gate_set_manifest"
     ],
     "tools/nouns/assert_todo_use_cases_ssot_fails/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_unmapped_file_runs_full_suite_passes/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_unmapped_file_runs_full_suite_passes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_unmapped_file_runs_full_suite_passes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_unmapped_file_runs_full_suite_passes/assert_unmapped_file_runs_full_suite_passes.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/assert_unmapped_file_runs_full_suite_passes/fields.txt": [
       "gate_set_manifest"
     ],
     "tools/nouns/assert_unresolvable_refuses_passes/README.md": [
@@ -7190,6 +6347,21 @@
     "tools/nouns/charter_corpus_pointer/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/check_inputs/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_inputs/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_inputs/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_inputs/check_inputs.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_inputs/fields.txt": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/check_rule_adoption/README.md": [
       "gate_set_manifest"
     ],
@@ -7206,6 +6378,24 @@
       "gate_set_manifest"
     ],
     "tools/nouns/check_rule_adoption/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_selection/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_selection/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_selection/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_selection/check_selection.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/check_selection/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/checker_digest/checker_digest.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/ci_fitness/README.md": [
@@ -8183,6 +7373,21 @@
     "tools/nouns/fitness_charter_nlc_door/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/fitness_check_inputs_declaration/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_check_inputs_declaration/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_check_inputs_declaration/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_check_inputs_declaration/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_check_inputs_declaration/fitness_check_inputs_declaration.py": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/fitness_compiled_system_uc_binder/README.md": [
       "gate_set_manifest"
     ],
@@ -8268,6 +7473,9 @@
       "gate_set_manifest"
     ],
     "tools/nouns/fitness_dashboard_interview_sync/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_derived_release_state/fitness_derived_release_state.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/fitness_distribution_binder/README.md": [
@@ -8709,6 +7917,18 @@
       "gate_set_manifest"
     ],
     "tools/nouns/fitness_hub_source/schemas/verbs.schema.json": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_hub_stamp_scopes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_hub_stamp_scopes/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_hub_stamp_scopes/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_hub_stamp_scopes/fitness_hub_stamp_scopes.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/fitness_hub_x4_noun_pilot/README.md": [
@@ -9737,6 +8957,21 @@
     "tools/nouns/fitness_release_planner_ownership/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/fitness_release_prep_script_match/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_release_prep_script_match/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_release_prep_script_match/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_release_prep_script_match/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/fitness_release_prep_script_match/fitness_release_prep_script_match.py": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/fitness_requirements_hub_entrypoints/README.md": [
       "gate_set_manifest"
     ],
@@ -10383,6 +9618,12 @@
       "gate_set_manifest"
     ],
     "tools/nouns/hub_own_produce/hub_own_produce.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/hub_stamp_scopes/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/hub_stamp_scopes/hub_stamp_scopes.py": [
       "gate_set_manifest"
     ],
     "tools/nouns/hub_update/README.md": [
@@ -11366,6 +10607,36 @@
     "tools/nouns/release_preflight/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/release_prep_surfaces/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_prep_surfaces/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_prep_surfaces/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_prep_surfaces/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_prep_surfaces/release_prep_surfaces.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_probe/README.md": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_probe/__init__.py": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_probe/adjectives.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_probe/fields.txt": [
+      "gate_set_manifest"
+    ],
+    "tools/nouns/release_probe/release_probe.py": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/release_remediate/README.md": [
       "gate_set_manifest"
     ],
@@ -11685,6 +10956,9 @@
       "gate_set_manifest"
     ],
     "tools/product_tree.py": [
+      "gate_set_manifest"
+    ],
+    "tools/regen-derived-release-state.py": [
       "gate_set_manifest"
     ],
     "tools/release-audit.py": [

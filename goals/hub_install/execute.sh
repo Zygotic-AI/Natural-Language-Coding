@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Natural Language Coding — install portable skills into the user's agent harness.
+# Natural Language Compiler — install portable skills into the user's agent harness.
 # macOS, Linux, WSL. Requires: bash, curl or git, mkdir, cp or rsync.
 set -euo pipefail
 
@@ -40,7 +40,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-echo "Natural Language Coding — install"
+echo "Natural Language Compiler — install"
 echo "  target: ${INSTALL_ROOT}"
 echo "  skills: ${AGENTS_SKILLS}"
 

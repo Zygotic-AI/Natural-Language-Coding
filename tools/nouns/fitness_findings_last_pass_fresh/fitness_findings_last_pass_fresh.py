@@ -29,8 +29,7 @@ def main() -> int:
         print("RESULT:NOT_MET")
         return 1
 
-    recorded = read_content_tree_hash(ROOT)
-    if not recorded:
+    if not read_content_tree_hash(ROOT):
         print("VIOLATION missing integrity/hub-content-tree-hash.txt")
         print("RESULT:NOT_MET")
         return 1

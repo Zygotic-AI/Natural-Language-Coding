@@ -73,6 +73,9 @@ def sync_content_tree_hash(root: Path | None = None) -> str:
     h = content_digest_excluding(base, _content_exclude_rel())
     if not h:
         raise RuntimeError("cannot compute hub content digest")
+    if read_content_tree_hash(base) == h:
+        return h
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(h + "\n", encoding="utf-8")
     return h
 

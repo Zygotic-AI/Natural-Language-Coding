@@ -6,6 +6,7 @@ Usage: derive-gate-set-closure-reference.py <repo-root>   -> prints sorted repo-
 Reference algorithm (PM closure v2). SSOT implementation: nouns.gate_set.gate_set.derive_gate_set_paths.
 
 Also excludes exactly (not by pattern): integrity/gate-set-baseline.manifest.sha256.approval.asc
+and integrity/hub-content-tree-hash.txt (PR #30 option A freshness stamp).
 """
 from __future__ import annotations
 

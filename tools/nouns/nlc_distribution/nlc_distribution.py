@@ -16,6 +16,8 @@ import urllib.request
 from pathlib import Path
 from typing import Iterable
 
+from nouns.release_probe.release_probe import ProbeFailure, confirmed_text, run_argv
+
 DEFAULT_REPO = "Zygotic-AI/Natural-Language-Coding"
 DEFAULT_RAW = f"https://raw.githubusercontent.com/{DEFAULT_REPO}/main"
 SEMVER_RE = re.compile(r"^v?(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)$")
@@ -217,31 +219,39 @@ def copy_tree_into_version(src: Path, install_root: Path, version: str) -> Path:
     return dest
 
 
-def _github_latest_tag(repo: str) -> str | None:
+def _github_latest_tag(
+    repo: str,
+    *,
+    opener: object | None = None,
+    runner: object | None = None,
+) -> str | None:
     url = f"https://api.github.com/repos/{repo}/releases/latest"
     req = urllib.request.Request(url, headers={"Accept": "application/vnd.github+json"})
+    open_url = opener or urllib.request.urlopen
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError:
-        return _github_latest_tag_via_ls_remote(repo)
+        with open_url(req, timeout=60) as resp:
+            raw = resp.read().decode("utf-8")
+    except urllib.error.HTTPError as exc:
+        if exc.code == 404:
+            return _github_latest_tag_via_ls_remote(repo, runner=runner)
+        raise ProbeFailure(f"unexpected error: HTTP {exc.code}", kind="unexpected_error") from exc
+    except urllib.error.URLError as exc:
+        raise ProbeFailure(f"unexpected error: {exc}", kind="unexpected_error") from exc
+    if not raw.strip():
+        raise ProbeFailure("empty output: GitHub latest release", kind="empty")
+    data = json.loads(raw)
     tag = data.get("tag_name")
     if not tag:
-        return None
+        raise ProbeFailure("empty output: tag_name", kind="empty")
     return normalize_version(tag)
 
 
-def github_published_versions(repo: str) -> list[str]:
-    if shutil.which("git") is None:
-        return []
-    proc = subprocess.run(
+def github_published_versions(repo: str, runner: object | None = None) -> list[str]:
+    proc = run_argv(
         ["git", "ls-remote", "--tags", "--refs", f"https://github.com/{repo}.git", "v*"],
-        capture_output=True,
-        text=True,
-        check=False,
+        runner=runner,
     )
-    if proc.returncode != 0:
-        return []
+    confirmed_text(proc, empty_ok=True)
     tags: list[str] = []
     for line in proc.stdout.splitlines():
         parts = line.split()
@@ -253,8 +263,8 @@ def github_published_versions(repo: str) -> list[str]:
     return sorted(set(tags), key=version_key)
 
 
-def _github_latest_tag_via_ls_remote(repo: str) -> str | None:
-    tags = github_published_versions(repo)
+def _github_latest_tag_via_ls_remote(repo: str, runner: object | None = None) -> str | None:
+    tags = github_published_versions(repo, runner=runner)
     if not tags:
         return None
     return tags[-1]

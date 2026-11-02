@@ -17,6 +17,7 @@ import sys
 from pathlib import Path
 
 from nouns.gate_set.gate_set import derive_gate_set_paths
+from nouns.release_probe.release_probe import ProbeFailure, confirmed_text, run_argv
 from nouns.planit_identity.planit_identity import CANONICAL_PATH, REGISTRY_REL, content_hash
 from nouns.self_ref_set.self_ref_set import STAGING_PREFIX
 
@@ -98,39 +99,27 @@ def derive_mandated_paths(root: Path) -> dict[str, list[str]]:
     return {key: mapping[key] for key in sorted(mapping)}
 
 
-def git_changed_paths(root: Path, base: str | None = None) -> list[str]:
+def git_changed_paths(
+    root: Path, base: str | None = None, runner: object | None = None
+) -> list[str]:
     """Repo-relative paths changed versus merge-base (plus dirty and staged)."""
     names: set[str] = set()
     merge_base = base
     if merge_base is None:
-        proc = subprocess.run(
+        proc = run_argv(
             ["git", "merge-base", "HEAD", "origin/release/v0.4.0"],
-            cwd=str(root),
-            capture_output=True,
-            text=True,
-            check=False,
+            cwd=root,
+            runner=runner,
         )
-        if proc.returncode == 0 and proc.stdout.strip():
-            merge_base = proc.stdout.strip()
-        else:
-            merge_base = "HEAD"
+        merge_base = confirmed_text(proc, empty_ok=False)
     commands = (
         ["git", "diff", "--name-only", f"{merge_base}...HEAD"],
         ["git", "diff", "--name-only", "--cached"],
         ["git", "diff", "--name-only"],
     )
-    if merge_base == "HEAD":
-        commands = commands[1:]
     for argv in commands:
-        proc = subprocess.run(
-            argv,
-            cwd=str(root),
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        if proc.returncode != 0:
-            continue
+        proc = run_argv(argv, cwd=root, runner=runner)
+        confirmed_text(proc, empty_ok=True)
         for line in (proc.stdout or "").splitlines():
             rel = line.strip().replace("\\", "/")
             if rel and not rel.startswith(STAGING_PREFIX):
@@ -179,7 +168,10 @@ def _manifest_matches_tree(root: Path) -> bool:
 
 def pin_move_errors(root: Path, changed: list[str] | None = None) -> list[str]:
     """Refuse when a mandated path changed and its pins did not move."""
-    changed_list = list(changed) if changed is not None else git_changed_paths(root)
+    try:
+        changed_list = list(changed) if changed is not None else git_changed_paths(root)
+    except ProbeFailure as exc:
+        return [f"mandate-pins changed-path probe: {exc}"]
     changed_set = set(changed_list)
     mandated = derive_mandated_paths(root)
     errors: list[str] = []
@@ -211,20 +203,12 @@ def pin_move_errors(root: Path, changed: list[str] | None = None) -> list[str]:
 
 
 def unsigned_manifest_incomplete(root: Path, changed: list[str] | None = None) -> list[str]:
-    """A regenerated-but-unsigned manifest is INCOMPLETE produce, not a finished step."""
-    changed_list = list(changed) if changed is not None else git_changed_paths(root)
-    mandated = derive_mandated_paths(root)
-    touches_member = any(PIN_MANIFEST in (mandated.get(rel) or []) for rel in changed_list)
-    if not touches_member and MANIFEST_REL not in changed_list:
-        return []
-    sidecar = root / (MANIFEST_REL + ".approval.asc")
-    if not sidecar.is_file():
-        return [f"INCOMPLETE {MANIFEST_REL}: regenerated without owner sidecar"]
-    from nouns.owner_sidecar.owner_sidecar import verify_sidecar_p1
+    """Branch produce does not need manifest armor (ADR 0057).
 
-    errors = verify_sidecar_p1(root, MANIFEST_REL)
-    if errors:
-        return [f"INCOMPLETE {MANIFEST_REL}: {errors[0]}"]
+    The tag gate refuses an unsigned checker digest. A missing manifest
+    sidecar is not an incomplete branch.
+    """
+    _ = (root, changed)
     return []
 
 

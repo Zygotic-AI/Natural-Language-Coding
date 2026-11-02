@@ -1,4 +1,4 @@
-# [Natural Language Coding](../TERMS.md#nlc) — doc map
+# [Natural Language Compiler](../TERMS.md#nlc) — doc map
 
 This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler), gates, and skills. It does **not** [ship](../TERMS.md#ship) product requirements (no PCI, no HIPAA built-in). Adopters bring requirements via their own ADRs, rules, and **[requirement packs](../TERMS.md#requirement-pack)** (v0.2 — see [`TODO`](../../TODO)).
 

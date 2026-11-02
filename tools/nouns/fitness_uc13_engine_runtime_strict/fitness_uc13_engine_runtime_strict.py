@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
+HUB_BEFORE_GENERATE_STAMP = ".nlc/before-generate-stamp.json"
 sys.path.insert(0, str(ROOT / "tools"))
 from fitness_hub_source import read_tool  # noqa: E402
 

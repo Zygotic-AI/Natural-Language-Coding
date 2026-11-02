@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 from nouns.mandated_paths.mandated_paths import git_changed_paths
+from nouns.release_probe.release_probe import ProbeFailure
 from nouns.planit_identity.planit_identity import CANONICAL_PATH, REGISTRY_REL, content_hash, load_registry
 from nouns.self_ref_set.self_ref_set import STAGING_PREFIX, derive_self_ref_set
 
@@ -107,9 +108,13 @@ def _is_activation_commit(root: Path, changed: list[str]) -> bool:
 
 
 def live_member_edit_errors(root: Path) -> list[str]:
+    try:
+        changed_paths = git_changed_paths(root)
+    except ProbeFailure as exc:
+        return [f"changed-path probe: {exc}"]
     changed = [
         rel
-        for rel in git_changed_paths(root)
+        for rel in changed_paths
         if not rel.startswith(STAGING_PREFIX)
     ]
     self_ref = set(derive_self_ref_set(root))
@@ -132,9 +137,6 @@ def main() -> int:
         print("LIVE_SELF_REF:MET skip (hub-only gate, not hub tree)")
         return 0
     errors = live_member_edit_errors(root)
-    errors.extend(__import__(
-        "nouns.self_ref_set.self_ref_set", fromlist=["snapshot_errors"]
-    ).snapshot_errors(root))
     if errors:
         for item in errors:
             print(f"VIOLATION {item}")

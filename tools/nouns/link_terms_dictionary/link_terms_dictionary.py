@@ -21,7 +21,7 @@ SKIP_DIRS = {
 }
 
 EXTRA_ALIASES: dict[str, str] = {
-    "Natural Language Coding": "NLC",
+    "Natural Language Compiler": "NLC",
     "verify deep": "verify-deep",
     "gate-record": "Gate record",
     "gate record": "Gate record",

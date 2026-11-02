@@ -19,20 +19,21 @@ from nlc_release_tags import (  # noqa: E402
 )
 from nouns.release_bump import bump_semver, read_version, suggest_bump  # noqa: E402
 from nouns.release_main_purity import evaluate_main_purity  # noqa: E402
+from nouns.release_probe.release_probe import (  # noqa: E402
+    ProbeFailure,
+    confirmed_exists,
+    run_argv,
+)
 
 BOUNDARY = "bba-emit"
 
 HUB_ROOT = Path(__file__).resolve().parents[3]
 
 
-def _git(*args: str, root: Path) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        ["git", *args],
-        cwd=str(root),
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+def _git(
+    *args: str, root: Path, runner: object | None = None
+) -> subprocess.CompletedProcess[str]:
+    return run_argv(["git", *args], cwd=root, runner=runner)
 
 
 def current_branch(root: Path) -> str:
@@ -49,8 +50,9 @@ def version_from_release_branch(branch: str) -> str | None:
     return m.group(1) if m else None
 
 
-def branch_exists(name: str, root: Path) -> bool:
-    return _git("show-ref", "--verify", "--quiet", f"refs/heads/{name}", root=root).returncode == 0
+def branch_exists(name: str, root: Path, runner: object | None = None) -> bool:
+    proc = _git("show-ref", "--verify", "--quiet", f"refs/heads/{name}", root=root, runner=runner)
+    return confirmed_exists(proc, require_stdout=False)
 
 
 @dataclass
@@ -140,7 +142,21 @@ def infer_release(
     hub = hub.resolve()
     branch = (as_branch or "").strip() or current_branch(hub)
     _ = resume
-    decision = plan_release(observe(remote, base))
+    try:
+        decision = plan_release(observe(remote, base))
+    except ProbeFailure as exc:
+        return InferPlan(
+            phase="prepare",
+            bump="keep",
+            target_version="",
+            release_branch="",
+            action="blocked",
+            source_branch=branch,
+            reasons=[str(exc)],
+            block=True,
+            block_problem=str(exc),
+            block_gaps=[str(exc)],
+        )
     phase = present_resume_phase(decision)
 
     if phase in ("tag_ready", "await_merge", "complete"):
@@ -227,7 +243,21 @@ def infer_release(
     def _exists(name: str) -> bool:
         return branch_exists(name, hub)
 
-    action, action_reasons = plan_prepare_action(branch, target, release_branch, _exists)
+    try:
+        action, action_reasons = plan_prepare_action(branch, target, release_branch, _exists)
+    except ProbeFailure as exc:
+        return InferPlan(
+            phase="prepare",
+            bump=bump,
+            target_version=target,
+            release_branch=release_branch,
+            action="blocked",
+            source_branch=branch,
+            reasons=reasons,
+            block=True,
+            block_problem=str(exc),
+            block_gaps=[str(exc)],
+        )
     reasons.extend(action_reasons)
 
     return InferPlan(

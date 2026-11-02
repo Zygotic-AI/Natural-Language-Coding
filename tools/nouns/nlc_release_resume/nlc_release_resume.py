@@ -17,16 +17,16 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 from nlc_release_record import git_show_json  # noqa: E402
 from nlc_release_tags import tag_exists  # noqa: E402
+from nouns.release_probe.release_probe import (  # noqa: E402
+    ProbeFailure,
+    confirmed_exists,
+    confirmed_text,
+    run_argv,
+)
 
 
-def _git(*args: str) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        ["git", *args],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+def _git(*args: str, runner: object | None = None) -> subprocess.CompletedProcess[str]:
+    return run_argv(["git", *args], cwd=ROOT, runner=runner)
 
 
 def _is_full_sha(value: str) -> bool:
@@ -34,18 +34,21 @@ def _is_full_sha(value: str) -> bool:
     return len(value) == 40 and all(c in "0123456789abcdef" for c in value)
 
 
-def resolve_ref_sha(ref: str) -> str:
+def resolve_ref_sha(ref: str, runner: object | None = None) -> str:
     """Git rev-parse; git may print ref name on stderr path — ignore non-SHA stdout."""
-    proc = _git("rev-parse", ref)
-    if proc.returncode != 0:
+    proc = _git("rev-parse", "-q", "--verify", ref, runner=runner)
+    if not confirmed_exists(proc, require_stdout=True):
         return ""
     sha = (proc.stdout or "").strip()
-    return sha if _is_full_sha(sha) else ""
+    if not _is_full_sha(sha):
+        raise ProbeFailure("empty output: ref sha is not a full commit", kind="empty")
+    return sha
 
 
-def remote_branch_exists(remote: str, branch: str) -> bool:
-    proc = _git("ls-remote", "--heads", remote, f"refs/heads/{branch}")
-    return proc.returncode == 0 and bool((proc.stdout or "").strip())
+def remote_branch_exists(remote: str, branch: str, runner: object | None = None) -> bool:
+    proc = _git("ls-remote", "--heads", remote, f"refs/heads/{branch}", runner=runner)
+    confirmed_text(proc, empty_ok=True)
+    return bool((proc.stdout or "").strip())
 
 
 def list_release_branches(remote: str) -> list[str]:
@@ -85,11 +88,13 @@ def merged_commit_for_branch(remote: str, base: str, rel_branch: str, tip: str) 
     return None
 
 
-def tag_on_commit(tag: str, commit: str) -> bool:
-    if not tag_exists(tag):
+def tag_on_commit(tag: str, commit: str, runner: object | None = None) -> bool:
+    if not tag_exists(tag, runner=runner):
         return False
-    proc = _git("rev-parse", f"{tag}^{{commit}}")
-    return proc.returncode == 0 and proc.stdout.strip() == commit
+    proc = _git("rev-parse", "-q", "--verify", f"{tag}^{{commit}}", runner=runner)
+    if not confirmed_exists(proc, require_stdout=True):
+        raise ProbeFailure("empty output: tag peel after tag_exists", kind="empty")
+    return (proc.stdout or "").strip() == commit
 
 
 def release_record_on_commit(commit: str) -> bool:
@@ -153,7 +158,11 @@ def main() -> int:
     parser.add_argument("--emit", choices=("shell", "json"), default="shell")
     args = parser.parse_args()
 
-    state = detect(args.remote, args.base)
+    try:
+        state = detect(args.remote, args.base)
+    except ProbeFailure as exc:
+        print(f"RESUME:REFUSE {exc}", file=sys.stderr)
+        return 2
     if args.emit == "json":
         import json
 

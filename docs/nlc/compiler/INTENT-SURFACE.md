@@ -1,6 +1,6 @@
 # What the human holds vs what the [compiler](../../TERMS.md#compiler) infers
 
-SSOT for division of labor in [Natural Language Coding](../../TERMS.md#nlc). Design shape (nouns, verbs, gates) is [`CHARTER.md`](../../../CHARTER.md). This page is the **[intent surface](../../TERMS.md#intent-surface)** — ratified by [ADR 0036](../../../adrs/0036-inference-only-human-surface.md): the human contributes **goal and policy only**; everything else is inference.
+SSOT for division of labor in [Natural Language Compiler](../../TERMS.md#nlc). Design shape (nouns, verbs, gates) is [`CHARTER.md`](../../../CHARTER.md). This page is the **[intent surface](../../TERMS.md#intent-surface)** — ratified by [ADR 0036](../../../adrs/0036-inference-only-human-surface.md): the human contributes **goal and policy only**; everything else is inference.
 
 ## The two human contributions
 

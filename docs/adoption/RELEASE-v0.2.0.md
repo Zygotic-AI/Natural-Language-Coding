@@ -1,4 +1,4 @@
-# Natural Language Coding hub v0.2.0
+# Natural Language Compiler hub v0.2.0
 
 Hub **v0.2.0** closes the **v1 compiled-system product** surface: machine-backed use-case rows, semantic rule IR runner/apply, hub X4 noun tooling, verify/CI hardening, and a **resumable `./release`** ship path. Expansion work (composable IR v2, full multi-language scanners, public pack registry) stays documented as residuals, not blockers for this tag.
 

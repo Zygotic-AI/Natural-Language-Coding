@@ -1,0 +1,13 @@
+---
+description: When a signature is required, give the exact text in that message
+alwaysApply: true
+---
+
+# Signature text handoff
+
+Anytime a signature is required, give the exact text in that same message. Say **Sign this** and name the output path outside the signed text.
+
+- IDE: one fenced block whose body is only the signed text.
+- Terminal: a start marker line immediately above and an end marker line immediately below. The markers are not signed.
+
+SSOT: [`AGENTS.md`](../../AGENTS.md) and [`.agents/instructions/signature-text-handoff.md`](../../.agents/instructions/signature-text-handoff.md).

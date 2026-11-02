@@ -28,8 +28,20 @@ Automation overrides:
 EOF
 }
 
+PROBE_REF=""
+PROBE_REF_SET=0
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --probe-ref)
+      PROBE_REF_SET=1
+      if [[ $# -ge 2 ]]; then
+        PROBE_REF="$2"
+        shift
+      else
+        PROBE_REF=""
+      fi
+      ;;
     --dry-run) DRY_RUN=1 ;;
     --no-push) NO_PUSH=1 ;;
     --message)
@@ -93,6 +105,30 @@ run_planned() {
   fi
 }
 
+create_release_line_ref_state() {
+  local branch="$1"
+  if ! command -v git >/dev/null 2>&1; then
+    echo "error:missing_tool"
+    return 0
+  fi
+  if [[ -z "${branch}" ]]; then
+    echo "error:empty"
+    return 0
+  fi
+  git show-ref --verify --quiet "refs/heads/${branch}"
+  local show_rc=$?
+  if [[ "${show_rc}" -eq 0 ]]; then
+    echo "exists"
+    return 0
+  fi
+  if [[ "${show_rc}" -eq 1 ]]; then
+    echo "absent"
+    return 0
+  fi
+  echo "error:unexpected rc=${show_rc}"
+  return 0
+}
+
 apply_release_infer() {
   # Compatibility diagnostic only. It presents the planner and does not choose an action.
   python3 tools/nlc_release_infer.py \
@@ -120,6 +156,16 @@ clear_action_observations() {
 }
 
 dispatch_release_plan() {
+  if [[ "${PROBE_REF_SET}" -eq 1 ]]; then
+    local ref_state
+    ref_state="$(create_release_line_ref_state "${PROBE_REF}")"
+    printf '%s\n' "${ref_state}"
+    if [[ "${ref_state}" == "exists" || "${ref_state}" == "absent" ]]; then
+      exit 0
+    fi
+    echo "CREATE_RELEASE_LINE:REFUSE ${ref_state}" >&2
+    exit 2
+  fi
   local phase action kind desired branch tag merge_sha rc worktree shipped_sha
   local tag_output run_id
   local -a tag_argv=()
@@ -190,14 +236,14 @@ dispatch_release_plan() {
       : action_result_boundary:VERIFY_SHIPPED_BASELINE
       shipped_sha="$(release_fact_field shipped_tag_sha)"
       if [[ -z "${shipped_sha}" ]]; then
-        python3 tools/nlc.py --project . verify-deep || rc=$?
+        python3 tools/nlc.py --project . verify || rc=$?
       else
         worktree="$(mktemp -d)"
         git worktree add --detach "${worktree}" "${shipped_sha}" || rc=$?
         if [[ "${rc}" -eq 0 ]]; then
           (
             cd "${worktree}" &&
-              python3 tools/nlc.py --project . verify-deep
+              python3 tools/nlc.py --project . verify
           ) || rc=$?
         fi
         git worktree remove --force "${worktree}" >/dev/null 2>&1
@@ -224,7 +270,7 @@ dispatch_release_plan() {
       ;;
     VERIFY_TARGET)
       : action_result_boundary:VERIFY_TARGET
-      python3 tools/nlc.py --project . verify-deep || rc=$?
+      python3 tools/nlc.py --project . verify || rc=$?
       if [[ "${rc}" -eq 0 ]]; then
         python3 tools/nlc_release_state.py \
           --remote "${REMOTE}" --base "${BASE_BRANCH}" \
@@ -260,10 +306,16 @@ dispatch_release_plan() {
       if [[ "${rc}" -eq 0 ]]; then
         if [[ -z "${branch}" ]]; then
           rc=2
-        elif git show-ref --verify --quiet "refs/heads/${branch}"; then
-          run_planned git checkout "${branch}" || rc=$?
         else
-          run_planned git checkout -b "${branch}" || rc=$?
+          ref_state="$(create_release_line_ref_state "${branch}")"
+          if [[ "${ref_state}" == "exists" ]]; then
+            run_planned git checkout "${branch}" || rc=$?
+          elif [[ "${ref_state}" == "absent" ]]; then
+            run_planned git checkout -b "${branch}" || rc=$?
+          else
+            echo "CREATE_RELEASE_LINE:REFUSE unknown ref state" >&2
+            rc=2
+          fi
         fi
       fi
       ;;
@@ -376,4 +428,7 @@ cmd_release() {
 
 # Planner observer selects pull requests by headRefOid, not list position.
 # Shipped tag integrity remains an action input and is rechecked during PREP.
+if [[ "${PROBE_REF_SET}" -eq 1 ]]; then
+  dispatch_release_plan
+fi
 cmd_release

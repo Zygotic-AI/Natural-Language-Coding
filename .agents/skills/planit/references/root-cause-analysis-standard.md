@@ -24,6 +24,8 @@ Run RCA **before** declaring a failure handled, **before** passing work downstre
 
 **Skip RCA** only when the failure is **trivial and fully understood** (typo in an uncommitted local edit you just fixed) — still state the one preventive change in chat in one sentence.
 
+**Do not ask for a signature to start.** Investigating does not need a signed manifest, a clearsign, or any other human signature. A signature is only the owner clearsign of `integrity/gate-set-baseline.manifest.sha256` after checker bytes change, a per-file signature when an accepted architecture decision's bytes change, or `Released-by:` when a product tree ships.
+
 ---
 
 ## 2. Terms

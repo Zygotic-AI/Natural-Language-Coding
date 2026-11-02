@@ -35,14 +35,25 @@ def fail(msg: str) -> None:
 
 
 def run(label: str, argv: list[str]) -> None:
-    print(f"--- {label} ---")
+    from nouns.check_selection.check_selection import should_run_check, skip_reason_for
+
+    if not should_run_check(label):
+        print(f"SKIPPED {label} reason={skip_reason_for(label)}", flush=True)
+        return
+    print(f"--- {label} ---", flush=True)
     proc = subprocess.run(
         argv,
         cwd=str(ROOT),
         check=False,
+        capture_output=True,
+        text=True,
     )
     if proc.returncode != 0:
+        sys.stdout.write(proc.stdout or "")
+        sys.stderr.write(proc.stderr or "")
         fail(label)
+        return
+    print(f"MET {label}", flush=True)
 
 
 def session_preflight() -> None:
@@ -97,6 +108,21 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         print("=== releasable verify profile (SSOT) ===")
         if run_profile("verify", ROOT) != 0:
             fail("releasable verify profile")
+
+    from nouns.gate_set.gate_set import prime_run_cache
+    from nouns.check_selection.check_selection import apply_run_selection
+
+    cache_path = prime_run_cache(ROOT)
+    print(f"GATE_SET_CACHE {cache_path}", flush=True)
+    selection = apply_run_selection(ROOT)
+    if selection.full_suite:
+        print(f"SELECTION:FULL reason={selection.reason}", flush=True)
+    else:
+        print(
+            f"SELECTION:NARROW selected={len(selection.selected)} "
+            f"skipped={len(selection.skipped)} reason={selection.reason}",
+            flush=True,
+        )
 
     session_preflight()
 
@@ -180,7 +206,7 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         hub_only = set(json.loads(manifest.read_text(encoding="utf-8")).get("hub_only_fitness") or [])
     for path in sorted(TOOLS.glob("fitness-*.py")):
         if path.name in hub_only:
-            print(f"--- skip {path.name} invoice-correct (hub-only) ---")
+            print(f"--- skip {path.name} invoice-correct (hub-only) ---", flush=True)
             continue
         run(
             f"{path.name} invoice-correct",
@@ -610,6 +636,38 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "assert-release-main-purity-remediation",
         [sys.executable, str(TOOLS / "assert-release-main-purity-remediation-passes.py")],
     )
+    for _probe_name in (
+        "main-purity",
+        "tag-exists",
+        "list-version-tags",
+        "tag-is-ancestor",
+        "remote-tag-commit-only",
+        "align-local-tag-to-remote",
+        "changelog-tag-exists",
+        "branch-exists",
+        "remote-branch-exists",
+        "resolve-ref-sha",
+        "tag-on-commit",
+        "is-resolvable-commit",
+        "release-state-out",
+        "remote-branch-sha",
+        "remote-known",
+        "pull-requests",
+        "publish-status",
+        "publish-decision",
+        "git-changed-paths",
+        "github-latest-tag",
+        "create-release-line-show-ref",
+        "sig-ok",
+    ):
+        run(
+            f"assert-release-probe-{_probe_name}-fails",
+            [sys.executable, str(TOOLS / f"assert-release-probe-{_probe_name}-fails.py")],
+        )
+        run(
+            f"assert-release-probe-{_probe_name}-passes",
+            [sys.executable, str(TOOLS / f"assert-release-probe-{_probe_name}-passes.py")],
+        )
     run(
         "assert-human-surface",
         [sys.executable, str(TOOLS / "assert-human-surface-passes.py")],
@@ -637,6 +695,28 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "assert-verify-before-generate-stamp",
         [sys.executable, str(TOOLS / "assert-verify-before-generate-stamp-fails.py")],
+    )
+    run(
+        "assert-hash-ledger-stable",
+        [
+            sys.executable,
+            "-c",
+            "import sys; sys.path.insert(0, 'tools'); "
+            "from nouns.verify.verify import assert_hash_ledger_stable; "
+            "raise SystemExit(assert_hash_ledger_stable())",
+        ],
+    )
+    run(
+        "assert-before-generate-hub-stamp-scopes-writer",
+        [sys.executable, str(TOOLS / "assert-before-generate-hub-stamp-scopes-writer-fails.py")],
+    )
+    run(
+        "assert-fitness-hub-stamp-scopes-check",
+        [sys.executable, str(TOOLS / "assert-fitness-hub-stamp-scopes-check-fails.py")],
+    )
+    run(
+        "assert-fitness-hub-stamp-scopes-source",
+        [sys.executable, str(TOOLS / "assert-fitness-hub-stamp-scopes-source-fails.py")],
     )
     run(
         "assert-verify-stale-stamp",
@@ -718,8 +798,12 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-adr-status-heading-fails.py")],
     )
     run(
-        "fitness-gate-set-manifest",
-        [sys.executable, str(TOOLS / "fitness-gate-set-manifest.py")],
+        "fitness-derived-release-state",
+        [sys.executable, str(TOOLS / "fitness-derived-release-state.py")],
+    )
+    run(
+        "assert-tag-digest-signature-required",
+        [sys.executable, str(TOOLS / "assert-tag-digest-signature-required-fails.py")],
     )
     run(
         "fitness-owner-key-trust",
@@ -744,6 +828,10 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "fitness-hub-brief-forbid-weaken",
         [sys.executable, str(TOOLS / "fitness-hub-brief-forbid-weaken.py")],
+    )
+    run(
+        "fitness-hub-stamp-scopes",
+        [sys.executable, str(TOOLS / "fitness-hub-stamp-scopes.py")],
     )
     run(
         "fitness-no-check-on-check",
@@ -802,6 +890,45 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-gate-set-manifest-placeholder-sidecar-fails.py")],
     )
     run(
+        "assert-content-only-change-does-not-trip-gate-set-signature",
+        [
+            sys.executable,
+            str(TOOLS / "assert-content-only-change-does-not-trip-gate-set-signature-passes.py"),
+        ],
+    )
+    run(
+        "assert-gate-set-member-change-fails-closed",
+        [sys.executable, str(TOOLS / "assert-gate-set-member-change-fails-closed.py")],
+    )
+    run(
+        "assert-gate-set-cache-once",
+        [sys.executable, str(TOOLS / "assert-gate-set-cache-once-passes.py")],
+    )
+    run(
+        "fitness-check-inputs-declaration",
+        [sys.executable, str(TOOLS / "fitness-check-inputs-declaration.py")],
+    )
+    run(
+        "assert-unmapped-file-runs-full-suite",
+        [sys.executable, str(TOOLS / "assert-unmapped-file-runs-full-suite-passes.py")],
+    )
+    run(
+        "assert-selection-error-runs-full-suite",
+        [sys.executable, str(TOOLS / "assert-selection-error-runs-full-suite-passes.py")],
+    )
+    run(
+        "assert-landmine-file-change-triggers-landmine",
+        [sys.executable, str(TOOLS / "assert-landmine-file-change-triggers-landmine-passes.py")],
+    )
+    run(
+        "fitness-release-prep-script-match",
+        [sys.executable, str(TOOLS / "fitness-release-prep-script-match.py")],
+    )
+    run(
+        "assert-release-prep-hand-edit",
+        [sys.executable, str(TOOLS / "assert-release-prep-hand-edit-fails.py")],
+    )
+    run(
         "fitness-adr-record-gate",
         [sys.executable, str(TOOLS / "fitness-adr-record-gate.py")],
     )
@@ -821,10 +948,7 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "fitness-live-self-ref-activation",
         [sys.executable, str(TOOLS / "fitness-live-self-ref-activation.py")],
     )
-    run(
-        "fitness-mandate-inheritance",
-        [sys.executable, str(TOOLS / "fitness-mandate-inheritance.py")],
-    )
+    # Mandate drift is inside fitness-derived-release-state (one check).
     run(
         "fitness-control-lifecycle",
         [sys.executable, str(TOOLS / "fitness-control-lifecycle.py")],

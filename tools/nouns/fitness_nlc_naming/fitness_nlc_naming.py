@@ -20,11 +20,11 @@ SCAN = (
 
 BANNED = (
     (re.compile(r"\bACS is the (?:whole )?product\b", re.I), "retired: ACS is the product"),
-    (re.compile(r"\bAI-Compiled Systems is the product\b", re.I), "use Natural Language Coding"),
+    (re.compile(r"\bAI-Compiled Systems is the product\b", re.I), "use Natural Language Compiler"),
     (re.compile(r"\bBoundary-Based-Architecture\b", re.I), "legacy repo name in consumer copy"),
 )
 
-REQUIRE_NLC = re.compile(r"Natural Language Coding", re.I)
+REQUIRE_NLC = re.compile(r"Natural Language Compiler", re.I)
 
 
 def scan_file(path: Path) -> list[str]:
@@ -34,7 +34,7 @@ def scan_file(path: Path) -> list[str]:
     rel = str(path.relative_to(ROOT)).replace("\\", "/")
     violations: list[str] = []
     if path.name == "README.md" and not REQUIRE_NLC.search(text[:2000]):
-        violations.append(f"{rel}: missing 'Natural Language Coding' in hero")
+        violations.append(f"{rel}: missing 'Natural Language Compiler' in hero")
     for pattern, msg in BANNED:
         if pattern.search(text):
             violations.append(f"{rel}: {msg}")
@@ -46,7 +46,7 @@ def main() -> int:
     for path in SCAN:
         all_v.extend(scan_file(path))
     names = ROOT / "docs" / "nlc" / "compiler" / "NAMES.md"
-    if names.is_file() and "Natural Language Coding" not in names.read_text(encoding="utf-8")[:500]:
+    if names.is_file() and "Natural Language Compiler" not in names.read_text(encoding="utf-8")[:500]:
         all_v.append("docs/nlc/compiler/NAMES.md: missing NLC product name")
     for v in all_v:
         print(f"VIOLATION {v}")

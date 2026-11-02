@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 
 from nouns.gate_set.gate_set import derive_gate_set_paths, iter_gate_set_relative_paths
-from nouns.owner_sidecar.owner_sidecar import content_hash, verify_sidecar_p1
+from nouns.owner_sidecar.owner_sidecar import content_hash
 
 MANIFEST_REL = "integrity/gate-set-baseline.manifest.sha256"
 
@@ -64,7 +64,11 @@ def _manifest_path_set(manifest_bytes_on_disk: bytes) -> set[str]:
 def gate_set_manifest_errors(
     root: Path, *, overrides: dict[str, bytes] | None = None
 ) -> list[str]:
-    """MET when ALL OF: manifest path set == derive closure; bytes match tree; sidecar passes P1."""
+    """MET when the manifest path set matches the closure and the bytes match the tree.
+
+    Owner armor is not a branch requirement (ADR 0057). The tag gate checks
+    the checker-digest signature instead.
+    """
     errors: list[str] = []
     manifest_path = root / MANIFEST_REL
     if not manifest_path.is_file():
@@ -88,8 +92,6 @@ def gate_set_manifest_errors(
     expected = manifest_bytes(root, overrides=overrides)
     if on_disk != expected:
         errors.append(f"{MANIFEST_REL}: bytes do not match current gate-set tree")
-    if overrides is None:
-        errors.extend(verify_sidecar_p1(root, MANIFEST_REL))
     return errors
 
 

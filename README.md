@@ -1,4 +1,6 @@
-# [Natural Language Coding](docs/TERMS.md#nlc)
+# [Natural Language Compiler](docs/TERMS.md#nlc)
+
+Licensed under the [Apache License 2.0](LICENSE).
 
 **Product: Natural Language Compiler**
 
@@ -71,11 +73,41 @@ Agents also run `./nlc maintainer …` (requirements sync, regen queue, before-g
 
 | Layer | You say | What it is |
 | ----- | ------- | ---------- |
-| **[NLC](docs/TERMS.md#nlc)** | [Natural Language Coding](docs/TERMS.md#nlc) | Intent in, compile or [refuse](docs/TERMS.md#refuse). |
+| **[NLC](docs/TERMS.md#nlc)** | [Natural Language Compiler](docs/TERMS.md#nlc) | Intent in, compile or [refuse](docs/TERMS.md#refuse). |
 | **[ASC](docs/TERMS.md#asc)** | [AI System Compiler](docs/TERMS.md#compiler) | `/interview` + `/planit` + gates in [`tools/`](tools/). |
 | **[Compiled system](docs/TERMS.md#compiled-system)** | Your app tree | BBP-shaped code in *your* repo—not [`examples/`](examples/) (gate specimens only). |
 
 Design SSOT: [`CHARTER.md`](CHARTER.md). Words: [`GLOSSARY.md`](docs/nlc/compiler/GLOSSARY.md).
+
+## Product picture
+
+Two views of the same compiler. The left is any app. The right is the same path with healthcare and securities policies named. Gaps in what the hub can do today stay in [`FINDINGS.md`](FINDINGS.md).
+
+```mermaid
+flowchart LR
+  intent["Plain-language intent"]
+  goals["Goals"]
+  policy["Policies and standards"]
+  decisions["Accepted decisions"]
+  rules["If/then rules"]
+  code["Compiled code"]
+  intent --> goals --> decisions
+  policy --> decisions
+  decisions --> rules --> code
+```
+
+```mermaid
+flowchart LR
+  hipaa["HIPAA"]
+  sec["SEC"]
+  decisions["Accepted decisions"]
+  rules["If/then rules"]
+  code["Healthcare and securities app code"]
+  audit["The code those policies touch"]
+  hipaa --> decisions
+  sec --> decisions
+  decisions --> rules --> code --> audit
+```
 
 ## Go deeper
 

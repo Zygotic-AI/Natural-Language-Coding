@@ -111,6 +111,9 @@ def main() -> int:
     except RuntimeError as exc:
         print(f"RELEASE_RECORD:REFUSE {exc}", file=sys.stderr)
         return 2
+    from nouns.release_prep_surfaces.release_prep_surfaces import write_all  # noqa: E402
+
+    write_all(ROOT, version=args.version, release_branch=args.branch)
     path = write_record(args.version, args.branch)
     print(f"RELEASE_RECORD:WROTE {path.relative_to(ROOT)}")
     return 0

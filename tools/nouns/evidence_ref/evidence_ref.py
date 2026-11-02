@@ -16,15 +16,17 @@ COMMIT_HEX = re.compile(r"\b[0-9a-f]{7,40}\b", re.I)
 SHA256_HEX = re.compile(r"\b[0-9a-f]{64}\b", re.I)
 
 
-def git_run(root: Path, *args: str) -> subprocess.CompletedProcess[str]:
+from nouns.release_probe.release_probe import (  # noqa: E402
+    confirmed_exists,
+    run_argv,
+)
+
+
+def git_run(
+    root: Path, *args: str, runner: object | None = None
+) -> subprocess.CompletedProcess[str]:
     """Run git in root with captured stdout/stderr."""
-    return subprocess.run(
-        ["git", *args],
-        cwd=str(root),
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+    return run_argv(["git", *args], cwd=root, runner=runner)
 
 
 def object_type(root: Path, ref: str) -> str | None:
@@ -35,10 +37,10 @@ def object_type(root: Path, ref: str) -> str | None:
     return (proc.stdout or "").strip()
 
 
-def is_resolvable_commit(root: Path, ref: str) -> bool:
+def is_resolvable_commit(root: Path, ref: str, runner: object | None = None) -> bool:
     """True when ref resolves to a commit object in root's repository."""
-    proc = git_run(root, "rev-parse", "--verify", f"{ref}^{{commit}}")
-    return proc.returncode == 0
+    proc = git_run(root, "rev-parse", "-q", "--verify", f"{ref}^{{commit}}", runner=runner)
+    return confirmed_exists(proc, require_stdout=True)
 
 
 def resolve_commit(root: Path, ref: str) -> tuple[str | None, str | None]:

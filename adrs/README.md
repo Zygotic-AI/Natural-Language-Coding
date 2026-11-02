@@ -64,3 +64,6 @@ Deciders are role names (CG-R4). Person-to-role mapping lives outside SSOT.
 | [`0054-published-skill-author-contract.md`](0054-published-skill-author-contract.md) | Published-skill author contract (one checklist, pre-release and post-install) | Accepted |
 | [`0055-staged-activation-of-gate-machinery.md`](0055-staged-activation-of-gate-machinery.md) | Staged activation of gate machinery | Accepted |
 | [`0056-per-file-adr-detached-signatures.md`](0056-per-file-adr-detached-signatures.md) | Per-file detached owner signatures for ADRs; manifest stays single-signed | Proposed |
+| [`0057-tag-time-checker-digest.md`](0057-tag-time-checker-digest.md) | One tag-time signature over the checker digest; branch suite does not require armor | Proposed |
+
+Record 0045 is not edited when a later record amends it. The readable result of decision 2 after record 0048 is [`docs/nlc/effective-decisions.md`](../docs/nlc/effective-decisions.md).

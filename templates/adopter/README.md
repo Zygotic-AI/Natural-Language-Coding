@@ -1,6 +1,6 @@
 # [Adopter repo](../../docs/TERMS.md#adopter)
 
-This repository is a **[compiled system](../../docs/TERMS.md#compiled-system)** under [Natural Language Coding](../../docs/TERMS.md#nlc) (NLC).
+This repository is a **[compiled system](../../docs/TERMS.md#compiled-system)** under [Natural Language Compiler](../../docs/TERMS.md#nlc) (NLC).
 
 - **[Charter](../../docs/TERMS.md#charter):** link or copy from [Natural-Language-Coding `CHARTER.md`](https://github.com/Zygotic-AI/Natural-Language-Coding/blob/main/CHARTER.md).
 - **Intent:** `goals/`, `adrs/`, requirements prose, [knowledge domains](../../docs/TERMS.md#knowledge-domain).

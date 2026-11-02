@@ -41,7 +41,7 @@ def emit_and_exit(gaps: list[str], hints: list[str] | None = None) -> None:
     if not gaps:
         return
     print(
-        "Natural Language Coding can't run on this machine until the gaps below are fixed.",
+        "Natural Language Compiler can't run on this machine until the gaps below are fixed.",
         file=sys.stderr,
     )
     for g in gaps:

@@ -5,59 +5,71 @@ from __future__ import annotations
 import subprocess
 from pathlib import Path
 
+from nouns.release_probe.release_probe import (  # noqa: E402
+    ProbeFailure,
+    confirmed_exists,
+    confirmed_text,
+    run_argv,
+)
+
 BOUNDARY = "bba-emit"
 
 HUB_ROOT = Path(__file__).resolve().parents[3]
 
 
-def _git(*args: str, root: Path | None = None) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        ["git", *args],
-        cwd=str(root or HUB_ROOT),
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+def _git(
+    *args: str,
+    root: Path | None = None,
+    runner: object | None = None,
+) -> subprocess.CompletedProcess[str]:
+    return run_argv(["git", *args], cwd=root or HUB_ROOT, runner=runner)
 
 
-def list_version_tags(root: Path | None = None) -> list[str]:
-    proc = _git("tag", "-l", "v*.*.*", "--sort=-version:refname", root=root)
-    if proc.returncode != 0:
-        return []
+def list_version_tags(root: Path | None = None, runner: object | None = None) -> list[str]:
+    proc = _git("tag", "-l", "v*.*.*", "--sort=-version:refname", root=root, runner=runner)
+    confirmed_text(proc, empty_ok=True)
     return [t.strip() for t in (proc.stdout or "").splitlines() if t.strip()]
 
 
-def tag_exists(tag: str, root: Path | None = None) -> bool:
-    proc = _git("rev-parse", "-q", "--verify", f"{tag}^{{commit}}", root=root)
-    return proc.returncode == 0
+def tag_exists(tag: str, root: Path | None = None, runner: object | None = None) -> bool:
+    proc = _git("rev-parse", "-q", "--verify", f"{tag}^{{commit}}", root=root, runner=runner)
+    return confirmed_exists(proc, require_stdout=True)
 
 
-def tag_commit(tag: str, root: Path | None = None) -> str:
-    proc = _git("rev-parse", f"{tag}^{{commit}}", root=root)
-    return proc.stdout.strip() if proc.returncode == 0 else ""
+def tag_commit(tag: str, root: Path | None = None, runner: object | None = None) -> str:
+    proc = _git("rev-parse", "-q", "--verify", f"{tag}^{{commit}}", root=root, runner=runner)
+    if not confirmed_exists(proc, require_stdout=True):
+        return ""
+    return (proc.stdout or "").strip()
 
 
-def remote_tag_commit_only(tag: str, remote: str = "origin", root: Path | None = None) -> str:
+def remote_tag_commit_only(
+    tag: str, remote: str = "origin", root: Path | None = None, runner: object | None = None
+) -> str:
     """Peeled commit for refs/tags/{tag} on remote (annotated tag object id is not the commit)."""
-    peeled = _git("ls-remote", remote, f"refs/tags/{tag}^{{}}", root=root)
-    if peeled.returncode == 0 and peeled.stdout.strip():
+    peeled = _git("ls-remote", remote, f"refs/tags/{tag}^{{}}", root=root, runner=runner)
+    confirmed_text(peeled, empty_ok=True)
+    if peeled.stdout.strip():
         parts = peeled.stdout.strip().splitlines()[0].split()
         if parts:
             return parts[0]
-    proc = _git("ls-remote", remote, f"refs/tags/{tag}", root=root)
-    if proc.returncode == 0 and proc.stdout.strip():
+    proc = _git("ls-remote", remote, f"refs/tags/{tag}", root=root, runner=runner)
+    confirmed_text(proc, empty_ok=True)
+    if proc.stdout.strip():
         parts = proc.stdout.strip().splitlines()[0].split()
         if parts:
             return parts[0]
     return ""
 
 
-def remote_tag_commit(tag: str, remote: str = "origin", root: Path | None = None) -> str:
+def remote_tag_commit(
+    tag: str, remote: str = "origin", root: Path | None = None, runner: object | None = None
+) -> str:
     """Remote shipped tag commit when resolvable, else local peeled tag."""
-    remote_at = remote_tag_commit_only(tag, remote, root)
+    remote_at = remote_tag_commit_only(tag, remote, root, runner=runner)
     if remote_at:
         return remote_at
-    return tag_commit(tag, root)
+    return tag_commit(tag, root, runner=runner)
 
 
 def canonical_tag_commit(tag: str, remote: str = "origin", root: Path | None = None) -> str:
@@ -66,31 +78,36 @@ def canonical_tag_commit(tag: str, remote: str = "origin", root: Path | None = N
 
 
 def local_remote_tag_divergence(
-    tag: str, remote: str = "origin", root: Path | None = None
+    tag: str, remote: str = "origin", root: Path | None = None, runner: object | None = None
 ) -> tuple[str, str] | None:
     """(local_commit, remote_commit) when both exist and differ."""
-    local = tag_commit(tag, root)
-    remote_at = remote_tag_commit_only(tag, remote, root)
+    local = tag_commit(tag, root, runner=runner)
+    remote_at = remote_tag_commit_only(tag, remote, root, runner=runner)
     if local and remote_at and local != remote_at:
         return local, remote_at
     return None
 
 
 def align_local_tag_to_remote(
-    tag: str, remote: str = "origin", root: Path | None = None
+    tag: str, remote: str = "origin", root: Path | None = None, runner: object | None = None
 ) -> str | None:
     """Replace local tag with the remote tag ref. Does not push. Returns peeled commit or None."""
-    diverged = local_remote_tag_divergence(tag, remote, root)
+    diverged = local_remote_tag_divergence(tag, remote, root, runner=runner)
     if not diverged:
         return None
-    proc = _git("fetch", remote, f"+refs/tags/{tag}:refs/tags/{tag}", root=root)
-    if proc.returncode != 0:
-        return None
-    return tag_commit(tag, root) or None
+    proc = _git("fetch", remote, f"+refs/tags/{tag}:refs/tags/{tag}", root=root, runner=runner)
+    confirmed_text(proc, empty_ok=True)
+    peeled = tag_commit(tag, root, runner=runner)
+    if not peeled:
+        raise ProbeFailure("empty output: aligned tag commit", kind="empty")
+    return peeled
 
 
-def tag_is_ancestor(tag: str, ref: str, root: Path | None = None) -> bool:
-    return _git("merge-base", "--is-ancestor", tag, ref, root=root).returncode == 0
+def tag_is_ancestor(
+    tag: str, ref: str, root: Path | None = None, runner: object | None = None
+) -> bool:
+    proc = _git("merge-base", "--is-ancestor", tag, ref, root=root, runner=runner)
+    return confirmed_exists(proc, require_stdout=False)
 
 
 def tag_key(tag: str) -> tuple[int, int, int]:

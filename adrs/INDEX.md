@@ -66,6 +66,7 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0054 | 2026-10-24 | RCA 2026-10-20 published-skill author contract | active | — | L-0054 |
 | 0055 | 2026-10-25 | staged activation of gate machinery | active | — | L-0055 |
 | 0056 | 2026-10-25 | per-file detached owner signatures for ADRs | proposed | — | L-0056 |
+| 0057 | 2026-10-31 | one tag-time signature over the checker digest | proposed | — | L-0057 |
 
 ## Lineage format
 

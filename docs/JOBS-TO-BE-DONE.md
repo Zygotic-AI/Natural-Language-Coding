@@ -1,6 +1,6 @@
 # [Jobs to be done](TERMS.md#jobs-to-be-done)
 
-Why adopters want **[Natural Language Coding](TERMS.md#nlc)**—outcomes people seek, not every compiler use-case id.
+Why adopters want **[Natural Language Compiler](TERMS.md#nlc)**—outcomes people seek, not every compiler use-case id.
 
 **Companion docs:** numbered [compiler](TERMS.md#compiler) stories live in [`USE-CASES.md`](USE-CASES.md). **ADR → binders:** [`ADR-ENFORCEMENT.md`](ADR-ENFORCEMENT.md), [`TODO`](../TODO).
 

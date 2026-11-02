@@ -29,17 +29,15 @@ echo "RELEASE_PREP:MET smoke"
 VER="$(python3 -c "import json; print(json.load(open('integrity/nlc-version.json'))['version'])")"
 echo "RELEASE_PREP:VERSION ${VER}"
 
-SHA="$(git rev-parse --short HEAD)"
-FINDINGS="${ROOT}/FINDINGS.md"
-if [[ -f "${FINDINGS}" ]]; then
-  sed -i "s/^Last pass: \`[^\`]*\`.*/Last pass: \`${SHA}\` (release prep; tag v${VER} when ready)./" "${FINDINGS}"
-  echo "RELEASE_PREP:MET findings_sha=${SHA}"
-fi
+python3 tools/nlc_release_prep_surfaces.py --write --version "${VER}"
+echo "RELEASE_PREP:MET findings_describe_record"
 
 if ! git diff --quiet; then
   echo "RELEASE_PREP:NOTE commit FINDINGS (and any other) changes before tagging"
   git status -sb
 fi
+
+SHA="$(git rev-parse HEAD)"
 
 cat <<EOF
 

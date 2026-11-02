@@ -20,6 +20,7 @@ from nlc_release_record import git_show_json, read_version_at, validate_record  
 from nlc_release_tags import resolve_shipped_version  # noqa: E402
 from nlc_requirements import hub_tool  # noqa: E402
 from nouns.evidence_ref.evidence_ref import refuse_gate, resolve_commit  # noqa: E402
+from nouns.release_probe.release_probe import ProbeFailure  # noqa: E402
 from nouns.fitness_findings_shipped_tag_sync import (  # noqa: E402
     check_surfaces,
     resolve_shipped_version as f1_shipped_version,
@@ -88,7 +89,11 @@ def check_static(repo_root: Path, commit: str, tag: str) -> list[str]:
 
     from nlc_migration_catalog import migration_steps_blockers
 
-    shipped = resolve_shipped_version(commit) or "0.0.0"
+    try:
+        shipped = resolve_shipped_version(commit, root=repo_root) or "0.0.0"
+    except ProbeFailure as exc:
+        problems.append(f"shipped-baseline probe refused: {exc}")
+        shipped = "0.0.0"
     if shipped != ver:
         problems.extend(migration_steps_blockers(ROOT, shipped, ver))
 
@@ -109,6 +114,57 @@ def check_findings_describe_identity(repo_root: Path, commit: str, ver: str) -> 
     )
 
 
+def checker_digest_signature_problems(repo_root: Path, commit: str) -> list[str]:
+    """Refuse a tag when main's checker says the digest armor is missing.
+
+    Bootstrap: if origin/main does not contain the checker script, add no problem.
+    The commit being tagged is not the process that runs the check.
+    """
+    if repo_root != ROOT:
+        return []
+    main = _git(repo_root, "rev-parse", "--verify", "origin/main")
+    if main.returncode != 0 or not main.stdout.strip():
+        return []
+    main_sha = main.stdout.strip()
+    script = "tools/check-checker-digest-signature.py"
+    exists = _git(repo_root, "cat-file", "-e", f"{main_sha}:{script}")
+    if exists.returncode != 0:
+        return []
+    problems: list[str] = []
+    with tempfile.TemporaryDirectory(prefix="nlc-main-checker-") as tmp:
+        checker = Path(tmp) / "main"
+        subject = Path(tmp) / "subject"
+        added = _git(repo_root, "worktree", "add", "--detach", str(checker), main_sha)
+        if added.returncode != 0:
+            return [f"cannot check out main checker: {added.stderr.strip()}"]
+        added_subject = _git(repo_root, "worktree", "add", "--detach", str(subject), commit)
+        if added_subject.returncode != 0:
+            _git(repo_root, "worktree", "remove", "--force", str(checker))
+            return [f"cannot check out tag commit: {added_subject.stderr.strip()}"]
+        try:
+            proc = subprocess.run(
+                [
+                    sys.executable,
+                    str(checker / script),
+                    "--root",
+                    str(subject),
+                ],
+                cwd=str(checker),
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            if proc.returncode != 0:
+                problems.append("checker digest signature NOT_MET (verifier from origin/main)")
+                tail = ((proc.stdout or "") + (proc.stderr or "")).strip().splitlines()
+                for line in tail[-4:]:
+                    problems.append(f"  {line}")
+        finally:
+            _git(repo_root, "worktree", "remove", "--force", str(subject))
+            _git(repo_root, "worktree", "remove", "--force", str(checker))
+    return problems
+
+
 def run_verify_deep_at(commit: str) -> list[str]:
     problems: list[str] = []
     with tempfile.TemporaryDirectory(prefix="nlc-rel-wt-") as tmp:
@@ -119,14 +175,14 @@ def run_verify_deep_at(commit: str) -> list[str]:
         try:
             # Grade the tag commit with that commit's tools, not the agent's worktree.
             vproc = subprocess.run(
-                [sys.executable, str(wt / "tools" / "nlc.py"), "--project", ".", "verify-deep"],
+                [sys.executable, str(wt / "tools" / "nlc.py"), "--project", ".", "verify"],
                 cwd=str(wt),
                 capture_output=True,
                 text=True,
                 check=False,
             )
             if vproc.returncode != 0:
-                problems.append("verify-deep NOT_MET at tag commit")
+                problems.append("verify NOT_MET at tag commit")
                 tail = ((vproc.stdout or "") + (vproc.stderr or "")).strip().splitlines()
                 for line in tail[-6:]:
                     problems.append(f"  {line}")
@@ -173,6 +229,7 @@ def main() -> int:
 
     problems = check_static(repo_root, commit, tag)
     problems.extend(check_findings_describe_identity(repo_root, commit, ver))
+    problems.extend(checker_digest_signature_problems(repo_root, commit))
     if not problems and not args.skip_verify_deep and repo_root == ROOT:
         problems.extend(run_verify_deep_at(commit))
 
