@@ -34,7 +34,18 @@ ROOT = Path(__file__).resolve().parents[3]
 STAMP = ROOT / ".nlc" / "release-prepare-facts.json"
 
 
+def _ensure_gh_token() -> None:
+    """Actions exposes GITHUB_TOKEN. gh refuses unless GH_TOKEN is set."""
+    if os.environ.get("GH_TOKEN", "").strip():
+        return
+    github = os.environ.get("GITHUB_TOKEN", "").strip()
+    if github:
+        os.environ["GH_TOKEN"] = github
+
+
 def _run(args: list[str], runner: object | None = None) -> subprocess.CompletedProcess[str]:
+    if args and args[0] == "gh":
+        _ensure_gh_token()
     return run_argv(args, cwd=ROOT, runner=runner)
 
 
