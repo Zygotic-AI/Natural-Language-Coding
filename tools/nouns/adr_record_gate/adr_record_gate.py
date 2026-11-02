@@ -151,8 +151,10 @@ def record_gate_errors(root: Path) -> list[str]:
         )
         if proc.returncode != 0:
             tail = (proc.stdout + "\n" + proc.stderr).strip().splitlines()
-            detail = tail[-1] if tail else "no output"
-            errors.append(f"{number}: fixture {rel} failed ({proc.returncode}) {detail}")
+            errors.append(f"{number}: fixture {rel} failed ({proc.returncode})")
+            shown = tail[-12:] if tail else ["no output"]
+            for line in shown:
+                errors.append(f"{number}: fixture-out {line}")
     return errors
 
 
