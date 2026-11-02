@@ -10382,6 +10382,9 @@
     "tools/nouns/planit_identity/schemas/verbs.schema.json": [
       "gate_set_manifest"
     ],
+    "tools/nouns/pr_offer_gate.py": [
+      "gate_set_manifest"
+    ],
     "tools/nouns/preflight/README.md": [
       "gate_set_manifest"
     ],
@@ -10953,6 +10956,9 @@
       "gate_set_manifest"
     ],
     "tools/nouns/verify_owner_ratification_offline/verify_owner_ratification_offline.py": [
+      "gate_set_manifest"
+    ],
+    "tools/pr-offer-gate.py": [
       "gate_set_manifest"
     ],
     "tools/product_tree.py": [
