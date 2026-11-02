@@ -22,7 +22,7 @@ Problem: Release repair PUSH_FAST_FORWARD failed.
 Gap: BLOCKED_PUSH_FAST_FORWARD_FAILED
 ```
 
-Ruleset evaluation `4828955661` (actor `richardpickett`, `refs/heads/release/v0.4.1`, `247dba5` → `adf223e`, `2026-10-30T23:16:40-05:00`):
+Ruleset evaluation `4828955661` (the pushing account, `refs/heads/release/v0.4.1`, `247dba5` → `adf223e`, `2026-10-30T23:16:40-05:00`):
 
 | Rule | Result | Detail |
 | --- | --- | --- |
@@ -60,7 +60,7 @@ The executor that sent the push is `goals/hub_release/execute.sh`: for `PUSH_NEW
 
 | Time | Event |
 | --- | --- |
-| 2026-10-25T21:13:59-05:00 | Ruleset `25824126` last updated. Enforcement active. Bypass is only the start-release app (`actor_id` 5473379). `current_user_can_bypass` for `richardpickett` is `never`. |
+| 2026-10-25T21:13:59-05:00 | Ruleset `25824126` last updated. Enforcement active. Bypass is only the start-release app (`actor_id` 5473379). `current_user_can_bypass` for the pushing account is `never`. |
 | 2026-10-30T23:16:40-05:00 | `./release` push `247dba5` → `adf223e` failed. Suite `4828955661`. |
 | After that failure | Branch `cursor/v041-diagram-onto-release-line` pushed. Pull request #46 opened into `release/v0.4.1`. |
 | 2026-10-31T04:22:25Z | `fitness` on `adf223e` completed with conclusion `success` (pull-request checks). |
@@ -100,7 +100,7 @@ If that order had been in place before `2026-10-30T23:16:40-05:00`, the remote r
 - `BLOCKED_PUSH_FAST_FORWARD_FAILED` tells the operator to inspect and re-run `./release`. Re-running repeats the same push.
 - `docs/github-ruleset-release.md` says not to push `release/*` at all from a producer session. The live rule accepts the push after a pull request and a green `fitness` check. The doc is stricter than the rule that actually fired.
 - The reproduction push in this RCA did update `origin/release/v0.4.1` to `adf223e`. That was not a remediation commit. It is the second suite above.
-- Repository admin on `richardpickett` did not bypass the ruleset. `current_user_can_bypass` is `never`.
+- Repository admin on the pushing account did not bypass the ruleset. `current_user_can_bypass` is `never`.
 
 ---
 
