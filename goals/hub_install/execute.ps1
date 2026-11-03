@@ -21,7 +21,7 @@ if ($ReqMissing.Count -gt 0) {
     exit 1
 }
 
-$NlcRepoSlug = if ($env:NLC_REPO_SLUG) { $env:NLC_REPO_SLUG } else { 'Zygotic-AI/Natural-Language-Coding' }
+$NlcRepoSlug = if ($env:NLC_REPO_SLUG) { $env:NLC_REPO_SLUG } else { 'Zygotic-AI/Natural-Language-Compiler' }
 $NlcRawBase = if ($env:NLC_RAW_BASE) { $env:NLC_RAW_BASE } else { "https://raw.githubusercontent.com/$NlcRepoSlug/main" }
 $InstallRoot = if ($env:NLC_INSTALL_ROOT) { $env:NLC_INSTALL_ROOT } else { Join-Path $env:USERPROFILE '.local\share\nlc' }
 $Py = if (Get-Command python -ErrorAction SilentlyContinue) { 'python' } else { 'py' }

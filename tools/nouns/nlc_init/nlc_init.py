@@ -32,7 +32,7 @@ CHARTER_POINTER = """# Charter
 
 This adopter uses Boundary-Based Programming. SSOT:
 
-https://github.com/Zygotic-AI/Natural-Language-Coding/blob/main/CHARTER.md
+https://github.com/Zygotic-AI/Natural-Language-Compiler/blob/main/CHARTER.md
 
 Pin a commit or fork when you ratify adoption.
 """

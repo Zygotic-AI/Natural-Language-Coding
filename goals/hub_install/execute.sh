@@ -25,7 +25,7 @@ requirements_preflight() {
 }
 requirements_preflight
 
-NLC_REPO_SLUG="${NLC_REPO_SLUG:-Zygotic-AI/Natural-Language-Coding}"
+NLC_REPO_SLUG="${NLC_REPO_SLUG:-Zygotic-AI/Natural-Language-Compiler}"
 NLC_RAW_BASE="${NLC_RAW_BASE:-https://raw.githubusercontent.com/${NLC_REPO_SLUG}/main}"
 NLC_REF="${NLC_REF:-}"
 INSTALL_ROOT="${NLC_INSTALL_ROOT:-${HOME}/.local/share/nlc}"

@@ -11,7 +11,7 @@ if ($Here) {
   }
 }
 
-$NlcRepoSlug = if ($env:NLC_REPO_SLUG) { $env:NLC_REPO_SLUG } else { 'Zygotic-AI/Natural-Language-Coding' }
+$NlcRepoSlug = if ($env:NLC_REPO_SLUG) { $env:NLC_REPO_SLUG } else { 'Zygotic-AI/Natural-Language-Compiler' }
 $NlcRef = if ($env:NLC_REF) { $env:NLC_REF } else { 'main' }
 $NlcRawBase = if ($env:NLC_RAW_BASE) { $env:NLC_RAW_BASE } else { "https://raw.githubusercontent.com/$NlcRepoSlug/$NlcRef" }
 

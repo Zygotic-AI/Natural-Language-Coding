@@ -33,7 +33,7 @@ Refuses non-empty `domain/` or `goals/` (brownfield: [BROWNFIELD.md](BROWNFIELD.
 2. **Install [NLC](../TERMS.md#nlc)** on the machine that runs agents:
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
+   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Compiler/main/scripts/install.sh | bash
    ```
 
    Remote install fetches the latest **semver release tarball** (or `NLC_VERSION` / `NLC_REF` override). [Hub](../TERMS.md#hub) lands in `~/.local/share/nlc/versions/<semver>/` with an active `hub` pointer. [Verify](../TERMS.md#verify): [`integrity/nlc-install-hashes.json`](../../integrity/nlc-install-hashes.json) unless `NLC_SKIP_VERIFY=1`.

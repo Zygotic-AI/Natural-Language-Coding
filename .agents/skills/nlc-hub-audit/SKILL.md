@@ -37,7 +37,7 @@ Do **not** emit a findings report until every **blocking** row is true. Audit on
 
 ## Inputs
 
-- Target repo URL or local path (default: https://github.com/Zygotic-AI/Natural-Language-Coding)
+- Target repo URL or local path (default: https://github.com/Zygotic-AI/Natural-Language-Compiler)
 - Baseline SHA or ref (default: `main` HEAD; record the exact SHA you audited)
 - Optional: prior findings list to diff against
 

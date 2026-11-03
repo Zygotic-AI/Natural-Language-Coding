@@ -18,7 +18,7 @@ from typing import Iterable
 
 from nouns.release_probe.release_probe import ProbeFailure, confirmed_text, run_argv
 
-DEFAULT_REPO = "Zygotic-AI/Natural-Language-Coding"
+DEFAULT_REPO = "Zygotic-AI/Natural-Language-Compiler"
 DEFAULT_RAW = f"https://raw.githubusercontent.com/{DEFAULT_REPO}/main"
 SEMVER_RE = re.compile(r"^v?(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)$")
 

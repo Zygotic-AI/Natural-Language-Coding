@@ -10,7 +10,7 @@ if [[ -n "${BASH_SOURCE[0]:-}" && "${BASH_SOURCE[0]}" != "bash" ]]; then
   fi
 fi
 
-NLC_REPO_SLUG="${NLC_REPO_SLUG:-Zygotic-AI/Natural-Language-Coding}"
+NLC_REPO_SLUG="${NLC_REPO_SLUG:-Zygotic-AI/Natural-Language-Compiler}"
 NLC_REF="${NLC_REF:-main}"
 NLC_RAW_BASE="${NLC_RAW_BASE:-https://raw.githubusercontent.com/${NLC_REPO_SLUG}/${NLC_REF}}"
 
