@@ -316,7 +316,10 @@ def record_fact(name: str, remote: str, base: str) -> None:
 
 def fetch_marks_remote_known(remote: str, runner: object | None = None) -> bool:
     """Fetch then confirm remote state. Probe error refuses (does not return False)."""
-    fetch = _run(["git", "fetch", remote, "--prune", "--tags"], runner=runner)
+    # Do not pass --tags. A tag-ref checkout is a lightweight tag at the peel;
+    # origin's annotated tag is a different object, so `git fetch --tags`
+    # exits 1 with "would clobber existing tag" (v0.4.1 tag workflow).
+    fetch = _run(["git", "fetch", remote, "--prune"], runner=runner)
     confirmed_text(fetch, empty_ok=True)
     return True
 

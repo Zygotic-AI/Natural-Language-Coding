@@ -102,7 +102,7 @@ def release_record_on_commit(commit: str) -> bool:
 
 
 def detect(remote: str, base: str) -> dict:
-    _git("fetch", remote, base, "--tags", "--prune", "--quiet")
+    _git("fetch", remote, base, "--prune", "--quiet")
     stale_branches: list[str] = []
     closed_branches: list[str] = []
     await_merge_row: dict | None = None
