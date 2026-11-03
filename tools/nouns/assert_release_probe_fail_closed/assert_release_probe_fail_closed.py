@@ -543,8 +543,16 @@ def fails_remote_known() -> int:
 def passes_remote_known() -> int:
     from nouns.nlc_release_state.nlc_release_state import fetch_marks_remote_known
 
-    if fetch_marks_remote_known("origin", runner=lambda argv, **k: _proc(0, "")) is not True:
+    seen: list[list[str]] = []
+
+    def runner(argv: list[str], **_kwargs: object) -> subprocess.CompletedProcess[str]:
+        seen.append(list(argv))
+        return _proc(0, "")
+
+    if fetch_marks_remote_known("origin", runner=runner) is not True:
         return _fail("successful fetch must be True")
+    if any("--tags" in argv for argv in seen):
+        return _fail("fetch_marks_remote_known must not fetch tags")
     return _ok("remote-known known-good")
 
 

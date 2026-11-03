@@ -220,7 +220,7 @@ dispatch_release_plan() {
   case "${action}" in
     FETCH_REMOTE)
       : action_result_boundary:FETCH_REMOTE
-      run_planned git fetch "${REMOTE}" --prune --tags || rc=$?
+      run_planned git fetch "${REMOTE}" --prune || rc=$?
       ;;
     FAST_FORWARD_LOCAL)
       : action_result_boundary:FAST_FORWARD_LOCAL

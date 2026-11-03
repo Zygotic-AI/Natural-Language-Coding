@@ -65,6 +65,17 @@ def main() -> int:
         violations.append("nlc-release.sh must plan through nlc_release_state.py before mutation (ADR 0045)")
     if "--tag-argv" not in text:
         violations.append("nlc-release.sh must create annotated tags via --tag-argv (explicit commit)")
+    if "fetch \"${REMOTE}\" --prune --tags" in text or "fetch ${REMOTE} --prune --tags" in text:
+        violations.append(
+            "nlc-release.sh must not git fetch --tags (lightweight tag checkout clobbers annotated tags)"
+        )
+    resume_text = (ROOT / "tools" / "nouns" / "nlc_release_resume" / "nlc_release_resume.py").read_text(
+        encoding="utf-8"
+    )
+    if 'fetch", remote, base, "--tags"' in resume_text:
+        violations.append(
+            "nlc_release_resume.detect must not git fetch --tags (lightweight tag checkout clobbers annotated tags)"
+        )
     if ".[0].mergeCommit" in text or "ancestry-path" in text:
         violations.append("nlc-release.sh must match a merged PR by head SHA, not the first result")
     if "headRefOid" not in text:
