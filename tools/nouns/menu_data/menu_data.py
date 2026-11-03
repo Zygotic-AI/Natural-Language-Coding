@@ -5,7 +5,7 @@ from __future__ import annotations
 BOUNDARY = "bba-emit"
 
 INSTALL_CMD = (
-    "curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/"
+    "curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Compiler/"
     "main/scripts/install.sh | bash"
 )
 

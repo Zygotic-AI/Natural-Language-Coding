@@ -125,7 +125,7 @@ def main() -> int:
     statement.write_text(
         "\n".join(
             [
-                "Repo: Zygotic-AI/Natural-Language-Coding",
+                "Repo: Zygotic-AI/Natural-Language-Compiler",
                 "Document: integrity/gate-set-baseline.manifest.sha256",
                 f"Content-SHA256: {digest}",
                 "Decision: Accepted",

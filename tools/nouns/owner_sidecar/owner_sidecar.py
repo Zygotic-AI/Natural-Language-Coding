@@ -11,7 +11,9 @@ import tempfile
 from pathlib import Path
 from typing import NamedTuple
 
-REPO_SLUG = "Zygotic-AI/Natural-Language-Coding"
+REPO_SLUG = "Zygotic-AI/Natural-Language-Compiler"
+# Already-clearsigned armor still carries the pre-rename GitHub slug.
+_FORMER_REPO_SLUGS = frozenset({"Zygotic-AI/Natural-Language-Coding"})
 OWNER_KEY_REL = "integrity/owner-keys/richard-pickett.asc"
 TRUSTED_REL = "integrity/owner-keys/TRUSTED_FINGERPRINTS"
 _FIELD = re.compile(r"^([A-Za-z0-9_-]+):\s*(.*)$")
@@ -323,7 +325,7 @@ def verify_sidecar_p1_fields(
         errors.append(
             f"{doc_rel}: Content-SHA256 mismatch (statement {fields.get('Content-SHA256')} vs file {actual_hash})"
         )
-    if fields.get("Repo") != REPO_SLUG:
+    if fields.get("Repo") not in {REPO_SLUG} | _FORMER_REPO_SLUGS:
         errors.append(f"{doc_rel}: Repo must be {REPO_SLUG!r}")
     if fields.get("Document") != doc_rel:
         errors.append(f"{doc_rel}: Document field must be {doc_rel!r}")
@@ -435,7 +437,7 @@ def parse_batch_headers(plaintext: str) -> dict[str, str]:
 
 def batch_header_errors(fields: dict[str, str], entry_count: int) -> list[str]:
     errors: list[str] = []
-    if fields.get("Repo") != REPO_SLUG:
+    if fields.get("Repo") not in {REPO_SLUG} | _FORMER_REPO_SLUGS:
         errors.append(f"batch Repo must be {REPO_SLUG!r}")
     if fields.get("Decision") != "Accepted":
         errors.append("batch Decision must be 'Accepted'")
@@ -645,7 +647,7 @@ def statement_field_errors(
         errors.append("Content-SHA256 mismatch")
     if fields.get("Decision") != status:
         errors.append("Decision mismatch")
-    if fields.get("Repo") != REPO_SLUG:
+    if fields.get("Repo") not in {REPO_SLUG} | _FORMER_REPO_SLUGS:
         errors.append("Repo mismatch")
     if fields.get("Document") != doc_rel:
         errors.append("Document mismatch")

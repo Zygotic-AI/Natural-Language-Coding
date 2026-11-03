@@ -27,20 +27,20 @@ NLC gives you an application and infrastructure that's fully traceable and audit
    Linux:
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
+   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Compiler/main/scripts/install.sh | bash
    ```
 
    macOS:
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | /bin/bash
+   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Compiler/main/scripts/install.sh | /bin/bash
    ```
 
    Windows (PowerShell):
 
    ```powershell
    Set-ExecutionPolicy -Scope Process Bypass -Force
-   irm https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.ps1 | iex
+   irm https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Compiler/main/scripts/install.ps1 | iex
    ```
 
    Then check the install: `nlc doctor` (or `./nlc doctor` if you only use a repo-local launcher).

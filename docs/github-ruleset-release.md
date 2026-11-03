@@ -63,7 +63,7 @@ The one `bypass_actors` entry is the start-release GitHub App (`actor_type` Inte
 The live ruleset id is `25824126`. After this JSON is the live body:
 
 ```bash
-gh api --method PUT repos/Zygotic-AI/Natural-Language-Coding/rulesets/25824126 \
+gh api --method PUT repos/Zygotic-AI/Natural-Language-Compiler/rulesets/25824126 \
   --input docs/github-ruleset-release.json
 ```
 

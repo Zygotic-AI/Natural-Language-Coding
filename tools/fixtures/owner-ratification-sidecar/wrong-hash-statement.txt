@@ -1,4 +1,4 @@
-Repo: Zygotic-AI/Natural-Language-Coding
+Repo: Zygotic-AI/Natural-Language-Compiler
 Document: tools/fixtures/owner-ratification-sidecar/stub-doc.md
 Content-SHA256: 0000000000000000000000000000000000000000000000000000000000000000
 Decision: Accepted

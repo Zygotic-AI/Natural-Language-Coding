@@ -7,20 +7,20 @@
    Linux:
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | bash
+   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Compiler/main/scripts/install.sh | bash
    ```
 
    macOS:
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.sh | /bin/bash
+   curl -fsSL https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Compiler/main/scripts/install.sh | /bin/bash
    ```
 
    Windows (PowerShell):
 
    ```powershell
    Set-ExecutionPolicy -Scope Process Bypass -Force
-   irm https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Coding/main/scripts/install.ps1 | iex
+   irm https://raw.githubusercontent.com/Zygotic-AI/Natural-Language-Compiler/main/scripts/install.ps1 | iex
    ```
 
 2. **Open your [app repo](../../TERMS.md#adopter)** in Cursor (or work in this hub for charter/tool changes).

@@ -27,7 +27,7 @@ Retired in **consumer** prose: **[ACS](../docs/TERMS.md#acs) = whole product**. 
 ## Consequences
 
 - Root `README.md` and [`docs/nlc/compiler/NAMES.md`](../docs/nlc/compiler/NAMES.md) follow this table.
-- GitHub repo name **Natural-Language-Coding** matches the product name; legacy “Boundary-Based-Architecture” references are historical only.
+- GitHub repo name **Natural-Language-Compiler** matches the product name; **Natural-Language-Coding** is the prior GitHub name (redirects). Legacy “Boundary-Based-Architecture” references are historical only.
 
 ## Supersedes
 

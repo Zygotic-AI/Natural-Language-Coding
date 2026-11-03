@@ -731,6 +731,9 @@
     "docs/adoption/RELEASE-v0.4.1.md": [
       "gate_set_manifest"
     ],
+    "docs/adoption/RELEASE-v0.5.0.md": [
+      "gate_set_manifest"
+    ],
     "docs/adoption/RELEASE.md": [
       "gate_set_manifest"
     ],
@@ -1398,6 +1401,9 @@
       "gate_set_manifest"
     ],
     "migrations/0.4.0_to_0.4.1/migration.yaml": [
+      "gate_set_manifest"
+    ],
+    "migrations/0.4.1_to_0.5.0/migration.yaml": [
       "gate_set_manifest"
     ],
     "migrations/README.md": [

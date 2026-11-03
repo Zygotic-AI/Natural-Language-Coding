@@ -28,4 +28,4 @@ The PAN worked example remains useful as **shape** (ADR → rules → tags → o
 
 ## Rejected
 
-- Building PCI certification or walkthrough SSOT in the Natural-Language-Coding [hub](../docs/TERMS.md#hub) repo.
+- Building PCI certification or walkthrough SSOT in the Natural-Language-Compiler [hub](../docs/TERMS.md#hub) repo.

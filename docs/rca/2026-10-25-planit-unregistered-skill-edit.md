@@ -92,7 +92,7 @@
 
 **Confirmed (process):** transcript of `bc-298e948a` at 00:50 UTC: agent notes no PR exists, walkthrough defers the ship PR to `./release`, cloud briefing wants a PR, walkthrough wins; `git push origin release/v0.4.0`. Handoff: “did not bump identity… Regenerated the unsigned gate-set… owner ratification stays the later sign step.” Verified list is `SKILL_AUTHOR:MET` plus author-checklist fitness; identity is absent.
 
-**Confirmed (host):** `GET /repos/Zygotic-AI/Natural-Language-Coding/branches/release/v0.4.0` → `"protected": false`, `"protection": {"enabled": false, "required_status_checks": {"enforcement_level": "off", "contexts": [], "checks": []}}`. `GET …/rulesets` → `[]`. Detailed `…/protection` and org rulesets return 403 to this integration; the branch object is enough to show this ref is not protected.
+**Confirmed (host):** `GET /repos/Zygotic-AI/Natural-Language-Compiler/branches/release/v0.4.0` → `"protected": false`, `"protection": {"enabled": false, "required_status_checks": {"enforcement_level": "off", "contexts": [], "checks": []}}`. `GET …/rulesets` → `[]`. Detailed `…/protection` and org rulesets return 403 to this integration; the branch object is enough to show this ref is not protected.
 
 ---
 

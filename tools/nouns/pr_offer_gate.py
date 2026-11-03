@@ -168,7 +168,7 @@ def _self_test() -> int:
 
     def _create() -> str:
         calls["n"] += 1
-        return "https://github.com/Zygotic-AI/Natural-Language-Coding/pull/1"
+        return "https://github.com/Zygotic-AI/Natural-Language-Compiler/pull/1"
 
     cases: list[tuple[str, dict, int, bool]] = [
         (
@@ -189,7 +189,7 @@ def _self_test() -> int:
                 "stamp_ok": True,
                 "stamp_detail": "",
                 "verify_code": 1,
-                "verify_text": "VIOLATION hub-content-tree-fresh\nhttps://github.com/Zygotic-AI/Natural-Language-Coding/pull/9\n",
+                "verify_text": "VIOLATION hub-content-tree-fresh\nhttps://github.com/Zygotic-AI/Natural-Language-Compiler/pull/9\n",
                 "runs": [{"event": "push", "conclusion": "success", "status": "completed", "databaseId": 1}],
             },
             1,
