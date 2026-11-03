@@ -1214,6 +1214,9 @@
     "integrity/checker-digest.sha256": [
       "gate_set_manifest"
     ],
+    "integrity/checker-digest.sha256.approval.asc": [
+      "gate_set_manifest"
+    ],
     "integrity/examples/pan-rules-adopted.json": [
       "gate_set_manifest"
     ],
