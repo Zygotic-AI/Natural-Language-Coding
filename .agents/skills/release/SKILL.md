@@ -26,6 +26,7 @@ Do **not** run `./release` until every **blocking** row is true.
 | Resume probe | yes | Step 0 complete | `nlc_release_resume.py` |
 | Machine continuity | yes | **prepare:** `release-prep` MET on ship HEAD. **await_merge / tag_ready:** waived | Command output |
 | Hub compile | yes | `./nlc verify` → `Verify passed.` on ship HEAD (that command runs `tools/ci_fitness.py`) | Exit 0 |
+| Pull-request offer | yes | The only command that may run `gh pr create` is `python3 tools/pr-offer-gate.py`. A ready sentence is forbidden unless that command prints `PR_OFFER_GATE:MET` and exits 0. Direct `gh pr create` is not an offer step. | Exit code |
 | P0/P1 inference | yes | None from Step 4 | Inference apex |
 | Plain-language refs | yes | Reply references for every id in the verdict | Chat |
 | Product residuals | yes when P2/P3 | User confirms **once** after table | Chat |
@@ -113,6 +114,16 @@ Before **GO with residuals**, cite product gaps per `.agents/instructions/reply-
 | **Ship: NO-GO** | Unfixable gate / P0/P1 | Keep fixing; no `./release` |
 | **Ship: GO with residuals** | Product gaps only | Table + one clear question; after **yes** → Step 6 |
 | **Ship: GO** | Closeout + machine + inference | Step 6 |
+
+### 5b — Pull-request offer
+
+Do not run `gh pr create` yourself. Do not tell the operator a pull request is ready, and do not paste a pull request URL, unless this command exits 0:
+
+```bash
+python3 tools/pr-offer-gate.py --base main --head <branch> --title "<title>" --body "<body>"
+```
+
+Non-zero output is `RESULT:NOT_MET` plus the violation. Stop on that output. The command runs `./nlc verify` and requires a successful push fitness run on that commit before it calls `gh pr create`.
 
 ### 6 — Run `./release`
 
