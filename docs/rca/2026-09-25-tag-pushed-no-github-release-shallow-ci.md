@@ -11,8 +11,8 @@
 **Evidence (observed):**
 
 - Operator signal: after `./release` tag leg, terminal reported **`RELEASE:TAG_PUSHED v0.2.0 @ ce7b3a6c1fd5`** and *“GitHub Actions will build the tarball and publish the Release.”*
-- Product outcome: **`gh release list`** for `Zygotic-AI/Natural-Language-Coding` returns **no releases** (empty).
-- CI: GitHub Actions workflow **`release`** on tag push **`v0.2.0`** → **`failure`** (~13s), run [36192457449](https://github.com/Zygotic-AI/Natural-Language-Coding/actions/runs/36192457449).
+- Product outcome: **`gh release list`** for `Zygotic-AI/Natural-Language-Compiler` returns **no releases** (empty).
+- CI: GitHub Actions workflow **`release`** on tag push **`v0.2.0`** → **`failure`** (~13s), run [36192457449](https://github.com/Zygotic-AI/Natural-Language-Compiler/actions/runs/36192457449).
 - Failed step: **Hub fitness suite** (`python3 tools/ci_fitness.py`).
 - Log excerpt:
   ```text
@@ -26,7 +26,7 @@
   - `.github/workflows/release.yml` — `actions/checkout@v4` **without** `fetch-depth: 0` (default shallow)
 - Reproduction (local, observed):
   ```bash
-  git clone --depth 1 --branch v0.2.0 https://github.com/Zygotic-AI/Natural-Language-Coding /tmp/nlc-shallow-test
+  git clone --depth 1 --branch v0.2.0 https://github.com/Zygotic-AI/Natural-Language-Compiler /tmp/nlc-shallow-test
   cd /tmp/nlc-shallow-test
   python3 tools/nlc_release_tag_gate.py --check --commit 397b1a0 --tag v0.2.0 --skip-verify-deep
   # → RELEASE_TAG_GATE:NOT_MET — "no nlc-version.json at commit" (not hub-release-record)

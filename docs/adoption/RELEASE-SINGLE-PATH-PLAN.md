@@ -151,7 +151,7 @@ Fix:
   git pull origin main
   python3 tools/nlc_release_tag_gate.py --check --commit <sha> --tag v0.2.0
 Re-run:
-  cd /path/to/Natural-Language-Coding && ./release --bump keep
+  cd /path/to/Natural-Language-Compiler && ./release --bump keep
 ```
 
 ---

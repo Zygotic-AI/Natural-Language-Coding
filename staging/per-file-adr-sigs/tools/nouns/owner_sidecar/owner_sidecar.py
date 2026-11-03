@@ -11,7 +11,7 @@ import tempfile
 from pathlib import Path
 from typing import NamedTuple
 
-REPO_SLUG = "Zygotic-AI/Natural-Language-Coding"
+REPO_SLUG = "Zygotic-AI/Natural-Language-Compiler"
 OWNER_KEY_REL = "integrity/owner-keys/richard-pickett.asc"
 TRUSTED_REL = "integrity/owner-keys/TRUSTED_FINGERPRINTS"
 _FIELD = re.compile(r"^([A-Za-z0-9_-]+):\s*(.*)$")

@@ -16,7 +16,7 @@
 
 error_condition: A hub pull request is offered as the merge step when the GitHub `fitness` check on that head is not success.
 
-Repo: `/home/rpickett/workspace/Zygotic-AI/Natural-Language-Coding`. Subpath: `.agents/skills/release/SKILL.md` offer path and `gh pr create`. Severity: incident.
+Repo: `/home/rpickett/workspace/Zygotic-AI/Natural-Language-Compiler`. Subpath: `.agents/skills/release/SKILL.md` offer path and `gh pr create`. Severity: incident.
 
 Not every recent pull request failed. Of the last 15, these heads have a `fitness` conclusion of success and are merged: #38, #40, #41, #42, #45, #48, #51. The defect is the offer that precedes a failure.
 

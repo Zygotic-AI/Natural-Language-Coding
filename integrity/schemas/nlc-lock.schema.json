@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/Zygotic-AI/Natural-Language-Coding/integrity/schemas/nlc-lock.schema.json",
+  "$id": "https://github.com/Zygotic-AI/Natural-Language-Compiler/integrity/schemas/nlc-lock.schema.json",
   "title": "NLC project lock",
   "type": "object",
   "additionalProperties": false,
