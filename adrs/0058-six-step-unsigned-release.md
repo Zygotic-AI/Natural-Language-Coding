@@ -6,7 +6,7 @@
 - Accepted: Human manager (chat Accept, 2026-11-03)
 - Class: F (integrity / hub produce), process
 - Corpus: nlc
-- Version class: **major**
+- Version class: **minor**
 - Supersedes: [ADR 0052](0052-owner-openpgp-ratification-amends-0051.md) (OpenPGP ratification), [ADR 0055](0055-staged-activation-of-gate-machinery.md) (staged activate + armor), [ADR 0056](0056-per-file-adr-detached-signatures.md) (per-file ADR signatures), [ADR 0057](0057-tag-time-checker-digest.md) (tag-time digest signature)
 - Amends: [ADR 0051](0051-hub-own-produce-principles.md) SG2 (owner receipt is the merge, not a sidecar), [ADR 0039](0039-single-command-human-surfaces.md) (the one command is `./release` and it is the whole of steps 3–6), [ADR 0044](0044-hub-release-production-trunk.md) (human contract is six steps; work still lives on `release/<semver>`), [ADR 0049](0049-release-planner-owns-stops.md) (a stop may not be “please sign”), [ADR 0022](0022-hub-release-fail-early.md) (Highlights text is not a tag blocker)
 
@@ -264,7 +264,7 @@ Stop calling, then delete when nothing imports them:
 
 ## Consequences
 
-- First tag that ships this rule is a **major** version. Assumption unless the owner names another: **1.0.0**.
+- First tag that ships this rule is a **minor** version (owner, 2026-11-03). Same class as adding the locks (v0.4.0). **v1.0.0** stays parked for dogfood.
 - Produce-package leaves C6/C8 that demand sidecars are retired with the fitness rows.
 - Charter C24 remains: ratification is recorded. The record is the merge commit.
 - Integrity P3 / charter R30 remain: hard gates, complete or incomplete. The one command failing is the gate.
