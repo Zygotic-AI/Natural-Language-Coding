@@ -29,7 +29,7 @@ FORBID_CLAUSE_NEEDLES = (
     "rewriting a receipt",
 )
 CONTROL_LIFECYCLE_NEEDLES = (
-    "create, change, sign, ingest, rotate",
+    "create, change, list, accept, merge",
     "first bootstrap",
     "legitimate change to the verifier",
 )

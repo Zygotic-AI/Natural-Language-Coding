@@ -1,8 +1,9 @@
 # ADR 0058 — Six-step unsigned hub release
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-11-03
 - Deciders: Human manager
+- Accepted: Human manager (chat Accept, 2026-11-03)
 - Class: F (integrity / hub produce), process
 - Corpus: nlc
 - Version class: **major**
@@ -162,9 +163,9 @@ Do not keep as human or tag blockers:
 - Release-notes Highlights placeholder
 - Inference “please confirm residuals” as a second ritual (if the suite is red, step 3 fails; if it is green, proceed)
 
-## Lifecycle walkthrough (create, change, sign, ingest, rotate, first bootstrap)
+## Lifecycle walkthrough (create, change, list, accept, merge, first bootstrap)
 
-This section exists so the current control-design gate can see the walkthrough. **Sign is not performed. Rotate is not performed.**
+This section exists so the control-design gate can see the walkthrough. **Sign is not performed. Rotate is not performed.** A **legitimate change to the verifier** is listed by `origin/main`'s copy.
 
 ### Create
 

@@ -9,10 +9,10 @@ This committed brief is the `brief_ref` for the hub produce package. It names ev
 - `C3` — brief-forbid-weaken: this brief names every leaf and carries the forbid clause.
 - `C4` — no-check-on-check: no wired tool grades another fitness or assert tool's source or logic.
 - `C5` — known-bad-ssot: every bound constraint has a known-bad Candidate that the constraint itself refuses.
-- `C6` — sidecar-all-accepted: every Accepted document needs a valid owner sidecar.
+- `C6` — status-line: Accepted numbered ADRs have a parseable Status line; merge is accept (ADR 0058).
 - `C7` — pending-known-bad: Pending or Proposed presented as ratified is NOT_MET.
-- `C8` — no-tool-writes-ratification: no tracked tool writes `*.approval.asc` or ratified registry state.
-- `C9` — retired-key-denylist: retired fingerprint 1A86E89505A908766DFD7304F04AD1CEC768DB18 never enters TRUSTED_FINGERPRINTS.
+- `C8` — merge-is-accept: sidecar-write refuse is retired (ADR 0058).
+- `C9` — owner-key denylist is not a ship gate (ADR 0058).
 - `C10` — adr-gates-rows: `integrity/adr-gates.json` maps each 0051/0052 constraint to a check and known-bad.
 - `C11` — rules-ssot: `integrity/adr-0051-0052-rules.json` ids equal `derive-adr-0051-0052-rules.py`.
 

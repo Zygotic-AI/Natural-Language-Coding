@@ -3,9 +3,8 @@
   "scopes": [
     "default",
     "release",
-    "hub_release",
-    "sign_adrs"
+    "hub_release"
   ],
-  "at": "2026-11-03T14:15:44Z",
-  "product_content_sha256": "eb7c136319b8705b1fc8e0cded4a1dfe13f2dbc0ec4a80e42f3a0eb9a28c5417"
+  "at": "2026-11-04T01:03:01Z",
+  "product_content_sha256": "2b9a372ac8a65c941b872e09db50eadfa7f9b87c3c5934f1a43e68c0a27208ea"
 }

@@ -1,7 +1,6 @@
-"""Numbered ADRs are not branch-signed (ADR 0057).
+"""Numbered ADRs need a parseable Status line. Merge is accept (ADR 0058).
 
-Non-ADR Accepted documents still use the clearsigned sidecar (ADR 0052).
-Per-file adrs/*.md.asc files are not a suite requirement.
+Sidecar armor is not a compile, merge, or tag requirement.
 """
 
 from __future__ import annotations
@@ -13,12 +12,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-from nouns.adr_file_sig.adr_file_sig import numbered_adr_rel
 from nouns.owner_sidecar.owner_sidecar import (
     document_status_errors,
     non_adr_status_errors,
     read_status_line,
-    verify_sidecar_p1,
 )
 
 _ADR_FILE = re.compile(r"^(\d{4})-.+\.md$")
@@ -79,10 +76,6 @@ def sidecar_errors(root: Path) -> list[str]:
         for path in sorted(adrs.glob("[0-9][0-9][0-9][0-9]-*.md")):
             rel = path.relative_to(root).as_posix()
             errors.extend(document_status_errors(rel, path))
-    for rel in accepted_document_rels(root):
-        if numbered_adr_rel(rel):
-            continue
-        errors.extend(verify_sidecar_p1(root, rel))
     for rel in _git_tracked_files(root):
         if not rel.endswith(".md"):
             continue

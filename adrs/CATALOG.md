@@ -55,10 +55,10 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0049 | Release planner owns every intentional stop | proposed | L-0049 |
 | 0050 | Evidence binds to content fingerprints, not git commit ids | active | L-0050 |
 | 0051 | Hub-own produce principles SG1–SG3 | accepted | L-0051 |
-| 0052 | Owner OpenPGP ratification amends 0051 | accepted | L-0052 |
+| 0052 | Owner OpenPGP ratification amends 0051 | superseded | L-0052 |
 | 0053 | Text retrofit for stale 0051/0052 sentences | proposed | L-0053 |
 | 0054 | Published-skill author contract (one checklist, pre-release and post-install) | accepted | L-0054 |
-| 0055 | Staged activation of gate machinery | accepted | L-0055 |
-| 0056 | Per-file detached owner signatures for ADRs; manifest stays single-signed | proposed | L-0056 |
-| 0057 | One tag-time signature over the checker digest | proposed | L-0057 |
-| 0058 | Six-step unsigned hub release; merge is accept | proposed | L-0058 |
+| 0055 | Staged activation of gate machinery | superseded | L-0055 |
+| 0056 | Per-file detached owner signatures for ADRs; manifest stays single-signed | superseded | L-0056 |
+| 0057 | One tag-time signature over the checker digest | superseded | L-0057 |
+| 0058 | Six-step unsigned hub release; merge is accept | active | L-0058 |

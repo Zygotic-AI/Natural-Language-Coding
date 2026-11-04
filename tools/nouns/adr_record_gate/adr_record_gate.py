@@ -77,7 +77,7 @@ def constraint_row_errors(root: Path, payload: dict[str, object] | None = None) 
             continue
         rid = str(row.get("id") or "")
         status = str(row.get("status") or "")
-        if not rid or status == "CONTEXT" or rid in exempt:
+        if not rid or status in {"CONTEXT", "SUPERSEDED"} or rid in exempt:
             continue
         entry = constraints.get(rid)
         if not isinstance(entry, dict):

@@ -45,14 +45,12 @@ PLANIT is the compile process; BBP is the shape (`docs/nlc/compiler/MERGE.md`). 
 
 ## Gate — CONTROL-LIFECYCLE (control or gate design)
 
-When the work designs a pin, sidecar, hook, verifier, registry, or trusted-key list, do **not** Accept or wire until every **blocking** row is true. Checked rules — not prose only.
+When the work designs a pin, hook, verifier, registry, or the sensitive-file list, do **not** Accept or wire until every **blocking** row is true. Checked rules — not prose only. **Sign is not done.** Walk create, change, list, accept, merge, and first bootstrap.
 
 | Criterion | Blocking? | Pass when (true if…) | Evidence |
 | --------- | --------- | -------------------- | -------- |
-| Lifecycle walkthrough | yes when control or gate design | Plan/ADR walks create, change, sign, ingest, rotate, and first bootstrap | Named section in the plan or ADR |
-| Known-bad legitimate change to the verifier | yes when control or gate design | A staged path exists; the live verifier stays signed until atomic activate; `python3 tools/assert-verifier-change-via-staging-passes.py` is ASSERT:PASS | Command output |
-| Self-ref members stay off live paths | yes when the path is in `python3 tools/derive-self-ref-set.py` | Candidates live under `staging/<change-id>/`; live edit outside activate is refused | `python3 tools/fitness-live-self-ref-activation.py` |
-| Mandated pins imported | yes when a mandated path is touched | Pins move in the same change; unsigned manifest is INCOMPLETE, not done | `python3 tools/derive-mandated-paths.py` + `python3 tools/fitness-mandate-inheritance.py` |
+| Lifecycle walkthrough | yes when control or gate design | Plan/ADR walks create, change, list, accept, merge, and first bootstrap | Named section in the plan or ADR |
+| Known-bad legitimate change to the verifier | yes when control or gate design | Editing the list-builder on a branch cannot hide a path; `origin/main`'s copy still lists it; `python3 tools/assert-sensitive-review-hide-fails.py` is ASSERT:PASS | Command output |
 
 After all **blocking** rows are **true**, emit **`## Verdict — Planit intake gate`** per [`operation-verdict-standard.md`](references/operation-verdict-standard.md) §4, then proceed to AWL Phase 2.
 
@@ -147,7 +145,7 @@ Use AWL **Appendix D** plan template. Add **Leaf skill / procedure** column when
 Attack plan and statements: unbound items, god-noun, split adjectives, **noun inheritance** (ADR 0008), missing impact, wrong charter class, raw I/O that is not a primitive function (ADR 0009). **Hub:** **`bbp-reviewer`** on the proposal package; findings cite `R*` / `C*` / `P*`.
 
 
-**Register rows must include:** `GATE-STD` (planned artifacts will ship with §2-compliant gates). When the work is a **control or gate design**, also `CONTROL-LIFECYCLE` (create, change, sign, ingest, rotate, first bootstrap + known-bad legitimate change to the verifier through staging).
+**Register rows must include:** `GATE-STD` (planned artifacts will ship with §2-compliant gates). When the work is a **control or gate design**, also `CONTROL-LIFECYCLE` (create, change, list, accept, merge, first bootstrap + known-bad legitimate change to the verifier: main's copy still lists a path the branch copy hid).
 
 Emit **`## Verdict — Planit plan audit`** per [`operation-verdict-standard.md`](references/operation-verdict-standard.md) §4 before bind close-out and before AWL Phase 5.
 
@@ -200,7 +198,7 @@ Run approved plan steps **in order**. Bind gate must already **PASS**. This phas
 1. **Machine gate** — hub: **`bbp-confirmer`** (`python3 tools/ci_fitness.py` + charter §11 with evidence). Adopter: the fitness suite that tree bound. Exit non-zero = fail.
 2. **Adversarial audit** — separate from the generator: statements done, bindings held, no second copy of an adjective inside a goal.
 
-Compile-green is not released. **Ship** is later: `python3 tools/release-audit.py <tree>` after a human writes `Released-by:` (and `Ratified-by:` when class A/B/D/E/F). Do not treat prove PASS as ship. Do not write those lines as the confirmer.
+Compile-green is not released. **Ship** is later: the six-step unsigned path (`./release`); the GitHub merge onto `main` is the C24 record. Do not treat prove PASS as ship. Do not write `Released-by:`.
 
 Emit **`## Verdict — Planit prove`** per §4 when step 7 completes.
 
@@ -295,7 +293,7 @@ From the adopter app repo root, **you** run machine steps; do not ask the human 
 - Each generate has metrics in the plan; each artifact is gated **before** the next statement (ADR 0010)
 - Prove **PASS** (machine + adversarial); hub confirmer output when hub touched. Prove is compile, not ship.
 
-- Ship is optional in this skill: `python3 tools/release-audit.py <tree>` after a human `Released-by:` — not part of process PASS
+- Ship is optional in this skill: `./release` after prove PASS; merge is accept — not part of process PASS
 
 - Execution audit **PASS** with `GATE-STD` on delivered artifacts; evidence is the artifact under test, not a delegate summary — §4 verdict before record
 - Appendix B meta-audit **PASS** when T2+

@@ -1,149 +1,57 @@
 ---
 name: release
-description: Hub ship entrypoint — agent closes continuity (commit, SSOT, stale branches), readiness, then ./release. Use when the user wants to release, ship, promote, tag, or run ./release.
+description: Hub ship entrypoint — run ./release for the six-step unsigned path. Use when the user wants to release, ship, promote, tag, or run ./release.
 disable-model-invocation: true
 ---
 
 # Release (`/release`)
 
-**You remember one thing:** invoke **`/release`** in chat.
+**One command:** `./release`. Chat `/release` means run that command. There is no second checklist.
 
-**Your job:** run the **full pre-ship pipeline** — not a checklist for the human. **`/release` authorizes** the agent to commit the hub continuity/product batch, fix SSOT headers, remove stale `release/v*` branches, prove gates, run inference, then start **`./release`**. The orchestrator performs deterministic audits and repairs and re-plans in the same invocation (ADR 0049); `RELEASE:NOT_MET` is reserved for a named human decision. **Human-only:** GitHub PR merge click, release notes **Highlights** content when invalid, and explicitly named unsafe/ambiguous decisions. Do **not** move an existing tag, `reset` `main`, or force-push. Phase comes from `nlc_release_state.py` (ADR 0045). `INVALID_MERGED` is never tagged; the planner creates a new release-line candidate when safe.
+The human path is six steps (ADR 0058). **Sign is not done.** Merge is accept.
 
-**Terminal orchestrator:** `./release` — ADR 0039 + **production trunk** ADR 0044. Start after **Ship: GO** (or **GO with residuals**).
-
-**Do not** instruct the user to “commit and merge”, “update FINDINGS`, “delete stale branch”, or run `full-nlc-audit` by hand — **do it** (or fix failures and retry). **Do not** write `Released-by:`.
+1. A `release/<semver>` branch exists (`./release` may create it).
+2. Work merges into that branch.
+3. `./release` checks everything and lists sensitive files. Revert, edit, or accept by merging. Stay on this step until every listed file is resolved.
+4. After that, never sign another thing.
+5. Merge the release pull request to `main`.
+6. `./release` tags the merge commit.
 
 ## Gate (default-closed)
 
-Do **not** run `./release` until every **blocking** row is true.
+Do **not** tell the human to sign. Do **not** invent a seventh step.
 
 | Criterion | Blocking? | Pass when | Evidence |
 | --------- | --------- | --------- | -------- |
 | Repo root | yes | NLC hub workspace | Path |
-| Ship branch (prepare) | yes | Ship work on any branch; orchestrator normalizes to **`release/v*`** via infer | `git branch` + ADR 0044 |
-| Agent closeout (Step 1A) | yes | Clean tree at ship HEAD **or** resume leg with no ship-intent dirty edits | `git status --porcelain` |
-| Resume probe | yes | Step 0 complete | `nlc_release_resume.py` |
-| Machine continuity | yes | **prepare:** `release-prep` MET on ship HEAD. **await_merge / tag_ready:** waived | Command output |
-| Hub compile | yes | `./nlc verify` → `Verify passed.` on ship HEAD (that command runs `tools/ci_fitness.py`) | Exit 0 |
-| Pull-request offer | yes | The only command that may run `gh pr create` is `python3 tools/pr-offer-gate.py`. A ready sentence is forbidden unless that command prints `PR_OFFER_GATE:MET` and exits 0. Direct `gh pr create` is not an offer step. | Exit code |
-| P0/P1 inference | yes | None from Step 4 | Inference apex |
-| Plain-language refs | yes | Reply references for every id in the verdict | Chat |
-| Product residuals | yes when P2/P3 | User confirms **once** after table | Chat |
-| `./release` started | yes on GO | Orchestrator invoked from repo root | Terminal |
-| Mandated pins | yes when a mandated path is touched | Derived list `python3 tools/derive-mandated-paths.py` imported; pins moved in the same change; unsigned manifest is INCOMPLETE, not a finished step | `python3 tools/fitness-mandate-inheritance.py` |
+| Six-step path | yes | Steps 1–6 above; `./release` is the only command | This skill + `docs/adoption/RELEASE.md` |
+| Sensitive list | yes when a listed path changed | `python3 tools/nlc_release_sensitive_review.py --check` printed the paths; the pull-request body carries the same list | Command output |
+| Machine checks | yes | `./nlc verify` MET inside `./release` | Exit 0 |
+| Merge is accept | yes for step 5 | GitHub merge of the release pull request | Merge commit |
+| No signature stop | yes | Output does not ask for a signature or OpenPGP armor | `python3 tools/fitness-sign-stop.py` |
 
-**Done signals:** Closeout done; **Ship** verdict; `./release` running, awaiting the release pull-request merge, complete, or stopped on a named human decision.
+**Done signals:** `./release` running, awaiting merge, tagged, or stopped on a named machine/merge decision. Never stopped to request a signature.
 
 ## Procedure
 
-### 0 — Resume probe (always first)
+Run `./release` from the hub root with no flags. Report its output. If it prints `SENSITIVE_REVIEW:NOT_MET`, the listed paths are the review. The human reverts, edits, or merges. Re-run `./release` after that.
 
-```bash
-python3 tools/nlc_release_context.py --list-branches
-python3 tools/nlc_release_resume.py --emit json
-git tag -l
-git ls-remote --tags origin 'v*' 2>/dev/null | tail -5
-```
+Do not write `Released-by:`. Do not paste armor. Do not run `scripts/sign-adrs.sh`.
 
-- **What is shipped?** = semver tag reachable from `origin/main` + `integrity/nlc-version.json` + `integrity/hub-release-record.json` at that commit. `FINDINGS.md` is gap narrative only and must not contradict those three. `DESCRIBE.md` “Current ship” is narrative and must not contradict them either. Disagreement is a factory FAIL, not a reader FAIL.
-- **`tag` / `planned_tag` in JSON** = name `./release` would create — **not** an existing ref unless **`git_tag_on_merge`** is true.
-- **`stale_release_branches`:** merged `release/v*` **without** `hub-release-record.json` on the merge commit (RCA 26-09-24) — agent **deletes** those refs in Step 1A when fixing resume hygiene.
-- **`closed_release_branches`:** shipped release lines (git tag exists for that version) — **do not delete**; resume skips them for the next `./release`. Keep branch history unless the user asks to prune.
+Never tell the operator to ignore or reinterpret command output ([`jidoka-ssot-output.md`](../../instructions/jidoka-ssot-output.md)).
 
-| Phase | Agent path |
-| ----- | ---------- |
-| **prepare** | Steps 1 → 1A → 2–6 |
-| **await_merge** / **tag_ready** | Skip 1A commit burst if tree clean; skip Step 3 `release-prep`; **GO** → `./release` |
-| **complete** | Report shipped; new ship: branch from `main`, commit, **`./release`** |
+## CONTROL-LIFECYCLE (control or gate design)
 
-Never tell the user to run `./release finish` or `prepare` — **`./release`** only.
-
-Never tell the operator to **ignore or reinterpret** resume JSON (`jidoka-ssot-output.md`); fix `nlc_release_resume.py` / docs when fields contradict SSOT.
-
-### 1 — Bound ship state
-
-Record branch, short SHA, dirty file count. **Prepare:** work on **`release/v*`** (ADR 0044); do **not** commit ship batches to `main`.
-
-### 1A — Agent continuity closeout (mandatory on **prepare**)
-
-**When the user invokes `/release`, treat uncommitted hub work as ship intent** unless they say *resume only*, *audit only*, or *no commit*.
-
-Execute **in order** (fix and retry on NOT_MET; do not dump steps on the user):
-
-1. **Stale `release/v*` only** — for each name in **`stale_release_branches`** (missing record on merge, not **`closed_release_branches`**): `git branch -D <branch>`; `git push origin --delete <branch>` when remote exists (no force-push to `main`).
-2. **Stage and commit** ship-intent changes on the **release line branch** (never `main`). If user is on `main` with work, create/checkout `release/v*` first, then commit. Use repo commit message style; never `--no-verify`.
-3. **Content-tree stamp only** — `python3 tools/sync-hub-content-tree-hash.py`, then `python3 tools/fitness-findings-last-pass-fresh.py` → MET. Do not rewrite `FINDINGS.md` or `DESCRIBE.md` unless a sentence contradicts `integrity/hub-release-record.json` or `integrity/nlc-version.json`. Commit the stamp if it changed.
-4. **Inference record** — update `integrity/full-nlc-audit-inference-record.json` only when `audit_tree_hash` would change. Do not rewrite it to repeat the release record.
-5. **TODO continuity** — mark completed closeout rows `@done` when predicates MET (same commit or follow-up).
-6. **Prove once** — `./nlc verify` → `Verify passed.` on the final HEAD. This is the only suite run in closeout. Do not prove before the commit and again after. If FAIL, fix until it passes, then commit that fix and prove once more.
-7. **Clean tree** — `git status --porcelain` empty. Do not run `./nlc verify-deep` after the owner gate-set signature. That command is a writer; `./nlc verify` is the read-only merge check.
-
-**Stop / NO-GO only if:** CI cannot MET after fix attempts; git push rejected; P0/P1 inference; user refused product residuals.
-
-**Waived:** optional `--profile full` on clean tree (not required for `./release`).
-
-### 2 — Outstanding scan (inform verdict)
-
-Scan `TODO`, `FINDINGS.md`, `integrity/uc-product-status.json`. Tag **continuity** vs **product** ([`references/release-vs-product.md`](references/release-vs-product.md)). **Product** open items → **GO with residuals** after one confirmation; do not block on UC14/16/20 expansion by default.
-
-### 3 — Machine (`release-prep` on **prepare** only)
-
-```bash
-python3 tools/full-nlc-audit.py --check --profile release-prep
-```
-
-Skip when **await_merge** / **tag_ready** / **complete**. Deterministic release repairs remain inside `./release`; `NOT_MET` must name a human-only decision, not another command.
-
-**tag_ready:** optional `python3 tools/nlc_release_tag_gate.py --check --commit … --tag …`
-
-### 4 — Inference
-
-```bash
-python3 tools/full-nlc-audit.py --emit-inference-checklist
-```
-
-Compressed phases; apex **Continuity: PASS | FAIL | PASS with residuals**.
-
-### 5 — Ship verdict
-
-Before **GO with residuals**, cite product gaps per `.agents/instructions/reply-references-plain-language.md` (table with **Impact** column). **Blocking:** no bare UC/ADR id lists.
-
-| Verdict | When | Agent next |
-| ------- | ---- | ---------- |
-| **Ship: NO-GO** | Unfixable gate / P0/P1 | Keep fixing; no `./release` |
-| **Ship: GO with residuals** | Product gaps only | Table + one clear question; after **yes** → Step 6 |
-| **Ship: GO** | Closeout + machine + inference | Step 6 |
-
-### 5b — Pull-request offer
-
-Do not run `gh pr create` yourself. Do not tell the operator a pull request is ready, and do not paste a pull request URL, unless this command exits 0:
-
-```bash
-python3 tools/pr-offer-gate.py --base main --head <branch> --title "<title>" --body "<body>"
-```
-
-Non-zero output is `RESULT:NOT_MET` plus the violation. Stop on that output. The command runs `./nlc verify` and requires a successful push fitness run on that commit before it calls `gh pr create`.
-
-### 6 — Run `./release`
-
-```bash
-./release
-```
-
-No flags. The planner sets the next action and runs deterministic repairs in the same invocation. Report **`RELEASE:NOT_MET`** verbatim only when it names a human-only decision.
-
-**Human-only:** GitHub merge, and editing Highlights in release notes when the notes gate fails. Do not retag.
+When this skill or `./release` is the control under change, walk **create, change, list, accept, merge**, and **first bootstrap**. Known-bad of a **legitimate change to the verifier:** main's copy still lists a path the branch copy hid (`python3 tools/assert-sensitive-review-hide-fails.py`).
 
 ## Routing
 
 | Need | Skill |
 | ---- | ----- |
-| Machine/inference detail | [`full-nlc-audit`](../full-nlc-audit/SKILL.md) |
 | Compile proof | [`bbp-confirmer`](../bbp-confirmer/SKILL.md) |
 | Large hub change plan | [`planit`](../planit/SKILL.md) |
 
 ## Reference
 
 - `docs/adoption/RELEASE.md`
-- [`references/release-vs-product.md`](references/release-vs-product.md)
+- [ADR 0058](../../../adrs/0058-six-step-unsigned-release.md)

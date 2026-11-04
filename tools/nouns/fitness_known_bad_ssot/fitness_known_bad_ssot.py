@@ -268,7 +268,7 @@ def required_constraint_ids(root: Path) -> list[str]:
     for row in load_rules(rules):
         rid = str(row.get("id") or "")
         status = str(row.get("status") or "")
-        if not rid or status == "CONTEXT" or rid in OWNER_EXEMPT:
+        if not rid or status in {"CONTEXT", "SUPERSEDED"} or rid in OWNER_EXEMPT:
             continue
         ids.append(rid)
     return ids

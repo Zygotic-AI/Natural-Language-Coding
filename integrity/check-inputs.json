@@ -3,19 +3,6 @@
   "source": "tools/nouns/check_inputs/check_inputs.py",
   "checks": [
     {
-      "label": "assert-activation-split-land-fails",
-      "script": "tools/assert-activation-split-land-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-activation-split-land-fails.py",
-        "tools/nouns/assert_activation_split_land_fails/README.md",
-        "tools/nouns/assert_activation_split_land_fails/__init__.py",
-        "tools/nouns/assert_activation_split_land_fails/adjectives.txt",
-        "tools/nouns/assert_activation_split_land_fails/assert_activation_split_land_fails.py",
-        "tools/nouns/assert_activation_split_land_fails/fields.txt"
-      ]
-    },
-    {
       "label": "assert-adjective-locality-violation-fails",
       "script": "tools/assert-adjective-locality-violation-fails.py",
       "kind": "landmine",
@@ -35,19 +22,6 @@
       "kind": "landmine",
       "inputs": [
         "tools/assert-adr-approval-mismatch-fails.py"
-      ]
-    },
-    {
-      "label": "assert-adr-detached-sig-fails",
-      "script": "tools/assert-adr-detached-sig-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-adr-detached-sig-fails.py",
-        "tools/nouns/assert_adr_detached_sig_fails/README.md",
-        "tools/nouns/assert_adr_detached_sig_fails/__init__.py",
-        "tools/nouns/assert_adr_detached_sig_fails/adjectives.txt",
-        "tools/nouns/assert_adr_detached_sig_fails/assert_adr_detached_sig_fails.py",
-        "tools/nouns/assert_adr_detached_sig_fails/fields.txt"
       ]
     },
     {
@@ -619,27 +593,6 @@
       ]
     },
     {
-      "label": "assert-gate-set-manifest-missing-sidecar-fails",
-      "script": "tools/assert-gate-set-manifest-missing-sidecar-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-gate-set-manifest-missing-sidecar-fails.py"
-      ]
-    },
-    {
-      "label": "assert-gate-set-manifest-placeholder-sidecar-fails",
-      "script": "tools/assert-gate-set-manifest-placeholder-sidecar-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-gate-set-manifest-placeholder-sidecar-fails.py",
-        "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/README.md",
-        "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/__init__.py",
-        "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/adjectives.txt",
-        "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/assert_gate_set_manifest_placeholder_sidecar_fails.py",
-        "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/fields.txt"
-      ]
-    },
-    {
       "label": "assert-gate-set-manifest-tamper-fails",
       "script": "tools/assert-gate-set-manifest-tamper-fails.py",
       "kind": "landmine",
@@ -721,32 +674,6 @@
         "tools/nouns/assert_invoice_violation_fails/assert_invoice_violation_fails.py",
         "tools/nouns/assert_invoice_violation_fails/fields.txt",
         "tools/nouns/assert_invoice_violation_fails/schemas/verbs.schema.json"
-      ]
-    },
-    {
-      "label": "assert-live-self-ref-direct-edit-fails",
-      "script": "tools/assert-live-self-ref-direct-edit-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-live-self-ref-direct-edit-fails.py",
-        "tools/nouns/assert_live_self_ref_direct_edit_fails/README.md",
-        "tools/nouns/assert_live_self_ref_direct_edit_fails/__init__.py",
-        "tools/nouns/assert_live_self_ref_direct_edit_fails/adjectives.txt",
-        "tools/nouns/assert_live_self_ref_direct_edit_fails/assert_live_self_ref_direct_edit_fails.py",
-        "tools/nouns/assert_live_self_ref_direct_edit_fails/fields.txt"
-      ]
-    },
-    {
-      "label": "assert-mandate-skill-without-registry-fails",
-      "script": "tools/assert-mandate-skill-without-registry-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-mandate-skill-without-registry-fails.py",
-        "tools/nouns/assert_mandate_skill_without_registry_fails/README.md",
-        "tools/nouns/assert_mandate_skill_without_registry_fails/__init__.py",
-        "tools/nouns/assert_mandate_skill_without_registry_fails/adjectives.txt",
-        "tools/nouns/assert_mandate_skill_without_registry_fails/assert_mandate_skill_without_registry_fails.py",
-        "tools/nouns/assert_mandate_skill_without_registry_fails/fields.txt"
       ]
     },
     {
@@ -1303,22 +1230,6 @@
       ]
     },
     {
-      "label": "assert-release-probe-sig-ok-fails",
-      "script": "tools/assert-release-probe-sig-ok-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-release-probe-sig-ok-fails.py"
-      ]
-    },
-    {
-      "label": "assert-release-probe-sig-ok-passes",
-      "script": "tools/assert-release-probe-sig-ok-passes.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-release-probe-sig-ok-passes.py"
-      ]
-    },
-    {
       "label": "assert-release-probe-tag-exists-fails",
       "script": "tools/assert-release-probe-tag-exists-fails.py",
       "kind": "landmine",
@@ -1378,20 +1289,6 @@
         "tools/nouns/assert_release_tag_gate_fails/assert_release_tag_gate_fails.py",
         "tools/nouns/assert_release_tag_gate_fails/fields.txt",
         "tools/nouns/assert_release_tag_gate_fails/schemas/verbs.schema.json"
-      ]
-    },
-    {
-      "label": "assert-release-unsigned-fails",
-      "script": "tools/assert-release-unsigned-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-release-unsigned-fails.py",
-        "tools/nouns/assert_release_unsigned_fails/README.md",
-        "tools/nouns/assert_release_unsigned_fails/__init__.py",
-        "tools/nouns/assert_release_unsigned_fails/adjectives.txt",
-        "tools/nouns/assert_release_unsigned_fails/assert_release_unsigned_fails.py",
-        "tools/nouns/assert_release_unsigned_fails/fields.txt",
-        "tools/nouns/assert_release_unsigned_fails/schemas/verbs.schema.json"
       ]
     },
     {
@@ -1493,6 +1390,34 @@
       ]
     },
     {
+      "label": "assert-sensitive-review-hide-fails",
+      "script": "tools/assert-sensitive-review-hide-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-sensitive-review-hide-fails.py",
+        "tools/nouns/assert_sensitive_review_hide_fails/README.md",
+        "tools/nouns/assert_sensitive_review_hide_fails/__init__.py",
+        "tools/nouns/assert_sensitive_review_hide_fails/adjectives.txt",
+        "tools/nouns/assert_sensitive_review_hide_fails/assert_sensitive_review_hide_fails.py",
+        "tools/nouns/assert_sensitive_review_hide_fails/fields.txt",
+        "tools/nouns/assert_sensitive_review_hide_fails/schemas/verbs.schema.json"
+      ]
+    },
+    {
+      "label": "assert-sensitive-review-self-fails",
+      "script": "tools/assert-sensitive-review-self-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-sensitive-review-self-fails.py",
+        "tools/nouns/assert_sensitive_review_self_fails/README.md",
+        "tools/nouns/assert_sensitive_review_self_fails/__init__.py",
+        "tools/nouns/assert_sensitive_review_self_fails/adjectives.txt",
+        "tools/nouns/assert_sensitive_review_self_fails/assert_sensitive_review_self_fails.py",
+        "tools/nouns/assert_sensitive_review_self_fails/fields.txt",
+        "tools/nouns/assert_sensitive_review_self_fails/schemas/verbs.schema.json"
+      ]
+    },
+    {
       "label": "assert-shipped-tag-audit-fails",
       "script": "tools/assert-shipped-tag-audit-fails.py",
       "kind": "landmine",
@@ -1541,15 +1466,6 @@
         "tools/assert-stale-committed-evidence-fails.py",
         "tools/nouns/assert_stale_committed_evidence_fails/__init__.py",
         "tools/nouns/assert_stale_committed_evidence_fails/assert_stale_committed_evidence_fails.py"
-      ]
-    },
-    {
-      "label": "assert-tag-digest-signature-required-fails",
-      "script": "tools/assert-tag-digest-signature-required-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-tag-digest-signature-required-fails.py",
-        "tools/nouns/assert_tag_digest_signature_required_fails/assert_tag_digest_signature_required_fails.py"
       ]
     },
     {
@@ -4943,19 +4859,6 @@
       ]
     },
     {
-      "label": "tools/assert-activation-split-land-fails.py",
-      "script": "tools/assert-activation-split-land-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-activation-split-land-fails.py",
-        "tools/nouns/assert_activation_split_land_fails/README.md",
-        "tools/nouns/assert_activation_split_land_fails/__init__.py",
-        "tools/nouns/assert_activation_split_land_fails/adjectives.txt",
-        "tools/nouns/assert_activation_split_land_fails/assert_activation_split_land_fails.py",
-        "tools/nouns/assert_activation_split_land_fails/fields.txt"
-      ]
-    },
-    {
       "label": "tools/assert-adjective-locality-violation-fails.py",
       "script": "tools/assert-adjective-locality-violation-fails.py",
       "kind": "landmine",
@@ -4975,19 +4878,6 @@
       "kind": "landmine",
       "inputs": [
         "tools/assert-adr-approval-mismatch-fails.py"
-      ]
-    },
-    {
-      "label": "tools/assert-adr-detached-sig-fails.py",
-      "script": "tools/assert-adr-detached-sig-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-adr-detached-sig-fails.py",
-        "tools/nouns/assert_adr_detached_sig_fails/README.md",
-        "tools/nouns/assert_adr_detached_sig_fails/__init__.py",
-        "tools/nouns/assert_adr_detached_sig_fails/adjectives.txt",
-        "tools/nouns/assert_adr_detached_sig_fails/assert_adr_detached_sig_fails.py",
-        "tools/nouns/assert_adr_detached_sig_fails/fields.txt"
       ]
     },
     {
@@ -5559,27 +5449,6 @@
       ]
     },
     {
-      "label": "tools/assert-gate-set-manifest-missing-sidecar-fails.py",
-      "script": "tools/assert-gate-set-manifest-missing-sidecar-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-gate-set-manifest-missing-sidecar-fails.py"
-      ]
-    },
-    {
-      "label": "tools/assert-gate-set-manifest-placeholder-sidecar-fails.py",
-      "script": "tools/assert-gate-set-manifest-placeholder-sidecar-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-gate-set-manifest-placeholder-sidecar-fails.py",
-        "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/README.md",
-        "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/__init__.py",
-        "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/adjectives.txt",
-        "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/assert_gate_set_manifest_placeholder_sidecar_fails.py",
-        "tools/nouns/assert_gate_set_manifest_placeholder_sidecar_fails/fields.txt"
-      ]
-    },
-    {
       "label": "tools/assert-gate-set-manifest-tamper-fails.py",
       "script": "tools/assert-gate-set-manifest-tamper-fails.py",
       "kind": "landmine",
@@ -5661,32 +5530,6 @@
         "tools/nouns/assert_invoice_violation_fails/assert_invoice_violation_fails.py",
         "tools/nouns/assert_invoice_violation_fails/fields.txt",
         "tools/nouns/assert_invoice_violation_fails/schemas/verbs.schema.json"
-      ]
-    },
-    {
-      "label": "tools/assert-live-self-ref-direct-edit-fails.py",
-      "script": "tools/assert-live-self-ref-direct-edit-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-live-self-ref-direct-edit-fails.py",
-        "tools/nouns/assert_live_self_ref_direct_edit_fails/README.md",
-        "tools/nouns/assert_live_self_ref_direct_edit_fails/__init__.py",
-        "tools/nouns/assert_live_self_ref_direct_edit_fails/adjectives.txt",
-        "tools/nouns/assert_live_self_ref_direct_edit_fails/assert_live_self_ref_direct_edit_fails.py",
-        "tools/nouns/assert_live_self_ref_direct_edit_fails/fields.txt"
-      ]
-    },
-    {
-      "label": "tools/assert-mandate-skill-without-registry-fails.py",
-      "script": "tools/assert-mandate-skill-without-registry-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-mandate-skill-without-registry-fails.py",
-        "tools/nouns/assert_mandate_skill_without_registry_fails/README.md",
-        "tools/nouns/assert_mandate_skill_without_registry_fails/__init__.py",
-        "tools/nouns/assert_mandate_skill_without_registry_fails/adjectives.txt",
-        "tools/nouns/assert_mandate_skill_without_registry_fails/assert_mandate_skill_without_registry_fails.py",
-        "tools/nouns/assert_mandate_skill_without_registry_fails/fields.txt"
       ]
     },
     {
@@ -6099,14 +5942,6 @@
       ]
     },
     {
-      "label": "tools/assert-release-probe-sig-ok-fails.py",
-      "script": "tools/assert-release-probe-sig-ok-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-release-probe-sig-ok-fails.py"
-      ]
-    },
-    {
       "label": "tools/assert-release-probe-tag-exists-fails.py",
       "script": "tools/assert-release-probe-tag-exists-fails.py",
       "kind": "landmine",
@@ -6142,20 +5977,6 @@
         "tools/nouns/assert_release_tag_gate_fails/assert_release_tag_gate_fails.py",
         "tools/nouns/assert_release_tag_gate_fails/fields.txt",
         "tools/nouns/assert_release_tag_gate_fails/schemas/verbs.schema.json"
-      ]
-    },
-    {
-      "label": "tools/assert-release-unsigned-fails.py",
-      "script": "tools/assert-release-unsigned-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-release-unsigned-fails.py",
-        "tools/nouns/assert_release_unsigned_fails/README.md",
-        "tools/nouns/assert_release_unsigned_fails/__init__.py",
-        "tools/nouns/assert_release_unsigned_fails/adjectives.txt",
-        "tools/nouns/assert_release_unsigned_fails/assert_release_unsigned_fails.py",
-        "tools/nouns/assert_release_unsigned_fails/fields.txt",
-        "tools/nouns/assert_release_unsigned_fails/schemas/verbs.schema.json"
       ]
     },
     {
@@ -6257,6 +6078,34 @@
       ]
     },
     {
+      "label": "tools/assert-sensitive-review-hide-fails.py",
+      "script": "tools/assert-sensitive-review-hide-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-sensitive-review-hide-fails.py",
+        "tools/nouns/assert_sensitive_review_hide_fails/README.md",
+        "tools/nouns/assert_sensitive_review_hide_fails/__init__.py",
+        "tools/nouns/assert_sensitive_review_hide_fails/adjectives.txt",
+        "tools/nouns/assert_sensitive_review_hide_fails/assert_sensitive_review_hide_fails.py",
+        "tools/nouns/assert_sensitive_review_hide_fails/fields.txt",
+        "tools/nouns/assert_sensitive_review_hide_fails/schemas/verbs.schema.json"
+      ]
+    },
+    {
+      "label": "tools/assert-sensitive-review-self-fails.py",
+      "script": "tools/assert-sensitive-review-self-fails.py",
+      "kind": "landmine",
+      "inputs": [
+        "tools/assert-sensitive-review-self-fails.py",
+        "tools/nouns/assert_sensitive_review_self_fails/README.md",
+        "tools/nouns/assert_sensitive_review_self_fails/__init__.py",
+        "tools/nouns/assert_sensitive_review_self_fails/adjectives.txt",
+        "tools/nouns/assert_sensitive_review_self_fails/assert_sensitive_review_self_fails.py",
+        "tools/nouns/assert_sensitive_review_self_fails/fields.txt",
+        "tools/nouns/assert_sensitive_review_self_fails/schemas/verbs.schema.json"
+      ]
+    },
+    {
       "label": "tools/assert-shipped-tag-audit-fails.py",
       "script": "tools/assert-shipped-tag-audit-fails.py",
       "kind": "landmine",
@@ -6305,15 +6154,6 @@
         "tools/assert-stale-committed-evidence-fails.py",
         "tools/nouns/assert_stale_committed_evidence_fails/__init__.py",
         "tools/nouns/assert_stale_committed_evidence_fails/assert_stale_committed_evidence_fails.py"
-      ]
-    },
-    {
-      "label": "tools/assert-tag-digest-signature-required-fails.py",
-      "script": "tools/assert-tag-digest-signature-required-fails.py",
-      "kind": "landmine",
-      "inputs": [
-        "tools/assert-tag-digest-signature-required-fails.py",
-        "tools/nouns/assert_tag_digest_signature_required_fails/assert_tag_digest_signature_required_fails.py"
       ]
     },
     {

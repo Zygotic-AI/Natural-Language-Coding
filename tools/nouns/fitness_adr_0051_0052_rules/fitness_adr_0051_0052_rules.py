@@ -67,7 +67,7 @@ def rules_ssot_errors(root: Path, payload: dict[str, object] | None = None) -> l
     for row in rows:
         rid = str(row.get("id") or "")
         status = str(row.get("status") or "")
-        if status == "CONTEXT" or rid in OWNER_EXEMPT:
+        if status in {"CONTEXT", "SUPERSEDED"} or rid in OWNER_EXEMPT:
             continue
         check_id = str(row.get("check_id") or "").strip()
         known_bad = str(row.get("known_bad_id") or "").strip()

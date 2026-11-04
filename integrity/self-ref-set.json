@@ -19,8 +19,6 @@
     "integrity/planit-skill-registry.json",
     "integrity/releasable-gates.json",
     "tools/generate-gate-set-baseline-manifest.py",
-    "tools/nouns/assert_verifier_change_via_staging_passes/assert_verifier_change_via_staging_passes.py",
-    "tools/nouns/fitness_live_self_ref_activation/fitness_live_self_ref_activation.py",
     "tools/nouns/fitness_no_tool_writes_ratification/fitness_no_tool_writes_ratification.py",
     "tools/nouns/gate_activate/gate_activate.py",
     "tools/nouns/gate_set/gate_set.py",

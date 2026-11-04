@@ -216,6 +216,10 @@
     "0055": {
       "gate": "tools/fitness-live-self-ref-activation.py",
       "fixture": "tools/assert-live-self-ref-direct-edit-fails.py"
+    },
+    "0058": {
+      "gate": "tools/nlc_release_sensitive_review.py",
+      "fixture": "tools/assert-sensitive-review-hide-fails.py"
     }
   },
   "constraints": {

@@ -40,7 +40,6 @@ INSTANCES = (
     "git-changed-paths",
     "github-latest-tag",
     "create-release-line-show-ref",
-    "sig-ok",
 )
 
 SHA = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -914,7 +913,6 @@ _FAILS = {
     "git-changed-paths": fails_git_changed_paths,
     "github-latest-tag": fails_github_latest_tag,
     "create-release-line-show-ref": fails_create_release_line_show_ref,
-    "sig-ok": fails_sig_ok,
 }
 
 _PASSES = {
@@ -939,7 +937,6 @@ _PASSES = {
     "git-changed-paths": passes_git_changed_paths,
     "github-latest-tag": passes_github_latest_tag,
     "create-release-line-show-ref": passes_create_release_line_show_ref,
-    "sig-ok": passes_sig_ok,
 }
 
 
