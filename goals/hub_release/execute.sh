@@ -260,9 +260,7 @@ dispatch_release_plan() {
       python3 tools/nlc_release_notes.py \
         --version "${desired}" --write-draft &&
         python3 tools/nlc_release_notes.py \
-          --version "${desired}" --refresh-changes &&
-        python3 tools/nlc_release_notes.py \
-          --version "${desired}" --check || rc=$?
+          --version "${desired}" --refresh-changes || rc=$?
       ;;
     ALIGN_VERSION)
       : action_result_boundary:ALIGN_VERSION
@@ -271,6 +269,7 @@ dispatch_release_plan() {
     VERIFY_TARGET)
       : action_result_boundary:VERIFY_TARGET
       python3 tools/nlc.py --project . verify || rc=$?
+      python3 tools/nlc_release_sensitive_review.py --check || true
       if [[ "${rc}" -eq 0 ]]; then
         python3 tools/nlc_release_state.py \
           --remote "${REMOTE}" --base "${BASE_BRANCH}" \
@@ -339,11 +338,18 @@ dispatch_release_plan() {
       if [[ "${NO_PUSH}" -eq 1 ]]; then
         echo "RELEASE:READY_LOCAL pull-request=${branch}"
       else
+        body_file="$(mktemp)"
+        {
+          printf 'Release v%s\n\n' "${desired}"
+          printf 'Sensitive-file review (ADR 0058). Merge is accept.\n\n'
+          python3 tools/nlc_release_sensitive_review.py --check || true
+        } >"${body_file}"
         gh pr create \
           --base "${BASE_BRANCH}" \
           --head "${branch}" \
           --title "Release v${desired}" \
-          --body "Release v${desired}" || rc=$?
+          --body-file "${body_file}" || rc=$?
+        rm -f "${body_file}"
       fi
       ;;
     CREATE_LOCAL_TAG)

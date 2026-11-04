@@ -248,123 +248,123 @@
       "known_bad_id": "GAP-self-declared-diff"
     },
     {
-      "id": "0052:L9",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:9",
-      "status": "BUILT",
-      "check_id": "C6",
-      "known_bad_id": "GAP-0051-unsigned"
-    },
-    {
-      "id": "0052:L13",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:13",
-      "status": "CONTEXT",
+      "id": "0052:L10",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:10",
+      "status": "SUPERSEDED",
       "check_id": null,
       "known_bad_id": null
     },
     {
-      "id": "0052:L15",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:15",
-      "status": "BUILT",
-      "check_id": "fitness-adr-owner-sidecar",
-      "known_bad_id": "KB-0052-unsigned"
+      "id": "0052:L14",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:14",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
     },
     {
-      "id": "0052:L27",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:27",
-      "status": "BUILT",
-      "check_id": "fitness-adr-owner-sidecar",
-      "known_bad_id": "KB-0052-unsigned"
+      "id": "0052:L16",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:16",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
     },
     {
-      "id": "0052:L40",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:40",
-      "status": "BUILT",
-      "check_id": "C6",
-      "known_bad_id": "GAP-0051-unsigned"
+      "id": "0052:L28",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:28",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
+    },
+    {
+      "id": "0052:L41",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:41",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
     },
     {
       "id": "0052:DEC-1",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:44",
-      "status": "BUILT",
-      "check_id": "C6",
-      "known_bad_id": "GAP-0051-unsigned"
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:45",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
     },
     {
       "id": "0052:DEC-2",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:46",
-      "status": "BUILT",
-      "check_id": "fitness-adr-owner-sidecar",
-      "known_bad_id": "KB-0052-unsigned"
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:47",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
     },
     {
       "id": "0052:DEC-3",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:48",
-      "status": "BUILT",
-      "check_id": "fitness-owner-key-trust",
-      "known_bad_id": "KB-0052-rotation"
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:49",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
     },
     {
       "id": "0052:DEC-4",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:50",
-      "status": "BUILT",
-      "check_id": "C7",
-      "known_bad_id": "KB-pending-ratified"
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:51",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
     },
     {
       "id": "0052:DEC-5",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:52",
-      "status": "BUILT",
-      "check_id": "C6",
-      "known_bad_id": "GAP-0051-unsigned"
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:53",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
     },
     {
       "id": "0052:DEC-6",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:54",
-      "status": "PARTIAL",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:55",
+      "status": "SUPERSEDED",
       "check_id": null,
       "known_bad_id": null
     },
     {
       "id": "0052:DEC-7",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:56",
-      "status": "BUILT",
-      "check_id": "fitness-adr-owner-sidecar",
-      "known_bad_id": "KB-0052-unsigned"
-    },
-    {
-      "id": "0052:DEC-8",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:58",
-      "status": "BUILT",
-      "check_id": "fitness-adr-owner-sidecar",
-      "known_bad_id": "KB-0052-unsigned"
-    },
-    {
-      "id": "0052:L64",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:64",
-      "status": "CONTEXT",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:57",
+      "status": "SUPERSEDED",
       "check_id": null,
       "known_bad_id": null
     },
     {
-      "id": "0052:REJ-68",
-      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:68",
-      "status": "BUILT",
-      "check_id": "C6",
-      "known_bad_id": "GAP-0051-unsigned"
+      "id": "0052:DEC-8",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:59",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
+    },
+    {
+      "id": "0052:L65",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:65",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
     },
     {
       "id": "0052:REJ-69",
       "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:69",
-      "status": "BUILT",
-      "check_id": "C8",
-      "known_bad_id": "KB-write-approval"
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
     },
     {
       "id": "0052:REJ-70",
       "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:70",
-      "status": "BUILT",
-      "check_id": "C9",
-      "known_bad_id": "KB-retired-trusted"
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
+    },
+    {
+      "id": "0052:REJ-71",
+      "location": "adrs/0052-owner-openpgp-ratification-amends-0051.md:71",
+      "status": "SUPERSEDED",
+      "check_id": null,
+      "known_bad_id": null
     }
   ]
 }

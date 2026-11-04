@@ -14,14 +14,16 @@
 | Ratification pending | [ADR](../TERMS.md#adr) `Proposed` / `needs_review` → `verify` fails |
 | [Rule](../TERMS.md#rule) conflicts | `check-rule-adoption` → `verify` fails |
 | Fitness / [verify](../TERMS.md#verify) | `ci_fitness.py`, `./nlc verify`, `./nlc verify-deep` |
+| Sensitive-file list (ADR 0058) | `python3 tools/nlc_release_sensitive_review.py --check` prints unresolved paths; `origin/main`'s copy is the grader |
 
 ## Human only (cannot be forged by agents)
 
 | [Gate](../TERMS.md#gate) | Enforcement |
 | ---- | ------------- |
-| **C24 / release** | `Released-by:` on `CONFIRM.md` must be a **person** — `release-audit` / `./nlc ship-check` |
+| **C24 / release** | The GitHub **merge commit** of the release pull request onto `main` is the record. Merge is accept. No sidecar. |
 | **[ADR](../TERMS.md#adr) / [rule](../TERMS.md#rule) adoption** | Human sets [ADR](../TERMS.md#adr) **Accepted**; agent does not ratify |
+| **Sensitive-file accept** | Human reverts, edits, or merges the listed paths. Agents cannot perform that merge when branch protection requires the owner |
 | **“Would this [noun](../TERMS.md#noun) be a lie?”** | [Interview](../TERMS.md#interview) / plan; do not codegen around unresolved doubt |
 | **Waivers** | Explicit `Waived:` with reason in [handoff](../TERMS.md#handoff); machine gates still apply unless [waived](../TERMS.md#waived) criteria documented |
 
-[Ship](../TERMS.md#ship) is **after** [verify](../TERMS.md#verify) compile green. See [`VERIFY-AND-SHIP.md`](VERIFY-AND-SHIP.md).
+[Ship](../TERMS.md#ship) is the six-step unsigned path in [`docs/adoption/RELEASE.md`](../adoption/RELEASE.md). Compile green is not shipped.

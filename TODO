@@ -6,6 +6,24 @@ Charter SSOT: `CHARTER.md`.
 
 How to read red vs green (hub CI): designed red on its specimen → NOT_MET; assert-fails → ASSERT:PASS; invoice-correct MET; true miss = invoice-correct red or a specimen green on its own tool.
 
+## Six-step unsigned release (ADR 0058)
+
+Do not implement deletions or `./release` rewrite while ADR 0058 is Proposed. Human Accepts first.
+
+- ✔ Author ADR 0058 as Proposed with six-step contract, sensitive-list rule, no signatures, lifecycle, known-bads, delete list, keep list @done(26-11-03 18:42)
+- ✔ Human Accepts ADR 0058 (ratify) — stop until this @done(26-11-03 19:12)
+- ✔ After Accept: add ADR 0058 to ACTIVE.md; mark 0052/0055/0056/0057 superseded in INDEX/CATALOG/README; retrofit 0051 SG2 text via a follow-on record @done(26-11-03 19:12)
+- ✔ Rewrite CONTROL-LIFECYCLE in Planit, AWL, briefing validator, and fitness-control-lifecycle.py to list/accept/merge; delete sign/staging/unsigned-incomplete @done(26-11-03 19:12)
+- ✔ Add sensitive-review tool (noun + CLI) whose grader is origin/main's copy; SSOT path prefixes; print unresolved files @done(26-11-03 19:12)
+- ✔ Add known-bad: branch lister that hides a path still fails because main's copy lists it; known-good: doc-only change produces empty sensitive list @done(26-11-03 19:12)
+- ✔ Fold sensitive-review into ./release as the only command for steps 3–6; remove checker-digest signature from tag gate; remove Highlights placeholder as a tag blocker @done(26-11-03 19:12)
+- ✔ Delete or stop calling every signature gate @done(26-11-03 19:12)
+- ✔ Delete armor files, sign-adrs script, signature-text-handoff instruction and Cursor rule, AGENTS.md signature-text paragraph @done(26-11-03 19:12)
+- ✔ Rewrite docs/adoption/RELEASE.md, .agents/skills/release/SKILL.md, and docs/nlc/HUMAN-JUDGMENT-GATES.md to the six steps only; C24 is the merge commit @done(26-11-03 19:12)
+- ✔ Update integrity/releasable-gates.json, known-bad-cases, ci_fitness list, mandated-paths by regen @done(26-11-03 19:12)
+- ✔ Prove: python3 tools/ci_fitness.py and ./nlc verify pass with no .approval.asc required @done(26-11-03 19:12)
+- ✔ Record: bbp-recorder closeout; produce package SSOT exit evidence @done(26-11-03 19:12)
+
 ---
 
 ## Consumable grade — Natural Language Compiler (NLC)

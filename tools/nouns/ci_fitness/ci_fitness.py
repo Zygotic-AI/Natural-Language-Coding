@@ -184,10 +184,6 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "assert-impact-graph-generated.py")],
     )
     run(
-        "release signed",
-        [sys.executable, str(TOOLS / "assert-release-signed-passes.py")],
-    )
-    run(
         "full-nlc-audit quick",
         [sys.executable, str(TOOLS / "assert-full-nlc-audit-quick-passes.py")],
     )
@@ -658,7 +654,6 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "git-changed-paths",
         "github-latest-tag",
         "create-release-line-show-ref",
-        "sig-ok",
     ):
         run(
             f"assert-release-probe-{_probe_name}-fails",
@@ -786,14 +781,6 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-adr-owner-sidecar.py")],
     )
     run(
-        "assert-adr-detached-sig",
-        [sys.executable, str(TOOLS / "assert-adr-detached-sig-fails.py")],
-    )
-    run(
-        "assert-sign-adrs-script",
-        [sys.executable, str(TOOLS / "assert-sign-adrs-script-passes.py")],
-    )
-    run(
         "assert-adr-status-heading",
         [sys.executable, str(TOOLS / "assert-adr-status-heading-fails.py")],
     )
@@ -802,24 +789,12 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         [sys.executable, str(TOOLS / "fitness-derived-release-state.py")],
     )
     run(
-        "assert-tag-digest-signature-required",
-        [sys.executable, str(TOOLS / "assert-tag-digest-signature-required-fails.py")],
-    )
-    run(
-        "fitness-owner-key-trust",
-        [sys.executable, str(TOOLS / "fitness-owner-key-trust.py")],
-    )
-    run(
         "fitness-hub-own-principle-subgoals",
         [sys.executable, str(TOOLS / "fitness-hub-own-principle-subgoals.py")],
     )
     run(
         "fitness-hub-own-property-exit",
         [sys.executable, str(TOOLS / "fitness-hub-own-property-exit.py")],
-    )
-    run(
-        "fitness-owner-ratification-known-bad",
-        [sys.executable, str(TOOLS / "fitness-owner-ratification-known-bad.py")],
     )
     run(
         "fitness-hub-scope-derived",
@@ -844,14 +819,6 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "fitness-pending-ratification",
         [sys.executable, str(TOOLS / "fitness-pending-ratification.py")],
-    )
-    run(
-        "fitness-no-tool-writes-ratification",
-        [sys.executable, str(TOOLS / "fitness-no-tool-writes-ratification.py")],
-    )
-    run(
-        "fitness-retired-key-denylist",
-        [sys.executable, str(TOOLS / "fitness-retired-key-denylist.py")],
     )
     run(
         "fitness-adr-0051-0052-rules",
@@ -880,21 +847,6 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
     run(
         "assert-gate-set-closure-excluded-not-members",
         [sys.executable, str(TOOLS / "assert-gate-set-closure-excluded-not-members-passes.py")],
-    )
-    run(
-        "assert-gate-set-manifest-missing-sidecar",
-        [sys.executable, str(TOOLS / "assert-gate-set-manifest-missing-sidecar-fails.py")],
-    )
-    run(
-        "assert-gate-set-manifest-placeholder-sidecar",
-        [sys.executable, str(TOOLS / "assert-gate-set-manifest-placeholder-sidecar-fails.py")],
-    )
-    run(
-        "assert-content-only-change-does-not-trip-gate-set-signature",
-        [
-            sys.executable,
-            str(TOOLS / "assert-content-only-change-does-not-trip-gate-set-signature-passes.py"),
-        ],
     )
     run(
         "assert-gate-set-member-change-fails-closed",
@@ -944,30 +896,30 @@ def run_ci_fitness_suite(*, include_releasable_verify: bool = False) -> int:
         "assert-planit-other-skill",
         [sys.executable, str(TOOLS / "assert-planit-other-skill-fails.py")],
     )
-    run(
-        "fitness-live-self-ref-activation",
-        [sys.executable, str(TOOLS / "fitness-live-self-ref-activation.py")],
-    )
     # Mandate drift is inside fitness-derived-release-state (one check).
     run(
         "fitness-control-lifecycle",
         [sys.executable, str(TOOLS / "fitness-control-lifecycle.py")],
     )
     run(
-        "assert-live-self-ref-direct-edit",
-        [sys.executable, str(TOOLS / "assert-live-self-ref-direct-edit-fails.py")],
+        "assert-sensitive-review-hide",
+        [sys.executable, str(TOOLS / "assert-sensitive-review-hide-fails.py")],
     )
     run(
-        "assert-verifier-change-via-staging",
-        [sys.executable, str(TOOLS / "assert-verifier-change-via-staging-passes.py")],
+        "assert-sensitive-review-self",
+        [sys.executable, str(TOOLS / "assert-sensitive-review-self-fails.py")],
     )
     run(
-        "assert-activation-split-land",
-        [sys.executable, str(TOOLS / "assert-activation-split-land-fails.py")],
+        "assert-sensitive-review-doc-only",
+        [sys.executable, str(TOOLS / "assert-sensitive-review-doc-only-passes.py")],
     )
     run(
-        "assert-mandate-skill-without-registry",
-        [sys.executable, str(TOOLS / "assert-mandate-skill-without-registry-fails.py")],
+        "assert-unsigned-tag",
+        [sys.executable, str(TOOLS / "assert-unsigned-tag-passes.py")],
+    )
+    run(
+        "fitness-sign-stop",
+        [sys.executable, str(TOOLS / "fitness-sign-stop.py")],
     )
     run(
         "assert-adr-approval-mismatch",

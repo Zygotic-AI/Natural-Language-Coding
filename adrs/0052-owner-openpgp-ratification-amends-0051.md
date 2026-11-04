@@ -1,6 +1,7 @@
 # ADR 0052 — Owner OpenPGP ratification (amends 0051)
 
-- Status: Accepted
+- Status: Superseded
+- Superseded-by: ADR 0058
 - Date: 2026-10-11
 - Deciders: Human manager
 - Class: F (integrity / hub produce)

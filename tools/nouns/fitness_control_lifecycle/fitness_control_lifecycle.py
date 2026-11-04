@@ -1,4 +1,4 @@
-"""Control/gate designs must carry a lifecycle walkthrough and verifier-change known-bad."""
+"""Control/gate designs must walk create, change, list, accept, merge (ADR 0058)."""
 
 from __future__ import annotations
 
@@ -13,16 +13,12 @@ PLANIT = ROOT / ".agents" / "skills" / "planit" / "SKILL.md"
 AWL = ROOT / ".agents" / "skills" / "planit" / "references" / "audited-work-loop-standard.md"
 RELEASE = ROOT / ".agents" / "skills" / "release" / "SKILL.md"
 BRIEF_MOD = ROOT / "tools" / "nouns" / "hub_own_produce" / "hub_own_produce.py"
-KNOWN_BAD = ROOT / "tools" / "assert-verifier-change-via-staging-passes.py"
+KNOWN_BAD = ROOT / "tools" / "assert-sensitive-review-hide-fails.py"
 
 LIFECYCLE_NEEDLES = (
-    "create, change, sign, ingest, rotate",
+    "create, change, list, accept, merge",
     "first bootstrap",
     "legitimate change to the verifier",
-)
-CONTROL_GATE_NEEDLES = (
-    "CONTROL-LIFECYCLE",
-    "control or gate design",
 )
 
 
@@ -39,7 +35,7 @@ def control_lifecycle_errors(root: Path) -> list[str]:
     awl = root / ".agents" / "skills" / "planit" / "references" / "audited-work-loop-standard.md"
     release = root / ".agents" / "skills" / "release" / "SKILL.md"
     brief_mod = root / "tools" / "nouns" / "hub_own_produce" / "hub_own_produce.py"
-    known_bad = root / "tools" / "assert-verifier-change-via-staging-passes.py"
+    known_bad = root / "tools" / "assert-sensitive-review-hide-fails.py"
     for path, label in (
         (planit, "Planit skill"),
         (awl, "AWL standard"),
@@ -60,15 +56,14 @@ def control_lifecycle_errors(root: Path) -> list[str]:
             errors.append(f"Planit skill missing checked rule {needle!r}")
         if needle not in texts["awl"]:
             errors.append(f"AWL standard missing checked rule {needle!r}")
+        if needle not in texts["brief"]:
+            errors.append(f"briefing validator missing {needle!r}")
     if "CONTROL-LIFECYCLE" not in texts["planit"]:
         errors.append("Planit skill missing CONTROL-LIFECYCLE gate row")
     if "control or gate design" not in texts["brief"]:
         errors.append("briefing validator missing control or gate design branch")
-    for needle in LIFECYCLE_NEEDLES:
-        if needle not in texts["brief"]:
-            errors.append(f"briefing validator missing {needle!r}")
-    if "mandated-paths" not in texts["release"] and "derive-mandated-paths" not in texts["release"]:
-        errors.append("/release skill must import the derived mandated-path list")
+    if "six-step" not in texts["release"] and "sensitive" not in texts["release"].lower():
+        errors.append("/release skill must describe the six-step unsigned path")
     return errors
 
 

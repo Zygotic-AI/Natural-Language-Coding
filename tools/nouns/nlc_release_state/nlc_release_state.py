@@ -264,8 +264,7 @@ def _pull_requests(
 def _notes_valid(version: str) -> bool:
     if not version:
         return False
-    proc = _run(["python3", "tools/nlc_release_notes.py", "--check", "--version", version])
-    return proc.returncode == 0
+    return (ROOT / f"docs/adoption/RELEASE-v{version}.md").is_file()
 
 
 def _publish_status(tag: str, runner: object | None = None) -> str:

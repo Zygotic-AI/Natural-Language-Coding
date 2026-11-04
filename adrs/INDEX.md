@@ -61,12 +61,13 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0049 | 2026-10-09 | RCA 2026-10-09 release stops outside planner | proposed | — | L-0049 |
 | 0050 | 2026-10-10 | RCA 2026-10-10 SHA-pinned evidence / content identity | active | — | L-0050 |
 | 0051 | 2026-10-11 | hub-own produce principles | accepted | — | L-0051 |
-| 0052 | 2026-10-11 | owner OpenPGP ratification amends 0051 | accepted | — | L-0052 |
+| 0052 | 2026-10-11 | owner OpenPGP ratification amends 0051 | superseded | 0058 | L-0052 |
 | 0053 | 2026-10-13 | text retrofit for stale 0051/0052 sentences | proposed | — | L-0053 |
 | 0054 | 2026-10-24 | RCA 2026-10-20 published-skill author contract | active | — | L-0054 |
-| 0055 | 2026-10-25 | staged activation of gate machinery | active | — | L-0055 |
-| 0056 | 2026-10-25 | per-file detached owner signatures for ADRs | proposed | — | L-0056 |
-| 0057 | 2026-10-31 | one tag-time signature over the checker digest | proposed | — | L-0057 |
+| 0055 | 2026-10-25 | staged activation of gate machinery | superseded | 0058 | L-0055 |
+| 0056 | 2026-10-25 | per-file detached owner signatures for ADRs | superseded | 0058 | L-0056 |
+| 0057 | 2026-10-31 | one tag-time signature over the checker digest | superseded | 0058 | L-0057 |
+| 0058 | 2026-11-03 | six-step unsigned hub release | active | — | L-0058 |
 
 ## Lineage format
 

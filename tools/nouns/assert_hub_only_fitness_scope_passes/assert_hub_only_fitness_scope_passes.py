@@ -51,18 +51,7 @@ def main() -> int:
         print("ASSERT:FAIL planit must skip on adopter tree")
         return 1
 
-    signed = subprocess.run(
-        [sys.executable, str(ROOT / "tools" / "assert-release-signed-passes.py")],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
-    )
-    if signed.returncode != 0:
-        print("ASSERT:FAIL release-signed landmine must pass (human Released-by on product copy)")
-        print((signed.stdout or "") + (signed.stderr or ""))[-500:]
-        return 1
-
-    print("ASSERT:PASS hub_only_fitness skips adopter trees only; release-signed enforces human sign-off")
+    print("ASSERT:PASS hub_only_fitness skips adopter trees only")
     return 0
 
 

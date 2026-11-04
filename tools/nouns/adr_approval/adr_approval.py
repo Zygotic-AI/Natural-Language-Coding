@@ -1,8 +1,6 @@
-"""Active ADR ratification is the owner's per-file detached OpenPGP signature (C6).
+"""Hash-only `integrity/adr-approval-receipts.json` is retired (still NOT_MET if present).
 
-Hash-only `integrity/adr-approval-receipts.json` is retired. Presence of that
-file is NOT_MET. This module does not load or honor receipt rows. A batch
-owner-approvals statement does not count as ratification (ADR 0056).
+Merge is accept (ADR 0058). This module does not require sidecars.
 """
 
 from __future__ import annotations
@@ -32,10 +30,10 @@ def active_numbers(active_text: str) -> list[str]:
 
 
 def approval_errors(root: Path) -> list[str]:
-    """Refuse the retired receipts file. Ratification is C6 per-file detached only."""
+    """Refuse the retired receipts file. Merge is accept (ADR 0058)."""
     if (root / RETIRED_RECEIPTS_REL).is_file():
         return [
-            f"{RETIRED_RECEIPTS_REL} is retired; ratification is C6 per-file detached only"
+            f"{RETIRED_RECEIPTS_REL} is retired; merge is accept (ADR 0058)"
         ]
     return []
 

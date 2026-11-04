@@ -40,7 +40,6 @@ _EXACT = frozenset(
     {
         "tools/ci_fitness.py",
         "tools/nlc.py",
-        "tools/check-checker-digest-signature.py",
         "tools/regen-derived-release-state.py",
         "tools/generate-gate-set-baseline-manifest.py",
         ".github/workflows/fitness.yml",

@@ -36,8 +36,8 @@
       },
       {
         "leaf_id": "C6",
-        "statement": "Every Accepted numbered ADR requires a valid per-file detached owner signature; a batch statement does not cover.",
-        "exit_status": "REFUSE",
+        "statement": "Accepted numbered ADRs have a parseable Status line. Merge is accept. No sidecar (ADR 0058).",
+        "exit_status": "MET",
         "evidence_path": "tools/fitness-adr-owner-sidecar.py"
       },
       {
@@ -48,15 +48,15 @@
       },
       {
         "leaf_id": "C8",
-        "statement": "No tracked tool writes a ratification sidecar or ratified registry state.",
+        "statement": "C8 sidecar-write refuse is retired. Merge is accept (ADR 0058).",
         "exit_status": "MET",
-        "evidence_path": "tools/fitness-no-tool-writes-ratification.py"
+        "evidence_path": "adrs/0058-six-step-unsigned-release.md"
       },
       {
         "leaf_id": "C9",
-        "statement": "Retired fingerprint 1A86E89505A908766DFD7304F04AD1CEC768DB18 is denylisted and must not overlap TRUSTED_FINGERPRINTS.",
+        "statement": "Owner-key denylist is not a ship gate (ADR 0058).",
         "exit_status": "MET",
-        "evidence_path": "integrity/owner-keys/RETIRED_FINGERPRINTS"
+        "evidence_path": "adrs/0058-six-step-unsigned-release.md"
       },
       {
         "leaf_id": "C10",
@@ -76,18 +76,30 @@
   "adversarial_auditor_role": "adversarial-reviewer",
   "adversarial_reviewer_receipt": {
     "reviewer_role": "adversarial-reviewer",
-    "receipt_id": "hub-0051-0052-retrofit-review"
+    "receipt_id": "hub-0058-six-step-unsigned-review"
   },
   "quality_evidence": [
     {
       "gate_id": "ci_fitness",
       "outcome": "PASS",
-      "timestamp": "2026-10-13T04:00:00Z",
+      "timestamp": "2026-11-04T01:10:00Z",
       "evidence_path": "tools/ci_fitness.py"
     }
   ],
-  "ssot_leaf_ids": ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11"],
-  "ssot_exit_status": "property leaves C1-C11 MET or REFUSE with evidence; owner per-file ADR detached signatures and the regenerated gate-set manifest signature are outstanding",
+  "ssot_leaf_ids": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11"
+  ],
+  "ssot_exit_status": "property leaves C1-C11 MET; merge is accept; no sidecar required (ADR 0058)",
   "quality_snapshot": {
     "opportunities": 1,
     "ops": 1,

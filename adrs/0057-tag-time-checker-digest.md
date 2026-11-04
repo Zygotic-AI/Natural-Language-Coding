@@ -1,6 +1,7 @@
 # ADR 0057 — One tag-time signature over the checker digest
 
-- Status: Proposed
+- Status: Superseded
+- Superseded-by: ADR 0058
 - Date: 2026-10-31
 - Deciders: Human manager
 - Class: F (integrity / hub produce)

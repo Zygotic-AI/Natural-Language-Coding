@@ -1,6 +1,7 @@
 # ADR 0056 — Per-file detached owner signatures for ADRs
 
-- Status: Proposed
+- Status: Superseded
+- Superseded-by: ADR 0058
 - Date: 2026-10-25
 - Deciders: Human manager
 - Class: F (integrity / hub produce)

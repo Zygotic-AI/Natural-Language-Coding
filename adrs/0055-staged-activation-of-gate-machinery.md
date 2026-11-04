@@ -1,6 +1,7 @@
 # ADR 0055 — Staged activation of gate machinery
 
-- Status: Accepted
+- Status: Superseded
+- Superseded-by: ADR 0058
 - Date: 2026-10-25
 - Deciders: Human manager
 - Class: F (integrity / hub produce)

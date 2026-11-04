@@ -22,9 +22,9 @@
     "assert_only": 0,
     "emit_path_open": 0,
     "other_or_lib": 0,
-    "noun_backed_lib": 66,
-    "noun_backed_assert": 148,
-    "noun_backed_fitness": 135,
+    "noun_backed_lib": 67,
+    "noun_backed_assert": 150,
+    "noun_backed_fitness": 136,
     "fitness_only": 0,
     "covered_emit_path": 26
   },
@@ -474,10 +474,6 @@
       "class": "noun-backed-assert"
     },
     {
-      "file": "assert-release-signed-passes.py",
-      "class": "noun-backed-assert"
-    },
-    {
       "file": "assert-release-smoke-passes.py",
       "class": "noun-backed-assert"
     },
@@ -487,10 +483,6 @@
     },
     {
       "file": "assert-release-tag-gate-fails.py",
-      "class": "noun-backed-assert"
-    },
-    {
-      "file": "assert-release-unsigned-fails.py",
       "class": "noun-backed-assert"
     },
     {
@@ -1468,6 +1460,30 @@
     {
       "file": "validate-pack-ingest-candidates.py",
       "class": "noun-backed-lib"
+    },
+    {
+      "file": "assert-sensitive-review-hide-fails.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-sensitive-review-self-fails.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-sensitive-review-doc-only-passes.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "assert-unsigned-tag-passes.py",
+      "class": "noun-backed-assert"
+    },
+    {
+      "file": "fitness-sign-stop.py",
+      "class": "noun-backed-fitness"
+    },
+    {
+      "file": "nlc_release_sensitive_review.py",
+      "class": "noun-backed-lib"
     }
   ],
   "noun_pilots": [
@@ -2345,14 +2361,6 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
-      "noun": "assert_release_signed_passes",
-      "path": "tools/nouns/assert_release_signed_passes/",
-      "adapters": [
-        "assert-release-signed-passes.py"
-      ],
-      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
-    },
-    {
       "noun": "assert_release_smoke_passes",
       "path": "tools/nouns/assert_release_smoke_passes/",
       "adapters": [
@@ -2373,14 +2381,6 @@
       "path": "tools/nouns/assert_release_tag_gate_fails/",
       "adapters": [
         "assert-release-tag-gate-fails.py"
-      ],
-      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
-    },
-    {
-      "noun": "assert_release_unsigned_fails",
-      "path": "tools/nouns/assert_release_unsigned_fails/",
-      "adapters": [
-        "assert-release-unsigned-fails.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
@@ -2505,6 +2505,30 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
+      "noun": "assert_sensitive_review_doc_only_passes",
+      "path": "tools/nouns/assert_sensitive_review_doc_only_passes/",
+      "adapters": [
+        "assert-sensitive-review-doc-only-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_sensitive_review_hide_fails",
+      "path": "tools/nouns/assert_sensitive_review_hide_fails/",
+      "adapters": [
+        "assert-sensitive-review-hide-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_sensitive_review_self_fails",
+      "path": "tools/nouns/assert_sensitive_review_self_fails/",
+      "adapters": [
+        "assert-sensitive-review-self-fails.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
       "noun": "assert_shipped_tag_audit_fails",
       "path": "tools/nouns/assert_shipped_tag_audit_fails/",
       "adapters": [
@@ -2565,6 +2589,14 @@
       "path": "tools/nouns/assert_unresolvable_refuses_passes/",
       "adapters": [
         "assert-unresolvable-refuses-passes.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "assert_unsigned_tag_passes",
+      "path": "tools/nouns/assert_unsigned_tag_passes/",
+      "adapters": [
+        "assert-unsigned-tag-passes.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
@@ -3731,6 +3763,14 @@
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
     {
+      "noun": "fitness_sign_stop",
+      "path": "tools/nouns/fitness_sign_stop/",
+      "adapters": [
+        "fitness-sign-stop.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
       "noun": "fitness_specimen_contract_policy",
       "path": "tools/nouns/fitness_specimen_contract_policy/",
       "adapters": [
@@ -4376,6 +4416,14 @@
       "path": "tools/nouns/reverse_audit/",
       "adapters": [
         "nlc-reverse-audit.py"
+      ],
+      "fitness": "tools/fitness-hub-x4-noun-pilot.py"
+    },
+    {
+      "noun": "sensitive_review",
+      "path": "tools/nouns/sensitive_review/",
+      "adapters": [
+        "nlc_release_sensitive_review.py"
       ],
       "fitness": "tools/fitness-hub-x4-noun-pilot.py"
     },
