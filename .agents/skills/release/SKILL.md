@@ -38,7 +38,7 @@ Run `./release` from the hub root with no flags. Report its output. If it prints
 
 Do not write `Released-by:`. Do not paste armor. Do not run `scripts/sign-adrs.sh`.
 
-Never tell the operator to ignore or reinterpret command output ([`jidoka-ssot-output.md`](../../instructions/jidoka-ssot-output.md)).
+Never tell the operator to ignore or reinterpret command output (`.agents/instructions/jidoka-ssot-output.md`).
 
 ## CONTROL-LIFECYCLE (control or gate design)
 
@@ -54,4 +54,4 @@ When this skill or `./release` is the control under change, walk **create, chang
 ## Reference
 
 - `docs/adoption/RELEASE.md`
-- [ADR 0058](../../../adrs/0058-six-step-unsigned-release.md)
+- `adrs/0058-six-step-unsigned-release.md`
