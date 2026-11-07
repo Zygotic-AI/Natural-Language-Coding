@@ -1,0 +1,10 @@
+---
+description: Product feature order and reasons live in docs/nlc/FEATURES.md
+alwaysApply: true
+---
+
+# Product features SSOT
+
+Released, upcoming, milestones, and **why**: [`docs/nlc/FEATURES.md`](../../docs/nlc/FEATURES.md).
+
+SSOT: [`AGENTS.md`](../../AGENTS.md) and [`.agents/instructions/product-features-ssot.md`](../../.agents/instructions/product-features-ssot.md).

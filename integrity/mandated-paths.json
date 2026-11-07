@@ -18,6 +18,9 @@
     ".agents/instructions/planit-phase7-handoff-adr-0038.md": [
       "gate_set_manifest"
     ],
+    ".agents/instructions/product-features-ssot.md": [
+      "gate_set_manifest"
+    ],
     ".agents/instructions/release-notes.md": [
       "gate_set_manifest"
     ],
@@ -608,6 +611,9 @@
     "adrs/0057-tag-time-checker-digest.md": [
       "gate_set_manifest"
     ],
+    "adrs/0058-no-harness-hooks.md": [
+      "gate_set_manifest"
+    ],
     "adrs/ACTIVE.md": [
       "gate_set_manifest"
     ],
@@ -744,6 +750,9 @@
       "gate_set_manifest"
     ],
     "docs/nlc/EMIT-FROM-PROSE.md": [
+      "gate_set_manifest"
+    ],
+    "docs/nlc/FEATURES.md": [
       "gate_set_manifest"
     ],
     "docs/nlc/FULL-NLC-AUDIT.md": [

@@ -2,7 +2,7 @@
 
 Why adopters want **[Natural Language Compiler](TERMS.md#nlc)**—outcomes people seek, not every compiler use-case id.
 
-**Companion docs:** numbered [compiler](TERMS.md#compiler) stories live in [`USE-CASES.md`](USE-CASES.md). **ADR → binders:** [`ADR-ENFORCEMENT.md`](ADR-ENFORCEMENT.md), [`TODO`](../TODO).
+**Companion docs:** numbered [compiler](TERMS.md#compiler) stories live in [`USE-CASES.md`](USE-CASES.md). Released / upcoming / milestones and **why**: [`docs/nlc/FEATURES.md`](nlc/FEATURES.md). **ADR → binders:** [`ADR-ENFORCEMENT.md`](ADR-ENFORCEMENT.md), [`TODO`](../TODO).
 
 **Precondition:** Work runs through interview → planit → generate → gate → `./nlc verify` on an [adopter](TERMS.md#adopter) compiled-system layout.
 

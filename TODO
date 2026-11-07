@@ -727,13 +727,26 @@ v0.3.3 install copies skills whose `SKILL.md` YAML `name:` fields were rewritten
 - ✔ Write `integrity/hub-release-record.json` 0.4.0 / `release/v0.4.0` and set DESCRIBE/FINDINGS last-tagged-ship to v0.4.0 so tag-time F1 and the record do not move after the owner signs @done(26-10-25 20:00)
 - ✔ Refresh hub-content-tree-hash / stamps and regenerate the gate-set manifest once after those prepare edits @done(26-10-25 20:01)
 
-## Milestones to v1.0.0
+## Product features (story and order)
 
-v1.0.0 is this repo rewritten by its own compile: goals, constraints, then the rewrite. No new decision record: this is the ship queue. Small features sit on the milestone that needs them.
+SSOT with reasons: [`docs/nlc/FEATURES.md`](docs/nlc/FEATURES.md). Do not treat this TODO section as a second roadmap.
 
-- ☐ **1. Brownfield.** Take an existing repo without starting over: inventory, migration plan, apply. Includes installing the compiler into that repo. Today the install is per user (`~/.local/share/nlc`, `~/.local/bin`, `~/.agents/skills`).
-- ☐ **2. Full requirement import.** Any document becomes accepted goals and if/then constraints, each citing document, page, and line. The human edits and approves. The interview stays the path when there is no document. An agent runs one chunk per pass: a section or a set of goals, writes that slice, and stops. No question-per-turn inside the chunk.
-- ☐ **3. Trace graph.** One link from intention to constraint to code. Three queries: reverse walk (code back to the goal and the decisions), audit pull (a policy such as PCI back to the code and the decisions), find every use (a library or action back to every place).
-- ☐ **4. Precise rewrite.** One accepted decision regenerates only the code it touches, including an architecture swap such as MySQL to Oracle. Later edits replace those units. That is the no-code-slop rule.
-- ☐ **5. Policy in the code.** An accepted constraint becomes data types and actions the app enforces. A later policy change uses milestone 4 to rewrite those units.
-- ☐ **v1.0.0 Dogfood.** Import this repo’s own docs, accept the constraints, brownfield the existing tree, and rewrite it. Milestones 3–5 already hold.
+## Next milestone — no editor hooks ([ADR 0058](adrs/0058-no-harness-hooks.md) Proposed)
+
+Law: no harness hooks; no required model or agent host; verify on the files is the notice path. Enabling a named harness later is its own accepted decisions (confirm that harness is in use, fail if not).
+
+- ☐ Accept [ADR 0058](adrs/0058-no-harness-hooks.md) (human manager).
+- ☐ Remove in-tree Cursor hooks (`.cursor/hooks.json`, `.cursor/hooks/*`) and invert fitness that currently requires the Write/Delete hook (`fitness-goal-write-hook`, `assert-goal-write-hook-landmine`).
+- ☐ Stop telling adopters to copy Cursor hooks (`templates/adopter/hooks.example.json`, [`docs/nlc/HARNESS.md`](docs/nlc/HARNESS.md)).
+- ☐ Keep Planit-skill identity on repo gates, not on a Cursor prompt-submit hook.
+
+## After that — install NLC into a specific repo
+
+- ☐ Pin one app repo to an NLC copy so a global upgrade does not drag every repo along (greenfield and later brownfield). See FEATURES.md “Install NLC into a specific repo.”
+
+## Recorded, not scheduled
+
+Upcoming list (full requirement import, trace graph, precise rewrite, constraints as types and actions, brownfield ourselves, rules that have to work together, brownfield on other repos, other languages, public packs and signing, UI) lives only in FEATURES.md until promoted.
+
+- ☐ Before public signed packs: majority-key / stolen-key / pack-withdrawal design recorded in FEATURES.md item 11 — solve it then, not now.
+- ☐ Pack install conflict resolution (company encryption vs PCI pack, human accepts or edits the resolution) lives under FEATURES.md item 8 — after we brownfield ourselves.

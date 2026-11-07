@@ -7,6 +7,7 @@ This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler
 | You want… | Go to |
 | --------- | ----- |
 | **What [NLC](../TERMS.md#nlc) is for (honest status)** | [`JOBS-TO-BE-DONE.md`](../JOBS-TO-BE-DONE.md) |
+| **Released, upcoming, milestones, and why that order** | [`FEATURES.md`](FEATURES.md) |
 | **ADR → code enforcement tracker** | [`ADR-ENFORCEMENT.md`](../ADR-ENFORCEMENT.md) |
 | **Terms dictionary** | [`TERMS.md`](../TERMS.md) |
 | Install [NLC](../TERMS.md#nlc) | [Root `README.md`](../../README.md) → curl / PowerShell install |
@@ -66,6 +67,8 @@ This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler
 
 ## Roadmap (hub)
 
+Living story, upcoming list, next milestone, and **why**: [`FEATURES.md`](FEATURES.md). History of shipped tags:
+
 | Version | Focus |
 | ------- | ----- |
 | **v0.1.0** | Install, lock, [greenfield](../TERMS.md#greenfield), spine v1, [verify](../TERMS.md#verify) path |
@@ -78,5 +81,6 @@ This repo is the **[hub](../TERMS.md#hub)**: the [compiler](../TERMS.md#compiler
 | ----- | -------- |
 | [Charter](../TERMS.md#charter) (design SSOT) | [`CHARTER.md`](../../CHARTER.md) |
 | ADRs | [`adrs/README.md`](../../adrs/README.md) |
+| Released / upcoming / milestones | [`FEATURES.md`](FEATURES.md) |
 | Open gaps | [`FINDINGS.md`](../../FINDINGS.md) |
 | Task queue | [`TODO`](../../TODO) |

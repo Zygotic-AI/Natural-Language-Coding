@@ -67,6 +67,7 @@ See [ADR 0029](0029-adr-lineage-active-set-and-bind-snapshot.md).
 | 0055 | 2026-10-25 | staged activation of gate machinery | active | — | L-0055 |
 | 0056 | 2026-10-25 | per-file detached owner signatures for ADRs | proposed | — | L-0056 |
 | 0057 | 2026-10-31 | one tag-time signature over the checker digest | proposed | — | L-0057 |
+| 0058 | 2026-11-07 | no harness hooks; harness- and model-agnostic | proposed | — | L-0058 |
 
 ## Lineage format
 
