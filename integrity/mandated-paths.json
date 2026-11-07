@@ -611,7 +611,7 @@
     "adrs/0057-tag-time-checker-digest.md": [
       "gate_set_manifest"
     ],
-    "adrs/0058-no-harness-hooks.md": [
+    "adrs/0058-harness-and-model-agnostic.md": [
       "gate_set_manifest"
     ],
     "adrs/ACTIVE.md": [

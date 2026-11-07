@@ -1,4 +1,4 @@
-# ADR 0058 — No harness hooks; NLC is harness- and model-agnostic
+# ADR 0058 — Harness- and model-agnostic
 
 - Status: Proposed
 - Date: 2026-11-07

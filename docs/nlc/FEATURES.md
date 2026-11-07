@@ -78,7 +78,7 @@ The public site (naturallanguagecoding.ai / naturallanguagecompiler.ai) uses the
 | Feature | Version | What the customer gets | Why it is here |
 | ------- | ------- | ---------------------- | -------------- |
 | Zero-parameter hub `./release` | v0.3.0 | Hub maintainers cut a ship with no bump flags | Operator surface, not app compile. |
-| Cursor Write/Delete hooks (to be removed) | v0.3.0 | Cursor-only early deny on `goals/` Write/Delete | **Wrong shape.** See Upcoming “No editor hooks” and [ADR 0058](../../adrs/0058-no-harness-hooks.md). Does not see shell, other tool connections, or helper agents. Other editors have no such hook. |
+| Cursor Write/Delete hooks (to be removed) | v0.3.0 | Cursor-only early deny on `goals/` Write/Delete | **Wrong shape.** See Upcoming “No editor hooks” and [ADR 0058](../../adrs/0058-harness-and-model-agnostic.md). Does not see shell, other tool connections, or helper agents. Other editors have no such hook. |
 | Loadable published skills | v0.4.0 | `/interview`, `/planit`, `/verify` load after install | Skills must parse. |
 | Tag-time checker signature | v0.4.1 | Owner signs the checker digest at tag | Thinner than “customer proves the whole release is unedited.” |
 | GitHub product name | v0.5.0 | Install from `Zygotic-AI/Natural-Language-Compiler` | Rename. Old name redirects. |
@@ -100,7 +100,7 @@ Intended sequence. More items than we will put on milestones. Convert-language i
 - An agent writes generated files with a shell redirect, a helper agent, or a tool connection. Verify still catches it.
 - A common model does poorly. We RCA NLC first. We only name a model or harness “not recommended” after we can show the expectation is reasonable and that setup still will not meet it.
 
-**Why this order.** It is a single rule: no hooks. The alternative is “hooks if you remember, verify if you do not,” which is hope. We should not marry one editor before we brownfield ourselves. Law: [ADR 0058](../../adrs/0058-no-harness-hooks.md) (Proposed). Removing the in-tree Cursor hooks is follow-on after that record is accepted.
+**Why this order.** It is a single rule: no hooks. The alternative is “hooks if you remember, verify if you do not,” which is hope. We should not marry one editor before we brownfield ourselves. Law: [ADR 0058](../../adrs/0058-harness-and-model-agnostic.md) (Proposed). Removing the in-tree Cursor hooks is follow-on after that record is accepted.
 
 **Later, not now.** A milestone may **enable a named harness**. That work adds accepted decisions for that harness, including “confirm this is the harness in use, error if it is not.” Until then, no hooks.
 
@@ -225,7 +225,7 @@ Only slices we are scheduling. Confidence is highest in the next one.
 
 ### Next (high confidence)
 
-**No editor hooks.** Accept [ADR 0058](../../adrs/0058-no-harness-hooks.md). Remove in-tree Cursor hooks and the fitness that requires them. Verify on the files is the only notice path.
+**No editor hooks.** Accept [ADR 0058](../../adrs/0058-harness-and-model-agnostic.md). Remove in-tree Cursor hooks and the fitness that requires them. Verify on the files is the only notice path.
 
 Open work: [`TODO`](../../TODO) rows under “No editor hooks.”
 

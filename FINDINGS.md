@@ -71,7 +71,7 @@ Promotion remains human (`ship-check`, not compile-green alone).
 | E3 explicit ci_fitness 0024 | Glob already runs `fitness-*.py`; explicit run optional |
 | CHARTER / DESCRIBE door | **Done** — #38 NLC-first door (BBP body retained) |
 | README diagrams | **Done** — README product picture: generic intent and policies, and the same path with HIPAA and SEC named. |
-| UC18 goal-write hook coverage | **Direction reversed** — do not extend Cursor hooks. Proposed law: no harness hooks; verify on the files ([ADR 0058](adrs/0058-no-harness-hooks.md)). Remove in-tree Cursor Write/Delete (and other) hooks after that record is accepted. Story: [`docs/nlc/FEATURES.md`](docs/nlc/FEATURES.md). |
+| UC18 goal-write hook coverage | **Direction reversed** — do not extend Cursor hooks. Proposed law: no harness hooks; verify on the files ([ADR 0058](adrs/0058-harness-and-model-agnostic.md)). Remove in-tree Cursor Write/Delete (and other) hooks after that record is accepted. Story: [`docs/nlc/FEATURES.md`](docs/nlc/FEATURES.md). |
 
 ---
 
