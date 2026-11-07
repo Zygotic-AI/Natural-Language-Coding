@@ -54,6 +54,7 @@ Same structural discipline applied to organizing **agent fleets** — durable ro
 | `docs/OPERATING_BINDINGS.md` | Operating policy index (P-016…P-031 class); hub-local P-series prose |
 | `content-types/HOW-TO-ADD.md` | Type recipes for adding content (ADR, integrity doc, agent noun, Skill, etc.) |
 | `TODO` | Task list (`☐` / `✔ @done(...)`) |
+| `docs/nlc/FEATURES.md` | Released / upcoming / milestones and the reasons (not an ADR) |
 | `AGENTS.md` | Cross-harness standing instructions |
 | `.agents/` | Portable skills / instructions |
 

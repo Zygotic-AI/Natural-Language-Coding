@@ -117,6 +117,7 @@ flowchart LR
 | Why intent is the product | [`MANIFESTO.md`](MANIFESTO.md) → SSOT [`docs/nlc/compiler/MANIFESTO.md`](docs/nlc/compiler/MANIFESTO.md) |
 | Adopt step-by-step | [`BOOTSTRAP.md`](docs/adoption/BOOTSTRAP.md) |
 | Full doc map | [`docs/nlc/README.md`](docs/nlc/README.md) |
+| Released, upcoming, milestones, and why | [`FEATURES.md`](docs/nlc/FEATURES.md) |
 
 ## Not for you if
 

@@ -56,9 +56,12 @@ Skills and portable instructions live under [`.agents/`](.agents/). End-to-end c
 
 **Reply references (always):** Whenever you mention UC/ADR/P/R ids, paths, or hub jargon in user-facing text, include plain language **in the same message** — see [`.agents/instructions/reply-references-plain-language.md`](.agents/instructions/reply-references-plain-language.md). No bare id lists as explanation; applies to every reply, not only when asking the human to decide.
 
+**Product features SSOT (always):** What is released, what is upcoming, which slice is on a milestone, and **why** that order — [`docs/nlc/FEATURES.md`](docs/nlc/FEATURES.md). Write reasons next to the feature in the same change. Hard rules still go in [ADRs](docs/TERMS.md#adr). See [`.agents/instructions/product-features-ssot.md`](.agents/instructions/product-features-ssot.md).
+
 **Signature text (always):** Anytime you need a signature, give the exact text in that same message. In an IDE, put only that text in one fenced block so it can be copied. In a terminal, put a start marker line above it and an end marker line below it — see [`.agents/instructions/signature-text-handoff.md`](.agents/instructions/signature-text-handoff.md).
 
 ## Memory files
 
 - [`DESCRIBE.md`](DESCRIBE.md) — durable project facts for agents
 - [`TODO`](TODO) — task queue (`☐` open, `✔ … @done(YY-MM-DD HH:MM)` when done)
+- [`docs/nlc/FEATURES.md`](docs/nlc/FEATURES.md) — released / upcoming / milestones and the reasons

@@ -6,6 +6,7 @@ Do not treat [`HOLES.md`](HOLES.md), root [`TODO`](TODO), or [`docs/USE-CASES.md
 | File | Role |
 |------|------|
 | **This file** | Live undone-work SSOT |
+| [`docs/nlc/FEATURES.md`](docs/nlc/FEATURES.md) | Released / upcoming / milestones and **why** — not a second work queue |
 | [`docs/USE-CASES.md`](docs/USE-CASES.md) | Narrative UC map (what the practice *does*) |
 | [`integrity/uc-product-status.json`](integrity/uc-product-status.json) | Machine product/binder status; CI gates TODO `@done` |
 | [`TODO`](TODO) | Historical work log + CI evidence rows — **not** a second queue |
@@ -39,7 +40,6 @@ v1 binders for UC9 / UC14 / UC15 / UC18 are **product-closed** in [`integrity/uc
 |----|-----|
 | **Packs v0.2 consume** | **Closed** — `nlc-pack-install` writes `.nlc/pack-consume-status.json` (scope + UC9 hint). |
 | **Packs registry** | **Closed (v1)** — hub-local curated registry [`integrity/hub-pack-registry.json`](integrity/hub-pack-registry.json) ([ADR 0041](adrs/0041-product-completion-scope.md), [`docs/nlc/PACK-REGISTRY.md`](docs/nlc/PACK-REGISTRY.md)). Not a public internet registry. |
-| **UC18 goal-write hook coverage** | **Partial (v0.3.0)** — Cursor `preToolUse` on `Write\|Delete` only (see [Cursor hooks](https://cursor.com/docs/hooks)). **Not covered:** `Shell` redirects into `goals/`, MCP tool writes, subagent `Task` writes. |
 
 Promotion remains human (`ship-check`, not compile-green alone).
 
@@ -71,6 +71,7 @@ Promotion remains human (`ship-check`, not compile-green alone).
 | E3 explicit ci_fitness 0024 | Glob already runs `fitness-*.py`; explicit run optional |
 | CHARTER / DESCRIBE door | **Done** — #38 NLC-first door (BBP body retained) |
 | README diagrams | **Done** — README product picture: generic intent and policies, and the same path with HIPAA and SEC named. |
+| UC18 goal-write hook coverage | **Direction reversed** — do not extend Cursor hooks. Proposed law: no harness hooks; verify on the files ([ADR 0058](adrs/0058-harness-and-model-agnostic.md)). Remove in-tree Cursor Write/Delete (and other) hooks after that record is accepted. Story: [`docs/nlc/FEATURES.md`](docs/nlc/FEATURES.md). |
 
 ---
 

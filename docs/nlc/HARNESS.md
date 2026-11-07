@@ -27,7 +27,7 @@ If `nlc-pipeline-wire.py` exits non-zero at any stage, **do not emit** (before) 
 
 On every PR, run **`./nlc verify`**. [Workflow](../TERMS.md#workflow) template: `.github/workflows/nlc-verify.yml` from `nlc-init`.
 
-**Hooks (v2):** `.nlc/hooks.example.json` only — menu actions and optional [UC18](../TERMS.md#uc18) hook shape. [Hub](../TERMS.md#hub) does **not** [ship](../TERMS.md#ship) active Cursor/SDK wiring; copy into your harness when supported.
+**Hooks (v2, scheduled for removal):** `.nlc/hooks.example.json` is still present for [UC18](../TERMS.md#uc18) v1. Proposed law is **no harness hooks** ([ADR 0058](../../adrs/0058-harness-and-model-agnostic.md)); `./nlc verify` on the files is the notice path. Do not copy Cursor Write/Delete as the way [NLC](../TERMS.md#nlc) notices generated files. Story: [`FEATURES.md`](FEATURES.md).
 
 **Judgment (not automatable):** [`HUMAN-JUDGMENT-GATES.md`](HUMAN-JUDGMENT-GATES.md).
 
